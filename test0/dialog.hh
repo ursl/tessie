@@ -1,21 +1,29 @@
 #ifndef DIALOG_H
 #define DIALOG_H
 
-#include <QDialog>
+#include <QtWidgets/QWidget>
 
-namespace Ui {
-  class Dialog;
-}
+#include "driveHardware.hh"
 
-class dialog : public QDialog {
+class dialog : public QWidget {
   Q_OBJECT
 
 public:
-  explicit dialog(QWidget *parent = nullptr);
+  dialog(QWidget *parent = nullptr);
   ~dialog();
 
+
+protected:
+  void paintEvent(QPaintEvent *event) override;
+
+
+private slots:
+  void updateFrequency(int f);
+
 private:
-  Ui::Dialog *ui;
+  driveHardware fThread;
+  int fInputFrequency, fInputOffset;
+
 };
 
 #endif // DIALOG_H
