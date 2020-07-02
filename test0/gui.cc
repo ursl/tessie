@@ -3,23 +3,23 @@
 #include <QtGui/QPainter>
 
 
-#include "dialog.hh"
-#include "ui_dialog.h"
+#include "gui.hh"
+#include "ui_gui.h"
 
-dialog::dialog(QWidget *parent):QWidget(parent) {
+gui::gui(QMainWindow *parent): QMainWindow(parent) {
 
   connect(&fThread, &driveHardware::signalSomething,
-	  this, &dialog::updateFrequency);
+	  this, &gui::updateFrequency);
 
 }
 
-dialog::~dialog() {
+gui::~gui() {
 }
 
 
-void dialog::updateFrequency(int f) {
+void gui::updateFrequency(int f) {
   std::cout << "do something with f = " << f << std::endl;
 }
 
-void dialog::paintEvent(QPaintEvent * /* event */) {
+void gui::paintEvent(QPaintEvent * /* event */) {
 }

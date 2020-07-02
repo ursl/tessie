@@ -1,16 +1,16 @@
-#ifndef DIALOG_H
-#define DIALOG_H
+#ifndef GUI_H
+#define GUI_H
 
-#include <QtWidgets/QWidget>
+#include <QtWidgets/QMainWindow>
 
 #include "driveHardware.hh"
 
-class dialog : public QWidget {
+class gui : public QMainWindow {
   Q_OBJECT
 
 public:
-  dialog(QWidget *parent = nullptr);
-  ~dialog();
+  gui(QMainWindow *parent = nullptr);
+  ~gui();
 
 
 protected:
@@ -26,4 +26,4 @@ private:
 
 };
 
-#endif // DIALOG_H
+#endif // GUI_H
