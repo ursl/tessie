@@ -10,6 +10,7 @@ dialog::dialog(QWidget *parent):QWidget(parent) {
 
   connect(&fThread, &driveHardware::signalSomething,
 	  this, &dialog::updateFrequency);
+
 }
 
 dialog::~dialog() {
@@ -21,6 +22,4 @@ void dialog::updateFrequency(int f) {
 }
 
 void dialog::paintEvent(QPaintEvent * /* event */) {
-  QPainter painter(this);
-  painter.fillRect(rect(), Qt::black);
 }
