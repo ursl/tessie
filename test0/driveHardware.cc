@@ -47,23 +47,22 @@ void driveHardware::runPrintout(int freq, int off) {
 // ----------------------------------------------------------------------
 void driveHardware::run() {
 
-  while (1) {
-    fMutex.lock();
-    int cnt = this->fOffset;
-    std::chrono::milliseconds sec(1000/this->fFrequency);
-    cout << "countUp: " << cnt++ << " fFrequency = " << fFrequency << endl;
-    //    sleep(1./fFrequency);
-    fMutex.unlock();
-    std::this_thread::sleep_for(sec);
+    while (1) {
+        fMutex.lock();
+        std::chrono::milliseconds sec(1000/this->fFrequency);
+        cout << "countUp: " << this->fOffset++ << " fFrequency = " << fFrequency << endl;
+        fMutex.unlock();
+        //    sleep(1./fFrequency);
+        std::this_thread::sleep_for(sec);
 
-    // -- I think I don't need the following:
-    // fMutex.lock();
-    // if (!fRestart) {
-    //   fCondition.wait(&fMutex);
-    // }
-    // fRestart = false;
-    // fMutex.unlock();
-  }
+        // -- I think I don't need the following:
+        // fMutex.lock();
+        // if (!fRestart) {
+        //   fCondition.wait(&fMutex);
+        // }
+        // fRestart = false;
+        // fMutex.unlock();
+    }
 
 }
 
