@@ -8,18 +8,18 @@
 
 gui::gui(QMainWindow *parent): QMainWindow(parent) {
 
+    // -- here you connect the ui_gui (QML design) with the GUI class:
+    // Ui::MainWindow ui;
+    ui = new Ui::MainWindow();
+    ui->setupUi(this);
+    updateTime();
+
     // -- set up a timer to display a clock
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &gui::updateTime);
     timer->start(1000);
 
-    // -- here you connect the ui_gui (QML design) with the GUI class:
-    // Ui::MainWindow ui;
-    ui = new Ui::MainWindow();
-    ui->setupUi(this);
-
-
-    ui->textEdit->setText("Hallo");
+    ui->textEdit->setText("Welcome to Tessie's");
     ui->textEdit->verticalScrollBar()->setValue(ui->textEdit->verticalScrollBar()->maximum());
 
     this->show();
@@ -68,11 +68,11 @@ QString gui::getTimeString() {
     int day     = dati.date().day();
     QString text;
     text = QString("%1/%2/%3 %4:%5:%6")
-      .arg(year,4)
-      .arg(month,2,10,QChar('0'))
-      .arg(day,2,10,QChar('0'))
-      .arg(hours,2,10,QChar('0'))
-      .arg(minutes,2,10,QChar('0'))
-      .arg(seconds,2,10,QChar('0'));
+            .arg(year,4)
+            .arg(month,2,10,QChar('0'))
+            .arg(day,2,10,QChar('0'))
+            .arg(hours,2,10,QChar('0'))
+            .arg(minutes,2,10,QChar('0'))
+            .arg(seconds,2,10,QChar('0'));
     return text;
 }
