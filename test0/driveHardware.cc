@@ -15,6 +15,12 @@ driveHardware::driveHardware(QObject *parent): QThread(parent) {
     fOffset    = 0;
     QDateTime dt = QDateTime::currentDateTime();
     fDateAndTime = dt.date().toString() + "  " +  dt.time().toString("hh:mm");
+
+
+#ifdef PI
+  wiringPiSetup();
+  pinMode(gled, OUTPUT);
+#endif
 }
 
 
@@ -98,3 +104,20 @@ int driveHardware::getFrequency() {
 int driveHardware::getOffset() {
     return fOffset;
 }
+
+
+#ifdef PI
+// ----------------------------------------------------------------------
+void driveHardware::toggleLED() {
+  static int status = 0;
+  if (0 == status) {
+    cout << "toggle LED on" << endl;
+    status = 1;
+    digitalWrite(gled, HIGH);
+  } else {
+    cout << "toggle LED off" << endl;
+    status = 0;
+    digitalWrite(gled, LOW);
+  }
+}
+#endif

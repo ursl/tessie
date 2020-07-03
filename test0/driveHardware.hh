@@ -6,6 +6,15 @@
 #include <QtCore/QWaitCondition>
 #include <QtCore/QTime>
 
+#ifdef PI
+#include <wiringPi.h>
+// -- Red LED: Physical pin 18, BCM GPIO24, and WiringPi pin 5.
+const int gled = 5;
+#endif
+
+
+
+
 class driveHardware: public QThread {
   Q_OBJECT
 
@@ -14,6 +23,10 @@ public:
   ~driveHardware();
 
   void runPrintout(int freq, int off);
+
+#ifdef PI
+  void toggleLED();
+#endif
 
   void setFrequency(int x);
   void setOffset(int x);
