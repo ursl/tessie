@@ -15,11 +15,10 @@ public:
 
 
 protected:
-  void paintEvent(QPaintEvent *event) override;
 
 
 private slots:
-  void updateFrequency(int f);
+  void appendText(QString line);
 
   void on_pushButton_clicked();
 
@@ -28,6 +27,10 @@ private slots:
   void on_spinBox_valueChanged(int arg1);
 
   void on_spinBox_2_valueChanged(int arg1);
+
+  QString getTimeString();
+
+  void updateTime();
 
 private:
   driveHardware fThread;

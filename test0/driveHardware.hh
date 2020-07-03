@@ -4,6 +4,7 @@
 #include <QtCore/QThread>
 #include <QtCore/QMutex>
 #include <QtCore/QWaitCondition>
+#include <QtCore/QTime>
 
 class driveHardware: public QThread {
   Q_OBJECT
@@ -21,6 +22,7 @@ public:
 
 signals:
   void signalSomething(int x);
+  void signalText(QString x);
 
 protected:
   void run() override;
@@ -33,6 +35,7 @@ private:
   bool fAbort;
   int fFrequency;
   int fOffset;
+  QString fDateAndTime;
 };
 
 #endif // DRIVEHARDWARE_H
