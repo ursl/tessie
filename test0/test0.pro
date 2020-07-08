@@ -24,6 +24,13 @@ SOURCES += main.cc \
 
 QT += widgets
 
+CONFIG(PI) {
+   DEFINES += PI
+   LIBS += -lwiringPi
+} else {
+
+}
+
 DISTFILES +=
 
 FORMS += \
