@@ -8,12 +8,7 @@
 
 #ifdef PI
 #include <wiringPi.h>
-// -- Red LED: Physical pin 18, BCM GPIO24, and WiringPi pin 5.
-const int gled = 5;
 #endif
-
-
-
 
 class driveHardware: public QThread {
   Q_OBJECT
@@ -49,6 +44,18 @@ private:
   int fFrequency;
   int fOffset;
   QString fDateAndTime;
+
+#ifdef PI
+  // -- Red LED: Physical pin 18, BCM GPIO24, and WiringPi pin 5.
+  const int fLed1 = 5;
+  // -- Red LED: Physical pin 22, BCM GPIO25, and WiringPi pin 6.
+  const int fLedBlue = 6;
+
+  int fStatus1 = 0;
+  int fStatusBlue = 0;
+
+#endif
+
 };
 
 #endif // DRIVEHARDWARE_H

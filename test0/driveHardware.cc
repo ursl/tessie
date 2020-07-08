@@ -19,7 +19,8 @@ driveHardware::driveHardware(QObject *parent): QThread(parent) {
 
 #ifdef PI
   wiringPiSetup();
-  pinMode(gled, OUTPUT);
+  pinMode(fLed1, OUTPUT);
+  pinMode(fLedBlue, OUTPUT);
 #endif
 }
 
@@ -64,9 +65,20 @@ void driveHardware::run() {
 
         signalText(aline);
 
+#ifdef PI
+	if (1 == fStatus1) {
+	  digitalWrite(fLed1, LOW);
+	  fStatus1 = 0;
+	} else {
+	  digitalWrite(fLed1, HIGH);
+	  fStatus1 = 1;
+	}
+#endif
+
         cout << "countUp: " << cn
              << " fFrequency = " << fFrequency
              << endl;
+
 
 
         fMutex.unlock();
@@ -112,12 +124,14 @@ void driveHardware::toggleLED() {
   static int status = 0;
   if (0 == status) {
     cout << "toggle LED on" << endl;
-    status = 1;
-    digitalWrite(gled, HIGH);
+    fStatusBlue = 1;
+    digitalWrite(fLedBlue, HIGH);
   } else {
     cout << "toggle LED off" << endl;
-    status = 0;
-    digitalWrite(gled, LOW);
+    fStatusBlue = 0;
+    digitalWrite(fLedBlue, LOW);
   }
 }
+
+
 #endif
