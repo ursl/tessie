@@ -20,7 +20,7 @@ public:
   void runPrintout(int freq, int off);
 
 #ifdef PI
-  void toggleLED();
+  void toggleBlue();
 #endif
 
   void setFrequency(int x);

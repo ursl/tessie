@@ -76,3 +76,9 @@ QString gui::getTimeString() {
             .arg(seconds,2,10,QChar('0'));
     return text;
 }
+
+#ifdef PI
+void gui::on_toolButton_clicked(bool checked) {
+    fThread.toggleBlue();
+}
+#endif

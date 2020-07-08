@@ -32,6 +32,10 @@ private slots:
 
   void updateTime();
 
+#ifdef PI
+  void on_toolButton_clicked(bool checked);
+#endif
+
 private:
   driveHardware fThread;
   int fInputFrequency, fInputOffset;

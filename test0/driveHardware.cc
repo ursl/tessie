@@ -120,10 +120,9 @@ int driveHardware::getOffset() {
 
 #ifdef PI
 // ----------------------------------------------------------------------
-void driveHardware::toggleLED() {
-  static int status = 0;
-  if (0 == status) {
-    cout << "toggle LED on" << endl;
+void driveHardware::toggleBlue() {
+  if (0 == fStatusBlue) {
+    cout << "toggle blue LED on" << endl;
     fStatusBlue = 1;
     digitalWrite(fLedBlue, HIGH);
   } else {
