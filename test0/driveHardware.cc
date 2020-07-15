@@ -28,10 +28,6 @@ driveHardware::driveHardware(QObject *parent): QThread(parent) {
 // ----------------------------------------------------------------------
 driveHardware::~driveHardware() {
 
-  // -- shutdown everything
-  digitalWrite(fLed1, LOW);
-  digitalWrite(fLedBlue, LOW);
-
   fMutex.lock();
   fAbort = true;
   fCondition.wakeOne();
@@ -137,5 +133,11 @@ void driveHardware::toggleBlue() {
   }
 }
 
+// ----------------------------------------------------------------------
+void driveHardware::shutDown() {
+  // -- turn of LEDs
+  digitalWrite(fLed1, LOW);
+  digitalWrite(fLedBlue, LOW);
+}
 
 #endif

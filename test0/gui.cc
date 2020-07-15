@@ -47,7 +47,12 @@ void gui::on_pushButton_clicked() {
 }
 
 void gui::on_pushButton_2_clicked() {
-    exit(0);
+
+#ifdef PI
+  fThread.shutDown();
+#endif
+
+  exit(0);
 }
 
 void gui::on_spinBox_valueChanged(int arg1) {

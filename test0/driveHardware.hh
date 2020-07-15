@@ -21,6 +21,7 @@ public:
 
 #ifdef PI
   void toggleBlue();
+  void shutDown();
 #endif
 
   void setFrequency(int x);
