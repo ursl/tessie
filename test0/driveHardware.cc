@@ -27,12 +27,17 @@ driveHardware::driveHardware(QObject *parent): QThread(parent) {
 
 // ----------------------------------------------------------------------
 driveHardware::~driveHardware() {
-    fMutex.lock();
-    fAbort = true;
-    fCondition.wakeOne();
-    fMutex.unlock();
 
-    wait();
+  // -- shutdown everything
+  digitalWrite(fLed1, LOW);
+  digitalWrite(fLedBlue, LOW);
+
+  fMutex.lock();
+  fAbort = true;
+  fCondition.wakeOne();
+  fMutex.unlock();
+
+  wait();
 }
 
 
