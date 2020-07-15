@@ -90,21 +90,42 @@
     <property name="geometry">
      <rect>
       <x>360</x>
-      <y>50</y>
-      <width>141</width>
-      <height>32</height>
+      <y>40</y>
+      <width>371</width>
+      <height>81</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetNoConstraint</enum>
+     </property>
      <item>
       <widget class="QPushButton" name="pushButton_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>Quit</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>33</width>
+         <height>33</height>
+        </size>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="palette">
         <palette>
          <active>
@@ -174,6 +195,12 @@
        </property>
        <property name="text">
         <string>Start</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>33</width>
+         <height>33</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -258,9 +285,9 @@
     <property name="geometry">
      <rect>
       <x>240</x>
-      <y>150</y>
+      <y>190</y>
       <width>541</width>
-      <height>191</height>
+      <height>151</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -292,9 +319,9 @@
     <property name="geometry">
      <rect>
       <x>360</x>
-      <y>100</y>
-      <width>171</width>
-      <height>42</height>
+      <y>131</y>
+      <width>221</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
