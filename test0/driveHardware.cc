@@ -34,6 +34,9 @@ driveHardware::~driveHardware() {
   fMutex.unlock();
 
   wait();
+#ifdef PI
+  shutdown();
+#endif
 }
 
 
