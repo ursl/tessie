@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>578</width>
-    <height>334</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -259,8 +259,8 @@
      <rect>
       <x>240</x>
       <y>150</y>
-      <width>331</width>
-      <height>91</height>
+      <width>541</width>
+      <height>191</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -293,12 +293,51 @@
      <rect>
       <x>360</x>
       <y>100</y>
-      <width>121</width>
-      <height>22</height>
+      <width>171</width>
+      <height>42</height>
      </rect>
     </property>
     <property name="text">
-     <string>Turn on Blue LED</string>
+     <string>Toggle Blue LED</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>351</y>
+      <width>181</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Program 1</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>350</y>
+      <width>181</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Program 2</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_5">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>350</y>
+      <width>181</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Program 3</string>
     </property>
    </widget>
   </widget>
