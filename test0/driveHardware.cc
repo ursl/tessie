@@ -38,7 +38,7 @@ driveHardware::~driveHardware() {
 
   wait();
 #ifdef PI
-  shutdown();
+  shutDown();
 #endif
 }
 
