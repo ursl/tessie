@@ -6,6 +6,8 @@
 #include <QtCore/QWaitCondition>
 #include <QtCore/QTime>
 
+#include "tLog.hh"
+
 #ifdef PI
 #include <wiringPi.h>
 #endif
@@ -14,7 +16,7 @@ class driveHardware: public QThread {
   Q_OBJECT
 
 public:
-  driveHardware(QObject *parent = nullptr);
+  driveHardware(tLog &x, QObject *parent = nullptr);
   ~driveHardware();
 
   void runPrintout(int freq, int off);
@@ -29,6 +31,8 @@ public:
   int  getFrequency();
   int  getOffset();
 
+  void  printToGUI(std::string);
+
 signals:
   void signalSomething(int x);
   void signalText(QString x);
@@ -37,13 +41,14 @@ protected:
   void run() override;
 
 private:
+  tLog&   fLOG;
   QMutex fMutex;
   QWaitCondition fCondition;
 
-  bool fRestart;
-  bool fAbort;
-  int fFrequency;
-  int fOffset;
+  bool    fRestart;
+  bool    fAbort;
+  int     fFrequency;
+  int     fOffset;
   QString fDateAndTime;
 
 #ifdef PI

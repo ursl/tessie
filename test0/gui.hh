@@ -4,13 +4,15 @@
 #include <QtWidgets/QMainWindow>
 
 #include "driveHardware.hh"
+#include "tLog.hh"
 #include "ui_gui.h"
 
 class gui : public QMainWindow {
   Q_OBJECT
 
 public:
-  gui(QMainWindow *parent = nullptr);
+  gui(tLog &x, QMainWindow *parent = nullptr);
+  void printText(std::string line);
   ~gui();
 
 
@@ -37,6 +39,7 @@ private slots:
 #endif
 
 private:
+  tLog&         fLOG;
   driveHardware fThread;
   int fInputFrequency, fInputOffset;
 

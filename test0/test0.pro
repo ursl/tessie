@@ -20,7 +20,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # Input
 SOURCES += main.cc \
     gui.cc \
-    drivehardware.cc
+    drivehardware.cc \
+    tLog.cc
 
 QT += widgets
 
@@ -39,4 +40,5 @@ FORMS += \
 HEADERS += \
     ui_gui.h \
     gui.hh \
-    driveHardware.hh
+    driveHardware.hh \
+    tLog.hh
