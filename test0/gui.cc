@@ -32,6 +32,7 @@ gui::gui(tLog &x, QMainWindow *parent): QMainWindow(parent), fLOG(x), fThread(x)
   this->show();
 
   connect(&fThread, &driveHardware::signalText, this, &gui::appendText);
+  connect(&fLOG, &tLog::signalText, this, &gui::appendText);
 
 }
 

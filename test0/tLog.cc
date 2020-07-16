@@ -36,7 +36,8 @@ string tLog::print(tLogLevel level, std::string print) {
   string sout = output.str();
   fFile << sout << endl;
   if (level <= fLevel) {
-    fpHw->printToGUI(sout);
+    QString qsout(QString::fromStdString(sout));
+    emit signalText(qsout);
   }
   return sout;
 }
@@ -51,7 +52,8 @@ void tLog::operator()(tLogLevel level, std::string print) {
   string sout = output.str();
   fFile << sout << endl;
   if (level <= fLevel) {
-    fpGui->printText(sout);
+    QString qsout(QString::fromStdString(sout));
+    emit signalText(qsout);
   }
 }
 

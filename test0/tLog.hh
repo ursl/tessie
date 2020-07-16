@@ -1,6 +1,8 @@
 #ifndef LOG_H
 #define LOG_H
 
+#include <QtCore/QtCore>
+
 #include <fstream>
 #include <string>
 #include <cstdio>
@@ -14,7 +16,8 @@ class driveHardware;
 
 enum tLogLevel {ERROR, WARNING, INFO, DEBUG, ALL};
 
-class tLog {
+class tLog: public QObject {
+  Q_OBJECT
 public:
   tLog(std::string fname = "tessie.txt");
   virtual ~tLog();
@@ -30,6 +33,9 @@ public:
   std::string timeStamp(bool filestamp = false);
   void setGui(gui *x) {fpGui = x;}
   void setHw(driveHardware *x) {fpHw = x;}
+signals:
+  void signalText(QString x);
+
 private:
   tLog(const tLog&);
   tLog& operator = (const tLog&);
