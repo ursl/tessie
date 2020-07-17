@@ -12,12 +12,10 @@ int main(int argc, char *argv[]) {
 
   // -- by default run in full screen mode
   bool doRunInWindow(false);
-  tLogLevel ll(DEBUG);
 
   for (int i = 0; i < argc; i++){
     if (!strcmp(argv[i],"-h")) {
       cout << "List of arguments:" << endl;
-      cout << "-d {ERROR,WARNING,INFO,DEBUG,ALL} set logging level (ALL appears in logfile, always)" << endl;
       cout << "-w                                start in window (not fullscreen)" << endl;
       return 0;
     }

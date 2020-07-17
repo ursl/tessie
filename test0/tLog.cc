@@ -8,7 +8,7 @@
 using namespace std;
 
 // ----------------------------------------------------------------------
-tLog::tLog(string fname): fLevel(DEBUG), fFileName(fname) {
+tLog::tLog(string fname): fLevel(INFO), fFileName(fname) {
   fFile.open(fFileName, ios_base::app);
   int filesize = fFile.tellp();
   if (filesize > 1000) {
