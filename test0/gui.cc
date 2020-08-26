@@ -41,7 +41,11 @@ string getLoad() {
     replaceAll(result, "\n", "");
     replaceAll(result, ": ", "");
     replaceAll(result, ":", "");
+    replaceAll(result, ",", "");
+    s1 = result.find(" ");
     cout << "result: ->" << result << "<-" << endl;
+    result.erase(s1);
+    cout << "->" << result << "<-" << endl;
    // result;
 
     return result;
