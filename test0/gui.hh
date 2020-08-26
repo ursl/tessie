@@ -3,6 +3,10 @@
 
 #include <QtWidgets/QMainWindow>
 
+#include <QtCharts/QChartView>
+#include <QtCharts/QLineSeries>
+
+
 #include "driveHardware.hh"
 #include "tLog.hh"
 #include "ui_gui.h"
@@ -42,6 +46,9 @@ private:
   tLog&         fLOG;
   driveHardware fThread;
   int fInputFrequency, fInputOffset;
+
+  QtCharts::QLineSeries *fSeries;
+  QtCharts::QChart      *fChart;
 
   // -- without the following line you cannot 'go to slot' in the UI designer (and this line requires the above include)
   Ui::MainWindow *ui;

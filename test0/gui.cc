@@ -5,15 +5,20 @@
 #include <QtCore/QTimer>
 #include <QtWidgets/QScrollBar>
 
+#include <QtCore/QDateTime>
+#include <QtCharts/QDateTimeAxis>
+
+
 #include "gui.hh"
 
 using namespace std;
+using namespace QtCharts;
 
 gui::gui(tLog &x, QMainWindow *parent): QMainWindow(parent), fLOG(x), fThread(x) {
 
   fLOG.setHw(&fThread);
 
-  // -- here you connect the ui_gui (QML design) with the GUI class:
+  // -- connect the ui_gui (QML design) with the GUI class:
   ui = new Ui::MainWindow();
   ui->setupUi(this);
   updateTime();
@@ -30,6 +35,26 @@ gui::gui(tLog &x, QMainWindow *parent): QMainWindow(parent), fLOG(x), fThread(x)
   ui->textEdit->verticalScrollBar()->setValue(ui->textEdit->verticalScrollBar()->maximum());
 
   this->show();
+
+
+  // -- set up display chart
+  fSeries = new QLineSeries();
+
+  QDateTime momentInTime;
+  momentInTime.setDate(QDate(1991, 06, 15));
+  fSeries->append(momentInTime.toMSecsSinceEpoch(), 123.);
+
+  momentInTime.setDate(QDate(1993, 06, 15));
+  fSeries->append(momentInTime.toMSecsSinceEpoch(), 139.);
+
+  fChart = new QChart();
+
+  fChart->addSeries(fSeries);
+  fChart->legend()->hide();
+  fChart->setTitle("CPU load");
+
+  ui->graphicsView->setChart(fChart);
+  ui->graphicsView->setRenderHint(QPainter::Antialiasing);
 
   connect(&fThread, &driveHardware::signalText, this, &gui::appendText);
   connect(&fLOG, &tLog::signalText, this, &gui::appendText);
