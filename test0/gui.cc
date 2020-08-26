@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#include <array>
 
 #include <QtGui/QPainter>
 #include <QtCore/QTimer>
@@ -13,6 +14,39 @@
 
 using namespace std;
 using namespace QtCharts;
+
+void replaceAll(string &str, const string &from, const string &to) {
+  if (from.empty()) return;
+  size_t start_pos = 0;
+  while((start_pos = str.find(from, start_pos)) != string::npos) {
+    str.replace(start_pos, from.length(), to);
+    start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
+  }
+}
+
+
+double getLoad() {
+    std::array<char,128> buffer;
+    std::string result, result2;
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen("/usr/bin/w | /usr/bin/head -n 1", "r"), pclose);
+    if (!pipe) {
+        throw std::runtime_error("popen() failed!");
+    }
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+        result += buffer.data();
+    }
+
+    string::size_type s1 = result.rfind("average");
+    result.erase(0, s1+sizeof("average"));
+    replaceAll(result, "\n", "");
+    replaceAll(result, ": ", "");
+    replaceAll(result, ":", "");
+    cout << "result: ->" << result << "<-" << endl;
+   // result;
+
+    return 0;
+}
+
 
 gui::gui(tLog &x, QMainWindow *parent): QMainWindow(parent), fLOG(x), fThread(x) {
 
@@ -47,6 +81,8 @@ gui::gui(tLog &x, QMainWindow *parent): QMainWindow(parent), fLOG(x), fThread(x)
   momentInTime.setDate(QDate(1993, 06, 15));
   fSeries->append(momentInTime.toMSecsSinceEpoch(), 139.);
 
+  cout << getLoad() << endl;
+
   fChart = new QChart();
 
   fChart->addSeries(fSeries);
@@ -55,6 +91,8 @@ gui::gui(tLog &x, QMainWindow *parent): QMainWindow(parent), fLOG(x), fThread(x)
 
   ui->graphicsView->setChart(fChart);
   ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+
+
 
   connect(&fThread, &driveHardware::signalText, this, &gui::appendText);
   connect(&fLOG, &tLog::signalText, this, &gui::appendText);
@@ -129,3 +167,4 @@ void gui::on_toolButton_clicked(bool checked) {
   fThread.toggleBlue();
 }
 #endif
+
