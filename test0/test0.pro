@@ -24,6 +24,7 @@ SOURCES += main.cc \
     tLog.cc
 
 QT += widgets
+QT += charts
 
 CONFIG(PI) {
    DEFINES += PI
