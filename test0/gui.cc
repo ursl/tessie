@@ -25,7 +25,7 @@ void replaceAll(string &str, const string &from, const string &to) {
 }
 
 
-double getLoad() {
+string getLoad() {
     std::array<char,128> buffer;
     std::string result, result2;
     std::unique_ptr<FILE, decltype(&pclose)> pipe(popen("/usr/bin/w | /usr/bin/head -n 1", "r"), pclose);
@@ -44,7 +44,7 @@ double getLoad() {
     cout << "result: ->" << result << "<-" << endl;
    // result;
 
-    return 0;
+    return result;
 }
 
 
@@ -80,8 +80,6 @@ gui::gui(tLog &x, QMainWindow *parent): QMainWindow(parent), fLOG(x), fThread(x)
 
   momentInTime.setDate(QDate(1993, 06, 15));
   fSeries->append(momentInTime.toMSecsSinceEpoch(), 139.);
-
-  cout << getLoad() << endl;
 
   fChart = new QChart();
 
@@ -120,6 +118,9 @@ void gui::appendText(QString line) {
 
 void gui::on_pushButton_clicked() {
   fLOG(INFO, "Start");
+  string result = getLoad();
+  fLOG(INFO, result);
+
   fThread.runPrintout(1,1);
 }
 
