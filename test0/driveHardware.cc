@@ -11,7 +11,7 @@
 using namespace std;
 
 // ----------------------------------------------------------------------
-driveHardware::driveHardware(tLog& x, QObject *parent): fLOG(x), QThread(parent) {
+driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x) {
   fRestart   = false;
   fAbort     = false;
   fFrequency = 0;
