@@ -150,7 +150,7 @@ void gui::updateCPULoad() {
     QDateTime momentInTime = QDateTime::currentDateTime();
     fSeries->append((momentInTime.toMSecsSinceEpoch()-fStartTime)/1000., cpuload);
     string toprint = "cpu: " + std::to_string((momentInTime.toMSecsSinceEpoch()-fStartTime)/1000.) + ": " + std::to_string(cpuload);
-    fLOG(INFO, toprint);
+    fLOG(ALL, toprint);
     fChart->removeSeries(fSeries);
     fChart->addSeries(fSeries);
 
