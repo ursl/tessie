@@ -83,13 +83,15 @@ gui::gui(tLog &x, QMainWindow *parent): QMainWindow(parent), fLOG(x), fThread(x)
     // -- set up display chart with timer
     QTimer *timer2 = new QTimer(this);
     connect(timer2, &QTimer::timeout, this, &gui::updateCPULoad);
-    timer2->start(1000);
+    timer2->start(10000);
 
     fSeries = new QLineSeries();
 
     float cpuload = ::atof(getLoad().c_str());
     QDateTime momentInTime = QDateTime::currentDateTime();
-    fSeries->append(momentInTime.toMSecsSinceEpoch(), cpuload);
+    fStartTime = momentInTime.toMSecsSinceEpoch();
+
+    fSeries->append((momentInTime.toMSecsSinceEpoch()-fStartTime)/1000, cpuload);
 
     fChart = new QChart();
     fChart->addSeries(fSeries);
@@ -100,25 +102,22 @@ gui::gui(tLog &x, QMainWindow *parent): QMainWindow(parent), fLOG(x), fThread(x)
 
     fAxisY = new QValueAxis;
     fAxisY->setLinePenColor(fSeries->pen().color());
-    //fAxisY->setLabelFormat("%.2f");
     fAxisY->setTitleText("CPU");
     fAxisY->setMin(0.);
     fAxisY->setMax(4.);
-    //fAxisY->setTickCount(5);
-    //fAxisY->applyNiceNumbers();
-    //fAxisY->titleFont().setPointSize(8);
 
-    fAxisX = new QDateTimeAxis();
-    fAxisX->setTickCount(5);
-    fAxisX->setFormat("dd-MM h:mm:ss");
-    fAxisX->titleFont().setPointSize(8);
-    fAxisX->setTitleText("Time");
+
+    fAxisX0 = new QValueAxis;
+    fAxisX0->setTitleText("Time since tessie start [sec]");
+    fAxisX0->setLabelFormat("%.0f");
+    fAxisX0->setTickCount(10);
+
 
     fChart->addAxis(fAxisY, Qt::AlignLeft);
-  //  fChart->addAxis(axisX, Qt::AlignBottom);
+    fChart->addAxis(fAxisX0, Qt::AlignBottom);
 
     fSeries->attachAxis(fAxisY);
-//    fSeries->attachAxis(fXxisX);
+    fSeries->attachAxis(fAxisX0);
 
     ui->graphicsView->setChart(fChart);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
@@ -149,12 +148,18 @@ void gui::updateTime() {
 void gui::updateCPULoad() {
     float cpuload = ::atof(getLoad().c_str());
     QDateTime momentInTime = QDateTime::currentDateTime();
-    fSeries->append(momentInTime.toMSecsSinceEpoch(), cpuload);
-    string toprint = "cpu: " + momentInTime.toString().toStdString() + ": " + std::to_string(cpuload);
+    fSeries->append((momentInTime.toMSecsSinceEpoch()-fStartTime)/1000., cpuload);
+    string toprint = "cpu: " + std::to_string((momentInTime.toMSecsSinceEpoch()-fStartTime)/1000.) + ": " + std::to_string(cpuload);
     fLOG(INFO, toprint);
     fChart->removeSeries(fSeries);
     fChart->addSeries(fSeries);
+
+ //   fAxisX0->setRange(fStartTime/1000., (momentInTime.toMSecsSinceEpoch()-fStartTime)/1000.);
+    fAxisX0->setMin(0);
+    fAxisX0->setMax((momentInTime.toMSecsSinceEpoch()-fStartTime)/1000.);
     fSeries->attachAxis(fAxisY);
+    fSeries->attachAxis(fAxisX0);
+
     ui->graphicsView->repaint();
 }
 

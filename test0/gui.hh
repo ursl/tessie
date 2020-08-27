@@ -52,8 +52,10 @@ private:
 
   QtCharts::QLineSeries   *fSeries;
   QtCharts::QChart        *fChart;
-  QtCharts::QValueAxis    *fAxisY;
+  QtCharts::QValueAxis    *fAxisY, *fAxisX0;
   QtCharts::QDateTimeAxis *fAxisX;
+
+  qint64    fStartTime;
 
   // -- without the following line you cannot 'go to slot' in the UI designer (and this line requires the above include)
   Ui::MainWindow *ui;
