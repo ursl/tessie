@@ -73,12 +73,12 @@ void driveHardware::run() {
     fMutex.lock();
     std::chrono::milliseconds sec(1000/this->fFrequency);
     int cn = fOffset++;
-    // QString aline;
-    // aline = QString("countUp: %1 %2").arg(cn).arg(fFrequency);
-    // signalText(aline);
-    stringstream print;
-    print << "countUp: " << cn  << " fFrequency = " << fFrequency;
-    fLOG(DEBUG, print.str());
+    // -- keep for possible debugging but remove for long-term testing on pi
+    if (0) {
+        stringstream print;
+        print << "countUp: " << cn  << " fFrequency = " << fFrequency;
+        fLOG(DEBUG, print.str());
+    }
 
 #ifdef PI
     if (1 == fStatus1) {
