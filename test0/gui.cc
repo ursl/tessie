@@ -7,9 +7,7 @@
 #include <QtWidgets/QScrollBar>
 
 #include <QtCore/QDateTime>
-#include <QtCharts/QDateTimeAxis>
 
-#include <QtCharts/QValueAxis>
 #include <QtWidgets/QGraphicsLayout>
 
 #include "gui.hh"
@@ -89,7 +87,7 @@ gui::gui(tLog &x, QMainWindow *parent): QMainWindow(parent), fLOG(x), fThread(x)
 
     fSeries = new QLineSeries();
 
-    double cpuload = ::atof(getLoad().c_str());
+    float cpuload = ::atof(getLoad().c_str());
     QDateTime momentInTime = QDateTime::currentDateTime();
     fSeries->append(momentInTime.toMSecsSinceEpoch(), cpuload);
 
@@ -100,27 +98,27 @@ gui::gui(tLog &x, QMainWindow *parent): QMainWindow(parent), fLOG(x), fThread(x)
     fChart->setMargins(QMargins(0,0,0,0));
     fChart->setBackgroundRoundness(0);
 
-    QValueAxis *axisY = new QValueAxis;
-    axisY->setLinePenColor(fSeries->pen().color());
-    axisY->setLabelFormat("%.2f");
-    axisY->setTitleText("CPU");
-    axisY->setMin(0.);
-    axisY->setMax(4.);
-    //axisY->setTickCount(5);
-    axisY->applyNiceNumbers();
-    axisY->titleFont().setPointSize(8);
+    fAxisY = new QValueAxis;
+    fAxisY->setLinePenColor(fSeries->pen().color());
+    //fAxisY->setLabelFormat("%.2f");
+    fAxisY->setTitleText("CPU");
+    fAxisY->setMin(0.);
+    fAxisY->setMax(4.);
+    //fAxisY->setTickCount(5);
+    //fAxisY->applyNiceNumbers();
+    //fAxisY->titleFont().setPointSize(8);
 
-    QDateTimeAxis *axisX = new QDateTimeAxis();
-    axisX->setTickCount(5);
-    axisX->setFormat("dd-MM h:mm:ss");
-    axisX->titleFont().setPointSize(8);
-    axisX->setTitleText("Time");
+    fAxisX = new QDateTimeAxis();
+    fAxisX->setTickCount(5);
+    fAxisX->setFormat("dd-MM h:mm:ss");
+    fAxisX->titleFont().setPointSize(8);
+    fAxisX->setTitleText("Time");
 
-    fChart->addAxis(axisY, Qt::AlignLeft);
-    fChart->addAxis(axisX, Qt::AlignBottom);
+    fChart->addAxis(fAxisY, Qt::AlignLeft);
+  //  fChart->addAxis(axisX, Qt::AlignBottom);
 
-    fSeries->attachAxis(axisY);
-    fSeries->attachAxis(axisX);
+    fSeries->attachAxis(fAxisY);
+//    fSeries->attachAxis(fXxisX);
 
     ui->graphicsView->setChart(fChart);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
@@ -149,13 +147,14 @@ void gui::updateTime() {
 
 // ----------------------------------------------------------------------
 void gui::updateCPULoad() {
-    double cpuload = ::atof(getLoad().c_str());
+    float cpuload = ::atof(getLoad().c_str());
     QDateTime momentInTime = QDateTime::currentDateTime();
     fSeries->append(momentInTime.toMSecsSinceEpoch(), cpuload);
     string toprint = "cpu: " + momentInTime.toString().toStdString() + ": " + std::to_string(cpuload);
     fLOG(INFO, toprint);
     fChart->removeSeries(fSeries);
     fChart->addSeries(fSeries);
+    fSeries->attachAxis(fAxisY);
     ui->graphicsView->repaint();
 }
 

@@ -6,6 +6,8 @@
 #include <QtCharts/QChartView>
 #include <QtCharts/QLineSeries>
 
+#include <QtCharts/QDateTimeAxis>
+#include <QtCharts/QValueAxis>
 
 #include "driveHardware.hh"
 #include "tLog.hh"
@@ -48,8 +50,10 @@ private:
   driveHardware fThread;
   int fInputFrequency, fInputOffset;
 
-  QtCharts::QLineSeries *fSeries;
-  QtCharts::QChart      *fChart;
+  QtCharts::QLineSeries   *fSeries;
+  QtCharts::QChart        *fChart;
+  QtCharts::QValueAxis    *fAxisY;
+  QtCharts::QDateTimeAxis *fAxisX;
 
   // -- without the following line you cannot 'go to slot' in the UI designer (and this line requires the above include)
   Ui::MainWindow *ui;
