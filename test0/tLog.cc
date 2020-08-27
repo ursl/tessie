@@ -107,7 +107,7 @@ string tLog::timeStamp(bool filestamp) {
   tm *ltm = localtime(&t);
   int year  = 1900 + ltm->tm_year;
   int month = 1 + ltm->tm_mon;
-  int day   = 1 + ltm->tm_mday;
+  int day   = ltm->tm_mday;
   int hour  = ltm->tm_hour;
   int min   = ltm->tm_min;
   int sec   = ltm->tm_sec;
