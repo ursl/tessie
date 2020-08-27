@@ -37,6 +37,7 @@ private slots:
   QString getTimeString();
 
   void updateTime();
+  void updateCPULoad();
 
 #ifdef PI
   void on_toolButton_clicked(bool checked);

@@ -252,7 +252,7 @@
       <x>240</x>
       <y>190</y>
       <width>541</width>
-      <height>151</height>
+      <height>91</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -296,10 +296,10 @@
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>351</y>
+      <x>10</x>
+      <y>170</y>
       <width>181</width>
-      <height>61</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -309,10 +309,10 @@
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>350</y>
+      <x>10</x>
+      <y>210</y>
       <width>181</width>
-      <height>61</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -322,10 +322,10 @@
    <widget class="QPushButton" name="pushButton_5">
     <property name="geometry">
      <rect>
-      <x>440</x>
-      <y>350</y>
+      <x>10</x>
+      <y>250</y>
       <width>181</width>
-      <height>61</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -335,11 +335,16 @@
    <widget class="QtCharts::QChartView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>190</y>
-      <width>191</width>
+      <x>10</x>
+      <y>290</y>
+      <width>771</width>
       <height>151</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
     </property>
    </widget>
   </widget>
