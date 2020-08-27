@@ -172,9 +172,6 @@ void gui::appendText(QString line) {
 // ----------------------------------------------------------------------
 void gui::on_pushButton_clicked() {
     fLOG(INFO, "Start");
-    string result = getLoad();
-    fLOG(INFO, result);
-
     fThread.runPrintout(1,1);
 }
 
