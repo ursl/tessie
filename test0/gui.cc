@@ -24,7 +24,7 @@ void replaceAll(string &str, const string &from, const string &to) {
   }
 }
 
-
+// -- the following works on both macos and raspian
 string getLoad() {
     std::array<char,128> buffer;
     std::string result, result2;
@@ -42,11 +42,12 @@ string getLoad() {
     replaceAll(result, ": ", "");
     //replaceAll(result, ":", "");
     replaceAll(result, ",", "");
-    s1 = result.find(" ");
+    s1 = result.find(" ", 1);
     cout << "result: ->" << result << "<-" << endl;
     //result.erase(s1);
     string resultNew = result;
     resultNew.erase(s1);
+    replaceAll(resultNew, " ", "");
     string tmp = "result ->" + result + "<- resultNew ->" + resultNew + "<-";
     cout << "->" << result << "<-" << endl;
    // result;
