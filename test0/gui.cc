@@ -40,15 +40,18 @@ string getLoad() {
     result.erase(0, s1+sizeof("average"));
     replaceAll(result, "\n", "");
     replaceAll(result, ": ", "");
-    replaceAll(result, ":", "");
+    //replaceAll(result, ":", "");
     replaceAll(result, ",", "");
     s1 = result.find(" ");
     cout << "result: ->" << result << "<-" << endl;
-    result.erase(s1);
+    //result.erase(s1);
+    string resultNew = result;
+    resultNew.erase(s1);
+    string tmp = "result ->" + result + "<- resultNew ->" + resultNew + "<-";
     cout << "->" << result << "<-" << endl;
    // result;
 
-    return result;
+    return tmp;
 }
 
 
