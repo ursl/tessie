@@ -332,19 +332,14 @@
      <string>Program 3</string>
     </property>
    </widget>
-   <widget class="QtCharts::QChartView" name="graphicsView">
+   <widget class="timeChart" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>20</x>
       <y>290</y>
-      <width>771</width>
+      <width>761</width>
       <height>151</height>
      </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>9</pointsize>
-     </font>
     </property>
    </widget>
   </widget>
@@ -357,9 +352,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>QtCharts::QChartView</class>
+   <class>timeChart</class>
    <extends>QGraphicsView</extends>
-   <header location="global">QtCharts/QChartView</header>
+   <header location="global">timeChart.hh</header>
   </customwidget>
  </customwidgets>
  <resources/>

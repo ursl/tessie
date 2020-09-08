@@ -11,6 +11,8 @@
 
 #include "driveHardware.hh"
 #include "tLog.hh"
+#include "timeseries.hh"
+#include "timeChart.hh"
 #include "ui_gui.h"
 
 class gui : public QMainWindow {
@@ -27,14 +29,15 @@ protected:
 
 private slots:
   void appendText(QString line);
-
   void on_pushButton_clicked();
-
   void on_pushButton_2_clicked();
-
   void on_spinBox_valueChanged(int arg1);
-
   void on_spinBox_2_valueChanged(int arg1);
+
+  void on_valueChanged(int v);
+  void on_rangeChanged( qreal min, qreal max);
+
+  void on_graphUpdate(bool arg1);
 
   QString getTimeString();
 
@@ -50,13 +53,10 @@ private:
   driveHardware fThread;
   int fInputFrequency, fInputOffset;
 
-  QtCharts::QLineSeries   *fSeries;
-  QtCharts::QChart        *fChart;
-  QtCharts::QValueAxis    *fAxisY, *fAxisX0;
-  QtCharts::QDateTimeAxis *fAxisX;
+  qint64    fStartTime, fCurrent;
 
-  qint64    fStartTime;
-
+  bool fDoUpdate;
+  qreal fXmin, fXmax;
   // -- without the following line you cannot 'go to slot' in the UI designer (and this line requires the above include)
   Ui::MainWindow *ui;
 

@@ -21,7 +21,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cc \
     gui.cc \
     drivehardware.cc \
-    tLog.cc
+    tLog.cc \
+    timeChart.cc \
+    timeseries.cc
 
 QT += widgets
 QT += charts
@@ -39,7 +41,9 @@ FORMS += \
     gui.ui
 
 HEADERS += \
+    timeChart.hh \
     ui_gui.h \
     gui.hh \
     driveHardware.hh \
-    tLog.hh
+    tLog.hh \
+    timeseries.hh

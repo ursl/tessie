@@ -62,6 +62,8 @@ gui::gui(tLog &x, QMainWindow *parent): QMainWindow(parent), fLOG(x), fThread(x)
 
     fLOG.setHw(&fThread);
 
+    fDoUpdate = true;
+
     // -- connect the ui_gui (QML design) with the GUI class:
     ui = new Ui::MainWindow();
     ui->setupUi(this);
@@ -81,50 +83,24 @@ gui::gui(tLog &x, QMainWindow *parent): QMainWindow(parent), fLOG(x), fThread(x)
 
 
     // -- set up display chart with timer
+    double updateSec = 0.5;
     QTimer *timer2 = new QTimer(this);
     connect(timer2, &QTimer::timeout, this, &gui::updateCPULoad);
-    timer2->start(10000);
+    timer2->start(1000*updateSec);
 
-    fSeries = new QLineSeries();
 
     float cpuload = ::atof(getLoad().c_str());
     QDateTime momentInTime = QDateTime::currentDateTime();
     fStartTime = momentInTime.toMSecsSinceEpoch();
 
-    fSeries->append((momentInTime.toMSecsSinceEpoch()-fStartTime)/1000, cpuload);
+    // -- set up everything for a real time series
+    QString daystring = momentInTime.date().toString(Qt::ISODate);
 
-    fChart = new QChart();
-    fChart->addSeries(fSeries);
-    fChart->legend()->hide();
-
-    fChart->setMargins(QMargins(0,0,0,0));
-    fChart->setBackgroundRoundness(0);
-
-    fAxisY = new QValueAxis;
-    fAxisY->setLinePenColor(fSeries->pen().color());
-    fAxisY->setTitleText("CPU");
-    fAxisY->setMin(0.);
-    fAxisY->setMax(4.);
-
-
-    fAxisX0 = new QValueAxis;
-    fAxisX0->setTitleText("Time since tessie start [sec]");
-    fAxisX0->setLabelFormat("%.0f");
-    fAxisX0->setTickCount(10);
-
-
-    fChart->addAxis(fAxisY, Qt::AlignLeft);
-    fChart->addAxis(fAxisX0, Qt::AlignBottom);
-
-    fSeries->attachAxis(fAxisY);
-    fSeries->attachAxis(fAxisX0);
-
-    ui->graphicsView->setChart(fChart);
-    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
-    ui->graphicsView->repaint();
 
     connect(&fThread, &driveHardware::signalText, this, &gui::appendText);
     connect(&fLOG, &tLog::signalText, this, &gui::appendText);
+
+//    connect(ui->graphicsView, &timeChart::doUpdate, this, &gui::on_graphUpdate);
 
 }
 
@@ -146,21 +122,35 @@ void gui::updateTime() {
 
 // ----------------------------------------------------------------------
 void gui::updateCPULoad() {
+    int ncounts = 100;
     float cpuload = ::atof(getLoad().c_str());
     QDateTime momentInTime = QDateTime::currentDateTime();
-    fSeries->append((momentInTime.toMSecsSinceEpoch()-fStartTime)/1000., cpuload);
+
+    fCurrent = (momentInTime.toMSecsSinceEpoch()-fStartTime)/1000.;
+//    fSeries->append(fCurrent, cpuload);
+    cout << "hallo in gui1: "
+         << static_cast<qreal>(fCurrent)
+         << "  " << static_cast<qreal>(cpuload)
+         << endl;
+
+    ui->graphicsView->addPoint(static_cast<qreal>(fCurrent),
+                               static_cast<qreal>(cpuload));
+    cout << "hallo in gui2" << endl;
+
     string toprint = "cpu: " + std::to_string((momentInTime.toMSecsSinceEpoch()-fStartTime)/1000.) + ": " + std::to_string(cpuload);
     fLOG(ALL, toprint);
-    fChart->removeSeries(fSeries);
-    fChart->addSeries(fSeries);
 
- //   fAxisX0->setRange(fStartTime/1000., (momentInTime.toMSecsSinceEpoch()-fStartTime)/1000.);
-    fAxisX0->setMin(0);
-    fAxisX0->setMax((momentInTime.toMSecsSinceEpoch()-fStartTime)/1000.);
-    fSeries->attachAxis(fAxisY);
-    fSeries->attachAxis(fAxisX0);
+//    if (fDoUpdate) {
+//        fChart->removeSeries(fSeries);
+//        fChart->addSeries(fSeries);
 
-    ui->graphicsView->repaint();
+//        fAxisX0->setMin(fXmin);
+//        fAxisX0->setMax((momentInTime.toMSecsSinceEpoch()-fStartTime)/1000.);
+//        fSeries->attachAxis(fAxisY);
+//        fSeries->attachAxis(fAxisX0);
+//     //   ui->graphicsView->repaint();
+//    }
+
 }
 
 // ----------------------------------------------------------------------
@@ -225,3 +215,42 @@ void gui::on_toolButton_clicked(bool checked) {
 }
 #endif
 
+
+// ----------------------------------------------------------------------
+void gui::on_valueChanged(int v ) {
+    //  if (fDoUpdate) {
+    //    fDoUpdate = false;
+    //    // -- cache values
+    //    fXmin = fAxisX0->min();
+    //    fXmax = fAxisX0->max();
+    //    ui->graphicsView->chart()->scroll(v, 0);
+    //    // fAxisX0->setMin(fXmin);
+    //    // fAxisX0->setMax(fXmax - v);
+    //  }
+    //  // if (fAxisX0->max() > 0.9*fCurrent) {
+    //  //   fDoUpdate = true;
+    //  //   updateCPULoad();
+    //  // }
+
+    //  ui->graphicsView->chart()->scroll(v, 0);
+
+}
+
+// ----------------------------------------------------------------------
+void gui::on_rangeChanged( qreal min, qreal max ) {
+
+    //    if (fDoUpdate) {
+    //      fDoUpdate = false;
+    //      // -- cache values
+    //      fAxisX0->setMin(min);
+    //      fAxisX0->setMax(max);
+    //      // fAxisX0->setMin(fXmin);
+    //      // fAxisX0->setMax(fXmax - v);
+    //    }
+    //    ui->graphicsView->repaint();
+
+}
+
+void gui::on_graphUpdate(bool arg1) {
+    fDoUpdate = arg1;
+}
