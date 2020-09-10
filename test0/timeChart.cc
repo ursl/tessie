@@ -7,7 +7,6 @@ using namespace std;
 timeChart::timeChart(QWidget *p) : QChartView(p) {
     fChart = new QChart();
     fSeries = new QLineSeries();
-    fSeries->append(0., 0.);
     fDoUpdate = true;
 
     cout << "hallo in timeChart" << endl;

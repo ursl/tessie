@@ -89,13 +89,9 @@ gui::gui(tLog &x, QMainWindow *parent): QMainWindow(parent), fLOG(x), fThread(x)
     timer2->start(1000*updateSec);
 
 
-    float cpuload = ::atof(getLoad().c_str());
     QDateTime momentInTime = QDateTime::currentDateTime();
     fStartTime = momentInTime.toMSecsSinceEpoch();
-
-    // -- set up everything for a real time series
-    QString daystring = momentInTime.date().toString(Qt::ISODate);
-
+    updateCPULoad();
 
     connect(&fThread, &driveHardware::signalText, this, &gui::appendText);
     connect(&fLOG, &tLog::signalText, this, &gui::appendText);
