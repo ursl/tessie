@@ -83,7 +83,7 @@ gui::gui(tLog &x, QMainWindow *parent): QMainWindow(parent), fLOG(x), fThread(x)
 
 
     // -- set up display chart with timer
-    double updateSec = 0.5;
+    double updateSec = 10;
     QTimer *timer2 = new QTimer(this);
     connect(timer2, &QTimer::timeout, this, &gui::updateCPULoad);
     timer2->start(1000*updateSec);
@@ -127,30 +127,11 @@ void gui::updateCPULoad() {
     QDateTime momentInTime = QDateTime::currentDateTime();
 
     fCurrent = (momentInTime.toMSecsSinceEpoch()-fStartTime)/1000.;
-//    fSeries->append(fCurrent, cpuload);
-    cout << "hallo in gui1: "
-         << static_cast<qreal>(fCurrent)
-         << "  " << static_cast<qreal>(cpuload)
-         << endl;
-
     ui->graphicsView->addPoint(static_cast<qreal>(fCurrent),
                                static_cast<qreal>(cpuload));
-    cout << "hallo in gui2" << endl;
 
     string toprint = "cpu: " + std::to_string((momentInTime.toMSecsSinceEpoch()-fStartTime)/1000.) + ": " + std::to_string(cpuload);
     fLOG(ALL, toprint);
-
-//    if (fDoUpdate) {
-//        fChart->removeSeries(fSeries);
-//        fChart->addSeries(fSeries);
-
-//        fAxisX0->setMin(fXmin);
-//        fAxisX0->setMax((momentInTime.toMSecsSinceEpoch()-fStartTime)/1000.);
-//        fSeries->attachAxis(fAxisY);
-//        fSeries->attachAxis(fAxisX0);
-//     //   ui->graphicsView->repaint();
-//    }
-
 }
 
 // ----------------------------------------------------------------------

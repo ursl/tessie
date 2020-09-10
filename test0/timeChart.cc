@@ -8,6 +8,7 @@ timeChart::timeChart(QWidget *p) : QChartView(p) {
     fChart = new QChart();
     fSeries = new QLineSeries();
     fSeries->append(0., 0.);
+    fDoUpdate = true;
 
     cout << "hallo in timeChart" << endl;
 
@@ -24,10 +25,12 @@ timeChart::timeChart(QWidget *p) : QChartView(p) {
     fAxisY->setMax(4.);
 
     fAxisX = new QValueAxis();
-    fAxisX->setTitleText("Time since tessie start [sec]");
+    fAxisX->setTitleText("Time since tessie start [h]");
     fAxisX->setLabelFormat("%.0f");
-    fAxisX->setTickCount(10);
-//    connect(fAxisX, SIGNAL(rangeChanged(qreal, qreal)), this, SLOT(on_rangeChanged(qreal,qreal)) );
+    //    connect(fAxisX, SIGNAL(rangeChanged(qreal, qreal)), this, SLOT(on_rangeChanged(qreal,qreal)) );
+
+    fAxisX->setTickCount(11);
+    fAxisX->setMax(1000.);
 
 
     fChart->addAxis(fAxisY, Qt::AlignLeft);
@@ -66,6 +69,8 @@ void timeChart::mousePressEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton && chart())
         m_lastMousePos = mapToScene(event->pos());
     QGraphicsView::mousePressEvent(event);
+    fDoUpdate = false;
+    emit doUpdate(false);
 }
 
 // -------------------------------------------------------------------------
@@ -75,21 +80,8 @@ void timeChart::mouseMoveEvent(QMouseEvent *event) {
         QPointF delta = newValue - m_lastMousePos;
         std::cout << "delta = " << delta.x() << std::endl;
         chart()->scroll(-delta.x(), 0);
-        if (0) {
-            emit doUpdate(false);
-        } else {
-            emit doUpdate(true);
-        }
-        //        if(QValueAxis * axis = qobject_cast<QValueAxis *>(chart()->axes(m_orientation).first()) ){
-        //            qreal deltaX = axis->max() - axis->min();
-        //            if(axis->min() < m_limit_min){
-        //                axis->setRange(m_limit_min, m_limit_min + deltaX);
-        //            }
-        //            else if(axis->max() > m_limit_max){
-        //                axis->setRange(m_limit_max - deltaX, m_limit_max);
-        //            }
-        //        }
-        //        m_lastMousePos = newValue;
+        fDoUpdate = false;
+        emit doUpdate(false);
     }
     QGraphicsView::mouseMoveEvent(event);
 }
@@ -97,17 +89,24 @@ void timeChart::mouseMoveEvent(QMouseEvent *event) {
 
 // ----------------------------------------------------------------------
 void timeChart::addPoint(qreal x, qreal y) {
-   // cout << "timeChart::addPoint: " << fSeries << endl;
+    // cout << "timeChart::addPoint: " << fSeries << endl;
     fSeries->append(x,y);
 
-    fChart->removeSeries(fSeries);
-    fChart->addSeries(fSeries);
+    if ((x > fAxisX->max() - 100) && (x < fAxisX->max() + 100)) fDoUpdate = true;
 
- //   fAxisX0->setRange(fStartTime/1000., (momentInTime.toMSecsSinceEpoch()-fStartTime)/1000.);
-    fAxisX->setMin(0);
-    fAxisX->setMax(x);
-    fSeries->attachAxis(fAxisY);
-    fSeries->attachAxis(fAxisX);
+    if (x > 10000) {
+        fAxisX->setTickCount(13);
+        fAxisX->setMax(43200.);
+    }
 
+    if (fDoUpdate) {
+        fChart->removeSeries(fSeries);
+        fChart->addSeries(fSeries);
+
+        fAxisX->setMin(0);
+        fAxisX->setMax(x);
+        fSeries->attachAxis(fAxisY);
+        fSeries->attachAxis(fAxisX);
+    }
     repaint();
 }

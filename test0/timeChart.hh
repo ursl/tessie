@@ -34,7 +34,7 @@ private:
     QtCharts::QLineSeries   *fSeries;
     QtCharts::QChart        *fChart;
     QtCharts::QValueAxis    *fAxisY, *fAxisX;
-
+    bool                     fDoUpdate;
 
 };
 
