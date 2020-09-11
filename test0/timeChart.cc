@@ -24,7 +24,7 @@ timeChart::timeChart(QWidget *p) : QChartView(p) {
     fAxisY->setMax(4.);
 
     fAxisX = new QValueAxis();
-    fAxisX->setTitleText("Time since tessie start [h]");
+    fAxisX->setTitleText("Time since tessie start [sec]");
     fAxisX->setLabelFormat("%.0f");
     //    connect(fAxisX, SIGNAL(rangeChanged(qreal, qreal)), this, SLOT(on_rangeChanged(qreal,qreal)) );
 
@@ -93,17 +93,21 @@ void timeChart::addPoint(qreal x, qreal y) {
 
     if ((x > fAxisX->max() - 100) && (x < fAxisX->max() + 100)) fDoUpdate = true;
 
-    if (x > 10000) {
-        fAxisX->setTickCount(13);
-        fAxisX->setMax(43200.);
-    }
 
     if (fDoUpdate) {
         fChart->removeSeries(fSeries);
         fChart->addSeries(fSeries);
 
-        fAxisX->setMin(0);
         fAxisX->setMax(x);
+        if (x < 43200) {
+            fAxisX->setMin(0);
+            if (x > 10000) {
+                fAxisX->setTickCount(13);
+                fAxisX->setMax(43200.);
+            }
+        } else {
+            fAxisX->setMin(x-43200);
+        }
         fSeries->attachAxis(fAxisY);
         fSeries->attachAxis(fAxisX);
     }
