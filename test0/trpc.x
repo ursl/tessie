@@ -1,4 +1,4 @@
-/*The IDL File  --- name IDL.x*/
+/*The IDL File  --- name trpc.x*/
 
 /*Structure to hold a value and a char*/
 struct args{
