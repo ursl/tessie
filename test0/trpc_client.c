@@ -6,9 +6,12 @@
 
 #include "trpc.h"
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 void
-trpc_6(char *host)
+trpc_6(char *host, char *cmd, float argtemp)
 {
 	CLIENT *clnt;
 	void  *result_1;
@@ -18,19 +21,27 @@ trpc_6(char *host)
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, TRPC, TRPC_VERS, "udp");
+        printf("Hallo in DEBUG\n");
 	if (clnt == NULL) {
 		clnt_pcreateerror (host);
 		exit (1);
 	}
 #endif	/* DEBUG */
 
-	result_1 = settemp_6(&settemp_6_arg, clnt);
-	if (result_1 == (void *) NULL) {
-		clnt_perror (clnt, "call failed");
+	if (!strcmp("settemp", cmd)) {
+	  settemp_6_arg.value = argtemp;
+	  printf("calling from trpc_6 with settemp_6_arg.value = %f\n", settemp_6_arg.value);
+	  result_1 = settemp_6(&settemp_6_arg, clnt);
+	  if (result_1 == (void *) NULL) {
+	    clnt_perror (clnt, "call failed");
+	  }
 	}
-	result_2 = gettemp_6((void*)&gettemp_6_arg, clnt);
-	if (result_2 == (float *) NULL) {
-		clnt_perror (clnt, "call failed");
+	if (!strcmp("gettemp", cmd)) {
+	  result_2 = gettemp_6((void*)&gettemp_6_arg, clnt);
+	  printf("calling from trpc_6, returned temperature = %f\n", *result_2);
+	  if (result_2 == (float *) NULL) {
+	    clnt_perror (clnt, "call failed");
+	  }
 	}
 #ifndef	DEBUG
 	clnt_destroy (clnt);
@@ -41,13 +52,19 @@ trpc_6(char *host)
 int
 main (int argc, char *argv[])
 {
-	char *host;
+        char *host, *cmd;
+	float temp;
+	temp = 0.;
 
 	if (argc < 2) {
-		printf ("usage: %s server_host\n", argv[0]);
+		printf ("usage: %s server_host cmd [temperature]\n", argv[0]);
 		exit (1);
 	}
 	host = argv[1];
-	trpc_6 (host);
+	cmd = argv[2];
+	if (!strcmp("settemp", cmd)) {
+	  temp = atoi(argv[3]);
+	}
+	trpc_6 (host, cmd, temp);
 exit (0);
 }

@@ -6,11 +6,19 @@
 
 #include "trpc.h"
 
+#include <stdlib.h>
+#include <stdio.h>
+
+float trpc_gtemperature;
+
 void *
 settemp_6_svc(args *argp, struct svc_req *rqstp)
 {
 	static char * result;
-
+	float temp;
+	temp = argp->value;
+  	printf("now in settemp_6_svc, T = %f\n", temp);
+	trpc_gtemperature = temp;
 	/*
 	 * insert server code here
 	 */
@@ -23,9 +31,10 @@ gettemp_6_svc(void *argp, struct svc_req *rqstp)
 {
 	static float  result;
 
+	printf("now in gettemp_6_svc, sending back T = %f\n", trpc_gtemperature);
 	/*
 	 * insert server code here
 	 */
 
-	return &result;
+	return &trpc_gtemperature;
 }
