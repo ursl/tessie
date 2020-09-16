@@ -5,31 +5,27 @@
  */
 
 #include "IDL.h"
-#include <stdio.h>
-#include <iostream>
 
 float *
 gotemp_6_svc(args *argp, struct svc_req *rqstp)
 {
-
 	static float  result;
 
-	float t = argp->value;
+	/*
+	 * insert server code here
+	 */
 
-	std::cout << "gotemp_6_svc to T = " <<  t << std::endl;
-
-	return(&result);
+	return &result;
 }
 
 float *
 gohumi_6_svc(args *argp, struct svc_req *rqstp)
 {
-
 	static float  result;
 
-	float t = argp->value;
+	/*
+	 * insert server code here
+	 */
 
-	std::cout << "gohumi_6_svc to RH = " <<  t << std::endl;
-
-	return(&result);
+	return &result;
 }

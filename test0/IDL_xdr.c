@@ -6,12 +6,13 @@
 #include "IDL.h"
 
 bool_t
-xdr_args(XDR *xdrs, args *objp)
+xdr_args (XDR *xdrs, args *objp)
 {
+	register int32_t *buf;
 
-	if (!xdr_float(xdrs, &objp->value))
-		return (FALSE);
-	if (!xdr_char(xdrs, &objp->operation))
-		return (FALSE);
-	return (TRUE);
+	 if (!xdr_float (xdrs, &objp->value))
+		 return FALSE;
+	 if (!xdr_char (xdrs, &objp->operation))
+		 return FALSE;
+	return TRUE;
 }

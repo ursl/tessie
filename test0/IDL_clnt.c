@@ -3,8 +3,7 @@
  * It was generated using rpcgen.
  */
 
-#include <memory.h>
-#include <rpc/types.h>
+#include <memory.h> /* for memset */
 #include "IDL.h"
 
 /* Default timeout can be changed using clnt_control() */
@@ -16,8 +15,12 @@ gotemp_6(args *argp, CLIENT *clnt)
 	static float clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
-	if (clnt_call(clnt, GOTEMP, xdr_args, argp, xdr_float, &clnt_res, TIMEOUT) != RPC_SUCCESS)
+	if (clnt_call (clnt, GOTEMP,
+		(xdrproc_t) xdr_args, (caddr_t) argp,
+		(xdrproc_t) xdr_float, (caddr_t) &clnt_res,
+		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
+	}
 	return (&clnt_res);
 }
 
@@ -27,7 +30,11 @@ gohumi_6(args *argp, CLIENT *clnt)
 	static float clnt_res;
 
 	memset((char *)&clnt_res, 0, sizeof(clnt_res));
-	if (clnt_call(clnt, GOHUMI, xdr_args, argp, xdr_float, &clnt_res, TIMEOUT) != RPC_SUCCESS)
+	if (clnt_call (clnt, GOHUMI,
+		(xdrproc_t) xdr_args, (caddr_t) argp,
+		(xdrproc_t) xdr_float, (caddr_t) &clnt_res,
+		TIMEOUT) != RPC_SUCCESS) {
 		return (NULL);
+	}
 	return (&clnt_res);
 }

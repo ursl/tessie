@@ -6,9 +6,12 @@
 #ifndef _IDL_H_RPCGEN
 #define _IDL_H_RPCGEN
 
-#define RPCGEN_VERSION	199506
-
 #include <rpc/rpc.h>
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 
 struct args {
@@ -16,41 +19,41 @@ struct args {
 	char operation;
 };
 typedef struct args args;
-#ifdef __cplusplus
-extern "C" bool_t xdr_args(XDR *, args*);
-#elif __STDC__
-extern  bool_t xdr_args(XDR *, args*);
-#else /* Old Style C */
-bool_t xdr_args();
-#endif /* Old Style C */
 
+#define TRPC 456123789
+#define TRPC_VERS 6
 
-#define TRPC ((rpc_uint)456123789)
-#define TRPC_VERS ((rpc_uint)6)
-
-#ifdef __cplusplus
-#define GOTEMP ((rpc_uint)1)
-extern "C" float * gotemp_6(args *, CLIENT *);
-extern "C" float * gotemp_6_svc(args *, struct svc_req *);
-#define GOHUMI ((rpc_uint)2)
-extern "C" float * gohumi_6(args *, CLIENT *);
-extern "C" float * gohumi_6_svc(args *, struct svc_req *);
-
-#elif __STDC__
-#define GOTEMP ((rpc_uint)1)
+#if defined(__STDC__) || defined(__cplusplus)
+#define GOTEMP 1
 extern  float * gotemp_6(args *, CLIENT *);
 extern  float * gotemp_6_svc(args *, struct svc_req *);
-#define GOHUMI ((rpc_uint)2)
+#define GOHUMI 2
 extern  float * gohumi_6(args *, CLIENT *);
 extern  float * gohumi_6_svc(args *, struct svc_req *);
+extern int trpc_6_freeresult (SVCXPRT *, xdrproc_t, caddr_t);
 
-#else /* Old Style C */
-#define GOTEMP ((rpc_uint)1)
+#else /* K&R C */
+#define GOTEMP 1
 extern  float * gotemp_6();
 extern  float * gotemp_6_svc();
-#define GOHUMI ((rpc_uint)2)
+#define GOHUMI 2
 extern  float * gohumi_6();
 extern  float * gohumi_6_svc();
-#endif /* Old Style C */
+extern int trpc_6_freeresult ();
+#endif /* K&R C */
+
+/* the xdr functions */
+
+#if defined(__STDC__) || defined(__cplusplus)
+extern  bool_t xdr_args (XDR *, args*);
+
+#else /* K&R C */
+extern bool_t xdr_args ();
+
+#endif /* K&R C */
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !_IDL_H_RPCGEN */
