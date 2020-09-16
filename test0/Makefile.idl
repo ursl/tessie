@@ -1,0 +1,17 @@
+CC            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
+CXX           = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
+CXXFLAGS      = -pipe -stdlib=libc++ -O2 -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -mmacosx-version-min=10.13 -Wall -Wextra -fPIC $(DEFINES)
+INCPATH       = -I. -I. -I/opt/local/qt/5.15.0/clang_64/lib/QtCharts.framework/Headers -I/opt/local/qt/5.15.0/clang_64/lib/QtWidgets.framework/Headers -I/opt/local/qt/5.15.0/clang_64/lib/QtGui.framework/Headers -I/opt/local/qt/5.15.0/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I/opt/local/qt/5.15.0/clang_64/mkspecs/macx-clang -F/opt/local/qt/5.15.0/clang_64/lib
+LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
+LFLAGS        = -stdlib=libc++ -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk -mmacosx-version-min=10.13 -Wl,-rpath,@executable_path/../Frameworks -Wl,-rpath,/opt/local/qt/5.15.0/clang_64/lib
+
+client:
+#	$(CXX)  -DRPC_SVC_FG -c $(CXXFLAGS) $(INCPATH) -o IDL_xdr.o IDL_xdr.c
+	$(CXX)  -DRPC_SVC_FG -c $(CXXFLAGS) $(INCPATH) IDL_clnt.c -o IDL_clnt.o
+	$(CXX)  -DRPC_SVC_FG -c $(CXXFLAGS) $(INCPATH) -o IDL_client.o IDL_client.c
+	$(LINK) -DRPC_SVC_FG $(LFLAGS) -o IDL_client IDL_client.o IDL_xdr.o
+
+server:
+	$(CXX)  -DRPC_SVC_FG -c $(CXXFLAGS) $(INCPATH) IDL_server.c -o IDL_server.o
+	$(CXX)  -DRPC_SVC_FG -c $(CXXFLAGS) $(INCPATH) IDL_svc.c -o IDL_svc.o
+	$(LINK) -DRPC_SVC_FG $(LFLAGS) -o IDL_server IDL_server.o IDL_svc.o
