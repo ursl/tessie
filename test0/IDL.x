@@ -9,8 +9,8 @@ struct args{
 /*Programme, version and procedure definition*/
 program TRPC{
     version TRPC_VERS{
-        float GOTEMP(args)=1;
-        float GOHUMI(args)=2;
+        void SETTEMP(args)=1;
+        float GETTEMP()=2;
     } =6;
 
 } = 456123789;
