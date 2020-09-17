@@ -29,12 +29,18 @@ CFLAGS += -g -O0 -W -Wall -fPIC -pipe
 LDFLAGS += $(CFLAGS)
 RPCGENFLAGS =
 
+
 # -- main target creating the lib with the RPC source code
 lib: trpc_clnt.o trpc_server.o trpc_server.o trpc.o
 	$(CC)  $(SOFLAGS) trpc_clnt.o trpc_server.o trpc.o -o libtrpc.so
 	echo "DIST = " $(DIST)
 	mkdir -p $(DIST)
 	cp libtrpc.so $(DIST)
+
+# -- minimal target (also works for server running on linux)
+mini: trpc.o
+	cp trpc.o ..
+
 # -- standalone original setup with server and client and RPC calls distributed in the respective source code
 test : $(CLIENT) $(SERVER)
 
