@@ -7,9 +7,11 @@ Etymology: tessie sounds better than TC (box), for temperature cycling (box)
 git clone git@github.com:ursl/tessie
 
 cd tessie/test0/rpc
+
 make mini
 
 cd ../
+
 qmake -o Makefile test0.pro
 
 make
