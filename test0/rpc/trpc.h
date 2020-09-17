@@ -13,6 +13,8 @@
 extern "C" {
 #endif
 
+// ----------------------------------------------------------------------
+void startServer();
 
 struct args {
 	float value;
@@ -55,5 +57,6 @@ extern bool_t xdr_args ();
 #ifdef __cplusplus
 }
 #endif
+
 
 #endif /* !_TRPC_H_RPCGEN */
