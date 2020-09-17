@@ -1,8 +1,10 @@
 # -- note that the comparison is LITERAL!
 ifeq ($(OSTYPE),darwin)
   DIST := ../tessie.app/Contents/MacOS/rpc
+  SOFLAGS += $(CFLAGS) -Wl -dynamiclib -shared /usr/lib/librpcsvc.dylib
 else
   DIST = ../
+  SOFLAGS +=
 endif
 
 CLIENT = trpc_client
@@ -24,7 +26,6 @@ OBJECTS_SVC = $(SOURCES_SVC.c:%.c=%.o) $(TARGETS_SVC.c:%.c=%.o)
 
 CFLAGS += -g -O0 -W -Wall -fPIC -pipe
 #LDLIBS += -lnsl
-SOFLAGS += $(CFLAGS) -Wl -dynamiclib -shared /usr/lib/librpcsvc.dylib
 LDFLAGS += $(CFLAGS)
 RPCGENFLAGS =
 
