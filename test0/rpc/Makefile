@@ -1,3 +1,10 @@
+# -- note that the comparison is LITERAL!
+ifeq ($(OSTYPE),darwin)
+  DIST := ../tessie.app/Contents/MacOS/rpc
+else
+  DIST = ../
+endif
+
 CLIENT = trpc_client
 SERVER = trpc_server
 
@@ -24,7 +31,9 @@ RPCGENFLAGS =
 # -- main target creating the lib with the RPC source code
 lib: trpc_clnt.o trpc_server.o trpc_server.o trpc.o
 	$(CC)  $(SOFLAGS) trpc_clnt.o trpc_server.o trpc.o -o libtrpc.so
-
+	echo "DIST = " $(DIST)
+	mkdir -p $(DIST)
+	cp libtrpc.so $(DIST)
 # -- standalone original setup with server and client and RPC calls distributed in the respective source code
 test : $(CLIENT) $(SERVER)
 
