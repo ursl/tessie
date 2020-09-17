@@ -30,7 +30,7 @@ LDFLAGS += $(CFLAGS)
 RPCGENFLAGS =
 
 
-# -- main target creating the lib with the RPC source code
+# -- main target creating the lib with the RPC source code (note: error message on pi because of 'main'??)
 lib: trpc_clnt.o trpc_server.o trpc_server.o trpc.o
 	$(CC)  $(SOFLAGS) trpc_clnt.o trpc_server.o trpc.o -o libtrpc.so
 	echo "DIST = " $(DIST)
