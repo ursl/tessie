@@ -7,6 +7,7 @@
 #include <QtCore/QTime>
 
 #include "tLog.hh"
+#include "rpcServer.hh"
 
 #ifdef PI
 #include <wiringPi.h>
@@ -32,10 +33,16 @@ public:
   int  getOffset();
 
   void  printToGUI(std::string);
+  void  getMessage(std::string);
+
+public slots:
+  void sentFromServer(const QString&);
 
 signals:
   void signalSomething(int x);
   void signalText(QString x);
+  void sendToServer(const QString&);
+  void startServer();
 
 protected:
   void run() override;
@@ -44,6 +51,9 @@ private:
   tLog&   fLOG;
   QMutex fMutex;
   QWaitCondition fCondition;
+
+  QThread   *fRpcThread;
+  rpcServer *fRpcServer;
 
   bool    fRestart;
   bool    fAbort;

@@ -19,6 +19,16 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   QDateTime dt = QDateTime::currentDateTime();
   fDateAndTime = dt.date().toString() + "  " +  dt.time().toString("hh:mm");
 
+  fRpcThread = new QThread();
+  fRpcServer = new rpcServer();
+  //  connect(fRpcThread, &QThread::finished, fRpcServer, &QObject::deleteLater);
+  connect(this, &driveHardware::sendToServer, fRpcServer, &rpcServer::sentToServer);
+  connect(this, &driveHardware::startServer, fRpcServer, &rpcServer::run);
+  connect(fRpcServer, &rpcServer::sendFromServer, this, &driveHardware::sentFromServer);
+  fRpcServer->moveToThread(fRpcThread);
+  fRpcThread->start();
+  emit startServer();
+  //  fRpcServer->run();
 
 #ifdef PI
   wiringPiSetup();
@@ -36,10 +46,27 @@ driveHardware::~driveHardware() {
   fCondition.wakeOne();
   fMutex.unlock();
 
+  fRpcThread->quit();
+  fRpcThread->wait();
+
   wait();
 #ifdef PI
   shutDown();
 #endif
+}
+
+// ----------------------------------------------------------------------
+void driveHardware::sentFromServer(const QString &result) {
+  cout << "driveHardware::sentFromServer() -> " << result.toStdString() << "<-" << endl;
+}
+
+
+// ----------------------------------------------------------------------
+void  driveHardware::getMessage(std::string x) {
+  QString aline(QString::fromStdString(x));
+  signalText(aline);
+
+  // -- do something else eventually
 }
 
 

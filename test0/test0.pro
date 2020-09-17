@@ -21,12 +21,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cc \
     gui.cc \
     drivehardware.cc \
+    rpcServer.cc \
     tLog.cc \
     timeChart.cc \
     timeseries.cc
 
+HEADERS += \
+    timeChart.hh \
+    ui_gui.h \
+    gui.hh \
+    driveHardware.hh \
+    rpcServer.hh \
+    tLog.hh \
+    timeseries.hh
+
+
 QT += widgets
 QT += charts
+
+LIBS += -L rpc -l trpc
 
 CONFIG(PI) {
    DEFINES += PI
@@ -39,11 +52,3 @@ DISTFILES +=
 
 FORMS += \
     gui.ui
-
-HEADERS += \
-    timeChart.hh \
-    ui_gui.h \
-    gui.hh \
-    driveHardware.hh \
-    tLog.hh \
-    timeseries.hh
