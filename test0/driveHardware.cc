@@ -20,7 +20,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   fDateAndTime = dt.date().toString() + "  " +  dt.time().toString("hh:mm");
 
   fRpcThread = new QThread();
-  fRpcServer = new rpcServer();
+  fRpcServer = new rpcServer(this);
   //  connect(fRpcThread, &QThread::finished, fRpcServer, &QObject::deleteLater);
   connect(this, &driveHardware::sendToServer, fRpcServer, &rpcServer::sentToServer);
   connect(this, &driveHardware::startServer, fRpcServer, &rpcServer::run);
@@ -58,6 +58,7 @@ driveHardware::~driveHardware() {
 // ----------------------------------------------------------------------
 void driveHardware::sentFromServer(const QString &result) {
   cout << "driveHardware::sentFromServer() -> " << result.toStdString() << "<-" << endl;
+  signalText(result);
 }
 
 

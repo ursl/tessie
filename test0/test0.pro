@@ -39,7 +39,8 @@ HEADERS += \
 QT += widgets
 QT += charts
 
-LIBS += -L rpc -l trpc
+#LIBS += -L rpc -l trpc
+LIBS += trpc.o
 
 CONFIG(PI) {
    DEFINES += PI

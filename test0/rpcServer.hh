@@ -3,12 +3,15 @@
 
 #include <QtCore/QObject>
 
+class driveHardware;
+// ----------------------------------------------------------------------
 class rpcServer: public QObject {
 
   Q_OBJECT
 
 public:
-  rpcServer();
+  rpcServer(driveHardware *);
+  void printFromServer(const QString &result);
   virtual ~rpcServer();
 
 public slots:
@@ -20,6 +23,7 @@ signals:
 
 private:
   QString fString;
+  float   fOldTemperature;
 };
 
 #endif // RPCSERVER_H
