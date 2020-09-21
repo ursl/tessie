@@ -4,7 +4,7 @@ ifeq ($(OSTYPE),darwin)
   SOFLAGS += $(CFLAGS) -Wl -dynamiclib -shared /usr/lib/librpcsvc.dylib
 else
   DIST = ../
-  SOFLAGS +=
+  SOFLAGS += -shared
 endif
 
 CLIENT = trpc_client
