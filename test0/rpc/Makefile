@@ -27,6 +27,7 @@ OBJECTS_SVC = $(SOURCES_SVC.c:%.c=%.o) $(TARGETS_SVC.c:%.c=%.o)
 CFLAGS += -g -O0 -W -Wall -fPIC -pipe
 #LDLIBS += -lnsl
 LDFLAGS += $(CFLAGS)
+SOFLAGS += $(CFLAGS)
 RPCGENFLAGS =
 
 
