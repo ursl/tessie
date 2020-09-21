@@ -39,6 +39,7 @@ lib: trpc_clnt.o trpc_server.o trpc_server.o trpc.o
 
 # -- minimal target (also works for server running on linux)
 mini: trpc.o
+	echo "DIST = " $(DIST)
 	cp trpc.o ..
 
 # -- standalone original setup with server and client and RPC calls distributed in the respective source code
