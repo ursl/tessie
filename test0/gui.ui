@@ -107,6 +107,11 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Quit</string>
        </property>
@@ -189,6 +194,11 @@
           </colorrole>
          </disabled>
         </palette>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+        </font>
        </property>
        <property name="autoFillBackground">
         <bool>false</bool>
@@ -289,6 +299,12 @@
       <height>51</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+      <underline>false</underline>
+     </font>
+    </property>
     <property name="text">
      <string>Toggle Blue LED</string>
     </property>
@@ -301,6 +317,11 @@
       <width>181</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Program 1</string>
@@ -315,6 +336,11 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
     <property name="text">
      <string>Program 2</string>
     </property>
@@ -327,6 +353,11 @@
       <width>181</width>
       <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Program 3</string>
