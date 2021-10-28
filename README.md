@@ -3,7 +3,7 @@
 Etymology: tessie sounds better than TC (box), for temperature cycling (box)
 
 
-# hints for test0:
+## hints for starting with test0:
 git clone git@github.com:ursl/tessie
 
 (git clone https://github.com/ursl/tessie.git)
@@ -19,4 +19,14 @@ qmake -o Makefile test0.pro
 make
 
 
-# RPC communication now works from MAC and/or linux to raspberry pi
+## RPC communication 
+works from MAC and/or linux to raspberry pi (tessie.psi.ch)
+
+cd rpc
+
+make all
+
+./trpc_client tessie settemp 17
+
+./trpc_client tessie gettemp
+
