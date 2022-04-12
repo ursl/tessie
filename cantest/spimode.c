@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
    int fd;
    char mode;
 
-   fd = open("/dev/spidev0.0", O_RDWR);
+   fd = open("/dev/spidev0.1", O_RDWR);
 
    if (fd >= 0) {
       /* write mode */
@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
       ioctl(fd,SPI_IOC_RD_MODE,&mode);
       printf("mode = %u\n",mode);
    } else {
-     printf("could not open /dev/spidev0.0\n");
+     printf("could not open /dev/spidev0.1\n");
    }
 
    close(fd);
