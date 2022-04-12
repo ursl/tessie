@@ -4,6 +4,11 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <rpc/rpc.h>
+
+
+void pmap_unset(u_long prognum, u_long versnum);
+
 // ----------------------------------------------------------------------
 bool_t xdr_args (XDR *xdrs, args *objp) {
   register int32_t *buf;

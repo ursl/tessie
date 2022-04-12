@@ -1,7 +1,8 @@
 # -- note that the comparison is LITERAL!
 ifeq ($(OSTYPE),darwin)
   DIST := ../tessie.app/Contents/MacOS/rpc
-  SOFLAGS += $(CFLAGS) -Wl -dynamiclib -shared /usr/lib/librpcsvc.dylib
+#  SOFLAGS += $(CFLAGS) -Wl -dynamiclib -shared /usr/lib/librpcsvc.dylib
+  SOFLAGS += $(CFLAGS) -Wl -dynamiclib
 else
   DIST = ../
   SOFLAGS += -shared
