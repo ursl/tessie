@@ -48,13 +48,13 @@ mini: trpc.o
 test : $(CLIENT) $(SERVER)
 
 # -- 'main' server using RPC source code from libtrpc.so
-tgui: tgui.o
-	$(CXX)  $(CXXFLAGS) -c -o tgui.o tgui.cc
-	$(CXX)  -o tgui tgui.o libtrpc.so
+#tgui: tgui.o
+#	$(CXX)  $(CXXFLAGS) -c -o tgui.o tgui.cc
+#	$(CXX)  -o tgui tgui.o libtrpc.so
 
 
 # -- all
-all: clean lib tgui test
+all: clean lib test
 
 $(TARGETS) : $(SOURCES.x)
 	rpcgen $(RPCGENFLAGS) $(SOURCES.x)
@@ -70,4 +70,4 @@ $(SERVER) : $(OBJECTS_SVC)
 	$(LINK.c) -o $(SERVER) $(OBJECTS_SVC) $(LDLIBS)
 
  clean:
-	 $(RM) *.o *~ trpc_client trpc_server libtrpc.so tgui
+	 $(RM) *.o *~ trpc_client trpc_server libtrpc.so
