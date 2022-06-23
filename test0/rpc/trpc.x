@@ -7,10 +7,10 @@ struct args{
 };
 
 /*Programme, version and procedure definition*/
-program TRPC{
-    version TRPC_VERS{
-        void SETTEMP(args)=1;
-        float GETTEMP()=2;
-    } =6;
+program TRPC {
+    version TRPC_VERS {
+        void SETTEMP(args) = 1;
+        float GETTEMP(void) = 2;
+    } = 6;
 
 } = 456123789;
