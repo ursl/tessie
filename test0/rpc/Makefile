@@ -29,21 +29,20 @@ CFLAGS += -g -O0 -W -Wall -fPIC -pipe
 #LDLIBS += -lnsl
 LDFLAGS += $(CFLAGS)
 SOFLAGS += $(CFLAGS)
-RPCGENFLAGS = -a -C
+RPCGENFLAGS =
 
 
 # -- main target creating the lib with the RPC source code (note: error message on pi because of 'main'??)
-lib: trpc_clnt.o trpc_server.o trpc_server.o # trpc.o
-#	$(CC)  $(SOFLAGS) trpc_clnt.o trpc_server.o trpc.o -o libtrpc.so
-	$(CC)  $(SOFLAGS) trpc_clnt.o trpc_server.o -o libtrpc.so
+lib: trpc_clnt.o trpc_server.o trpc_server.o trpc.o
+	$(CC)  $(SOFLAGS) trpc_clnt.o trpc_server.o trpc.o -o libtrpc.so
 	echo "DIST = " $(DIST)
 	mkdir -p $(DIST)
 	cp libtrpc.so $(DIST)
 
 # -- minimal target (also works for server running on linux)
-#mini: trpc.o
-#	echo "DIST = " $(DIST)
-#	cp trpc.o ..
+mini: trpc.o
+	echo "DIST = " $(DIST)
+	cp trpc.o ..
 
 # -- standalone original setup with server and client and RPC calls distributed in the respective source code
 test : $(CLIENT) $(SERVER)
@@ -71,4 +70,4 @@ $(SERVER) : $(OBJECTS_SVC)
 	$(LINK.c) -o $(SERVER) $(OBJECTS_SVC) $(LDLIBS)
 
  clean:
-	 $(RM) *.o *~ trpc_client trpc_server libtrpc.so trpc_* trpc.h
+	 $(RM) *.o *~ trpc_client trpc_server libtrpc.so
