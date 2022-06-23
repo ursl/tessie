@@ -1,3 +1,6 @@
+*.o
+tessie.txt*
 *.pdf
+moc_*
 .DS_Store
 *~
