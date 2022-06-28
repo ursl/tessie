@@ -22,6 +22,7 @@ int main(int argc, char *argv[]) {
 
   int id, reg; 
   char data[4] = {0, 0, 0, 0};
+  float fdata; 
   
   int ret;
   int s, nbytes;
@@ -42,10 +43,15 @@ int main(int argc, char *argv[]) {
       data[1]  = static_cast<char>(strtoul(argv[i+2], NULL, 16));
       data[2]  = static_cast<char>(strtoul(argv[i+3], NULL, 16));
       data[3]  = static_cast<char>(strtoul(argv[i+4], NULL, 16));
+      memcpy(&fdata, data, sizeof fdata); 
+    }     
+    if (!strcmp(argv[i],"-f"))  {
+      fdata = atof(argv[++i]);
+      memcpy(data, &fdata, sizeof fdata);
     }     
   }
 
-  printf("id = %d reg = %d, data = %d %d %d %d\n", id, reg, data[0], data[1], data[2], data[3]);
+  printf("id = %d reg = %d, data = %d %d %d %d (%f)\n", id, reg, data[0], data[1], data[2], data[3], fdata);
   exit(0);
   
   memset(&frame, 0, sizeof(struct can_frame));
