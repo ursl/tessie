@@ -1,4 +1,4 @@
-CC = gcc
+CC = g++
 CFLAGS = -Wall -g -O0
 
 all: can_send can_receive
