@@ -8,8 +8,16 @@
 #include <linux/can.h>
 #include <linux/can/raw.h>
 
-int main()
-{
+/*
+First do: 
+========
+sudo ip link set can0 type can bitrate 125000 
+sudo ip link set can0 up
+
+NOTE: Initially 125kbit/s should be 1Mbit/s
+*/
+
+int main() {
     int ret;
     int s, nbytes;
     int cnt;
@@ -19,8 +27,10 @@ int main()
     
     memset(&frame, 0, sizeof(struct can_frame));
     
+    /* 
     system("sudo ip link set can0 type can bitrate 100000");
     system("sudo ifconfig can0 up");
+    */
     printf("this is a can receive demo\r\n");
     
     //1.Create socket
@@ -49,7 +59,7 @@ int main()
     
     //4.Define receive rules
     struct can_filter rfilter[1];
-    rfilter[0].can_id = 0x123;
+    rfilter[0].can_id = 0x000;
     rfilter[0].can_mask = CAN_SFF_MASK;
     setsockopt(s, SOL_CAN_RAW, CAN_RAW_FILTER, &rfilter, sizeof(rfilter));
 

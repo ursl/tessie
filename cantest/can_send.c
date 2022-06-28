@@ -8,6 +8,15 @@
 #include <linux/can.h>
 #include <linux/can/raw.h>
 
+/*
+First do: 
+========
+sudo ip link set can0 type can bitrate 125000 
+sudo ip link set can0 up
+
+NOTE: Initially 125kbit/s should be 1Mbit/s
+*/
+
 int main(int argc, char *argv[]) {
 
   int ret;
@@ -24,11 +33,12 @@ int main(int argc, char *argv[]) {
   }
 
   
-  /*    printf("setup link \r\n");
-        system("sudo ip link set can0 type can bitrate 100000");
-  */
-  printf("ifconfig can0 \r\n");
-  system("sudo ifconfig can0 up");
+  if (0) {
+    printf("setup link \r\n");
+    system("sudo ip link set can0 type can bitrate 125000");
+    printf("ifconfig can0 \r\n");
+    system("sudo ifconfig can0 up");
+  }
   printf("this is a can send demo\r\n");
         
   //1.Create socket
@@ -59,9 +69,10 @@ int main(int argc, char *argv[]) {
   setsockopt(s, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
 
   //5.Set send data
-  frame.can_id = 0x123;
-  frame.can_dlc = 8;
-  frame.data[0] = first;
+  frame.can_id = 0x111;
+  frame.can_dlc = 1;
+  frame.data[0] = 9;
+  /*
   frame.data[1] = 2;
   frame.data[2] = 3;
   frame.data[3] = 4;
@@ -69,22 +80,22 @@ int main(int argc, char *argv[]) {
   frame.data[5] = 6;
   frame.data[6] = 7;
   frame.data[7] = 8;
-    
+  */
   printf("can_id  = 0x%X\r\n", frame.can_id);
   printf("can_dlc = %d\r\n", frame.can_dlc);
   int i = 0;
-  for(i = 0; i < 8; i++)
+  for(i = 0; i < frame.can_dlc; ++i)
     printf("data[%d] = %d\r\n", i, frame.data[i]);
     
   //6.Send message
   nbytes = write(s, &frame, sizeof(frame)); 
   if(nbytes != sizeof(frame)) {
     printf("Send Error frame[0]!\r\n");
-    system("sudo ifconfig can0 down");
+    /*    system("sudo ifconfig can0 down");*/
   }
     
   //7.Close the socket and can0
   close(s);
-  system("sudo ifconfig can0 down");
+  /*  system("sudo ifconfig can0 down");*/
   return 0;
 }
