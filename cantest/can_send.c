@@ -18,7 +18,11 @@ NOTE: Initially 125kbit/s should be 1Mbit/s
 */
 
 int main(int argc, char *argv[]) {
+  int i;
 
+  int id, reg; 
+  char data[4] = {0, 0, 0, 0};
+  
   int ret;
   int s, nbytes;
   int first;
@@ -26,13 +30,26 @@ int main(int argc, char *argv[]) {
   struct sockaddr_can addr;
   struct ifreq ifr;
   struct can_frame frame;
-  memset(&frame, 0, sizeof(struct can_frame));
 
-  if (argc > 1) {  
-    first = atoi(argv[1]);
+
+
+  // -- command line arguments
+  for (i = 0; i < argc; i++){
+    if (!strcmp(argv[i],"-i"))  {id    = strtol(argv[++i], NULL, 16); }     // can bus ID
+    if (!strcmp(argv[i],"-r"))  {reg   = strtol(argv[++i], NULL, 16); }     // register address
+    if (!strcmp(argv[i],"-d"))  {
+      data[0]  = static_cast<char>(strtoul(argv[i+1], NULL, 16));
+      data[1]  = static_cast<char>(strtoul(argv[i+2], NULL, 16));
+      data[2]  = static_cast<char>(strtoul(argv[i+3], NULL, 16));
+      data[3]  = static_cast<char>(strtoul(argv[i+4], NULL, 16));
+    }     
   }
 
+  printf("id = %d reg = %d, data = %d %d %d %d\n", id, reg, data[0], data[1], data[2], data[3]);
+  exit(0);
   
+  memset(&frame, 0, sizeof(struct can_frame));
+
   if (0) {
     printf("setup link \r\n");
     system("sudo ip link set can0 type can bitrate 125000");
@@ -83,7 +100,7 @@ int main(int argc, char *argv[]) {
   */
   printf("can_id  = 0x%X\r\n", frame.can_id);
   printf("can_dlc = %d\r\n", frame.can_dlc);
-  int i = 0;
+
   for(i = 0; i < frame.can_dlc; ++i)
     printf("data[%d] = %d\r\n", i, frame.data[i]);
     
