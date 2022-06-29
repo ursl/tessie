@@ -29,14 +29,14 @@
        <item>
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>Frequency</string>
+          <string>Register</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Offset</string>
+          <string>Value</string>
          </property>
         </widget>
        </item>
@@ -47,20 +47,20 @@
        <item>
         <widget class="QSpinBox" name="spinBox">
          <property name="minimum">
-          <number>1</number>
+          <number>0</number>
          </property>
          <property name="maximum">
-          <number>100</number>
+          <number>17</number>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QSpinBox" name="spinBox_2">
          <property name="minimum">
-          <number>-1000</number>
+          <number>-10</number>
          </property>
          <property name="maximum">
-          <number>1000</number>
+          <number>10</number>
          </property>
         </widget>
        </item>
@@ -306,7 +306,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Toggle Blue LED</string>
+     <string>tool button</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_3">
@@ -324,7 +324,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Program 1</string>
+     <string>CAN write reg</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_4">
@@ -342,7 +342,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Program 2</string>
+     <string>CAN read reg</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_5">
