@@ -28,15 +28,17 @@ public:
   void runPrintout(int freq, int off);
 
 #ifdef PI
-  void sendCANmessage(unsigned int id, unsigned int reg, char *bytes);
-  void readCANmessage(unsigned int id, unsigned int reg, char *bytes);
+  void sendCANmessage();
+  void readCANmessage();
   void shutDown();
 #endif
 
-  void setFrequency(int x);
-  void setOffset(int x);
-  int  getFrequency();
-  int  getOffset();
+  void setId(int x);
+  void setRegister(int x);
+  void setValue(int x);
+  int  getId();
+  int  getRegister();
+  int  getValue();
 
   void  printToGUI(std::string);
   void  getMessage(std::string);
@@ -63,15 +65,21 @@ private:
 
   bool    fRestart;
   bool    fAbort;
-  int     fFrequency;
-  int     fOffset;
+  int     fCANId;
+  int     fCANReg;
+  int     fCANVal;
   QString fDateAndTime;
 
 #ifdef PI
-  int    fS; 
-  struct sockaddr_can fAddr;
-  struct ifreq fIfr;
-  struct can_frame fFrame;
+  int    fSw; 
+  struct sockaddr_can fAddrW;
+  struct ifreq fIfrW;
+  struct can_frame fFrameW;
+
+  int    fSr; 
+  struct sockaddr_can fAddrR;
+  struct ifreq fIfrR;
+  struct can_frame fFrameR;
 
 #endif
 

@@ -31,6 +31,9 @@ private slots:
   void appendText(QString line);
   void on_pushButton_clicked();
   void on_pushButton_2_clicked();
+  void on_pushButton_3_clicked();
+  void on_pushButton_4_clicked();
+
   void on_spinBox_valueChanged(int arg1);
   void on_spinBox_2_valueChanged(int arg1);
 
@@ -57,7 +60,8 @@ private:
 
   bool fDoUpdate;
   qreal fXmin, fXmax;
-  // -- without the following line you cannot 'go to slot' in the UI designer (and this line requires the above include)
+  // -- without the following line you cannot 'go to slot' in the UI designer
+  //    (and this line requires the above include)
   Ui::MainWindow *ui;
 
 };

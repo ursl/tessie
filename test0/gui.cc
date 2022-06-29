@@ -153,15 +153,44 @@ void gui::on_pushButton_2_clicked() {
 }
 
 // ----------------------------------------------------------------------
+void gui::on_pushButton_3_clicked() {
+  fThread.setId(0x121);
+  stringstream sbla; sbla << "CAN write ID = " << hex << fThread.getId()
+                          << " reg = " << fThread.getRegister()
+                          << " value = " << fThread.getValue();
+  fLOG(INFO, sbla.str());
+#ifdef PI
+  fThread.sendCANmessage();
+#endif
+
+}
+
+// ----------------------------------------------------------------------
+void gui::on_pushButton_4_clicked() {
+  fThread.setId(0x111);
+  stringstream sbla; sbla << "CAN read ID = " << hex << fThread.getId()
+                          << " reg = " << fThread.getRegister();
+  
+  fLOG(INFO, sbla.str());
+#ifdef PI
+  fThread.sendCANmessage();
+#endif
+
+}
+
+
+// ----------------------------------------------------------------------
 void gui::on_spinBox_valueChanged(int arg1) {
-    stringstream sbla; sbla << "spinBox_valueChanged to " << arg1;
-    fLOG(ALL, sbla.str());
-    fThread.setFrequency(arg1);
+  stringstream sbla; sbla << "spinBox_valueChanged to register = " << arg1;
+  fLOG(ALL, sbla.str());
+  fThread.setRegister(arg1);
 }
 
 // ----------------------------------------------------------------------
 void gui::on_spinBox_2_valueChanged(int arg1) {
-    fThread.setOffset(arg1);
+  stringstream sbla; sbla << "spinBox_valueChanged to value = " << arg1;
+  fLOG(ALL, sbla.str());
+  fThread.setValue(arg1);
 }
 
 // ----------------------------------------------------------------------
@@ -187,8 +216,8 @@ QString gui::getTimeString() {
 #ifdef PI
 // ----------------------------------------------------------------------
 void gui::on_toolButton_clicked(bool checked) {
-    fLOG(INFO, "Toggle blue LED clicked");
-    //    fThread.toggleBlue();
+  fLOG(INFO, "send CAN command");
+  fThread.sendCANmessage();
 }
 #endif
 
