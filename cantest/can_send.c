@@ -23,6 +23,8 @@ int main(int argc, char *argv[]) {
   int id, reg; 
   char data[4] = {0, 0, 0, 0};
   float fdata; 
+  unsigned int idata;
+  int dlength(1);
   
   int ret;
   int s, nbytes;
@@ -33,26 +35,50 @@ int main(int argc, char *argv[]) {
   struct can_frame frame;
 
 
+  memcpy(&fdata, data, sizeof fdata); 
+  memcpy(&idata, data, sizeof idata); 
 
   // -- command line arguments
   for (i = 0; i < argc; i++){
     if (!strcmp(argv[i],"-i"))  {id    = strtol(argv[++i], NULL, 16); }     // can bus ID
     if (!strcmp(argv[i],"-r"))  {reg   = strtol(argv[++i], NULL, 16); }     // register address
+
     if (!strcmp(argv[i],"-d"))  {
+      printf("parse -d\n");
+      dlength += 4;
       data[0]  = static_cast<char>(strtoul(argv[i+1], NULL, 16));
       data[1]  = static_cast<char>(strtoul(argv[i+2], NULL, 16));
       data[2]  = static_cast<char>(strtoul(argv[i+3], NULL, 16));
       data[3]  = static_cast<char>(strtoul(argv[i+4], NULL, 16));
+
       memcpy(&fdata, data, sizeof fdata); 
+      memcpy(&idata, data, sizeof idata); 
+
     }     
+
     if (!strcmp(argv[i],"-f"))  {
+      printf("parse -f\n");
+      dlength += 4;
       fdata = atof(argv[++i]);
       memcpy(data, &fdata, sizeof fdata);
+      memcpy(&idata, data, sizeof idata); 
+    }     
+
+    if (!strcmp(argv[i],"-u"))  {
+      printf("parse -u\r\n");
+      dlength += 4;
+      idata = atoi(argv[++i]);
+      fdata = 0.0; 
+      memcpy(&idata, data, sizeof idata); 
+      memcpy(&fdata, data, sizeof fdata); 
     }     
   }
 
-  printf("id = %d reg = %d, data = %d %d %d %d (%f)\n", id, reg, data[0], data[1], data[2], data[3], fdata);
-  exit(0);
+  
+  printf("id = %d reg = %d, data[0..3] = %d %d %d %d/%x %x %x %x (f: %f, u: %u)\n",
+         id, reg, data[0], data[1], data[2], data[3],
+         data[0], data[1], data[2], data[3],
+         fdata, idata);
   
   memset(&frame, 0, sizeof(struct can_frame));
 
@@ -62,7 +88,6 @@ int main(int argc, char *argv[]) {
     printf("ifconfig can0 \r\n");
     system("sudo ifconfig can0 up");
   }
-  printf("this is a can send demo\r\n");
         
   //1.Create socket
   s = socket(PF_CAN, SOCK_RAW, CAN_RAW);
@@ -92,23 +117,21 @@ int main(int argc, char *argv[]) {
   setsockopt(s, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
 
   //5.Set send data
-  frame.can_id = 0x111;
-  frame.can_dlc = 1;
-  frame.data[0] = 9;
-  /*
-  frame.data[1] = 2;
-  frame.data[2] = 3;
-  frame.data[3] = 4;
-  frame.data[4] = 5;
-  frame.data[5] = 6;
-  frame.data[6] = 7;
-  frame.data[7] = 8;
-  */
+  frame.can_id = id;
+  frame.can_dlc = dlength;
+  frame.data[0] = reg;
+  if (dlength > 1) {
+    frame.data[1] = data[0];
+    frame.data[2] = data[1];
+    frame.data[3] = data[2];
+    frame.data[4] = data[3];
+  }
   printf("can_id  = 0x%X\r\n", frame.can_id);
   printf("can_dlc = %d\r\n", frame.can_dlc);
 
-  for(i = 0; i < frame.can_dlc; ++i)
-    printf("data[%d] = %d\r\n", i, frame.data[i]);
+  for(i = 0; i < frame.can_dlc; ++i) {
+    printf("data[%d] = %2x/%3d\r\n", i, frame.data[i], frame.data[i]);
+  }
     
   //6.Send message
   nbytes = write(s, &frame, sizeof(frame)); 
