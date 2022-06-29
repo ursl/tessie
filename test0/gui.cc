@@ -188,7 +188,7 @@ QString gui::getTimeString() {
 // ----------------------------------------------------------------------
 void gui::on_toolButton_clicked(bool checked) {
     fLOG(INFO, "Toggle blue LED clicked");
-    fThread.toggleBlue();
+    //    fThread.toggleBlue();
 }
 #endif
 
