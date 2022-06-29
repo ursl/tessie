@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
       dlength += 4;
       idata = atoi(argv[++i]);
       fdata = 0.0; 
-      memcpy(&idata, data, sizeof idata); 
+      memcpy(data, &idata, sizeof idata); 
       memcpy(&fdata, data, sizeof fdata); 
     }     
   }
