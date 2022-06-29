@@ -31,9 +31,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   //  fRpcServer->run();
 
 #ifdef PI
-  wiringPiSetup();
-  pinMode(fLed1, OUTPUT);
-  pinMode(fLedBlue, OUTPUT);
+
 #endif
 }
 
@@ -109,13 +107,7 @@ void driveHardware::run() {
     }
 
 #ifdef PI
-    if (1 == fStatus1) {
-      digitalWrite(fLed1, LOW);
-      fStatus1 = 0;
-    } else {
-      digitalWrite(fLed1, HIGH);
-      fStatus1 = 1;
-    }
+
 #endif
 
     fMutex.unlock();
@@ -156,24 +148,11 @@ int driveHardware::getOffset() {
 
 
 #ifdef PI
-// ----------------------------------------------------------------------
-void driveHardware::toggleBlue() {
-  if (0 == fStatusBlue) {
-    cout << "toggle blue LED on" << endl;
-    fStatusBlue = 1;
-    digitalWrite(fLedBlue, HIGH);
-  } else {
-    cout << "toggle LED off" << endl;
-    fStatusBlue = 0;
-    digitalWrite(fLedBlue, LOW);
-  }
+void driveHardware::sendCANmessage(unsigned int id, unsigned int reg, char[4] bytes) {
 }
 
-// ----------------------------------------------------------------------
-void driveHardware::shutDown() {
-  // -- turn of LEDs
-  digitalWrite(fLed1, LOW);
-  digitalWrite(fLedBlue, LOW);
+char[4] driveHardware::readCANmessage(unsigned int id, unsigned int reg) {
+  char[4] result = {0, 0, 0, 0};
+  return result;
 }
-
 #endif

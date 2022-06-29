@@ -23,8 +23,8 @@ public:
   void runPrintout(int freq, int off);
 
 #ifdef PI
-  void toggleBlue();
-  void shutDown();
+  void    sendCANmessage(unsigned int id, unsigned int reg, char[4] bytes);
+  char[4] readCANmessage(unsigned int id, unsigned int reg);
 #endif
 
   void setFrequency(int x);
@@ -62,13 +62,6 @@ private:
   QString fDateAndTime;
 
 #ifdef PI
-  // -- Red LED: Physical pin 18, BCM GPIO24, and WiringPi pin 5.
-  const int fLed1 = 5;
-  // -- Red LED: Physical pin 22, BCM GPIO25, and WiringPi pin 6.
-  const int fLedBlue = 6;
-
-  int fStatus1 = 0;
-  int fStatusBlue = 0;
 
 #endif
 
