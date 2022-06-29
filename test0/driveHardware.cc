@@ -141,8 +141,8 @@ void driveHardware::run() {
     char data[4]; 
     unsigned int idata(0);
     float fdata(0.0);
-    while(1) {
-      while(1) {
+    // while(1) {
+    //   while(1) {
         nbytes = read(fS, &fFrame, sizeof(fFrame));
         if(nbytes > 0) {
           printf("can_id = 0x%X\r\ncan_dlc = %d \r\n", fFrame.can_id, fFrame.can_dlc);
@@ -161,12 +161,12 @@ void driveHardware::run() {
           memcpy(&idata, data, sizeof idata); 
           printf("float = %f/uint32 = %u\r\n", fdata, idata);
           ++cnt;
-          break;
-        }
-      }
+      //          break;
+      //   }
+      // }
       
-      printf("received message %d\r\n", cnt);
-    }
+          printf("received message %d\r\n", cnt);
+        }
 
 #endif
 
