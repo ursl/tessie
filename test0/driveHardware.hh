@@ -10,7 +10,12 @@
 #include "rpcServer.hh"
 
 #ifdef PI
-#include <wiringPi.h>
+//#include <wiringPi.h>
+#include <net/if.h>
+#include <sys/ioctl.h>
+#include <sys/socket.h>
+#include <linux/can.h>
+#include <linux/can/raw.h>
 #endif
 
 class driveHardware: public QThread {
@@ -23,8 +28,9 @@ public:
   void runPrintout(int freq, int off);
 
 #ifdef PI
-  void    sendCANmessage(unsigned int id, unsigned int reg, char[4] bytes);
-  char[4] readCANmessage(unsigned int id, unsigned int reg);
+  void sendCANmessage(unsigned int id, unsigned int reg, char *bytes);
+  void readCANmessage(unsigned int id, unsigned int reg, char *bytes);
+  void shutDown();
 #endif
 
   void setFrequency(int x);
@@ -62,6 +68,10 @@ private:
   QString fDateAndTime;
 
 #ifdef PI
+  int    fS; 
+  struct sockaddr_can fAddr;
+  struct ifreq fIfr;
+  struct can_frame fFrame;
 
 #endif
 

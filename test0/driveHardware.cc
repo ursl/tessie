@@ -3,6 +3,10 @@
 #include <unistd.h>
 #include <sstream>
 
+#include <net/if.h>
+#include <sys/ioctl.h>
+
+
 #include <chrono>
 #include <thread>
 
@@ -31,7 +35,33 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   //  fRpcServer->run();
 
 #ifdef PI
+  memset(&fFrame, 0, sizeof(struct can_frame));
 
+  fS = socket(PF_CAN, SOCK_RAW, CAN_RAW);
+  if (fS < 0) {
+    perror("socket PF_CAN failed");
+    return;
+  }
+    
+  strcpy(fIfr.ifr_name, "can0");
+  int ret = ioctl(fS, SIOCGIFINDEX, &fIfr);
+  if (ret < 0) {
+    perror("ioctl failed");
+    return;
+  }
+  
+  fAddr.can_family = AF_CAN;
+  fAddr.can_ifindex = fIfr.ifr_ifindex;
+  ret = bind(fS, (struct sockaddr *)&fAddr, sizeof(fAddr));
+  if (ret < 0) {
+    perror("bind failed");
+    return;
+  }
+    
+  //4.Disable filtering rules, do not receive packets, only send
+  //  setsockopt(s, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
+
+  
 #endif
 }
 
@@ -107,6 +137,36 @@ void driveHardware::run() {
     }
 
 #ifdef PI
+    int cnt(0), nbytes(0); 
+    char data[4]; 
+    unsigned int idata(0);
+    float fdata(0.0);
+    while(1) {
+      while(1) {
+        nbytes = read(fS, &fFrame, sizeof(fFrame));
+        if(nbytes > 0) {
+          printf("can_id = 0x%X\r\ncan_dlc = %d \r\n", fFrame.can_id, fFrame.can_dlc);
+          int i = 0;
+          
+          for(i = 0; i < fFrame.can_dlc; i++) {
+            printf("data[%d] = %2x/%3d\r\n", i, fFrame.data[i], fFrame.data[i]);
+          }
+          
+          data[0] = fFrame.data[1];
+          data[1] = fFrame.data[2];
+          data[2] = fFrame.data[3];
+          data[3] = fFrame.data[4];
+          
+          memcpy(&fdata, data, sizeof fdata); 
+          memcpy(&idata, data, sizeof idata); 
+          printf("float = %f/uint32 = %u\r\n", fdata, idata);
+          ++cnt;
+          break;
+        }
+      }
+      
+      printf("received message %d\r\n", cnt);
+    }
 
 #endif
 
@@ -114,13 +174,6 @@ void driveHardware::run() {
     //    sleep(1./fFrequency);
     std::this_thread::sleep_for(sec);
 
-    // -- I think I don't need the following:
-    // fMutex.lock();
-    // if (!fRestart) {
-    //   fCondition.wait(&fMutex);
-    // }
-    // fRestart = false;
-    // fMutex.unlock();
   }
 
 }
@@ -148,11 +201,18 @@ int driveHardware::getOffset() {
 
 
 #ifdef PI
-void driveHardware::sendCANmessage(unsigned int id, unsigned int reg, char[4] bytes) {
+void driveHardware::shutDown() {
+  close(fS);
 }
 
-char[4] driveHardware::readCANmessage(unsigned int id, unsigned int reg) {
-  char[4] result = {0, 0, 0, 0};
-  return result;
+void driveHardware::sendCANmessage(unsigned int id, unsigned int reg, char bytes[4]) {
+}
+
+void driveHardware::readCANmessage(unsigned int id, unsigned int reg, char bytes[4]) {
+  bytes[0] = 0; 
+  bytes[1] = 0; 
+  bytes[2] = 0; 
+  bytes[3] = 0; 
+  return;
 }
 #endif
