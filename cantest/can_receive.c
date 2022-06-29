@@ -52,7 +52,7 @@ int main() {
   }
 
   //3.Bind the socket to can0
-  addr.can_family = PF_CAN;
+  addr.can_family = AF_CAN;
   addr.can_ifindex = ifr.ifr_ifindex;
   ret = bind(s, (struct sockaddr *)&addr, sizeof(addr));
   if (ret < 0) {
