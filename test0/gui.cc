@@ -190,7 +190,7 @@ void gui::on_spinBox_valueChanged(int arg1) {
 void gui::on_spinBox_2_valueChanged(int arg1) {
   stringstream sbla; sbla << "spinBox_valueChanged to value = " << arg1;
   fLOG(ALL, sbla.str());
-  fThread.setValue(arg1);
+  fThread.setValue(static_cast<float>(arg1));
 }
 
 // ----------------------------------------------------------------------
