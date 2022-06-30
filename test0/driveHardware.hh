@@ -25,35 +25,35 @@ public:
   driveHardware(tLog &x, QObject *parent = nullptr);
   ~driveHardware();
 
-  void runPrintout(int freq, int off);
+  void  runPrintout(int reg, float val);
 
 #ifdef PI
-  void sendCANmessage();
-  void readCANmessage();
-  void shutDown();
+  void  sendCANmessage();
+  void  readCANmessage();
+  void  shutDown();
 #endif
 
-  void setId(int x);
-  void setRegister(int x);
-  void setValue(int x);
-  int  getId();
-  int  getRegister();
-  int  getValue();
+  void  setId(int x);
+  void  setRegister(int x);
+  void  setValue(float x);
+  int   getId();
+  int   getRegister();
+  float getValue();
 
   void  printToGUI(std::string);
   void  getMessage(std::string);
 
 public slots:
-  void sentFromServer(const QString&);
+  void  sentFromServer(const QString&);
 
 signals:
-  void signalSomething(int x);
-  void signalText(QString x);
-  void sendToServer(const QString&);
-  void startServer();
+  void  signalSomething(int x);
+  void  signalText(QString x);
+  void  sendToServer(const QString&);
+  void  startServer();
 
 protected:
-  void run() override;
+  void  run() override;
 
 private:
   tLog&   fLOG;
@@ -67,7 +67,7 @@ private:
   bool    fAbort;
   int     fCANId;
   int     fCANReg;
-  int     fCANVal;
+  float   fCANVal;
   QString fDateAndTime;
 
 #ifdef PI

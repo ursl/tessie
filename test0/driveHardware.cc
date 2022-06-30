@@ -19,7 +19,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   fRestart   = false;
   fAbort     = false;
   fCANReg    = 0;
-  fCANVal    = 0;
+  fCANVal    = 0.;
   QDateTime dt = QDateTime::currentDateTime();
   fDateAndTime = dt.date().toString() + "  " +  dt.time().toString("hh:mm");
 
@@ -138,7 +138,7 @@ void  driveHardware::printToGUI(std::string x) {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::runPrintout(int reg, int val) {
+void driveHardware::runPrintout(int reg, float val) {
   cout << "driveHardware::runPrintout() " << endl;
   QMutexLocker locker(&fMutex);
   this->fCANReg = reg;
@@ -157,13 +157,18 @@ void driveHardware::runPrintout(int reg, int val) {
 // ----------------------------------------------------------------------
 void driveHardware::run() {
   std::chrono::milliseconds msec(5);
+  cout << "Hallo in run()" << endl;
+  int cnt(0);
   while (1) {
     // -- keep for possible debugging but remove for long-term testing on pi
     if (0) {
       stringstream print("asd");
       fLOG(DEBUG, print.str());
     }
-
+    ++cnt;
+    if (cnt%100 == 1) {
+      cout << "Hallo in run(), cnt = " << cnt << endl;
+    }
     readCANmessage();
 
     std::this_thread::sleep_for(msec);
@@ -179,7 +184,7 @@ void driveHardware::setRegister(int reg) {
 }
 
 // ----------------------------------------------------------------------
-void driveHardware::setValue(int val) {
+void driveHardware::setValue(float val) {
   fCANVal = val;
 }
 
@@ -195,7 +200,7 @@ int driveHardware::getRegister() {
 }
 
 // ----------------------------------------------------------------------
-int driveHardware::getValue() {
+float driveHardware::getValue() {
   return fCANVal;
 }
 
@@ -215,7 +220,6 @@ void driveHardware::shutDown() {
 // ----------------------------------------------------------------------
 void driveHardware::sendCANmessage() {
   fMutex.lock();
-
   char data[4] = {0, 0, 0, 0};
   fFrameW.can_id = fCANId;
   int dlength(0);
@@ -231,7 +235,15 @@ void driveHardware::sendCANmessage() {
   fFrameW.data[0] = fCANReg;
   if (dlength > 1) {
     memcpy(data, &fCANVal, sizeof fCANVal);
+    fFrameW.data[1] = data[0];
+    fFrameW.data[2] = data[1];
+    fFrameW.data[3] = data[2];
+    fFrameW.data[4] = data[3];
   }
+  cout << "canid = " << fCANId << " reg = " << fCANReg
+       << " value = " << fCANVal
+       << " dlength = " << dlength
+       << endl;
 
   printf("can_id  = 0x%X (from sendCANmessage())\n", fFrameW.can_id);
   printf("can_dlc = %d\n", fFrameW.can_dlc);
@@ -255,9 +267,9 @@ void driveHardware::sendCANmessage() {
 // ----------------------------------------------------------------------
 void driveHardware::readCANmessage() { 
   static int cntCAN(0);
-
+  cout << "readCANmessage 0" << endl;
+  
 #ifdef PI
-  fMutex.lock();
 
   int nbytes(0); 
   char data[4]; 
@@ -284,7 +296,6 @@ void driveHardware::readCANmessage() {
     ++cntCAN;
     printf("received CAN message %d\n", cntCAN);
   }
-  fMutex.unlock();
   
 #endif
 
