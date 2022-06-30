@@ -168,8 +168,8 @@ void gui::on_pushButton_3_clicked() {
 // ----------------------------------------------------------------------
 void gui::on_pushButton_4_clicked() {
   fThread.setId(0x111);
-  stringstream sbla; sbla << "CAN read ID = " << hex << fThread.getId()
-                          << " reg = " << fThread.getRegister();
+  stringstream sbla; sbla << "CAN read ID = 0x" << hex << fThread.getId()
+                          << " reg = 0x" << fThread.getRegister();
   
   fLOG(INFO, sbla.str());
 #ifdef PI
@@ -182,8 +182,8 @@ void gui::on_pushButton_4_clicked() {
 // ----------------------------------------------------------------------
 void gui::on_pushButton_5_clicked() {
   fThread.setId(0x101);
-  stringstream sbla; sbla << "CAN send cmd ID = " << hex << fThread.getId()
-                          << " cmd = " << fThread.getRegister();
+  stringstream sbla; sbla << "CAN send cmd ID = 0x" << hex << fThread.getId()
+                          << " cmd = 0x" << fThread.getRegister();
   
   fLOG(INFO, sbla.str());
 #ifdef PI

@@ -294,7 +294,8 @@ void driveHardware::readCANmessage() {
     for(i = 0; i < fFrameR.can_dlc; i++) {
       printf("data[%d] = %2x/%3d\n", i, fFrameR.data[i], fFrameR.data[i]);
     }
-      
+
+    int reg = fFrameR.data[0];
     data[0] = fFrameR.data[1];
     data[1] = fFrameR.data[2];
     data[2] = fFrameR.data[3];
@@ -305,9 +306,10 @@ void driveHardware::readCANmessage() {
     printf("float = %f/uint32 = %u\n", fdata, idata);
     ++cntCAN;
     printf("received CAN message %d\n", cntCAN);
-    stringstream sbla; sbla << "CAN read " << hex 
-                            << " reg = " << fFrameR.data[0]
+    stringstream sbla; sbla << "CAN read "
+                            << " reg = 0x"  << hex << reg
                             << " value = " << fdata;
+    cout << "sbla: " << sbla.str() << endl;
     fLOG(INFO, sbla.str());
 
   }
