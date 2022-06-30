@@ -360,7 +360,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Program 3</string>
+     <string>CAN send cmd</string>
     </property>
    </widget>
    <widget class="timeChart" name="graphicsView">

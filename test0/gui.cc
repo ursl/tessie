@@ -180,6 +180,20 @@ void gui::on_pushButton_4_clicked() {
 
 
 // ----------------------------------------------------------------------
+void gui::on_pushButton_5_clicked() {
+  fThread.setId(0x101);
+  stringstream sbla; sbla << "CAN send cmd ID = " << hex << fThread.getId()
+                          << " cmd = " << fThread.getRegister();
+  
+  fLOG(INFO, sbla.str());
+#ifdef PI
+  fThread.sendCANmessage();
+#endif
+
+}
+
+
+// ----------------------------------------------------------------------
 void gui::on_spinBox_valueChanged(int arg1) {
   stringstream sbla; sbla << "spinBox_valueChanged to register = " << arg1;
   fLOG(ALL, sbla.str());

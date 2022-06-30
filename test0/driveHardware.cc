@@ -222,7 +222,12 @@ void driveHardware::sendCANmessage() {
   fMutex.lock();
   char data[4] = {0, 0, 0, 0};
   fFrameW.can_id = fCANId;
-  int dlength(0);
+  int dlength(0), command(0);
+  if (0x0 == ((0x0f0 & fCANId)>>4)) {
+    // -- x0x is command access and no subsequent 4 bytes are required. fCANReg indicates the command type
+    dlength = 1;
+    command = 1; 
+  }
   if (0x1 & ((0x0f0 & fCANId)>>4)) {
     // -- x1x is read access and no subsequent 4 bytes are required
     dlength = 1;
@@ -240,11 +245,16 @@ void driveHardware::sendCANmessage() {
     fFrameW.data[3] = data[2];
     fFrameW.data[4] = data[3];
   }
-  cout << "canid = " << fCANId << " reg = " << fCANReg
-       << " value = " << fCANVal
-       << " dlength = " << dlength
-       << endl;
+  if (1 == command) {
+    cout << "canid = " << fCANId << " cmd = " << fCANReg
+         << endl;
+  } else {
+    cout << "canid = " << fCANId << " reg = " << fCANReg
+         << " value = " << fCANVal
+         << " dlength = " << dlength
+         << endl;
 
+  }
   printf("can_id  = 0x%X (from sendCANmessage())\n", fFrameW.can_id);
   printf("can_dlc = %d\n", fFrameW.can_dlc);
 
@@ -295,6 +305,11 @@ void driveHardware::readCANmessage() {
     printf("float = %f/uint32 = %u\n", fdata, idata);
     ++cntCAN;
     printf("received CAN message %d\n", cntCAN);
+    stringstream sbla; sbla << "CAN read " << hex 
+                            << " reg = " << fFrameR.data[0]
+                            << " value = " << fdata;
+    fLOG(INFO, sbla.str());
+
   }
   
 #endif
