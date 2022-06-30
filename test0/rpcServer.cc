@@ -34,7 +34,7 @@ rpcServer::~rpcServer() {
 
 // ----------------------------------------------------------------------
 void rpcServer::sentToServer(const QString &result) {
-  cout << "rpcServer::sendToServer() received ->" << result.toStdString() << "<-" << endl;
+  cout << "rpcServer::sentToServer() received ->" << result.toStdString() << "<-" << endl;
   emit("rpcServer result emitted");
 }
 
