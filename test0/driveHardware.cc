@@ -160,11 +160,6 @@ void driveHardware::run() {
   cout << "Hallo in run()" << endl;
   int cnt(0);
   while (1) {
-    // -- keep for possible debugging but remove for long-term testing on pi
-    if (0) {
-      stringstream print("asd");
-      fLOG(DEBUG, print.str());
-    }
     ++cnt;
     if (cnt%100 == 1) {
       cout << "Hallo in run(), cnt = " << cnt << endl;
@@ -285,10 +280,11 @@ void driveHardware::talkToFras() {
   //  fFrameW.can_id = 000'0100'0000 -> 0x040 for process
   //  fFrameW.can_id = 000'0100'0001 -> 0x041 for service
   //  fFrameW.can_id = 000'0100'0010 -> 0x042 for control
-  fFrameW.can_id = 0x42;
-  int dlength(1);
+  fFrameW.can_id = CAN_RTR_FLAG | 0x41;
+  int dlength(2);
   fFrameW.can_dlc = dlength;
-  fFrameW.data[0] = fCANVal;
+  fFrameW.data[0] = 0x1;
+  fFrameW.data[1] = fCANVal;
   stringstream sbla; sbla << "talkToFras "
                           << " reg = 0x"  << hex << fFrameW.can_id
                           << " data = " << fCANVal;
@@ -310,7 +306,6 @@ void driveHardware::talkToFras() {
 // ----------------------------------------------------------------------
 void driveHardware::readCANmessage() { 
   static int cntCAN(0);
-  cout << "readCANmessage 0" << endl;
   
   int nbytes(0); 
   char data[4]; 
