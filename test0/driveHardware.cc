@@ -220,7 +220,7 @@ void driveHardware::shutDown() {
 
 // ----------------------------------------------------------------------
 void driveHardware::sendCANmessage() {
-  fMutex.lock();
+  //  fMutex.lock();
   char data[4] = {0, 0, 0, 0};
   fFrameW.can_id = fCANId;
   int dlength(0), command(0);
@@ -271,13 +271,38 @@ void driveHardware::sendCANmessage() {
   }
 
 
-  fMutex.unlock();
+  //  fMutex.unlock();
 }
 
 
 // ----------------------------------------------------------------------
 void driveHardware::talkToFras() {
   cout << "talkToFras"  << endl;
+  //  fMutex.lock();
+  char mkind[4] = {0, 0, 0, 0};
+  //            TEC:   ssP'..tt'aaaa        
+  //           FRAS:   0aa'aaaa'akkk
+  //  fFrameW.can_id = 000'0100'0000 -> 0x040 for process
+  //  fFrameW.can_id = 000'0100'0001 -> 0x041 for service
+  //  fFrameW.can_id = 000'0100'0010 -> 0x042 for control
+  fFrameW.can_id = 0x42;
+  int dlength(1);
+  fFrameW.can_dlc = dlength;
+  fFrameW.data[0] = fCANVal;
+  stringstream sbla; sbla << "talkToFras "
+                          << " reg = 0x"  << hex << fFrameW.can_id
+                          << " data = " << fCANVal;
+  cout << "sbla: " << sbla.str() << endl;
+  fLOG(INFO, sbla.str());
+
+  // -- Send message
+  setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
+  int nbytes = write(fSw, &fFrameW, sizeof(fFrameW)); 
+  if (nbytes != sizeof(fFrameW)) {
+    printf("Send Error frame[0]!\r\n");
+  }
+
+  //  fMutex.unlock();
 
 }
 
