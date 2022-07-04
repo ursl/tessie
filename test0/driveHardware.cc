@@ -247,7 +247,7 @@ void driveHardware::sendCANmessage() {
     fFrameW.data[4] = data[3];
   }
   if (1 == command) {
-    cout << "canid = " << fCANId << " cmd = " << fCANReg
+    cout << "sendCANmessage: canid = " << fCANId << " cmd = " << fCANReg
          << endl;
   } else {
     cout << "canid = " << fCANId << " reg = " << fCANReg

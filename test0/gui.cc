@@ -194,9 +194,10 @@ void gui::on_pushButton_5_clicked() {
 
 
 // ----------------------------------------------------------------------
+#ifdef PI
 void gui::on_toolButton_clicked() {
   stringstream sbla; sbla << "talk2FRAS";
-#ifdef PI
+  fLOG(INFO, sbla.str());
   fThread.talkToFras();
 #endif
 
@@ -236,14 +237,6 @@ QString gui::getTimeString() {
             .arg(seconds,2,10,QChar('0'));
     return text;
 }
-
-#ifdef PI
-// ----------------------------------------------------------------------
-void gui::on_toolButton_clicked(bool checked) {
-  fLOG(INFO, "send CAN command");
-  fThread.sendCANmessage();
-}
-#endif
 
 
 // ----------------------------------------------------------------------

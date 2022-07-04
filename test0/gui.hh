@@ -49,10 +49,6 @@ private slots:
   void updateTime();
   void updateCPULoad();
 
-#ifdef PI
-  void on_toolButton_clicked(bool checked);
-#endif
-
 private:
   tLog&         fLOG;
   driveHardware fThread;
