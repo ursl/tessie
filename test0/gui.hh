@@ -34,6 +34,7 @@ private slots:
   void on_pushButton_3_clicked();
   void on_pushButton_4_clicked();
   void on_pushButton_5_clicked();
+  void on_toolButton_clicked();
 
   void on_spinBox_valueChanged(int arg1);
   void on_spinBox_2_valueChanged(int arg1);

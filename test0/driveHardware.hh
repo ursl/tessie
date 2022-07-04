@@ -30,6 +30,7 @@ public:
 #ifdef PI
   void  sendCANmessage();
   void  readCANmessage();
+  void  talkToFras();
   void  shutDown();
 #endif
 

@@ -213,6 +213,7 @@ int driveHardware::getId() {
 #ifdef PI
 // ----------------------------------------------------------------------
 void driveHardware::shutDown() {
+  // FIXME: do a poff for all TEC controllers. set all relais outputs to 0.
   close(fSw);
 }
 
@@ -275,12 +276,17 @@ void driveHardware::sendCANmessage() {
 
 
 // ----------------------------------------------------------------------
+void driveHardware::talkToFras() {
+  cout << "talkToFras"  << endl;
+
+}
+
+
+// ----------------------------------------------------------------------
 void driveHardware::readCANmessage() { 
   static int cntCAN(0);
   cout << "readCANmessage 0" << endl;
   
-#ifdef PI
-
   int nbytes(0); 
   char data[4]; 
   unsigned int idata(0);
@@ -314,8 +320,7 @@ void driveHardware::readCANmessage() {
 
   }
   
-#endif
-
   return;
 }
+
 #endif

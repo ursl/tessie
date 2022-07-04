@@ -194,6 +194,16 @@ void gui::on_pushButton_5_clicked() {
 
 
 // ----------------------------------------------------------------------
+void gui::on_toolButton_clicked() {
+  stringstream sbla; sbla << "talk2FRAS";
+#ifdef PI
+  fThread.talkToFras();
+#endif
+
+}
+
+
+// ----------------------------------------------------------------------
 void gui::on_spinBox_valueChanged(int arg1) {
   stringstream sbla; sbla << "spinBox_valueChanged to register = " << arg1;
   fLOG(ALL, sbla.str());
