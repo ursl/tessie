@@ -50,17 +50,17 @@
           <number>0</number>
          </property>
          <property name="maximum">
-          <number>17</number>
+          <number>20</number>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QSpinBox" name="spinBox_2">
          <property name="minimum">
-          <number>-50</number>
+          <number>-150</number>
          </property>
          <property name="maximum">
-          <number>50</number>
+          <number>150</number>
          </property>
         </widget>
        </item>

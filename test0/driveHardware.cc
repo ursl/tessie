@@ -156,7 +156,7 @@ void driveHardware::runPrintout(int reg, float val) {
 
 // ----------------------------------------------------------------------
 void driveHardware::run() {
-  std::chrono::milliseconds oneSec(500);
+  std::chrono::milliseconds oneSec(1000);
   cout << "Hallo in run()" << endl;
   int cnt(0);
   while (1) {
@@ -272,51 +272,52 @@ void driveHardware::sendCANmessage() {
 
 // ----------------------------------------------------------------------
 void driveHardware::entertainFras() {
-  //  fMutex.lock();
-  char mkind[4] = {0, 0, 0, 0};
-  //            TEC:   ssP'..tt'aaaa        
-  //           FRAS:   0aa'aaaa'akkk
-  //  fFrameW.can_id = 000'0100'0000 -> 0x040 for process
-  //  fFrameW.can_id = 000'0100'0001 -> 0x041 for service
-  //  fFrameW.can_id = 000'0100'0010 -> 0x042 for control
-  fFrameW.can_id = CAN_RTR_FLAG | 0x41;
-  int dlength(0);
-  fFrameW.can_dlc = dlength;
-  // fFrameW.data[0] = 0x1;
-  // fFrameW.data[1] = fCANVal;
-  stringstream sbla; sbla << "entertainFras "
-                          << " reg = 0x"  << hex << fFrameW.can_id
-                          << " data = " << fCANVal;
-  cout << "sbla: " << sbla.str() << endl;
-  fLOG(INFO, sbla.str());
-
-  // -- Send message
-  setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
-  int nbytes = write(fSw, &fFrameW, sizeof(fFrameW)); 
-  if (nbytes != sizeof(fFrameW)) {
-    printf("Send Error frame[0]!\r\n");
+  if (0 == fValveMask) {
+    fFrameW.can_id = CAN_RTR_FLAG | 0x41;
+    int dlength(0);
+    fFrameW.can_dlc = dlength;
+    // stringstream sbla; sbla << "entertainFras "
+    //                         << " reg = 0x"  << hex << fFrameW.can_id;
+    // cout << "sbla: " << sbla.str() << endl;
+    
+    // -- Send message
+    setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
+    int nbytes = write(fSw, &fFrameW, sizeof(fFrameW)); 
+    if (nbytes != sizeof(fFrameW)) {
+      printf("Send Error frame[0]!\r\n");
+    }
+  } else {
+    fFrameW.can_id = 0x40;
+    int dlength(1);
+    fFrameW.can_dlc = dlength;
+    fFrameW.data[0] = fValveMask;
+    
+    // -- Send message
+    setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
+    int nbytes = write(fSw, &fFrameW, sizeof(fFrameW)); 
+    if (nbytes != sizeof(fFrameW)) {
+      printf("Send Error frame[0]!\r\n");
+    }
   }
-
-  //  fMutex.unlock();
-
 }
 
 
 // ----------------------------------------------------------------------
 void driveHardware::talkToFras() {
+  fValveMask = static_cast<int>(fCANVal);
   cout << "talkToFras"  << endl;
   //  fMutex.lock();
-  char mkind[4] = {0, 0, 0, 0};
+
   //            TEC:   ssP'..tt'aaaa        
   //           FRAS:   0aa'aaaa'akkk
   //  fFrameW.can_id = 000'0100'0000 -> 0x040 for process
   //  fFrameW.can_id = 000'0100'0001 -> 0x041 for service
   //  fFrameW.can_id = 000'0100'0010 -> 0x042 for control
-  fFrameW.can_id = CAN_RTR_FLAG | 0x41;
-  int dlength(2);
+
+  fFrameW.can_id = 0x40;
+  int dlength(1);
   fFrameW.can_dlc = dlength;
-  fFrameW.data[0] = 0x1;
-  fFrameW.data[1] = fCANVal;
+  fFrameW.data[0] = fValveMask;
   stringstream sbla; sbla << "talkToFras "
                           << " reg = 0x"  << hex << fFrameW.can_id
                           << " data = " << fCANVal;

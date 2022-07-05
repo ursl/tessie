@@ -70,6 +70,7 @@ private:
   int     fCANId;
   int     fCANReg;
   float   fCANVal;
+  int     fValveMask; 
   QString fDateAndTime;
 
 #ifdef PI
