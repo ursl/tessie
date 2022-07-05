@@ -156,17 +156,17 @@ void driveHardware::runPrintout(int reg, float val) {
 
 // ----------------------------------------------------------------------
 void driveHardware::run() {
-  std::chrono::milliseconds msec(5);
+  std::chrono::milliseconds oneSec(500);
   cout << "Hallo in run()" << endl;
   int cnt(0);
   while (1) {
     ++cnt;
-    if (cnt%100 == 1) {
+    if (cnt%10 == 1) {
       cout << "Hallo in run(), cnt = " << cnt << endl;
     }
-    readCANmessage();
-
-    std::this_thread::sleep_for(msec);
+    //    readCANmessage();
+    entertainFras();
+    std::this_thread::sleep_for(oneSec);
 
   }
 
@@ -267,6 +267,38 @@ void driveHardware::sendCANmessage() {
 
 
   //  fMutex.unlock();
+}
+
+
+// ----------------------------------------------------------------------
+void driveHardware::entertainFras() {
+  //  fMutex.lock();
+  char mkind[4] = {0, 0, 0, 0};
+  //            TEC:   ssP'..tt'aaaa        
+  //           FRAS:   0aa'aaaa'akkk
+  //  fFrameW.can_id = 000'0100'0000 -> 0x040 for process
+  //  fFrameW.can_id = 000'0100'0001 -> 0x041 for service
+  //  fFrameW.can_id = 000'0100'0010 -> 0x042 for control
+  fFrameW.can_id = CAN_RTR_FLAG | 0x41;
+  int dlength(0);
+  fFrameW.can_dlc = dlength;
+  // fFrameW.data[0] = 0x1;
+  // fFrameW.data[1] = fCANVal;
+  stringstream sbla; sbla << "entertainFras "
+                          << " reg = 0x"  << hex << fFrameW.can_id
+                          << " data = " << fCANVal;
+  cout << "sbla: " << sbla.str() << endl;
+  fLOG(INFO, sbla.str());
+
+  // -- Send message
+  setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
+  int nbytes = write(fSw, &fFrameW, sizeof(fFrameW)); 
+  if (nbytes != sizeof(fFrameW)) {
+    printf("Send Error frame[0]!\r\n");
+  }
+
+  //  fMutex.unlock();
+
 }
 
 

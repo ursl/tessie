@@ -31,6 +31,7 @@ public:
   void  sendCANmessage();
   void  readCANmessage();
   void  talkToFras();
+  void  entertainFras();
   void  shutDown();
 #endif
 
