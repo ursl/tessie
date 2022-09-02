@@ -20,7 +20,7 @@
       <x>72</x>
       <y>42</y>
       <width>216</width>
-      <height>60</height>
+      <height>66</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -306,7 +306,7 @@
      </font>
     </property>
     <property name="text">
-     <string>tool button</string>
+     <string>FRAS program</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_3">

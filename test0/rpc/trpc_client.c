@@ -21,7 +21,7 @@ trpc_6(char *host, char *cmd, float argtemp)
 
 #ifndef	DEBUG
 	clnt = clnt_create (host, TRPC, TRPC_VERS, "udp");
-        printf("Hallo in DEBUG\n");
+    printf("Hallo in DEBUG\n");
 	if (clnt == NULL) {
 		clnt_pcreateerror (host);
 		exit (1);
