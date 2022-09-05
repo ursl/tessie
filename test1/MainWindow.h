@@ -27,6 +27,10 @@ private slots:
 
     void on_buttonValve0_clicked();
 
+    void on_checkBoxTEC0_clicked(bool checked);
+
+    void on_checkboxTECLockAll_clicked(bool checked);
+
 private:
 
     driveHardware fThread;

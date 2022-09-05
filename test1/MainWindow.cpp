@@ -37,6 +37,7 @@ void MainWindow::on_buttonValve0_clicked() {
 // ----------------------------------------------------------------------
 void MainWindow::appendText(QString line) {
 //  ui->textEditLog->append(line);
+  ui->textEditLog->append(line);
 }
 
 // ----------------------------------------------------------------------
@@ -58,3 +59,20 @@ QString MainWindow::getTimeString() {
       .arg(seconds, 2, 10, QChar('0'));
   return text;
 }
+
+// ----------------------------------------------------------------------
+void MainWindow::on_checkBoxTEC0_clicked(bool checked) {
+  stringstream sbla; sbla << "TEC controller 0 clicked " << checked;
+  string sline = sbla.str();
+  QString qline = sline.c_str();
+  ui->textEditLog->append(qline);
+}
+
+
+// ----------------------------------------------------------------------
+void MainWindow::on_checkboxTECLockAll_clicked(bool checked) {
+  stringstream sbla; sbla << "TEC controller ALL clicked " << checked;
+  ui->textEditLog->append(sbla.str().c_str());
+
+}
+
