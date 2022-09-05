@@ -13,10 +13,14 @@ CONFIG += c++17
 
 SOURCES += \
     MainWindow.cpp \
+    driveHardware.cc \
+    tLog.cc \
     tessie.cpp
 
 HEADERS += \
-    MainWindow.h
+    MainWindow.h \
+    driveHardware.hh \
+    tLog.hh
 
 FORMS += \
     MainWindow.ui

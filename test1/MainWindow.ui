@@ -203,6 +203,16 @@
      <string>Quit</string>
     </property>
    </widget>
+   <widget class="QTextEdit" name="textEditLog">
+    <property name="geometry">
+     <rect>
+      <x>265</x>
+      <y>381</y>
+      <width>491</width>
+      <height>151</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

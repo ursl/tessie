@@ -1,11 +1,15 @@
 #include "MainWindow.h"
+#include "tLog.hh"
 
 #include <QApplication>
 
 // -------------------------------------------------------------------------------
 int main(int argc, char *argv[]) {
-    QApplication a(argc, argv);
-    MainWindow w;
+  tLog LOG;
+
+  QApplication a(argc, argv);
+    MainWindow w(LOG, nullptr);
+    LOG.setGui(&w);
     w.show();
     return a.exec();
 }
