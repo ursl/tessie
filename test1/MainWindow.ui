@@ -206,10 +206,10 @@
    <widget class="QTextEdit" name="textEditLog">
     <property name="geometry">
      <rect>
-      <x>265</x>
-      <y>381</y>
-      <width>491</width>
-      <height>151</height>
+      <x>230</x>
+      <y>390</y>
+      <width>441</width>
+      <height>121</height>
      </rect>
     </property>
    </widget>

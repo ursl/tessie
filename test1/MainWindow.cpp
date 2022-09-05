@@ -36,7 +36,7 @@ void MainWindow::on_buttonValve0_clicked() {
 
 // ----------------------------------------------------------------------
 void MainWindow::appendText(QString line) {
-  ui->textBrowserLog->append(line);
+//  ui->textEditLog->append(line);
 }
 
 // ----------------------------------------------------------------------
