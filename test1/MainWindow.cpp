@@ -2,20 +2,19 @@
 #include "ui_MainWindow.h"
 #include <qpushbutton.h>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-{
+// -------------------------------------------------------------------------------
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
-
-    QWidget * wdg = new QWidget(this);
-    QPushButton *train_button = new QPushButton(wdg);
-    train_button->setText(tr("something"));
-    setCentralWidget(wdg);
 }
 
-MainWindow::~MainWindow()
-{
+// -------------------------------------------------------------------------------
+MainWindow::~MainWindow() {
     delete ui;
+}
+
+
+// -------------------------------------------------------------------------------
+void MainWindow::on_buttonQuit_clicked() {
+    exit(0);
 }
 
