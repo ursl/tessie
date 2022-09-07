@@ -12,7 +12,11 @@
 using namespace std;
 
 // -------------------------------------------------------------------------------
-MainWindow::MainWindow(tLog &x, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), fLOG(x), fThread(x) {
+MainWindow::MainWindow(tLog &x, QWidget *parent) :
+  QMainWindow(parent),
+  ui(new Ui::MainWindow),
+  fLOG(x),
+  fThread(x) {
   fLOG.setHw(&fThread);
   ui->setupUi(this);
 }
@@ -25,7 +29,6 @@ MainWindow::~MainWindow() {
 
 // ----------------------------------------------------------------------
 void MainWindow::appendText(QString line) {
-//  ui->textEditLog->append(line);
   ui->textEditLog->append(line);
 }
 
@@ -76,7 +79,7 @@ void MainWindow::setCheckBoxTEC(int itec, bool state) {
     case 7:
       ui->checkBoxTEC7->setChecked(state);
       break;
-  }
+    }
 }
 
 
@@ -165,8 +168,8 @@ void MainWindow::checkTECAll(bool checked) {
   QString qline = sline.c_str();
   ui->textEditLog->append(qline);
   for (int i = 0; i < 8; ++i) {
-    setCheckBoxTEC(i, checked);
-  }
+      setCheckBoxTEC(i, checked);
+    }
 }
 
 
