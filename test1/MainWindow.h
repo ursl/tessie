@@ -18,18 +18,27 @@ public:
     ~MainWindow();
 
     void printText(std::string line);
-
+    void setCheckBoxTEC(int itec, bool state);
 
 private slots:
-    void on_buttonQuit_clicked();
     void appendText(QString line);
     QString getTimeString();
 
-    void on_buttonValve0_clicked();
+    void checkValve0(bool checked);
+    void checkValve1(bool checked);
+    void checkValveAll(bool checked);
 
-    void on_checkBoxTEC0_clicked(bool checked);
 
-    void on_checkboxTECLockAll_clicked(bool checked);
+    void checkTEC0(bool checked);
+    void checkTEC1(bool checked);
+    void checkTEC2(bool checked);
+    void checkTEC3(bool checked);
+    void checkTEC4(bool checked);
+    void checkTEC5(bool checked);
+    void checkTEC6(bool checked);
+    void checkTEC7(bool checked);
+    void checkTECAll(bool checked);
+    void quitProgram();
 
 private:
 
