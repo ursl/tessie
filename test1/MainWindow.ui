@@ -14,88 +14,11 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="gridLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>401</x>
-      <y>191</y>
-      <width>331</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="1" column="3">
-      <widget class="QCheckBox" name="checkBoxTEC3">
-       <property name="text">
-        <string>TEC 3</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QCheckBox" name="checkBoxTEC1">
-       <property name="text">
-        <string>TEC 1</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QCheckBox" name="checkBoxTEC2">
-       <property name="text">
-        <string>TEC 2</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QCheckBox" name="checkBoxTEC0">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="mouseTracking">
-        <bool>true</bool>
-       </property>
-       <property name="text">
-        <string>TEC 0</string>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3">
-      <widget class="QCheckBox" name="checkBoxTEC4">
-       <property name="text">
-        <string>TEC 4</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QCheckBox" name="checkBoxTEC5">
-       <property name="text">
-        <string>TEC 5</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QCheckBox" name="checkBoxTEC6">
-       <property name="text">
-        <string>TEC 6</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QCheckBox" name="checkBoxTEC7">
-       <property name="text">
-        <string>TEC 7</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
    <widget class="QFrame" name="frameTECController">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>180</y>
+      <x>260</x>
+      <y>150</y>
       <width>481</width>
       <height>141</height>
      </rect>
@@ -163,6 +86,116 @@
       <string>lock all</string>
      </property>
     </widget>
+    <widget class="QCheckBox" name="checkBoxTEC0">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>100</y>
+       <width>82</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TEC 0</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxTEC1">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>100</y>
+       <width>82</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TEC 1</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxTEC2">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>100</y>
+       <width>82</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TEC 2</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxTEC3">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>100</y>
+       <width>82</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TEC 3</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxTEC4">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>50</y>
+       <width>82</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TEC 4</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxTEC5">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>50</y>
+       <width>110</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TEC 5</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxTEC6">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>50</y>
+       <width>165</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TEC 6</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBoxTEC7">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>50</y>
+       <width>331</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TEC 7</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
@@ -218,8 +251,8 @@
    <widget class="QTextEdit" name="textEditLog">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>390</y>
+      <x>280</x>
+      <y>350</y>
       <width>441</width>
       <height>121</height>
      </rect>
