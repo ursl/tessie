@@ -106,7 +106,7 @@ void MainWindow::clkValve0() {
   #ifdef PI
     sbla << "talk2FRAS 0";
     ui->textEditLog->append(sbla.str().c_str());
-    fThread.toggleValve(0);
+    fThread.toggleFras(0);
   #endif
 }
 
