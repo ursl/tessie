@@ -27,14 +27,12 @@ public:
 
   void  runPrintout(int reg, float val);
 
-#ifdef PI
   void  sendCANmessage();
   void  readCANmessage();
   void  talkToFras();
   void  toggleFras(int imask);
   void  entertainFras();
   void  shutDown();
-#endif
 
   void  setId(int x);
   void  setRegister(int x);
