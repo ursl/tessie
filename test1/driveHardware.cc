@@ -351,7 +351,7 @@ void driveHardware::toggleFras(int imask) {
 
   fValveMask = old xor imask;
 
-  cout << "toggleFras old = " << old
+  cout << "toggleFras old = " << hex << old
        << " imask = " << imask
        << " fValveMask = " << fValveMask
        << endl;
