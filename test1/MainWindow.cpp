@@ -103,23 +103,27 @@ void MainWindow::start() {
 void MainWindow::clkValve0() {
   stringstream sbla; sbla << "checkValve0 clicked ";
   ui->textEditLog->append(sbla.str().c_str());
-  #ifdef PI
-    sbla << "toggleFRAS(1)";
-    ui->textEditLog->append(sbla.str().c_str());
-    fThread.toggleFras(1);
-  #endif
+  sbla << "toggleFRAS(1)";
+  ui->textEditLog->append(sbla.str().c_str());
+  fThread.toggleFras(1);
 }
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValve1() {
   stringstream sbla; sbla << "checkValve1 clicked ";
   ui->textEditLog->append(sbla.str().c_str());
+  sbla << "toggleFRAS(2)";
+  ui->textEditLog->append(sbla.str().c_str());
+  fThread.toggleFras(2);
 }
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValveAll() {
   stringstream sbla; sbla << "checkValveAll clicked ";
   ui->textEditLog->append(sbla.str().c_str());
+  sbla << "toggleFRAS(3)";
+  ui->textEditLog->append(sbla.str().c_str());
+  fThread.toggleFras(3);
 }
 
 
