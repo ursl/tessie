@@ -91,21 +91,33 @@ void MainWindow::quitProgram() {
 }
 
 
+// ----------------------------------------------------------------------
+void MainWindow::start() {
+  stringstream sbla; sbla << "Startup";
+  ui->textEditLog->append(sbla.str().c_str());
+  fThread.runPrintout(1,1);
+}
+
 
 // ----------------------------------------------------------------------
-void MainWindow::checkValve0(bool checked) {
+void MainWindow::clkValve0(bool checked) {
   stringstream sbla; sbla << "checkValve0 clicked ";
   ui->textEditLog->append(sbla.str().c_str());
+  #ifdef PI
+    stringstream sbla; sbla << "talk2FRAS";
+    fLOG(INFO, sbla.str());
+    fThread.talkToFras();
+  #endif
 }
 
 // ----------------------------------------------------------------------
-void MainWindow::checkValve1(bool checked) {
+void MainWindow::clkValve1(bool checked) {
   stringstream sbla; sbla << "checkValve1 clicked ";
   ui->textEditLog->append(sbla.str().c_str());
 }
 
 // ----------------------------------------------------------------------
-void MainWindow::checkValveAll(bool checked) {
+void MainWindow::clkValveAll(bool checked) {
   stringstream sbla; sbla << "checkValveAll clicked ";
   ui->textEditLog->append(sbla.str().c_str());
 }

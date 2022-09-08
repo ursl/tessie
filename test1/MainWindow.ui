@@ -233,9 +233,9 @@
    <widget class="QToolButton" name="buttonQuit">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>60</y>
-      <width>41</width>
+      <x>110</x>
+      <y>100</y>
+      <width>81</width>
       <height>22</height>
      </rect>
     </property>
@@ -256,6 +256,19 @@
       <width>441</width>
       <height>121</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>40</y>
+      <width>100</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Start</string>
     </property>
    </widget>
   </widget>
@@ -304,8 +317,8 @@
    <slot>quitProgram()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>121</x>
-     <y>71</y>
+     <x>131</x>
+     <y>111</y>
     </hint>
     <hint type="destinationlabel">
      <x>129</x>
@@ -442,50 +455,66 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonValve0</sender>
-   <signal>clicked(bool)</signal>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>checkValve0(bool)</slot>
+   <slot>start()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>429</x>
-     <y>96</y>
+     <x>153</x>
+     <y>52</y>
     </hint>
     <hint type="destinationlabel">
-     <x>446</x>
-     <y>43</y>
+     <x>235</x>
+     <y>52</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonValve0</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>clkValve0()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>432</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>362</x>
+     <y>52</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>buttonValve1</sender>
-   <signal>clicked(bool)</signal>
+   <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>checkValve1(bool)</slot>
+   <slot>clkValve1()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>513</x>
-     <y>104</y>
+     <x>548</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>531</x>
-     <y>57</y>
+     <x>558</x>
+     <y>13</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>buttonValveAll</sender>
-   <signal>clicked(bool)</signal>
+   <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>checkValveAll(bool)</slot>
+   <slot>clkValveAll()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>590</x>
-     <y>103</y>
+     <x>617</x>
+     <y>99</y>
     </hint>
     <hint type="destinationlabel">
-     <x>613</x>
-     <y>71</y>
+     <x>631</x>
+     <y>37</y>
     </hint>
    </hints>
   </connection>
@@ -501,8 +530,9 @@
   <slot>checkTEC5(bool)</slot>
   <slot>checkTEC6(bool)</slot>
   <slot>checkTEC7(bool)</slot>
-  <slot>checkValve0(bool)</slot>
-  <slot>checkValve1(bool)</slot>
-  <slot>checkValveAll(bool)</slot>
+  <slot>start()</slot>
+  <slot>clkValve0()</slot>
+  <slot>clkValve1()</slot>
+  <slot>clkValveAll()</slot>
  </slots>
 </ui>
