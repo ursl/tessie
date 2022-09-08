@@ -100,7 +100,7 @@ void MainWindow::start() {
 
 
 // ----------------------------------------------------------------------
-void MainWindow::clkValve0(bool checked) {
+void MainWindow::clkValve0() {
   stringstream sbla; sbla << "checkValve0 clicked ";
   ui->textEditLog->append(sbla.str().c_str());
   #ifdef PI
@@ -111,13 +111,13 @@ void MainWindow::clkValve0(bool checked) {
 }
 
 // ----------------------------------------------------------------------
-void MainWindow::clkValve1(bool checked) {
+void MainWindow::clkValve1() {
   stringstream sbla; sbla << "checkValve1 clicked ";
   ui->textEditLog->append(sbla.str().c_str());
 }
 
 // ----------------------------------------------------------------------
-void MainWindow::clkValveAll(bool checked) {
+void MainWindow::clkValveAll() {
   stringstream sbla; sbla << "checkValveAll clicked ";
   ui->textEditLog->append(sbla.str().c_str());
 }

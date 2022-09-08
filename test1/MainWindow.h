@@ -24,9 +24,9 @@ private slots:
     void appendText(QString line);
     QString getTimeString();
 
-    void clkValve0(bool checked);
-    void clkValve1(bool checked);
-    void clkValveAll(bool checked);
+    void clkValve0();
+    void clkValve1();
+    void clkValveAll();
 
 
     void checkTEC0(bool checked);
