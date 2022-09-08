@@ -104,9 +104,9 @@ void MainWindow::clkValve0() {
   stringstream sbla; sbla << "checkValve0 clicked ";
   ui->textEditLog->append(sbla.str().c_str());
   #ifdef PI
-    stringstream sbla; sbla << "talk2FRAS";
-    fLOG(INFO, sbla.str());
-    fThread.talkToFras();
+    sbla << "talk2FRAS 0";
+    ui->textEditLog->append(sbla.str().c_str());
+    fThread.toggleValve0(0);
   #endif
 }
 
