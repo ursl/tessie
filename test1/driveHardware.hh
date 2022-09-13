@@ -77,7 +77,7 @@ private:
   int     fCANId;
   int     fCANReg;
   float   fCANVal;
-  float   fTECVoltage;
+  float   fTECParameter;
   int     fValveMask; 
   QString fDateAndTime;
 

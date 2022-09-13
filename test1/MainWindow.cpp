@@ -137,8 +137,12 @@ void MainWindow::clkValveAll() {
 void MainWindow::checkTEC0(bool checked) {
   stringstream sbla; sbla << "checkTEC0 clicked " << checked;
   ui->textEditLog->append(sbla.str().c_str());
+  if (checked) {
+      fThread.turnOnTEC(1);
+    } else {
+      fThread.turnOffTEC(1);
+    }
 }
-
 
 // ----------------------------------------------------------------------
 void MainWindow::checkTEC1(bool checked) {

@@ -206,13 +206,29 @@ int driveHardware::getId() {
 
 // ----------------------------------------------------------------------
 void  driveHardware::setTECParameter(float par) {
-  fTECVoltage = par;
+  fTECParameter = par;
+  printf("driveHardware::fTECVoltage = = %f\n", fTECParameter);
+
 }
 
 
 // ----------------------------------------------------------------------
 void  driveHardware::turnOnTEC(int itec) {
 
+  printf("driveHardware::turnOnTEC(%d)\n", itec);
+
+  // -- program parameter
+  fCANId = 0x121;
+  fCANReg = 1;
+  fCANVal = fTECParameter;
+  printf(" (1) program the parameter %f into register %d, canID = %x\n", fCANVal, fCANReg, fCANId);
+  sendCANmessage();
+
+  fCANId = 0x101;
+  fCANReg = 1;
+  fCANVal = fTECParameter;
+  printf(" (2) send CMD with register %d, canID = %x\n", fCANReg, fCANId);
+  sendCANmessage();
 
 }
 
@@ -220,6 +236,14 @@ void  driveHardware::turnOnTEC(int itec) {
 // ----------------------------------------------------------------------
 void  driveHardware::turnOffTEC(int itec) {
 
+  printf("driveHardware::turnOffTEC(%d)\n", itec);
+
+  // -- program parameter
+  fCANId = 0x101;
+  fCANReg = 2;
+  fCANVal = fTECParameter;
+  printf(" send CMD with register %d, canID = %x\n", fCANReg, fCANId);
+  sendCANmessage();
 
 }
 
