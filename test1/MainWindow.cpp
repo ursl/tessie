@@ -21,6 +21,7 @@ MainWindow::MainWindow(tLog &x, QWidget *parent) :
   ui->setupUi(this);
 }
 
+
 // -------------------------------------------------------------------------------
 MainWindow::~MainWindow() {
   delete ui;
@@ -31,6 +32,7 @@ MainWindow::~MainWindow() {
 void MainWindow::appendText(QString line) {
   ui->textEditLog->append(line);
 }
+
 
 // ----------------------------------------------------------------------
 QString MainWindow::getTimeString() {
@@ -51,6 +53,7 @@ QString MainWindow::getTimeString() {
       .arg(seconds, 2, 10, QChar('0'));
   return text;
 }
+
 
 // ----------------------------------------------------------------------
 void MainWindow::setCheckBoxTEC(int itec, bool state) {
@@ -108,6 +111,7 @@ void MainWindow::clkValve0() {
   fThread.toggleFras(1);
 }
 
+
 // ----------------------------------------------------------------------
 void MainWindow::clkValve1() {
   stringstream sbla; sbla << "checkValve1 clicked ";
@@ -116,6 +120,7 @@ void MainWindow::clkValve1() {
   ui->textEditLog->append(sbla.str().c_str());
   fThread.toggleFras(2);
 }
+
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValveAll() {
@@ -127,11 +132,13 @@ void MainWindow::clkValveAll() {
 }
 
 
+
 // ----------------------------------------------------------------------
 void MainWindow::checkTEC0(bool checked) {
   stringstream sbla; sbla << "checkTEC0 clicked " << checked;
   ui->textEditLog->append(sbla.str().c_str());
 }
+
 
 // ----------------------------------------------------------------------
 void MainWindow::checkTEC1(bool checked) {
@@ -139,11 +146,13 @@ void MainWindow::checkTEC1(bool checked) {
   ui->textEditLog->append(sbla.str().c_str());
 }
 
+
 // ----------------------------------------------------------------------
 void MainWindow::checkTEC2(bool checked) {
   stringstream sbla; sbla << "checkTEC2 clicked " << checked;
   ui->textEditLog->append(sbla.str().c_str());
 }
+
 
 // ----------------------------------------------------------------------
 void MainWindow::checkTEC3(bool checked) {
@@ -151,11 +160,13 @@ void MainWindow::checkTEC3(bool checked) {
   ui->textEditLog->append(sbla.str().c_str());
 }
 
+
 // ----------------------------------------------------------------------
 void MainWindow::checkTEC4(bool checked) {
   stringstream sbla; sbla << "checkTEC4 clicked " << checked;
   ui->textEditLog->append(sbla.str().c_str());
 }
+
 
 // ----------------------------------------------------------------------
 void MainWindow::checkTEC5(bool checked) {
@@ -163,11 +174,13 @@ void MainWindow::checkTEC5(bool checked) {
   ui->textEditLog->append(sbla.str().c_str());
 }
 
+
 // ----------------------------------------------------------------------
 void MainWindow::checkTEC6(bool checked) {
   stringstream sbla; sbla << "checkTEC6 clicked " << checked;
   ui->textEditLog->append(sbla.str().c_str());
 }
+
 
 // ----------------------------------------------------------------------
 void MainWindow::checkTEC7(bool checked) {
@@ -189,4 +202,15 @@ void MainWindow::checkTECAll(bool checked) {
 }
 
 
+// ----------------------------------------------------------------------
+void MainWindow::updateVoltageValue() {
+  QString qline = ui->textTECParameter->toPlainText();
+  float fbla = qline.toFloat();
+
+  stringstream sbla; sbla << "changed TEC parameter ->" << qline.toStdString().c_str() << "<- in float: " << fbla;
+
+  fThread.setTECParameter(fbla);
+  ui->textEditLog->append(sbla.str().c_str());
+
+}
 
