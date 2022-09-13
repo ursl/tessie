@@ -29,11 +29,19 @@ public:
 
   void  sendCANmessage();
   void  readCANmessage();
+
+  // -- controlling the FRAS/valve(s)
   void  talkToFras();
   void  toggleFras(int imask);
   void  entertainFras();
   void  shutDown();
 
+  // -- controlling the TEC
+  void  setTECParameter(float par);
+  void  turnOnTEC(int itec);
+  void  turnOffTEC(int itec);
+
+  //
   void  setId(int x);
   void  setRegister(int x);
   void  setValue(float x);
@@ -69,6 +77,7 @@ private:
   int     fCANId;
   int     fCANReg;
   float   fCANVal;
+  float   fTECVoltage;
   int     fValveMask; 
   QString fDateAndTime;
 

@@ -38,6 +38,8 @@ private slots:
     void checkTEC6(bool checked);
     void checkTEC7(bool checked);
     void checkTECAll(bool checked);
+    void updateVoltageValue();
+
 
     void start();
     void quitProgram();

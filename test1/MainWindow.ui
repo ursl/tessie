@@ -50,7 +50,7 @@
       <string>TEC controller</string>
      </property>
     </widget>
-    <widget class="QSlider" name="sliderTECTemperature">
+    <widget class="QSlider" name="sliderTECParameter">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -63,7 +63,7 @@
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="QTextEdit" name="textTECTemperature">
+    <widget class="QTextEdit" name="textTECParameter">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -284,8 +284,8 @@
   <tabstop>checkBoxTEC6</tabstop>
   <tabstop>checkBoxTEC7</tabstop>
   <tabstop>checkboxTECLockAll</tabstop>
-  <tabstop>sliderTECTemperature</tabstop>
-  <tabstop>textTECTemperature</tabstop>
+  <tabstop>sliderTECParameter</tabstop>
+  <tabstop>textTECParameter</tabstop>
   <tabstop>buttonValve0</tabstop>
   <tabstop>buttonValve1</tabstop>
   <tabstop>buttonValveAll</tabstop>
@@ -518,6 +518,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>textTECParameter</sender>
+   <signal>textChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>updateVoltageValue()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>310</x>
+     <y>273</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>311</x>
+     <y>309</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>checkTEC0(bool)</slot>
@@ -534,5 +550,6 @@
   <slot>clkValve0()</slot>
   <slot>clkValve1()</slot>
   <slot>clkValveAll()</slot>
+  <slot>updateVoltageValue()</slot>
  </slots>
 </ui>

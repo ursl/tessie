@@ -204,6 +204,25 @@ int driveHardware::getId() {
 }
 
 
+// ----------------------------------------------------------------------
+void  driveHardware::setTECParameter(float par) {
+  fTECVoltage = par;
+}
+
+
+// ----------------------------------------------------------------------
+void  driveHardware::turnOnTEC(int itec) {
+
+
+}
+
+
+// ----------------------------------------------------------------------
+void  driveHardware::turnOffTEC(int itec) {
+
+
+}
+
 
 // ----------------------------------------------------------------------
 void driveHardware::shutDown() {
