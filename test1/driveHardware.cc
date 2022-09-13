@@ -287,27 +287,27 @@ void driveHardware::sendCANmessage() {
       fFrameW.data[4] = data[3];
     }
   if (1 == command) {
-      cout << "sendCANmessage: canid = " << fCANId << " cmd = " << fCANReg
+      cout << "   sendCANmessage: canid = " << fCANId << " cmd = " << fCANReg
            << endl;
     } else {
-      cout << "canid = " << fCANId << " reg = " << fCANReg
+      cout << "   canid = " << fCANId << " reg = " << fCANReg
            << " value = " << fCANVal
            << " dlength = " << dlength
            << endl;
 
     }
-  printf("can_id  = 0x%X (from sendCANmessage())\n", fFrameW.can_id);
-  printf("can_dlc = %d\n", fFrameW.can_dlc);
+  printf("    can_id  = 0x%X (from sendCANmessage())\n", fFrameW.can_id);
+  printf("    can_dlc = %d\n", fFrameW.can_dlc);
 
   for (int i = 0; i < fFrameW.can_dlc; ++i) {
-      printf("data[%d] = %2x/%3d\r\n", i, fFrameW.data[i], fFrameW.data[i]);
+      printf("    data[%d] = %2x/%3d\r\n", i, fFrameW.data[i], fFrameW.data[i]);
     }
 
   //6.Send message
   setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
   int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
   if (nbytes != sizeof(fFrameW)) {
-      printf("Send Error frame[0]!\r\n");
+      printf("    Send Error frame[0]!\r\n");
     }
 
 
