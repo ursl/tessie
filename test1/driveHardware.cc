@@ -219,13 +219,6 @@ void  driveHardware::turnOnTEC(int itec) {
 
   printf("driveHardware::turnOnTEC(%d)\n", itec);
 
-  // -- program parameter
-  fCANId = 0x121;
-  fCANReg = 1;
-  fCANVal = fTECParameter;
-  printf(" (1) program the parameter %f into register %d, canID = %x\n", fCANVal, fCANReg, fCANId);
-  sendCANmessage();
-
   fCANId = 0x101;
   fCANReg = 1;
   fCANVal = fTECParameter;
@@ -481,22 +474,22 @@ void driveHardware::initTECData() {
       fTECData.insert(make_pair(itec, initAllTECRegister()));
     }
 
-  fTECData[8].reg["ControlVoltage_Set"].value = -998.;
-  fTECData[7].reg["ControlVoltage_Set"].value = -997.;
-  fTECData[6].reg["ControlVoltage_Set"].value = -996.;
-  fTECData[5].reg["ControlVoltage_Set"].value = -995.;
+  fTECData[8].reg["ControlVoltage_Set"].value = -8.;
+  fTECData[7].reg["ControlVoltage_Set"].value = -7.;
+  fTECData[6].reg["ControlVoltage_Set"].value = -6.;
+  fTECData[5].reg["ControlVoltage_Set"].value = -5.;
 }
 
 
 // ----------------------------------------------------------------------
 float driveHardware::getTECRegister(int itec, std::string regname) {
   if (fTECData.find(itec) == fTECData.end()) {
-    return -1001.;
+    return -1.;
   }
   if (fTECData[itec].reg.find(regname) != fTECData[itec].reg.end()) {
     return fTECData[itec].reg[regname].value;
   } else {
-    return -1003.;
+    return -3.;
   }
 }
 
@@ -504,6 +497,14 @@ float driveHardware::getTECRegister(int itec, std::string regname) {
 // ----------------------------------------------------------------------
 void driveHardware::setTECRegister(int itec, std::string regname, float value) {
   fTECData[itec].reg[regname].value = value;
+
+  // -- program parameter
+  fCANId = 0x120 | itec;
+  fCANReg = 1; //FIXME!!
+  fCANVal = value;
+  printf(" (1) program the parameter %f into register %d, canID = %x\n", fCANVal, fCANReg, fCANId);
+  sendCANmessage();
+
 }
 
 
@@ -513,31 +514,31 @@ TECData  driveHardware::initAllTECRegister() {
 
   TECRegister b;
   // -- read/write registers
-  b = {-999., "Mode",                0, 1}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "ControlVoltage_Set",  1, 1}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "PID_kp",              2, 1}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "PID_ki",              3, 1}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "PID_kd",              4, 1}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "Temp_Set",            5, 1}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "PID_Max",             6, 1}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "PID_Min",             7, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "Mode",                0, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "ControlVoltage_Set",  1, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "PID_kp",              2, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "PID_ki",              3, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "PID_kd",              4, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "Temp_Set",            5, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "PID_Max",             6, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "PID_Min",             7, 1}; tdata.reg.insert(make_pair(b.name, b));
   // -- read-only registers
-  b = {-999., "Temp_W",              8, 2}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "Temp_M",              9, 2}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "Temp_Diff",          10, 2}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "Peltier_U",          11, 2}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "Peltier_I",          12, 2}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "Peltier_R",          13, 2}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "Peltier_P",          14, 2}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "Supply_U",           15, 2}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "Supply_I",           16, 2}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "Supply_P",           17, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "Temp_W",              8, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "Temp_M",              9, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "Temp_Diff",          10, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "Peltier_U",          11, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "Peltier_I",          12, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "Peltier_R",          13, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "Peltier_P",          14, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "Supply_U",           15, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "Supply_I",           16, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "Supply_P",           17, 2}; tdata.reg.insert(make_pair(b.name, b));
   // -- commands
-  b = {-999., "No Command",          0, 3}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "Power_On",            1, 3}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "Power_Off",           2, 3}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "Watchdog",            3, 3}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-999., "Alarm",               4, 3}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "No Command",          0, 3}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "Power_On",            1, 3}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "Power_Off",           2, 3}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "Watchdog",            3, 3}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "Alarm",               4, 3}; tdata.reg.insert(make_pair(b.name, b));
 
   return tdata;
 }
