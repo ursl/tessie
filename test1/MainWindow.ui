@@ -490,22 +490,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxTEC8</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>checkTEC7(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>510</x>
-     <y>155</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>468</x>
-     <y>121</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>checkBoxTEC5</sender>
    <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
@@ -681,6 +665,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBoxTEC8</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkTEC8(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>489</x>
+     <y>145</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>760</x>
+     <y>9</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>checkTEC0(bool)</slot>
@@ -701,5 +701,6 @@
   <slot>tec8ChangePar0()</slot>
   <slot>clkRefresh()</slot>
   <slot>tec1ChangePar0()</slot>
+  <slot>checkTEC8(bool)</slot>
  </slots>
 </ui>

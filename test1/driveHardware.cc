@@ -472,12 +472,9 @@ void driveHardware::readCANmessage() {
 void driveHardware::initTECData() {
   for (unsigned int itec = 1; itec <=8; ++itec) {
       fTECData.insert(make_pair(itec, initAllTECRegister()));
-    }
+      fTECData[itec].reg["ControlVoltage_Set"].value = -static_cast<float>(itec);
 
-  fTECData[8].reg["ControlVoltage_Set"].value = -8.;
-  fTECData[7].reg["ControlVoltage_Set"].value = -7.;
-  fTECData[6].reg["ControlVoltage_Set"].value = -6.;
-  fTECData[5].reg["ControlVoltage_Set"].value = -5.;
+    }
 }
 
 
@@ -500,9 +497,10 @@ void driveHardware::setTECRegister(int itec, std::string regname, float value) {
 
   // -- program parameter
   fCANId = 0x120 | itec;
-  fCANReg = 1; //FIXME!!
+  fCANReg = fTECData[itec].getIdx(regname);
+
   fCANVal = value;
-  printf(" (1) program the parameter %f into register %d, canID = %x\n", fCANVal, fCANReg, fCANId);
+  printf(" (1) program the parameter %f into register %d, canID = %x \n", fCANVal, fCANReg, fCANId);
   sendCANmessage();
 
 }

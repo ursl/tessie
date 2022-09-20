@@ -303,7 +303,17 @@ void MainWindow::updateHardwareValues() {
   ui->tec5_par0->setText(sval);
   ui->tec5_par0->setStyleSheet("QLineEdit {color : green; }");
 
-  // FIXME
+  sval = QString::number(fThread.getTECRegister(4, "ControlVoltage_Set"), 'f', 2);
+  ui->tec4_par0->setText(sval);
+  ui->tec4_par0->setStyleSheet("QLineEdit {color : green; }");
+
+  sval = QString::number(fThread.getTECRegister(3, "ControlVoltage_Set"), 'f', 2);
+  ui->tec3_par0->setText(sval);
+  ui->tec3_par0->setStyleSheet("QLineEdit {color : green; }");
+
+  sval = QString::number(fThread.getTECRegister(2, "ControlVoltage_Set"), 'f', 2);
+  ui->tec2_par0->setText(sval);
+  ui->tec2_par0->setStyleSheet("QLineEdit {color : green; }");
 
   sval = QString::number(fThread.getTECRegister(1, "ControlVoltage_Set"), 'f', 2);
   ui->tec1_par0->setText(sval);

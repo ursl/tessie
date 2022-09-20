@@ -1,6 +1,8 @@
 #ifndef DRIVEHARDWARE_H
 #define DRIVEHARDWARE_H
 
+#include <iostream>
+
 #include <QtCore/QThread>
 #include <QtCore/QMutex>
 #include <QtCore/QWaitCondition>
@@ -29,6 +31,12 @@ struct TECRegister {
 
 // ----------------------------------------------------------------------
 struct TECData {
+  int getIdx(std::string regname) {
+    int idx = reg.find(regname)->second.idx;
+    std::cout << "regname " << regname << " -> idx = " << idx << std::endl;
+    return idx;
+  }
+
   std::map<std::string, TECRegister> reg;
 };
 
@@ -116,6 +124,7 @@ private:
 #endif
 
   // -- all the registers, one element per TEC
+  // -- this is a map instead of a vector to avoid the mismatch between '0' and '1'
   std::map<int, TECData> fTECData;
 
 };
