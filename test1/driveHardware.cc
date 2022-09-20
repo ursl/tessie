@@ -23,6 +23,8 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   QDateTime dt = QDateTime::currentDateTime();
   fDateAndTime = dt.date().toString() + "  " +  dt.time().toString("hh:mm");
 
+  initTECData();
+
   //rpc  fRpcThread = new QThread();
   //rpc  fRpcServer = new rpcServer(this);
   //rpc  connect(this, &driveHardware::sendToServer, fRpcServer, &rpcServer::sentToServer);
@@ -470,4 +472,47 @@ void driveHardware::readCANmessage() {
     }
 #endif
   return;
+}
+
+
+// ----------------------------------------------------------------------
+void driveHardware::initTECData() {
+  for (unsigned int itec = 1; itec <=8; ++itec) {
+      fTECData.push_back(initAllTECRegister());
+    }
+
+
+}
+
+
+// ----------------------------------------------------------------------
+TECData  driveHardware::initAllTECRegister() {
+  TECData tdata;
+
+  TECRegister b;
+  b = {0., "Mode",              0, 1};  tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "ControlVoltage_Set", 1, 1}; tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "PID_kp", 2, 1};             tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "PID_ki", 3, 1};             tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "PID_kd", 4, 1};             tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "Temp_Set", 5, 1};           tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "PID_Max", 6, 1};            tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "PID_Min", 7, 1};            tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "Temp_W", 8, 2};             tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "Temp_M", 9, 2};             tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "Temp_Diff", 10, 2};         tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "Peltier_U", 11, 2};         tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "Peltier_I", 12, 2};         tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "Peltier_R", 13, 2};         tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "Peltier_P", 14, 2};         tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "Supply_U", 15, 2};          tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "Supply_I", 16, 2};          tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "Supply_P", 17, 2};          tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "No Command", 0, 3};         tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "Power_On", 1, 3};           tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "Power_Off", 2, 3};          tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "Watchdog", 3, 3};           tdata.regs.insert(make_pair(b.name, b));
+  b = {0., "Alarm", 4, 3};              tdata.regs.insert(make_pair(b.name, b));
+
+  return tdata;
 }

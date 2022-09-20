@@ -17,6 +17,22 @@
 #include <linux/can/raw.h>
 #endif
 
+
+// ----------------------------------------------------------------------
+struct TECRegister {
+  float       value;
+  std::string name;
+  uint32_t    idx;
+  uint32_t    type; // 0 = unset, 1 = W/R, 2 = R, 3 = C
+};
+
+// ----------------------------------------------------------------------
+struct TECData {
+  std::map<std::string, TECRegister> regs;
+};
+
+
+// ----------------------------------------------------------------------
 class driveHardware: public QThread {
   Q_OBJECT
 
@@ -61,7 +77,9 @@ signals:
   void  startServer();
 
 protected:
-  void  run() override;
+  void        run() override;
+  void        initTECData();
+  TECData     initAllTECRegister();
 
 private:
   tLog&   fLOG;
@@ -92,6 +110,9 @@ private:
   struct can_frame fFrameR;
 
 #endif
+
+  // -- all the registers, one element per TEC
+  std::vector<TECData> fTECData;
 
 };
 
