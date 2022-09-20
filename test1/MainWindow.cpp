@@ -117,6 +117,13 @@ void MainWindow::tec8ChangePar0() {
   fThread.setTECRegister(8, "ControlVoltage_Set", xval);
 }
 
+// ----------------------------------------------------------------------
+void MainWindow::tec1ChangePar0() {
+  ui->tec1_par0->setStyleSheet("QLineEdit {color : red; }");
+  QString sval = ui->tec1_par0->text();
+  float xval = sval.toFloat();
+  fThread.setTECRegister(1, "ControlVoltage_Set", xval);
+}
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValve0() {
@@ -153,6 +160,13 @@ void MainWindow::clkValveAll() {
 void MainWindow::checkTEC0(bool checked) {
   stringstream sbla; sbla << "checkTEC0 clicked " << checked;
   ui->textEditLog->append(sbla.str().c_str());
+  ui->textEditLog->append("   do nothing!");
+}
+
+// ----------------------------------------------------------------------
+void MainWindow::checkTEC1(bool checked) {
+  stringstream sbla; sbla << "checkTEC1 clicked " << checked;
+  ui->textEditLog->append(sbla.str().c_str());
   if (checked) {
       fThread.turnOnTEC(1);
     } else {
@@ -160,17 +174,16 @@ void MainWindow::checkTEC0(bool checked) {
     }
 }
 
-// ----------------------------------------------------------------------
-void MainWindow::checkTEC1(bool checked) {
-  stringstream sbla; sbla << "checkTEC1 clicked " << checked;
-  ui->textEditLog->append(sbla.str().c_str());
-}
-
 
 // ----------------------------------------------------------------------
 void MainWindow::checkTEC2(bool checked) {
   stringstream sbla; sbla << "checkTEC2 clicked " << checked;
   ui->textEditLog->append(sbla.str().c_str());
+  if (checked) {
+      fThread.turnOnTEC(2);
+    } else {
+      fThread.turnOffTEC(2);
+    }
 }
 
 
@@ -178,6 +191,11 @@ void MainWindow::checkTEC2(bool checked) {
 void MainWindow::checkTEC3(bool checked) {
   stringstream sbla; sbla << "checkTEC3 clicked " << checked;
   ui->textEditLog->append(sbla.str().c_str());
+  if (checked) {
+      fThread.turnOnTEC(3);
+    } else {
+      fThread.turnOffTEC(3);
+    }
 }
 
 
@@ -185,6 +203,11 @@ void MainWindow::checkTEC3(bool checked) {
 void MainWindow::checkTEC4(bool checked) {
   stringstream sbla; sbla << "checkTEC4 clicked " << checked;
   ui->textEditLog->append(sbla.str().c_str());
+  if (checked) {
+      fThread.turnOnTEC(4);
+    } else {
+      fThread.turnOffTEC(4);
+    }
 }
 
 
@@ -192,6 +215,11 @@ void MainWindow::checkTEC4(bool checked) {
 void MainWindow::checkTEC5(bool checked) {
   stringstream sbla; sbla << "checkTEC5 clicked " << checked;
   ui->textEditLog->append(sbla.str().c_str());
+  if (checked) {
+      fThread.turnOnTEC(5);
+    } else {
+      fThread.turnOffTEC(5);
+    }
 }
 
 
@@ -199,6 +227,11 @@ void MainWindow::checkTEC5(bool checked) {
 void MainWindow::checkTEC6(bool checked) {
   stringstream sbla; sbla << "checkTEC6 clicked " << checked;
   ui->textEditLog->append(sbla.str().c_str());
+  if (checked) {
+      fThread.turnOnTEC(6);
+    } else {
+      fThread.turnOffTEC(6);
+    }
 }
 
 
@@ -206,8 +239,23 @@ void MainWindow::checkTEC6(bool checked) {
 void MainWindow::checkTEC7(bool checked) {
   stringstream sbla; sbla << "checkTEC7 clicked " << checked;
   ui->textEditLog->append(sbla.str().c_str());
+  if (checked) {
+      fThread.turnOnTEC(7);
+    } else {
+      fThread.turnOffTEC(7);
+    }
 }
 
+// ----------------------------------------------------------------------
+void MainWindow::checkTEC8(bool checked) {
+  stringstream sbla; sbla << "checkTEC8 clicked " << checked;
+  ui->textEditLog->append(sbla.str().c_str());
+  if (checked) {
+      fThread.turnOnTEC(8);
+    } else {
+      fThread.turnOffTEC(8);
+    }
+}
 
 
 // ----------------------------------------------------------------------
@@ -254,5 +302,11 @@ void MainWindow::updateHardwareValues() {
   sval = QString::number(fThread.getTECRegister(5, "ControlVoltage_Set"), 'f', 2);
   ui->tec5_par0->setText(sval);
   ui->tec5_par0->setStyleSheet("QLineEdit {color : green; }");
+
+  // FIXME
+
+  sval = QString::number(fThread.getTECRegister(1, "ControlVoltage_Set"), 'f', 2);
+  ui->tec1_par0->setText(sval);
+  ui->tec1_par0->setStyleSheet("QLineEdit {color : green; }");
 
 }

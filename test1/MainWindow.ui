@@ -199,7 +199,7 @@
       <string>Refresh</string>
      </property>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>190</x>
@@ -208,7 +208,7 @@
        <height>23</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="hlayoutTop_par0">
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
@@ -242,6 +242,56 @@
       </item>
       <item>
        <widget class="QLineEdit" name="tec5_par0">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>290</y>
+       <width>441</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="hlayoutBot_par0">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>ControlVoltage_Set</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec1_par0">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec2_par0">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec3_par0">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec4_par0">
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -347,7 +397,7 @@
    <sender>checkBoxTEC1</sender>
    <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
-   <slot>checkTEC0(bool)</slot>
+   <slot>checkTEC1(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>521</x>
@@ -395,7 +445,7 @@
    <sender>checkBoxTEC2</sender>
    <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
-   <slot>checkTEC1(bool)</slot>
+   <slot>checkTEC2(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>601</x>
@@ -411,7 +461,7 @@
    <sender>checkBoxTEC3</sender>
    <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
-   <slot>checkTEC2(bool)</slot>
+   <slot>checkTEC3(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>681</x>
@@ -427,7 +477,7 @@
    <sender>checkBoxTEC4</sender>
    <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
-   <slot>checkTEC3(bool)</slot>
+   <slot>checkTEC4(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>761</x>
@@ -459,7 +509,7 @@
    <sender>checkBoxTEC5</sender>
    <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
-   <slot>checkTEC4(bool)</slot>
+   <slot>checkTEC5(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>761</x>
@@ -475,7 +525,7 @@
    <sender>checkBoxTEC6</sender>
    <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
-   <slot>checkTEC5(bool)</slot>
+   <slot>checkTEC6(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>670</x>
@@ -491,7 +541,7 @@
    <sender>checkBoxTEC7</sender>
    <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
-   <slot>checkTEC6(bool)</slot>
+   <slot>checkTEC7(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>580</x>
@@ -585,7 +635,7 @@
   </connection>
   <connection>
    <sender>tec8_par0</sender>
-   <signal>editingFinished()</signal>
+   <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
    <slot>tec8ChangePar0()</slot>
    <hints>
@@ -615,6 +665,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tec1_par0</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec1ChangePar0()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>477</x>
+     <y>402</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>112</x>
+     <y>388</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>checkTEC0(bool)</slot>
@@ -634,5 +700,6 @@
   <slot>updateVoltageValue()</slot>
   <slot>tec8ChangePar0()</slot>
   <slot>clkRefresh()</slot>
+  <slot>tec1ChangePar0()</slot>
  </slots>
 </ui>

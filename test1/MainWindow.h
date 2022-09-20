@@ -38,10 +38,12 @@ private slots:
     void checkTEC5(bool checked);
     void checkTEC6(bool checked);
     void checkTEC7(bool checked);
+    void checkTEC8(bool checked);
     void checkTECAll(bool checked);
     void updateVoltageValue();
 
     void tec8ChangePar0();
+    void tec1ChangePar0();
 
     void  updateHardwareValues();
 
