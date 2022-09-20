@@ -20,9 +20,9 @@
    <widget class="QFrame" name="frameTECController">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>120</x>
       <y>100</y>
-      <width>621</width>
+      <width>661</width>
       <height>461</height>
      </rect>
     </property>
@@ -76,30 +76,14 @@
       <string>lock all</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBoxTEC0">
+    <widget class="QCheckBox" name="checkBoxTEC1">
      <property name="enabled">
       <bool>true</bool>
      </property>
      <property name="geometry">
       <rect>
-       <x>140</x>
-       <y>100</y>
-       <width>82</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>TEC 0</string>
-     </property>
-     <property name="checked">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBoxTEC1">
-     <property name="geometry">
-      <rect>
-       <x>220</x>
-       <y>100</y>
+       <x>320</x>
+       <y>260</y>
        <width>82</width>
        <height>20</height>
       </rect>
@@ -107,12 +91,15 @@
      <property name="text">
       <string>TEC 1</string>
      </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
     </widget>
     <widget class="QCheckBox" name="checkBoxTEC2">
      <property name="geometry">
       <rect>
-       <x>300</x>
-       <y>100</y>
+       <x>400</x>
+       <y>260</y>
        <width>82</width>
        <height>20</height>
       </rect>
@@ -124,8 +111,8 @@
     <widget class="QCheckBox" name="checkBoxTEC3">
      <property name="geometry">
       <rect>
-       <x>380</x>
-       <y>100</y>
+       <x>480</x>
+       <y>260</y>
        <width>82</width>
        <height>20</height>
       </rect>
@@ -137,8 +124,8 @@
     <widget class="QCheckBox" name="checkBoxTEC4">
      <property name="geometry">
       <rect>
-       <x>380</x>
-       <y>50</y>
+       <x>560</x>
+       <y>260</y>
        <width>82</width>
        <height>20</height>
       </rect>
@@ -150,9 +137,9 @@
     <widget class="QCheckBox" name="checkBoxTEC5">
      <property name="geometry">
       <rect>
-       <x>300</x>
-       <y>50</y>
-       <width>71</width>
+       <x>560</x>
+       <y>40</y>
+       <width>82</width>
        <height>20</height>
       </rect>
      </property>
@@ -163,9 +150,9 @@
     <widget class="QCheckBox" name="checkBoxTEC6">
      <property name="geometry">
       <rect>
-       <x>220</x>
-       <y>50</y>
-       <width>61</width>
+       <x>480</x>
+       <y>40</y>
+       <width>71</width>
        <height>20</height>
       </rect>
      </property>
@@ -176,22 +163,98 @@
     <widget class="QCheckBox" name="checkBoxTEC7">
      <property name="geometry">
       <rect>
-       <x>140</x>
-       <y>50</y>
-       <width>71</width>
-       <height>16</height>
+       <x>400</x>
+       <y>40</y>
+       <width>61</width>
+       <height>20</height>
       </rect>
      </property>
      <property name="text">
       <string>TEC 7</string>
      </property>
     </widget>
+    <widget class="QCheckBox" name="checkBoxTEC8">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>40</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TEC 8</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="buttonRefresh">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>20</y>
+       <width>100</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Refresh</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>70</y>
+       <width>441</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>ControlVoltage_Set</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec8_par0">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec7_par0">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec6_par0">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec5_par0">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
    <widget class="QToolButton" name="buttonQuit">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>80</y>
+      <x>20</x>
+      <y>70</y>
       <width>81</width>
       <height>22</height>
      </rect>
@@ -265,7 +328,6 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <tabstops>
-  <tabstop>checkBoxTEC0</tabstop>
   <tabstop>checkBoxTEC1</tabstop>
   <tabstop>checkBoxTEC2</tabstop>
   <tabstop>checkBoxTEC3</tabstop>
@@ -273,6 +335,7 @@
   <tabstop>checkBoxTEC5</tabstop>
   <tabstop>checkBoxTEC6</tabstop>
   <tabstop>checkBoxTEC7</tabstop>
+  <tabstop>checkBoxTEC8</tabstop>
   <tabstop>checkboxTECLockAll</tabstop>
   <tabstop>textTECParameter</tabstop>
   <tabstop>buttonQuit</tabstop>
@@ -281,14 +344,14 @@
  <resources/>
  <connections>
   <connection>
-   <sender>checkBoxTEC0</sender>
+   <sender>checkBoxTEC1</sender>
    <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>checkTEC0(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>418</x>
-     <y>261</y>
+     <x>521</x>
+     <y>379</y>
     </hint>
     <hint type="destinationlabel">
      <x>423</x>
@@ -303,8 +366,8 @@
    <slot>quitProgram()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>131</x>
-     <y>111</y>
+     <x>100</x>
+     <y>91</y>
     </hint>
     <hint type="destinationlabel">
      <x>129</x>
@@ -319,8 +382,8 @@
    <slot>checkTECAll(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>321</x>
-     <y>209</y>
+     <x>224</x>
+     <y>169</y>
     </hint>
     <hint type="destinationlabel">
      <x>324</x>
@@ -329,14 +392,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxTEC1</sender>
+   <sender>checkBoxTEC2</sender>
    <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>checkTEC1(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>521</x>
-     <y>268</y>
+     <x>601</x>
+     <y>379</y>
     </hint>
     <hint type="destinationlabel">
      <x>546</x>
@@ -345,14 +408,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxTEC2</sender>
+   <sender>checkBoxTEC3</sender>
    <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>checkTEC2(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>601</x>
-     <y>256</y>
+     <x>681</x>
+     <y>379</y>
     </hint>
     <hint type="destinationlabel">
      <x>611</x>
@@ -361,14 +424,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxTEC3</sender>
+   <sender>checkBoxTEC4</sender>
    <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>checkTEC3(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>674</x>
-     <y>264</y>
+     <x>761</x>
+     <y>379</y>
     </hint>
     <hint type="destinationlabel">
      <x>676</x>
@@ -377,14 +440,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxTEC7</sender>
+   <sender>checkBoxTEC8</sender>
    <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>checkTEC7(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>447</x>
-     <y>206</y>
+     <x>510</x>
+     <y>155</y>
     </hint>
     <hint type="destinationlabel">
      <x>468</x>
@@ -393,14 +456,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxTEC4</sender>
+   <sender>checkBoxTEC5</sender>
    <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>checkTEC4(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>701</x>
-     <y>211</y>
+     <x>761</x>
+     <y>159</y>
     </hint>
     <hint type="destinationlabel">
      <x>739</x>
@@ -409,14 +472,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxTEC5</sender>
+   <sender>checkBoxTEC6</sender>
    <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>checkTEC5(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>581</x>
-     <y>208</y>
+     <x>670</x>
+     <y>159</y>
     </hint>
     <hint type="destinationlabel">
      <x>672</x>
@@ -425,14 +488,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxTEC6</sender>
+   <sender>checkBoxTEC7</sender>
    <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>checkTEC6(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>500</x>
-     <y>212</y>
+     <x>580</x>
+     <y>159</y>
     </hint>
     <hint type="destinationlabel">
      <x>524</x>
@@ -463,8 +526,8 @@
    <slot>clkValve0()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>432</x>
-     <y>98</y>
+     <x>109</x>
+     <y>120</y>
     </hint>
     <hint type="destinationlabel">
      <x>362</x>
@@ -479,8 +542,8 @@
    <slot>clkValve1()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>548</x>
-     <y>99</y>
+     <x>109</x>
+     <y>154</y>
     </hint>
     <hint type="destinationlabel">
      <x>558</x>
@@ -495,8 +558,8 @@
    <slot>clkValveAll()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>617</x>
-     <y>99</y>
+     <x>109</x>
+     <y>188</y>
     </hint>
     <hint type="destinationlabel">
      <x>631</x>
@@ -511,12 +574,44 @@
    <slot>updateVoltageValue()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>310</x>
-     <y>273</y>
+     <x>230</x>
+     <y>230</y>
     </hint>
     <hint type="destinationlabel">
      <x>311</x>
      <y>309</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec8_par0</sender>
+   <signal>editingFinished()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec8ChangePar0()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>466</x>
+     <y>186</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>110</x>
+     <y>235</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonRefresh</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>clkRefresh()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>311</x>
+     <y>142</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>248</x>
+     <y>67</y>
     </hint>
    </hints>
   </connection>
@@ -537,5 +632,7 @@
   <slot>clkValve1()</slot>
   <slot>clkValveAll()</slot>
   <slot>updateVoltageValue()</slot>
+  <slot>tec8ChangePar0()</slot>
+  <slot>clkRefresh()</slot>
  </slots>
 </ui>

@@ -28,6 +28,7 @@ private slots:
     void clkValve1();
     void clkValveAll();
 
+    void clkRefresh();
 
     void checkTEC0(bool checked);
     void checkTEC1(bool checked);
@@ -40,6 +41,9 @@ private slots:
     void checkTECAll(bool checked);
     void updateVoltageValue();
 
+    void tec8ChangePar0();
+
+    void  updateHardwareValues();
 
     void start();
     void quitProgram();

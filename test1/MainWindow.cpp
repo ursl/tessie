@@ -19,10 +19,12 @@ MainWindow::MainWindow(tLog &x, QWidget *parent) :
   fThread(x) {
   fLOG.setHw(&fThread);
   ui->setupUi(this);
+
+  updateHardwareValues();
 }
 
 
-// -------------------------------------------------------------------------------
+// ----------------------------------------------------------------------
 MainWindow::~MainWindow() {
   delete ui;
 }
@@ -59,28 +61,28 @@ QString MainWindow::getTimeString() {
 void MainWindow::setCheckBoxTEC(int itec, bool state) {
   switch (itec) {
     case 0:
-      ui->checkBoxTEC0->setChecked(state);
-      break;
-    case 1:
       ui->checkBoxTEC1->setChecked(state);
       break;
-    case 2:
+    case 1:
       ui->checkBoxTEC2->setChecked(state);
       break;
-    case 3:
+    case 2:
       ui->checkBoxTEC3->setChecked(state);
       break;
-    case 4:
+    case 3:
       ui->checkBoxTEC4->setChecked(state);
       break;
-    case 5:
+    case 4:
       ui->checkBoxTEC5->setChecked(state);
       break;
-    case 6:
+    case 5:
       ui->checkBoxTEC6->setChecked(state);
       break;
-    case 7:
+    case 6:
       ui->checkBoxTEC7->setChecked(state);
+      break;
+    case 7:
+      ui->checkBoxTEC8->setChecked(state);
       break;
     }
 }
@@ -94,11 +96,25 @@ void MainWindow::quitProgram() {
 }
 
 
+void MainWindow::clkRefresh() {
+  updateHardwareValues();
+
+}
+
 // ----------------------------------------------------------------------
 void MainWindow::start() {
   stringstream sbla; sbla << "Startup";
   ui->textEditLog->append(sbla.str().c_str());
   fThread.runPrintout(1,1);
+}
+
+
+// ----------------------------------------------------------------------
+void MainWindow::tec8ChangePar0() {
+  ui->tec8_par0->setStyleSheet("QLineEdit {color : red; }");
+  QString sval = ui->tec8_par0->text();
+  float xval = sval.toFloat();
+  fThread.setTECRegister(8, "ControlVoltage_Set", xval);
 }
 
 
@@ -218,3 +234,25 @@ void MainWindow::updateVoltageValue() {
 
 }
 
+
+// ----------------------------------------------------------------------
+void MainWindow::updateHardwareValues() {
+
+  QString sval;
+  sval = QString::number(fThread.getTECRegister(8, "ControlVoltage_Set"), 'f', 2);
+  ui->tec8_par0->setText(sval);
+  ui->tec8_par0->setStyleSheet("QLineEdit {color : green; }");
+
+  sval = QString::number(fThread.getTECRegister(7, "ControlVoltage_Set"), 'f', 2);
+  ui->tec7_par0->setText(sval);
+  ui->tec7_par0->setStyleSheet("QLineEdit {color : green; }");
+
+  sval = QString::number(fThread.getTECRegister(6, "ControlVoltage_Set"), 'f', 2);
+  ui->tec6_par0->setText(sval);
+  ui->tec6_par0->setStyleSheet("QLineEdit {color : green; }");
+
+  sval = QString::number(fThread.getTECRegister(5, "ControlVoltage_Set"), 'f', 2);
+  ui->tec5_par0->setText(sval);
+  ui->tec5_par0->setStyleSheet("QLineEdit {color : green; }");
+
+}

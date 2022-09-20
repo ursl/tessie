@@ -26,9 +26,10 @@ struct TECRegister {
   uint32_t    type; // 0 = unset, 1 = W/R, 2 = R, 3 = C
 };
 
+
 // ----------------------------------------------------------------------
 struct TECData {
-  std::map<std::string, TECRegister> regs;
+  std::map<std::string, TECRegister> reg;
 };
 
 
@@ -63,6 +64,9 @@ public:
   int   getId();
   int   getRegister();
   float getValue();
+
+  float getTECRegister(int itec, std::string regname);
+  void  setTECRegister(int itec, std::string regname, float value);
 
   void  printToGUI(std::string);
   void  getMessage(std::string);
@@ -112,7 +116,7 @@ private:
 #endif
 
   // -- all the registers, one element per TEC
-  std::vector<TECData> fTECData;
+  std::map<int, TECData> fTECData;
 
 };
 
