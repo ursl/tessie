@@ -156,18 +156,19 @@ void driveHardware::runPrintout(int reg, float val) {
 
 // ----------------------------------------------------------------------
 void driveHardware::run() {
-  std::chrono::milliseconds oneSec(1000);
+  std::chrono::milliseconds oneTenthSec(100);
   cout << "Hallo in run()" << endl;
   int cnt(0);
   while (1) {
       ++cnt;
+      std::this_thread::sleep_for(oneTenthSec);
       if (cnt%10 == 1) {
           cout << "Hallo in run(), cnt = " << cnt << endl;
         }
       //    readCANmessage();
 #ifdef PI
       entertainFras();
-      std::this_thread::sleep_for(oneSec);
+      std::this_thread::sleep_for(oneTenthSec);
 #endif
     }
 
@@ -209,7 +210,7 @@ int driveHardware::getId() {
 // ----------------------------------------------------------------------
 void  driveHardware::setTECParameter(float par) {
   fTECParameter = par;
-  printf("driveHardware::fTECVoltage = = %f\n", fTECParameter);
+  printf("driveHardware::fTECVoltage = %f\n", fTECParameter);
 
 }
 
@@ -219,8 +220,8 @@ void  driveHardware::turnOnTEC(int itec) {
 
   printf("driveHardware::turnOnTEC(%d)\n", itec);
 
-  fCANId = 0x101;
-  fCANReg = 1;
+  fCANId = ((0x1<<8) | itec);
+  fCANReg = 1; // Power_On
   fCANVal = fTECParameter;
   printf(" (2) send CMD with register %d, canID = %x\n", fCANReg, fCANId);
   sendCANmessage();
@@ -233,9 +234,8 @@ void  driveHardware::turnOffTEC(int itec) {
 
   printf("driveHardware::turnOffTEC(%d)\n", itec);
 
-  // -- program parameter
-  fCANId = 0x101;
-  fCANReg = 2;
+  fCANId = ((0x1<<8) | itec);
+  fCANReg = 2; // Power_Off
   fCANVal = fTECParameter;
   printf(" send CMD with register %d, canID = %x\n", fCANReg, fCANId);
   sendCANmessage();
@@ -260,7 +260,8 @@ void driveHardware::sendCANmessage() {
   fFrameW.can_id = fCANId;
   int dlength(0), command(0);
   if (0x0 == ((0x0f0 & fCANId)>>4)) {
-      // -- x0x is command access and no subsequent 4 bytes are required. fCANReg indicates the command type
+      // -- x0x is command access and no subsequent 4 bytes are required.
+      //    fCANReg indicates the command type
       dlength = 1;
       command = 1;
     }

@@ -60,31 +60,37 @@ QString MainWindow::getTimeString() {
 // ----------------------------------------------------------------------
 void MainWindow::setCheckBoxTEC(int itec, bool state) {
   switch (itec) {
-    case 0:
+    case 1:
       ui->checkBoxTEC1->setChecked(state);
       break;
-    case 1:
+    case 2:
       ui->checkBoxTEC2->setChecked(state);
       break;
-    case 2:
+    case 3:
       ui->checkBoxTEC3->setChecked(state);
       break;
-    case 3:
+    case 4:
       ui->checkBoxTEC4->setChecked(state);
       break;
-    case 4:
+    case 5:
       ui->checkBoxTEC5->setChecked(state);
       break;
-    case 5:
+    case 6:
       ui->checkBoxTEC6->setChecked(state);
       break;
-    case 6:
+    case 7:
       ui->checkBoxTEC7->setChecked(state);
       break;
-    case 7:
+    case 8:
       ui->checkBoxTEC8->setChecked(state);
       break;
-    }
+  }
+  if (state) {
+    fThread.turnOnTEC(itec);
+  } else {
+    fThread.turnOffTEC(itec);
+  }
+
 }
 
 
@@ -165,96 +171,48 @@ void MainWindow::checkTEC0(bool checked) {
 
 // ----------------------------------------------------------------------
 void MainWindow::checkTEC1(bool checked) {
-  stringstream sbla; sbla << "checkTEC1 clicked " << checked;
-  ui->textEditLog->append(sbla.str().c_str());
-  if (checked) {
-      fThread.turnOnTEC(1);
-    } else {
-      fThread.turnOffTEC(1);
-    }
+  setCheckBoxTEC(1, checked);
 }
 
 
 // ----------------------------------------------------------------------
 void MainWindow::checkTEC2(bool checked) {
-  stringstream sbla; sbla << "checkTEC2 clicked " << checked;
-  ui->textEditLog->append(sbla.str().c_str());
-  if (checked) {
-      fThread.turnOnTEC(2);
-    } else {
-      fThread.turnOffTEC(2);
-    }
+  setCheckBoxTEC(2, checked);
 }
 
 
 // ----------------------------------------------------------------------
 void MainWindow::checkTEC3(bool checked) {
-  stringstream sbla; sbla << "checkTEC3 clicked " << checked;
-  ui->textEditLog->append(sbla.str().c_str());
-  if (checked) {
-      fThread.turnOnTEC(3);
-    } else {
-      fThread.turnOffTEC(3);
-    }
+  setCheckBoxTEC(3, checked);
 }
 
 
 // ----------------------------------------------------------------------
 void MainWindow::checkTEC4(bool checked) {
-  stringstream sbla; sbla << "checkTEC4 clicked " << checked;
-  ui->textEditLog->append(sbla.str().c_str());
-  if (checked) {
-      fThread.turnOnTEC(4);
-    } else {
-      fThread.turnOffTEC(4);
-    }
+  setCheckBoxTEC(4, checked);
 }
 
 
 // ----------------------------------------------------------------------
 void MainWindow::checkTEC5(bool checked) {
-  stringstream sbla; sbla << "checkTEC5 clicked " << checked;
-  ui->textEditLog->append(sbla.str().c_str());
-  if (checked) {
-      fThread.turnOnTEC(5);
-    } else {
-      fThread.turnOffTEC(5);
-    }
+  setCheckBoxTEC(5, checked);
 }
 
 
 // ----------------------------------------------------------------------
 void MainWindow::checkTEC6(bool checked) {
-  stringstream sbla; sbla << "checkTEC6 clicked " << checked;
-  ui->textEditLog->append(sbla.str().c_str());
-  if (checked) {
-      fThread.turnOnTEC(6);
-    } else {
-      fThread.turnOffTEC(6);
-    }
+  setCheckBoxTEC(6, checked);
 }
 
 
 // ----------------------------------------------------------------------
 void MainWindow::checkTEC7(bool checked) {
-  stringstream sbla; sbla << "checkTEC7 clicked " << checked;
-  ui->textEditLog->append(sbla.str().c_str());
-  if (checked) {
-      fThread.turnOnTEC(7);
-    } else {
-      fThread.turnOffTEC(7);
-    }
+  setCheckBoxTEC(7, checked);
 }
 
 // ----------------------------------------------------------------------
 void MainWindow::checkTEC8(bool checked) {
-  stringstream sbla; sbla << "checkTEC8 clicked " << checked;
-  ui->textEditLog->append(sbla.str().c_str());
-  if (checked) {
-      fThread.turnOnTEC(8);
-    } else {
-      fThread.turnOffTEC(8);
-    }
+  setCheckBoxTEC(8, checked);
 }
 
 
@@ -264,7 +222,7 @@ void MainWindow::checkTECAll(bool checked) {
   string sline = sbla.str();
   QString qline = sline.c_str();
   ui->textEditLog->append(qline);
-  for (int i = 0; i < 8; ++i) {
+  for (int i = 1; i <= 8; ++i) {
       setCheckBoxTEC(i, checked);
     }
 }
