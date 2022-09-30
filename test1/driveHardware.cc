@@ -170,7 +170,7 @@ void driveHardware::run() {
       std::this_thread::sleep_for(oneTenthSec);
       if (cnt%10 == 1) {
           cout << "Hallo in run(), cnt = " << cnt << endl;
-          dumpCSV();
+         dumpCSV();
         }
       //    readCANmessage();
 #ifdef PI
@@ -267,7 +267,7 @@ void driveHardware::shutDown() {
 // ----------------------------------------------------------------------
 void driveHardware::readCANmessage() {
   fCANReadIntVal   += 1;
-  fCANReadFloatVal += 1.0;
+  fCANReadFloatVal += 0.1;
 #ifdef PI
   static int cntCAN(0);
 
@@ -493,8 +493,9 @@ void driveHardware::toggleFras(int imask) {
 void driveHardware::initTECData() {
   for (unsigned int itec = 1; itec <=8; ++itec) {
       fTECData.insert(make_pair(itec, initAllTECRegister()));
+      // -- just for fun:
       fTECData[itec].reg["ControlVoltage_Set"].value = -static_cast<float>(itec);
-
+      fTECData[itec].print();
     }
 }
 
