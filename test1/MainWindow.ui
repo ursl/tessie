@@ -53,12 +53,12 @@
       <string>TEC controller</string>
      </property>
     </widget>
-    <widget class="QTextEdit" name="textTECParameter">
+    <widget class="QTextEdit" name="textTECName">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>110</y>
-       <width>91</width>
+       <y>190</y>
+       <width>151</width>
        <height>21</height>
       </rect>
      </property>
@@ -77,9 +77,6 @@
      </property>
     </widget>
     <widget class="QCheckBox" name="checkBoxTEC1">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
      <property name="geometry">
       <rect>
        <x>320</x>
@@ -90,9 +87,6 @@
      </property>
      <property name="text">
       <string>TEC 1</string>
-     </property>
-     <property name="checked">
-      <bool>false</bool>
      </property>
     </widget>
     <widget class="QCheckBox" name="checkBoxTEC2">
@@ -208,16 +202,16 @@
        <height>23</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="hlayoutTop_par0">
+     <layout class="QHBoxLayout" name="hlayoutTop_Voltage">
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="labelTop_Voltage">
         <property name="text">
          <string>ControlVoltage_Set</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec8_par0">
+       <widget class="QLineEdit" name="tec8_Voltage">
         <property name="acceptDrops">
          <bool>false</bool>
         </property>
@@ -227,21 +221,21 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec7_par0">
+       <widget class="QLineEdit" name="tec7_Voltage">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec6_par0">
+       <widget class="QLineEdit" name="tec6_Voltage">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec5_par0">
+       <widget class="QLineEdit" name="tec5_Voltage">
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -258,16 +252,16 @@
        <height>23</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="hlayoutBot_par0">
+     <layout class="QHBoxLayout" name="hlayoutBot_Voltage">
       <item>
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="labelBot_Voltage">
         <property name="text">
          <string>ControlVoltage_Set</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec1_par0">
+       <widget class="QLineEdit" name="tec1_Voltage">
         <property name="acceptDrops">
          <bool>false</bool>
         </property>
@@ -277,27 +271,512 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec2_par0">
+       <widget class="QLineEdit" name="tec2_Voltage">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec3_par0">
+       <widget class="QLineEdit" name="tec3_Voltage">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec4_par0">
+       <widget class="QLineEdit" name="tec4_Voltage">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
      </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_3">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>100</y>
+       <width>441</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="hlayoutTop_Temp">
+      <item>
+       <widget class="QLabel" name="labelTop_Temp">
+        <property name="text">
+         <string>Temp_Set                </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec8_Temp">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec7_Temp">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec6_Temp">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec5_Temp">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_4">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>320</y>
+       <width>441</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="hlayoutBot_Temp">
+      <item>
+       <widget class="QLabel" name="labelBot_Temp">
+        <property name="text">
+         <string>Temp_Set                </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec1_Temp">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec2_Temp">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec3_Temp">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec4_Temp">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_5">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>130</y>
+       <width>441</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="hlayoutTop_PID_kp">
+      <item>
+       <widget class="QLabel" name="labelTop_PID_kp">
+        <property name="text">
+         <string>PID_kp                     </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec8_PID_kp">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec7_PID_kp">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec6_PID_kp">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec5_PID_kp">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_6">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>350</y>
+       <width>441</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="hlayoutBot_PID_kp">
+      <item>
+       <widget class="QLabel" name="labelBot_PID_kp">
+        <property name="text">
+         <string>PID_kp                     </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec1_PID_kp">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec2_PID_kp">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec3_PID_kp">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec4_PID_kp">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_7">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>380</y>
+       <width>441</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="hlayoutBot_PID_ki">
+      <item>
+       <widget class="QLabel" name="labelBot_PID_ki">
+        <property name="text">
+         <string>PID_ki                      </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec1_PID_ki">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec2_PID_ki">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec3_PID_ki">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec4_PID_ki">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_8">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>410</y>
+       <width>441</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="hlayoutBot_PID_kd">
+      <item>
+       <widget class="QLabel" name="labelBot_PID_kd">
+        <property name="text">
+         <string>PID_kd                     </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec1_PID_kd">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec2_PID_kd">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec3_PID_kd">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec4_PID_kd">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_9">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>160</y>
+       <width>441</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="hlayoutTop_PID_ki">
+      <item>
+       <widget class="QLabel" name="labelTop_PID_ki">
+        <property name="text">
+         <string>PID_ki                      </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec8_PID_ki">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec7_PID_ki">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec6_PID_ki">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec5_PID_ki">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_10">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>190</y>
+       <width>441</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="hlayoutTop_PID_kd">
+      <item>
+       <widget class="QLabel" name="labelTop_PID_kd">
+        <property name="text">
+         <string>PID_kd                     </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec8_PID_kd">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec7_PID_kd">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec6_PID_kd">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec5_PID_kd">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QTextEdit" name="textTECValue">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>250</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="textTECNumber">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>130</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelTECFrame_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>110</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TEC number</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelTECName">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>170</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TEC Register</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelTECValue">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>230</y>
+       <width>91</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TEC Reg Value</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonRead">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>290</y>
+       <width>51</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Read</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButtonWrite">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>290</y>
+       <width>51</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Write</string>
+     </property>
     </widget>
    </widget>
    <widget class="QToolButton" name="buttonQuit">
@@ -387,7 +866,7 @@
   <tabstop>checkBoxTEC7</tabstop>
   <tabstop>checkBoxTEC8</tabstop>
   <tabstop>checkboxTECLockAll</tabstop>
-  <tabstop>textTECParameter</tabstop>
+  <tabstop>textTECName</tabstop>
   <tabstop>buttonQuit</tabstop>
   <tabstop>textEditLog</tabstop>
  </tabstops>
@@ -602,26 +1081,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>textTECParameter</sender>
-   <signal>textChanged()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>updateVoltageValue()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>230</x>
-     <y>230</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>311</x>
-     <y>309</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec8_par0</sender>
+   <sender>tec8_Voltage</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>tec8ChangePar0()</slot>
+   <slot>tec8VoltSet()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>466</x>
@@ -650,22 +1113,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>tec1_par0</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec1ChangePar0()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>477</x>
-     <y>402</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>112</x>
-     <y>388</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>checkBoxTEC8</sender>
    <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
@@ -678,6 +1125,390 @@
     <hint type="destinationlabel">
      <x>760</x>
      <y>9</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec8_Temp</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec8TempSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>475</x>
+     <y>214</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>17</x>
+     <y>257</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec7_Temp</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec7TempSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>546</x>
+     <y>208</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>36</x>
+     <y>265</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec6_Temp</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec6TempSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>616</x>
+     <y>210</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>52</x>
+     <y>273</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec5_Temp</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec5TempSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>705</x>
+     <y>218</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>70</x>
+     <y>280</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec7_Voltage</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec7VoltSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>562</x>
+     <y>184</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>24</x>
+     <y>247</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec6_Voltage</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec6VoltSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>631</x>
+     <y>186</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>49</x>
+     <y>253</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec5_Voltage</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec5VoltSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>689</x>
+     <y>179</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>83</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec8_PID_kp</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec8PIDkp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>488</x>
+     <y>239</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>14</x>
+     <y>307</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec7_PID_kp</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec7PIDkp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>523</x>
+     <y>236</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>24</x>
+     <y>313</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec6_PID_kp</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec6PIDkp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>647</x>
+     <y>239</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>38</x>
+     <y>318</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec5_PID_kp</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec5PIDkp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>721</x>
+     <y>240</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>53</x>
+     <y>325</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec8_PID_ki</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec8PIDki()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>459</x>
+     <y>278</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>7</x>
+     <y>349</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec7_PID_ki</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec7PIDki()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>539</x>
+     <y>276</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>22</x>
+     <y>356</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec6_PID_ki</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec6PIDki()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>632</x>
+     <y>275</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>36</x>
+     <y>362</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec5_PID_ki</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec5PIDki()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>713</x>
+     <y>269</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>51</x>
+     <y>369</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec8_PID_kd</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec8PIDkd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>471</x>
+     <y>300</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>10</x>
+     <y>402</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec7_PID_kd</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec7PIDkd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>548</x>
+     <y>305</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>24</x>
+     <y>409</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec6_PID_kd</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec6PIDkd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>611</x>
+     <y>306</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>37</x>
+     <y>417</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec5_PID_kd</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec5PIDkd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>681</x>
+     <y>300</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>59</x>
+     <y>424</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>textTECNumber</sender>
+   <signal>textChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>guiSetCanID()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>164</x>
+     <y>242</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>30</x>
+     <y>451</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>textTECName</sender>
+   <signal>textChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>guiSetRegName()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>182</x>
+     <y>300</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>55</x>
+     <y>459</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>textTECValue</sender>
+   <signal>textChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>guiSetRegValue()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>197</x>
+     <y>365</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>74</x>
+     <y>465</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButtonWrite</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>guiWriteToCAN()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>210</x>
+     <y>411</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>91</x>
+     <y>474</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButtonRead</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>guiReadFromCAN()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>146</x>
+     <y>408</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>106</x>
+     <y>483</y>
     </hint>
    </hints>
   </connection>
@@ -702,5 +1533,51 @@
   <slot>clkRefresh()</slot>
   <slot>tec1ChangePar0()</slot>
   <slot>checkTEC8(bool)</slot>
+  <slot>tec1TempSet()</slot>
+  <slot>tec8TempSet()</slot>
+  <slot>tec7TempSet()</slot>
+  <slot>tec6TempSet()</slot>
+  <slot>tec5TempSet()</slot>
+  <slot>tec4TempSet()</slot>
+  <slot>tec3TempSet()</slot>
+  <slot>tec2TempSet()</slot>
+  <slot>slot1()</slot>
+  <slot>tec1VoltSet()</slot>
+  <slot>tec2VoltSet()</slot>
+  <slot>tec3VoltSet()</slot>
+  <slot>tec4VoltSet()</slot>
+  <slot>tec5VoltSet()</slot>
+  <slot>tec6VoltSet()</slot>
+  <slot>tec7VoltSet()</slot>
+  <slot>tec8VoltSet()</slot>
+  <slot>tec8PIDkp()</slot>
+  <slot>tec7PIDkp()</slot>
+  <slot>tec6PIDkp()</slot>
+  <slot>tec5PIDkp()</slot>
+  <slot>tec4PIDkp()</slot>
+  <slot>tec3PIDkp()</slot>
+  <slot>tec2PIDkp()</slot>
+  <slot>tec1PIDkp()</slot>
+  <slot>tec8PIDki()</slot>
+  <slot>tec7PIDki()</slot>
+  <slot>tec6PIDki()</slot>
+  <slot>tec5PIDki()</slot>
+  <slot>tec4PIDki()</slot>
+  <slot>tec3PIDki()</slot>
+  <slot>tec2PIDki()</slot>
+  <slot>tec1PIDki()</slot>
+  <slot>tec8PIDkd()</slot>
+  <slot>tec7PIDkd()</slot>
+  <slot>tec6PIDkd()</slot>
+  <slot>tec4PIDkd()</slot>
+  <slot>tec3PIDkd()</slot>
+  <slot>tec2PIDkd()</slot>
+  <slot>tec1PIDkd()</slot>
+  <slot>tec5PIDkd()</slot>
+  <slot>guiSetCanID()</slot>
+  <slot>guiSetRegName()</slot>
+  <slot>guiSetRegValue()</slot>
+  <slot>guiWriteToCAN()</slot>
+  <slot>guiReadFromCAN()</slot>
  </slots>
 </ui>

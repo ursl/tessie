@@ -8,6 +8,8 @@
 #include <QtCore/QWaitCondition>
 #include <QtCore/QTime>
 
+#include <fstream>
+
 #include "tLog.hh"
 //rpc #include "rpcServer.hh"
 
@@ -31,9 +33,12 @@ struct TECRegister {
 
 // ----------------------------------------------------------------------
 struct TECData {
+  // FIXME: This is wrong and always returns 0!
   int getIdx(std::string regname) {
     int idx = reg.find(regname)->second.idx;
-    std::cout << "regname " << regname << " -> idx = " << idx << std::endl;
+    std::cout << "regname " << regname << " -> idx = " << idx
+              << " second = " << reg.find(regname)->second.name
+              << std::endl;
     return idx;
   }
 
@@ -50,6 +55,8 @@ public:
   ~driveHardware();
 
   void  runPrintout(int reg, float val);
+  void dumpCSV();
+  std::string timeStamp(bool filestamp = true);
 
   void  sendCANmessage();
   void  readCANmessage();
@@ -61,11 +68,10 @@ public:
   void  shutDown();
 
   // -- controlling the TEC
-  void  setTECParameter(float par);
+  void  setTECParameter(float par); // ???
   void  turnOnTEC(int itec);
   void  turnOffTEC(int itec);
 
-  //
   void  setId(int x);
   void  setRegister(int x);
   void  setValue(float x);
@@ -73,8 +79,21 @@ public:
   int   getRegister();
   float getValue();
 
+  // -- simply returns the value stored in fTECData
   float getTECRegister(int itec, std::string regname);
+  int   getTECRegisterIdx(std::string rname);
+
+  // -- read from and write to CAN
+  float getTECRegisterFromCAN(int canID, std::string regname);
   void  setTECRegister(int itec, std::string regname, float value);
+
+  // -- fill 'all' parameters for dumping into csv or for refreshing the GUI
+  void readAllParamsFromCAN();
+
+  // -- AFTER readCANmessage() these can be used to get the relevant value
+  float getCANReadFloatVal() {return fCANReadFloatVal;}
+  int   getCANReadIntVal() {return fCANReadIntVal;}
+
 
   void  printToGUI(std::string);
   void  getMessage(std::string);
@@ -109,6 +128,13 @@ private:
   float   fTECParameter;
   int     fValveMask; 
   QString fDateAndTime;
+
+  int     fCANReadIntVal;
+  float   fCANReadFloatVal;
+
+  std::string fCsvFileName;
+  std::ofstream fCsvFile;
+
 
 #ifdef PI
   int    fSw; 

@@ -6,7 +6,6 @@
 #include <unistd.h>
 
 #include "tLog.hh"
-#include "ui_MainWindow.h"
 
 
 using namespace std;
@@ -20,7 +19,54 @@ MainWindow::MainWindow(tLog &x, QWidget *parent) :
   fLOG.setHw(&fThread);
   ui->setupUi(this);
 
+  fUITemp_Set.push_back(ui->tec1_Temp);
+  fUITemp_Set.push_back(ui->tec2_Temp);
+  fUITemp_Set.push_back(ui->tec3_Temp);
+  fUITemp_Set.push_back(ui->tec4_Temp);
+  fUITemp_Set.push_back(ui->tec5_Temp);
+  fUITemp_Set.push_back(ui->tec6_Temp);
+  fUITemp_Set.push_back(ui->tec7_Temp);
+  fUITemp_Set.push_back(ui->tec8_Temp);
+
+  fUIControlVoltageSet.push_back(ui->tec1_Voltage);
+  fUIControlVoltageSet.push_back(ui->tec2_Voltage);
+  fUIControlVoltageSet.push_back(ui->tec3_Voltage);
+  fUIControlVoltageSet.push_back(ui->tec4_Voltage);
+  fUIControlVoltageSet.push_back(ui->tec5_Voltage);
+  fUIControlVoltageSet.push_back(ui->tec6_Voltage);
+  fUIControlVoltageSet.push_back(ui->tec7_Voltage);
+  fUIControlVoltageSet.push_back(ui->tec8_Voltage);
+
+  fUIPIDkp.push_back(ui->tec1_PID_kp);
+  fUIPIDkp.push_back(ui->tec2_PID_kp);
+  fUIPIDkp.push_back(ui->tec3_PID_kp);
+  fUIPIDkp.push_back(ui->tec4_PID_kp);
+  fUIPIDkp.push_back(ui->tec5_PID_kp);
+  fUIPIDkp.push_back(ui->tec6_PID_kp);
+  fUIPIDkp.push_back(ui->tec7_PID_kp);
+  fUIPIDkp.push_back(ui->tec8_PID_kp);
+
+  fUIPIDki.push_back(ui->tec1_PID_ki);
+  fUIPIDki.push_back(ui->tec2_PID_ki);
+  fUIPIDki.push_back(ui->tec3_PID_ki);
+  fUIPIDki.push_back(ui->tec4_PID_ki);
+  fUIPIDki.push_back(ui->tec5_PID_ki);
+  fUIPIDki.push_back(ui->tec6_PID_ki);
+  fUIPIDki.push_back(ui->tec7_PID_ki);
+  fUIPIDki.push_back(ui->tec8_PID_ki);
+
+  fUIPIDkd.push_back(ui->tec1_PID_kd);
+  fUIPIDkd.push_back(ui->tec2_PID_kd);
+  fUIPIDkd.push_back(ui->tec3_PID_kd);
+  fUIPIDkd.push_back(ui->tec4_PID_kd);
+  fUIPIDkd.push_back(ui->tec5_PID_kd);
+  fUIPIDkd.push_back(ui->tec6_PID_kd);
+  fUIPIDkd.push_back(ui->tec7_PID_kd);
+  fUIPIDkd.push_back(ui->tec8_PID_kd);
+
+
   updateHardwareValues();
+
 }
 
 
@@ -102,6 +148,7 @@ void MainWindow::quitProgram() {
 }
 
 
+// ----------------------------------------------------------------------
 void MainWindow::clkRefresh() {
   updateHardwareValues();
 
@@ -116,20 +163,15 @@ void MainWindow::start() {
 
 
 // ----------------------------------------------------------------------
-void MainWindow::tec8ChangePar0() {
-  ui->tec8_par0->setStyleSheet("QLineEdit {color : red; }");
-  QString sval = ui->tec8_par0->text();
+void MainWindow::tecSetFromUI(int itec, std::string rname, QWidget *qw) {
+  QLineEdit *qle = (QLineEdit*)qw;
+  qle->setStyleSheet("QLineEdit {color : red; }");
+  QString sval = qle->text();
   float xval = sval.toFloat();
-  fThread.setTECRegister(8, "ControlVoltage_Set", xval);
+  fThread.setTECRegister(itec, rname, xval);
 }
 
-// ----------------------------------------------------------------------
-void MainWindow::tec1ChangePar0() {
-  ui->tec1_par0->setStyleSheet("QLineEdit {color : red; }");
-  QString sval = ui->tec1_par0->text();
-  float xval = sval.toFloat();
-  fThread.setTECRegister(1, "ControlVoltage_Set", xval);
-}
+
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValve0() {
@@ -163,60 +205,6 @@ void MainWindow::clkValveAll() {
 
 
 // ----------------------------------------------------------------------
-void MainWindow::checkTEC0(bool checked) {
-  stringstream sbla; sbla << "checkTEC0 clicked " << checked;
-  ui->textEditLog->append(sbla.str().c_str());
-  ui->textEditLog->append("   do nothing!");
-}
-
-// ----------------------------------------------------------------------
-void MainWindow::checkTEC1(bool checked) {
-  setCheckBoxTEC(1, checked);
-}
-
-
-// ----------------------------------------------------------------------
-void MainWindow::checkTEC2(bool checked) {
-  setCheckBoxTEC(2, checked);
-}
-
-
-// ----------------------------------------------------------------------
-void MainWindow::checkTEC3(bool checked) {
-  setCheckBoxTEC(3, checked);
-}
-
-
-// ----------------------------------------------------------------------
-void MainWindow::checkTEC4(bool checked) {
-  setCheckBoxTEC(4, checked);
-}
-
-
-// ----------------------------------------------------------------------
-void MainWindow::checkTEC5(bool checked) {
-  setCheckBoxTEC(5, checked);
-}
-
-
-// ----------------------------------------------------------------------
-void MainWindow::checkTEC6(bool checked) {
-  setCheckBoxTEC(6, checked);
-}
-
-
-// ----------------------------------------------------------------------
-void MainWindow::checkTEC7(bool checked) {
-  setCheckBoxTEC(7, checked);
-}
-
-// ----------------------------------------------------------------------
-void MainWindow::checkTEC8(bool checked) {
-  setCheckBoxTEC(8, checked);
-}
-
-
-// ----------------------------------------------------------------------
 void MainWindow::checkTECAll(bool checked) {
   stringstream sbla; sbla << "checkTECTAll clicked " << checked;
   string sline = sbla.str();
@@ -229,52 +217,80 @@ void MainWindow::checkTECAll(bool checked) {
 
 
 // ----------------------------------------------------------------------
-void MainWindow::updateVoltageValue() {
-  QString qline = ui->textTECParameter->toPlainText();
+void MainWindow::guiWriteToCAN() {
+
+  stringstream sbla; sbla << "writeToCAN: CAN ID = " << fGuiTecId
+                          << " register ->" << fGuiRegName << "<-"
+                          << " value = " << fGuiRegValue
+                         ;
+
+  fThread.setTECRegister(fGuiTecId, fGuiRegName, fGuiRegValue);
+
+  ui->textEditLog->append(sbla.str().c_str());
+}
+
+
+// ----------------------------------------------------------------------
+void MainWindow::guiReadFromCAN() {
+  float fval = fThread.getTECRegisterFromCAN(fGuiTecId, fGuiRegName);
+  ui->textTECValue->setText(QString::number(fval, 'f', 2));
+}
+
+
+// ----------------------------------------------------------------------
+void MainWindow::guiSetCanID() {
+  QString qline = ui->textTECNumber->toPlainText();
+  int ibla = qline.toInt();
+
+  stringstream sbla; sbla << "GUI changed CAN ID ->" << qline.toStdString().c_str() << "<- in int: " << ibla;
+  fGuiTecId = ibla;
+  ui->textEditLog->append(sbla.str().c_str());
+}
+
+
+// ----------------------------------------------------------------------
+void MainWindow::guiSetRegValue() {
+  QString qline = ui->textTECValue->toPlainText();
   float fbla = qline.toFloat();
 
-  stringstream sbla; sbla << "changed TEC parameter ->" << qline.toStdString().c_str() << "<- in float: " << fbla;
-
-  fThread.setTECParameter(fbla);
+  stringstream sbla; sbla << "GUI changed reg value ->" << qline.toStdString().c_str() << "<- in int: " << fbla;
+  fGuiRegValue = fbla;
   ui->textEditLog->append(sbla.str().c_str());
+}
 
+
+// ----------------------------------------------------------------------
+void MainWindow::guiSetRegName() {
+  QString qline = ui->textTECName->toPlainText();
+  string ssbla = qline.toStdString();
+
+  stringstream sbla; sbla << "GUI changed reg name ->" << qline.toStdString().c_str() << "<- in string: " << ssbla;
+  fGuiRegName = ssbla;
+  ui->textEditLog->append(sbla.str().c_str());
 }
 
 
 // ----------------------------------------------------------------------
 void MainWindow::updateHardwareValues() {
 
+  fThread.readAllParamsFromCAN();
+
   QString sval;
-  sval = QString::number(fThread.getTECRegister(8, "ControlVoltage_Set"), 'f', 2);
-  ui->tec8_par0->setText(sval);
-  ui->tec8_par0->setStyleSheet("QLineEdit {color : green; }");
+  for (unsigned int ivec = 0; ivec < 8; ++ivec) {
+    fUIControlVoltageSet[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "ControlVoltage_Set"), 'f', 2));
+    fUIControlVoltageSet[ivec]->setStyleSheet("QLineEdit {color : green; }");
 
-  sval = QString::number(fThread.getTECRegister(7, "ControlVoltage_Set"), 'f', 2);
-  ui->tec7_par0->setText(sval);
-  ui->tec7_par0->setStyleSheet("QLineEdit {color : green; }");
+    fUITemp_Set[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "Temp_Set"), 'f', 2));
+    fUITemp_Set[ivec]->setStyleSheet("QLineEdit {color : green; }");
 
-  sval = QString::number(fThread.getTECRegister(6, "ControlVoltage_Set"), 'f', 2);
-  ui->tec6_par0->setText(sval);
-  ui->tec6_par0->setStyleSheet("QLineEdit {color : green; }");
+    fUIPIDki[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "PID_ki"), 'f', 2));
+    fUIPIDki[ivec]->setStyleSheet("QLineEdit {color : green; }");
 
-  sval = QString::number(fThread.getTECRegister(5, "ControlVoltage_Set"), 'f', 2);
-  ui->tec5_par0->setText(sval);
-  ui->tec5_par0->setStyleSheet("QLineEdit {color : green; }");
+    fUIPIDkp[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "PID_kp"), 'f', 2));
+    fUIPIDkp[ivec]->setStyleSheet("QLineEdit {color : green; }");
 
-  sval = QString::number(fThread.getTECRegister(4, "ControlVoltage_Set"), 'f', 2);
-  ui->tec4_par0->setText(sval);
-  ui->tec4_par0->setStyleSheet("QLineEdit {color : green; }");
-
-  sval = QString::number(fThread.getTECRegister(3, "ControlVoltage_Set"), 'f', 2);
-  ui->tec3_par0->setText(sval);
-  ui->tec3_par0->setStyleSheet("QLineEdit {color : green; }");
-
-  sval = QString::number(fThread.getTECRegister(2, "ControlVoltage_Set"), 'f', 2);
-  ui->tec2_par0->setText(sval);
-  ui->tec2_par0->setStyleSheet("QLineEdit {color : green; }");
-
-  sval = QString::number(fThread.getTECRegister(1, "ControlVoltage_Set"), 'f', 2);
-  ui->tec1_par0->setText(sval);
-  ui->tec1_par0->setStyleSheet("QLineEdit {color : green; }");
+    fUIPIDkd[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "PID_kd"), 'f', 2));
+    fUIPIDkd[ivec]->setStyleSheet("QLineEdit {color : green; }");
+  }
 
 }

@@ -23,6 +23,12 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   QDateTime dt = QDateTime::currentDateTime();
   fDateAndTime = dt.date().toString() + "  " +  dt.time().toString("hh:mm");
 
+  fCANReadIntVal = 3;
+  fCANReadFloatVal = 3.1415;
+
+  fCsvFileName = "tessie.csv";
+  fCsvFile.open(fCsvFileName, ios_base::app);
+
   initTECData();
 
   //rpc  fRpcThread = new QThread();
@@ -164,6 +170,7 @@ void driveHardware::run() {
       std::this_thread::sleep_for(oneTenthSec);
       if (cnt%10 == 1) {
           cout << "Hallo in run(), cnt = " << cnt << endl;
+          dumpCSV();
         }
       //    readCANmessage();
 #ifdef PI
@@ -204,6 +211,11 @@ float driveHardware::getValue() {
 // ----------------------------------------------------------------------
 int driveHardware::getId() {
   return fCANId;
+}
+
+// ----------------------------------------------------------------------
+int driveHardware::getTECRegisterIdx(std::string rname) {
+  return fTECData[1].getIdx(rname);
 }
 
 
@@ -249,6 +261,54 @@ void driveHardware::shutDown() {
 #ifdef PI
   close(fSw);
 #endif
+}
+
+
+// ----------------------------------------------------------------------
+void driveHardware::readCANmessage() {
+  fCANReadIntVal   += 1;
+  fCANReadFloatVal += 1.0;
+#ifdef PI
+  static int cntCAN(0);
+
+  int nbytes(0);
+  char data[4];
+  unsigned int idata(0);
+  float fdata(0.0);
+  nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
+  cout << "readCANmessage(), nbytes = " << nbytes << endl;
+  if(nbytes > 0) {
+      printf("can_id = 0x%X ncan_dlc = %d (from run())\n", fFrameR.can_id, fFrameR.can_dlc);
+      int i = 0;
+
+      for(i = 0; i < fFrameR.can_dlc; i++) {
+          printf("data[%d] = %2x/%3d\n", i, fFrameR.data[i], fFrameR.data[i]);
+        }
+
+      int reg = fFrameR.data[0];
+      data[0] = fFrameR.data[1];
+      data[1] = fFrameR.data[2];
+      data[2] = fFrameR.data[3];
+      data[3] = fFrameR.data[4];
+
+      memcpy(&fdata, data, sizeof fdata);
+      memcpy(&idata, data, sizeof idata);
+      printf("float = %f/uint32 = %u\n", fdata, idata);
+      ++cntCAN;
+      printf("received CAN message %d\n", cntCAN);
+      stringstream sbla; sbla << "CAN read "
+                              << " reg = 0x"  << hex << reg
+                              << " value = " << fdata;
+      cout << "sbla: " << sbla.str() << endl;
+      fLOG(INFO, sbla.str());
+
+
+      fCANReadIntVal = idata;
+      fCANReadFloatVal = fdata;
+    }
+#endif
+
+  return;
 }
 
 
@@ -427,46 +487,6 @@ void driveHardware::toggleFras(int imask) {
 
 }
 
-// ----------------------------------------------------------------------
-void driveHardware::readCANmessage() { 
-#ifdef PI
-  static int cntCAN(0);
-  
-  int nbytes(0);
-  char data[4];
-  unsigned int idata(0);
-  float fdata(0.0);
-  nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
-  cout << "readCANmessage(), nbytes = " << nbytes << endl;
-  if(nbytes > 0) {
-      printf("can_id = 0x%X ncan_dlc = %d (from run())\n", fFrameR.can_id, fFrameR.can_dlc);
-      int i = 0;
-      
-      for(i = 0; i < fFrameR.can_dlc; i++) {
-          printf("data[%d] = %2x/%3d\n", i, fFrameR.data[i], fFrameR.data[i]);
-        }
-
-      int reg = fFrameR.data[0];
-      data[0] = fFrameR.data[1];
-      data[1] = fFrameR.data[2];
-      data[2] = fFrameR.data[3];
-      data[3] = fFrameR.data[4];
-      
-      memcpy(&fdata, data, sizeof fdata);
-      memcpy(&idata, data, sizeof idata);
-      printf("float = %f/uint32 = %u\n", fdata, idata);
-      ++cntCAN;
-      printf("received CAN message %d\n", cntCAN);
-      stringstream sbla; sbla << "CAN read "
-                              << " reg = 0x"  << hex << reg
-                              << " value = " << fdata;
-      cout << "sbla: " << sbla.str() << endl;
-      fLOG(INFO, sbla.str());
-
-    }
-#endif
-  return;
-}
 
 
 // ----------------------------------------------------------------------
@@ -489,6 +509,16 @@ float driveHardware::getTECRegister(int itec, std::string regname) {
   } else {
     return -3.;
   }
+}
+
+
+// ----------------------------------------------------------------------
+float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
+  fCANId  = 0x110 | itec;
+  fCANReg = fTECData[0].getIdx(regname);
+  readCANmessage();
+
+  return fCANReadFloatVal;
 }
 
 
@@ -540,4 +570,77 @@ TECData  driveHardware::initAllTECRegister() {
   b = {-99., "Alarm",               4, 3}; tdata.reg.insert(make_pair(b.name, b));
 
   return tdata;
+}
+
+
+// ----------------------------------------------------------------------
+void driveHardware::readAllParamsFromCAN() {
+  for (int i = 1; i <= 8; ++i) fTECData[i].reg["ControlVoltage_Set"].value = getTECRegisterFromCAN(i, "ControlVoltage_Set");
+  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_Set"].value = getTECRegisterFromCAN(i, "Temp_Set");
+  for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_kp"].value = getTECRegisterFromCAN(i, "PID_kp");
+  for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_ki"].value = getTECRegisterFromCAN(i, "PID_ki");
+  for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_kd"].value = getTECRegisterFromCAN(i, "PID_kd");
+  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_W"].value = getTECRegisterFromCAN(i, "Temp_W");
+  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_M"].value = getTECRegisterFromCAN(i, "Temp_M");
+  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Peltier_I"].value = getTECRegisterFromCAN(i, "Peltier_I");
+  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Peltier_R"].value = getTECRegisterFromCAN(i, "Peltier_R");
+  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Peltier_P"].value = getTECRegisterFromCAN(i, "Peltier_P");
+
+  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_U"].value = getTECRegisterFromCAN(i, "Supply_U");
+  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_I"].value = getTECRegisterFromCAN(i, "Supply_I");
+  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_P"].value = getTECRegisterFromCAN(i, "Supply_P");
+
+
+}
+
+
+// ----------------------------------------------------------------------
+void driveHardware::dumpCSV() {
+  stringstream output;
+
+  readAllParamsFromCAN();
+  output  << timeStamp();
+  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["ControlVoltage_Set"].value;
+  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Temp_Set"].value;
+  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_kp"].value;
+  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_ki"].value;
+  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_kd"].value;
+  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Temp_M"].value;
+  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Temp_W"].value;
+  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Peltier_I"].value;
+  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Peltier_R"].value;
+  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Peltier_P"].value;
+  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Supply_U"].value;
+  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Supply_I"].value;
+  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Supply_P"].value;
+
+  string sout = output.str();
+  fCsvFile << sout << endl;
+}
+
+// ----------------------------------------------------------------------
+string driveHardware::timeStamp(bool filestamp) {
+  char buffer[11];
+  time_t t;
+  time(&t);
+  tm r;
+  strftime(buffer, sizeof(buffer), "%X", localtime_r(&t, &r));
+  struct timeval tv;
+  gettimeofday(&tv, 0);
+
+  tm *ltm = localtime(&t);
+  int year  = 1900 + ltm->tm_year;
+  int month = 1 + ltm->tm_mon;
+  int day   = ltm->tm_mday;
+  int hour  = ltm->tm_hour;
+  int min   = ltm->tm_min;
+  int sec   = ltm->tm_sec;
+  std::stringstream result;
+  if (filestamp) {
+    result << year  << std::setfill('0') << std::setw(2) << month << day << "-" << hour << min << sec;
+    return result.str();
+  }
+  result << year << "/" << std::setfill('0') << std::setw(2) << month << "/" << day << " "
+         << buffer << "." << std::setfill('0') << std::setw(3) << ((long)tv.tv_usec / 1000);
+  return result.str();
 }
