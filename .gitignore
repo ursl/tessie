@@ -4,3 +4,4 @@ tessie.txt*
 moc_*
 .DS_Store
 *~
+.vscode/settings.json
