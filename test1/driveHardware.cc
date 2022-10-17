@@ -27,7 +27,9 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   fCANReadFloatVal = 3.1415;
 
   fCsvFileName = "tessie.csv";
+  cout << "open " << fCsvFileName << endl;
   fCsvFile.open(fCsvFileName, ios_base::app);
+  cout << "done?" << endl;\
 
   initTECData();
 
