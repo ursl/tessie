@@ -578,10 +578,19 @@ TECData  driveHardware::initAllTECRegister() {
 
 // ----------------------------------------------------------------------
 void driveHardware::readAllParamsFromCAN() {
+  cout << "read ControlVoltage_Set" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["ControlVoltage_Set"].value = getTECRegisterFromCAN(i, "ControlVoltage_Set");
+
+  cout << "read Temp_Set" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_Set"].value = getTECRegisterFromCAN(i, "Temp_Set");
+
+  cout << "read PID_kp" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_kp"].value = getTECRegisterFromCAN(i, "PID_kp");
+
+  cout << "read PID_kd" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_ki"].value = getTECRegisterFromCAN(i, "PID_ki");
+
+  cout << "read ControlVoltage_Set" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_kd"].value = getTECRegisterFromCAN(i, "PID_kd");
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_W"].value = getTECRegisterFromCAN(i, "Temp_W");
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_M"].value = getTECRegisterFromCAN(i, "Temp_M");
