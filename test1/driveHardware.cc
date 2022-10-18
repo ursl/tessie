@@ -552,6 +552,11 @@ float driveHardware::getTECRegister(int itec, std::string regname) {
 // ----------------------------------------------------------------------
 float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
 
+  if (0 == fActiveTEC[itec]) {
+    cout << "TEC " << itec <<  " not active, skipping" << endl;
+    return -99.;
+  }
+
   fCANId  = 0x110 | itec;
   fCANReg = fTECData[itec].getIdx(regname);
   sendCANmessage();
