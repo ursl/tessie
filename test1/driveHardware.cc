@@ -612,6 +612,7 @@ TECData  driveHardware::initAllTECRegister() {
 
 // ----------------------------------------------------------------------
 void driveHardware::readAllParamsFromCAN() {
+  return;
   cout << "read ControlVoltage_Set" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["ControlVoltage_Set"].value = getTECRegisterFromCAN(i, "ControlVoltage_Set");
 
