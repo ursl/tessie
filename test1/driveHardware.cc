@@ -612,12 +612,13 @@ TECData  driveHardware::initAllTECRegister() {
 
 // ----------------------------------------------------------------------
 void driveHardware::readAllParamsFromCAN() {
-  return;
-  cout << "read ControlVoltage_Set" << endl;
-  for (int i = 1; i <= 8; ++i) fTECData[i].reg["ControlVoltage_Set"].value = getTECRegisterFromCAN(i, "ControlVoltage_Set");
 
   cout << "read Temp_Set" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_Set"].value = getTECRegisterFromCAN(i, "Temp_Set");
+
+  return;
+  cout << "read ControlVoltage_Set" << endl;
+  for (int i = 1; i <= 8; ++i) fTECData[i].reg["ControlVoltage_Set"].value = getTECRegisterFromCAN(i, "ControlVoltage_Set");
 
   cout << "read PID_kp" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_kp"].value = getTECRegisterFromCAN(i, "PID_kp");
