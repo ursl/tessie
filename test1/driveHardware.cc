@@ -179,7 +179,7 @@ void driveHardware::run() {
       std::this_thread::sleep_for(oneTenthSec);
       if (cnt%10 == 1) {
           cout << "Hallo in run(), cnt = " << cnt << endl;
-          dumpCSV();
+          //dumpCSV();
         }
       //    readCANmessage();
 #ifdef PI
@@ -344,6 +344,13 @@ void driveHardware::sendCANmessage() {
   //  fMutex.lock();
 
 #ifdef PI
+  int itec = 0;
+  itec = fCANId & 0xf;
+  if (0 == fActiveTEC[itec]) {
+    cout << "TEC " << itec <<  " not active, skipping" << endl;
+    return;
+  }
+
   char data[4] = {0, 0, 0, 0};
   fFrameW.can_id = fCANId;
   int dlength(0), command(0);
