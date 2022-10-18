@@ -31,6 +31,13 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   fCsvFile.open(fCsvFileName, ios_base::app);
   cout << "done?" << endl;\
 
+  for (unsigned int itec = 1; itec <= 4; ++itec) {
+      fActiveTEC.insert(make_pair(itec, 0));
+  }
+  for (unsigned int itec = 5; itec <= 8; ++itec) {
+      fActiveTEC.insert(make_pair(itec, 1));
+  }
+
   initTECData();
 
   //rpc  fRpcThread = new QThread();
@@ -172,7 +179,7 @@ void driveHardware::run() {
       std::this_thread::sleep_for(oneTenthSec);
       if (cnt%10 == 1) {
           cout << "Hallo in run(), cnt = " << cnt << endl;
-         dumpCSV();
+          dumpCSV();
         }
       //    readCANmessage();
 #ifdef PI
@@ -232,6 +239,11 @@ void  driveHardware::setTECParameter(float par) {
 // ----------------------------------------------------------------------
 void  driveHardware::turnOnTEC(int itec) {
 
+  if (0 == fActiveTEC[itec]) {
+    cout << "TEC " << itec <<  " not active, skipping" << endl;
+    return;
+  }
+
   printf("driveHardware::turnOnTEC(%d)\n", itec);
 
   fCANId = ((0x1<<8) | itec);
@@ -245,6 +257,11 @@ void  driveHardware::turnOnTEC(int itec) {
 
 // ----------------------------------------------------------------------
 void  driveHardware::turnOffTEC(int itec) {
+
+  if (0 == fActiveTEC[itec]) {
+    cout << "TEC " << itec <<  " not active, skipping" << endl;
+    return;
+  }
 
   printf("driveHardware::turnOffTEC(%d)\n", itec);
 
@@ -270,7 +287,15 @@ void driveHardware::shutDown() {
 void driveHardware::readCANmessage() {
   fCANReadIntVal   += 1;
   fCANReadFloatVal += 0.1;
+
 #ifdef PI
+  int itec = 0;
+  itec = fCANId & 0xf;
+  if (0 == fActiveTEC[itec]) {
+    cout << "TEC " << itec <<  " not active, skipping" << endl;
+    return;
+  }
+
   static int cntCAN(0);
 
   int nbytes(0);
@@ -317,6 +342,7 @@ void driveHardware::readCANmessage() {
 // ----------------------------------------------------------------------
 void driveHardware::sendCANmessage() {
   //  fMutex.lock();
+
 #ifdef PI
   char data[4] = {0, 0, 0, 0};
   fFrameW.can_id = fCANId;
@@ -505,20 +531,20 @@ void driveHardware::initTECData() {
 // ----------------------------------------------------------------------
 float driveHardware::getTECRegister(int itec, std::string regname) {
   if (fTECData.find(itec) == fTECData.end()) {
-    return -1.;
-  }
+      return -1.;
+    }
   if (fTECData[itec].reg.find(regname) != fTECData[itec].reg.end()) {
-    return fTECData[itec].reg[regname].value;
-  } else {
-    return -3.;
-  }
+      return fTECData[itec].reg[regname].value;
+    } else {
+      return -3.;
+    }
 }
 
 
 // ----------------------------------------------------------------------
 float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
   fCANId  = 0x110 | itec;
-  fCANReg = fTECData[0].getIdx(regname);
+  fCANReg = fTECData[itec].getIdx(regname);
   readCANmessage();
 
   return fCANReadFloatVal;
@@ -649,9 +675,9 @@ string driveHardware::timeStamp(bool filestamp) {
   int sec   = ltm->tm_sec;
   std::stringstream result;
   if (filestamp) {
-    result << year  << std::setfill('0') << std::setw(2) << month << day << "-" << hour << min << sec;
-    return result.str();
-  }
+      result << year  << std::setfill('0') << std::setw(2) << month << day << "-" << hour << min << sec;
+      return result.str();
+    }
   result << year << "/" << std::setfill('0') << std::setw(2) << month << "/" << day << " "
          << buffer << "." << std::setfill('0') << std::setw(3) << ((long)tv.tv_usec / 1000);
   return result.str();

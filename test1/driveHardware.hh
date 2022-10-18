@@ -142,6 +142,8 @@ private:
   int     fValveMask; 
   QString fDateAndTime;
 
+  std::map<int, int> fActiveTEC;
+
   int     fCANReadIntVal;
   float   fCANReadFloatVal;
 
