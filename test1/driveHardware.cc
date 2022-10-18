@@ -302,6 +302,7 @@ void driveHardware::readCANmessage() {
   char data[4];
   unsigned int idata(0);
   float fdata(0.0);
+  cout << "try to call read for itec = " << itec << " corresponding to fCANId = " << fCANId << endl;
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
   cout << "readCANmessage(), nbytes = " << nbytes << endl;
   if(nbytes > 0) {
