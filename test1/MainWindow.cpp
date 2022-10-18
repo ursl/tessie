@@ -28,6 +28,16 @@ MainWindow::MainWindow(tLog &x, QWidget *parent) :
   fUITemp_Set.push_back(ui->tec7_Temp);
   fUITemp_Set.push_back(ui->tec8_Temp);
 
+  fUITempM.push_back(ui->tec1_TempM);
+  fUITempM.push_back(ui->tec2_TempM);
+  fUITempM.push_back(ui->tec3_TempM);
+  fUITempM.push_back(ui->tec4_TempM);
+  fUITempM.push_back(ui->tec5_TempM);
+  fUITempM.push_back(ui->tec6_TempM);
+  fUITempM.push_back(ui->tec7_TempM);
+  fUITempM.push_back(ui->tec8_TempM);
+
+
   fUIControlVoltageSet.push_back(ui->tec1_Voltage);
   fUIControlVoltageSet.push_back(ui->tec2_Voltage);
   fUIControlVoltageSet.push_back(ui->tec3_Voltage);
@@ -282,6 +292,10 @@ void MainWindow::updateHardwareValues() {
 
     fUITemp_Set[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "Temp_Set"), 'f', 2));
     fUITemp_Set[ivec]->setStyleSheet("QLineEdit {color : green; }");
+
+    fUITempM[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "Temp_M"), 'f', 2));
+    fUITempM[ivec]->setStyleSheet("QLineEdit {color : green; }");
+
 
     fUIPIDki[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "PID_ki"), 'f', 2));
     fUIPIDki[ivec]->setStyleSheet("QLineEdit {color : green; }");

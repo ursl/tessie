@@ -99,7 +99,6 @@ private slots:
     void tec2PIDkd() {tecSetFromUI(2, "PID_kd", ui->tec2_PID_kd); }
     void tec1PIDkd() {tecSetFromUI(1, "PID_kd", ui->tec1_PID_kd); }
 
-
     void  updateHardwareValues();
 
     void start();
@@ -120,6 +119,7 @@ private:
 
     std::vector<QLineEdit*> fUIControlVoltageSet,
     fUITemp_Set,
+    fUITempM,
     fUIPIDkp,
     fUIPIDki,
     fUIPIDkd;

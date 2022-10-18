@@ -247,7 +247,7 @@
      <property name="geometry">
       <rect>
        <x>200</x>
-       <y>290</y>
+       <y>280</y>
        <width>441</width>
        <height>23</height>
       </rect>
@@ -347,7 +347,7 @@
      <property name="geometry">
       <rect>
        <x>200</x>
-       <y>320</y>
+       <y>310</y>
        <width>441</width>
        <height>23</height>
       </rect>
@@ -397,7 +397,7 @@
      <property name="geometry">
       <rect>
        <x>190</x>
-       <y>130</y>
+       <y>160</y>
        <width>441</width>
        <height>23</height>
       </rect>
@@ -447,7 +447,7 @@
      <property name="geometry">
       <rect>
        <x>200</x>
-       <y>350</y>
+       <y>370</y>
        <width>441</width>
        <height>23</height>
       </rect>
@@ -497,7 +497,7 @@
      <property name="geometry">
       <rect>
        <x>200</x>
-       <y>380</y>
+       <y>400</y>
        <width>441</width>
        <height>23</height>
       </rect>
@@ -547,7 +547,7 @@
      <property name="geometry">
       <rect>
        <x>200</x>
-       <y>410</y>
+       <y>430</y>
        <width>441</width>
        <height>23</height>
       </rect>
@@ -597,7 +597,7 @@
      <property name="geometry">
       <rect>
        <x>190</x>
-       <y>160</y>
+       <y>190</y>
        <width>441</width>
        <height>23</height>
       </rect>
@@ -647,7 +647,7 @@
      <property name="geometry">
       <rect>
        <x>190</x>
-       <y>190</y>
+       <y>220</y>
        <width>441</width>
        <height>23</height>
       </rect>
@@ -777,6 +777,106 @@
      <property name="text">
       <string>Write</string>
      </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_11">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>130</y>
+       <width>441</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="hlayoutTop_TempM">
+      <item>
+       <widget class="QLabel" name="labelTop_TempM">
+        <property name="text">
+         <string>Temp_ M                 </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec8_TempM">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec7_TempM">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec6_TempM">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec5_TempM">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_12">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>340</y>
+       <width>441</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="hlayoutBot_TempM">
+      <item>
+       <widget class="QLabel" name="labelBot_TempM">
+        <property name="text">
+         <string>Temp_M                   </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec1_TempM">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec2_TempM">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec3_TempM">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec4_TempM">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
    <widget class="QToolButton" name="buttonQuit">
@@ -1247,8 +1347,8 @@
    <slot>tec8PIDkp()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>488</x>
-     <y>239</y>
+     <x>505</x>
+     <y>270</y>
     </hint>
     <hint type="destinationlabel">
      <x>14</x>
@@ -1263,8 +1363,8 @@
    <slot>tec7PIDkp()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>523</x>
-     <y>236</y>
+     <x>586</x>
+     <y>267</y>
     </hint>
     <hint type="destinationlabel">
      <x>24</x>
@@ -1279,8 +1379,8 @@
    <slot>tec6PIDkp()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>647</x>
-     <y>239</y>
+     <x>668</x>
+     <y>270</y>
     </hint>
     <hint type="destinationlabel">
      <x>38</x>
@@ -1295,8 +1395,8 @@
    <slot>tec5PIDkp()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>721</x>
-     <y>240</y>
+     <x>749</x>
+     <y>271</y>
     </hint>
     <hint type="destinationlabel">
      <x>53</x>
@@ -1311,8 +1411,8 @@
    <slot>tec8PIDki()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>459</x>
-     <y>278</y>
+     <x>504</x>
+     <y>309</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -1327,8 +1427,8 @@
    <slot>tec7PIDki()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>539</x>
-     <y>276</y>
+     <x>586</x>
+     <y>307</y>
     </hint>
     <hint type="destinationlabel">
      <x>22</x>
@@ -1343,8 +1443,8 @@
    <slot>tec6PIDki()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>632</x>
-     <y>275</y>
+     <x>667</x>
+     <y>306</y>
     </hint>
     <hint type="destinationlabel">
      <x>36</x>
@@ -1359,8 +1459,8 @@
    <slot>tec5PIDki()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>713</x>
-     <y>269</y>
+     <x>749</x>
+     <y>300</y>
     </hint>
     <hint type="destinationlabel">
      <x>51</x>
@@ -1375,8 +1475,8 @@
    <slot>tec8PIDkd()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>471</x>
-     <y>300</y>
+     <x>505</x>
+     <y>331</y>
     </hint>
     <hint type="destinationlabel">
      <x>10</x>
@@ -1391,8 +1491,8 @@
    <slot>tec7PIDkd()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>548</x>
-     <y>305</y>
+     <x>586</x>
+     <y>336</y>
     </hint>
     <hint type="destinationlabel">
      <x>24</x>
@@ -1407,8 +1507,8 @@
    <slot>tec6PIDkd()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>611</x>
-     <y>306</y>
+     <x>668</x>
+     <y>337</y>
     </hint>
     <hint type="destinationlabel">
      <x>37</x>
@@ -1423,8 +1523,8 @@
    <slot>tec5PIDkd()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>681</x>
-     <y>300</y>
+     <x>749</x>
+     <y>331</y>
     </hint>
     <hint type="destinationlabel">
      <x>59</x>
@@ -1512,6 +1612,70 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tec8_TempM</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec8TempM()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>483</x>
+     <y>239</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>788</x>
+     <y>246</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec7_TempM</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec7TempM()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>534</x>
+     <y>236</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>798</x>
+     <y>231</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec6_TempM</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec6TempM()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>606</x>
+     <y>237</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>793</x>
+     <y>219</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec5_TempM</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec5TempM()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>716</x>
+     <y>238</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>789</x>
+     <y>208</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>checkTEC0(bool)</slot>
@@ -1579,5 +1743,13 @@
   <slot>guiSetRegValue()</slot>
   <slot>guiWriteToCAN()</slot>
   <slot>guiReadFromCAN()</slot>
+  <slot>tec8TempM()</slot>
+  <slot>tec7TempM()</slot>
+  <slot>tec6TempM()</slot>
+  <slot>tec5TempM()</slot>
+  <slot>tec4TempM()</slot>
+  <slot>tec3TempM()</slot>
+  <slot>tec2TempM()</slot>
+  <slot>tec1TempM()</slot>
  </slots>
 </ui>
