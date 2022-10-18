@@ -52,54 +52,52 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
 #ifdef PI
   // -- write CAN socket
   memset(&fFrameW, 0, sizeof(struct can_frame));
-
   fSw = socket(PF_CAN, SOCK_RAW, CAN_RAW);
   if (fSw < 0) {
-      perror("socket PF_CAN failed");
-      return;
-    }
+    perror("socket PF_CAN failed");
+    return;
+  }
 
   strcpy(fIfrW.ifr_name, "can0");
   int ret = ioctl(fSw, SIOCGIFINDEX, &fIfrW);
   if (ret < 0) {
-      perror("ioctl failed");
-      return;
-    }
+    perror("ioctl failed");
+    return;
+  }
   
   fAddrW.can_family = AF_CAN;
   fAddrW.can_ifindex = fIfrW.ifr_ifindex;
   ret = bind(fSw, (struct sockaddr *)&fAddrW, sizeof(fAddrW));
   if (ret < 0) {
-      perror("bind failed");
-      return;
-    }
+    perror("bind failed");
+    return;
+  }
 
   setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
 
   
   // -- read CAN socket
   memset(&fFrameR, 0, sizeof(struct can_frame));
-
   fSr = socket(PF_CAN, SOCK_RAW, CAN_RAW);
   if (fSr < 0) {
-      perror("socket PF_CAN failed");
-      return;
-    }
+    perror("socket PF_CAN failed");
+    return;
+  }
 
   strcpy(fIfrR.ifr_name, "can0");
   ret = ioctl(fSr, SIOCGIFINDEX, &fIfrR);
   if (ret < 0) {
-      perror("ioctl failed");
-      return;
-    }
+    perror("ioctl failed");
+    return;
+   }
   
   fAddrR.can_family = AF_CAN;
   fAddrR.can_ifindex = fIfrR.ifr_ifindex;
   ret = bind(fSr, (struct sockaddr *)&fAddrR, sizeof(fAddrR));
   if (ret < 0) {
-      perror("bind failed");
-      return;
-    }
+    perror("bind failed");
+    return;
+  }
 
   //4.Define receive rules
   struct can_filter rfilter[1];
@@ -299,7 +297,9 @@ void driveHardware::readCANmessage() {
   static int cntCAN(0);
 
   int nbytes(0);
-  char data[4];
+  char data[4] = {0, 0, 0, 0};
+  fFrameR.can_id = fCANId;
+
   unsigned int idata(0);
   float fdata(0.0);
   cout << "try to call read for itec = " << itec << " corresponding to fCANId = 0x" << hex << fCANId << dec << endl;
@@ -551,8 +551,13 @@ float driveHardware::getTECRegister(int itec, std::string regname) {
 
 // ----------------------------------------------------------------------
 float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
+
   fCANId  = 0x110 | itec;
   fCANReg = fTECData[itec].getIdx(regname);
+  sendCANmessage();
+
+  fCANId  = 0x110 | itec;
+  fCANReg = fTECData[itec].getIdx(regname);  
   readCANmessage();
 
   return fCANReadFloatVal;
