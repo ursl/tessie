@@ -278,9 +278,9 @@ void driveHardware::readCANmessage() {
   if (nbytes > 0) {
       if (DBX) printf("can_id = 0x%X ncan_dlc = %d (from run())\n", fFrameR.can_id, fFrameR.can_dlc);
       int i = 0;
-
+      cout << "data[] = ";
       if (DBX) for(i = 0; i < fFrameR.can_dlc; i++) {
-          printf("data[%d] = %2x/%3d\n", i, fFrameR.data[i], fFrameR.data[i]);
+          printf("%2x/%3d ", i, fFrameR.data[i], fFrameR.data[i]);
         }
 
       fCANId  = fFrameR.can_id;
@@ -295,10 +295,12 @@ void driveHardware::readCANmessage() {
       memcpy(&fdata, data, sizeof fdata);
       memcpy(&idata, data, sizeof idata);
      if (DBX) {
-       printf("float = %f/uint32 = %u\n", fdata, idata);
+       printf("float = %f/uint32 = %u", fdata, idata);
        ++cntCAN;
-       printf("received CAN message %d\n", cntCAN);
+       printf(" (received CAN message %d)", cntCAN);
      }
+     cout << endl;
+
      stringstream sbla; sbla << "CAN read "
                              << " reg = 0x"  << hex << reg
                              << " value = " << fdata;
@@ -577,16 +579,12 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
     return -99.;
   }
 
-  fCANId  = 0x110 | itec;
-  cout << "old can ID = 0x" << hex << fCANId;
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_READ);
-  cout << " new can ID = 0x" << fCANId << dec << endl;
 
   fCANReg = fTECData[itec].getIdx(regname);
   sendCANmessage();
 
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECSEND | CANBUS_READ);
-  cout << "can ID = 0x" << hex << fCANId << endl;
   fCANReg = fTECData[itec].getIdx(regname);
   readCANmessage();
 
