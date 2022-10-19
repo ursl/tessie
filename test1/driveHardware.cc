@@ -189,7 +189,7 @@ void driveHardware::run() {
         }
       //    readCANmessage();
 #ifdef PI
-      entertainFras();
+      //entertainFras();
       std::this_thread::sleep_for(oneTenthSec);
 #endif
     }
