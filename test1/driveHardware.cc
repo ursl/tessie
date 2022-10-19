@@ -273,15 +273,14 @@ void driveHardware::readCANmessage() {
 
   unsigned int idata(0);
   float fdata(0.0);
-  if (DBX) cout << "try to call read for itec = " << itec << " corresponding to fCANId = 0x" << hex << fCANId << dec << endl;
+  //if (DBX) cout << "try to call read for itec = " << itec << " corresponding to fCANId = 0x" << hex << fCANId << dec << endl;
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
-  if (DBX) cout << "readCANmessage(), nbytes = " << nbytes << endl;
   if (nbytes > 0) {
-      if (DBX) printf("can_id = 0x%X ncan_dlc = %d (from run())\n", fFrameR.can_id, fFrameR.can_dlc);
+      if (DBX) printf("can_id = 0x%X ncan_dlc = %d \n", fFrameR.can_id, fFrameR.can_dlc);
       int i = 0;
       cout << "data[] = ";
       if (DBX) for (i = 0; i < fFrameR.can_dlc; i++) {
-          printf("%3d ", i, fFrameR.data[i]);
+          printf("%3d ", fFrameR.data[i]);
       }
 
       bool RegSend = (fCANId & 0x040) && (0 == (fFrameR.can_id & 0x030));
