@@ -291,7 +291,7 @@ void driveHardware::readCANmessage() {
   int itec = 0;
   itec = fCANId & 0xf;
   if (0 == fActiveTEC[itec]) {
-    cout << "TEC " << itec <<  " not active, skipping" << endl;
+    if (0) cout << "TEC " << itec <<  " not active, skipping" << endl;
     return;
   }
 
@@ -303,9 +303,9 @@ void driveHardware::readCANmessage() {
 
   unsigned int idata(0);
   float fdata(0.0);
-  cout << "try to call read for itec = " << itec << " corresponding to fCANId = 0x" << hex << fCANId << dec << endl;
+  if (0) cout << "try to call read for itec = " << itec << " corresponding to fCANId = 0x" << hex << fCANId << dec << endl;
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
-  cout << "readCANmessage(), nbytes = " << nbytes << endl;
+  if (0) cout << "readCANmessage(), nbytes = " << nbytes << endl;
   if(nbytes > 0) {
       if (0) printf("can_id = 0x%X ncan_dlc = %d (from run())\n", fFrameR.can_id, fFrameR.can_dlc);
       int i = 0;
@@ -330,7 +330,7 @@ void driveHardware::readCANmessage() {
       stringstream sbla; sbla << "CAN read "
                               << " reg = 0x"  << hex << reg
                               << " value = " << fdata;
-      cout << "sbla: " << sbla.str() << endl;
+      if (0) cout << "sbla: " << sbla.str() << endl;
       fLOG(INFO, sbla.str());
 
 
@@ -351,7 +351,7 @@ void driveHardware::sendCANmessage() {
   int itec = 0;
   itec = fCANId & 0xf;
   if (0 == fActiveTEC[itec]) {
-    cout << "TEC " << itec <<  " not active, skipping" << endl;
+    if (0) cout << "TEC " << itec <<  " not active, skipping" << endl;
     return;
   }
 
