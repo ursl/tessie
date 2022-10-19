@@ -103,8 +103,15 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   struct can_filter rfilter[1];
   rfilter[0].can_id = 0x000;
   rfilter[0].can_mask = CAN_SFF_MASK;
-//  setsockopt(fSr, SOL_CAN_RAW, CAN_RAW_FILTER, &rfilter, sizeof(rfilter));
+  // -- this does not work with the new CANBUS protocol?!
+  // setsockopt(fSr, SOL_CAN_RAW, CAN_RAW_FILTER, &rfilter, sizeof(rfilter));
 
+
+  // add timeout?
+  struct timeval tv;
+  tv.tv_sec = 0;
+  tv.tv_usec = 100000;
+  setsockopt(fSr, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
 
 #endif
 }
@@ -262,7 +269,6 @@ void driveHardware::readCANmessage() {
 
   int nbytes(0);
   char data[4] = {0, 0, 0, 0};
-  //  fFrameR.can_id = fCANId;
 
   unsigned int idata(0);
   float fdata(0.0);
@@ -289,20 +295,22 @@ void driveHardware::readCANmessage() {
       memcpy(&fdata, data, sizeof fdata);
       memcpy(&idata, data, sizeof idata);
      if (DBX) {
-      printf("float = %f/uint32 = %u\n", fdata, idata);
-      ++cntCAN;
-      printf("received CAN message %d\n", cntCAN);
-    }
-      stringstream sbla; sbla << "CAN read "
-                              << " reg = 0x"  << hex << reg
-                              << " value = " << fdata;
-      if (DBX) cout << "sbla: " << sbla.str() << endl;
-      fLOG(INFO, sbla.str());
+       printf("float = %f/uint32 = %u\n", fdata, idata);
+       ++cntCAN;
+       printf("received CAN message %d\n", cntCAN);
+     }
+     stringstream sbla; sbla << "CAN read "
+                             << " reg = 0x"  << hex << reg
+                             << " value = " << fdata;
+     if (DBX) cout << "sbla: " << sbla.str() << endl;
+     fLOG(INFO, sbla.str());
 
 
-      fCANReadIntVal = idata;
-      fCANReadFloatVal = fdata;
-    }
+     fCANReadIntVal = idata;
+     fCANReadFloatVal = fdata;
+  } else {
+    cout << "nothing read from CAN" << endl;
+  }
 #endif
 
   return;
