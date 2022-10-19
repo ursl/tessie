@@ -261,7 +261,6 @@ void driveHardware::readCANmessage() {
   int ireg = 0;
 
   itec = fCANId & 0xf;
-  //ireg = fCANId
   if (0 == fActiveTEC[itec]) {
     if (DBX) cout << "TEC " << itec <<  " not active, skipping" << endl;
     return;
@@ -285,10 +284,9 @@ void driveHardware::readCANmessage() {
           printf("%3d ", i, fFrameR.data[i]);
       }
 
-      fCANId  = fFrameR.can_id;
-      int tec = fCANId & 0xf;
-      bool RegSend = (fCANId & 0x040) && (0 == (fCANId & 0x030));
-      int reg = fFrameR.data[0];
+      bool RegSend = (fCANId & 0x040) && (0 == (fFrameR.can_id & 0x030));
+      itec    = fFrameR.can_id & 0xf;
+      ireg    = fFrameR.data[0];
       data[0] = fFrameR.data[1];
       data[1] = fFrameR.data[2];
       data[2] = fFrameR.data[3];
@@ -304,7 +302,8 @@ void driveHardware::readCANmessage() {
      cout << endl;
 
      stringstream sbla; sbla << "CAN read "
-                             << " reg = 0x"  << hex << reg
+                             << " tec = " << itec
+                             << " reg = 0x"  << hex << ireg
                              << " value = " << fdata;
      if (DBX) cout << "sbla: " << sbla.str() << endl;
      fLOG(INFO, sbla.str());
