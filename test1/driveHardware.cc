@@ -102,7 +102,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   //4.Define receive rules
   struct can_filter rfilter[1];
   rfilter[0].can_id = 0x000;
-  rfilter[0].can_mask = CAN_SFF_MASK;
+//??  rfilter[0].can_mask = CAN_SFF_MASK;
   setsockopt(fSr, SOL_CAN_RAW, CAN_RAW_FILTER, &rfilter, sizeof(rfilter));
 
   
@@ -642,23 +642,23 @@ TECData  driveHardware::initAllTECRegister() {
 // ----------------------------------------------------------------------
 void driveHardware::readAllParamsFromCAN() {
 
-  cout << "read Temp_M" << endl;
+  cout << "driveHardware::readAllParamsFromCAN() read Temp_M" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_M"].value = getTECRegisterFromCAN(i, "Temp_M");
 
-  cout << "read ControlVoltage_Set" << endl;
+  cout << "driveHardware::readAllParamsFromCAN() read ControlVoltage_Set" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["ControlVoltage_Set"].value = getTECRegisterFromCAN(i, "ControlVoltage_Set");
   return;
 
-  cout << "read PID_kp" << endl;
+  cout << "driveHardware::readAllParamsFromCAN() read PID_kp" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_kp"].value = getTECRegisterFromCAN(i, "PID_kp");
 
-  cout << "read PID_ki" << endl;
+  cout << "driveHardware::readAllParamsFromCAN() read PID_ki" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_ki"].value = getTECRegisterFromCAN(i, "PID_ki");
 
-  cout << "read PID_kd" << endl;
+  cout << "driveHardware::readAllParamsFromCAN() read PID_kd" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_kd"].value = getTECRegisterFromCAN(i, "PID_kd");
 
-  cout << "read all the rest" << endl;
+  cout << "driveHardware::readAllParamsFromCAN() read all the rest" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_W"].value = getTECRegisterFromCAN(i, "Temp_W");
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_Set"].value = getTECRegisterFromCAN(i, "Temp_Set");
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Peltier_I"].value = getTECRegisterFromCAN(i, "Peltier_I");
