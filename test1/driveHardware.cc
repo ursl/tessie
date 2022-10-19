@@ -105,10 +105,6 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   rfilter[0].can_mask = CAN_SFF_MASK;
   setsockopt(fSr, SOL_CAN_RAW, CAN_RAW_FILTER, &rfilter, sizeof(rfilter));
 
-  timeval tv;
-  tv.tv_sec = 0;
-  tv.tv_usec = 10000;
-  setsockopt(fSr, SOL_CAN_RAW, SO_RCVTIMEO, &tv, sizeof(tv));
 
 #endif
 }
