@@ -111,7 +111,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   struct timeval tv;
   tv.tv_sec = 0;
   tv.tv_usec = 100000;
-  setsockopt(fSr, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
+//  setsockopt(fSr, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
 
 #endif
 }
@@ -238,7 +238,6 @@ int driveHardware::getTECRegisterIdx(std::string rname) {
 void  driveHardware::setTECParameter(float par) {
   fTECParameter = par;
   printf("driveHardware::setTECParameter = %f\n", fTECParameter);
-
 }
 
 
@@ -575,8 +574,10 @@ void  driveHardware::turnOffTEC(int itec) {
 float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
 
   if (0 == fActiveTEC[itec]) {
-    cout << "TEC " << itec <<  " not active, skipping" << endl;
+    cout << "driveHardware::getTECRegisterFromCAN> TEC " << itec <<  " not active, skipping" << endl;
     return -99.;
+  } else {
+    cout << "driveHardware::getTECRegisterFromCAN"  << endl;
   }
 
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_READ);
