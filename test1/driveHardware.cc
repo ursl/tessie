@@ -296,7 +296,7 @@ void driveHardware::readCANmessage() {
      }
      cout << endl;
 
-     stringstream sbla; sbla << "CAN read "
+     stringstream sbla; sbla << "CAN read canid = " << hex << fCANId
                              << " tec = " << itec
                              << " reg = 0x"  << hex << ireg
                              << " value = " << fdata;
