@@ -296,7 +296,7 @@ void driveHardware::readCANmessage() {
      }
      cout << endl;
 
-     stringstream sbla; sbla << "CAN read canid = " << hex << fCANId
+     stringstream sbla; sbla << "CAN read canid = " << hex << fFrameR.can_id
                              << " tec = " << itec
                              << " reg = 0x"  << hex << ireg
                              << " value = " << fdata;
@@ -535,14 +535,11 @@ void  driveHardware::turnOnTEC(int itec) {
 
   printf("driveHardware::turnOnTEC(%d)\n", itec);
 
-  fCANId = ((0x1<<8) | itec);
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_CMD);
-
   fCANReg = 1; // Power_On
   fCANVal = fTECParameter;
   printf(" (2) send CMD with register %d, canID = %x\n", fCANReg, fCANId);
   sendCANmessage();
-
 }
 
 
@@ -556,13 +553,11 @@ void  driveHardware::turnOffTEC(int itec) {
 
   printf("driveHardware::turnOffTEC(%d)\n", itec);
 
-  fCANId = ((0x1<<8) | itec);
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_CMD);
   fCANReg = 2; // Power_Off
   fCANVal = fTECParameter;
   printf(" send CMD with register %d, canID = %x\n", fCANReg, fCANId);
   sendCANmessage();
-
 }
 
 
@@ -583,7 +578,6 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
   sendCANmessage();
 
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECSEND | CANBUS_READ);
-  fCANReg = fTECData[itec].getIdx(regname);
   readCANmessage();
 
   return fCANReadFloatVal;
