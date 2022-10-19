@@ -256,6 +256,9 @@ void driveHardware::readCANmessage() {
   fCANReadFloatVal += 0.1;
 
 #ifdef PI
+  // -- send read request
+  sendCANmessage();
+
   bool DBX(true);
   int itec = 0;
   int ireg = 0;
@@ -573,11 +576,8 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
   }
 
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_READ);
-
   fCANReg = fTECData[itec].getIdx(regname);
-  sendCANmessage();
-
- // fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECSEND | CANBUS_READ);
+  //sendCANmessage();
   readCANmessage();
 
   return fCANReadFloatVal;
