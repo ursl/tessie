@@ -570,9 +570,9 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
   }
 
   fCANId  = 0x110 | itec;
-  cout << "old can ID = " << fCANId;
+  cout << "old can ID = " << hex << fCANId;
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_READ);
-  cout << " new can ID = " << fCANId << endl;
+  cout << " new can ID = " << fCANId << dec << endl;
 
   fCANReg = fTECData[itec].getIdx(regname);
   sendCANmessage();
