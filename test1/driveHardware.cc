@@ -236,44 +236,6 @@ void  driveHardware::setTECParameter(float par) {
 
 
 // ----------------------------------------------------------------------
-void  driveHardware::turnOnTEC(int itec) {
-
-  if (0 == fActiveTEC[itec]) {
-    cout << "TEC " << itec <<  " not active, skipping" << endl;
-    return;
-  }
-
-  printf("driveHardware::turnOnTEC(%d)\n", itec);
-
-  fCANId = ((0x1<<8) | itec);
-  fCANReg = 1; // Power_On
-  fCANVal = fTECParameter;
-  printf(" (2) send CMD with register %d, canID = %x\n", fCANReg, fCANId);
-  sendCANmessage();
-
-}
-
-
-// ----------------------------------------------------------------------
-void  driveHardware::turnOffTEC(int itec) {
-
-  if (0 == fActiveTEC[itec]) {
-    cout << "TEC " << itec <<  " not active, skipping" << endl;
-    return;
-  }
-
-  printf("driveHardware::turnOffTEC(%d)\n", itec);
-
-  fCANId = ((0x1<<8) | itec);
-  fCANReg = 2; // Power_Off
-  fCANVal = fTECParameter;
-  printf(" send CMD with register %d, canID = %x\n", fCANReg, fCANId);
-  sendCANmessage();
-
-}
-
-
-// ----------------------------------------------------------------------
 void driveHardware::shutDown() {
   // FIXME: do a poff for all TEC controllers. set all relais outputs to 0.
 #ifdef PI
@@ -558,6 +520,48 @@ float driveHardware::getTECRegister(int itec, std::string regname) {
 
 
 // ----------------------------------------------------------------------
+void  driveHardware::turnOnTEC(int itec) {
+
+  if (0 == fActiveTEC[itec]) {
+    cout << "TEC " << itec <<  " not active, skipping" << endl;
+    return;
+  }
+
+  printf("driveHardware::turnOnTEC(%d)\n", itec);
+
+  fCANId = ((0x1<<8) | itec);
+  fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_CMD);
+
+  fCANReg = 1; // Power_On
+  fCANVal = fTECParameter;
+  printf(" (2) send CMD with register %d, canID = %x\n", fCANReg, fCANId);
+  sendCANmessage();
+
+}
+
+
+// ----------------------------------------------------------------------
+void  driveHardware::turnOffTEC(int itec) {
+
+  if (0 == fActiveTEC[itec]) {
+    cout << "TEC " << itec <<  " not active, skipping" << endl;
+    return;
+  }
+
+  printf("driveHardware::turnOffTEC(%d)\n", itec);
+
+  fCANId = ((0x1<<8) | itec);
+  fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_CMD);
+  fCANReg = 2; // Power_Off
+  fCANVal = fTECParameter;
+  printf(" send CMD with register %d, canID = %x\n", fCANReg, fCANId);
+  sendCANmessage();
+
+}
+
+
+
+// ----------------------------------------------------------------------
 float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
 
   if (0 == fActiveTEC[itec]) {
@@ -566,6 +570,8 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
   }
 
   fCANId  = 0x110 | itec;
+  fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_READ);
+
   fCANReg = fTECData[itec].getIdx(regname);
   sendCANmessage();
 
@@ -583,6 +589,8 @@ void driveHardware::setTECRegister(int itec, std::string regname, float value) {
 
   // -- program parameter
   fCANId = 0x120 | itec;
+  fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_WRITE);
+
   fCANReg = fTECData[itec].getIdx(regname);
 
   fCANVal = value;

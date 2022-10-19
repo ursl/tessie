@@ -29,7 +29,8 @@ const unsigned int CANBUS_CMD     = 0x000;
 const unsigned int CANBUS_READ    = 0x010;
 const unsigned int CANBUS_WRITE   = 0x020;
 
-const unsigned int CANBUS_SEND    = 0x040;
+const unsigned int CANBUS_TECSEND = 0x040;
+const unsigned int CANBUS_TECREC  = 0x000;
 
 // ----------------------------------------------------------------------
 struct TECRegister {
