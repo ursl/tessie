@@ -262,7 +262,7 @@ void driveHardware::readCANmessage() {
 
   itec = fCANId & 0xf;
   if (0 == fActiveTEC[itec]) {
-    if (DBX) cout << "TEC " << itec <<  " not active, skipping" << endl;
+    if (DBX) cout << "TEC " << itec <<  " not active, skipping????????!!!!!!!????" << endl;
     return;
   }
 
