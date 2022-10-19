@@ -103,7 +103,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   struct can_filter rfilter[1];
   rfilter[0].can_id = 0x000;
   rfilter[0].can_mask = CAN_SFF_MASK;
-  setsockopt(fSr, SOL_CAN_RAW, CAN_RAW_FILTER, &rfilter, sizeof(rfilter));
+//  setsockopt(fSr, SOL_CAN_RAW, CAN_RAW_FILTER, &rfilter, sizeof(rfilter));
 
 
 #endif
@@ -262,14 +262,14 @@ void driveHardware::readCANmessage() {
 
   int nbytes(0);
   char data[4] = {0, 0, 0, 0};
-  fFrameR.can_id = fCANId;
+  //  fFrameR.can_id = fCANId;
 
   unsigned int idata(0);
   float fdata(0.0);
   if (DBX) cout << "try to call read for itec = " << itec << " corresponding to fCANId = 0x" << hex << fCANId << dec << endl;
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
   if (DBX) cout << "readCANmessage(), nbytes = " << nbytes << endl;
-  if(nbytes > 0) {
+  if (nbytes > 0) {
       if (DBX) printf("can_id = 0x%X ncan_dlc = %d (from run())\n", fFrameR.can_id, fFrameR.can_dlc);
       int i = 0;
 
