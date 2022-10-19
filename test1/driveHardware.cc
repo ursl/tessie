@@ -154,8 +154,9 @@ void  driveHardware::printToGUI(std::string x) {
 void driveHardware::runPrintout(int reg, float val) {
   cout << "driveHardware::runPrintout() " << endl;
   QMutexLocker locker(&fMutex);
-  this->fCANReg = reg;
-  this->fCANVal = val;
+
+  this->fCANReg = reg; // ??
+  this->fCANVal = val; // ??
 
   if (!isRunning()) {
       start(LowPriority);
@@ -229,7 +230,7 @@ int driveHardware::getTECRegisterIdx(std::string rname) {
 // ----------------------------------------------------------------------
 void  driveHardware::setTECParameter(float par) {
   fTECParameter = par;
-  printf("driveHardware::fTECVoltage = %f\n", fTECParameter);
+  printf("driveHardware::setTECParameter = %f\n", fTECParameter);
 
 }
 
@@ -530,8 +531,8 @@ void driveHardware::initTECData() {
   for (unsigned int itec = 1; itec <=8; ++itec) {
       fTECData.insert(make_pair(itec, initAllTECRegister()));
       // -- just for fun:
-      fTECData[itec].reg["ControlVoltage_Set"].value = -static_cast<float>(itec);
-      fTECData[itec].print();
+      // fTECData[itec].reg["ControlVoltage_Set"].value = -static_cast<float>(itec);
+      // fTECData[itec].print();
     }
 }
 
@@ -626,20 +627,21 @@ void driveHardware::readAllParamsFromCAN() {
   cout << "read Temp_M" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_M"].value = getTECRegisterFromCAN(i, "Temp_M");
 
-  return;
   cout << "read ControlVoltage_Set" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["ControlVoltage_Set"].value = getTECRegisterFromCAN(i, "ControlVoltage_Set");
 
   cout << "read PID_kp" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_kp"].value = getTECRegisterFromCAN(i, "PID_kp");
 
-  cout << "read PID_kd" << endl;
+  cout << "read PID_ki" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_ki"].value = getTECRegisterFromCAN(i, "PID_ki");
 
-  cout << "read ControlVoltage_Set" << endl;
+  cout << "read PID_kd" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_kd"].value = getTECRegisterFromCAN(i, "PID_kd");
+
+  cout << "read all the rest" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_W"].value = getTECRegisterFromCAN(i, "Temp_W");
-  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_M"].value = getTECRegisterFromCAN(i, "Temp_M");
+  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_Set"].value = getTECRegisterFromCAN(i, "Temp_Set");
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Peltier_I"].value = getTECRegisterFromCAN(i, "Peltier_I");
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Peltier_R"].value = getTECRegisterFromCAN(i, "Peltier_R");
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Peltier_P"].value = getTECRegisterFromCAN(i, "Peltier_P");
@@ -647,8 +649,6 @@ void driveHardware::readAllParamsFromCAN() {
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_U"].value = getTECRegisterFromCAN(i, "Supply_U");
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_I"].value = getTECRegisterFromCAN(i, "Supply_I");
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_P"].value = getTECRegisterFromCAN(i, "Supply_P");
-
-
 }
 
 

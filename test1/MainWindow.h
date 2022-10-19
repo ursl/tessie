@@ -99,6 +99,15 @@ private slots:
     void tec2PIDkd() {tecSetFromUI(2, "PID_kd", ui->tec2_PID_kd); }
     void tec1PIDkd() {tecSetFromUI(1, "PID_kd", ui->tec1_PID_kd); }
 
+    void tec8TempM() {tecSetFromUI(8, "Temp_M", ui->tec8_TempM); }
+    void tec7TempM() {tecSetFromUI(7, "Temp_M", ui->tec7_TempM); }
+    void tec6TempM() {tecSetFromUI(6, "Temp_M", ui->tec6_TempM); }
+    void tec5TempM() {tecSetFromUI(5, "Temp_M", ui->tec5_TempM); }
+    void tec4TempM() {tecSetFromUI(4, "Temp_M", ui->tec4_TempM); }
+    void tec3TempM() {tecSetFromUI(3, "Temp_M", ui->tec3_TempM); }
+    void tec2TempM() {tecSetFromUI(2, "Temp_M", ui->tec2_TempM); }
+    void tec1TempM() {tecSetFromUI(1, "Temp_M", ui->tec1_TempM); }
+
     void  updateHardwareValues();
 
     void start();
