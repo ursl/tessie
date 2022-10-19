@@ -258,7 +258,10 @@ void driveHardware::readCANmessage() {
 #ifdef PI
   bool DBX(true);
   int itec = 0;
+  int ireg = 0;
+
   itec = fCANId & 0xf;
+  //ireg = fCANId
   if (0 == fActiveTEC[itec]) {
     if (DBX) cout << "TEC " << itec <<  " not active, skipping" << endl;
     return;
@@ -278,9 +281,9 @@ void driveHardware::readCANmessage() {
       if (DBX) printf("can_id = 0x%X ncan_dlc = %d (from run())\n", fFrameR.can_id, fFrameR.can_dlc);
       int i = 0;
       cout << "data[] = ";
-      if (DBX) for(i = 0; i < fFrameR.can_dlc; i++) {
-          printf("%2x/%3d ", i, fFrameR.data[i], fFrameR.data[i]);
-        }
+      if (DBX) for (i = 0; i < fFrameR.can_dlc; i++) {
+          printf("%3d ", i, fFrameR.data[i]);
+      }
 
       fCANId  = fFrameR.can_id;
       int tec = fCANId & 0xf;
