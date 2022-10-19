@@ -275,6 +275,7 @@ void driveHardware::readCANmessage() {
 
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
   bool RegSend = (fFrameR.can_id & 0x040) && (0 == (fFrameR.can_id & 0x030));
+  cout << "RegSend = " << RegSend << endl;
 
   while (!RegSend) {
     nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
