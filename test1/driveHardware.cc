@@ -288,10 +288,11 @@ void driveHardware::readCANmessage() {
   fCANReadFloatVal += 0.1;
 
 #ifdef PI
+  bool DBX(true);
   int itec = 0;
   itec = fCANId & 0xf;
   if (0 == fActiveTEC[itec]) {
-    if (0) cout << "TEC " << itec <<  " not active, skipping" << endl;
+    if (DBX) cout << "TEC " << itec <<  " not active, skipping" << endl;
     return;
   }
 
@@ -299,21 +300,24 @@ void driveHardware::readCANmessage() {
 
   int nbytes(0);
   char data[4] = {0, 0, 0, 0};
-  fFrameR.can_id = fCANId;
+  //?? fFrameR.can_id = fCANId;
 
   unsigned int idata(0);
   float fdata(0.0);
-  if (0) cout << "try to call read for itec = " << itec << " corresponding to fCANId = 0x" << hex << fCANId << dec << endl;
+  if (DBX) cout << "try to call read for itec = " << itec << " corresponding to fCANId = 0x" << hex << fCANId << dec << endl;
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
-  if (0) cout << "readCANmessage(), nbytes = " << nbytes << endl;
+  if (DBX) cout << "readCANmessage(), nbytes = " << nbytes << endl;
   if(nbytes > 0) {
-      if (0) printf("can_id = 0x%X ncan_dlc = %d (from run())\n", fFrameR.can_id, fFrameR.can_dlc);
+      if (DBX) printf("can_id = 0x%X ncan_dlc = %d (from run())\n", fFrameR.can_id, fFrameR.can_dlc);
       int i = 0;
 
-      if (0) for(i = 0; i < fFrameR.can_dlc; i++) {
+      if (DBX) for(i = 0; i < fFrameR.can_dlc; i++) {
           printf("data[%d] = %2x/%3d\n", i, fFrameR.data[i], fFrameR.data[i]);
         }
 
+      fCANId  = fFrameR.can_id;
+      int tec = fCANId & 0xf;
+      bool RegSend = (fCANId & 0x040) && (0 == (fCANId & 0x030));
       int reg = fFrameR.data[0];
       data[0] = fFrameR.data[1];
       data[1] = fFrameR.data[2];
@@ -322,7 +326,7 @@ void driveHardware::readCANmessage() {
 
       memcpy(&fdata, data, sizeof fdata);
       memcpy(&idata, data, sizeof idata);
-     if (0) {
+     if (DBX) {
       printf("float = %f/uint32 = %u\n", fdata, idata);
       ++cntCAN;
       printf("received CAN message %d\n", cntCAN);
@@ -330,7 +334,7 @@ void driveHardware::readCANmessage() {
       stringstream sbla; sbla << "CAN read "
                               << " reg = 0x"  << hex << reg
                               << " value = " << fdata;
-      if (0) cout << "sbla: " << sbla.str() << endl;
+      if (DBX) cout << "sbla: " << sbla.str() << endl;
       fLOG(INFO, sbla.str());
 
 

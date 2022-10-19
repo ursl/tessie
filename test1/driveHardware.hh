@@ -21,6 +21,15 @@
 #include <linux/can/raw.h>
 #endif
 
+const unsigned int CANBUS_SHIFT   = 0x200;
+const unsigned int CANBUS_PRIVATE = 0x100;
+const unsigned int CANBUS_PUBLIC  = 0x000;
+
+const unsigned int CANBUS_CMD     = 0x000;
+const unsigned int CANBUS_READ    = 0x010;
+const unsigned int CANBUS_WRITE   = 0x020;
+
+const unsigned int CANBUS_SEND    = 0x040;
 
 // ----------------------------------------------------------------------
 struct TECRegister {
