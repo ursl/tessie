@@ -260,12 +260,6 @@ void driveHardware::readCANmessage() {
   int itec = 0;
   int ireg = 0;
 
-  itec = fCANId & 0xf;
-  if (0 == fActiveTEC[itec]) {
-    if (DBX) cout << "TEC " << itec <<  " not active, skipping????????!!!!!!!????" << endl;
-    return;
-  }
-
   static int cntCAN(0);
 
   int nbytes(0);
@@ -273,7 +267,9 @@ void driveHardware::readCANmessage() {
 
   unsigned int idata(0);
   float fdata(0.0);
-  //if (DBX) cout << "try to call read for itec = " << itec << " corresponding to fCANId = 0x" << hex << fCANId << dec << endl;
+
+  //if (DBX) cout << "try to call read for fCANId = 0x" << hex << fCANId << dec << endl;
+
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
   if (nbytes > 0) {
       if (DBX) printf("can_id = 0x%X ncan_dlc = %d \n", fFrameR.can_id, fFrameR.can_dlc);
@@ -575,10 +571,10 @@ void  driveHardware::turnOffTEC(int itec) {
 float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
 
   if (0 == fActiveTEC[itec]) {
-    cout << "driveHardware::getTECRegisterFromCAN> TEC " << itec <<  " not active, skipping" << endl;
+    //cout << "driveHardware::getTECRegisterFromCAN> TEC " << itec <<  " not active, skipping" << endl;
     return -99.;
   } else {
-    cout << "driveHardware::getTECRegisterFromCAN"  << endl;
+    //cout << "driveHardware::getTECRegisterFromCAN"  << endl;
   }
 
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_READ);
