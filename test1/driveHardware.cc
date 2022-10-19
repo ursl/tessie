@@ -577,7 +577,7 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
   fCANReg = fTECData[itec].getIdx(regname);
   sendCANmessage();
 
-  fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECSEND | CANBUS_READ);
+ // fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECSEND | CANBUS_READ);
   readCANmessage();
 
   return fCANReadFloatVal;
