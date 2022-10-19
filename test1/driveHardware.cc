@@ -307,10 +307,10 @@ void driveHardware::readCANmessage() {
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
   cout << "readCANmessage(), nbytes = " << nbytes << endl;
   if(nbytes > 0) {
-      printf("can_id = 0x%X ncan_dlc = %d (from run())\n", fFrameR.can_id, fFrameR.can_dlc);
+      if (0) printf("can_id = 0x%X ncan_dlc = %d (from run())\n", fFrameR.can_id, fFrameR.can_dlc);
       int i = 0;
 
-      for(i = 0; i < fFrameR.can_dlc; i++) {
+      if (0) for(i = 0; i < fFrameR.can_dlc; i++) {
           printf("data[%d] = %2x/%3d\n", i, fFrameR.data[i], fFrameR.data[i]);
         }
 
@@ -322,9 +322,11 @@ void driveHardware::readCANmessage() {
 
       memcpy(&fdata, data, sizeof fdata);
       memcpy(&idata, data, sizeof idata);
+     if (0) {
       printf("float = %f/uint32 = %u\n", fdata, idata);
       ++cntCAN;
       printf("received CAN message %d\n", cntCAN);
+    }
       stringstream sbla; sbla << "CAN read "
                               << " reg = 0x"  << hex << reg
                               << " value = " << fdata;
@@ -379,6 +381,7 @@ void driveHardware::sendCANmessage() {
       fFrameW.data[3] = data[2];
       fFrameW.data[4] = data[3];
     }
+  if (0) {
   if (1 == command) {
       cout << "   sendCANmessage: canid = " << fCANId << " cmd = " << fCANReg
            << endl;
@@ -395,7 +398,7 @@ void driveHardware::sendCANmessage() {
   for (int i = 0; i < fFrameW.can_dlc; ++i) {
       printf("    data[%d] = %2x/%3d\r\n", i, fFrameW.data[i], fFrameW.data[i]);
     }
-
+  }
   //6.Send message
   setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
   int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
