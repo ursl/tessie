@@ -16,6 +16,7 @@ using namespace std;
 
 // ----------------------------------------------------------------------
 driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x) {
+  fParent    = parent;
   fRestart   = false;
   fAbort     = false;
   fCANReg    = 0;
@@ -137,14 +138,14 @@ driveHardware::~driveHardware() {
 // ----------------------------------------------------------------------
 void driveHardware::sentFromServer(const QString &result) {
   cout << "driveHardware::sentFromServer() -> " << result.toStdString() << "<-" << endl;
-  signalText(result);
+  emit signalText(result);
 }
 
 
 // ----------------------------------------------------------------------
 void  driveHardware::getMessage(std::string x) {
   QString aline(QString::fromStdString(x));
-  signalText(aline);
+  emit signalText(aline);
 
   // -- do something else eventually
 }
@@ -153,8 +154,14 @@ void  driveHardware::getMessage(std::string x) {
 // ----------------------------------------------------------------------
 void  driveHardware::printToGUI(std::string x) {
   QString aline(QString::fromStdString(x));
-  signalText(aline);
+  emit signalText(aline);
 }
+
+// ----------------------------------------------------------------------
+//void driveHardware::updateHwDisplay() {
+//  cout << "driveHardware::updateHwDisplay() " << endl;
+//  emit signalSomething(1);
+//}
 
 
 // ----------------------------------------------------------------------
@@ -508,18 +515,6 @@ void driveHardware::toggleFras(int imask) {
 }
 
 
-
-// ----------------------------------------------------------------------
-void driveHardware::initTECData() {
-  for (unsigned int itec = 1; itec <=8; ++itec) {
-      fTECData.insert(make_pair(itec, initAllTECRegister()));
-      // -- just for fun:
-      // fTECData[itec].reg["ControlVoltage_Set"].value = -static_cast<float>(itec);
-      // fTECData[itec].print();
-    }
-}
-
-
 // ----------------------------------------------------------------------
 float driveHardware::getTECRegister(int itec, std::string regname) {
   if (fTECData.find(itec) == fTECData.end()) {
@@ -607,6 +602,17 @@ void driveHardware::setTECRegister(int itec, std::string regname, float value) {
 
 
 // ----------------------------------------------------------------------
+void driveHardware::initTECData() {
+  for (unsigned int itec = 1; itec <=8; ++itec) {
+      fTECData.insert(make_pair(itec, initAllTECRegister()));
+      // -- just for fun:
+      // fTECData[itec].reg["ControlVoltage_Set"].value = -static_cast<float>(itec);
+      // fTECData[itec].print();
+    }
+}
+
+
+// ----------------------------------------------------------------------
 TECData  driveHardware::initAllTECRegister() {
   TECData tdata;
 
@@ -671,6 +677,10 @@ void driveHardware::readAllParamsFromCAN() {
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_U"].value = getTECRegisterFromCAN(i, "Supply_U");
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_I"].value = getTECRegisterFromCAN(i, "Supply_I");
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_P"].value = getTECRegisterFromCAN(i, "Supply_P");
+
+
+  emit updateHwDisplay();
+
 }
 
 
@@ -717,7 +727,14 @@ string driveHardware::timeStamp(bool filestamp) {
   int sec   = ltm->tm_sec;
   std::stringstream result;
   if (filestamp) {
-      result << year  << std::setfill('0') << std::setw(2) << month << day << "-" << hour << min << sec;
+      result << year
+             << std::setfill('0') << std::setw(2) << month
+             << std::setfill('0') << std::setw(2) << day
+             << ":"
+             << std::setfill('0') << std::setw(2) << hour
+             << std::setfill('0') << std::setw(2) << min
+             << std::setfill('0') << std::setw(2) << sec
+             << std::setfill('0') << std::setw(3) << ((long)tv.tv_usec / 1000);
       return result.str();
     }
   result << year << "/" << std::setfill('0') << std::setw(2) << month << "/" << day << " "

@@ -129,6 +129,7 @@ signals:
   void  signalText(QString x);
   void  sendToServer(const QString&);
   void  startServer();
+  void  updateHwDisplay();
 
 protected:
   void        run() override;
@@ -136,6 +137,7 @@ protected:
   TECData     initAllTECRegister();
 
 private:
+  QObject *fParent;
   tLog&   fLOG;
   QMutex fMutex;
   QWaitCondition fCondition;

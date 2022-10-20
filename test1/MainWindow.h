@@ -109,6 +109,8 @@ private slots:
     void tec1TempM() {tecSetFromUI(1, "Temp_M", ui->tec1_TempM); }
 
     void  updateHardwareValues();
+    void  updateHardwareDisplay();
+
 
     void start();
     void quitProgram();

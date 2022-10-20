@@ -77,6 +77,7 @@ MainWindow::MainWindow(tLog &x, QWidget *parent) :
 
   updateHardwareValues();
 
+  connect(&fThread, &driveHardware::updateHwDisplay, this, &MainWindow::updateHardwareDisplay);
 }
 
 
@@ -282,8 +283,12 @@ void MainWindow::guiSetRegName() {
 
 // ----------------------------------------------------------------------
 void MainWindow::updateHardwareValues() {
-
   fThread.readAllParamsFromCAN();
+  updateHardwareDisplay();
+}
+
+// ----------------------------------------------------------------------
+void MainWindow::updateHardwareDisplay() {
 
   for (unsigned int ivec = 0; ivec < 8; ++ivec) {
     fUIControlVoltageSet[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "ControlVoltage_Set"), 'f', 2));
