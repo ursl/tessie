@@ -258,7 +258,7 @@ void driveHardware::readCANmessage() {
 #ifdef PI
   // -- send read request
   sendCANmessage();
-  std::chrono::microseconds blink(100);
+  std::chrono::microseconds blink(500);
   std::this_thread::sleep_for(blink);
 
 
