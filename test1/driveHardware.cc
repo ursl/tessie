@@ -279,7 +279,7 @@ void driveHardware::readCANmessage() {
 //ul  nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
 
   socklen_t len = sizeof(fAddrR);
-  nbytes = recvfrom(fSr, &fFrameR, sizeof(struct fFrameR),
+  nbytes = recvfrom(fSr, &fFrameR, sizeof(fFrameR),
                     0, (struct sockaddr*)&fAddrR, &len);
 
   bool RegSend = (fFrameR.can_id & 0x040) && (0 == (fFrameR.can_id & 0x030));
