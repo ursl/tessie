@@ -260,8 +260,6 @@ void driveHardware::readCANmessage() {
 
   // -- send read request
   sendCANmessage();
-  // -- this is required to absorb the write request from fSr
-  nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
 
   bool DBX(true);
   int itec = 0;
@@ -385,8 +383,10 @@ void driveHardware::sendCANmessage() {
   int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
   if (nbytes != sizeof(fFrameW)) {
       printf("    Send Error frame[0]!\r\n");
-    }
+  }
 
+  // -- this is required to absorb the write request from fSr
+  nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
 
   //  fMutex.unlock();
 #endif
