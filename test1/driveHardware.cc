@@ -256,6 +256,8 @@ void driveHardware::readCANmessage() {
   fCANReadFloatVal += 0.1;
 
 #ifdef PI
+  int nbytes(0);
+
   // -- send read request
   sendCANmessage();
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
@@ -270,7 +272,6 @@ void driveHardware::readCANmessage() {
 
   static int cntCAN(0);
 
-  int nbytes(0);
   char data[4] = {0, 0, 0, 0};
 
   unsigned int idata(0);
