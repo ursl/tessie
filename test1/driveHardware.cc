@@ -276,7 +276,12 @@ void driveHardware::readCANmessage() {
 
   //if (DBX) cout << "try to call read for fCANId = 0x" << hex << fCANId << dec << endl;
 
-  nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
+//ul  nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
+
+  socklen_t len = sizeof(fAddrR);
+  nbytes = recvfrom(fSr, &fFrameR, sizeof(struct fFrameR),
+                    0, (struct sockaddr*)&fAddrR, &len);
+
   bool RegSend = (fFrameR.can_id & 0x040) && (0 == (fFrameR.can_id & 0x030));
   cout << "RegSend = " << RegSend <<  " fFrameR.can_id = " << hex << fFrameR.can_id << endl;
 
