@@ -286,14 +286,14 @@ void driveHardware::readCANmessage() {
           printf("%3d ", fFrameR.data[i]);
       }
 
-      cout << " itec = " << itec << " (fCANReg = " << fCANReg << ") ";
-
       itec    = fFrameR.can_id & 0xf;
       ireg    = fFrameR.data[0];
       data[0] = fFrameR.data[1];
       data[1] = fFrameR.data[2];
       data[2] = fFrameR.data[3];
       data[3] = fFrameR.data[4];
+
+      cout << " ireg = " << ireg << " (fCANReg = " << fCANReg << ") ";
 
       memcpy(&fdata, data, sizeof fdata);
       memcpy(&idata, data, sizeof idata);
