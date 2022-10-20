@@ -260,11 +260,8 @@ void driveHardware::readCANmessage() {
 
   // -- send read request
   sendCANmessage();
+  // -- this is required to absorb the write request from fSr
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
-
-  std::chrono::microseconds blink(500);
-//  std::this_thread::sleep_for(blink);
-
 
   bool DBX(true);
   int itec = 0;
@@ -277,15 +274,11 @@ void driveHardware::readCANmessage() {
   unsigned int idata(0);
   float fdata(0.0);
 
-  //if (DBX) cout << "try to call read for fCANId = 0x" << hex << fCANId << dec << endl;
-
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
 
-//  socklen_t len = sizeof(fAddrR);
-//  nbytes = recvfrom(fSr, &fFrameR, sizeof(fFrameR), 0, (struct sockaddr*)&fAddrR, &len);
-
-  bool RegSend = (fFrameR.can_id & 0x040) && (0 == (fFrameR.can_id & 0x030));
-  cout << "RegSend = " << RegSend <<  " fFrameR.can_id = " << hex << fFrameR.can_id << endl;
+  // -- this is an alternative to 'read()'
+  //  socklen_t len = sizeof(fAddrR);
+  //  nbytes = recvfrom(fSr, &fFrameR, sizeof(fFrameR), 0, (struct sockaddr*)&fAddrR, &len);
 
   if (nbytes > -1) {
 
@@ -655,7 +648,6 @@ void driveHardware::readAllParamsFromCAN() {
 
   cout << "driveHardware::readAllParamsFromCAN() read Temp_M" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_M"].value = getTECRegisterFromCAN(i, "Temp_M");
-  return;
 
   cout << "driveHardware::readAllParamsFromCAN() read ControlVoltage_Set" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["ControlVoltage_Set"].value = getTECRegisterFromCAN(i, "ControlVoltage_Set");
