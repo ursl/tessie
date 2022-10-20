@@ -258,8 +258,10 @@ void driveHardware::readCANmessage() {
 #ifdef PI
   // -- send read request
   sendCANmessage();
+  nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
+
   std::chrono::microseconds blink(500);
-  std::this_thread::sleep_for(blink);
+//  std::this_thread::sleep_for(blink);
 
 
   bool DBX(true);
@@ -276,11 +278,10 @@ void driveHardware::readCANmessage() {
 
   //if (DBX) cout << "try to call read for fCANId = 0x" << hex << fCANId << dec << endl;
 
-//ul  nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
+  nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
 
-  socklen_t len = sizeof(fAddrR);
-  nbytes = recvfrom(fSr, &fFrameR, sizeof(fFrameR),
-                    0, (struct sockaddr*)&fAddrR, &len);
+//  socklen_t len = sizeof(fAddrR);
+//  nbytes = recvfrom(fSr, &fFrameR, sizeof(fFrameR), 0, (struct sockaddr*)&fAddrR, &len);
 
   bool RegSend = (fFrameR.can_id & 0x040) && (0 == (fFrameR.can_id & 0x030));
   cout << "RegSend = " << RegSend <<  " fFrameR.can_id = " << hex << fFrameR.can_id << endl;
