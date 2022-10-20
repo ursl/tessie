@@ -687,8 +687,10 @@ void driveHardware::readAllParamsFromCAN() {
 // ----------------------------------------------------------------------
 void driveHardware::dumpCSV() {
   stringstream output;
-
+  fMutex.lock();
   readAllParamsFromCAN();
+  fMutex.unlock();
+
   output  << timeStamp();
   for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["ControlVoltage_Set"].value;
   for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Temp_Set"].value;
