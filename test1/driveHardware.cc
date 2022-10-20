@@ -258,6 +258,9 @@ void driveHardware::readCANmessage() {
 #ifdef PI
   // -- send read request
   sendCANmessage();
+  std::chrono::microseconds blink(100);
+  std::this_thread::sleep_for(bink);
+
 
   bool DBX(true);
   int itec = 0;
