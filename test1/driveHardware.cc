@@ -185,12 +185,11 @@ void driveHardware::run() {
       std::this_thread::sleep_for(oneTenthSec);
       if (cnt%10 == 1) {
           cout << "Hallo in run(), cnt = " << cnt << endl;
-          //dumpCSV();
+          dumpCSV();
         }
-      //    readCANmessage();
 #ifdef PI
       //entertainFras();
-      std::this_thread::sleep_for(oneTenthSec);
+      //std::this_thread::sleep_for(oneTenthSec);
 #endif
     }
 
