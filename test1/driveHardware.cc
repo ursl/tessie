@@ -192,11 +192,19 @@ void driveHardware::run() {
       std::this_thread::sleep_for(oneTenthSec);
       if (cnt%10 == 1) {
           cout << "Hallo in run(), cnt = " << cnt << endl;
+
+          // -- read all parameters from CAN
+          fMutex.lock();
+          readAllParamsFromCAN();
+          fMutex.unlock();
+
+          // -- do something with the results
+          emit updateHwDisplay();
           dumpCSV();
+
         }
 #ifdef PI
       //entertainFras();
-      //std::this_thread::sleep_for(oneTenthSec);
 #endif
     }
 
@@ -243,7 +251,11 @@ int driveHardware::getTECRegisterIdx(std::string rname) {
 // ----------------------------------------------------------------------
 void  driveHardware::setTECParameter(float par) {
   fTECParameter = par;
-  printf("driveHardware::setTECParameter = %f\n", fTECParameter);
+  //  printf("driveHardware::setTECParameter = %f\n", fTECParameter);
+  QString aline = QString("driveHardware::setTECParameter = ") + QString::number(par, 'f', 2);
+  cout << aline.toStdString() << endl;
+
+  emit signalText(aline);
 }
 
 
@@ -589,13 +601,21 @@ void driveHardware::setTECRegister(int itec, std::string regname, float value) {
   fTECData[itec].reg[regname].value = value;
 
   // -- program parameter
-  fCANId = 0x120 | itec;
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_WRITE);
 
   fCANReg = fTECData[itec].getIdx(regname);
 
   fCANVal = value;
-  printf(" (1) program the parameter %f into register %d, canID = %x \n", fCANVal, fCANReg, fCANId);
+
+  QString aline = QString(" (1) program parameter ") + QString::number(fCANVal, 'f', 2)
+      + QString(" into register ") + QString::number(fCANReg, 'd', 2)
+      + QString(", canID = 0x") + QString::number(fCANId, 'x', 3)
+      ;
+
+  cout << aline.toStdString() << endl;
+
+  emit signalText(aline);
+  //  printf(" (1) program the parameter %f into register %d, canID = %x \n", fCANVal, fCANReg, fCANId);
   sendCANmessage();
 
 }
@@ -653,7 +673,6 @@ void driveHardware::readAllParamsFromCAN() {
 
   cout << "driveHardware::readAllParamsFromCAN() read Temp_M" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_M"].value = getTECRegisterFromCAN(i, "Temp_M");
-  //return;
 
   cout << "driveHardware::readAllParamsFromCAN() read ControlVoltage_Set" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["ControlVoltage_Set"].value = getTECRegisterFromCAN(i, "ControlVoltage_Set");
@@ -678,18 +697,12 @@ void driveHardware::readAllParamsFromCAN() {
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_I"].value = getTECRegisterFromCAN(i, "Supply_I");
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_P"].value = getTECRegisterFromCAN(i, "Supply_P");
 
-
-  emit updateHwDisplay();
-
 }
 
 
 // ----------------------------------------------------------------------
 void driveHardware::dumpCSV() {
   stringstream output;
-  fMutex.lock();
-  readAllParamsFromCAN();
-  fMutex.unlock();
 
   output  << timeStamp();
   for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["ControlVoltage_Set"].value;
