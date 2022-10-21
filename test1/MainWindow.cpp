@@ -78,6 +78,7 @@ MainWindow::MainWindow(tLog &x, QWidget *parent) :
   updateHardwareValues();
 
   connect(&fThread, &driveHardware::updateHwDisplay, this, &MainWindow::updateHardwareDisplay);
+  connect(&fThread, &driveHardware::signalText, this, &MainWindow::appendText);
 }
 
 
