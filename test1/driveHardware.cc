@@ -34,10 +34,10 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
 
   for (unsigned int itec = 1; itec <= 4; ++itec) {
       fActiveTEC.insert(make_pair(itec, 0));
-  }
+    }
   for (unsigned int itec = 5; itec <= 8; ++itec) {
       fActiveTEC.insert(make_pair(itec, 1));
-  }
+    }
 
   initTECData();
 
@@ -55,24 +55,24 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   memset(&fFrameW, 0, sizeof(struct can_frame));
   fSw = socket(PF_CAN, SOCK_RAW, CAN_RAW);
   if (fSw < 0) {
-    perror("socket PF_CAN failed");
-    return;
-  }
+      perror("socket PF_CAN failed");
+      return;
+    }
 
   strcpy(fIfrW.ifr_name, "can0");
   int ret = ioctl(fSw, SIOCGIFINDEX, &fIfrW);
   if (ret < 0) {
-    perror("ioctl failed");
-    return;
-  }
+      perror("ioctl failed");
+      return;
+    }
   
   fAddrW.can_family = AF_CAN;
   fAddrW.can_ifindex = fIfrW.ifr_ifindex;
   ret = bind(fSw, (struct sockaddr *)&fAddrW, sizeof(fAddrW));
   if (ret < 0) {
-    perror("bind failed");
-    return;
-  }
+      perror("bind failed");
+      return;
+    }
 
   setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
 
@@ -81,24 +81,24 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   memset(&fFrameR, 0, sizeof(struct can_frame));
   fSr = socket(PF_CAN, SOCK_RAW, CAN_RAW);
   if (fSr < 0) {
-    perror("socket PF_CAN failed");
-    return;
-  }
+      perror("socket PF_CAN failed");
+      return;
+    }
 
   strcpy(fIfrR.ifr_name, "can0");
   ret = ioctl(fSr, SIOCGIFINDEX, &fIfrR);
   if (ret < 0) {
-    perror("ioctl failed");
-    return;
-   }
+      perror("ioctl failed");
+      return;
+    }
   
   fAddrR.can_family = AF_CAN;
   fAddrR.can_ifindex = fIfrR.ifr_ifindex;
   ret = bind(fSr, (struct sockaddr *)&fAddrR, sizeof(fAddrR));
   if (ret < 0) {
-    perror("bind failed");
-    return;
-  }
+      perror("bind failed");
+      return;
+    }
 
   //4.Define receive rules
   struct can_filter rfilter[1];
@@ -279,7 +279,7 @@ void driveHardware::readCANmessage() {
   // -- send read request
   sendCANmessage();
 
-  bool DBX(true);
+  bool DBX(false);
   int itec = 0;
   int ireg = 0;
 
@@ -298,12 +298,14 @@ void driveHardware::readCANmessage() {
 
   if (nbytes > -1) {
 
-      if (DBX) printf("can_id = 0x%X ncan_dlc = %d \n", fFrameR.can_id, fFrameR.can_dlc);
-      int i = 0;
-      cout << "data[] = ";
-      if (DBX) for (i = 0; i < fFrameR.can_dlc; i++) {
-          printf("%3d ", fFrameR.data[i]);
-      }
+      if (DBX) {
+          printf("can_id = 0x%X ncan_dlc = %d \n", fFrameR.can_id, fFrameR.can_dlc);
+          int i = 0;
+          cout << "data[] = ";
+          if (DBX) for (i = 0; i < fFrameR.can_dlc; i++) {
+              printf("%3d ", fFrameR.data[i]);
+            }
+        }
 
       itec    = fFrameR.can_id & 0xf;
       ireg    = fFrameR.data[0];
@@ -312,28 +314,28 @@ void driveHardware::readCANmessage() {
       data[2] = fFrameR.data[3];
       data[3] = fFrameR.data[4];
 
-      cout << " ireg = " << ireg << " (fCANReg = " << fCANReg << ") ";
+      if (DBX) cout << " ireg = " << ireg << " (fCANReg = " << fCANReg << ") ";
 
       memcpy(&fdata, data, sizeof fdata);
       memcpy(&idata, data, sizeof idata);
-     if (DBX) {
-       printf("float = %f/uint32 = %u", fdata, idata);
-       ++cntCAN;
-       printf(" (received CAN message %d)", cntCAN);
-     }
-     cout << endl;
+      if (DBX) {
+          printf("float = %f/uint32 = %u", fdata, idata);
+          ++cntCAN;
+          printf(" (received CAN message %d)", cntCAN);
+        }
+      cout << endl;
 
-     stringstream sbla; sbla << "CAN read canid = " << hex << fFrameR.can_id
-                             << " tec = " << itec
-                             << " reg = 0x"  << hex << ireg
-                             << " value = " << fdata;
-     if (DBX) cout << "sbla: " << sbla.str() << endl;
-     fLOG(INFO, sbla.str());
+      stringstream sbla; sbla << "CAN read canid = " << hex << fFrameR.can_id
+                              << " tec = " << itec
+                              << " reg = 0x"  << hex << ireg
+                              << " value = " << fdata;
+      if (DBX) cout << "sbla: " << sbla.str() << endl;
+      fLOG(INFO, sbla.str());
 
 
-     fCANReadIntVal = idata;
-     fCANReadFloatVal = fdata;
-  }
+      fCANReadIntVal = idata;
+      fCANReadFloatVal = fdata;
+    }
 #endif
 
   return;
@@ -348,9 +350,9 @@ void driveHardware::sendCANmessage() {
   int itec = 0;
   itec = fCANId & 0xf;
   if (0 == fActiveTEC[itec]) {
-    if (0) cout << "TEC " << itec <<  " not active, skipping" << endl;
-    return;
-  }
+      if (0) cout << "TEC " << itec <<  " not active, skipping" << endl;
+      return;
+    }
 
   char data[4] = {0, 0, 0, 0};
   fFrameW.can_id = fCANId;
@@ -379,29 +381,29 @@ void driveHardware::sendCANmessage() {
       fFrameW.data[4] = data[3];
     }
   if (0) {
-  if (1 == command) {
-      cout << "   sendCANmessage: canid = " << fCANId << " cmd = " << fCANReg
-           << endl;
-    } else {
-      cout << "   canid = " << fCANId << " reg = " << fCANReg
-           << " value = " << fCANVal
-           << " dlength = " << dlength
-           << endl;
+      if (1 == command) {
+          cout << "   sendCANmessage: canid = " << fCANId << " cmd = " << fCANReg
+               << endl;
+        } else {
+          cout << "   canid = " << fCANId << " reg = " << fCANReg
+               << " value = " << fCANVal
+               << " dlength = " << dlength
+               << endl;
 
-    }
-  printf("    can_id  = 0x%X (from sendCANmessage())\n", fFrameW.can_id);
-  printf("    can_dlc = %d\n", fFrameW.can_dlc);
+        }
+      printf("    can_id  = 0x%X (from sendCANmessage())\n", fFrameW.can_id);
+      printf("    can_dlc = %d\n", fFrameW.can_dlc);
 
-  for (int i = 0; i < fFrameW.can_dlc; ++i) {
-      printf("    data[%d] = %2x/%3d\r\n", i, fFrameW.data[i], fFrameW.data[i]);
+      for (int i = 0; i < fFrameW.can_dlc; ++i) {
+          printf("    data[%d] = %2x/%3d\r\n", i, fFrameW.data[i], fFrameW.data[i]);
+        }
     }
-  }
   //6.Send message
   setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
   int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
   if (nbytes != sizeof(fFrameW)) {
       printf("    Send Error frame[0]!\r\n");
-  }
+    }
 
   // -- this is required to absorb the write request from fSr
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
@@ -544,9 +546,9 @@ float driveHardware::getTECRegister(int itec, std::string regname) {
 void  driveHardware::turnOnTEC(int itec) {
 
   if (0 == fActiveTEC[itec]) {
-    cout << "TEC " << itec <<  " not active, skipping" << endl;
-    return;
-  }
+      cout << "TEC " << itec <<  " not active, skipping" << endl;
+      return;
+    }
 
   printf("driveHardware::turnOnTEC(%d)\n", itec);
 
@@ -562,9 +564,9 @@ void  driveHardware::turnOnTEC(int itec) {
 void  driveHardware::turnOffTEC(int itec) {
 
   if (0 == fActiveTEC[itec]) {
-    cout << "TEC " << itec <<  " not active, skipping" << endl;
-    return;
-  }
+      cout << "TEC " << itec <<  " not active, skipping" << endl;
+      return;
+    }
 
   printf("driveHardware::turnOffTEC(%d)\n", itec);
 
@@ -580,11 +582,11 @@ void  driveHardware::turnOffTEC(int itec) {
 float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
 
   if (0 == fActiveTEC[itec]) {
-    //cout << "driveHardware::getTECRegisterFromCAN> TEC " << itec <<  " not active, skipping" << endl;
-    return -99.;
-  } else {
-    //cout << "driveHardware::getTECRegisterFromCAN"  << endl;
-  }
+      //cout << "driveHardware::getTECRegisterFromCAN> TEC " << itec <<  " not active, skipping" << endl;
+      return -99.;
+    } else {
+      //cout << "driveHardware::getTECRegisterFromCAN"  << endl;
+    }
 
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_READ);
   fCANReg = fTECData[itec].getIdx(regname);
