@@ -576,7 +576,6 @@ void  driveHardware::turnOffTEC(int itec) {
 }
 
 
-
 // ----------------------------------------------------------------------
 float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
 
@@ -589,7 +588,7 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
 
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_READ);
   fCANReg = fTECData[itec].getIdx(regname);
-  //sendCANmessage();
+
   readCANmessage();
 
   return fCANReadFloatVal;
@@ -607,15 +606,14 @@ void driveHardware::setTECRegister(int itec, std::string regname, float value) {
 
   fCANVal = value;
 
-  QString aline = QString(" (1) program parameter ") + QString::number(fCANVal, 'f', 2)
-      + QString(" into register ") + QString::number(fCANReg, 'd', 2)
-      + QString(", canID = 0x") + QString::number(fCANId, 'x', 3)
+  QString aline = QString("write TEC register ") + QString::number(fCANReg, 'd', 0)
+      + QString(" value =  ") + QString::number(fCANVal, 'f', 2)
+      + QString(", canID = 0x") + QString::number(fCANId, 'x', 0)
       ;
 
   cout << aline.toStdString() << endl;
 
   emit signalText(aline);
-  //  printf(" (1) program the parameter %f into register %d, canID = %x \n", fCANVal, fCANReg, fCANId);
   sendCANmessage();
 
 }
