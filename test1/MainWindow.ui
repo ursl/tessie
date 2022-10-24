@@ -46,7 +46,7 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>10</pointsize>
+       <pointsize>9</pointsize>
        <bold>true</bold>
       </font>
      </property>
@@ -921,31 +921,26 @@
      <string>Start</string>
     </property>
    </widget>
-   <widget class="QGroupBox" name="groupBox">
+   <widget class="QFrame" name="frameFRAS">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>110</y>
-      <width>111</width>
-      <height>161</height>
+      <x>10</x>
+      <y>100</y>
+      <width>101</width>
+      <height>141</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <bold>false</bold>
-     </font>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
     </property>
-    <property name="title">
-     <string>N valves</string>
-    </property>
-    <property name="flat">
-     <bool>false</bool>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
     </property>
     <widget class="QWidget" name="verticalLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>20</y>
+       <x>0</x>
+       <y>40</y>
        <width>101</width>
        <height>100</height>
       </rect>
@@ -973,6 +968,25 @@
        </widget>
       </item>
      </layout>
+    </widget>
+    <widget class="QLabel" name="labelTECFrame_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>91</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>N valves</string>
+     </property>
     </widget>
    </widget>
   </widget>
@@ -1151,54 +1165,6 @@
     <hint type="destinationlabel">
      <x>235</x>
      <y>52</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonValve0</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>clkValve0()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>109</x>
-     <y>120</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>362</x>
-     <y>52</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonValve1</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>clkValve1()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>109</x>
-     <y>154</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>558</x>
-     <y>13</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonValveAll</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>clkValveAll()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>109</x>
-     <y>188</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>631</x>
-     <y>37</y>
     </hint>
    </hints>
   </connection>
@@ -1695,6 +1661,54 @@
     <hint type="destinationlabel">
      <x>789</x>
      <y>208</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonValveAll</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>clkValveAll()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>109</x>
+     <y>188</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>631</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonValve1</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>clkValve1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>109</x>
+     <y>154</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>558</x>
+     <y>13</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonValve0</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>clkValve0()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>109</x>
+     <y>120</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>362</x>
+     <y>52</y>
     </hint>
    </hints>
   </connection>
