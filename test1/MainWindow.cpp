@@ -292,8 +292,10 @@ void MainWindow::updateHardwareValues() {
 void MainWindow::updateHardwareDisplay() {
 
   for (unsigned int ivec = 0; ivec < 8; ++ivec) {
-    fUIControlVoltageSet[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "ControlVoltage_Set"), 'f', 2));
-    fUIControlVoltageSet[ivec]->setStyleSheet("QLineEdit {color : green; }");
+    if (!fUIControlVoltageSet[ivec]->hasFocus()) {
+      fUIControlVoltageSet[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "ControlVoltage_Set"), 'f', 2));
+      fUIControlVoltageSet[ivec]->setStyleSheet("QLineEdit {color : green; }");
+    }
 
     fUITemp_Set[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "Temp_Set"), 'f', 2));
     fUITemp_Set[ivec]->setStyleSheet("QLineEdit {color : green; }");

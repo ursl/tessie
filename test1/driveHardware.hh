@@ -83,6 +83,7 @@ public:
 
   void  sendCANmessage();
   void  readCANmessage();
+  void  readAllCANmessage();
 
   // -- controlling the FRAS/valve(s)
   void  talkToFras();
@@ -107,8 +108,10 @@ public:
   int   getTECRegisterIdx(std::string rname);
 
   // -- read from and write to CAN
-  float getTECRegisterFromCAN(int canID, std::string regname);
+  float getTECRegisterFromCAN(int itec, std::string regname);
   void  setTECRegister(int itec, std::string regname, float value);
+
+  float getAllTECRegisterFromCAN(std::string regname);
 
   // -- fill 'all' parameters for dumping into csv or for refreshing the GUI
   void readAllParamsFromCAN();
