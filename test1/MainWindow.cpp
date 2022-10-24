@@ -181,6 +181,7 @@ void MainWindow::tecSetFromUI(int itec, std::string rname, QWidget *qw) {
   QString sval = qle->text();
   float xval = sval.toFloat();
   fThread.setTECRegister(itec, rname, xval);
+  qle->clearFocus();
 }
 
 

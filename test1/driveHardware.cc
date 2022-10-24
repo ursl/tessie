@@ -334,7 +334,7 @@ void driveHardware::readCANmessage() {
           ++cntCAN;
           printf(" (received CAN message %d)", cntCAN);
         }
-      cout << endl;
+      if (DBX) cout << endl;
 
       stringstream sbla; sbla << "CAN read canid = " << hex << fFrameR.can_id
                               << " tec = " << itec
@@ -409,7 +409,7 @@ void driveHardware::readAllCANmessage() {
           ++cntCAN;
           printf(" (received CAN message %d)", cntCAN);
         }
-      cout << endl;
+      if (DBX) cout << endl;
 
       stringstream sbla; sbla << "CAN read canid = " << hex << fFrameR.can_id
                               << " tec = " << itec
