@@ -45,7 +45,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   initTECData();
 
 #ifdef PI
-  wiringPiSetup();
+  int fd = wiringPiI2CSetup(0x60);
 #endif
 
   //rpc  fRpcThread = new QThread();
