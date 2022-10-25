@@ -45,7 +45,11 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   initTECData();
 
 #ifdef PI
-  int fd = wiringPiI2CSetup(0x60);
+  int fd = wiringPiI2CSetup(0x44);
+
+  cout << "Init result: "<< fd << endl;
+  result = wiringPiI2CWriteReg16(fd, 0x44, 0x2400 );
+
 #endif
 
   //rpc  fRpcThread = new QThread();
