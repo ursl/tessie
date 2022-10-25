@@ -7,7 +7,7 @@
 #include <sys/ioctl.h>
 
 #ifdef PI
-#include <wiringPi.h>
+#include <wiringPiI2C.h>
 #endif
 
 #include <chrono>
