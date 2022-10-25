@@ -6,6 +6,9 @@
 #include <net/if.h>
 #include <sys/ioctl.h>
 
+#ifdef PI
+#include <wiringPi.h>
+#endif
 
 #include <chrono>
 #include <thread>
