@@ -44,6 +44,10 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
 
   initTECData();
 
+#ifdef PI
+  wiringPiSetup();
+#endif
+
   //rpc  fRpcThread = new QThread();
   //rpc  fRpcServer = new rpcServer(this);
   //rpc  connect(this, &driveHardware::sendToServer, fRpcServer, &rpcServer::sentToServer);
