@@ -32,15 +32,16 @@ public:
   }
 
   void dump(bool eol = true) {
-    std::strstream s;
-    s << std::hex << fCanId << " [" << fdlen << "] ";
+    //std::strstream s;
+    std::cout << std::hex << fCanId << " [" << fdlen << "] ";
+    char sbuffer[5];
     for (unsigned int i = 0; i < fdlen; ++i) {
-      s << fData[i] << " ";
+        sprintf(sbuffer, "%2X ", static_cast<int>(fData[i]));
+        std::cout << sbuffer;
     }
-    s << ". tec = " << fTec
-      << " reg = " << fReg
-      << " val = " << fFloatVal << "/" << fIntVal;
-    std::cout << s.str();
+    std::cout << ". tec = " << fTec
+              << " reg = " << fReg
+              << " val = " << fFloatVal << "/" << fIntVal;
     if (eol) std::cout << std::endl;
   }
 
