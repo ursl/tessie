@@ -7,6 +7,7 @@
 #include <sys/ioctl.h>
 
 #ifdef PI
+#include <errno.h>
 #include <wiringPiI2C.h>
 #endif
 
@@ -45,6 +46,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   initTECData();
 
 #ifdef PI
+  if (0) {
   int fd = wiringPiI2CSetup(0x44);
 
   cout << "Init result: "<< fd << endl;
@@ -66,6 +68,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   cout << "data[4] = " << data[4] << endl;
   data[5] = wiringPiI2CReadReg8(fd, 0x44);
   cout << "data[5] = " << data[5] << endl;
+  }
 #endif
 
   //rpc  fRpcThread = new QThread();
@@ -142,11 +145,11 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   tv.tv_usec = 1000;
   setsockopt(fSr, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
 
-  if (0) {
+  if (1) {
       // https://stackoverflow.com/questions/13547721/udp-socket-set-timeout
       struct timeval tv;
       tv.tv_sec = 0;
-      tv.tv_usec = 100000;
+      tv.tv_usec = 10000;
       if (setsockopt(fSr /*rcv_sock*/, SOL_SOCKET, SO_RCVTIMEO, &tv,sizeof(tv)) < 0) {
           perror("Error");
       }
