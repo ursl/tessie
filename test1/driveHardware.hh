@@ -10,6 +10,8 @@
 
 #include <fstream>
 
+#include "CANmessage.hh"
+
 #include "tLog.hh"
 //rpc #include "rpcServer.hh"
 
@@ -147,7 +149,9 @@ private:
   QWaitCondition fCondition;
 
   QThread   *fRpcThread;
-//rpc  rpcServer *fRpcServer;
+  //rpc  rpcServer *fRpcServer;
+
+  CANmessage fCanMsg;
 
   bool    fRestart;
   bool    fAbort;

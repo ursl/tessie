@@ -19,13 +19,16 @@ CONFIG(PI) {
 }
 
 SOURCES += \
+    CANmessage.cc \
     MainWindow.cpp \
     driveHardware.cc \
     tLog.cc \
     tessie.cpp
 
 HEADERS += \
+    CANmessage.hh \
     MainWindow.h \
+    canFrame.hh \
     driveHardware.hh \
     tLog.hh
 

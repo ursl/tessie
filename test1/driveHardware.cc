@@ -151,7 +151,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
       tv.tv_sec = 0;
       tv.tv_usec = 1000; // 1 millisecond
       if (setsockopt(fSr /*rcv_sock*/, SOL_SOCKET, SO_RCVTIMEO, &tv,sizeof(tv)) < 0) {
-          perror("Error");
+        perror("Error in setting up time out");
       }
   }
 
@@ -234,7 +234,9 @@ void driveHardware::run() {
       std::this_thread::sleep_for(milli10);
       readCAN();
       if (cnt%100 == 1) {
-          cout << "Hallo in run(), cnt = " << cnt << endl;
+          cout << "Hallo in run(), cnt = " << cnt
+               << " nframes = " << fCanMsg.nFrames()
+               << endl;
 
           // -- read all parameters from CAN
           fMutex.lock();
@@ -339,6 +341,9 @@ void driveHardware::readCAN() {
       printf("can_id = 0x%X data[%d] = ", fFrameR.can_id, fFrameR.can_dlc);
       for (int i = 0; i < fFrameR.can_dlc; ++i) printf("%3d ", fFrameR.data[i]);
       cout << endl;
+
+      canFrame f(fFrameR.can_id, fFrameR.can_dlc, fFrameR.data);
+      fCanMsg.addFrame(f);
     }
   }
 #endif
