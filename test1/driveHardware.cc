@@ -315,7 +315,7 @@ void driveHardware::shutDown() {
 
 // ----------------------------------------------------------------------
 void driveHardware::readCAN() {
-  fMutex.lock();
+  //fMutex.lock();
 #ifdef PI
   int nbytes(0);
 
@@ -347,7 +347,7 @@ void driveHardware::readCAN() {
     }
   }
 #endif
-  fMutex.unlock();
+  //fMutex.unlock();
   return;
 }
 
@@ -356,7 +356,6 @@ void driveHardware::readCAN() {
 void driveHardware::readCANmessage() {
   fCANReadIntVal   += 1;
   fCANReadFloatVal += 0.1;
-
 #ifdef PI
   int nbytes(0);
 
@@ -431,7 +430,7 @@ void driveHardware::readCANmessage() {
 
 // ----------------------------------------------------------------------
 void driveHardware::sendCANmessage() {
- fMutex.lock();
+ //fMutex.lock();
 
 #ifdef PI
   int itec = 0;
@@ -496,7 +495,7 @@ void driveHardware::sendCANmessage() {
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
 
 #endif
-  fMutex.unlock();
+  //fMutex.unlock();
 }
 
 
