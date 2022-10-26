@@ -243,7 +243,8 @@ void driveHardware::run() {
 
           // -- read all parameters from CAN
           fMutex.lock();
-          readAllParamsFromCAN();
+          // readAllParamsFromCAN();
+          readAllParamsFromCANPublic();
           fMutex.unlock();
 
           // -- do something with the results
