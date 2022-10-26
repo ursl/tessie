@@ -81,6 +81,7 @@ public:
   void dumpCSV();
   std::string timeStamp(bool filestamp = true);
 
+  void  readCAN();
   void  sendCANmessage();
   void  readCANmessage();
   void  readAllCANmessage();

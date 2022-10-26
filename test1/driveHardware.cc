@@ -226,12 +226,14 @@ void driveHardware::runPrintout(int reg, float val) {
 // ----------------------------------------------------------------------
 void driveHardware::run() {
   std::chrono::milliseconds oneTenthSec(100);
+  std::chrono::milliseconds oneHundredthSec(10);
   cout << "Hallo in run()" << endl;
   int cnt(0);
   while (1) {
       ++cnt;
-      std::this_thread::sleep_for(oneTenthSec);
-      if (cnt%10 == 1) {
+      std::this_thread::sleep_for(oneHundredthSec);
+      readCAN();
+      if (cnt%100 == 1) {
           cout << "Hallo in run(), cnt = " << cnt << endl;
 
           // -- read all parameters from CAN
@@ -306,6 +308,46 @@ void driveHardware::shutDown() {
 #ifdef PI
   close(fSw);
 #endif
+}
+
+
+// ----------------------------------------------------------------------
+void driveHardware::readCAN() {
+
+#ifdef PI
+  int nbytes(0);
+
+  bool DBX(true);
+
+  static int cntCAN(0);
+
+  char data[4] = {0, 0, 0, 0};
+
+  unsigned int idata(0);
+  float fdata(0.0);
+
+  if (DBX) cout << "read(fSr, &fFrameR, sizeof(fFrameR)) ... " << endl;
+  nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
+  if (DBX) cout << "  nbytes = " << nbytes << endl;
+
+  // -- this is an alternative to 'read()'
+  //  socklen_t len = sizeof(fAddrR);
+  //  nbytes = recvfrom(fSr, &fFrameR, sizeof(fFrameR), 0, (struct sockaddr*)&fAddrR, &len);
+
+  if (nbytes > -1) {
+
+      if (DBX) {
+          printf("can_id = 0x%X ncan_dlc = %d \n", fFrameR.can_id, fFrameR.can_dlc);
+          int i = 0;
+          cout << "data[] = ";
+          if (DBX) for (i = 0; i < fFrameR.can_dlc; i++) {
+              printf("%3d ", fFrameR.data[i]);
+          }
+      }
+  }
+#endif
+
+  return;
 }
 
 
