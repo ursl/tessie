@@ -445,10 +445,12 @@ void driveHardware::sendCANmessage() {
 #ifdef PI
   int itec = 0;
   itec = fCANId & 0xf;
-  if (0 == fActiveTEC[itec]) {
+  if (1) cout << "sendCANmessage() TEC " << itec << endl;
+
+  if (itec > 0) && (0 == fActiveTEC[itec])) {
       if (0) cout << "TEC " << itec <<  " not active, skipping" << endl;
       return;
-    }
+  }
 
   char data[4] = {0, 0, 0, 0};
   fFrameW.can_id = fCANId;
@@ -689,7 +691,7 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
     fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_READ);
     fCANReg = fTECData[itec].getIdx(regname);
   } else {
-    fCANId = (1 | CANBUS_SHIFT | CANBUS_PUBLIC | CANBUS_TECREC | CANBUS_READ);
+    fCANId = (0 | CANBUS_SHIFT | CANBUS_PUBLIC | CANBUS_TECREC | CANBUS_READ);
     fCANReg = fTECData[1].getIdx(regname);
   }
   // -- send read request
