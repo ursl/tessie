@@ -19,6 +19,15 @@ MainWindow::MainWindow(tLog &x, QWidget *parent) :
   fLOG.setHw(&fThread);
   ui->setupUi(this);
 
+  fUICheckBox.push_back(ui->checkBoxTEC1);
+  fUICheckBox.push_back(ui->checkBoxTEC2);
+  fUICheckBox.push_back(ui->checkBoxTEC3);
+  fUICheckBox.push_back(ui->checkBoxTEC4);
+  fUICheckBox.push_back(ui->checkBoxTEC5);
+  fUICheckBox.push_back(ui->checkBoxTEC6);
+  fUICheckBox.push_back(ui->checkBoxTEC7);
+  fUICheckBox.push_back(ui->checkBoxTEC8);
+
   fUITemp_Set.push_back(ui->tec1_Temp);
   fUITemp_Set.push_back(ui->tec2_Temp);
   fUITemp_Set.push_back(ui->tec3_Temp);
@@ -117,32 +126,7 @@ QString MainWindow::getTimeString() {
 
 // ----------------------------------------------------------------------
 void MainWindow::setCheckBoxTEC(int itec, bool state) {
-  switch (itec) {
-    case 1:
-      ui->checkBoxTEC1->setChecked(state);
-      break;
-    case 2:
-      ui->checkBoxTEC2->setChecked(state);
-      break;
-    case 3:
-      ui->checkBoxTEC3->setChecked(state);
-      break;
-    case 4:
-      ui->checkBoxTEC4->setChecked(state);
-      break;
-    case 5:
-      ui->checkBoxTEC5->setChecked(state);
-      break;
-    case 6:
-      ui->checkBoxTEC6->setChecked(state);
-      break;
-    case 7:
-      ui->checkBoxTEC7->setChecked(state);
-      break;
-    case 8:
-      ui->checkBoxTEC8->setChecked(state);
-      break;
-  }
+  fUICheckBox[itec-1]->setChecked(state);
   if (state) {
     fThread.turnOnTEC(itec);
   } else {
@@ -313,7 +297,11 @@ void MainWindow::updateHardwareDisplay() {
     fUITempM[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "Temp_M"), 'f', 2));
     fUITempM[ivec]->setStyleSheet("QLineEdit {color : green; }");
 
-    setCheckBoxTEC(ivec, (fThread.getTECRegister(ivec+1, "PowerState") > 0.5? true: false));
+    bool state(false);
+    if (fThread.getTECRegister(ivec+1, "PowerState") > 0.5) {
+      state = true;
+    }
+    // if (!state) continue;
+    fUICheckBox[ivec]->setChecked(state);
   }
-
 }

@@ -135,5 +135,6 @@ private:
     fUIPIDki,
     fUIPIDkd;
 
+    std::vector<QCheckBox*> fUICheckBox;
 };
 #endif // MAINWINDOW_H
