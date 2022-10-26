@@ -51,7 +51,7 @@ int CANmessage::getInt(unsigned int tec, unsigned int reg) {
   // -- find the last one
   for (std::vector<canFrame>::iterator it = fFrames.begin(); it != fFrames.end(); ++it) {
     if ((tec == it->fTec) && (reg == it->fReg)) {
-      result = it->fFloatVal;
+      result = it->fIntVal;
       //fFrames.erase(it);
       //break;
     }
