@@ -31,6 +31,12 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   fCANReadIntVal = 3;
   fCANReadFloatVal = 3.1415;
 
+  fMilli5   = std::chrono::milliseconds(5);
+  fMilli10  = std::chrono::milliseconds(10);
+  fMilli100 = std::chrono::milliseconds(100);
+
+
+
   fCsvFileName = "tessie.csv";
   cout << "open " << fCsvFileName << endl;
   fCsvFile.open(fCsvFileName, ios_base::app);
@@ -225,13 +231,11 @@ void driveHardware::runPrintout(int reg, float val) {
 
 // ----------------------------------------------------------------------
 void driveHardware::run() {
-  std::chrono::milliseconds milli100(100);
-  std::chrono::milliseconds milli10(10);
   cout << "Hallo in run()" << endl;
   int cnt(0);
   while (1) {
       ++cnt;
-      std::this_thread::sleep_for(milli10);
+      std::this_thread::sleep_for(fMilli10);
       readCAN();
       if (cnt%100 == 1) {
           cout << "Hallo in run(), cnt = " << cnt
@@ -679,6 +683,8 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
 
   // -- send read request
   sendCANmessage();
+  std::this_thread::sleep_for(fMilli10);
+  readCAN();
   fCANReadFloatVal = fCanMsg.getFloat(itec, fCANReg);
   cout << "  obtained for tec = " << itec
        << " register = "<< regname

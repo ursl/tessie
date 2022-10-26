@@ -168,6 +168,8 @@ private:
   std::ofstream fCsvFile;
 
 
+  std::chrono::milliseconds fMilli5, fMilli10, fMilli100;
+
 #ifdef PI
   int    fSw; 
   struct sockaddr_can fAddrW;
