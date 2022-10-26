@@ -1,6 +1,7 @@
 #ifndef CANFRAME_HH
 #define CANFRAME_HH
 
+#include <cstring>
 #include <iostream>
 #include <strstream>
 #include <vector>
