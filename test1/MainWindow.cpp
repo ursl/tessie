@@ -296,23 +296,24 @@ void MainWindow::updateHardwareDisplay() {
     if (!fUIControlVoltageSet[ivec]->hasFocus()) {
       fUIControlVoltageSet[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "ControlVoltage_Set"), 'f', 2));
       fUIControlVoltageSet[ivec]->setStyleSheet("QLineEdit {color : green; }");
-    }
 
-    fUITemp_Set[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "Temp_Set"), 'f', 2));
-    fUITemp_Set[ivec]->setStyleSheet("QLineEdit {color : green; }");
+      fUITemp_Set[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "Temp_Set"), 'f', 2));
+      fUITemp_Set[ivec]->setStyleSheet("QLineEdit {color : green; }");
+
+      fUIPIDki[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "PID_ki"), 'f', 2));
+      fUIPIDki[ivec]->setStyleSheet("QLineEdit {color : green; }");
+
+      fUIPIDkp[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "PID_kp"), 'f', 2));
+      fUIPIDkp[ivec]->setStyleSheet("QLineEdit {color : green; }");
+
+      fUIPIDkd[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "PID_kd"), 'f', 2));
+      fUIPIDkd[ivec]->setStyleSheet("QLineEdit {color : green; }");
+    }
 
     fUITempM[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "Temp_M"), 'f', 2));
     fUITempM[ivec]->setStyleSheet("QLineEdit {color : green; }");
 
-
-    fUIPIDki[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "PID_ki"), 'f', 2));
-    fUIPIDki[ivec]->setStyleSheet("QLineEdit {color : green; }");
-
-    fUIPIDkp[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "PID_kp"), 'f', 2));
-    fUIPIDkp[ivec]->setStyleSheet("QLineEdit {color : green; }");
-
-    fUIPIDkd[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "PID_kd"), 'f', 2));
-    fUIPIDkd[ivec]->setStyleSheet("QLineEdit {color : green; }");
+    setCheckBoxTEC(ivec+1, (fThread.getTECRegister(ivec+1, "PowerState") > 0.5? true: false));
   }
 
 }

@@ -326,7 +326,7 @@ void driveHardware::readCAN(int nreads) {
   int nbytes(0);
 
   bool DBX(false);
-  if (nreads > 1) DBX = true;
+  // if (nreads > 1) DBX = true;
 
   static int cntCAN(0);
 
@@ -346,9 +346,9 @@ void driveHardware::readCAN(int nreads) {
 
     if (nbytes > -1) {
       if (1) {
-        printf("can_id = 0x%3X data[%d] = ", fFrameR.can_id, fFrameR.can_dlc);
-        for (int i = 0; i < fFrameR.can_dlc; ++i) printf("%02X ", fFrameR.data[i]);
-        cout << endl;
+//        printf("can_id = 0x%3X data[%d] = ", fFrameR.can_id, fFrameR.can_dlc);
+//        for (int i = 0; i < fFrameR.can_dlc; ++i) printf("%02X ", fFrameR.data[i]);
+//        cout << endl;
 
         canFrame f(fFrameR.can_id, fFrameR.can_dlc, fFrameR.data);
         fCanMsg.addFrame(f);
@@ -445,7 +445,7 @@ void driveHardware::sendCANmessage() {
 #ifdef PI
   int itec = 0;
   itec = fCANId & 0xf;
-  if (1) cout << "sendCANmessage() TEC " << itec << endl;
+  if (0) cout << "sendCANmessage() TEC " << itec << endl;
 
   if ((itec > 0) && (0 == fActiveTEC[itec])) {
       if (0) cout << "TEC " << itec <<  " not active, skipping" << endl;
@@ -480,7 +480,7 @@ void driveHardware::sendCANmessage() {
       fFrameW.data[4] = data[3];
     }
 
-  if (1) {
+  if (0) {
       if (1 == command) {
           cout << "   sendCANmessage: canid = " << fCANId << " cmd = " << fCANReg
                << endl;
@@ -776,6 +776,7 @@ TECData  driveHardware::initAllTECRegister() {
   b = {-99., "Supply_U",           15, 2}; tdata.reg.insert(make_pair(b.name, b));
   b = {-99., "Supply_I",           16, 2}; tdata.reg.insert(make_pair(b.name, b));
   b = {-99., "Supply_P",           17, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99., "PowerState",         18, 2}; tdata.reg.insert(make_pair(b.name, b));
   // -- commands
   b = {-99., "No Command",          0, 3}; tdata.reg.insert(make_pair(b.name, b));
   b = {-99., "Power_On",            1, 3}; tdata.reg.insert(make_pair(b.name, b));
@@ -788,39 +789,34 @@ TECData  driveHardware::initAllTECRegister() {
 
 // ----------------------------------------------------------------------
 void driveHardware::readAllParamsFromCANPublic() {
+  // -- what to read
+  vector<string> regnames = {"Temp_M",
+                            "ControlVoltage_set",
+                            "PID_kp",
+                            "PID_ki",
+                            "PID_kd",
+                            "Temp_W",
+                            "Temp_Set",
+                             "Peltier_I",
+                             "Peltier_R",
+                             "Peltier_P",
+                             "Supply_U",
+                             "Supply_I",
+                             "Supply_P"
+                            };
+  cout << "driveHardware::readAllParamsFromCANPublic() " << endl;
+  for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
+    cout << "Public reading " << regnames[ireg] << endl;
+    getTECRegisterFromCAN(0, regnames[ireg]);
+    int regIdx = fTECData[1].getIdx(regnames[ireg]);
+    for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_M"].value = fCanMsg.getFloat(i, regIdx);
+  }
 
-  string regname("Temp_M");
-  cout << "driveHardware::readAllParamsFromCANPublic() read Temp_M" << endl;
-  getTECRegisterFromCAN(0, regname);
-  int ireg = fTECData[1].getIdx(regname);
-  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_M"].value = fCanMsg.getFloat(i, ireg);
-
-
-//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_M"].value = getTECRegisterFromCAN(i, "Temp_M");
-//  return;
-
-//  cout << "driveHardware::readAllParamsFromCAN() read ControlVoltage_Set" << endl;
-//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["ControlVoltage_Set"].value = getTECRegisterFromCAN(i, "ControlVoltage_Set");
-
-//  cout << "driveHardware::readAllParamsFromCAN() read PID_kp" << endl;
-//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_kp"].value = getTECRegisterFromCAN(i, "PID_kp");
-
-//  cout << "driveHardware::readAllParamsFromCAN() read PID_ki" << endl;
-//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_ki"].value = getTECRegisterFromCAN(i, "PID_ki");
-
-//  cout << "driveHardware::readAllParamsFromCAN() read PID_kd" << endl;
-//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_kd"].value = getTECRegisterFromCAN(i, "PID_kd");
-
-//  cout << "driveHardware::readAllParamsFromCAN() read all the rest" << endl;
-//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_W"].value = getTECRegisterFromCAN(i, "Temp_W");
-//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_Set"].value = getTECRegisterFromCAN(i, "Temp_Set");
-//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Peltier_I"].value = getTECRegisterFromCAN(i, "Peltier_I");
-//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Peltier_R"].value = getTECRegisterFromCAN(i, "Peltier_R");
-//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Peltier_P"].value = getTECRegisterFromCAN(i, "Peltier_P");
-
-//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_U"].value = getTECRegisterFromCAN(i, "Supply_U");
-//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_I"].value = getTECRegisterFromCAN(i, "Supply_I");
-//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_P"].value = getTECRegisterFromCAN(i, "Supply_P");
+  // -- read PowerState
+  cout << "Public reading PowerState" << endl;
+  getTECRegisterFromCAN(0, "PowerState");
+  int regIdx = fTECData[1].getIdx("PowerState");
+  for (int i = 1; i <= 8; ++i) fTECData[i].reg["PowerState"].value = fCanMsg.getInt(i, regIdx);
 
 }
 

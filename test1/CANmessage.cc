@@ -10,8 +10,10 @@ CANmessage::CANmessage() {
 
 // ----------------------------------------------------------------------
 void CANmessage::addFrame(canFrame &x) {
-  cout << "  adding ";
-  x.dump();
+  //  if (0) {
+  //    cout << "  adding ";
+  //    x.dump();
+  //  }
   fFrames.push_back(x);
 }
 
