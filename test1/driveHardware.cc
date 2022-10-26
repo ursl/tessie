@@ -9,7 +9,7 @@
 #ifdef PI
 #include <errno.h>
 #include <wiringPiI2C.h>
-#define I2C_ADDR 0x44 # i2c address of sensor
+#define I2C_ADDR 0x44    // i2c address of sensor
 #endif
 
 #include <chrono>
