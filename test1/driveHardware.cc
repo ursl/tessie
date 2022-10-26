@@ -53,27 +53,37 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
 
 #ifdef PI
   if (1) {
-  int fd = wiringPiI2CSetup(I2C_ADDR, 0);
+    // Setup I2C communication
+    int fd = wiringPiI2CSetup(I2C_ADDR);
+    if (fd == -1) {
+      std::cout << "Failed to init I2C communication.\n";
+      // return -1;
+    }
+    cout << "I2C communication successfully setup.\n";
+    cout << "Init result: "<< fd << endl;
 
-  cout << "Init result: "<< fd << endl;
-  int result = wiringPiI2CWriteReg16(fd, I2C_ADDR, 0x2400 );
-  if (result == -1) {
-     cout << "Error.  Errno is: " << errno << endl;
-  }
-  sleep(1);
-  unsigned int data[6];
-  data[0] = wiringPiI2CReadReg8(fd, 0x44);
-  cout << "data[0] = " << data[0] << endl;
-  data[1] = wiringPiI2CReadReg8(fd, 0x44);
-  cout << "data[1] = " << data[1] << endl;
-  data[2] = wiringPiI2CReadReg8(fd, 0x44);
-  cout << "data[2] = " << data[2] << endl;
-  data[3] = wiringPiI2CReadReg8(fd, 0x44);
-  cout << "data[3] = " << data[3] << endl;
-  data[4] = wiringPiI2CReadReg8(fd, 0x44);
-  cout << "data[4] = " << data[4] << endl;
-  data[5] = wiringPiI2CReadReg8(fd, 0x44);
-  cout << "data[5] = " << data[5] << endl;
+    // Switch device to measurement mode
+    //wiringPiI2CWriteReg8(fd, I2C_ADDR, 0b00001000);
+
+    int result = wiringPiI2CWriteReg16(fd, I2C_ADDR, 0x0024);
+    if (result == -1) {
+      cout << "Error.  Errno is: " << errno << endl;
+    }
+
+    sleep(1);
+    unsigned int data[6];
+    data[0] = wiringPiI2CReadReg8(fd, 0x44);
+    cout << "data[0] = " << data[0] << endl;
+    data[1] = wiringPiI2CReadReg8(fd, 0x44);
+    cout << "data[1] = " << data[1] << endl;
+    data[2] = wiringPiI2CReadReg8(fd, 0x44);
+    cout << "data[2] = " << data[2] << endl;
+    data[3] = wiringPiI2CReadReg8(fd, 0x44);
+    cout << "data[3] = " << data[3] << endl;
+    data[4] = wiringPiI2CReadReg8(fd, 0x44);
+    cout << "data[4] = " << data[4] << endl;
+    data[5] = wiringPiI2CReadReg8(fd, 0x44);
+    cout << "data[5] = " << data[5] << endl;
   }
 #endif
 
