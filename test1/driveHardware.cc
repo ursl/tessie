@@ -317,7 +317,7 @@ void driveHardware::readCAN() {
 #ifdef PI
   int nbytes(0);
 
-  bool DBX(true);
+  bool DBX(false);
 
   static int cntCAN(0);
 
@@ -335,15 +335,11 @@ void driveHardware::readCAN() {
   //  nbytes = recvfrom(fSr, &fFrameR, sizeof(fFrameR), 0, (struct sockaddr*)&fAddrR, &len);
 
   if (nbytes > -1) {
-
-      if (DBX) {
-          printf("can_id = 0x%X ncan_dlc = %d \n", fFrameR.can_id, fFrameR.can_dlc);
-          int i = 0;
-          cout << "data[] = ";
-          if (DBX) for (i = 0; i < fFrameR.can_dlc; i++) {
-              printf("%3d ", fFrameR.data[i]);
-          }
-      }
+    if (1) {
+      printf("can_id = 0x%X ncan_dlc = %d, data[] = ", fFrameR.can_id, fFrameR.can_dlc);
+      for (int i = 0; i < fFrameR.can_dlc; i++) printf("%3d ", fFrameR.data[i]);
+      cout << endl;
+    }
   }
 #endif
 
