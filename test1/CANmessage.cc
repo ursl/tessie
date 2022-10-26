@@ -32,11 +32,12 @@ unsigned int CANmessage::nFrames() {
 // ----------------------------------------------------------------------
 float CANmessage::getFloat(unsigned int tec, unsigned int reg) {
   float result(-98.);
+  // -- find the last one
   for (std::vector<canFrame>::iterator it = fFrames.begin(); it != fFrames.end(); ++it) {
     if ((tec == it->fTec) && (reg == it->fReg)) {
       result = it->fFloatVal;
       //fFrames.erase(it);
-      break;
+      //break;
     }
   }
   return result;
@@ -45,11 +46,12 @@ float CANmessage::getFloat(unsigned int tec, unsigned int reg) {
 // ----------------------------------------------------------------------
 int CANmessage::getInt(unsigned int tec, unsigned int reg) {
   int result(-98);
+  // -- find the last one
   for (std::vector<canFrame>::iterator it = fFrames.begin(); it != fFrames.end(); ++it) {
     if ((tec == it->fTec) && (reg == it->fReg)) {
       result = it->fFloatVal;
       //fFrames.erase(it);
-      break;
+      //break;
     }
   }
   return result;
