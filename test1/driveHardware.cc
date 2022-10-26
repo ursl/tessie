@@ -469,6 +469,7 @@ void driveHardware::sendCANmessage() {
     }
   fFrameW.can_dlc = dlength;
   fFrameW.data[0] = fCANReg;
+
   if (dlength > 1) {
       memcpy(data, &fCANVal, sizeof fCANVal);
       fFrameW.data[1] = data[0];
@@ -476,7 +477,8 @@ void driveHardware::sendCANmessage() {
       fFrameW.data[3] = data[2];
       fFrameW.data[4] = data[3];
     }
-  if (0) {
+
+  if (1) {
       if (1 == command) {
           cout << "   sendCANmessage: canid = " << fCANId << " cmd = " << fCANReg
                << endl;
@@ -687,7 +689,7 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
     fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_READ);
     fCANReg = fTECData[itec].getIdx(regname);
   } else {
-    fCANId = (CANBUS_SHIFT | CANBUS_PUBLIC | CANBUS_TECREC | CANBUS_READ);
+    fCANId = (1 | CANBUS_SHIFT | CANBUS_PUBLIC | CANBUS_TECREC | CANBUS_READ);
     fCANReg = fTECData[1].getIdx(regname);
   }
   // -- send read request
