@@ -313,7 +313,7 @@ void MainWindow::updateHardwareDisplay() {
     fUITempM[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "Temp_M"), 'f', 2));
     fUITempM[ivec]->setStyleSheet("QLineEdit {color : green; }");
 
-    setCheckBoxTEC(ivec+1, (fThread.getTECRegister(ivec+1, "PowerState") > 0.5? true: false));
+    setCheckBoxTEC(ivec, (fThread.getTECRegister(ivec+1, "PowerState") > 0.5? true: false));
   }
 
 }

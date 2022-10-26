@@ -806,14 +806,14 @@ void driveHardware::readAllParamsFromCANPublic() {
                             };
   cout << "driveHardware::readAllParamsFromCANPublic() " << endl;
   for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
-    cout << "Public reading " << regnames[ireg] << endl;
+    cout << regnames[ireg] << " ";
     getTECRegisterFromCAN(0, regnames[ireg]);
     int regIdx = fTECData[1].getIdx(regnames[ireg]);
-    for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_M"].value = fCanMsg.getFloat(i, regIdx);
+    for (int i = 1; i <= 8; ++i) fTECData[i].reg[regnames[ireg]].value = fCanMsg.getFloat(i, regIdx);
   }
 
   // -- read PowerState
-  cout << "Public reading PowerState" << endl;
+  cout << " PowerState" << endl;
   getTECRegisterFromCAN(0, "PowerState");
   int regIdx = fTECData[1].getIdx("PowerState");
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["PowerState"].value = fCanMsg.getInt(i, regIdx);
