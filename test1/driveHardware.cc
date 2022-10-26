@@ -51,7 +51,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   initTECData();
 
 #ifdef PI
-  if (0) {
+  if (1) {
   int fd = wiringPiI2CSetup(0x44);
 
   cout << "Init result: "<< fd << endl;
