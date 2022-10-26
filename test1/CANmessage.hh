@@ -9,7 +9,11 @@ class CANmessage {
 public:
   CANmessage();
 
+  // number of frames held
   unsigned int nFrames();
+  // clear frames
+  void clearFrames() {fFrames.clear();}
+  // print
   void  dump();
   void  addFrame(canFrame &x);
   // read float and erase frame

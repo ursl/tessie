@@ -36,7 +36,7 @@ float CANmessage::getFloat(unsigned int tec, unsigned int reg) {
   for (std::vector<canFrame>::iterator it = fFrames.begin(); it != fFrames.end(); ++it) {
     if ((tec == it->fTec) && (reg == it->fReg)) {
       result = it->fFloatVal;
-      fFrames.erase(it);
+      //fFrames.erase(it);
       //break;
     }
   }
@@ -50,7 +50,7 @@ int CANmessage::getInt(unsigned int tec, unsigned int reg) {
   for (std::vector<canFrame>::iterator it = fFrames.begin(); it != fFrames.end(); ++it) {
     if ((tec == it->fTec) && (reg == it->fReg)) {
       result = it->fFloatVal;
-      fFrames.erase(it);
+      //fFrames.erase(it);
       //break;
     }
   }

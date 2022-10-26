@@ -251,6 +251,8 @@ void driveHardware::run() {
           dumpCSV();
 
         }
+        if (cnt%150 == 1) fCanMsg.clearFrames();
+
 #ifdef PI
       //entertainFras();
 #endif
