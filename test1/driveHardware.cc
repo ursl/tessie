@@ -140,16 +140,16 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
 
   // -- add timeout?
   // https://stackoverflow.com/questions/2876024/linux-is-there-a-read-or-recv-from-socket-with-timeout
-  struct timeval tv;
-  tv.tv_sec = 0;
-  tv.tv_usec = 1000;
-  setsockopt(fSr, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
+  // struct timeval tv;
+  // tv.tv_sec = 0;
+  // tv.tv_usec = 1000; // 1 millisecond
+  // setsockopt(fSr, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
 
   if (1) {
       // https://stackoverflow.com/questions/13547721/udp-socket-set-timeout
       struct timeval tv;
       tv.tv_sec = 0;
-      tv.tv_usec = 10000;
+      tv.tv_usec = 1000; // 1 millisecond
       if (setsockopt(fSr /*rcv_sock*/, SOL_SOCKET, SO_RCVTIMEO, &tv,sizeof(tv)) < 0) {
           perror("Error");
       }
@@ -225,13 +225,13 @@ void driveHardware::runPrintout(int reg, float val) {
 
 // ----------------------------------------------------------------------
 void driveHardware::run() {
-  std::chrono::milliseconds oneTenthSec(100);
-  std::chrono::milliseconds oneHundredthSec(10);
+  std::chrono::milliseconds milli100(100);
+  std::chrono::milliseconds milli10(10);
   cout << "Hallo in run()" << endl;
   int cnt(0);
   while (1) {
       ++cnt;
-      std::this_thread::sleep_for(oneHundredthSec);
+      std::this_thread::sleep_for(milli10);
       readCAN();
       if (cnt%100 == 1) {
           cout << "Hallo in run(), cnt = " << cnt << endl;
@@ -336,8 +336,8 @@ void driveHardware::readCAN() {
 
   if (nbytes > -1) {
     if (1) {
-      printf("can_id = 0x%X ncan_dlc = %d, data[] = ", fFrameR.can_id, fFrameR.can_dlc);
-      for (int i = 0; i < fFrameR.can_dlc; i++) printf("%3d ", fFrameR.data[i]);
+      printf("can_id = 0x%X data[%d] = ", fFrameR.can_id, fFrameR.can_dlc);
+      for (int i = 0; i < fFrameR.can_dlc; ++i) printf("%3d ", fFrameR.data[i]);
       cout << endl;
     }
   }
