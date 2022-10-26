@@ -31,7 +31,7 @@ public:
     }
   }
 
-  void dump() {
+  void dump(bool eol = true) {
     std::strstream s;
     s << std::hex << fCanId << " [" << fdlen << "] ";
     for (unsigned int i = 0; i < fdlen; ++i) {
@@ -41,7 +41,8 @@ public:
     s << ". tec = " << fTec
       << " reg = " << fReg
       << " val = " << fFloatVal << "/" << fIntVal;
-    std::cout << s.str() << std::endl;
+    std::cout << s.str();
+    if (eol) std::cout << std::endl;
   }
 
   // -- raw data

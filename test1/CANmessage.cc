@@ -1,6 +1,8 @@
 #include "CANmessage.hh"
 #include "canFrame.hh"
 
+using namespace std;
+
 // ----------------------------------------------------------------------
 CANmessage::CANmessage() {
 
@@ -8,6 +10,8 @@ CANmessage::CANmessage() {
 
 // ----------------------------------------------------------------------
 void CANmessage::addFrame(canFrame &x) {
+  cout << "  adding ";
+  x.dump();
   fFrames.push_back(x);
 }
 
