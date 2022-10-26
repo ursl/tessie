@@ -791,7 +791,7 @@ TECData  driveHardware::initAllTECRegister() {
 void driveHardware::readAllParamsFromCANPublic() {
   // -- what to read
   vector<string> regnames = {"Temp_M",
-                            "ControlVoltage_set",
+                            "ControlVoltage_Set",
                             "PID_kp",
                             "PID_ki",
                             "PID_kd",
