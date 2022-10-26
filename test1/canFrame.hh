@@ -35,7 +35,7 @@ public:
     std::strstream s;
     s << std::hex << fCanId << " [" << fdlen << "] ";
     for (unsigned int i = 0; i < fdlen; ++i) {
-      s << fData[i] << " ";
+      s << std::hex << fData[i] << " ";
     }
     s << std::dec;
     s << ". tec = " << fTec
