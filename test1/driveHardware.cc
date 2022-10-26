@@ -9,6 +9,7 @@
 #ifdef PI
 #include <errno.h>
 #include <wiringPiI2C.h>
+#define I2C_ADDR 0x44 # i2c address of sensor
 #endif
 
 #include <chrono>
@@ -52,10 +53,10 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
 
 #ifdef PI
   if (1) {
-  int fd = wiringPiI2CSetup(0x44);
+  int fd = wiringPiI2CSetup(I2C_ADDR, 0);
 
   cout << "Init result: "<< fd << endl;
-  int result = wiringPiI2CWriteReg16(fd, 0x44, 0x2400 );
+  int result = wiringPiI2CWriteReg16(fd, I2C_ADDR, 0x2400 );
   if (result == -1) {
      cout << "Error.  Errno is: " << errno << endl;
   }
