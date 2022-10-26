@@ -10,7 +10,7 @@ class canFrame {
 public:
   canFrame() { };
 
-  canFrame(int canid, int len, char *data) {
+  canFrame(int canid, int len, unsigned char *data) {
     fCanId = canid;
     fdlen  = len;
     for (int i = 0; i < len; ++i) fData.push_back(data[i]);
@@ -57,7 +57,7 @@ public:
   float fFloatVal;
 
   // -- vector with raw data (not just the 4 bytes with the float/int)
-  std::vector<char> fData;
+  std::vector<unsigned char> fData;
 };
 
 #endif // CANFRAME_HH
