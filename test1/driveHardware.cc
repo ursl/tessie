@@ -326,6 +326,7 @@ void driveHardware::readCAN(int nreads) {
   int nbytes(0);
 
   bool DBX(false);
+  if (nreads > 1) DBX = true;
 
   static int cntCAN(0);
 
@@ -335,7 +336,7 @@ void driveHardware::readCAN(int nreads) {
   float fdata(0.0);
 
   while (nreads > 0) {
-    if (DBX) cout << "read(fSr, &fFrameR, sizeof(fFrameR)) ... " << endl;
+    if (DBX) cout << "read(fSr, &fFrameR, sizeof(fFrameR)) ... nreads = " << nreads << endl;
     nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
     if (DBX) cout << "  nbytes = " << nbytes << endl;
 
@@ -678,7 +679,6 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
 
   if (itec > 0) {
     if (0 == fActiveTEC[itec]) {
-      //cout << "driveHardware::getTECRegisterFromCAN> TEC " << itec <<  " not active, skipping" << endl;
       return -99.;
     }
   }
@@ -695,19 +695,20 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
   std::this_thread::sleep_for(fMilli10);
   if (itec > 0) {
     readCAN();
+    fCANReadFloatVal = fCanMsg.getFloat(itec, fCANReg);
+    cout << "  obtained for tec = " << itec
+         << " register = "<< regname
+         << " value = " << fCANReadFloatVal
+         << " nframes = " << fCanMsg.nFrames()
+         << endl;
+    //  readCANmessage();
+
+    return fCANReadFloatVal;
   } else {
     readCAN(fNActiveTEC);
+    return -97;
   }
-
-  fCANReadFloatVal = fCanMsg.getFloat(itec, fCANReg);
-  cout << "  obtained for tec = " << itec
-       << " register = "<< regname
-       << " value = " << fCANReadFloatVal
-       << " nframes = " << fCanMsg.nFrames()
-       << endl;
-  //  readCANmessage();
-
-  return fCANReadFloatVal;
+  return -96;
 }
 
 
@@ -785,7 +786,7 @@ TECData  driveHardware::initAllTECRegister() {
 void driveHardware::readAllParamsFromCANPublic() {
 
   string regname("Temp_M");
-  cout << "driveHardware::readAllParamsFromCAN() read Temp_M" << endl;
+  cout << "driveHardware::readAllParamsFromCANPublic() read Temp_M" << endl;
   getTECRegisterFromCAN(0, regname);
   int ireg = fTECData[1].getIdx(regname);
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_M"].value = fCanMsg.getFloat(i, ireg);
