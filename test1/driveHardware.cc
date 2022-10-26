@@ -35,19 +35,18 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   fMilli10  = std::chrono::milliseconds(10);
   fMilli100 = std::chrono::milliseconds(100);
 
-
-
   fCsvFileName = "tessie.csv";
   cout << "open " << fCsvFileName << endl;
   fCsvFile.open(fCsvFileName, ios_base::app);
   cout << "done?" << endl;\
 
   for (unsigned int itec = 1; itec <= 4; ++itec) {
-      fActiveTEC.insert(make_pair(itec, 0));
-    }
+    fActiveTEC.insert(make_pair(itec, 0));
+  }
   for (unsigned int itec = 5; itec <= 8; ++itec) {
-      fActiveTEC.insert(make_pair(itec, 1));
-    }
+    fActiveTEC.insert(make_pair(itec, 1));
+  }
+  fNActiveTEC = 4;
 
   initTECData();
 
@@ -318,7 +317,7 @@ void driveHardware::shutDown() {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::readCAN() {
+void driveHardware::readCAN(int nreads) {
   //fMutex.lock();
 #ifdef PI
   int nbytes(0);
@@ -332,23 +331,26 @@ void driveHardware::readCAN() {
   unsigned int idata(0);
   float fdata(0.0);
 
-  if (DBX) cout << "read(fSr, &fFrameR, sizeof(fFrameR)) ... " << endl;
-  nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
-  if (DBX) cout << "  nbytes = " << nbytes << endl;
+  while (nreads > 0) {
+    if (DBX) cout << "read(fSr, &fFrameR, sizeof(fFrameR)) ... " << endl;
+    nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
+    if (DBX) cout << "  nbytes = " << nbytes << endl;
 
-  // -- this is an alternative to 'read()'
-  //  socklen_t len = sizeof(fAddrR);
-  //  nbytes = recvfrom(fSr, &fFrameR, sizeof(fFrameR), 0, (struct sockaddr*)&fAddrR, &len);
+    // -- this is an alternative to 'read()'
+    //  socklen_t len = sizeof(fAddrR);
+    //  nbytes = recvfrom(fSr, &fFrameR, sizeof(fFrameR), 0, (struct sockaddr*)&fAddrR, &len);
 
-  if (nbytes > -1) {
-    if (1) {
-      printf("can_id = 0x%3X data[%d] = ", fFrameR.can_id, fFrameR.can_dlc);
-      for (int i = 0; i < fFrameR.can_dlc; ++i) printf("%02X ", fFrameR.data[i]);
-      cout << endl;
+    if (nbytes > -1) {
+      if (1) {
+        printf("can_id = 0x%3X data[%d] = ", fFrameR.can_id, fFrameR.can_dlc);
+        for (int i = 0; i < fFrameR.can_dlc; ++i) printf("%02X ", fFrameR.data[i]);
+        cout << endl;
 
-      canFrame f(fFrameR.can_id, fFrameR.can_dlc, fFrameR.data);
-      fCanMsg.addFrame(f);
+        canFrame f(fFrameR.can_id, fFrameR.can_dlc, fFrameR.data);
+        fCanMsg.addFrame(f);
+      }
     }
+    --nreads;
   }
 #endif
   //fMutex.unlock();
@@ -671,20 +673,29 @@ void  driveHardware::turnOffTEC(int itec) {
 // ----------------------------------------------------------------------
 float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
 
-  if (0 == fActiveTEC[itec]) {
+  if (itec > 0) {
+    if (0 == fActiveTEC[itec]) {
       //cout << "driveHardware::getTECRegisterFromCAN> TEC " << itec <<  " not active, skipping" << endl;
       return -99.;
-    } else {
-      //cout << "driveHardware::getTECRegisterFromCAN"  << endl;
     }
+  }
 
-  fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_READ);
-  fCANReg = fTECData[itec].getIdx(regname);
-
+  if (itec > 0) {
+    fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_READ);
+    fCANReg = fTECData[itec].getIdx(regname);
+  } else {
+    fCANId = (CANBUS_SHIFT | CANBUS_PUBLIC | CANBUS_TECREC | CANBUS_READ);
+    fCANReg = fTECData[1].getIdx(regname);
+  }
   // -- send read request
   sendCANmessage();
   std::this_thread::sleep_for(fMilli10);
-  readCAN();
+  if (itec > 0) {
+    readCAN();
+  } else {
+    readCAN(fNActiveTEC);
+  }
+
   fCANReadFloatVal = fCanMsg.getFloat(itec, fCANReg);
   cout << "  obtained for tec = " << itec
        << " register = "<< regname
@@ -765,6 +776,44 @@ TECData  driveHardware::initAllTECRegister() {
   b = {-99., "Alarm",               4, 3}; tdata.reg.insert(make_pair(b.name, b));
 
   return tdata;
+}
+
+// ----------------------------------------------------------------------
+void driveHardware::readAllParamsFromCANPublic() {
+
+  string regname("Temp_M");
+  cout << "driveHardware::readAllParamsFromCAN() read Temp_M" << endl;
+  getTECRegisterFromCAN(0, regname);
+  int ireg = fTECData[1].getIdx(regname);
+  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_M"].value = fCanMsg.getFloat(i, ireg);
+
+
+//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_M"].value = getTECRegisterFromCAN(i, "Temp_M");
+//  return;
+
+//  cout << "driveHardware::readAllParamsFromCAN() read ControlVoltage_Set" << endl;
+//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["ControlVoltage_Set"].value = getTECRegisterFromCAN(i, "ControlVoltage_Set");
+
+//  cout << "driveHardware::readAllParamsFromCAN() read PID_kp" << endl;
+//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_kp"].value = getTECRegisterFromCAN(i, "PID_kp");
+
+//  cout << "driveHardware::readAllParamsFromCAN() read PID_ki" << endl;
+//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_ki"].value = getTECRegisterFromCAN(i, "PID_ki");
+
+//  cout << "driveHardware::readAllParamsFromCAN() read PID_kd" << endl;
+//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_kd"].value = getTECRegisterFromCAN(i, "PID_kd");
+
+//  cout << "driveHardware::readAllParamsFromCAN() read all the rest" << endl;
+//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_W"].value = getTECRegisterFromCAN(i, "Temp_W");
+//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_Set"].value = getTECRegisterFromCAN(i, "Temp_Set");
+//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Peltier_I"].value = getTECRegisterFromCAN(i, "Peltier_I");
+//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Peltier_R"].value = getTECRegisterFromCAN(i, "Peltier_R");
+//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Peltier_P"].value = getTECRegisterFromCAN(i, "Peltier_P");
+
+//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_U"].value = getTECRegisterFromCAN(i, "Supply_U");
+//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_I"].value = getTECRegisterFromCAN(i, "Supply_I");
+//  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_P"].value = getTECRegisterFromCAN(i, "Supply_P");
+
 }
 
 

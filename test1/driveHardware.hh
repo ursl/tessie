@@ -83,7 +83,7 @@ public:
   void dumpCSV();
   std::string timeStamp(bool filestamp = true);
 
-  void  readCAN();
+  void  readCAN(int nreads = 1);
   void  sendCANmessage();
   void  readCANmessage();
 
@@ -115,6 +115,8 @@ public:
 
   // -- fill 'all' parameters for dumping into csv or for refreshing the GUI
   void readAllParamsFromCAN();
+  // -- same as above, but with "public" broadcast
+  void readAllParamsFromCANPublic();
 
   // -- AFTER readCANmessage() these can be used to get the relevant value
   float getCANReadFloatVal() {return fCANReadFloatVal;}
@@ -160,6 +162,7 @@ private:
   QString fDateAndTime;
 
   std::map<int, int> fActiveTEC;
+  int fNActiveTEC;
 
   int     fCANReadIntVal;
   float   fCANReadFloatVal;
