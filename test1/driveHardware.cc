@@ -750,7 +750,11 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_READ);
   fCANReg = fTECData[itec].getIdx(regname);
 
-  readCANmessage();
+  // -- send read request
+  sendCANmessage();
+  fCANReadFloatVal = fCanMsg.getFloat(itec, fCANReg);
+  cout << "  obtained for " << regname << " value = " << fCANReadFloatVal << endl;
+  //  readCANmessage();
 
   return fCANReadFloatVal;
 }
@@ -843,6 +847,7 @@ void driveHardware::readAllParamsFromCAN() {
 
   cout << "driveHardware::readAllParamsFromCAN() read Temp_M" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_M"].value = getTECRegisterFromCAN(i, "Temp_M");
+  return;
 
   cout << "driveHardware::readAllParamsFromCAN() read ControlVoltage_Set" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["ControlVoltage_Set"].value = getTECRegisterFromCAN(i, "ControlVoltage_Set");
