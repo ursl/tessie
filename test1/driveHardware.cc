@@ -447,7 +447,7 @@ void driveHardware::sendCANmessage() {
   itec = fCANId & 0xf;
   if (1) cout << "sendCANmessage() TEC " << itec << endl;
 
-  if (itec > 0) && (0 == fActiveTEC[itec])) {
+  if ((itec > 0) && (0 == fActiveTEC[itec])) {
       if (0) cout << "TEC " << itec <<  " not active, skipping" << endl;
       return;
   }
