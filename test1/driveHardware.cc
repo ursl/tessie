@@ -338,8 +338,8 @@ void driveHardware::readCAN() {
 
   if (nbytes > -1) {
     if (1) {
-      printf("can_id = 0x%2X data[%d] = ", fFrameR.can_id, fFrameR.can_dlc);
-      for (int i = 0; i < fFrameR.can_dlc; ++i) printf("%2X ", fFrameR.data[i]);
+      printf("can_id = 0x%3X data[%d] = ", fFrameR.can_id, fFrameR.can_dlc);
+      for (int i = 0; i < fFrameR.can_dlc; ++i) printf("%02X ", fFrameR.data[i]);
       cout << endl;
 
       canFrame f(fFrameR.can_id, fFrameR.can_dlc, fFrameR.data);

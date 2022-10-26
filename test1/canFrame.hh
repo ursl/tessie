@@ -36,10 +36,11 @@ public:
     std::cout << std::hex << fCanId << " [" << fdlen << "] ";
     char sbuffer[5];
     for (unsigned int i = 0; i < fdlen; ++i) {
-        sprintf(sbuffer, "%2X ", static_cast<int>(fData[i]));
+        sprintf(sbuffer, "%02X ", static_cast<int>(fData[i]));
         std::cout << sbuffer;
     }
-    std::cout << ". tec = " << fTec
+    std::cout << std::dec
+              << ". tec = " << fTec
               << " reg = " << fReg
               << " val = " << fFloatVal << "/" << fIntVal;
     if (eol) std::cout << std::endl;
