@@ -6,9 +6,11 @@
 #include <net/if.h>
 #include <sys/ioctl.h>
 
+#include <fcntl.h>
+
+
 #ifdef PI
-#include <errno.h>
-#include <wiringPiI2C.h>
+#include <linux/i2c-dev.h>
 #define I2C_ADDR 0x44    // i2c address of sensor
 #endif
 
@@ -52,39 +54,49 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   initTECData();
 
 #ifdef PI
-  if (1) {
-    // Setup I2C communication
-    int fd = wiringPiI2CSetup(I2C_ADDR);
-    if (fd == -1) {
-      std::cout << "Failed to init I2C communication.\n";
-      // return -1;
-    }
-    cout << "I2C communication successfully setup.\n";
-    cout << "Init result: "<< fd << endl;
 
-    // Switch device to measurement mode
-    //wiringPiI2CWriteReg8(fd, I2C_ADDR, 0b00001000);
-
-    int result = wiringPiI2CWriteReg16(fd, I2C_ADDR, 0x0024);
-    if (result == -1) {
-      cout << "Error.  Errno is: " << errno << endl;
-    }
-
-    sleep(1);
-    unsigned int data[6];
-    data[0] = wiringPiI2CReadReg8(fd, 0x44);
-    cout << "data[0] = " << data[0] << endl;
-    data[1] = wiringPiI2CReadReg8(fd, 0x44);
-    cout << "data[1] = " << data[1] << endl;
-    data[2] = wiringPiI2CReadReg8(fd, 0x44);
-    cout << "data[2] = " << data[2] << endl;
-    data[3] = wiringPiI2CReadReg8(fd, 0x44);
-    cout << "data[3] = " << data[3] << endl;
-    data[4] = wiringPiI2CReadReg8(fd, 0x44);
-    cout << "data[4] = " << data[4] << endl;
-    data[5] = wiringPiI2CReadReg8(fd, 0x44);
-    cout << "data[5] = " << data[5] << endl;
+  // -- create I2C bus
+  int file;
+  char *bus = "/dev/i2c-0";
+  if ((file = open(bus, O_RDWR)) < 0) {
+    printf("Failed to open the bus. \n");
+    exit(1);
   }
+
+  // -- get I2C device, SHT85 I2C address is 0x44
+  ioctl(file, I2C_SLAVE, I2C_ADDR);
+
+  // -- send high repeatability measurement command
+  //    command msb, command lsb(0x2C, 0x06)
+  char config[2] = {0};
+  /* config[0] = 0x2C;   // MSB */
+  /* config[1] = 0x06;   // LSB */
+  config[0] = 0x24;   // MSB
+  config[1] = 0x00;   // LSB
+  write(file, config, 2);
+  sleep(1);
+
+  // -- read 6 bytes of data
+  //    temp msb, temp lsb, temp CRC, humidity msb, humidity lsb, humidity CRC
+  char data[6] = {0};
+  if (read(file, data, 6) != 6) {
+    printf("Error : Input/output Error \n");
+  } else {
+    // -- convert the data
+    //double cTemp = (((data[0] * 256) + data[1]) * 175.0) / 65535.0  - 45.0;
+    //double humidity = (((data[3] * 256) + data[4])) * 100.0 / 65535.0;
+    double norm     = 65535.0;
+    double st       = (data[0]<<8) + data[1];
+    double cTemp    = (st * 175.0) / norm  - 45.0;
+
+    st              = (data[3]<<8) + data[4];
+    double humidity = (st * 100.0) / norm;
+
+    // -- print
+    printf("Temperature in Celsius : %.4f C \n", cTemp);
+    printf("Relative Humidity is : %.4f RH \n", humidity);
+  }
+
 #endif
 
   //rpc  fRpcThread = new QThread();
