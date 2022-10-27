@@ -948,7 +948,7 @@ void driveHardware::readSHT85() {
 
     // -- calculate dew point
     //    https://doi.org/10.1175/BAMS-86-2-225
-    double td0 = fSHT85Temp - ((100. - fSHT85RH)/5.; // most simple approximation
+    double td0 = fSHT85Temp - (100. - fSHT85RH)/5.; // most simple approximation
     fSHT85DP = static_cast<float>(td0);
 
     // -- print
