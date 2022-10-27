@@ -39,9 +39,12 @@ int main(int argc, char *argv[]) {
     // -- convert the data
     //double cTemp = (((data[0] * 256) + data[1]) * 175.0) / 65535.0  - 45.0;
     //double humidity = (((data[3] * 256) + data[4])) * 100.0 / 65535.0;
+    double norm     = 65535.0;
+    double st       = (data[0]<<8) + data[1];
+    double cTemp    = (st * 175.0) / norm  - 45.0;
 
-    double cTemp = (((data[0]<<8) + data[1]) * 175.0) / 65535.0  - 45.0;
-    double humidity = (((data[3]<<8) + data[4])) * 100.0 / 65535.0;
+    st              = (data[3]<<8) + data[4];
+    double humidity = (st * 100.0) / norm;
     
     // -- print
     printf("Temperature in Celsius : %.4f C \n", cTemp);
