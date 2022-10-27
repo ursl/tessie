@@ -240,11 +240,12 @@ void driveHardware::run() {
                << " nframes = " << fCanMsg.nFrames()
                << endl;
 
+          readSHT85();
+
           // -- read all parameters from CAN
           fMutex.lock();
           // readAllParamsFromCAN();
           readAllParamsFromCANPublic();
-          readSHT85();
           fMutex.unlock();
 
           // -- do something with the results
