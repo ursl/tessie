@@ -67,8 +67,11 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
     exit(1);
   }
 
+  std::this_thread::sleep_for(fMilli10);
+
   // -- get I2C device, SHT85 I2C address is 0x44
   ioctl(fSHT85File, I2C_SLAVE, I2C_ADDR);
+  std::this_thread::sleep_for(fMilli10);
 
   readSHT85();
 #endif
@@ -918,11 +921,12 @@ void driveHardware::readSHT85() {
   config[0] = 0x24;   // MSB
   config[1] = 0x00;   // LSB
   write(fSHT85File, config, 2);
+  std::this_thread::sleep_for(fMilli10);
 
   // -- read 6 bytes of data
   //    temp msb, temp lsb, temp CRC, humidity msb, humidity lsb, humidity CRC
   if (read(fSHT85File, fSHT85data, 6) != 6) {
-    printf("Error : Input/output Error \n");
+    cout << "I2C Error: Input/output Error" << endl;
   } else {
     // -- convert the data
     //double cTemp = (((fSHT85data[0] * 256) + fSHT85data[1]) * 175.0) / 65535.0  - 45.0;
@@ -935,8 +939,8 @@ void driveHardware::readSHT85() {
     fSHT85RH    = (st * 100.0) / norm;
 
     // -- print
-    printf("Temperature in Celsius : %.4f C \n", fSHT85Temp);
-    printf("Relative Humidity is : %.4f RH \n", fSHT85RH);
+    cout << "Temperature in Celsius: " << fSHT85Temp << endl;
+    cout << "Relative Humidity:      " << fSHT85RH << endl;
   }
 
 #endif
