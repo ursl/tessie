@@ -9,5 +9,9 @@ can_send:can_send.c
 can_receive:can_receive.c 
 	    $(CC) $(CFLAGS) -o $@ $^ 
 
+i2ctest: i2ctest.c
+	gcc -o $@  $^
+
+
 clean:
 	    $(RM) can_send .*.sw?
