@@ -65,13 +65,12 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   if ((fSHT85File = open(bus, O_RDWR)) < 0) {
     cout << "Failed to open the bus." << endl;
     exit(1);
+  } else {
+    cout << "I2C bus opened with fSHT85File = " << fSHT85File << endl;
   }
-
-  std::this_thread::sleep_for(fMilli10);
 
   // -- get I2C device, SHT85 I2C address is 0x44
   ioctl(fSHT85File, I2C_SLAVE, I2C_ADDR);
-  std::this_thread::sleep_for(fMilli10);
 
   readSHT85();
 #endif
@@ -316,6 +315,8 @@ void driveHardware::shutDown() {
   // FIXME: do a poff for all TEC controllers. set all relais outputs to 0.
 #ifdef PI
   close(fSw);
+  close(fSr);
+  close(fSHT85File);
 #endif
 }
 
@@ -926,7 +927,7 @@ void driveHardware::readSHT85() {
   // -- read 6 bytes of data
   //    temp msb, temp lsb, temp CRC, humidity msb, humidity lsb, humidity CRC
   if (read(fSHT85File, fSHT85data, 6) != 6) {
-    cout << "I2C Error: Input/output Error" << endl;
+    cout << "I2C Error: Input/output Error for fSHT85File = " << fSHT85File << endl;
   } else {
     // -- convert the data
     //double cTemp = (((fSHT85data[0] * 256) + fSHT85data[1]) * 175.0) / 65535.0  - 45.0;
