@@ -162,7 +162,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
       // https://stackoverflow.com/questions/13547721/udp-socket-set-timeout
       struct timeval tv;
       tv.tv_sec = 0;
-      tv.tv_usec = 1000; // 1 millisecond
+      tv.tv_usec = 100; // 0.1 millisecond
       if (setsockopt(fSr /*rcv_sock*/, SOL_SOCKET, SO_RCVTIMEO, &tv,sizeof(tv)) < 0) {
         perror("Error in setting up time out");
       }
@@ -245,9 +245,9 @@ void driveHardware::run() {
       std::this_thread::sleep_for(fMilli10);
       readCAN();
       if (cnt%100 == 1) {
-          cout << "Hallo in run(), cnt = " << cnt
-               << " nframes = " << fCanMsg.nFrames()
-               << endl;
+          if (0) cout << "Hallo in run(), cnt = " << cnt
+                      << " nframes = " << fCanMsg.nFrames()
+                      << endl;
 
           readSHT85();
 
@@ -816,20 +816,16 @@ void driveHardware::readAllParamsFromCANPublic() {
                              "Supply_I",
                              "Supply_P"
                             };
-  cout << "driveHardware::readAllParamsFromCANPublic() " << endl;
   for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
-    cout << regnames[ireg] << " ";
     getTECRegisterFromCAN(0, regnames[ireg]);
     int regIdx = fTECData[1].getIdx(regnames[ireg]);
     for (int i = 1; i <= 8; ++i) fTECData[i].reg[regnames[ireg]].value = fCanMsg.getFloat(i, regIdx);
   }
 
   // -- read PowerState
-  cout << " PowerState" << endl;
   getTECRegisterFromCAN(0, "PowerState");
   int regIdx = fTECData[1].getIdx("PowerState");
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["PowerState"].value = fCanMsg.getInt(i, regIdx);
-
 }
 
 
@@ -952,10 +948,11 @@ void driveHardware::readSHT85() {
     fSHT85DP = static_cast<float>(td0);
 
     // -- print
-    cout << "Temperature in Celsius: " << fSHT85Temp << endl;
-    cout << "Relative Humidity:      " << fSHT85RH << endl;
+    if (0) {
+      cout << "Temperature in Celsius: " << fSHT85Temp << endl;
+      cout << "Relative Humidity:      " << fSHT85RH << endl;
+    }
   }
-
 #endif
 }
 
