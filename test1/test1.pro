@@ -13,7 +13,7 @@ CONFIG += c++17
 
 CONFIG(PI) {
    DEFINES += PI
-   LIBS += -lwiringPi
+#   LIBS += -lwiringPi
 } else {
 
 }
