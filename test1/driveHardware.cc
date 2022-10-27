@@ -11,8 +11,10 @@
 
 #ifdef PI
 #include <linux/i2c-dev.h>
-#define I2C_ADDR 0x44    // i2c address of sensor
 #endif
+
+// -- i2c address of SHT85 sensor
+#define I2C_ADDR 0x44
 
 #include <chrono>
 #include <thread>
@@ -55,6 +57,12 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
 
   fSHT85Temp = -99.;
   fSHT85RH   = -99.;
+  for (int i = 0; i < 6; ++i) {
+    fSHT85Data[i] = 0;
+  }
+
+  fSHT85Config[0] = 0x24;   // MSB
+  fSHT85Config[1] = 0x00;   // LSB
 
 #ifdef PI
 
@@ -919,25 +927,22 @@ void driveHardware::readSHT85() {
 #ifdef PI
   // -- send high repeatability measurement command
   //    command msb, command lsb(0x2C, 0x06)
-  char config[2] = {0};
-  config[0] = 0x24;   // MSB
-  config[1] = 0x00;   // LSB
-  write(fSHT85File, config, 2);
+  write(fSHT85File, fSHT85Config, 2);
   std::this_thread::sleep_for(fMilli10);
 
   // -- read 6 bytes of data
   //    temp msb, temp lsb, temp CRC, humidity msb, humidity lsb, humidity CRC
-  if (read(fSHT85File, fSHT85data, 6) != 6) {
+  if (read(fSHT85File, fSHT85Data, 6) != 6) {
     cout << "I2C Error: Input/output Error for fSHT85File = " << fSHT85File << endl;
   } else {
     // -- convert the data
-    //double cTemp = (((fSHT85data[0] * 256) + fSHT85data[1]) * 175.0) / 65535.0  - 45.0;
-    //double humidity = (((fSHT85data[3] * 256) + fSHT85data[4])) * 100.0 / 65535.0;
+    //double cTemp = (((fSHT85Data[0] * 256) + fSHT85Data[1]) * 175.0) / 65535.0  - 45.0;
+    //double humidity = (((fSHT85Data[3] * 256) + fSHT85Data[4])) * 100.0 / 65535.0;
     double norm = 65535.0;
-    double st   = (fSHT85data[0]<<8) + fSHT85data[1];
+    double st   = (fSHT85Data[0]<<8) + fSHT85Data[1];
     fSHT85Temp  = (st * 175.0) / norm  - 45.0;
 
-    st          = (fSHT85data[3]<<8) + fSHT85data[4];
+    st          = (fSHT85Data[3]<<8) + fSHT85Data[4];
     fSHT85RH    = (st * 100.0) / norm;
 
     // -- print

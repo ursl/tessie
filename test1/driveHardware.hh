@@ -179,7 +179,7 @@ private:
   std::chrono::milliseconds fMilli5, fMilli10, fMilli100;
 
   // -- access and data from SHT85
-  char fSHT85data[6];
+  char fSHT85Data[6], fSHT85Config[2];
   int  fSHT85File;
   float fSHT85Temp, fSHT85RH;
 
