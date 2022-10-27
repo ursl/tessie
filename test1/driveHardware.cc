@@ -59,10 +59,11 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
 #ifdef PI
 
   // -- create I2C bus
-  int file;
+  cout << "Open I2C bus for SHT85" << endl;
+
   char *bus = "/dev/i2c-0";
   if ((fSHT85File = open(bus, O_RDWR)) < 0) {
-    printf("Failed to open the bus. \n");
+    cout << "Failed to open the bus." << endl;
     exit(1);
   }
 
@@ -74,7 +75,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   char config[2] = {0};
   config[0] = 0x24;   // MSB
   config[1] = 0x00;   // LSB
-  write(file, config, 2);
+  write(fSHT85File, config, 2);
 #endif
 
   //rpc  fRpcThread = new QThread();
