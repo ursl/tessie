@@ -995,7 +995,7 @@
       <x>10</x>
       <y>260</y>
       <width>101</width>
-      <height>111</height>
+      <height>161</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -1048,6 +1048,29 @@
      </property>
      <property name="text">
       <string>RH [%]</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditDP">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>130</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelRH_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>110</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>DP [deg C]</string>
      </property>
     </widget>
    </widget>

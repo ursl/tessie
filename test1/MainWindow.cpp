@@ -278,6 +278,7 @@ void MainWindow::updateHardwareDisplay() {
 
   ui->lineEditTemp->setText(QString::number(fThread.getTemperature(), 'f', 2));
   ui->lineEditRH->setText(QString::number(fThread.getRH(), 'f', 2));
+  ui->lineEditDP->setText(QString::number(fThread.getDP(), 'f', 2));
 
   for (unsigned int ivec = 0; ivec < 8; ++ivec) {
     if (!fUIControlVoltageSet[ivec]->hasFocus()) {
@@ -308,7 +309,7 @@ void MainWindow::updateHardwareDisplay() {
     if (fThread.getTECRegister(ivec+1, "PowerState") > 0.5) {
       state = true;
     }
-    // if (!state) continue;
+
     fUICheckBox[ivec]->setChecked(state);
   }
 }

@@ -57,6 +57,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
 
   fSHT85Temp = -99.;
   fSHT85RH   = -99.;
+  fSHT85DP   = -99.;
   for (int i = 0; i < 6; ++i) {
     fSHT85Data[i] = 0;
   }
@@ -80,30 +81,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   // -- get I2C device, SHT85 I2C address is 0x44
   ioctl(fSHT85File, I2C_SLAVE, I2C_ADDR);
 
-  // -- send high repeatability measurement command
-  //    command msb, command lsb(0x2C, 0x06)
-  write(fSHT85File, fSHT85Config, 2);
-  std::this_thread::sleep_for(fMilli100);
-
-  // -- read 6 bytes of data
-  //    temp msb, temp lsb, temp CRC, humidity msb, humidity lsb, humidity CRC
-  if (read(fSHT85File, fSHT85Data, 6) != 6) {
-    cout << "I2C Error: Input/output Error for fSHT85File = " << fSHT85File << endl;
-  } else {
-    // -- convert the data
-    //double cTemp = (((fSHT85Data[0] * 256) + fSHT85Data[1]) * 175.0) / 65535.0  - 45.0;
-    //double humidity = (((fSHT85Data[3] * 256) + fSHT85Data[4])) * 100.0 / 65535.0;
-    double norm = 65535.0;
-    double st   = (fSHT85Data[0]<<8) + fSHT85Data[1];
-    fSHT85Temp  = (st * 175.0) / norm  - 45.0;
-
-    st          = (fSHT85Data[3]<<8) + fSHT85Data[4];
-    fSHT85RH    = (st * 100.0) / norm;
-
-    // -- print
-    cout << "Temperature in Celsius: " << fSHT85Temp << endl;
-    cout << "Relative Humidity:      " << fSHT85RH << endl;
-  }
+  readSHT85();
 #endif
 
   //rpc  fRpcThread = new QThread();
@@ -968,6 +946,11 @@ void driveHardware::readSHT85() {
     st          = (fSHT85Data[3]<<8) + fSHT85Data[4];
     fSHT85RH    = (st * 100.0) / norm;
 
+    // -- calculate dew point
+    //    https://doi.org/10.1175/BAMS-86-2-225
+    double td0 = fSHT85Temp - ((100. - fSHT85RH)/5.; // most simple approximation
+    fSHT85DP = static_cast<float>(td0);
+
     // -- print
     cout << "Temperature in Celsius: " << fSHT85Temp << endl;
     cout << "Relative Humidity:      " << fSHT85RH << endl;
@@ -984,5 +967,10 @@ float driveHardware::getTemperature() {
 // ----------------------------------------------------------------------
 float driveHardware::getRH() {
   return fSHT85RH;
+}
+
+// ----------------------------------------------------------------------
+float driveHardware::getDP() {
+  return fSHT85DP;
 }
 

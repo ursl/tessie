@@ -109,6 +109,7 @@ public:
   void  readSHT85();
   float getTemperature();
   float getRH();
+  float getDP();
 
   // -- simply returns the value stored in fTECData
   float getTECRegister(int itec, std::string regname);
@@ -181,7 +182,7 @@ private:
   // -- access and data from SHT85
   char fSHT85Data[6], fSHT85Config[2];
   int  fSHT85File;
-  float fSHT85Temp, fSHT85RH;
+  float fSHT85Temp, fSHT85RH, fSHT85DP;
 
 #ifdef PI
   int    fSw; 
