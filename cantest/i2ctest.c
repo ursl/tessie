@@ -21,10 +21,12 @@ int main(int argc, char *argv[]) {
   ioctl(file, I2C_SLAVE, I2C_ADDR);
   
   // -- send high repeatability measurement command
-  //    (Command msb, command lsb(0x2C, 0x06)
+  //    command msb, command lsb(0x2C, 0x06)
   char config[2] = {0};
-  config[0] = 0x2C;
-  config[1] = 0x06;
+  /* config[0] = 0x2C;   // MSB */
+  /* config[1] = 0x06;   // LSB */
+  config[0] = 0x24;   // MSB
+  config[1] = 0x00;   // LSB
   write(file, config, 2);
   sleep(1);
   
@@ -39,8 +41,8 @@ int main(int argc, char *argv[]) {
     double humidity = (((data[3] * 256) + data[4])) * 100.0 / 65535.0;
     
     // -- print
-    printf("Temperature in Celsius : %.2f C \n", cTemp);
-    printf("Relative Humidity is : %.2f RH \n", humidity);
+    printf("Temperature in Celsius : %.4f C \n", cTemp);
+    printf("Relative Humidity is : %.4f RH \n", humidity);
   }
   
   return 0;
