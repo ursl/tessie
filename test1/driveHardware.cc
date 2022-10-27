@@ -70,12 +70,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   // -- get I2C device, SHT85 I2C address is 0x44
   ioctl(fSHT85File, I2C_SLAVE, I2C_ADDR);
 
-  // -- send high repeatability measurement command
-  //    command msb, command lsb(0x2C, 0x06)
-  char config[2] = {0};
-  config[0] = 0x24;   // MSB
-  config[1] = 0x00;   // LSB
-  write(fSHT85File, config, 2);
+  readSHT85();
 #endif
 
   //rpc  fRpcThread = new QThread();
@@ -917,6 +912,13 @@ string driveHardware::timeStamp(bool filestamp) {
 // ----------------------------------------------------------------------
 void driveHardware::readSHT85() {
 #ifdef PI
+  // -- send high repeatability measurement command
+  //    command msb, command lsb(0x2C, 0x06)
+  char config[2] = {0};
+  config[0] = 0x24;   // MSB
+  config[1] = 0x00;   // LSB
+  write(fSHT85File, config, 2);
+
   // -- read 6 bytes of data
   //    temp msb, temp lsb, temp CRC, humidity msb, humidity lsb, humidity CRC
   if (read(fSHT85File, fSHT85data, 6) != 6) {
