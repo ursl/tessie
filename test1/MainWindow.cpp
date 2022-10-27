@@ -276,6 +276,9 @@ void MainWindow::updateHardwareValues() {
 // ----------------------------------------------------------------------
 void MainWindow::updateHardwareDisplay() {
 
+  ui->lineEditTemp->setText(QString::number(fThread.getTemperature(), 'f', 2));
+  ui->lineEditRH->setText(QString::number(fThread.getRH(), 'f', 2));
+
   for (unsigned int ivec = 0; ivec < 8; ++ivec) {
     if (!fUIControlVoltageSet[ivec]->hasFocus()) {
       fUIControlVoltageSet[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "ControlVoltage_Set"), 'f', 2));

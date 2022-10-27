@@ -105,6 +105,11 @@ public:
   int   getRegister();
   float getValue();
 
+  // -- environmental data
+  void  readSHT85();
+  float getTemperature();
+  float getRH();
+
   // -- simply returns the value stored in fTECData
   float getTECRegister(int itec, std::string regname);
   int   getTECRegisterIdx(std::string rname);
@@ -172,6 +177,11 @@ private:
 
 
   std::chrono::milliseconds fMilli5, fMilli10, fMilli100;
+
+  // -- access and data from SHT85
+  char fSHT85data[6];
+  int  fSHT85File;
+  float fSHT85Temp, fSHT85RH;
 
 #ifdef PI
   int    fSw; 

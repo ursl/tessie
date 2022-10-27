@@ -989,6 +989,68 @@
      </property>
     </widget>
    </widget>
+   <widget class="QFrame" name="frameSHT85">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>260</y>
+      <width>101</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLineEdit" name="lineEditRH">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditTemp">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelTemp">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>71</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>T [deg C]</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelRH">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>60</y>
+       <width>58</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>RH [%]</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
@@ -1672,7 +1734,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>109</x>
-     <y>188</y>
+     <y>208</y>
     </hint>
     <hint type="destinationlabel">
      <x>631</x>
@@ -1688,7 +1750,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>109</x>
-     <y>154</y>
+     <y>174</y>
     </hint>
     <hint type="destinationlabel">
      <x>558</x>
@@ -1704,7 +1766,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>109</x>
-     <y>120</y>
+     <y>140</y>
     </hint>
     <hint type="destinationlabel">
      <x>362</x>
@@ -1787,5 +1849,7 @@
   <slot>tec3TempM()</slot>
   <slot>tec2TempM()</slot>
   <slot>tec1TempM()</slot>
+  <slot>sht85Temp()</slot>
+  <slot>sht85RH()</slot>
  </slots>
 </ui>
