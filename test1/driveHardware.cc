@@ -951,7 +951,7 @@ void driveHardware::readSHT85() {
   // -- send high repeatability measurement command
   //    command msb, command lsb(0x2C, 0x06)
   write(fSHT85File, fSHT85Config, 2);
-  std::this_thread::sleep_for(fMilli10);
+  std::this_thread::sleep_for(fMilli100);
 
   // -- read 6 bytes of data
   //    temp msb, temp lsb, temp CRC, humidity msb, humidity lsb, humidity CRC
