@@ -622,7 +622,7 @@ void driveHardware::toggleFras(int imask) {
   fFrameW.can_dlc = dlength;
   fFrameW.data[0] = fValveMask;
 #endif
-  stringstream sbla; sbla << "talkToFras "
+  stringstream sbla; sbla << "toggleFras "
                           << " reg = 0x"  << hex << canid
                           << " data = " << fCANVal;
   cout << "sbla: " << sbla.str() << endl;
