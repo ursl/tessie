@@ -241,33 +241,33 @@ void driveHardware::run() {
   cout << "Hallo in run()" << endl;
   int cnt(0);
   while (1) {
-      ++cnt;
-      std::this_thread::sleep_for(fMilli10);
-      readCAN();
-      if (cnt%100 == 1) {
-          if (0) cout << "Hallo in run(), cnt = " << cnt
-                      << " nframes = " << fCanMsg.nFrames()
-                      << endl;
+    ++cnt;
+    std::this_thread::sleep_for(fMilli10);
+    readCAN();
+    if (cnt%100 == 1) {
+      if (0) cout << "Hallo in run(), cnt = " << cnt
+                  << " nframes = " << fCanMsg.nFrames()
+                  << endl;
 
-          readSHT85();
+      readSHT85();
 
-          // -- read all parameters from CAN
-          fMutex.lock();
-          // readAllParamsFromCAN();
-          cout << "readAllParamsFromCANPublic()" << endl;
-          readAllParamsFromCANPublic();
-          fMutex.unlock();
+      // -- read all parameters from CAN
+      fMutex.lock();
+      // readAllParamsFromCAN();
+      cout << "readAllParamsFromCANPublic()" << endl;
+      readAllParamsFromCANPublic();
+      fMutex.unlock();
 
-          // -- do something with the results
-          emit updateHwDisplay();
-          dumpCSV();
+      // -- do something with the results
+      emit updateHwDisplay();
+      dumpCSV();
 
-        }
-        if (cnt%150 == 1) {
-          // -- make sure there is no alarm before clearing
-          parseCAN();
-          fCanMsg.clearFrames();
-        }
+    }
+    if (cnt%150 == 1) {
+      // -- make sure there is no alarm before clearing
+      parseCAN();
+      fCanMsg.clearFrames();
+    }
 
 #ifdef PI
       //entertainFras();
@@ -374,6 +374,7 @@ void driveHardware::readCAN(int nreads) {
     --nreads;
   }
 #endif
+  parseCAN();
   //fMutex.unlock();
   return;
 }
