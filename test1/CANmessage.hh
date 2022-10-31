@@ -27,6 +27,8 @@ public:
 
 private:
   std::vector<canFrame> fFrames;
+  std::vector<canFrame> fFRASFrames;
+
 };
 
 #endif // CANMESSAGE_HH

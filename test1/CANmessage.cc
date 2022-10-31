@@ -14,7 +14,11 @@ void CANmessage::addFrame(canFrame &x) {
   //    cout << "  adding ";
   //    x.dump();
   //  }
-  fFrames.push_back(x);
+  if (0 == x.fFRAS) {
+    fFrames.push_back(x);
+  } else {
+    fFRASFrames.push_back(x);
+  }
 }
 
 
@@ -62,14 +66,8 @@ int CANmessage::getInt(unsigned int tec, unsigned int reg) {
 
 // ----------------------------------------------------------------------
 int CANmessage::getFRASMessage() {
-  int result(0);
-  // -- find the last one
-  for (std::vector<canFrame>::iterator it = fFrames.begin(); it != fFrames.end(); ++it) {
-    if (it->fFRAS > 0) {
-       result = it->fFRAS;
-    }
-  }
-
+  int result = fFRASFrames.size();
+  if (result > 0) fFRASFrames.clear();
   return result;
 }
 
