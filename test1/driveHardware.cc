@@ -854,7 +854,7 @@ void driveHardware::readAllParamsFromCAN() {
 
   cout << "driveHardware::readAllParamsFromCAN() read Temp_M" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_M"].value = getTECRegisterFromCAN(i, "Temp_M");
-  return;
+  //return;
 
   cout << "driveHardware::readAllParamsFromCAN() read ControlVoltage_Set" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["ControlVoltage_Set"].value = getTECRegisterFromCAN(i, "ControlVoltage_Set");
