@@ -254,6 +254,7 @@ void driveHardware::run() {
           // -- read all parameters from CAN
           fMutex.lock();
           // readAllParamsFromCAN();
+          cout << "readAllParamsFromCANPublic()" << endl;
           readAllParamsFromCANPublic();
           fMutex.unlock();
 
