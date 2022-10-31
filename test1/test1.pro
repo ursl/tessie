@@ -28,6 +28,8 @@ SOURCES += \
 HEADERS += \
     CANmessage.hh \
     MainWindow.h \
+    TECData.hh \
+    TECRegister.hh \
     canFrame.hh \
     driveHardware.hh \
     tLog.hh

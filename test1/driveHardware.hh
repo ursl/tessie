@@ -12,6 +12,7 @@
 
 #include "CANmessage.hh"
 
+#include "TECData.hh"
 #include "tLog.hh"
 //rpc #include "rpcServer.hh"
 
@@ -33,42 +34,6 @@ const unsigned int CANBUS_WRITE   = 0x020;
 
 const unsigned int CANBUS_TECSEND = 0x040;
 const unsigned int CANBUS_TECREC  = 0x000;
-
-// ----------------------------------------------------------------------
-struct TECRegister {
-  float       value;
-  std::string name;
-  uint32_t    idx;
-  uint32_t    type; // 0 = unset, 1 = W/R, 2 = R, 3 = C
-};
-
-
-// ----------------------------------------------------------------------
-struct TECData {
-  int getIdx(std::string regname) {
-    // FIXME: This is wrong and always returns 0!
-    int idx = reg.find(regname)->second.idx;
-    // FIXME: Therefore replace with for loop
-    for (std::map<std::string, TECRegister>::iterator it = reg.begin(); it != reg.end(); ++it) {
-        if (std::string::npos != it->first.find(regname)) {
-            if (0) std::cout << "regname " << regname << " -> idx = " << idx
-                             << " second = " << reg.find(regname)->second.name
-                             << std::endl;
-            return idx;
-          }
-      }
-    return -1;
-  }
-  void print() {
-    for (std::map<std::string, TECRegister>::iterator it = reg.begin(); it != reg.end(); ++it) {
-        std::cout << it->first << " idx: " << it->second.idx
-                  << " value: " << it->second.value
-                  << " type: " << it->second.type
-                  << std::endl;
-      }
-  }
-  std::map<std::string, TECRegister> reg;
-};
 
 
 // ----------------------------------------------------------------------
