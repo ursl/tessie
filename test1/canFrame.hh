@@ -16,6 +16,7 @@ public:
     for (int i = 0; i < len; ++i) fData.push_back(data[i]);
 
     if (0x42 == fCanId) {
+        std::cout << "received FRAS message" << std::endl;
         fFRAS = 0x42;
         fReg  = 0;
         fType = 0;
