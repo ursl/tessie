@@ -375,6 +375,16 @@ void driveHardware::readCAN(int nreads) {
 
 
 // ----------------------------------------------------------------------
+void driveHardware::parseCAN() {
+  unsigned int nf = fCanMsg.nFrames();
+  for (unsigned int i = 0; i < nf; ++i) {
+    // ...
+  }
+
+}
+
+
+// ----------------------------------------------------------------------
 void driveHardware::readCANmessage() {
   fCANReadIntVal   += 1;
   fCANReadFloatVal += 0.1;

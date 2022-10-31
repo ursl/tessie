@@ -44,6 +44,8 @@ public:
   driveHardware(tLog &x, QObject *parent = nullptr);
   ~driveHardware();
 
+  void  shutDown();
+
   void  runPrintout(int reg, float val);
   void dumpCSV();
   std::string timeStamp(bool filestamp = true);
@@ -51,12 +53,12 @@ public:
   void  readCAN(int nreads = 1);
   void  sendCANmessage();
   void  readCANmessage();
+  void  parseCAN();
 
   // -- controlling the FRAS/valve(s)
   void  talkToFras();
   void  toggleFras(int imask);
   void  entertainFras();
-  void  shutDown();
 
   // -- controlling the TEC
   void  setTECParameter(float par); // ???

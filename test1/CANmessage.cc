@@ -58,3 +58,31 @@ int CANmessage::getInt(unsigned int tec, unsigned int reg) {
   }
   return result;
 }
+
+
+// ----------------------------------------------------------------------
+int CANmessage::getFRASMessage() {
+  int result(0);
+  // -- find the last one
+  for (std::vector<canFrame>::iterator it = fFrames.begin(); it != fFrames.end(); ++it) {
+    if (it->fFRAS > 0) {
+       result = it->fFRAS;
+    }
+  }
+
+  return result;
+}
+
+
+// ----------------------------------------------------------------------
+int CANmessage::getAlarm() {
+  int result(0);
+  // -- find the last one
+  for (std::vector<canFrame>::iterator it = fFrames.begin(); it != fFrames.end(); ++it) {
+    if (it->fAlarm > 0) {
+       result = it->fAlarm;
+    }
+  }
+
+  return result;
+}

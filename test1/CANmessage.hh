@@ -14,12 +14,16 @@ public:
   // clear frames
   void clearFrames() {fFrames.clear();}
   // print
-  void  dump();
-  void  addFrame(canFrame &x);
+  void dump();
+  void addFrame(canFrame &x);
   // read float and erase frame
   float getFloat(unsigned int itec, unsigned int ireg);
   // read int and erase frame
-  int   getInt(unsigned int itec, unsigned int ireg);
+  int getInt(unsigned int itec, unsigned int ireg);
+  // check for FRAS message (0x42)
+  int getFRASMessage();
+  // check for alarm
+  int getAlarm();
 
 private:
   std::vector<canFrame> fFrames;
