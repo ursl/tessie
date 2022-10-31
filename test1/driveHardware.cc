@@ -262,7 +262,11 @@ void driveHardware::run() {
           dumpCSV();
 
         }
-        if (cnt%150 == 1) fCanMsg.clearFrames();
+        if (cnt%150 == 1) {
+          // -- make sure there is no alarm before clearing
+          parseCAN();
+          fCanMsg.clearFrames();
+        }
 
 #ifdef PI
       //entertainFras();
@@ -376,9 +380,12 @@ void driveHardware::readCAN(int nreads) {
 
 // ----------------------------------------------------------------------
 void driveHardware::parseCAN() {
-  unsigned int nf = fCanMsg.nFrames();
-  for (unsigned int i = 0; i < nf; ++i) {
-    // ...
+  if (fCanMsg.getFRASMessage() > 0) {
+    entertainFras();
+  }
+
+  if (fCanMsg.getAlarm() > 0) {
+    cout << "received alarm from CAN bus, do something!" << endl;
   }
 
 }
