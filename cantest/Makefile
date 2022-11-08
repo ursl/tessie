@@ -12,6 +12,9 @@ can_receive:can_receive.c
 i2ctest: i2ctest.c
 	gcc -o $@  $^
 
+container: container.cc
+	$(CC) $(CLFAGS) -o $@  $^
+
 
 clean:
 	    $(RM) can_send .*.sw?
