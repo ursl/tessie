@@ -21,6 +21,9 @@ MainWindow::MainWindow(tLog &x, QWidget *parent) :
   fLOG.setHw(&fThread);
   ui->setupUi(this);
 
+  fTECDisplay  = new TECDisplay(this);
+  fTECDisplay->close();
+
   ui->lineEditRunTime->setAlignment(Qt::AlignRight);
   ui->lineEditCANbusError->setAlignment(Qt::AlignRight);
 
@@ -93,7 +96,6 @@ MainWindow::MainWindow(tLog &x, QWidget *parent) :
 
   connect(&fThread, &driveHardware::updateHwDisplay, this, &MainWindow::updateHardwareDisplay);
   connect(&fThread, &driveHardware::signalText, this, &MainWindow::appendText);
- // connect(this, &TECDisplay::thatsIt, this, &MainWindow::closeTECDisplay);
 }
 
 
@@ -325,7 +327,6 @@ void MainWindow::updateHardwareDisplay() {
 // ----------------------------------------------------------------------
 void MainWindow::openTECDisplay(int itec) {
   cout << "openTEC(" << itec << ")" << endl;
-  fTECDisplay  = new TECDisplay(this);
   fTECDisplay->show();
 }
 
@@ -333,6 +334,4 @@ void MainWindow::openTECDisplay(int itec) {
 void MainWindow::closeTECDisplay() {
   cout << "closeTECDisplay()"  << endl;
   fTECDisplay->close();
-  delete fTECDisplay;
-  fTECDisplay = 0;
 }
