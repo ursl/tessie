@@ -833,8 +833,8 @@ void driveHardware::readAllParamsFromCANPublic() {
                              "Supply_I",
                              "Supply_P"
                             };
-  // for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
-  for (unsigned int ireg = 0; ireg < 1; ++ireg) {
+  for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
+  //for (unsigned int ireg = 0; ireg < 1; ++ireg) {
     getTECRegisterFromCAN(0, regnames[ireg]);
     int regIdx = fTECData[1].getIdx(regnames[ireg]);
     for (int i = 1; i <= 8; ++i) {
