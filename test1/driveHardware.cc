@@ -17,6 +17,7 @@
 #define I2C_ADDR 0x44
 
 #include <chrono>
+
 #include <thread>
 
 #include "tLog.hh"
@@ -240,11 +241,16 @@ void driveHardware::runPrintout(int reg, float val) {
 void driveHardware::run() {
   cout << "Hallo in run()" << endl;
   int cnt(0);
+  struct timeval tvOld, tvNew;
+  gettimeofday(&tvOld, 0);
+
   while (1) {
     ++cnt;
     std::this_thread::sleep_for(fMilli5);
     readCAN();
-    if (cnt%40 == 1) {
+    gettimeofday(&tvNew, 0);
+    if (diff_ms(tvNew, tvOld) > 900.) {
+      tvOld = tvNew;
       cout << tStamp() << " readAllParamsFromCANPublic()" << endl;
       readSHT85();
 
@@ -258,8 +264,7 @@ void driveHardware::run() {
       emit updateHwDisplay();
       dumpCSV();
       cout << tStamp() << " -> readAllParamsFromCANPublic()" << endl;
-    }
-    if (cnt%50 == 1) {
+
       // -- make sure there is no alarm before clearing
       cout << tStamp() << " parseCAN()" << endl;
       parseCAN();
@@ -993,3 +998,9 @@ float driveHardware::getDP() {
   return fSHT85DP;
 }
 
+
+// ----------------------------------------------------------------------
+int driveHardware::diff_ms(timeval t1, timeval t2) {
+  return (((t1.tv_sec - t2.tv_sec) * 1000000) +
+          (t1.tv_usec - t2.tv_usec))/1000;
+}

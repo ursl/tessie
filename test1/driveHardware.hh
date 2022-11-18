@@ -9,6 +9,8 @@
 #include <QtCore/QTime>
 
 #include <fstream>
+#include <time.h>
+
 
 #include "CANmessage.hh"
 
@@ -114,6 +116,7 @@ protected:
   void        run() override;
   void        initTECData();
   TECData     initAllTECRegister();
+  int         diff_ms(timeval t1, timeval t2);
 
 private:
   QObject *fParent;
