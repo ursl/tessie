@@ -364,10 +364,6 @@ void driveHardware::readCAN(int nreads) {
 
     if (nbytes > -1) {
       if (1) {
-//        printf("can_id = 0x%3X data[%d] = ", fFrameR.can_id, fFrameR.can_dlc);
-//        for (int i = 0; i < fFrameR.can_dlc; ++i) printf("%02X ", fFrameR.data[i]);
-//        cout << endl;
-
         canFrame f(fFrameR.can_id, fFrameR.can_dlc, fFrameR.data);
         fCanMsg.addFrame(f);
       }
@@ -395,6 +391,7 @@ void driveHardware::parseCAN() {
 
 
 // ----------------------------------------------------------------------
+// DECREPIT
 void driveHardware::readCANmessage() {
   fCANReadIntVal   += 1;
   fCANReadFloatVal += 0.1;
@@ -840,15 +837,20 @@ void driveHardware::readAllParamsFromCANPublic() {
   for (unsigned int ireg = 0; ireg < 1; ++ireg) {
     getTECRegisterFromCAN(0, regnames[ireg]);
     int regIdx = fTECData[1].getIdx(regnames[ireg]);
-    for (int i = 1; i <= 8; ++i) fTECData[i].reg[regnames[ireg]].value = fCanMsg.getFloat(i, regIdx);
+    for (int i = 1; i <= 8; ++i) {
+      if (0 == fActiveTEC[i]) continue;
+      fTECData[i].reg[regnames[ireg]].value = fCanMsg.getFloat(i, regIdx);
+    }
   }
 
   // -- read PowerState
   getTECRegisterFromCAN(0, "PowerState");
   int regIdx = fTECData[1].getIdx("PowerState");
-  for (int i = 1; i <= 8; ++i) fTECData[i].reg["PowerState"].value = fCanMsg.getInt(i, regIdx);
+  for (int i = 1; i <= 8; ++i) {
+    if (0 == fActiveTEC[i]) continue;
+    fTECData[i].reg["PowerState"].value = fCanMsg.getInt(i, regIdx);
+  }
 }
-
 
 // ----------------------------------------------------------------------
 void driveHardware::readAllParamsFromCAN() {
