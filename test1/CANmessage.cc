@@ -48,7 +48,7 @@ float CANmessage::getFloat(unsigned int tec, unsigned int reg) {
   }
   if (result < -90.) {
     ++fErrorCounter;
-    cout << "Error: getFloat " << result << endl;
+    cout << "Error: reg " << reg << " itec " << tec << " getFloat " << result << endl;
   }
   return result;
 }
@@ -66,7 +66,7 @@ int CANmessage::getInt(unsigned int tec, unsigned int reg) {
   }
   if (result < -90.) {
     ++fErrorCounter;
-    cout << "Error: getInt " << result << endl;
+    cout << "Error: reg " << reg << " itec " << tec << " getInt " << result << endl;
   }
   return result;
 }
