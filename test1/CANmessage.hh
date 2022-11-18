@@ -9,20 +9,22 @@ class CANmessage {
 public:
   CANmessage();
 
-  // number of frames held
+  // -- number of frames held
   unsigned int nFrames();
-  // clear frames
+  // -- get errors encountered
+  int nErrors();
+  // -- clear frames
   void clearFrames() {fFrames.clear();}
-  // print
+  // -- print
   void dump();
   void addFrame(canFrame &x);
-  // read float and erase frame
+  // -- read float and erase frame
   float getFloat(unsigned int itec, unsigned int ireg);
-  // read int and erase frame
+  // -- read int and erase frame
   int getInt(unsigned int itec, unsigned int ireg);
-  // check for FRAS message (0x42)
+  // -- check for FRAS message (0x42)
   int getFRASMessage();
-  // check for alarm
+  // -- check for alarm
   int getAlarm();
 
 private:

@@ -80,6 +80,8 @@ public:
   float getTemperature();
   float getRH();
   float getDP();
+  int   getRunTime();
+  int   getNCANbusErrors();
 
   // -- simply returns the value stored in fTECData
   float getTECRegister(int itec, std::string regname);
@@ -149,6 +151,7 @@ private:
 
 
   std::chrono::milliseconds fMilli5, fMilli10, fMilli100;
+  struct timeval ftvStart;
 
   // -- access and data from SHT85
   char fSHT85Data[6], fSHT85Config[2];

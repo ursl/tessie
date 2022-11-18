@@ -1060,7 +1060,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLabel" name="labelRH_2">
+    <widget class="QLabel" name="labelDP">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -1071,6 +1071,78 @@
      </property>
      <property name="text">
       <string>DP [deg C]</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frameCANbus">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>440</y>
+      <width>101</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="labelCANbusError">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Error counter</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditCANbusError">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelCANbusRunTime">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Runtime [sec]</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditRunTime">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
      </property>
     </widget>
    </widget>

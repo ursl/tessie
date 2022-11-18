@@ -36,6 +36,11 @@ unsigned int CANmessage::nFrames() {
 
 
 // ----------------------------------------------------------------------
+int CANmessage::nErrors() {
+  return fErrorCounter;
+}
+
+// ----------------------------------------------------------------------
 float CANmessage::getFloat(unsigned int tec, unsigned int reg) {
   float result(-98.);
   // -- find the last one

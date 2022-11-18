@@ -37,6 +37,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   fCANReadIntVal = 3;
   fCANReadFloatVal = 3.1415;
 
+  gettimeofday(&ftvStart, 0);
   fMilli5   = std::chrono::milliseconds(5);
   fMilli10  = std::chrono::milliseconds(10);
   fMilli100 = std::chrono::milliseconds(100);
@@ -993,6 +994,18 @@ float driveHardware::getRH() {
 // ----------------------------------------------------------------------
 float driveHardware::getDP() {
   return fSHT85DP;
+}
+
+// ----------------------------------------------------------------------
+int driveHardware::getRunTime() {
+  struct timeval tv;
+  gettimeofday(&tv, 0);
+  return 0.001*diff_ms(tv, ftvStart);
+}
+
+// ----------------------------------------------------------------------
+int driveHardware::getNCANbusErrors() {
+  return fCanMsg.nErrors();
 }
 
 
