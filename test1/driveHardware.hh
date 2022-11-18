@@ -49,6 +49,7 @@ public:
   void  runPrintout(int reg, float val);
   void dumpCSV();
   std::string timeStamp(bool filestamp = true);
+  std::string tStamp() {return timeStamp(false);}
 
   void  readCAN(int nreads = 1);
   void  sendCANmessage();

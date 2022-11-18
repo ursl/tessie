@@ -245,7 +245,7 @@ void driveHardware::run() {
     std::this_thread::sleep_for(fMilli5);
     readCAN();
     if (cnt%20 == 1) {
-      cout << timeStamp() << " readAllParamsFromCANPublic()" << endl;
+      cout << tStamp() << " readAllParamsFromCANPublic()" << endl;
       readSHT85();
 
       // -- read all parameters from CAN
@@ -257,7 +257,7 @@ void driveHardware::run() {
       // -- do something with the results
       emit updateHwDisplay();
       dumpCSV();
-      cout << timeStamp() << " -> readAllParamsFromCANPublic()" << endl;
+      cout << tStamp() << " -> readAllParamsFromCANPublic()" << endl;
     }
     if (cnt%30 == 1) {
       // -- make sure there is no alarm before clearing
@@ -832,7 +832,7 @@ void driveHardware::readAllParamsFromCANPublic() {
   for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
   //for (unsigned int ireg = 0; ireg < 1; ++ireg) {
     getTECRegisterFromCAN(0, regnames[ireg]);
-    if (0) cout << "  " << timeStamp() << " reading broadcast "<< regnames[ireg] << endl;
+    if (0) cout << "  " << tStamp() << " reading broadcast "<< regnames[ireg] << endl;
     int regIdx = fTECData[1].getIdx(regnames[ireg]);
     for (int i = 1; i <= 8; ++i) {
       if (0 == fActiveTEC[i]) continue;
@@ -924,21 +924,20 @@ string driveHardware::timeStamp(bool filestamp) {
   int sec   = ltm->tm_sec;
   std::stringstream result;
   if (filestamp) {
-    result << year
-           << std::setfill('0') << std::setw(2) << month
-           << std::setfill('0') << std::setw(2) << day
-           << ":"
-           << std::setfill('0') << std::setw(2) << hour
-           << std::setfill('0') << std::setw(2) << min
-           << std::setfill('0') << std::setw(2) << sec
+    result << year << "/"
+           << std::setfill('0') << std::setw(2) << month << "/"
+           << std::setfill('0') << std::setw(2) << day << "."
+           << std::setfill('0') << std::setw(2) << hour << ":"
+           << std::setfill('0') << std::setw(2) << min << ":"
+           << std::setfill('0') << std::setw(2) << sec << "."
            << std::setfill('0') << std::setw(3) << ((long)tv.tv_usec / 1000);
     return result.str();
   }
-  result << year << "/" << std::setfill('0') << std::setw(2) << month << "/" << day << "."
-         << std::setfill('0') << std::setw(2) << hour << ":"
+  result << std::setfill('0') << std::setw(2) << hour << ":"
          << std::setfill('0') << std::setw(2) << min << ":"
          << std::setfill('0') << std::setw(2) << sec << ":"
-         << "." << std::setfill('0') << std::setw(3) << ((long)tv.tv_usec / 1000);
+         << std::setfill('0') << std::setw(3) << "."
+         << ((long)tv.tv_usec / 1000);
   return result.str();
 }
 
