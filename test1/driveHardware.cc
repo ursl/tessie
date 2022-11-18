@@ -254,7 +254,7 @@ void driveHardware::run() {
       // -- read all parameters from CAN
       fMutex.lock();
       // readAllParamsFromCAN();
-      cout << "readAllParamsFromCANPublic()" << endl;
+      cout << timeStamp() << " readAllParamsFromCANPublic()" << endl;
       readAllParamsFromCANPublic();
       fMutex.unlock();
 
@@ -927,16 +927,16 @@ string driveHardware::timeStamp(bool filestamp) {
   int sec   = ltm->tm_sec;
   std::stringstream result;
   if (filestamp) {
-      result << year
-             << std::setfill('0') << std::setw(2) << month
-             << std::setfill('0') << std::setw(2) << day
-             << ":"
-             << std::setfill('0') << std::setw(2) << hour
-             << std::setfill('0') << std::setw(2) << min
-             << std::setfill('0') << std::setw(2) << sec
-             << std::setfill('0') << std::setw(3) << ((long)tv.tv_usec / 1000);
-      return result.str();
-    }
+    result << year
+           << std::setfill('0') << std::setw(2) << month
+           << std::setfill('0') << std::setw(2) << day
+           << ":"
+           << std::setfill('0') << std::setw(2) << hour
+           << std::setfill('0') << std::setw(2) << min
+           << std::setfill('0') << std::setw(2) << sec
+           << std::setfill('0') << std::setw(3) << ((long)tv.tv_usec / 1000);
+    return result.str();
+  }
   result << year << "/" << std::setfill('0') << std::setw(2) << month << "/" << day << " "
          << buffer << "." << std::setfill('0') << std::setw(3) << ((long)tv.tv_usec / 1000);
   return result.str();
