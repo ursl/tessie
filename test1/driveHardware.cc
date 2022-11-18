@@ -244,7 +244,7 @@ void driveHardware::run() {
     ++cnt;
     std::this_thread::sleep_for(fMilli5);
     readCAN();
-    if (cnt%20 == 1) {
+    if (cnt%40 == 1) {
       cout << tStamp() << " readAllParamsFromCANPublic()" << endl;
       readSHT85();
 
@@ -259,7 +259,7 @@ void driveHardware::run() {
       dumpCSV();
       cout << tStamp() << " -> readAllParamsFromCANPublic()" << endl;
     }
-    if (cnt%30 == 1) {
+    if (cnt%50 == 1) {
       // -- make sure there is no alarm before clearing
       cout << tStamp() << " parseCAN()" << endl;
       parseCAN();
