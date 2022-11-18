@@ -244,7 +244,7 @@ void driveHardware::run() {
     ++cnt;
     std::this_thread::sleep_for(fMilli5);
     readCAN();
-    if (cnt%100 == 1) {
+    if (cnt%20 == 1) {
       cout << timeStamp() << " readAllParamsFromCANPublic()" << endl;
       readSHT85();
 
@@ -259,7 +259,7 @@ void driveHardware::run() {
       dumpCSV();
       cout << timeStamp() << " -> readAllParamsFromCANPublic()" << endl;
     }
-    if (cnt%150 == 1) {
+    if (cnt%30 == 1) {
       // -- make sure there is no alarm before clearing
       parseCAN();
       fCanMsg.clearFrames();
@@ -335,7 +335,6 @@ void driveHardware::shutDown() {
 // ----------------------------------------------------------------------
 void driveHardware::readCAN(int nreads) {
   //fMutex.lock();
-  //DBX nreads += 2;
 #ifdef PI
   int nbytes(0);
 
@@ -349,6 +348,7 @@ void driveHardware::readCAN(int nreads) {
   unsigned int idata(0);
   float fdata(0.0);
 
+  ++nreads;
   while (nreads > 0) {
     if (DBX) cout << "read(fSr, &fFrameR, sizeof(fFrameR)) ... nreads = " << nreads << endl;
     nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
