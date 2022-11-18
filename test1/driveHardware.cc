@@ -245,23 +245,19 @@ void driveHardware::run() {
     std::this_thread::sleep_for(fMilli5);
     readCAN();
     if (cnt%100 == 1) {
-      if (0) cout << "Hallo in run(), cnt = " << cnt
-                  << " nframes = " << fCanMsg.nFrames()
-                  << endl;
-
+      cout << timeStamp() << " readAllParamsFromCANPublic()" << endl;
       readSHT85();
 
       // -- read all parameters from CAN
       fMutex.lock();
       // readAllParamsFromCAN();
-      cout << timeStamp() << " readAllParamsFromCANPublic()" << endl;
       readAllParamsFromCANPublic();
       fMutex.unlock();
 
       // -- do something with the results
       emit updateHwDisplay();
       dumpCSV();
-
+      cout << timeStamp() << " -> readAllParamsFromCANPublic()" << endl;
     }
     if (cnt%150 == 1) {
       // -- make sure there is no alarm before clearing
