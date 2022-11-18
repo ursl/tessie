@@ -335,7 +335,7 @@ void driveHardware::shutDown() {
 // ----------------------------------------------------------------------
 void driveHardware::readCAN(int nreads) {
   //fMutex.lock();
-  nreads += 2;
+  //DBX nreads += 2;
 #ifdef PI
   int nbytes(0);
 
