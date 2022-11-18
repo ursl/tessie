@@ -162,7 +162,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
       // https://stackoverflow.com/questions/13547721/udp-socket-set-timeout
       struct timeval tv;
       tv.tv_sec = 0;
-      tv.tv_usec = 100; // 0.1 millisecond
+      tv.tv_usec = 10; // 0.1 millisecond
       if (setsockopt(fSr /*rcv_sock*/, SOL_SOCKET, SO_RCVTIMEO, &tv,sizeof(tv)) < 0) {
         perror("Error in setting up time out");
       }
