@@ -261,8 +261,10 @@ void driveHardware::run() {
     }
     if (cnt%30 == 1) {
       // -- make sure there is no alarm before clearing
+      cout << tStamp() << " parseCAN()" << endl;
       parseCAN();
       fCanMsg.clearFrames();
+      cout << tStamp() << " -> parseCAN()" << endl;
     }
 
 #ifdef PI
