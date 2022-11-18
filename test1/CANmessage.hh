@@ -29,6 +29,7 @@ private:
   std::vector<canFrame> fFrames;
   std::vector<canFrame> fFRASFrames;
 
+  int fErrorCounter;
 };
 
 #endif // CANMESSAGE_HH

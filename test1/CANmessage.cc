@@ -5,7 +5,7 @@ using namespace std;
 
 // ----------------------------------------------------------------------
 CANmessage::CANmessage() {
-
+  fErrorCounter = 0;
 }
 
 // ----------------------------------------------------------------------
@@ -46,6 +46,10 @@ float CANmessage::getFloat(unsigned int tec, unsigned int reg) {
       //break;
     }
   }
+  if (result < -90.) {
+    ++fErrorCounter;
+    cout << "Error: getFloat " << result << endl;
+  }
   return result;
 }
 
@@ -59,6 +63,10 @@ int CANmessage::getInt(unsigned int tec, unsigned int reg) {
       //fFrames.erase(it);
       //break;
     }
+  }
+  if (result < -90.) {
+    ++fErrorCounter;
+    cout << "Error: getInt " << result << endl;
   }
   return result;
 }
