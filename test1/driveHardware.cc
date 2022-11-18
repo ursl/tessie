@@ -249,27 +249,24 @@ void driveHardware::run() {
     std::this_thread::sleep_for(fMilli5);
     readCAN();
     gettimeofday(&tvNew, 0);
-    if (diff_ms(tvNew, tvOld) > 900.) {
+    int tdiff = diff_ms(tvNew, tvOld);
+    if (tdiff > 900.) {
       tvOld = tvNew;
-      cout << tStamp() << " readAllParamsFromCANPublic()" << endl;
+      cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
       readSHT85();
 
       // -- read all parameters from CAN
       fMutex.lock();
-      // readAllParamsFromCAN();
       readAllParamsFromCANPublic();
       fMutex.unlock();
 
       // -- do something with the results
       emit updateHwDisplay();
       dumpCSV();
-      cout << tStamp() << " -> readAllParamsFromCANPublic()" << endl;
 
       // -- make sure there is no alarm before clearing
-      cout << tStamp() << " parseCAN()" << endl;
       parseCAN();
       fCanMsg.clearFrames();
-      cout << tStamp() << " -> parseCAN()" << endl;
     }
 
 #ifdef PI
