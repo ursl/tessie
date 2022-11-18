@@ -250,7 +250,7 @@ void driveHardware::run() {
     readCAN();
     gettimeofday(&tvNew, 0);
     int tdiff = diff_ms(tvNew, tvOld);
-    if (tdiff > 900.) {
+    if (tdiff > 1000.) {
       tvOld = tvNew;
       cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
       readSHT85();
