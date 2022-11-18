@@ -7,6 +7,7 @@
 
 #include "driveHardware.hh"
 #include "tLog.hh"
+#include "TECDisplay.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -53,6 +54,7 @@ private slots:
    // void updateVoltageValue();
 
     void tecSetFromUI(int itec, std::string rname, QWidget *);
+    void openTECDisplay(int itec);
 
     void tec8VoltSet() {tecSetFromUI(8, "ControlVoltage_Set", ui->tec8_Voltage); }
     void tec7VoltSet() {tecSetFromUI(7, "ControlVoltage_Set", ui->tec7_Voltage); }
@@ -108,9 +110,12 @@ private slots:
     void tec2TempM() {tecSetFromUI(2, "Temp_M", ui->tec2_TempM); }
     void tec1TempM() {tecSetFromUI(1, "Temp_M", ui->tec1_TempM); }
 
+    void openTEC8() {openTECDisplay(8);}
+
     void  updateHardwareValues();
     void  updateHardwareDisplay();
 
+    void closeTECDisplay();
 
     void start();
     void quitProgram();
@@ -134,6 +139,8 @@ private:
     fUIPIDkp,
     fUIPIDki,
     fUIPIDkd;
+
+    TECDisplay *fTECDisplay;
 
     std::vector<QCheckBox*> fUICheckBox;
 };

@@ -5,6 +5,8 @@
 #include <qpushbutton.h>
 #include <unistd.h>
 
+#include "TECDisplay.h"
+
 #include "tLog.hh"
 
 
@@ -91,6 +93,7 @@ MainWindow::MainWindow(tLog &x, QWidget *parent) :
 
   connect(&fThread, &driveHardware::updateHwDisplay, this, &MainWindow::updateHardwareDisplay);
   connect(&fThread, &driveHardware::signalText, this, &MainWindow::appendText);
+ // connect(this, &TECDisplay::thatsIt, this, &MainWindow::closeTECDisplay);
 }
 
 
@@ -317,4 +320,19 @@ void MainWindow::updateHardwareDisplay() {
 
     fUICheckBox[ivec]->setChecked(state);
   }
+}
+
+// ----------------------------------------------------------------------
+void MainWindow::openTECDisplay(int itec) {
+  cout << "openTEC(" << itec << ")" << endl;
+  fTECDisplay  = new TECDisplay(this);
+  fTECDisplay->show();
+}
+
+// ----------------------------------------------------------------------
+void MainWindow::closeTECDisplay() {
+  cout << "closeTECDisplay()"  << endl;
+  fTECDisplay->close();
+  delete fTECDisplay;
+  fTECDisplay = 0;
 }

@@ -21,6 +21,7 @@ CONFIG(PI) {
 SOURCES += \
     CANmessage.cc \
     MainWindow.cpp \
+    TECDisplay.cpp \
     driveHardware.cc \
     tLog.cc \
     tessie.cpp
@@ -29,13 +30,15 @@ HEADERS += \
     CANmessage.hh \
     MainWindow.h \
     TECData.hh \
+    TECDisplay.h \
     TECRegister.hh \
     canFrame.hh \
     driveHardware.hh \
     tLog.hh
 
 FORMS += \
-    MainWindow.ui
+    MainWindow.ui \
+    TECDisplay.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
