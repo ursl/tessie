@@ -896,17 +896,17 @@ void driveHardware::dumpCSV() {
   output  << timeStamp();
   for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["ControlVoltage_Set"].value;
   for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Temp_Set"].value;
-  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_kp"].value;
-  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_ki"].value;
-  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_kd"].value;
+//  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_kp"].value;
+//  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_ki"].value;
+//  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_kd"].value;
   for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Temp_M"].value;
   for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Temp_W"].value;
-  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Peltier_I"].value;
-  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Peltier_R"].value;
-  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Peltier_P"].value;
-  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Supply_U"].value;
-  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Supply_I"].value;
-  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Supply_P"].value;
+//  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Peltier_I"].value;
+//  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Peltier_R"].value;
+//  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Peltier_P"].value;
+//  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Supply_U"].value;
+//  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Supply_I"].value;
+//  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Supply_P"].value;
 
   string sout = output.str();
   fCsvFile << sout << endl;
