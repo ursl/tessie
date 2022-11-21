@@ -23,6 +23,7 @@ MainWindow::MainWindow(tLog &x, QWidget *parent) :
 
   fTECDisplay  = new TECDisplay(this);
   fTECDisplay->close();
+  fTECDisplay->setHardware(&fThread);
 
   ui->lineEditRunTime->setAlignment(Qt::AlignRight);
   ui->lineEditCANbusError->setAlignment(Qt::AlignRight);
@@ -284,6 +285,11 @@ void MainWindow::updateHardwareValues() {
 // ----------------------------------------------------------------------
 void MainWindow::updateHardwareDisplay() {
 
+  if (fTECDisplay->isVisible()) {
+    // cout << "MainWindow::updateHardwareDisplay() fTECDisplay->isVisible()" << endl;
+    fTECDisplay->updateHardwareDisplay();
+  }
+
   ui->lineEditTemp->setText(QString::number(fThread.getTemperature(), 'f', 2));
   ui->lineEditRH->setText(QString::number(fThread.getRH(), 'f', 2));
   ui->lineEditDP->setText(QString::number(fThread.getDP(), 'f', 2));
@@ -327,6 +333,7 @@ void MainWindow::updateHardwareDisplay() {
 // ----------------------------------------------------------------------
 void MainWindow::openTECDisplay(int itec) {
   cout << "openTEC(" << itec << ")" << endl;
+  fTECDisplay->setTitle(itec);
   fTECDisplay->show();
 }
 

@@ -23,9 +23,11 @@ public:
     void printText(std::string line);
     void setCheckBoxTEC(int itec, bool state);
 
-private slots:
+private:
     void appendText(QString line);
     QString getTimeString();
+
+private slots:
 
     void clkValve0();
     void clkValve1();
@@ -54,7 +56,6 @@ private slots:
    // void updateVoltageValue();
 
     void tecSetFromUI(int itec, std::string rname, QWidget *);
-    void openTECDisplay(int itec);
 
     void tec8VoltSet() {tecSetFromUI(8, "ControlVoltage_Set", ui->tec8_Voltage); }
     void tec7VoltSet() {tecSetFromUI(7, "ControlVoltage_Set", ui->tec7_Voltage); }
@@ -110,7 +111,15 @@ private slots:
     void tec2TempM() {tecSetFromUI(2, "Temp_M", ui->tec2_TempM); }
     void tec1TempM() {tecSetFromUI(1, "Temp_M", ui->tec1_TempM); }
 
+    void openTECDisplay(int itec);
     void openTEC8() {openTECDisplay(8);}
+    void openTEC7() {openTECDisplay(7);}
+    void openTEC6() {openTECDisplay(6);}
+    void openTEC5() {openTECDisplay(5);}
+    void openTEC4() {openTECDisplay(4);}
+    void openTEC3() {openTECDisplay(3);}
+    void openTEC2() {openTECDisplay(2);}
+    void openTEC1() {openTECDisplay(1);}
 
     void  updateHardwareValues();
     void  updateHardwareDisplay();
