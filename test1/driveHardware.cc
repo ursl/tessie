@@ -1003,7 +1003,8 @@ float driveHardware::getDP() {
 int driveHardware::getRunTime() {
   struct timeval tv;
   gettimeofday(&tv, 0);
-  return 0.001*diff_ms(tv, ftvStart);
+  int dt = tv.tv_sec - ftvStart.tv_sec;
+  return dt;
 }
 
 // ----------------------------------------------------------------------

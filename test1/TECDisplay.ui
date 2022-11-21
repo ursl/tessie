@@ -147,7 +147,8 @@
      <widget class="QLineEdit" name="value_00">
       <property name="font">
        <font>
-        <pointsize>10</pointsize>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
        </font>
       </property>
      </widget>

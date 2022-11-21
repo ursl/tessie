@@ -1023,13 +1023,31 @@
       <rect>
        <x>0</x>
        <y>40</y>
-       <width>101</width>
+       <width>302</width>
        <height>100</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QPushButton" name="buttonValve0">
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>60</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>valve 0</string>
         </property>
@@ -1037,6 +1055,24 @@
       </item>
       <item>
        <widget class="QPushButton" name="buttonValve1">
+        <property name="minimumSize">
+         <size>
+          <width>60</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>60</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>valve 1</string>
         </property>
@@ -1044,6 +1080,24 @@
       </item>
       <item>
        <widget class="QPushButton" name="buttonValveAll">
+        <property name="minimumSize">
+         <size>
+          <width>60</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>60</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>all valves</string>
         </property>
@@ -1186,9 +1240,9 @@
        <colorrole role="Window">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>240</red>
-          <green>183</green>
-          <blue>186</blue>
+          <red>248</red>
+          <green>217</green>
+          <blue>217</blue>
          </color>
         </brush>
        </colorrole>
@@ -1208,9 +1262,9 @@
        <colorrole role="Window">
         <brush brushstyle="SolidPattern">
          <color alpha="255">
-          <red>240</red>
-          <green>183</green>
-          <blue>186</blue>
+          <red>248</red>
+          <green>217</green>
+          <blue>217</blue>
          </color>
         </brush>
        </colorrole>
