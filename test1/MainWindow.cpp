@@ -336,7 +336,7 @@ void MainWindow::updateHardwareDisplay() {
 void MainWindow::openTECDisplay(int itec) {
   cout << "openTEC(" << itec << ")" << endl;
   if (fTECDisplay->isVisible()) {
-    updateHardwareValues();
+      fTECDisplay->updateHardwareDisplay();
   }
   fTECDisplay->setTitle(itec);
   fTECDisplay->show();
