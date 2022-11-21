@@ -26,6 +26,7 @@ MainWindow::MainWindow(tLog &x, QWidget *parent) :
 
   ui->lineEditRunTime->setAlignment(Qt::AlignRight);
   ui->lineEditCANbusError->setAlignment(Qt::AlignRight);
+  ui->lineEditI2CError->setAlignment(Qt::AlignRight);
 
   fUICheckBox.push_back(ui->checkBoxTEC1);
   fUICheckBox.push_back(ui->checkBoxTEC2);
@@ -293,7 +294,9 @@ void MainWindow::updateHardwareDisplay() {
   ui->lineEditRH->setText(QString::number(fThread.getRH(), 'f', 2));
   ui->lineEditDP->setText(QString::number(fThread.getDP(), 'f', 2));
   ui->lineEditCANbusError->setText(QString::number(fThread.getNCANbusErrors()));
+  ui->lineEditI2CError->setText(QString::number(fThread.getNI2CErrors()));
   ui->lineEditRunTime->setText(QString::number(fThread.getRunTime()));
+
 
   for (unsigned int ivec = 0; ivec < 8; ++ivec) {
     if (!fUIControlVoltageSet[ivec]->hasFocus()) {

@@ -869,6 +869,7 @@
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -894,6 +895,7 @@
         </property>
         <property name="font">
          <font>
+          <family>Arial</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -1175,8 +1177,45 @@
       <x>10</x>
       <y>440</y>
       <width>101</width>
-      <height>111</height>
+      <height>121</height>
      </rect>
+    </property>
+    <property name="palette">
+     <palette>
+      <active>
+       <colorrole role="Window">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>240</red>
+          <green>183</green>
+          <blue>186</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </active>
+      <inactive>
+       <colorrole role="Window">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>236</red>
+          <green>236</green>
+          <blue>236</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </inactive>
+      <disabled>
+       <colorrole role="Window">
+        <brush brushstyle="SolidPattern">
+         <color alpha="255">
+          <red>240</red>
+          <green>183</green>
+          <blue>186</blue>
+         </color>
+        </brush>
+       </colorrole>
+      </disabled>
+     </palette>
     </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
@@ -1188,7 +1227,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>10</y>
+       <y>0</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -1199,14 +1238,14 @@
       </font>
      </property>
      <property name="text">
-      <string>Error counter</string>
+      <string>Error counter: CAN/I2C</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEditCANbusError">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>30</y>
+       <y>20</y>
        <width>81</width>
        <height>21</height>
       </rect>
@@ -1216,7 +1255,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>60</y>
+       <y>70</y>
        <width>81</width>
        <height>16</height>
       </rect>
@@ -1234,7 +1273,17 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>80</y>
+       <y>90</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEditI2CError">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
        <width>81</width>
        <height>21</height>
       </rect>

@@ -37,6 +37,8 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   fCANReadIntVal = 3;
   fCANReadFloatVal = 3.1415;
 
+  fI2CErrorCounter = 0;
+
   gettimeofday(&ftvStart, 0);
   fMilli5   = std::chrono::milliseconds(5);
   fMilli10  = std::chrono::milliseconds(10);
@@ -956,6 +958,7 @@ void driveHardware::readSHT85() {
   //    temp msb, temp lsb, temp CRC, humidity msb, humidity lsb, humidity CRC
   if (read(fSHT85File, fSHT85Data, 6) != 6) {
     cout << "I2C Error: Input/output Error for fSHT85File = " << fSHT85File << endl;
+    ++fI2CErrorCounter;
   } else {
     // -- convert the data
     //double cTemp = (((fSHT85Data[0] * 256) + fSHT85Data[1]) * 175.0) / 65535.0  - 45.0;
