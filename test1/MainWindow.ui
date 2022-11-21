@@ -26,6 +26,11 @@
       <height>461</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>8</pointsize>
+     </font>
+    </property>
     <property name="mouseTracking">
      <bool>true</bool>
     </property>
@@ -73,6 +78,11 @@
        <height>20</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>lock all</string>
      </property>
@@ -85,6 +95,11 @@
        <width>82</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>TEC 1</string>
@@ -99,6 +114,11 @@
        <height>20</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>TEC 2</string>
      </property>
@@ -111,6 +131,11 @@
        <width>82</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>TEC 3</string>
@@ -125,6 +150,11 @@
        <height>20</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>TEC 4</string>
      </property>
@@ -137,6 +167,11 @@
        <width>100</width>
        <height>32</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>Refresh</string>
@@ -154,6 +189,11 @@
      <layout class="QHBoxLayout" name="hlayoutTop_Voltage">
       <item>
        <widget class="QLabel" name="labelTop_Voltage">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>ControlVoltage_Set</string>
         </property>
@@ -204,6 +244,11 @@
      <layout class="QHBoxLayout" name="hlayoutBot_Voltage">
       <item>
        <widget class="QLabel" name="labelBot_Voltage">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>ControlVoltage_Set</string>
         </property>
@@ -254,6 +299,11 @@
      <layout class="QHBoxLayout" name="hlayoutTop_Temp">
       <item>
        <widget class="QLabel" name="labelTop_Temp">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Temp_Set                </string>
         </property>
@@ -304,6 +354,11 @@
      <layout class="QHBoxLayout" name="hlayoutBot_Temp">
       <item>
        <widget class="QLabel" name="labelBot_Temp">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Temp_Set                </string>
         </property>
@@ -354,6 +409,11 @@
      <layout class="QHBoxLayout" name="hlayoutTop_PID_kp">
       <item>
        <widget class="QLabel" name="labelTop_PID_kp">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>PID_kp                     </string>
         </property>
@@ -404,6 +464,11 @@
      <layout class="QHBoxLayout" name="hlayoutBot_PID_kp">
       <item>
        <widget class="QLabel" name="labelBot_PID_kp">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>PID_kp                     </string>
         </property>
@@ -454,6 +519,11 @@
      <layout class="QHBoxLayout" name="hlayoutBot_PID_ki">
       <item>
        <widget class="QLabel" name="labelBot_PID_ki">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>PID_ki                      </string>
         </property>
@@ -504,6 +574,11 @@
      <layout class="QHBoxLayout" name="hlayoutBot_PID_kd">
       <item>
        <widget class="QLabel" name="labelBot_PID_kd">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>PID_kd                     </string>
         </property>
@@ -554,6 +629,11 @@
      <layout class="QHBoxLayout" name="hlayoutTop_PID_ki">
       <item>
        <widget class="QLabel" name="labelTop_PID_ki">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>PID_ki                      </string>
         </property>
@@ -604,6 +684,11 @@
      <layout class="QHBoxLayout" name="hlayoutTop_PID_kd">
       <item>
        <widget class="QLabel" name="labelTop_PID_kd">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>PID_kd                     </string>
         </property>
@@ -671,6 +756,11 @@
        <height>16</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>TEC number</string>
      </property>
@@ -683,6 +773,11 @@
        <width>81</width>
        <height>16</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>TEC Register</string>
@@ -697,6 +792,11 @@
        <height>16</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>TEC Reg Value</string>
      </property>
@@ -710,6 +810,11 @@
        <height>32</height>
       </rect>
      </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
      <property name="text">
       <string>Read</string>
      </property>
@@ -722,6 +827,11 @@
        <width>51</width>
        <height>32</height>
       </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
      </property>
      <property name="text">
       <string>Write</string>
@@ -739,6 +849,11 @@
      <layout class="QHBoxLayout" name="hlayoutTop_TempM">
       <item>
        <widget class="QLabel" name="labelTop_TempM">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Temp_ M                 </string>
         </property>
@@ -789,6 +904,11 @@
      <layout class="QHBoxLayout" name="hlayoutBot_TempM">
       <item>
        <widget class="QLabel" name="labelBot_TempM">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Temp_M                   </string>
         </property>
@@ -968,7 +1088,7 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>10</pointsize>
+      <pointsize>8</pointsize>
      </font>
     </property>
     <property name="text">
@@ -996,7 +1116,8 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>10</pointsize>
+      <family>Arial</family>
+      <pointsize>8</pointsize>
      </font>
     </property>
     <property name="text">
