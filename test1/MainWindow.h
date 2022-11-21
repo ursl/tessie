@@ -6,8 +6,8 @@
 #include "ui_MainWindow.h"
 
 #include "driveHardware.hh"
-#include "tLog.hh"
 #include "TECDisplay.h"
+#include "tLog.hh"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,11 +23,12 @@ public:
     void printText(std::string line);
     void setCheckBoxTEC(int itec, bool state);
 
-private:
-    void appendText(QString line);
-    QString getTimeString();
+    void openTECDisplay(int itec);
+    void closeTECDisplay();
 
 private slots:
+    void appendText(QString line);
+    QString getTimeString();
 
     void clkValve0();
     void clkValve1();
@@ -111,7 +112,6 @@ private slots:
     void tec2TempM() {tecSetFromUI(2, "Temp_M", ui->tec2_TempM); }
     void tec1TempM() {tecSetFromUI(1, "Temp_M", ui->tec1_TempM); }
 
-    void openTECDisplay(int itec);
     void openTEC8() {openTECDisplay(8);}
     void openTEC7() {openTECDisplay(7);}
     void openTEC6() {openTECDisplay(6);}
@@ -124,7 +124,6 @@ private slots:
     void  updateHardwareValues();
     void  updateHardwareDisplay();
 
-    void closeTECDisplay();
 
     void start();
     void quitProgram();
@@ -137,6 +136,7 @@ private:
 
     tLog&         fLOG;
     driveHardware fThread;
+    TECDisplay    *fTECDisplay;
 
     std::string fGuiRegName;
     int         fGuiTecId;
@@ -148,8 +148,6 @@ private:
     fUIPIDkp,
     fUIPIDki,
     fUIPIDkd;
-
-    TECDisplay *fTECDisplay;
 
     std::vector<QCheckBox*> fUICheckBox;
 };

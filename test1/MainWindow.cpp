@@ -5,7 +5,6 @@
 #include <qpushbutton.h>
 #include <unistd.h>
 
-#include "TECDisplay.h"
 
 #include "tLog.hh"
 
