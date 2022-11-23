@@ -44,6 +44,8 @@ public:
       if ((0 == fType) && (4 == fReg)) {
         if (fIntVal > 0) {
           fAlarm = fIntVal;
+        } else {
+          fAlarm = 0xdeadface;
         }
       }
     }
