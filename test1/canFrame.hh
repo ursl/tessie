@@ -16,31 +16,37 @@ public:
     for (int i = 0; i < len; ++i) fData.push_back(data[i]);
 
     if (0x42 == fCanId) {
-//        std::cout << "received FRAS message" << std::endl;
-        fFRAS = 0x42;
-        fReg  = 0;
-        fType = 0;
-        fTec  = 0;
-        fIntVal   = -99;
-        fFloatVal = -99.;
-      } else {
-        fFRAS = 0;
+      // -- This is a FRAS message
+      fFRAS = 0x42;
+      fReg  = 0;
+      fType = 0;
+      fTec  = 0;
+      fIntVal   = -99;
+      fFloatVal = -99.;
+    } else {
+      fFRAS = 0;
 
-        fTec = fCanId & 0xf;
-        fReg = data[0];
-        fType = fCanId & 0x30;
+      fTec = fCanId & 0xf;
+      fReg = data[0];
+      fType = fCanId & 0x30;
 
-        if (5 == fdlen) {
-            char ndata[4];
-            for (int i = 0; i < len; ++i) ndata[i] = fData[i+1];
+      if (5 == fdlen) {
+        char ndata[4];
+        for (int i = 0; i < len; ++i) ndata[i] = fData[i+1];
+         memcpy(&fIntVal, ndata, sizeof fIntVal);
+         memcpy(&fFloatVal, ndata, sizeof fFloatVal);
+       } else {
+         fIntVal   = -99;
+         fFloatVal = -99.;
+       }
 
-            memcpy(&fIntVal, ndata, sizeof fIntVal);
-            memcpy(&fFloatVal, ndata, sizeof fFloatVal);
-          } else {
-            fIntVal   = -99;
-            fFloatVal = -99.;
-          }
+      // -- alarms
+      if ((0 == fType) && (4 == fReg)) {
+        if (fIntVal > 0) {
+          fAlarm = fIntVal;
+        }
       }
+    }
   }
 
   void dump(bool eol = true) {
