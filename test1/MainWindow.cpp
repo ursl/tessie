@@ -97,6 +97,8 @@ MainWindow::MainWindow(tLog &x, QWidget *parent) :
 
   connect(&fThread, &driveHardware::updateHwDisplay, this, &MainWindow::updateHardwareDisplay);
   connect(&fThread, &driveHardware::signalText, this, &MainWindow::appendText);
+
+  fThread.runPrintout(1,1);
 }
 
 
@@ -163,7 +165,7 @@ void MainWindow::clkRefresh() {
 void MainWindow::start() {
   stringstream sbla; sbla << "Startup";
   ui->textEditLog->append(sbla.str().c_str());
-  fThread.runPrintout(1,1);
+  // fThread.runPrintout(1,1);
 }
 
 
