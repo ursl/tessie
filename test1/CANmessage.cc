@@ -29,13 +29,12 @@ void CANmessage::clearAllFrames() {
 
 // ----------------------------------------------------------------------
 void CANmessage::addFrame(canFrame &x) {
-  if (0) {
-    cout << "  adding ";
-    x.dump();
-  }
   if (0 == x.fFRAS) {
-//    fFrames.push_back(x);
-    //fMapFrames[x.fTec]
+    if (1) {
+      cout << "  adding ";
+      x.dump();
+    }
+    fMapFrames[x.fTec][x.fReg].push_front(x);
   } else if (x.fAlarm > 0) {
     fqAlarmFrames.push_back(x);
   } else {
