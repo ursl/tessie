@@ -90,7 +90,9 @@ float CANmessage::getFloat(unsigned int itec, unsigned int ireg) {
 
   if (nFrames(itec, ireg) > 0) {
     result = fMapFrames[itec][ireg].front().fFloatVal;
-    cout << " pop_front "; fMapFrames[itec][ireg].front().dump(false); cout << endl;
+    if (0) {
+      cout << " pop_front "; fMapFrames[itec][ireg].front().dump(false); cout << endl;
+    }
     fMapFrames[itec][ireg].pop_front();
   }
 
@@ -108,7 +110,9 @@ int CANmessage::getInt(unsigned int itec, unsigned int ireg) {
 
   if (nFrames(itec, ireg) > 0) {
     result = fMapFrames[itec][ireg].front().fIntVal;
-    cout << " pop_front "; fMapFrames[itec][ireg].front().dump(false); cout << endl;
+    if (0) {
+      cout << " pop_front "; fMapFrames[itec][ireg].front().dump(false); cout << endl;
+    }
     fMapFrames[itec][ireg].pop_front();
   }
 
