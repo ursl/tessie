@@ -19,11 +19,15 @@ CANmessage::CANmessage() {
 
 // ----------------------------------------------------------------------
 void CANmessage::clearAllFrames() {
+  cout << "clearAllFrames: ";
   for (auto &itt :fMapFrames) {
+    cout << itt.second.size() << "T" << itt.first << " R: ";
     for (auto &itr: itt.second) {
+      cout << itr.second.size() << " ";
       itr.second.clear();
     }
   }
+  cout << endl;
 }
 
 
