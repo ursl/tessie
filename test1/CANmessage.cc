@@ -70,8 +70,12 @@ void CANmessage::printMapFramesSize() {
   cout << dec;
   for (auto &itt :fMapFrames) {
     cout << " T" << itt.first << "(" << itt.second.size() << ") R: ";
+    int idx(0);
     for (auto &itr: itt.second) {
-      cout << itr.second.size() << " ";
+      if (itr.second.size() > 0) {
+        cout << idx << "(" << itr.second.size() << ") ";
+      }
+      ++idx;
     }
   }
   cout << endl;
