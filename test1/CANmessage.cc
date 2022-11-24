@@ -19,15 +19,14 @@ CANmessage::CANmessage() {
 
 // ----------------------------------------------------------------------
 void CANmessage::clearAllFrames() {
-  cout << "clearAllFrames: ";
+  cout << "0 clearAllFrames: " << endl;
+  printMapFramesSize();
   for (auto &itt :fMapFrames) {
-    cout << itt.second.size() << " T" << itt.first << " R: ";
     for (auto &itr: itt.second) {
-      cout << itr.second.size() << " ";
       itr.second.clear();
     }
   }
-  cout << endl;
+  cout << "1 clearAllFrames: " << endl;
 }
 
 
@@ -62,6 +61,19 @@ void CANmessage::dump() {
       }
     }
   }
+}
+
+
+// ----------------------------------------------------------------------
+void CANmessage::printMapFramesSize() {
+  cout << "clearAllFrames: " << dec;
+  for (auto &itt :fMapFrames) {
+    cout << " T" << itt.first << "(" << itt.second.size() << ") R: ";
+    for (auto &itr: itt.second) {
+      cout << itr.second.size() << " ";
+    }
+  }
+  cout << endl;
 }
 
 

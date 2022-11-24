@@ -23,6 +23,7 @@ public:
   void clearAllFrames();
   // -- print
   void dump();
+  void printMapFramesSize();
 
   void addFrameV(canFrame &x);
   void addFrame(canFrame &x);
