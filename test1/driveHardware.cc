@@ -938,7 +938,7 @@ string driveHardware::timeStamp(bool filestamp) {
   result << std::setfill('0') << std::setw(2) << hour << ":"
          << std::setfill('0') << std::setw(2) << min << ":"
          << std::setfill('0') << std::setw(2) << sec << "."
-         << std::setfill('0') << std::setw(6) << ((long)tv.tv_usec);
+         << std::setfill('0') << std::setw(6) << ((long)tv.tv_usec)/1000;
   return result.str();
 }
 
