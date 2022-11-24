@@ -752,7 +752,7 @@
       <rect>
        <x>20</x>
        <y>110</y>
-       <width>81</width>
+       <width>141</width>
        <height>16</height>
       </rect>
      </property>
@@ -770,7 +770,7 @@
       <rect>
        <x>20</x>
        <y>170</y>
-       <width>81</width>
+       <width>141</width>
        <height>16</height>
       </rect>
      </property>
@@ -788,7 +788,7 @@
       <rect>
        <x>20</x>
        <y>230</y>
-       <width>91</width>
+       <width>141</width>
        <height>16</height>
       </rect>
      </property>
@@ -1357,39 +1357,9 @@
     </property>
     <property name="palette">
      <palette>
-      <active>
-       <colorrole role="Window">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>248</red>
-          <green>217</green>
-          <blue>217</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </active>
-      <inactive>
-       <colorrole role="Window">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>236</red>
-          <green>236</green>
-          <blue>236</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </inactive>
-      <disabled>
-       <colorrole role="Window">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>248</red>
-          <green>217</green>
-          <blue>217</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </disabled>
+      <active/>
+      <inactive/>
+      <disabled/>
      </palette>
     </property>
     <property name="frameShape">
@@ -1409,7 +1379,7 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>6</pointsize>
+       <pointsize>5</pointsize>
       </font>
      </property>
      <property name="text">
