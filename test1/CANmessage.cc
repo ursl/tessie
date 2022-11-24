@@ -53,7 +53,9 @@ void CANmessage::addFrame(canFrame &x) {
     }
   }
   if (!filled) {
-    if (0) cout << "did NOT fill "; x.dump(false); cout << endl;
+    if (0) {
+      cout << "did NOT fill "; x.dump(false); cout << endl;
+    }
   }
 }
 
