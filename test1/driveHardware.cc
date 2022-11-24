@@ -269,7 +269,7 @@ void driveHardware::run() {
 
       // -- make sure there is no alarm before clearing
       parseCAN();
-      fCanMsg.clearFrames();
+      fCanMsg.clearAllFrames();
     }
 
 #ifdef PI
