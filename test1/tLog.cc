@@ -54,6 +54,7 @@ void tLog::operator()(tLogLevel level, std::string print) {
     QString qsout(QString::fromStdString(sout));
     emit signalText(qsout);
   }
+  cout << sout << endl;
 }
 
 

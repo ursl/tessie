@@ -45,7 +45,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   fMilli100 = std::chrono::milliseconds(100);
 
   fCsvFileName = "tessie.csv";
-  cout << "open " << fCsvFileName << endl;
+  fLOG(INFO, stringstream("open" + fCsvFileName).str());
   fCsvFile.open(fCsvFileName, ios_base::app);
   cout << "done?" << endl;\
 

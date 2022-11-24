@@ -6,6 +6,7 @@
 // -------------------------------------------------------------------------------
 int main(int argc, char *argv[]) {
   tLog LOG;
+  LOG(INFO, "start tessie");
 
   QApplication a(argc, argv);
   std::cout << "MainWindow w() call" << std::endl;
