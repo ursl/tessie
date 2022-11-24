@@ -33,16 +33,23 @@ void CANmessage::clearAllFrames() {
 
 // ----------------------------------------------------------------------
 void CANmessage::addFrame(canFrame &x) {
-  if (0 == x.fFRAS) {
-    if (1) {
-      cout << "  adding "; x.dump(false); cout << endl;
-    }
+  bool filled(false);
+  // -- received a CAN message from a TEC
+  if (1 <= x.fTec && x.fTec <= 8) {
     fMapFrames[x.fTec][x.fReg].push_front(x);
-  } else if (x.fAlarm > 0) {
-    fqAlarmFrames.push_back(x);
+    filled = true;
   } else {
-    fFRASFrames.push_back(x);
-    fqFRASFrames.push_back(x);
+    if (1 == x.fFRAS) {
+      fqFRASFrames.push_back(x);
+      filled = true;
+    }
+    if (x.fAlarm > 0) {
+      fqAlarmFrames.push_back(x);
+      filled = true;
+    }
+  }
+  if (!filled) {
+    cout << "did NOT fill "; x.dump(false); cout << endl;
   }
 }
 
