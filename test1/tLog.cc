@@ -3,7 +3,6 @@
 #include <sstream>
 
 #include "tLog.hh"
-//#include "MainWindow.h"
 
 using namespace std;
 
@@ -113,10 +112,13 @@ string tLog::timeStamp(bool filestamp) {
   int sec   = ltm->tm_sec;
   std::stringstream result;
   if (filestamp) {
-    result << year  << std::setfill('0') << std::setw(2) << month << day << "-" << hour << min << sec;
-    return result.str();
+    result << year << "/"
+           << std::setfill('0') << std::setw(2) << month << "/"
+           << std::setfill('0') << std::setw(2) << day << "_";
   }
-  result << year << "/" << std::setfill('0') << std::setw(2) << month << "/" << day << " "
-	 << buffer << "." << std::setfill('0') << std::setw(3) << ((long)tv.tv_usec / 1000);
+  result << std::setfill('0') << std::setw(2) << hour << ":"
+         << std::setfill('0') << std::setw(2) << min << ":"
+         << std::setfill('0') << std::setw(2) << sec << "."
+         << std::setfill('0') << std::setw(3) << ((long)tv.tv_usec)/1000;
   return result.str();
 }

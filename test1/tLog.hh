@@ -30,7 +30,10 @@ public:
 
   static std::string toString(tLogLevel level);
   static tLogLevel fromString(const std::string& level);
-  std::string timeStamp(bool filestamp = false);
+
+  std::string timeStamp(bool filestamp = true);
+  std::string tStamp() {return timeStamp(false);}
+
   void setGui(MainWindow *x) {fpGui = x;}
   void setHw(driveHardware *x) {fpHw = x;}
 signals:

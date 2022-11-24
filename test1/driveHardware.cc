@@ -623,10 +623,6 @@ void driveHardware::toggleFras(int imask) {
 
   fValveMask = old xor imask;
 
-  cout << "toggleFras old = " << hex << old
-       << " imask = " << imask
-       << " fValveMask = " << fValveMask
-       << endl;
   //  fMutex.lock();
 
   //            TEC:   ssP'..tt'aaaa
@@ -645,7 +641,6 @@ void driveHardware::toggleFras(int imask) {
   stringstream sbla; sbla << "toggleFras "
                           << " reg = 0x"  << hex << canid
                           << " data = " << fCANVal;
-  cout << "sbla: " << sbla.str() << endl;
   fLOG(INFO, sbla.str());
 
   // -- Send message
@@ -914,32 +909,7 @@ void driveHardware::dumpCSV() {
 
 // ----------------------------------------------------------------------
 string driveHardware::timeStamp(bool filestamp) {
-  char buffer[11];
-  time_t t;
-  time(&t);
-  tm r;
-  strftime(buffer, sizeof(buffer), "%X", localtime_r(&t, &r));
-  struct timeval tv;
-  gettimeofday(&tv, 0);
-
-  tm *ltm = localtime(&t);
-  int year  = 1900 + ltm->tm_year;
-  int month = 1 + ltm->tm_mon;
-  int day   = ltm->tm_mday;
-  int hour  = ltm->tm_hour;
-  int min   = ltm->tm_min;
-  int sec   = ltm->tm_sec;
-  std::stringstream result;
-  if (filestamp) {
-    result << year << "/"
-           << std::setfill('0') << std::setw(2) << month << "/"
-           << std::setfill('0') << std::setw(2) << day << "_";
-  }
-  result << std::setfill('0') << std::setw(2) << hour << ":"
-         << std::setfill('0') << std::setw(2) << min << ":"
-         << std::setfill('0') << std::setw(2) << sec << "."
-         << std::setfill('0') << std::setw(3) << ((long)tv.tv_usec)/1000;
-  return result.str();
+  return fLOG.timeStamp(filestamp);
 }
 
 // ----------------------------------------------------------------------
