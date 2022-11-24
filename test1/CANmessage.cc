@@ -27,6 +27,7 @@ void CANmessage::clearAllFrames() {
     }
   }
   cout << "1 clearAllFrames: " << endl;
+  printMapFramesSize();
 }
 
 
@@ -66,7 +67,7 @@ void CANmessage::dump() {
 
 // ----------------------------------------------------------------------
 void CANmessage::printMapFramesSize() {
-  cout << "clearAllFrames: " << dec;
+  cout << dec;
   for (auto &itt :fMapFrames) {
     cout << " T" << itt.first << "(" << itt.second.size() << ") R: ";
     for (auto &itr: itt.second) {
