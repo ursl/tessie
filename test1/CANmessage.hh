@@ -19,8 +19,8 @@ public:
   // -- get errors encountered
   int nErrors();
   // -- clear frames
-  void clearFrames() {fFrames.clear();} // vectors REMOVE
-  void clearAllFrames() {fMapFrames.clear();}
+//  void clearFrames() {fFrames.clear();} // vectors REMOVE
+  void clearAllFrames();
   // -- print
   void dump();
 
@@ -28,10 +28,10 @@ public:
   void addFrame(canFrame &x);
 
   // -- read float and erase frame
-  float getFloatV(unsigned int itec, unsigned int ireg);
+//  float getFloatV(unsigned int itec, unsigned int ireg);
   float getFloat(unsigned int itec, unsigned int ireg);
   // -- read int and erase frame
-  int getIntV(unsigned int itec, unsigned int ireg);
+//  int getIntV(unsigned int itec, unsigned int ireg);
   int getInt(unsigned int itec, unsigned int ireg);
   // -- check for FRAS message (0x42), returns 1 (0) if there is one (none)
   int getFRASMessageV();
@@ -41,7 +41,7 @@ public:
   int getAlarm();
 
 private:
-  std::vector<canFrame> fFrames;
+//  std::vector<canFrame> fFrames;
   std::vector<canFrame> fFRASFrames;
 
   // map<tec, map<reg, deque<canFrame>>>

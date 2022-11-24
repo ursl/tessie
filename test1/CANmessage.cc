@@ -6,16 +6,36 @@ using namespace std;
 // ----------------------------------------------------------------------
 CANmessage::CANmessage() {
   fErrorCounter = 0;
+  for (int itec = 1; itec <= 8; ++itec) {
+    for (int ireg = 0; ireg <= NREG; ++ireg) {
+      map<int, deque<canFrame>> amap;
+      deque<canFrame> adeq;
+      amap.insert(make_pair(ireg, adeq));
+      fMapFrames.insert(make_pair(itec, amap));
+    }
+  }
 }
+
+
+// ----------------------------------------------------------------------
+void CANmessage::clearAllFrames() {
+  for (auto &itt :fMapFrames) {
+    for (auto &itr: itt.second) {
+      itr.second.clear();
+    }
+  }
+}
+
 
 // ----------------------------------------------------------------------
 void CANmessage::addFrame(canFrame &x) {
-  //  if (0) {
-  //    cout << "  adding ";
-  //    x.dump();
-  //  }
+  if (0) {
+    cout << "  adding ";
+    x.dump();
+  }
   if (0 == x.fFRAS) {
-    fFrames.push_back(x);
+//    fFrames.push_back(x);
+    //fMapFrames[x.fTec]
   } else if (x.fAlarm > 0) {
     fqAlarmFrames.push_back(x);
   } else {
@@ -27,15 +47,15 @@ void CANmessage::addFrame(canFrame &x) {
 
 // ----------------------------------------------------------------------
 void CANmessage::dump() {
-  cout << "dump vector containers" << endl;
-  for (unsigned int i = 0; i < fFrames.size(); ++i) {
-    fFrames[i].dump();
-  }
+//  cout << "dump vector containers" << endl;
+//  for (unsigned int i = 0; i < fFrames.size(); ++i) {
+//    fFrames[i].dump();
+//  }
 
   cout << "dump map<int, map<int, deque>> containers" << endl;
   for (auto &itt :fMapFrames) {
-    for (auto &itd: itt.second) {
-      for (auto &itc: itd.second) {
+    for (auto &itr: itt.second) {
+      for (auto &itc: itr.second) {
         itc.dump();
       }
     }
@@ -45,7 +65,8 @@ void CANmessage::dump() {
 
 // ----------------------------------------------------------------------
 unsigned int CANmessage::nFrames() {
-  return fFrames.size();
+//  return fFrames.size();
+  return 99;
 }
 
 
@@ -82,24 +103,6 @@ float CANmessage::getFloat(unsigned int itec, unsigned int ireg) {
   return result;
 }
 
-// ----------------------------------------------------------------------
-int CANmessage::getIntV(unsigned int tec, unsigned int reg) {
-  int result(-98);
-  // -- find the last one
-  for (vector<canFrame>::iterator it = fFrames.begin(); it != fFrames.end(); ++it) {
-    if ((tec == it->fTec) && (reg == it->fReg)) {
-      result = it->fIntVal;
-      //fFrames.erase(it);
-      //break;
-    }
-  }
-  if (result < -90.) {
-    ++fErrorCounter;
-    cout << "Error: reg " << reg << " itec " << tec << " getInt " << result << endl;
-  }
-  return result;
-}
-
 
 // ----------------------------------------------------------------------
 int CANmessage::getInt(unsigned int itec, unsigned int ireg) {
@@ -120,32 +123,10 @@ int CANmessage::getInt(unsigned int itec, unsigned int ireg) {
 
 
 // ----------------------------------------------------------------------
-int CANmessage::getFRASMessageV() {
-  int result = fFRASFrames.size();
-  if (result > 0) fFRASFrames.clear();
-  return result;
-}
-
-
-// ----------------------------------------------------------------------
 int CANmessage::getFRASMessage() {
   int result = fqFRASFrames.size();
   // -- clear it
   if (result > 0) fqFRASFrames.pop_front();
-  return result;
-}
-
-
-// ----------------------------------------------------------------------
-int CANmessage::getAlarmV() {
-  int result(0);
-  // -- find the last one
-  for (std::vector<canFrame>::iterator it = fFrames.begin(); it != fFrames.end(); ++it) {
-    if (it->fAlarm > 0) {
-       result = it->fAlarm;
-    }
-  }
-
   return result;
 }
 
