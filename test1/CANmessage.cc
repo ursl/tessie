@@ -7,12 +7,12 @@ using namespace std;
 CANmessage::CANmessage() {
   fErrorCounter = 0;
   for (int itec = 1; itec <= 8; ++itec) {
+    map<int, deque<canFrame>> amap;
     for (int ireg = 0; ireg <= NREG; ++ireg) {
-      map<int, deque<canFrame>> amap;
       deque<canFrame> adeq;
       amap.insert(make_pair(ireg, adeq));
-      fMapFrames.insert(make_pair(itec, amap));
     }
+    fMapFrames.insert(make_pair(itec, amap));
   }
 }
 
@@ -21,7 +21,7 @@ CANmessage::CANmessage() {
 void CANmessage::clearAllFrames() {
   cout << "clearAllFrames: ";
   for (auto &itt :fMapFrames) {
-    cout << itt.second.size() << "T" << itt.first << " R: ";
+    cout << itt.second.size() << " T" << itt.first << " R: ";
     for (auto &itr: itt.second) {
       cout << itr.second.size() << " ";
       itr.second.clear();
