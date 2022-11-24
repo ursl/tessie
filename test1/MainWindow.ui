@@ -1383,7 +1383,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Error counter: CAN/I2C</string>
+      <string>Errors: CAN/I2C</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEditCANbusError">
