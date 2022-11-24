@@ -6,6 +6,8 @@
 #include <strstream>
 #include <vector>
 
+#define NREG 18
+
 class canFrame {
 public:
   canFrame() { };
