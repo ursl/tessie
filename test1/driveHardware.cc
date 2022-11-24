@@ -933,11 +933,7 @@ string driveHardware::timeStamp(bool filestamp) {
   if (filestamp) {
     result << year << "/"
            << std::setfill('0') << std::setw(2) << month << "/"
-           << std::setfill('0') << std::setw(2) << day << "."
-           << std::setfill('0') << std::setw(2) << hour << ":"
-           << std::setfill('0') << std::setw(2) << min << "."
-           << std::setfill('0') << std::setw(3) << ((long)tv.tv_usec);
-    return result.str();
+           << std::setfill('0') << std::setw(2) << day << "_";
   }
   result << std::setfill('0') << std::setw(2) << hour << ":"
          << std::setfill('0') << std::setw(2) << min << ":"
