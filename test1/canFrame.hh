@@ -18,6 +18,7 @@ public:
     if (0x42 == fCanId) {
       // -- This is a FRAS message
       fFRAS = 0x42;
+      fAlarm = 0;
       fReg  = 0;
       fType = 0;
       fTec  = 0;
@@ -25,11 +26,12 @@ public:
       fFloatVal = -99.;
     } else {
       fFRAS = 0;
-
+      fAlarm = 0;
       fTec = fCanId & 0xf;
       fReg = data[0];
       fType = fCanId & 0x30;
 
+      // -- parse data if present
       if (5 == fdlen) {
         char ndata[4];
         for (int i = 0; i < len; ++i) ndata[i] = fData[i+1];
