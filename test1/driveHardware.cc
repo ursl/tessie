@@ -913,14 +913,10 @@ void driveHardware::readAllParamsFromCAN() {
 // ----------------------------------------------------------------------
 void driveHardware::dumpCSV() {
   stringstream output;
-
-  output << timeStamp() << ","
-         << setprecision(4)
-         << fSHT85Temp << ","
-         << fSHT85RH << ","
-         << fSHT85DP;
-
   char cs[100];
+  sprintf(cs, "%+5.2f,%05.2f,%+5.2f", fSHT85Temp, fSHT85RH, fSHT85DP);
+  output << timeStamp() << "," << cs;
+
   for (int i = 8; i <= 8; ++i) {
     sprintf(cs, "%+4.1f", fTECData[i].reg["Temp_W"].value);
     output << "," << cs;
@@ -940,7 +936,7 @@ void driveHardware::dumpCSV() {
 //  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_kd"].value;
 
   for (int i = 1; i <= 8; ++i) {
-    sprintf(cs, "%+4.1f", fTECData[i].reg["Temp_M"].value);
+    sprintf(cs, "%+5.2f", fTECData[i].reg["Temp_M"].value);
     if (fActiveTEC[i]) output << "," << cs;
   }
 
