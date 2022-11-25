@@ -1107,7 +1107,7 @@
     <property name="font">
      <font>
       <family>Arial</family>
-      <pointsize>10</pointsize>
+      <pointsize>8</pointsize>
      </font>
     </property>
    </widget>

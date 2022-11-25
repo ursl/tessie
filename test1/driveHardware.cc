@@ -617,11 +617,8 @@ void driveHardware::talkToFras() {
 
 // ----------------------------------------------------------------------
 void driveHardware::toggleFras(int imask) {
-
   int old = fValveMask;
-
   fValveMask = old xor imask;
-
   //  fMutex.lock();
 
   //            TEC:   ssP'..tt'aaaa
@@ -630,17 +627,13 @@ void driveHardware::toggleFras(int imask) {
   //  fFrameW.can_id = 000'0100'0001 -> 0x041 for service
   //  fFrameW.can_id = 000'0100'0010 -> 0x042 for control
 
-  unsigned int canid = 0x40;
 #ifdef PI
+  unsigned int canid = 0x40;
   fFrameW.can_id = canid;
   int dlength(1);
   fFrameW.can_dlc = dlength;
   fFrameW.data[0] = fValveMask;
 #endif
-  stringstream sbla; sbla << "toggleFras "
-                          << " reg = 0x"  << hex << canid
-                          << " data = " << fCANVal;
-  fLOG(INFO, sbla.str());
 
   // -- Send message
 #ifdef PI

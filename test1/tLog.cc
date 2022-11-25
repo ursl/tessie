@@ -13,6 +13,14 @@ tLog::tLog(string fname): fpGui(0), fpHw(0), fLevel(INFO), fFileName(fname) {
   int filesize = fFile.tellp();
   if (filesize > 1000) {
     string bacname = fFileName + string(".") + timeStamp(true);
+
+    string from("/"), to("");
+    size_t start_pos = 0;
+    while((start_pos = bacname.find(from, start_pos)) != string::npos) {
+      bacname.replace(start_pos, from.length(), to);
+      start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
+    }
+
     cout << "filesize = " << filesize << " too large, creating new logfile" << endl;
     fFile << "filesize = " << filesize << " too large, backup to " << bacname
           << " and creating new logfile"
