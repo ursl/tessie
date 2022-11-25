@@ -583,7 +583,7 @@ void driveHardware::entertainFras() {
         }
     }
   // -- this is required to absorb the write request from fSr
-  nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
+  int nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
 #endif
 }
 
