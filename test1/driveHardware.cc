@@ -589,7 +589,6 @@ void driveHardware::entertainFras() {
 // ----------------------------------------------------------------------
 void driveHardware::talkToFras() {
   fValveMask = static_cast<int>(fCANVal);
-  cout << "talkToFras"  << endl;
   //  fMutex.lock();
 
   //            TEC:   ssP'..tt'aaaa
