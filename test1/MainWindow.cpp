@@ -28,7 +28,7 @@ MainWindow::MainWindow(tLog &x, QWidget *parent) :
   ui->lineEditCANbusError->setAlignment(Qt::AlignRight);
   ui->lineEditI2CError->setAlignment(Qt::AlignRight);
 
-  ui->labelVersion->setText("2022/11/25-01");
+  ui->labelVersion->setText("2022/11/25-02");
 
   fUICheckBox.push_back(ui->checkBoxTEC1);
   fUICheckBox.push_back(ui->checkBoxTEC2);
