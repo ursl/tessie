@@ -1,5 +1,6 @@
 #include "canFrame.hh"
 
+#include <cstring>
 #include <iostream>
 #include <unistd.h>
 #include <sstream>
