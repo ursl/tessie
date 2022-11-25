@@ -916,8 +916,10 @@ void driveHardware::readAllParamsFromCAN() {
 void driveHardware::dumpCSV() {
   stringstream output;
 
-  output  << timeStamp();
-  output << fSHT85Temp << "," << fSHT85RH << "," << fSHT85DP;
+  output << timeStamp() << ","
+         << fSHT85Temp << ","
+         << fSHT85RH << ","
+         << fSHT85DP;
   for (int i = 1; i <= 1; ++i) {
     output << "," << fTECData[i].reg["Temp_W"].value;
   }

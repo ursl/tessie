@@ -52,7 +52,13 @@ void CANmessage::addFrame(canFrame &x) {
   }
 
   if (!filled) {
-    string errstring = "did not fill " + x.getString();
+    string errstring = "did not fill "
+        + x.getString()
+        + " fPrivate = " + to_string(x.fPrivate)
+        + " fShift = " + to_string(x.fShift)
+        + " fType = " + to_string(x.fType)
+        + " fTec = " + to_string(x.fTec)
+        ;
     fqErrors.push_front(errstring);
   }
 }
