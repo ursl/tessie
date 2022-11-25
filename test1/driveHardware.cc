@@ -582,6 +582,8 @@ void driveHardware::entertainFras() {
           printf("Send Error frame[0]!\r\n");
         }
     }
+  // -- this is required to absorb the write request from fSr
+  nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
 #endif
 }
 
@@ -615,7 +617,10 @@ void driveHardware::talkToFras() {
   int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
   if (nbytes != sizeof(fFrameW)) {
       printf("Send Error frame[0]!\r\n");
-    }
+  }
+
+  // -- this is required to absorb the write request from fSr
+  nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
 
   //  fMutex.unlock();
 #endif
@@ -641,7 +646,6 @@ void driveHardware::toggleFras(int imask) {
   fFrameW.can_dlc = dlength;
   fFrameW.data[0] = fValveMask;
 #endif
-
   stringstream sbla; sbla << "toggleFRAS(" << imask << ")";
   fLOG(INFO, sbla.str().c_str());
 
@@ -651,7 +655,11 @@ void driveHardware::toggleFras(int imask) {
   int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
   if (nbytes != sizeof(fFrameW)) {
       printf("Send Error frame[0]!\r\n");
-    }
+  }
+
+  // -- this is required to absorb the write request from fSr
+  nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
+
 #endif
   //  fMutex.unlock();
 
