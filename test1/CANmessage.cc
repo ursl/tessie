@@ -49,7 +49,6 @@ void CANmessage::addFrame(canFrame &x) {
     filled = true;
   } else {
     if (x.fFRAS > 0) {
-      cout << "add FRAS" << endl;
       fqFRASFrames.push_back(x);
       filled = true;
     }
