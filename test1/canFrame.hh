@@ -2,6 +2,7 @@
 #define CANFRAME_HH
 
 #include <vector>
+#include <string>
 
 #define NREG 18
 
