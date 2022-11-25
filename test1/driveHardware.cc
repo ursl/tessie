@@ -917,15 +917,15 @@ void driveHardware::dumpCSV() {
   sprintf(cs, "%+5.2f,%05.2f,%+5.2f", fSHT85Temp, fSHT85RH, fSHT85DP);
   output << timeStamp() << "," << cs;
 
+  // -- only one water temperature reading
   for (int i = 8; i <= 8; ++i) {
     sprintf(cs, "%+4.1f", fTECData[i].reg["Temp_W"].value);
     if (fActiveTEC[i]) output << "," << cs;
   }
 
-  // -- only one water temperature reading
   for (int i = 1; i <= 8; ++i) {
     sprintf(cs, "%1.0f", fTECData[i].reg["PowerState"].value);
-    output << "," << cs;
+    if (fActiveTEC[i]) output << "," << cs;
   }
 
   for (int i = 1; i <= 8; ++i) {
