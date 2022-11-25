@@ -919,9 +919,10 @@ void driveHardware::dumpCSV() {
 
   for (int i = 8; i <= 8; ++i) {
     sprintf(cs, "%+4.1f", fTECData[i].reg["Temp_W"].value);
-    output << "," << cs;
+    if (fActiveTEC[i]) output << "," << cs;
   }
 
+  // -- only one water temperature reading
   for (int i = 8; i <= 8; ++i) {
     sprintf(cs, "%1.0f", fTECData[i].reg["PowerState"].value);
     output << "," << cs;
@@ -929,7 +930,7 @@ void driveHardware::dumpCSV() {
 
   for (int i = 8; i <= 8; ++i) {
     sprintf(cs, "%1.0f", fTECData[i].reg["ControlVoltage_Set"].value);
-    output << "," << cs;
+    if (fActiveTEC[i]) output << "," << cs;
   }
 
   for (int i = 1; i <= 8; ++i) {
