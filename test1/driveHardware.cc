@@ -921,17 +921,17 @@ void driveHardware::dumpCSV() {
          << fSHT85DP;
 
   char cs[100];
-  for (int i = 1; i <= 1; ++i) {
-    sprintf(cs, "%5.2f", fTECData[i].reg["Temp_W"].value);
+  for (int i = 8; i <= 8; ++i) {
+    sprintf(cs, "%+4.1f", fTECData[i].reg["Temp_W"].value);
     output << "," << cs;
   }
 
   for (int i = 1; i <= 8; ++i) {
-    sprintf(cs, "%5.2f", fTECData[i].reg["ControlVoltage_Set"].value);
+    sprintf(cs, "%+5.2f", fTECData[i].reg["ControlVoltage_Set"].value);
     if (fActiveTEC[i]) output << "," << cs;
   }
   for (int i = 1; i <= 8; ++i) {
-    sprintf(cs, "%+5.2f", fTECData[i].reg["Temp_Set"].value);
+    sprintf(cs, "%+4.1f", fTECData[i].reg["Temp_Set"].value);
     if (fActiveTEC[i]) output << "," << cs;
   }
 
@@ -940,7 +940,7 @@ void driveHardware::dumpCSV() {
 //  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_kd"].value;
 
   for (int i = 1; i <= 8; ++i) {
-    sprintf(cs, "%5.2f", fTECData[i].reg["Temp_M"].value);
+    sprintf(cs, "%+4.1f", fTECData[i].reg["Temp_M"].value);
     if (fActiveTEC[i]) output << "," << cs;
   }
 
