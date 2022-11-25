@@ -26,9 +26,14 @@ tLog::tLog(string fname): fpGui(0), fpHw(0), fLevel(INFO), fFileName(fname) {
           << " and creating new logfile"
           << endl;
     fFile.close();
+
     int result = rename(fFileName.c_str(), bacname.c_str());
     cout << "renamed " << fFileName << " to " << bacname << " with result = " << result << endl;
+
     fFile.open(fFileName, ios_base::app);
+    fFile << "filesize = " << filesize << " too large, backed up to " << bacname
+          << " and starting new logfile"
+          << endl;
   }
 }
 
