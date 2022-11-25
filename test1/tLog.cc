@@ -3,6 +3,7 @@
 #include <sstream>
 
 #include "tLog.hh"
+#include "MainWindow.h"
 
 using namespace std;
 
@@ -11,9 +12,12 @@ tLog::tLog(string fname): fLevel(INFO), fFileName(fname) {
   fFile.open(fFileName, ios_base::app);
   int filesize = fFile.tellp();
   if (filesize > 1000) {
-    cout << "filesize = " << filesize << " too large, creating new logfile" << endl;
-    fFile.close();
     string bacname = fFileName + string(".") + timeStamp(true);
+    cout << "filesize = " << filesize << " too large, creating new logfile" << endl;
+    fFile << "filesize = " << filesize << " too large, backup to " << bacname
+          << " and creating new logfile"
+          << endl;
+    fFile.close();
     int result = rename(fFileName.c_str(), bacname.c_str());
     cout << "renamed " << fFileName << " to " << bacname << " with result = " << result << endl;
     fFile.open(fFileName, ios_base::app);
@@ -34,12 +38,13 @@ string tLog::print(tLogLevel level, std::string print) {
 	 << print;
   string sout = output.str();
   fFile << sout << endl;
-  if (level <= fLevel) {
+  //  if (level <= fLevel) {
     QString qsout(QString::fromStdString(sout));
     emit signalText(qsout);
-  }
+  //  }
   return sout;
 }
+
 
 // ----------------------------------------------------------------------
 void tLog::operator()(tLogLevel level, std::string print) {
@@ -55,6 +60,7 @@ void tLog::operator()(tLogLevel level, std::string print) {
     emit signalText(qsout);
   }
   cout << sout << endl;
+  fpGui->printText(sout);
 }
 
 
@@ -63,6 +69,7 @@ void tLog::operator()(tLogLevel level, std::string print) {
 tLogLevel tLog::getLevel() {
   return fLevel;
 }
+
 
 // ----------------------------------------------------------------------
 void tLog::setLevel(string level) {

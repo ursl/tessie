@@ -115,22 +115,14 @@ void MainWindow::appendText(QString line) {
 
 
 // ----------------------------------------------------------------------
+void MainWindow::printText(string line) {
+  ui->textEditLog->append(QString::fromStdString(line));
+}
+
+
+// ----------------------------------------------------------------------
 QString MainWindow::getTimeString() {
-  QDateTime dati = QDateTime::currentDateTime();
-  int seconds = dati.time().second();
-  int minutes = dati.time().minute();
-  int hours   = dati.time().hour();
-  int year    = dati.date().year();
-  int month   = dati.date().month();
-  int day     = dati.date().day();
-  QString text;
-  text = QString("%1/%2/%3 %4:%5:%6")
-      .arg(year, 4)
-      .arg(month, 2, 10, QChar('0'))
-      .arg(day, 2, 10, QChar('0'))
-      .arg(hours, 2, 10, QChar('0'))
-      .arg(minutes, 2, 10, QChar('0'))
-      .arg(seconds, 2, 10, QChar('0'));
+  QString text = QString::fromStdString(fLOG.timeStamp());
   return text;
 }
 
@@ -150,6 +142,7 @@ void MainWindow::setCheckBoxTEC(int itec, bool state) {
 // ----------------------------------------------------------------------
 void MainWindow::quitProgram() {
   stringstream sbla; sbla << "This is the end, my friend";
+  fLOG(INFO, "This is the end, my friend -- tessie shutting down");
   ui->textEditLog->append(sbla.str().c_str());
   exit(0);
 }
@@ -183,9 +176,7 @@ void MainWindow::tecSetFromUI(int itec, std::string rname, QWidget *qw) {
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValve0() {
-  stringstream sbla; sbla << "checkValve0 clicked ";
-  ui->textEditLog->append(sbla.str().c_str());
-  sbla << "toggleFRAS(1)";
+  stringstream sbla; sbla << "checkValve0 clicked, toggleFRAS(1)";
   ui->textEditLog->append(sbla.str().c_str());
   fThread.toggleFras(1);
 }
@@ -193,9 +184,7 @@ void MainWindow::clkValve0() {
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValve1() {
-  stringstream sbla; sbla << "checkValve1 clicked ";
-  ui->textEditLog->append(sbla.str().c_str());
-  sbla << "toggleFRAS(2)";
+  stringstream sbla; sbla << "checkValve1 clicked, toggleFRAS(2)";
   ui->textEditLog->append(sbla.str().c_str());
   fThread.toggleFras(2);
 }
@@ -203,9 +192,7 @@ void MainWindow::clkValve1() {
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValveAll() {
-  stringstream sbla; sbla << "checkValveAll clicked ";
-  ui->textEditLog->append(sbla.str().c_str());
-  sbla << "toggleFRAS(3)";
+  stringstream sbla; sbla << "checkValveAll clicked,toggleFRAS(3)";
   ui->textEditLog->append(sbla.str().c_str());
   fThread.toggleFras(3);
 }
@@ -336,7 +323,7 @@ void MainWindow::updateHardwareDisplay() {
 
 // ----------------------------------------------------------------------
 void MainWindow::openTECDisplay(int itec) {
-  cout << "openTEC(" << itec << ")" << endl;
+  fLOG(INFO, stringstream("openTEC(" + to_string(itec) + ")").str());
   if (fTECDisplay->isVisible()) {
       fTECDisplay->updateHardwareDisplay();
   }

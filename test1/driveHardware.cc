@@ -47,7 +47,6 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   fCsvFileName = "tessie.csv";
   fLOG(INFO, stringstream("open" + fCsvFileName).str());
   fCsvFile.open(fCsvFileName, ios_base::app);
-  cout << "done?" << endl;\
 
   for (unsigned int itec = 1; itec <= 4; ++itec) {
     fActiveTEC.insert(make_pair(itec, 0));
