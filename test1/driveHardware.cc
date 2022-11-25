@@ -878,7 +878,7 @@ void driveHardware::readAllParamsFromCANPublic() {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::readAllParamsFromCAN() {
+void driveHardware::readAllParamsFromCAN(/*DECREPIT*/) {
 
   cout << "driveHardware::readAllParamsFromCAN() read Temp_M" << endl;
   for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_M"].value = getTECRegisterFromCAN(i, "Temp_M");
@@ -919,6 +919,11 @@ void driveHardware::dumpCSV() {
 
   for (int i = 8; i <= 8; ++i) {
     sprintf(cs, "%+4.1f", fTECData[i].reg["Temp_W"].value);
+    output << "," << cs;
+  }
+
+  for (int i = 8; i <= 8; ++i) {
+    sprintf(cs, "%1.0f", fTECData[i].reg["PowerState"].value);
     output << "," << cs;
   }
 
