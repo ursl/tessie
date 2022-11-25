@@ -688,9 +688,9 @@ void  driveHardware::turnOnTEC(int itec) {
 
   stringstream sbla; sbla << "turnOnTEC("
                           << itec << ")"
-                          << " reg = " << fCANReg
-                          << " canID = " << fCANId
-                          << " val = " << fCANVal;
+                          << " reg = " << fCANReg << hex
+                          << " canID = " << fCANId << dec
+                              ;
   fLOG(INFO, sbla.str());
 
   sendCANmessage();
@@ -714,9 +714,9 @@ void  driveHardware::turnOffTEC(int itec) {
 
   stringstream sbla; sbla << "turnOffTEC("
                           << itec << ")"
-                          << " reg = " << fCANReg
-                          << " canID = " << fCANId
-                          << " val = " << fCANVal;
+                          << " reg = " << fCANReg << hex
+                          << " canID = 0x" << fCANId
+                             ;
   fLOG(INFO, sbla.str());
 
   sendCANmessage();

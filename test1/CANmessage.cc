@@ -21,6 +21,44 @@ CANmessage::CANmessage() {
 
 
 // ----------------------------------------------------------------------
+void CANmessage::addFrame(canFrame &x) {
+  bool filled(false);
+  // -- received a CAN message from a TEC
+  if ((1 <= x.fTec) && (x.fTec <= 8)) {
+    fMapFrames[x.fTec][x.fReg].push_front(x);
+    filled = true;
+  }
+
+  if (!filled && (x.fFRAS > 0)) {
+    fqFRASFrames.push_back(x);
+    filled = true;
+  }
+
+  if (!filled && (x.fAlarm > 0)) {
+    fqAlarmFrames.push_back(x);
+    filled = true;
+  }
+
+  if (!filled && (0 == x.fTec) && (1 == x.fType)
+      && (0 == x.fPrivate) && (1 == x.fShift)) {
+    // -- ignore read requests 210
+    filled = true;
+  }
+
+  if (!filled && (0 == x.fTec) && (x.fCanId & 0x40)
+      && (0 == x.fPrivate) && (0 == x.fShift)) {
+    // -- ignore FRAS entertainment 40 and 41
+    filled = true;
+  }
+
+  if (!filled) {
+    string errstring = "did not fill " + x.getString();
+    fqErrors.push_front(errstring);
+  }
+}
+
+
+// ----------------------------------------------------------------------
 void CANmessage::clearAllFrames() {
   if (0) {
     cout << "0 clearAllFrames: " << endl;
@@ -37,30 +75,6 @@ void CANmessage::clearAllFrames() {
   }
 
   fqErrors.clear();
-}
-
-
-// ----------------------------------------------------------------------
-void CANmessage::addFrame(canFrame &x) {
-  bool filled(false);
-  // -- received a CAN message from a TEC
-  if (1 <= x.fTec && x.fTec <= 8) {
-    fMapFrames[x.fTec][x.fReg].push_front(x);
-    filled = true;
-  } else {
-    if (x.fFRAS > 0) {
-      fqFRASFrames.push_back(x);
-      filled = true;
-    }
-    if (x.fAlarm > 0) {
-      fqAlarmFrames.push_back(x);
-      filled = true;
-    }
-  }
-  if (!filled) {
-    string errstring = "did not fill " + x.getString();
-    fqErrors.push_front(errstring);
-  }
 }
 
 

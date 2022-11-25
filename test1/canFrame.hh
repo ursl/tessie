@@ -26,6 +26,9 @@ public:
   unsigned int fTec;
   unsigned int fReg;
 
+  unsigned int fPrivate;
+  unsigned int fShift;
+
   unsigned int fType; // 0 CMD, 1 READ, 2 Write
 
   int   fIntVal;
