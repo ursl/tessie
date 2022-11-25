@@ -28,6 +28,8 @@ MainWindow::MainWindow(tLog &x, QWidget *parent) :
   ui->lineEditCANbusError->setAlignment(Qt::AlignRight);
   ui->lineEditI2CError->setAlignment(Qt::AlignRight);
 
+  ui->labelVersion->setText("2022/11/25-00");
+
   fUICheckBox.push_back(ui->checkBoxTEC1);
   fUICheckBox.push_back(ui->checkBoxTEC2);
   fUICheckBox.push_back(ui->checkBoxTEC3);
@@ -143,7 +145,6 @@ void MainWindow::setCheckBoxTEC(int itec, bool state) {
 void MainWindow::quitProgram() {
   stringstream sbla; sbla << "This is the end, my friend";
   fLOG(INFO, "This is the end, my friend -- tessie shutting down");
-  ui->textEditLog->append(sbla.str().c_str());
   exit(0);
 }
 
@@ -157,7 +158,7 @@ void MainWindow::clkRefresh() {
 // ----------------------------------------------------------------------
 void MainWindow::start() {
   stringstream sbla; sbla << "Startup";
-  ui->textEditLog->append(sbla.str().c_str());
+  fLOG(INFO, sbla.str());
   // fThread.runPrintout(1,1);
 }
 
@@ -177,7 +178,7 @@ void MainWindow::tecSetFromUI(int itec, std::string rname, QWidget *qw) {
 // ----------------------------------------------------------------------
 void MainWindow::clkValve0() {
   stringstream sbla; sbla << "checkValve0 clicked, toggleFRAS(1)";
-  ui->textEditLog->append(sbla.str().c_str());
+  fLOG(INFO, sbla.str().c_str());
   fThread.toggleFras(1);
 }
 
@@ -185,15 +186,15 @@ void MainWindow::clkValve0() {
 // ----------------------------------------------------------------------
 void MainWindow::clkValve1() {
   stringstream sbla; sbla << "checkValve1 clicked, toggleFRAS(2)";
-  ui->textEditLog->append(sbla.str().c_str());
+  fLOG(INFO, sbla.str());
   fThread.toggleFras(2);
 }
 
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValveAll() {
-  stringstream sbla; sbla << "checkValveAll clicked,toggleFRAS(3)";
-  ui->textEditLog->append(sbla.str().c_str());
+  stringstream sbla; sbla << "checkValveAll clicked, toggleFRAS(3)";
+  fLOG(INFO, sbla.str());
   fThread.toggleFras(3);
 }
 
@@ -202,12 +203,10 @@ void MainWindow::clkValveAll() {
 // ----------------------------------------------------------------------
 void MainWindow::checkTECAll(bool checked) {
   stringstream sbla; sbla << "checkTECTAll clicked " << checked;
-  string sline = sbla.str();
-  QString qline = sline.c_str();
-  ui->textEditLog->append(qline);
+  fLOG(INFO, sbla.str());
   for (int i = 1; i <= 8; ++i) {
-      setCheckBoxTEC(i, checked);
-    }
+    setCheckBoxTEC(i, checked);
+  }
 }
 
 
@@ -219,9 +218,8 @@ void MainWindow::guiWriteToCAN() {
                           << " value = " << fGuiRegValue
                          ;
 
+  fLOG(INFO, sbla.str());
   fThread.setTECRegister(fGuiTecId, fGuiRegName, fGuiRegValue);
-
-  ui->textEditLog->append(sbla.str().c_str());
 }
 
 
@@ -239,7 +237,7 @@ void MainWindow::guiSetCanID() {
 
   stringstream sbla; sbla << "GUI changed CAN ID ->" << qline.toStdString().c_str() << "<- in int: " << ibla;
   fGuiTecId = ibla;
-  ui->textEditLog->append(sbla.str().c_str());
+  fLOG(INFO, sbla.str());
 }
 
 
@@ -250,7 +248,7 @@ void MainWindow::guiSetRegValue() {
 
   stringstream sbla; sbla << "GUI changed reg value ->" << qline.toStdString().c_str() << "<- in int: " << fbla;
   fGuiRegValue = fbla;
-  ui->textEditLog->append(sbla.str().c_str());
+  fLOG(INFO, sbla.str());
 }
 
 
@@ -261,7 +259,7 @@ void MainWindow::guiSetRegName() {
 
   stringstream sbla; sbla << "GUI changed reg name ->" << qline.toStdString().c_str() << "<- in string: " << ssbla;
   fGuiRegName = ssbla;
-  ui->textEditLog->append(sbla.str().c_str());
+  fLOG(INFO, sbla.str());
 }
 
 
