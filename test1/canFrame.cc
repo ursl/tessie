@@ -13,9 +13,9 @@ canFrame::canFrame(int canid, int len, unsigned char *data) {
   fdlen  = len;
   for (int i = 0; i < len; ++i) fData.push_back(data[i]);
 
-  if (0x42 == fCanId) {
+  if (ADDRESS_FRAS == fCanId) {
     // -- This is a FRAS message
-    fFRAS = 0x42;
+    fFRAS = ADDRESS_FRAS;
     fAlarm = 0;
     fReg  = 0;
     fType = 0;

@@ -48,7 +48,7 @@ void CANmessage::addFrame(canFrame &x) {
     fMapFrames[x.fTec][x.fReg].push_front(x);
     filled = true;
   } else {
-    if (1 == x.fFRAS) {
+    if (x.fFRAS > 0) {
       cout << "add FRAS" << endl;
       fqFRASFrames.push_back(x);
       filled = true;

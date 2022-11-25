@@ -5,6 +5,7 @@
 #include <string>
 
 #define NREG 18
+#define ADDRESS_FRAS 0x42
 
 class canFrame {
 public:
