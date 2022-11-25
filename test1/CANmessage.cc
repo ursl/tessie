@@ -49,6 +49,7 @@ void CANmessage::addFrame(canFrame &x) {
     filled = true;
   } else {
     if (1 == x.fFRAS) {
+      cout << "add FRAS" << endl;
       fqFRASFrames.push_back(x);
       filled = true;
     }
@@ -173,6 +174,7 @@ int CANmessage::getInt(unsigned int itec, unsigned int ireg) {
 // ----------------------------------------------------------------------
 int CANmessage::getFRASMessage() {
   int result = fqFRASFrames.size();
+  cout << "getFRASMessge result = " << result << endl;
   // -- clear it
   if (result > 0) fqFRASFrames.pop_front();
   return result;
