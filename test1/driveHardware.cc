@@ -785,11 +785,9 @@ void driveHardware::setTECRegister(int itec, std::string regname, float value) {
       + QString(", canID = 0x") + QString::number(fCANId, 'x', 0)
       ;
 
-  cout << aline.toStdString() << endl;
+  fLOG(INFO, aline.toStdString().c_str());
 
-  emit signalText(aline);
   sendCANmessage();
-
 }
 
 

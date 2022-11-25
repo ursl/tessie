@@ -1106,7 +1106,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Menlo</family>
+      <family>Courier New</family>
       <pointsize>8</pointsize>
      </font>
     </property>
