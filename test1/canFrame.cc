@@ -41,7 +41,7 @@ canFrame::canFrame(int canid, int len, unsigned char *data) {
      }
 
     // -- alarms
-    if ((0 == fType) && (4 == fReg)) {
+    if (4 == fType) {
       if (fIntVal > 0) {
         fAlarm = fIntVal;
       } else {
@@ -55,10 +55,10 @@ canFrame::canFrame(int canid, int len, unsigned char *data) {
 // ----------------------------------------------------------------------
 string canFrame::getString() {
    stringstream sbla;
-   sbla << std::hex << fCanId << " [" << fdlen << "] ";
+   sbla << std::hex << fCanId << " [" << fdlen << "]";
    char sbuffer[5];
    for (unsigned int i = 0; i < fdlen; ++i) {
-       sprintf(sbuffer, "%02X ", static_cast<int>(fData[i]));
+       sprintf(sbuffer, " %02X", static_cast<int>(fData[i]));
        sbla << sbuffer;
      }
    sbla << std::dec

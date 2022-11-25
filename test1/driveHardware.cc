@@ -254,7 +254,7 @@ void driveHardware::run() {
     int tdiff = diff_ms(tvNew, tvOld);
     if (tdiff > 1000.) {
       tvOld = tvNew;
-      cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
+      if (0) cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
       readSHT85();
 
       // -- read all parameters from CAN
@@ -813,6 +813,7 @@ TECData  driveHardware::initAllTECRegister() {
   return tdata;
 }
 
+
 // ----------------------------------------------------------------------
 void driveHardware::readAllParamsFromCANPublic() {
   // -- what to read
@@ -849,6 +850,7 @@ void driveHardware::readAllParamsFromCANPublic() {
     fTECData[i].reg["PowerState"].value = fCanMsg.getInt(i, regIdx);
   }
 }
+
 
 // ----------------------------------------------------------------------
 void driveHardware::readAllParamsFromCAN() {
@@ -888,13 +890,26 @@ void driveHardware::dumpCSV() {
   stringstream output;
 
   output  << timeStamp();
-  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["ControlVoltage_Set"].value;
-  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Temp_Set"].value;
+  output << fSHT85Temp << "," << fSHT85RH << "," << fSHT85DP;
+  for (int i = 1; i <= 1; ++i) {
+    output << "," << fTECData[i].reg["Temp_W"].value;
+  }
+
+  for (int i = 1; i <= 8; ++i) {
+    if (fActiveTEC[i]) output << "," << fTECData[i].reg["ControlVoltage_Set"].value;
+  }
+  for (int i = 1; i <= 8; ++i) {
+    if (fActiveTEC[i]) output << "," << fTECData[i].reg["Temp_Set"].value;
+  }
+
 //  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_kp"].value;
 //  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_ki"].value;
 //  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_kd"].value;
-  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Temp_M"].value;
-  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Temp_W"].value;
+
+  for (int i = 1; i <= 8; ++i) {
+    if (fActiveTEC[i]) output << "," << fTECData[i].reg["Temp_M"].value;
+  }
+
 //  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Peltier_I"].value;
 //  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Peltier_R"].value;
 //  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Peltier_P"].value;
@@ -902,8 +917,7 @@ void driveHardware::dumpCSV() {
 //  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Supply_I"].value;
 //  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Supply_P"].value;
 
-  string sout = output.str();
-  fCsvFile << sout << endl;
+  fCsvFile <<  output.str() << endl;
 }
 
 // ----------------------------------------------------------------------
