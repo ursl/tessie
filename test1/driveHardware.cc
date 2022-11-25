@@ -915,7 +915,7 @@ void driveHardware::dumpCSV() {
   stringstream output;
 
   output << timeStamp() << ","
-         << setprecision(1)
+         << setprecision(4)
          << fSHT85Temp << ","
          << fSHT85RH << ","
          << fSHT85DP;
