@@ -13,13 +13,8 @@ canFrame::canFrame(int canid, int len, unsigned char *data) {
   fdlen  = len;
   for (int i = 0; i < len; ++i) fData.push_back(data[i]);
 
-  if (fdlen > 0) {
-    fPrivate = (data[0] & 0x1);
-    fShift   = (data[0] & 0x6);
-  } else {
-    fPrivate = 99;
-    fShift   = 99;
-  }
+  fPrivate = (fCanId & 0x100)>>8;
+  fShift   = (fCanId & 0x600)>>9;
 
   if (ADDRESS_FRAS == fCanId) {
     // -- This is a FRAS message
