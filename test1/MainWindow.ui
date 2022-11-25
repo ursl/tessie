@@ -1106,7 +1106,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Arial</family>
+      <family>Menlo</family>
       <pointsize>8</pointsize>
      </font>
     </property>
