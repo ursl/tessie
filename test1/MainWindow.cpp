@@ -177,24 +177,18 @@ void MainWindow::tecSetFromUI(int itec, std::string rname, QWidget *qw) {
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValve0() {
-  stringstream sbla; sbla << "checkValve0 clicked, toggleFRAS(1)";
-  fLOG(INFO, sbla.str().c_str());
   fThread.toggleFras(1);
 }
 
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValve1() {
-  stringstream sbla; sbla << "checkValve1 clicked, toggleFRAS(2)";
-  fLOG(INFO, sbla.str());
   fThread.toggleFras(2);
 }
 
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValveAll() {
-  stringstream sbla; sbla << "checkValveAll clicked, toggleFRAS(3)";
-  fLOG(INFO, sbla.str());
   fThread.toggleFras(3);
 }
 

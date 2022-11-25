@@ -642,6 +642,9 @@ void driveHardware::toggleFras(int imask) {
   fFrameW.data[0] = fValveMask;
 #endif
 
+  stringstream sbla; sbla << "toggleFRAS(" << imask << ")";
+  fLOG(INFO, sbla.str().c_str());
+
   // -- Send message
 #ifdef PI
   setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
@@ -682,6 +685,14 @@ void  driveHardware::turnOnTEC(int itec) {
   fCANReg = 1; // Power_On
   fCANVal = fTECParameter;
   printf(" (2) send CMD with register %d, canID = %x\n", fCANReg, fCANId);
+
+  stringstream sbla; sbla << "turnOnTEC("
+                          << itec << ")"
+                          << " reg = " << fCANReg
+                          << " canID = " << fCANId
+                          << " val = " << fCANVal;
+  fLOG(INFO, sbla.str());
+
   sendCANmessage();
 }
 
@@ -700,6 +711,14 @@ void  driveHardware::turnOffTEC(int itec) {
   fCANReg = 2; // Power_Off
   fCANVal = fTECParameter;
   printf(" send CMD with register %d, canID = %x\n", fCANReg, fCANId);
+
+  stringstream sbla; sbla << "turnOffTEC("
+                          << itec << ")"
+                          << " reg = " << fCANReg
+                          << " canID = " << fCANId
+                          << " val = " << fCANVal;
+  fLOG(INFO, sbla.str());
+
   sendCANmessage();
 }
 

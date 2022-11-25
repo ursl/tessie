@@ -41,7 +41,7 @@ canFrame::canFrame(int canid, int len, unsigned char *data) {
      }
 
     // -- alarms
-    if (4 == fType) {
+    if ((0 == fType) && (4 == fReg)) {
       if (fIntVal > 0) {
         fAlarm = fIntVal;
       } else {
