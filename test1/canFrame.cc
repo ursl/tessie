@@ -30,7 +30,7 @@ canFrame::canFrame(int canid, int len, unsigned char *data) {
     fAlarm = 0;
     fTec = fCanId & 0xf;
     fReg = data[0];
-    fType = fCanId & 0x30;
+    fType = (fCanId & 0x30)>>4;
 
     // -- parse data if present
     if (5 == fdlen) {
