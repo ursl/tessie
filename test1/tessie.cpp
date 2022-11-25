@@ -6,7 +6,6 @@
 // -------------------------------------------------------------------------------
 int main(int argc, char *argv[]) {
   tLog LOG;
-  LOG(INFO, "start tessie");
 
   QApplication a(argc, argv);
   std::cout << "MainWindow w() call" << std::endl;
@@ -14,6 +13,8 @@ int main(int argc, char *argv[]) {
 
   std::cout << "LOG.setGUI(&w) call" << std::endl;
   LOG.setGui(&w);
+  // -- this must be after setGui(...)!
+  LOG(INFO, "start tessie");
 
   std::cout << "w.show() call" << std::endl;
   w.show();
