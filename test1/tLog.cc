@@ -60,7 +60,7 @@ void tLog::operator()(tLogLevel level, std::string print) {
     emit signalText(qsout);
   }
   cout << sout << endl;
-  fpGui->printText(sout);
+  if (fpGui) fpGui->printText(sout);
 }
 
 
