@@ -1,6 +1,7 @@
 #ifndef CANMESSAGE_HH
 #define CANMESSAGE_HH
 
+#include <string>
 #include <vector>
 #include <deque>
 #include <map>
@@ -19,8 +20,10 @@ public:
   // -- get errors encountered
   int nErrors();
   // -- clear frames
-//  void clearFrames() {fFrames.clear();} // vectors REMOVE
   void clearAllFrames();
+  // -- get accumulated error messages
+  std::deque<std::string> getErrors();
+
   // -- print
   void dump();
   void printMapFramesSize();
@@ -50,7 +53,8 @@ private:
   std::deque<canFrame>                 fqFRASFrames;
   std::deque<canFrame>                 fqAlarmFrames;
 
-  int fErrorCounter;
+  int                      fErrorCounter;
+  std::deque<std::string>  fqErrors;
 };
 
 #endif // CANMESSAGE_HH

@@ -268,6 +268,14 @@ void driveHardware::run() {
 
       // -- make sure there is no alarm before clearing
       parseCAN();
+      // -- print errors (if present) accumulated in CANmessage
+      if (fCanMsg.nErrors() > 0) {
+        deque<string> errs = fCanMsg.getErrors();
+        while (errs.size() > 0) {
+          fLOG(WARNING, errs.front());
+          errs.pop_front();
+        }
+      }
       fCanMsg.clearAllFrames();
     }
 

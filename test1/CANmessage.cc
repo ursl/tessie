@@ -1,5 +1,8 @@
 #include "CANmessage.hh"
 #include "canFrame.hh"
+#include <iostream>
+#include <unistd.h>
+#include <sstream>
 
 using namespace std;
 
@@ -32,6 +35,8 @@ void CANmessage::clearAllFrames() {
     cout << "1 clearAllFrames: " << endl;
     printMapFramesSize();
   }
+
+  fqErrors.clear();
 }
 
 
@@ -53,20 +58,14 @@ void CANmessage::addFrame(canFrame &x) {
     }
   }
   if (!filled) {
-    if (0) {
-      cout << "did NOT fill "; x.dump(false); cout << endl;
-    }
+    string errstring = "did not fill " + x.getString();
+    fqErrors.push_front(errstring);
   }
 }
 
 
 // ----------------------------------------------------------------------
 void CANmessage::dump() {
-//  cout << "dump vector containers" << endl;
-//  for (unsigned int i = 0; i < fFrames.size(); ++i) {
-//    fFrames[i].dump();
-//  }
-
   cout << "dump map<int, map<int, deque>> containers" << endl;
   for (auto &itt :fMapFrames) {
     for (auto &itr: itt.second) {
@@ -118,6 +117,13 @@ int CANmessage::nErrors() {
   return fErrorCounter;
 }
 
+
+// ----------------------------------------------------------------------
+deque<string> CANmessage::getErrors() {
+  return fqErrors;
+}
+
+
 // ----------------------------------------------------------------------
 float CANmessage::getFloat(unsigned int itec, unsigned int ireg) {
   float result(-98.);
@@ -131,8 +137,11 @@ float CANmessage::getFloat(unsigned int itec, unsigned int ireg) {
   }
 
   if (result < -90.) {
+    string errstring = "Error: reg " + to_string(ireg)
+        + " itec " + to_string(itec)
+        + " getFloat " + to_string(result);
+    fqErrors.push_front(errstring);
     ++fErrorCounter;
-    cout << "Error: reg " << ireg << " itec " << itec << " getFloat " << result << endl;
   }
   return result;
 }
@@ -152,7 +161,10 @@ int CANmessage::getInt(unsigned int itec, unsigned int ireg) {
 
   if (result < -90.) {
     ++fErrorCounter;
-    cout << "Error: reg " << ireg << " itec " << itec << " getInt " << result << endl;
+    string errstring = "Error: reg " + to_string(ireg)
+       + " itec " + to_string(itec)
+       + " getFloat " + to_string(result);
+    fqErrors.push_front(errstring);
   }
   return result;
 }

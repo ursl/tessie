@@ -22,6 +22,7 @@ SOURCES += \
     CANmessage.cc \
     MainWindow.cpp \
     TECDisplay.cpp \
+    canFrame.cc \
     driveHardware.cc \
     tLog.cc \
     tessie.cpp
