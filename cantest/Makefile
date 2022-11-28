@@ -13,8 +13,11 @@ i2ctest: i2ctest.c
 	gcc -o $@  $^
 
 container: container.cc
-	$(CC) $(CLFAGS) -o $@  $^
+	$(CC) $(CFLAGS) -o $@  $^
+
+mqtt: mqtt.cc
+	$(CC) $(CFLAGS) -o $@  $^
 
 
 clean:
-	    $(RM) can_send .*.sw?
+	    $(RM) can_send mqtt container .*.sw?
