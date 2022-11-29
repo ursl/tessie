@@ -16,7 +16,7 @@ container: container.cc
 	$(CC) $(CFLAGS) -o $@  $^
 
 mqtt: mqtt.cc
-	$(CC) $(CFLAGS) -o $@  $^
+	$(CC) $(CFLAGS) -L/opt/homebrew/lib -lmosquittopp -o $@  $^
 
 
 clean:
