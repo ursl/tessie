@@ -1,10 +1,11 @@
 CC = g++
 CFLAGS = -Wall -g -O0
+LIB_LDFLAGS = -shared
 
 ifeq ($(OSTYPE),darwin)
   MQTTLIBDIR = -L/opt/homebrew/lib -lmosquittopp
 else
-  MQTTLIBDIR = -L/usr/lib/arm-linux-gnueabihf/ -lmosquittopp -lmosquitto
+  MQTTLIBDIR = -L/usr/lib/arm-linux-gnueabihf/ -lmosquittopp 
 endif
 
 all: can_send can_receive
@@ -21,8 +22,8 @@ i2ctest: i2ctest.c
 container: container.cc
 	$(CC) $(CFLAGS) -o $@  $^
 
-mqtt: mqtt.cc
-	$(CC) $(CFLAGS) $(MQTTLIBDIR) -o $@  $^
+mqtt: mqtt.o
+	$(CC) $(LIB_LDFLAGS) $(MQTTLIBDIR) -o $@  $^
 
 
 clean:
