@@ -5,6 +5,9 @@
 
 using namespace std;
 
+bool gConnected(false);
+string gReadMsg("");
+
 // -- tessie mosquitto client class
 class tMosq : public mosqpp::mosquittopp {
   // struct mosquitto_message{
@@ -31,8 +34,9 @@ private:
 public:
   tMosq(const char *id, const char *topic, const char *host, int port);
   ~tMosq();
-  bool send_message(const char * message);
+  bool   send_message(const char * message);
   string rec_message(const char *topic);
+  int    fPublished;
 };
 
 tMosq::tMosq(const char *id,const char *topic, const char *host, int port) : mosquittopp(id) {
@@ -53,10 +57,9 @@ tMosq::~tMosq() {
 
 bool tMosq::send_message(const char *message) {
   // Send message - depending on QoS, mosquitto lib managed re-submission this the thread
-  //
   // * NULL : Message Id (int *) this allow to latter get status of each message
   // * topic : topic to be used
-  // * lenght of the message
+  // * length of the message
   // * message
   // * qos (0,1,2)
   // * retain (boolean) - indicates if message is retained on broker or not
@@ -66,8 +69,6 @@ bool tMosq::send_message(const char *message) {
 }
 
 void tMosq::on_message(const struct mosquitto_message *message) {
-  double temp_celsius, temp_farenheit;
-
   cout << "on_message: ->" << message->topic << "<-" << endl;
   string smsg("");
   if (!strcmp(message->topic, "test")){
@@ -76,6 +77,7 @@ void tMosq::on_message(const struct mosquitto_message *message) {
     smsg = string(buffer);
   }
   cout << "received message, len = " << message->payloadlen << " ->" << smsg << "<-" << endl;
+  gReadMsg = smsg;
 }
 
 void tMosq::on_subscribe() {
@@ -92,13 +94,16 @@ void tMosq::on_connect(int rc) {
     cout << ">> subscribing to \"test\" " << endl;
     subscribe(NULL, "test");
     cout << ">> subscribed to \"test\" " << endl;
+    gConnected = true; 
   } else {
     cout << ">> tMosq - Impossible to connect with server(" << rc << ")" << endl;
+    gConnected = false; 
   }
 }
 
 void tMosq::on_publish(int mid) {
   cout << ">> tMosq - Message (" << mid << ") succeed to be published " << endl;
+  fPublished = true;
 }
 
 
@@ -118,13 +123,11 @@ int main(int argc, char *argv[]) {
   class tMosq *tmosq;;
   int rc;
   
-  mosqpp::lib_init();
-  
   tmosq = new tMosq("tmosq", "test", "coldbox01", 1883);
   
   while(1){
     rc = tmosq->loop();
-    if(rc) {
+    if (rc) {
       tmosq->reconnect();
     } else {
       break;
@@ -133,8 +136,16 @@ int main(int argc, char *argv[]) {
 
   cout << "connected. " << endl;
   if (1 == send) {
-    cout << "send message" << endl;
-    tmosq->send_message("hallo");
+    while(1){
+      if (gConnected) break;
+    }
+    cout << "send message ->" << msg.c_str() << "<-" << endl;
+    while (1) {
+      tmosq->send_message(msg.c_str());
+      usleep(20000);
+      if (tmosq->fPublished) break;
+    }
+
   } else {
     cout << "waiting to receive " << endl;
     while(1){
