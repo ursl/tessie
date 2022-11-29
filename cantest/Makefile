@@ -27,4 +27,4 @@ mqtt: mqtt.o
 
 
 clean:
-	    $(RM) can_send mqtt container .*.sw?
+	    $(RM) *.o can_send mqtt container .*.sw?
