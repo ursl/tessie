@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <iostream>
+#include <cstring>
 
 #include <mosquittopp.h>
 
