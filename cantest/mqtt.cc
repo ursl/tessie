@@ -5,12 +5,13 @@
 #include <mosquittopp.h>
 
 using namespace std;
+using namespace mosqpp;
 
 bool gConnected(false);
 string gReadMsg("");
 
 // -- tessie mosquitto client class
-class tMosq : public mosqpp::mosquittopp {
+class tMosq : public mosquittopp {
   // struct mosquitto_message{
   // 	uint16_t mid;
   // 	char *topic;
