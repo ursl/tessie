@@ -1,6 +1,12 @@
 CC = g++
 CFLAGS = -Wall -g -O0
 
+ifeq ($(OSTYPE),darwin)
+  MQTTLIBDIR = -L/opt/homebrew/lib
+else
+  MQTTLIBDIR = -L/fixme
+endif
+
 all: can_send can_receive
 
 can_send:can_send.c 
@@ -16,7 +22,7 @@ container: container.cc
 	$(CC) $(CFLAGS) -o $@  $^
 
 mqtt: mqtt.cc
-	$(CC) $(CFLAGS) -L/opt/homebrew/lib -lmosquittopp -o $@  $^
+	$(CC) $(CFLAGS) $(MQTTLIBDIR) -lmosquittopp -o $@  $^
 
 
 clean:
