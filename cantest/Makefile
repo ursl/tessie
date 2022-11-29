@@ -1,6 +1,6 @@
-CC = g++
-CFLAGS = -Wall -g -O0
-LIB_LDFLAGS = -shared
+CC = c++
+CFLAGS = -Wall -g -O0 -shared
+LIB_LDFLAGS = 
 
 ifeq ($(OSTYPE),darwin)
   MQTTLIBDIR = -L/opt/homebrew/lib -lmosquittopp
