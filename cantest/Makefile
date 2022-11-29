@@ -4,7 +4,7 @@ CFLAGS = -Wall -g -O0
 ifeq ($(OSTYPE),darwin)
   MQTTLIBDIR = -L/opt/homebrew/lib
 else
-  MQTTLIBDIR = -L/fixme
+  MQTTLIBDIR = -L/usr/lib/arm-linux-gnueabihf/
 endif
 
 all: can_send can_receive
