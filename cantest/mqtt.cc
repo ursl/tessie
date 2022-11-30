@@ -8,7 +8,6 @@ using namespace std;
 using namespace mosqpp;
 
 bool gConnected(false);
-string gReadMsg("");
 
 // -- tessie mosquitto client class
 class tMosq : public mosquittopp {
@@ -73,12 +72,11 @@ void tMosq::on_message(const struct mosquitto_message *message) {
   cout << "on_message: ->" << message->topic << "<-" << endl;
   string smsg("");
   if (!strcmp(message->topic, "test")){
-    char *buffer = new char[message->payloadlen];
+    char *buffer = new char[message->payloadlen+1];
     memcpy(buffer, message->payload, message->payloadlen*sizeof(char));
     smsg = string(buffer);
   }
   cout << "received message, len = " << message->payloadlen << " ->" << smsg << "<-" << endl;
-  gReadMsg = smsg;
 }
 
 void tMosq::on_subscribe() {
@@ -140,8 +138,10 @@ int main(int argc, char *argv[]) {
 
   cout << "connected. " << endl;
   if (1 == send) {
+    // -- wait for connection 
     while(1){
       if (gConnected) break;
+      usleep(2000);
     }
     cout << "send message ->" << msg.c_str() << "<-" << endl;
     while (1) {
