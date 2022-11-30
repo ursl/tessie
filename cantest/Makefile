@@ -23,7 +23,7 @@ container: container.cc
 	$(CXX) $(CFLAGS) -o $@  $^
 
 mqtt: mqtt.o
-	$(CXX) $(LIB_LDFLAGS) -o $@ $(MQTTLIBDIR) $^
+	$(CXX) $(LIB_LDFLAGS) -o $@ $^ $(MQTTLIBDIR) 
 
 
 clean:
