@@ -20,6 +20,12 @@ class tMosq : public mosquittopp {
   // 	int qos;
   // 	bool retain;
   // };
+public:
+  tMosq(const char *id, const char *topic, const char *host, int port);
+  ~tMosq();
+  bool   send_message(const char *message);
+  string rec_message(const char *topic);
+  int    fPublished;
 
 private:
   const char *fHost;
@@ -33,16 +39,9 @@ private:
   void on_publish(int mid);
   void on_subscribe();
   void on_message(const struct mosquitto_message *message);
-public:
-  tMosq(const char *id, const char *topic, const char *host, int port);
-  ~tMosq();
-  bool   send_message(const char * message);
-  string rec_message(const char *topic);
-  int    fPublished;
 };
 
 tMosq::tMosq(const char *id,const char *topic, const char *host, int port) : mosquittopp(id) {
-  mosqpp::lib_init(); // Mandatory initialization for mosquitto library
   fKeepalive = 60;    // Basic configuration setup for tMosq class
   fId    = id;
   fPort  = port;
@@ -113,11 +112,14 @@ void tMosq::on_publish(int mid) {
 // ----------------------------------------------------------------------
 int main(int argc, char *argv[]) {
   int send(0);
-  string msg("");
+  string msg(""), host("coldbox01"), topic("test"), id("0");
   
   // -- command line arguments
   for (int i = 0; i < argc; i++){
+    if (!strcmp(argv[i], "-h"))  {host = string(argv[++i]); }
+    if (!strcmp(argv[i], "-i"))  {id = string(argv[++i]); }
     if (!strcmp(argv[i], "-s"))  {msg  = string(argv[++i]); send = 1; }
+    if (!strcmp(argv[i], "-t"))  {topic = string(argv[++i]); }
   } 
 
   mosqpp::lib_init();
@@ -125,9 +127,9 @@ int main(int argc, char *argv[]) {
   class tMosq *tmosq;;
   int rc;
   
-  tmosq = new tMosq("tmosq", "test", "coldbox01", 1883);
+  tmosq = new tMosq(id.c_str(), topic.c_str(), host.c_str(), 1883);
   
-  while(1){
+  while(1) {
     rc = tmosq->loop();
     if (rc) {
       tmosq->reconnect();
