@@ -87,14 +87,14 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   readSHT85();
 #endif
 
-  //rpc  fRpcThread = new QThread();
-  //rpc  fRpcServer = new rpcServer(this);
-  //rpc  connect(this, &driveHardware::sendToServer, fRpcServer, &rpcServer::sentToServer);
-  //rpc  connect(this, &driveHardware::startServer, fRpcServer, &rpcServer::run);
-  //rpc  connect(fRpcServer, &rpcServer::sendFromServer, this, &driveHardware::sentFromServer);
-  //rpc  fRpcServer->moveToThread(fRpcThread);
-  //rpc  fRpcThread->start();
-  //rpc  emit startServer();
+  fIoThread = new QThread();
+  fIoServer = new ioServer(this);
+  connect(this, &driveHardware::sendToServer, fIoServer, &ioServer::sentToServer);
+  connect(this, &driveHardware::startServer, fIoServer, &ioServer::run);
+  connect(fIoServer, &ioServer::sendFromServer, this, &driveHardware::sentFromServer);
+  fIoServer->moveToThread(fIoThread);
+  fIoThread->start();
+  emit startServer();
 
 #ifdef PI
   // -- write CAN socket
@@ -183,14 +183,15 @@ driveHardware::~driveHardware() {
   fCondition.wakeOne();
   fMutex.unlock();
 
-  //rpc  fRpcThread->quit();
-  //rpc  fRpcThread->wait();
+  fIoThread->quit();
+  fIoThread->wait();
 
   wait();
 #ifdef PI
   shutDown();
 #endif
 }
+
 
 // ----------------------------------------------------------------------
 void driveHardware::sentFromServer(const QString &result) {

@@ -16,7 +16,7 @@
 
 #include "TECData.hh"
 #include "tLog.hh"
-//rpc #include "rpcServer.hh"
+#include "ioServer.hh"
 
 #ifdef PI
 #include <net/if.h>
@@ -127,8 +127,8 @@ private:
   QMutex fMutex;
   QWaitCondition fCondition;
 
-  QThread   *fRpcThread;
-  //rpc  rpcServer *fRpcServer;
+  QThread   *fIoThread;
+  ioServer  *fIoServer;
 
   CANmessage fCanMsg;
 
