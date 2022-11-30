@@ -75,6 +75,7 @@ void tMosq::on_message(const struct mosquitto_message *message) {
     char *buffer = new char[message->payloadlen+1];
     memcpy(buffer, message->payload, message->payloadlen*sizeof(char));
     smsg = string(buffer);
+    smsg = string(message->payload);
   }
   cout << "received message, len = " << message->payloadlen << " ->" << smsg << "<-" << endl;
 }
