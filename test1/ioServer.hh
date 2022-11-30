@@ -3,6 +3,8 @@
 
 #include <QtCore/QObject>
 
+#include "tMosq.hh"
+
 class driveHardware;
 // ----------------------------------------------------------------------
 class ioServer: public QObject {
@@ -23,6 +25,8 @@ signals:
   void sendFromServer(const QString &result);
 
 private:
+  tMosq   *fMosq;
+
   QString fString;
   float   fOldTemperature;
 };
