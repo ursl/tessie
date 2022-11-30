@@ -14,8 +14,9 @@ CONFIG += c++17
 CONFIG(PI) {
    DEFINES += PI
 #   LIBS += -lwiringPi
+   LIBS += -L/usr/lib/arm-linux-gnueabihf/ -lmosquittopp
 } else {
-
+   LIBS += -L/opt/homebrew/lib -lmosquittopp
 }
 
 SOURCES += \
