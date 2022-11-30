@@ -145,11 +145,11 @@ int main(int argc, char *argv[]) {
       usleep(2000);
     }
     cout << "send message ->" << msg.c_str() << "<-" << endl;
-    //    while (1) {
-    tmosq->send_message(msg.c_str());
-    //   usleep(20000);
-    //   if (tmosq->fPublished) break;
-    // }
+    while (1) {
+      tmosq->send_message(msg.c_str());
+      usleep(50000);
+      if (tmosq->fPublished) break;
+    }
 
   } else {
     cout << "waiting to receive " << endl;
