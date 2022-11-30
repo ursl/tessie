@@ -1,6 +1,6 @@
 CXX = c++
-CXXFLAGS = -Wall -g -O0 -shared
-LIB_LDFLAGS = 
+CXXFLAGS = -Wall -g -O0 -fPIC
+LIB_LDFLAGS = -g -O0 -fPIC
 
 ifeq ($(OSTYPE),darwin)
   MQTTLIBDIR = -L/opt/homebrew/lib -lmosquittopp
