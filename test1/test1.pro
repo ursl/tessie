@@ -17,6 +17,7 @@ CONFIG(PI) {
    LIBS += -L/usr/lib/arm-linux-gnueabihf/ -lmosquittopp
 } else {
    LIBS += -L/opt/homebrew/lib -lmosquittopp
+   INCLUDEPATH += /opt/homebrew/include
 }
 
 SOURCES += \
@@ -27,6 +28,7 @@ SOURCES += \
     driveHardware.cc \
     tLog.cc \
     ioServer.cc \
+    tMosq.cc \
     tessie.cpp
 
 HEADERS += \
@@ -38,7 +40,8 @@ HEADERS += \
     canFrame.hh \
     driveHardware.hh \
     tLog.hh \\
-    ioServer.hh
+    ioServer.hh \
+    tMosq.hh
 
 FORMS += \
     MainWindow.ui \
