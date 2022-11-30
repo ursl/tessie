@@ -1,6 +1,7 @@
 #include "tMosq.hh"
 
 #include <iostream>
+#include <cstring>
 
 using namespace std;
 
