@@ -1,5 +1,5 @@
-CC = c++
-CFLAGS = -Wall -g -O0 -shared
+CXX = c++
+CXXFLAGS = -Wall -g -O0 -shared
 LIB_LDFLAGS = 
 
 ifeq ($(OSTYPE),darwin)
@@ -11,19 +11,19 @@ endif
 all: can_send can_receive
 
 can_send:can_send.c 
-	    $(CC) $(CFLAGS) -o $@ $^ 
+	    $(CXX) $(CFLAGS) -o $@ $^ 
 
 can_receive:can_receive.c 
-	    $(CC) $(CFLAGS) -o $@ $^ 
+	    $(CXX) $(CFLAGS) -o $@ $^ 
 
 i2ctest: i2ctest.c
 	gcc -o $@  $^
 
 container: container.cc
-	$(CC) $(CFLAGS) -o $@  $^
+	$(CXX) $(CFLAGS) -o $@  $^
 
 mqtt: mqtt.o
-	$(CC) $(LIB_LDFLAGS) $(MQTTLIBDIR) -o $@  $^
+	$(CXX) $(LIB_LDFLAGS) -o $@ $(MQTTLIBDIR) $^
 
 
 clean:
