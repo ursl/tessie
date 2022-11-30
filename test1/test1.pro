@@ -26,6 +26,7 @@ SOURCES += \
     canFrame.cc \
     driveHardware.cc \
     tLog.cc \
+    ioServer.cc \
     tessie.cpp
 
 HEADERS += \
@@ -36,7 +37,8 @@ HEADERS += \
     TECRegister.hh \
     canFrame.hh \
     driveHardware.hh \
-    tLog.hh
+    tLog.hh \\
+    ioServer.hh
 
 FORMS += \
     MainWindow.ui \
