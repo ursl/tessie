@@ -390,11 +390,14 @@ void driveHardware::parseCAN() {
 
 // ----------------------------------------------------------------------
 void driveHardware::parseIoMessage() {
+  cout << "driveHardware::parseIoMessage entered" << endl;
   if (string::npos != fIoMessage.find("getTemp")) {
-   float x = getTemperature();
-   QString qmsg = QString("Temp = ") + QString::number(x, 'f', 2);
-
-   emit sendToServer(qmsg);
+    float x = getTemperature();
+    QString qmsg = QString("Temp = ") + QString::number(x, 'f', 2);
+    cout << "  driveHardware::parseIoMessage> sendToServer("
+         << qmsg.toStdString()
+         << endl;
+    emit sendToServer(qmsg);
   }
 
 
