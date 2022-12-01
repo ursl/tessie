@@ -13,10 +13,7 @@ using namespace std;
 
 // ----------------------------------------------------------------------
 ioServer::ioServer(driveHardware *h) {
-  // cout << "rpcServer::rpcServer() starting RPC server" << endl;
-  // startServer();
   fMosq = new tMosq("tessie", "ctrlTessie", "localhost", 1883);
-
 }
 
 

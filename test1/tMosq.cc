@@ -36,7 +36,7 @@ bool tMosq::send_message(const char *message) {
 void tMosq::on_message(const struct mosquitto_message *message) {
   cout << "on_message: ->" << message->topic << "<-" << endl;
   string smsg("");
-  if (!strcmp(message->topic, "test")){
+  if (!strcmp(message->topic, fTopic)){
     char *buffer = new char[message->payloadlen+1];
     memcpy(buffer, message->payload, message->payloadlen*sizeof(char));
     smsg = string(buffer);
@@ -56,9 +56,9 @@ void tMosq::on_disconnect(int rc) {
 void tMosq::on_connect(int rc) {
   if (0 == rc) {
     cout << ">> tMosq - connected with server" << endl;
-    cout << ">> subscribing to \"test\" " << endl;
-    subscribe(NULL, "test");
-    cout << ">> subscribed to \"test\" " << endl;
+    cout << ">> subscribing to \"" << fTopic << "\" " << endl;
+    subscribe(NULL, fTopic);
+    cout << ">> subscribed to \"" << fTopic << "\" " << endl;
     fConnected = true;
   } else {
     cout << ">> tMosq - Impossible to connect with server(" << rc << ")" << endl;
