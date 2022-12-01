@@ -12,14 +12,14 @@
 using namespace std;
 
 // ----------------------------------------------------------------------
-ioServer::ioServer(driveHardware *h) {
-  fMosq = new tMosq("tessie", "ctrlTessie", "localhost", 1883);
+ioServer::ioServer(driveHardware *h): fHardware(h) {
+  fCtrlTessie = new tMosq("tessie", "ctrlTessie", "localhost", 1883);
 }
 
 
 // ----------------------------------------------------------------------
 ioServer::~ioServer() {
-  delete fMosq;
+  delete fCtrlTessie;
 }
 
 
@@ -35,11 +35,13 @@ void ioServer::run() {
   chrono::milliseconds milli5 = chrono::milliseconds(5);
   int cntMsg(0);
   while (1) {
-    int nmsg = fMosq->getNMessages();
+    int nmsg = fCtrlTessie->getNMessages();
     if (nmsg != cntMsg) {
-      string msg = fMosq->getMessage();
+      string msg = fCtrlTessie->getMessage();
       cout << "ioServer: ->" << msg << "<-" << endl;
       cntMsg = nmsg;
+      printFromServer(msg);
+
     } else {
       std::this_thread::sleep_for(milli5);
     }
@@ -51,9 +53,9 @@ void ioServer::run() {
 void ioServer::startServer() {
   cout << "ioServer::startServer()" << endl;
   while(1) {
-    int rc = fMosq->loop();
+    int rc = fCtrlTessie->loop();
     if (rc) {
-      fMosq->reconnect();
+      fCtrlTessie->reconnect();
     } else {
       break;
     }
@@ -63,7 +65,8 @@ void ioServer::startServer() {
 
 
 // ----------------------------------------------------------------------
-void ioServer::printFromServer(const QString &result) {
-  emit sendFromServer(result);
+void ioServer::printFromServer(string msg) {
+  QString qmsg = QString::fromStdString(msg);
+  emit sendFromServer(qmsg);
 }
 

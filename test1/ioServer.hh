@@ -13,7 +13,7 @@ class ioServer: public QObject {
 
 public:
   ioServer(driveHardware *);
-  void printFromServer(const QString &result);
+  void printFromServer(std::string result);
   virtual ~ioServer();
 
 public slots:
@@ -25,10 +25,8 @@ signals:
   void sendFromServer(const QString &result);
 
 private:
-  tMosq   *fMosq;
-
-  QString fString;
-  float   fOldTemperature;
+  tMosq         *fCtrlTessie;
+  driveHardware *fHardware;
 };
 
 #endif // RPCSERVER_H

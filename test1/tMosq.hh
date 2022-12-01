@@ -26,6 +26,7 @@ public:
   bool   fConnected;
   std::string getMessage();
   int    getNMessages() {return fNMessages;}
+  void on_subscribe();
 
 private:
   const char *fHost;
@@ -37,7 +38,6 @@ private:
   void on_connect(int rc);
   void on_disconnect(int rc);
   void on_publish(int mid);
-  void on_subscribe();
   void on_message(const struct mosquitto_message *message);
 
   // -- messages counter
