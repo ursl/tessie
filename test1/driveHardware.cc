@@ -232,7 +232,7 @@ void driveHardware::run() {
   struct timeval tvOld, tvNew;
   gettimeofday(&tvOld, 0);
 
-  emit(startServer());
+  emit startServer();
 
   while (1) {
     ++cnt;
