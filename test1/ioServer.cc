@@ -33,9 +33,9 @@ void ioServer::sentToServer(const QString &result) {
 // ----------------------------------------------------------------------
 void ioServer::run() {
   chrono::milliseconds milli5 = chrono::milliseconds(5);
-  cout << "ioServer::run() starting ioServer" << endl;
-  startServer();
-  cout << "ioServer::run() after starting ioServer" << endl;
+//  cout << "ioServer::run() starting ioServer" << endl;
+//  startServer();
+//  cout << "ioServer::run() after starting ioServer" << endl;
   int cntMsg(0);
   while (1) {
     int nmsg = fMosq->getNMessages();
