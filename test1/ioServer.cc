@@ -16,6 +16,7 @@ ioServer::ioServer(driveHardware *h) {
   // cout << "rpcServer::rpcServer() starting RPC server" << endl;
   // startServer();
   fMosq = new tMosq("tessie", "ctrlTessie", "localhost", 1883);
+
 }
 
 
@@ -28,7 +29,7 @@ ioServer::~ioServer() {
 // ----------------------------------------------------------------------
 void ioServer::sentToServer(const QString &result) {
   cout << "rpcServer::sentToServer() received ->" << result.toStdString() << "<-" << endl;
-  emit("ioServer result emitted");
+ // emit("ioServer result emitted");
 }
 
 
@@ -43,6 +44,16 @@ void ioServer::run() {
 // ----------------------------------------------------------------------
 void ioServer::startServer() {
   cout << "ioServer::startServer()" << endl;
+  while(1) {
+    int rc = fMosq->loop();
+    if (rc) {
+      fMosq->reconnect();
+    } else {
+      break;
+    }
+  }
+  cout << "connected. " << endl;
+
 }
 
 
