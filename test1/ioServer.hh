@@ -14,11 +14,11 @@ class ioServer: public QObject {
 public:
   ioServer(driveHardware *);
   void printFromServer(const QString &result);
-  void startServer();
   virtual ~ioServer();
 
 public slots:
   void sentToServer(const QString &result);
+  void startServer();
   void run();
 
 signals:
