@@ -16,9 +16,7 @@ public:
   ~ioServer();
   void run();
   void printFromServer(std::string msg);
-  //void sendIoMessage(std::string msg);
-
-  void sentToServer(const QString &msg);
+  void sentToServer(std::string msg);
   void startServer();
 
   void sendFromServer(const QString &msg);

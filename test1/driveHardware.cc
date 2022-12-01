@@ -389,17 +389,26 @@ void driveHardware::getIoMessage(std::string msg) {
 
 // ----------------------------------------------------------------------
 void driveHardware::parseIoMessage() {
-  cout << "driveHardware::parseIoMessage entered" << endl;
   if (string::npos != fIoMessage.find("getTemp")) {
-    float x = getTemperature();
-    QString qmsg = QString("Temp = ") + QString::number(x, 'f', 2);
-    cout << "  driveHardware::parseIoMessage> emit sendToServer("
-         << qmsg.toStdString()
-         << ")"
-         << endl;
-    fIoServer->sentToServer(qmsg);
+    stringstream str;
+    str << "Temp = " << getTemperature();
+    fIoServer->sentToServer(str.str());
+    return;
   }
 
+  if (string::npos != fIoMessage.find("getRH")) {
+    stringstream str;
+    str << "RH = " << getRH();
+    fIoServer->sentToServer(str.str());
+    return;
+  }
+
+  if (string::npos != fIoMessage.find("getDP")) {
+    stringstream str;
+    str << "DP = " << getDP();
+    fIoServer->sentToServer(str.str());
+    return;
+  }
 
 }
 

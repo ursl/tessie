@@ -25,15 +25,12 @@ ioServer::~ioServer() {
 
 
 // ----------------------------------------------------------------------
-void ioServer::sentToServer(const QString &msg) {
-  string smsg = msg.toStdString();
-  cout << "ioServer::sentToServer() received ->" << smsg << "<-" << endl;
-
+void ioServer::sentToServer(string msg) {
   while (1) {
-    bool ok = fCtrlTessie->sendMessage(smsg.c_str());
+    bool ok = fCtrlTessie->sendMessage(msg.c_str());
     usleep(50000);
     if (ok) break;
-//    if (fCtrlTessie->published()) break;
+    //    if (fCtrlTessie->published()) break;
   }
 }
 
