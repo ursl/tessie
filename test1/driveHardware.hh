@@ -58,6 +58,7 @@ public:
   void  readCANmessage();
   void  parseCAN();
 
+  void getIoMessage(std::string msg);
   void parseIoMessage();
 
   // -- controlling the FRAS/valve(s)
@@ -105,13 +106,13 @@ public:
 
 
 public slots:
-  void  sentFromServer(const QString&);
+//  void  sentFromServer(const QString&);
 
 signals:
   void  signalSomething(int x);
   void  signalText(QString x);
-  void  sendToServer(QString x);
-  void  startServer();
+//  void  sendToServer(QString x);
+//  void  startServer();
   void  updateHwDisplay();
 
 protected:

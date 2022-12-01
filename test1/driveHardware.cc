@@ -88,9 +88,9 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
 
   fIoThread = new QThread();
   fIoServer = new ioServer(this);
-  connect(this, &driveHardware::sendToServer, fIoServer, &ioServer::sentToServer);
-  connect(this, &driveHardware::startServer, fIoServer, &ioServer::startServer);
-  connect(fIoServer, &ioServer::sendFromServer, this, &driveHardware::sentFromServer);
+//  connect(this, &driveHardware::sendToServer, fIoServer, &ioServer::sentToServer);
+//  connect(this, &driveHardware::startServer, fIoServer, &ioServer::startServer);
+//  connect(fIoServer, &ioServer::sendFromServer, this, &driveHardware::sentFromServer);
   fIoServer->moveToThread(fIoThread);
   fIoThread->start();
 
@@ -192,15 +192,6 @@ driveHardware::~driveHardware() {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::sentFromServer(const QString &result) {
-  fIoMessage = result.toStdString();
-  cout << "driveHardware::sentFromServer() ->" << fIoMessage << "<-" << endl;
-  emit signalText(result);
-  parseIoMessage();
-}
-
-
-// ----------------------------------------------------------------------
 //void driveHardware::updateHwDisplay() {
 //  cout << "driveHardware::updateHwDisplay() " << endl;
 //  emit signalSomething(1);
@@ -232,7 +223,7 @@ void driveHardware::run() {
   struct timeval tvOld, tvNew;
   gettimeofday(&tvOld, 0);
 
-  emit startServer();
+  fIoServer->startServer();
 
   while (1) {
     ++cnt;
@@ -389,6 +380,14 @@ void driveHardware::parseCAN() {
 
 
 // ----------------------------------------------------------------------
+void driveHardware::getIoMessage(std::string msg) {
+  fIoMessage = msg;
+  parseIoMessage();
+}
+
+
+
+// ----------------------------------------------------------------------
 void driveHardware::parseIoMessage() {
   cout << "driveHardware::parseIoMessage entered" << endl;
   if (string::npos != fIoMessage.find("getTemp")) {
@@ -398,8 +397,6 @@ void driveHardware::parseIoMessage() {
          << qmsg.toStdString()
          << ")"
          << endl;
-    emit sendToServer(qmsg);
-    cout << "try direct call" << endl;
     fIoServer->sentToServer(qmsg);
   }
 
