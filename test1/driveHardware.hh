@@ -110,7 +110,7 @@ public slots:
 signals:
   void  signalSomething(int x);
   void  signalText(QString x);
-  void  sendToServer(const QString&);
+  void  sendToServer(QString x);
   void  startServer();
   void  updateHwDisplay();
 
