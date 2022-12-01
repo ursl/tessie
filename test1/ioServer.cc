@@ -61,6 +61,7 @@ void ioServer::startServer() {
       break;
     }
   }
+  run();
 }
 
 

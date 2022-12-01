@@ -89,6 +89,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
 
   fIoThread = new QThread();
   fIoServer = new ioServer(this);
+  fIoServer->startServer();
   connect(this, &driveHardware::sendToServer, fIoServer, &ioServer::sentToServer);
   //  connect(this, &driveHardware::startServer, fIoServer, &ioServer::run);
   connect(fIoServer, &ioServer::sendFromServer, this, &driveHardware::sentFromServer);

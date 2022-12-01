@@ -41,7 +41,7 @@ bool tMosq::send_message(const char *message) {
 
 // ----------------------------------------------------------------------
 void tMosq::on_message(const struct mosquitto_message *message) {
-  // cout << "on_message: ->" << message->topic << "<-" << endl;
+  cout << "on_message: ->" << message->topic << "<-" << endl;
   string smsg("");
   if (!strcmp(message->topic, fTopic)){
     char *buffer = new char[message->payloadlen+1];
