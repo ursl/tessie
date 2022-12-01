@@ -88,8 +88,6 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
 
   fIoThread = new QThread();
   fIoServer = new ioServer(this);
-  connect(this, &driveHardware::sendToServer, fIoServer, &ioServer::sentToServer);
-  connect(this, &driveHardware::startServer, fIoServer, &ioServer::startServer);
   connect(fIoServer, &ioServer::sendFromServer, this, &driveHardware::sentFromServer);
   fIoServer->moveToThread(fIoThread);
   fIoThread->start();
@@ -396,6 +394,7 @@ void driveHardware::parseIoMessage() {
     QString qmsg = QString("Temp = ") + QString::number(x, 'f', 2);
     cout << "  driveHardware::parseIoMessage> sendToServer("
          << qmsg.toStdString()
+         << ")"
          << endl;
     emit sendToServer(qmsg);
   }
