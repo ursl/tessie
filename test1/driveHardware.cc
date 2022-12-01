@@ -394,11 +394,13 @@ void driveHardware::parseIoMessage() {
   if (string::npos != fIoMessage.find("getTemp")) {
     float x = getTemperature();
     QString qmsg = QString("Temp = ") + QString::number(x, 'f', 2);
-    cout << "  driveHardware::parseIoMessage> sendToServer("
+    cout << "  driveHardware::parseIoMessage> emit sendToServer("
          << qmsg.toStdString()
          << ")"
          << endl;
     emit sendToServer(qmsg);
+    cout << "try direct call" << endl;
+    fIoServer->sentToServer(qmsg);
   }
 
 
