@@ -13,6 +13,8 @@ using namespace std;
 // ----------------------------------------------------------------------
 ioServer::ioServer(driveHardware *h): fHardware(h) {
   fCtrlTessie = new tMosq("tessie", "ctrlTessie", "localhost", 1883);
+
+  connect(fHardware, &driveHardware::sendToServer, this, &ioServer::sentToServer);
 }
 
 
