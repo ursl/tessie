@@ -25,16 +25,28 @@ ioServer::~ioServer() {
 
 // ----------------------------------------------------------------------
 void ioServer::sentToServer(const QString &result) {
-  cout << "rpcServer::sentToServer() received ->" << result.toStdString() << "<-" << endl;
+  cout << "ioServer::sentToServer() received ->" << result.toStdString() << "<-" << endl;
  // emit("ioServer result emitted");
 }
 
 
 // ----------------------------------------------------------------------
 void ioServer::run() {
-  cout << "ioServer::run() starting RPC server" << endl;
+  chrono::milliseconds milli5 = chrono::milliseconds(5);
+  cout << "ioServer::run() starting ioServer" << endl;
   startServer();
-  cout << "ioServer::run() after starting RPC server" << endl;
+  cout << "ioServer::run() after starting ioServer" << endl;
+  int cntMsg(0);
+  while (1) {
+    int nmsg = fMosq->getNMessages();
+    if (nmsg != cntMsg) {
+      string msg = fMosq->getMessage();
+      cout << "ioServer: ->" << msg << "<-" << endl;
+      cntMsg = nmsg;
+    } else {
+      std::this_thread::sleep_for(milli5);
+    }
+  }
 }
 
 
@@ -49,8 +61,6 @@ void ioServer::startServer() {
       break;
     }
   }
-  cout << "connected. " << endl;
-
 }
 
 

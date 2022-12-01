@@ -2,6 +2,8 @@
 #define TMOSQ_HH
 
 #include <string>
+#include <queue>
+
 #include <mosquittopp.h>
 
 // struct mosquitto_message{
@@ -19,9 +21,11 @@ public:
   tMosq(const char *id, const char *topic, const char *host, int port);
   ~tMosq();
   bool   send_message(const char *message);
-  std::string rec_message(const char *topic);
+  //  std::string rec_message(const char *topic);
   int    fPublished;
   bool   fConnected;
+  std::string getMessage();
+  int    getNMessages() {return fNMessages;}
 
 private:
   const char *fHost;
@@ -35,6 +39,10 @@ private:
   void on_publish(int mid);
   void on_subscribe();
   void on_message(const struct mosquitto_message *message);
+
+  // -- messages counter
+  int                     fNMessages;
+  std::queue<std::string> fMessages;
 };
 
 #endif // TMOSQ_HH

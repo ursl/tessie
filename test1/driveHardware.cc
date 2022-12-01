@@ -90,11 +90,10 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   fIoThread = new QThread();
   fIoServer = new ioServer(this);
   connect(this, &driveHardware::sendToServer, fIoServer, &ioServer::sentToServer);
-  connect(this, &driveHardware::startServer, fIoServer, &ioServer::run);
+  //  connect(this, &driveHardware::startServer, fIoServer, &ioServer::run);
   connect(fIoServer, &ioServer::sendFromServer, this, &driveHardware::sentFromServer);
   fIoServer->moveToThread(fIoThread);
   fIoThread->start();
-  emit startServer();
 
 #ifdef PI
   // -- write CAN socket
