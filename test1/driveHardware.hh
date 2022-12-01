@@ -58,6 +58,8 @@ public:
   void  readCANmessage();
   void  parseCAN();
 
+  void parseIoMessage();
+
   // -- controlling the FRAS/valve(s)
   void  talkToFras();
   void  toggleFras(int imask);
@@ -102,9 +104,6 @@ public:
   int   getCANReadIntVal() {return fCANReadIntVal;}
 
 
-  void  printToGUI(std::string);
-  void  getMessage(std::string);
-
 public slots:
   void  sentFromServer(const QString&);
 
@@ -131,6 +130,8 @@ private:
   ioServer  *fIoServer;
 
   CANmessage fCanMsg;
+
+  std::string fIoMessage;
 
   bool    fRestart;
   bool    fAbort;

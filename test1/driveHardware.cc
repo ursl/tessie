@@ -8,7 +8,6 @@
 
 #include <fcntl.h>
 
-
 #ifdef PI
 #include <linux/i2c-dev.h>
 #endif
@@ -194,25 +193,12 @@ driveHardware::~driveHardware() {
 
 // ----------------------------------------------------------------------
 void driveHardware::sentFromServer(const QString &result) {
-  cout << "driveHardware::sentFromServer() -> " << result.toStdString() << "<-" << endl;
+  fIoMessage = result.toStdString();
+  cout << "driveHardware::sentFromServer() ->" << fIoMessage << "<-" << endl;
   emit signalText(result);
+  parseIoMessage();
 }
 
-
-// ----------------------------------------------------------------------
-void  driveHardware::getMessage(std::string x) {
-  QString aline(QString::fromStdString(x));
-  emit signalText(aline);
-
-  // -- do something else eventually
-}
-
-
-// ----------------------------------------------------------------------
-void  driveHardware::printToGUI(std::string x) {
-  QString aline(QString::fromStdString(x));
-  emit signalText(aline);
-}
 
 // ----------------------------------------------------------------------
 //void driveHardware::updateHwDisplay() {
@@ -398,6 +384,19 @@ void driveHardware::parseCAN() {
   if (fCanMsg.getAlarm() > 0) {
     cout << "received alarm from CAN bus, do something!" << endl;
   }
+
+}
+
+
+// ----------------------------------------------------------------------
+void driveHardware::parseIoMessage() {
+  if (string::npos != fIoMessage.find("getTemp")) {
+   float x = getTemperature();
+   QString qmsg = QString("Temp = ") + QString::number(x, 'f', 2);
+
+   emit sendToServer(qmsg);
+  }
+
 
 }
 

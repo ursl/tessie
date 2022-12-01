@@ -5,9 +5,7 @@
 #include <qpushbutton.h>
 #include <unistd.h>
 
-
 #include "tLog.hh"
-
 
 using namespace std;
 
@@ -24,11 +22,14 @@ MainWindow::MainWindow(tLog &x, QWidget *parent) :
   fTECDisplay->close();
   fTECDisplay->setHardware(&fThread);
 
+  ui->labelVersion->setText("2022/12/01-01");
+
   ui->lineEditRunTime->setAlignment(Qt::AlignRight);
   ui->lineEditCANbusError->setAlignment(Qt::AlignRight);
   ui->lineEditI2CError->setAlignment(Qt::AlignRight);
-
-  ui->labelVersion->setText("2022/11/30-01");
+  ui->lineEditTemp->setAlignment(Qt::AlignRight);
+  ui->lineEditRH->setAlignment(Qt::AlignRight);
+  ui->lineEditDP->setAlignment(Qt::AlignRight);
 
   fUICheckBox.push_back(ui->checkBoxTEC1);
   fUICheckBox.push_back(ui->checkBoxTEC2);

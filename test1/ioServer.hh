@@ -13,16 +13,17 @@ class ioServer: public QObject {
 
 public:
   ioServer(driveHardware *);
-  void printFromServer(std::string result);
-  virtual ~ioServer();
+  ~ioServer();
+  void run();
+  void printFromServer(std::string msg);
+  //void sendIoMessage(std::string msg);
 
 public slots:
-  void sentToServer(const QString &result);
+  void sentToServer(const QString &msg);
   void startServer();
-  void run();
 
 signals:
-  void sendFromServer(const QString &result);
+  void sendFromServer(const QString &msg);
 
 private:
   tMosq         *fCtrlTessie;

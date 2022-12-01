@@ -25,7 +25,7 @@ tMosq::~tMosq() {
 
 
 // ----------------------------------------------------------------------
-bool tMosq::send_message(const char *message) {
+bool tMosq::sendMessage(const char *message) {
   // Send message - depending on QoS, mosquitto lib managed re-submission this the thread
   // * NULL : Message Id (int *) this allow to latter get status of each message
   // * topic : topic to be used
@@ -62,12 +62,6 @@ string tMosq::getMessage() {
   msg = fMessages.front();
   fMessages.pop();
   return msg;
-}
-
-
-// ----------------------------------------------------------------------
-void tMosq::on_subscribe() {
-  cout << "Subscription succeeded." << endl;
 }
 
 

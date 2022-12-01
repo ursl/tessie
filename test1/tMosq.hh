@@ -20,20 +20,23 @@ class tMosq : public mosqpp::mosquittopp {
 public:
   tMosq(const char *id, const char *topic, const char *host, int port);
   ~tMosq();
-  bool   send_message(const char *message);
-  //  std::string rec_message(const char *topic);
-  int    fPublished;
-  bool   fConnected;
+
+  bool        sendMessage(const char *message);
+  bool        published() {return fPublished;}
   std::string getMessage();
-  int    getNMessages() {return fNMessages;}
-  void on_subscribe();
+  int         getNMessages() {return fNMessages;}
 
 private:
+  // -- members from mosquitto_message
   const char *fHost;
   const char *fId;
   const char *fTopic;
   int        fPort;
   int        fKeepalive;
+
+  int        fPublished;
+  bool       fConnected;
+
 
   void on_connect(int rc);
   void on_disconnect(int rc);

@@ -8,7 +8,6 @@
 
 #include "driveHardware.hh"
 
-
 using namespace std;
 
 // ----------------------------------------------------------------------
@@ -24,9 +23,16 @@ ioServer::~ioServer() {
 
 
 // ----------------------------------------------------------------------
-void ioServer::sentToServer(const QString &result) {
-  cout << "ioServer::sentToServer() received ->" << result.toStdString() << "<-" << endl;
- // emit("ioServer result emitted");
+void ioServer::sentToServer(const QString &msg) {
+  string smsg = msg.toStdString();
+  cout << "ioServer::sentToServer() received ->" << smsg << "<-" << endl;
+
+  while (1) {
+    bool ok = fCtrlTessie->sendMessage(smsg.c_str());
+    usleep(50000);
+    if (ok) break;
+//    if (fCtrlTessie->published()) break;
+  }
 }
 
 
@@ -69,4 +75,3 @@ void ioServer::printFromServer(string msg) {
   QString qmsg = QString::fromStdString(msg);
   emit sendFromServer(qmsg);
 }
-
