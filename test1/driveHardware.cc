@@ -89,7 +89,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   fIoThread = new QThread();
   fIoServer = new ioServer(this);
 //  connect(this, &driveHardware::sendToServer, fIoServer, &ioServer::sentToServer);
-//  connect(this, &driveHardware::startServer, fIoServer, &ioServer::startServer);
+  connect(this, &driveHardware::startServer, fIoServer, &ioServer::startServer);
 //  connect(fIoServer, &ioServer::sendFromServer, this, &driveHardware::sentFromServer);
   fIoServer->moveToThread(fIoThread);
   fIoThread->start();
@@ -223,7 +223,8 @@ void driveHardware::run() {
   struct timeval tvOld, tvNew;
   gettimeofday(&tvOld, 0);
 
-  fIoServer->startServer();
+  //  fIoServer->startServer();
+  emit startServer();
   cout << "driveHardware::run() start loop" << endl;
   while (1) {
     ++cnt;
