@@ -218,13 +218,13 @@ void driveHardware::runPrintout(int reg, float val) {
 
 // ----------------------------------------------------------------------
 void driveHardware::run() {
-  cout << "Hallo in run()" << endl;
+  cout << "driveHardware::run() entered" << endl;
   int cnt(0);
   struct timeval tvOld, tvNew;
   gettimeofday(&tvOld, 0);
 
   fIoServer->startServer();
-
+  cout << "driveHardware::run() start loop" << endl;
   while (1) {
     ++cnt;
     std::this_thread::sleep_for(fMilli5);
