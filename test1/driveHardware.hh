@@ -112,7 +112,7 @@ signals:
   void  signalSomething(int x);
   void  signalText(QString x);
 //  void  sendToServer(QString x);
-//  void  startServer();
+  void  startServer();
   void  updateHwDisplay();
 
 protected:
