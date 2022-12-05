@@ -88,9 +88,9 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
 
   fIoThread = new QThread();
   fIoServer = new ioServer(this);
-//  connect(this, &driveHardware::sendToServer, fIoServer, &ioServer::sentToServer);
+  connect(this, &driveHardware::sendToServer, fIoServer, &ioServer::sentToServer);
   connect(this, &driveHardware::startServer, fIoServer, &ioServer::startServer);
-//  connect(fIoServer, &ioServer::sendFromServer, this, &driveHardware::sentFromServer);
+  connect(fIoServer, &ioServer::sendFromServer, this, &driveHardware::sentFromServer);
   fIoServer->moveToThread(fIoThread);
   fIoThread->start();
 
@@ -192,10 +192,9 @@ driveHardware::~driveHardware() {
 
 
 // ----------------------------------------------------------------------
-//void driveHardware::updateHwDisplay() {
-//  cout << "driveHardware::updateHwDisplay() " << endl;
-//  emit signalSomething(1);
-//}
+void driveHardware::sentFromServer(string msg) {
+  cout << "now what?" << endl;
+}
 
 
 // ----------------------------------------------------------------------
@@ -311,7 +310,7 @@ void  driveHardware::setTECParameter(float par) {
   QString aline = QString("driveHardware::setTECParameter = ") + QString::number(par, 'f', 2);
   cout << aline.toStdString() << endl;
 
-  emit signalText(aline);
+  emit signalText(aline.toStdString());
 }
 
 

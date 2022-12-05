@@ -106,12 +106,12 @@ public:
 
 
 public slots:
-//  void  sentFromServer(const QString&);
+  void  sentFromServer(std::string msg);
 
 signals:
   void  signalSomething(int x);
-  void  signalText(QString x);
-//  void  sendToServer(QString x);
+  void  signalText(std::string msg);
+  void  sendToServer(std::string msg);
   void  startServer();
   void  updateHwDisplay();
 

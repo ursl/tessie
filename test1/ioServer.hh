@@ -16,10 +16,13 @@ public:
   ~ioServer();
   void run();
   void printFromServer(std::string msg);
+
+public slots:
   void sentToServer(std::string msg);
   void startServer();
 
-  void sendFromServer(const QString &msg);
+signals:
+  void sendFromServer(std::string msg);
 
 private:
   tMosq         *fCtrlTessie;

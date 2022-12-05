@@ -27,7 +27,7 @@ public:
     void closeTECDisplay();
 
 private slots:
-    void appendText(QString line);
+    void appendText(std::string line);
     QString getTimeString();
 
     void clkValve0();
