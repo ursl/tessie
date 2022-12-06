@@ -37,7 +37,7 @@ void ioServer::sentToServer(string msg) {
 
 // ----------------------------------------------------------------------
 void ioServer::run() {
-  chrono::milliseconds milli5 = chrono::milliseconds(5);
+  //chrono::milliseconds milli5 = chrono::milliseconds(5);
   int cntMsg(0);
   while (1) {
     int nmsg = fCtrlTessie->getNMessages();
@@ -48,7 +48,7 @@ void ioServer::run() {
       printFromServer(msg);
 
     } else {
-      std::this_thread::sleep_for(milli5);
+      //std::this_thread::sleep_for(milli5);
     }
   }
 }
