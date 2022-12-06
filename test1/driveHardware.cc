@@ -48,7 +48,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   fCsvFile.open(fCsvFileName, ios_base::app);
 
   // -- initialize all with 0
-  for (unsigned int itec = 1; itec <= 4; ++itec) {
+  for (unsigned int itec = 1; itec <= 8; ++itec) {
     fActiveTEC.insert(make_pair(itec, 0));
   }
   // -- turn on whatever
