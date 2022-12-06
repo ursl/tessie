@@ -880,7 +880,8 @@ void driveHardware::readAllParamsFromCANPublic() {
   for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
   //for (unsigned int ireg = 0; ireg < 1; ++ireg) {
     if (8 == ireg) {
-      getTECRegisterFromCAN(8, regnames[ireg]);
+      fTECData[8].reg["Temp_W"].value = getTECRegisterFromCAN(8, regnames[ireg]);
+      continue;
     } else {
       getTECRegisterFromCAN(0, regnames[ireg]);
     }
