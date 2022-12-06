@@ -878,18 +878,17 @@ void driveHardware::readAllParamsFromCANPublic() {
                              "Supply_P"
                             };
   for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
-  //for (unsigned int ireg = 0; ireg < 1; ++ireg) {
-    if (8 == ireg) {
+    // -- NOTE: 5 != reg number!
+    if (5 == ireg) {
       fTECData[8].reg["Temp_W"].value = getTECRegisterFromCAN(8, regnames[ireg]);
-      continue;
     } else {
       getTECRegisterFromCAN(0, regnames[ireg]);
-    }
-    if (0) cout << "  " << tStamp() << " reading broadcast "<< regnames[ireg] << endl;
-    int regIdx = fTECData[1].getIdx(regnames[ireg]);
-    for (int i = 1; i <= 8; ++i) {
-      if (0 == fActiveTEC[i]) continue;
-      fTECData[i].reg[regnames[ireg]].value = fCanMsg.getFloat(i, regIdx);
+      if (0) cout << "  " << tStamp() << " reading broadcast "<< regnames[ireg] << endl;
+      int regIdx = fTECData[1].getIdx(regnames[ireg]);
+      for (int i = 1; i <= 8; ++i) {
+        if (0 == fActiveTEC[i]) continue;
+        fTECData[i].reg[regnames[ireg]].value = fCanMsg.getFloat(i, regIdx);
+      }
     }
   }
 
