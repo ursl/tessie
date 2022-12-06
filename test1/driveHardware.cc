@@ -50,7 +50,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   for (unsigned int itec = 1; itec <= 4; ++itec) {
     fActiveTEC.insert(make_pair(itec, 0));
   }
-  for (unsigned int itec = 5; itec <= 8; ++itec) {
+  for (unsigned int itec = 1; itec <= 8; ++itec) {
     fActiveTEC.insert(make_pair(itec, 1));
   }
   fNActiveTEC = 4;
@@ -392,21 +392,21 @@ void driveHardware::parseIoMessage() {
   if (string::npos != fIoMessage.find("getTemp")) {
     stringstream str;
     str << "Temp = " << getTemperature();
-    fIoServer->sentToServer(str.str());
+ // fIoServer->sentToServer(str.str());
     return;
   }
 
   if (string::npos != fIoMessage.find("getRH")) {
     stringstream str;
     str << "RH = " << getRH();
-    fIoServer->sentToServer(str.str());
+    //fIoServer->sentToServer(str.str());
     return;
   }
 
   if (string::npos != fIoMessage.find("getDP")) {
     stringstream str;
     str << "DP = " << getDP();
-    fIoServer->sentToServer(str.str());
+    //fIoServer->sentToServer(str.str());
     return;
   }
 
