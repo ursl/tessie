@@ -72,5 +72,5 @@ void ioServer::startServer() {
 // ----------------------------------------------------------------------
 void ioServer::printFromServer(string msg) {
   QString qmsg = QString::fromStdString(msg);
-  fHardware->getIoMessage(msg);
+  //fHardware->getIoMessage(msg);
 }
