@@ -47,13 +47,19 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   fLOG(INFO, stringstream("open" + fCsvFileName).str());
   fCsvFile.open(fCsvFileName, ios_base::app);
 
+  // -- initialize all with 0
   for (unsigned int itec = 1; itec <= 4; ++itec) {
     fActiveTEC.insert(make_pair(itec, 0));
   }
+  // -- turn on whatever
   for (unsigned int itec = 1; itec <= 8; ++itec) {
-    fActiveTEC.insert(make_pair(itec, 1));
+    fActiveTEC[itec] = 1;
   }
-  fNActiveTEC = 4;
+
+  fNActiveTEC = 0;
+  for (unsigned int itec = 1; itec <= 8; ++itec) {
+    if (1 == fActiveTEC[itec]) ++fNActiveTEC;
+  }
 
   initTECData();
 
