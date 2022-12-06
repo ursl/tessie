@@ -874,7 +874,7 @@ void driveHardware::readAllParamsFromCANPublic() {
   for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
   //for (unsigned int ireg = 0; ireg < 1; ++ireg) {
     getTECRegisterFromCAN(0, regnames[ireg]);
-    if (0) cout << "  " << tStamp() << " reading broadcast "<< regnames[ireg] << endl;
+    if (1) cout << "  " << tStamp() << " reading broadcast "<< regnames[ireg] << endl;
     int regIdx = fTECData[1].getIdx(regnames[ireg]);
     for (int i = 1; i <= 8; ++i) {
       if (0 == fActiveTEC[i]) continue;
