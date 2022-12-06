@@ -86,6 +86,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   readSHT85();
 #endif
 
+  /*
   fIoThread = new QThread();
   fIoServer = new ioServer(this);
   connect(this, &driveHardware::sendToServer, fIoServer, &ioServer::sentToServer);
@@ -93,6 +94,7 @@ driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x)
   connect(fIoServer, &ioServer::sendFromServer, this, &driveHardware::sentFromServer);
   fIoServer->moveToThread(fIoThread);
   fIoThread->start();
+  */
 
 #ifdef PI
   // -- write CAN socket
