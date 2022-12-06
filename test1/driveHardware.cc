@@ -864,18 +864,18 @@ TECData  driveHardware::initAllTECRegister() {
 void driveHardware::readAllParamsFromCANPublic() {
   // -- what to read
   vector<string> regnames = {"Temp_M"
-//                            , "ControlVoltage_Set"
-//                            , "PID_kp"
-//                            , "PID_ki"
-//                            , "PID_kd"
-//                            , "Temp_W"
-//                            , "Temp_Set"
-//                            , "Peltier_I"
-//                            , "Peltier_R"
-//                            , "Peltier_P"
-//                            , "Supply_U"
-//                            , "Supply_I"
-//                             "Supply_P"
+                            , "ControlVoltage_Set"
+                            , "PID_kp"
+                            , "PID_ki"
+                            , "PID_kd"
+                            , "Temp_W"
+                            , "Temp_Set"
+                            , "Peltier_I"
+                            , "Peltier_R"
+                            , "Peltier_P"
+                            , "Supply_U"
+                            , "Supply_I"
+                             "Supply_P"
                             };
   for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
   //for (unsigned int ireg = 0; ireg < 1; ++ireg) {
