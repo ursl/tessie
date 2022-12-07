@@ -11,10 +11,10 @@
 using namespace std;
 
 // ----------------------------------------------------------------------
-ioServer::ioServer(driveHardware *h): fHardware(h) {
-  fCtrlTessie = new tMosq("tessie", "ctrlTessie", "localhost", 1883);
+ioServer::ioServer() {
+  // should not be here?!
+  //  fCtrlTessie = new tMosq("tessie", "ctrlTessie", "localhost", 1883);
 
-//  connect(fHardware, &driveHardware::sendToServer, this, &ioServer::sentToServer);
 }
 
 
@@ -37,6 +37,7 @@ void ioServer::sentToServer(string msg) {
 
 // ----------------------------------------------------------------------
 void ioServer::run() {
+  fCtrlTessie = new tMosq("tessie", "ctrlTessie", "localhost", 1883);
   //chrono::milliseconds milli5 = chrono::milliseconds(5);
   int cntMsg(0);
   while (1) {

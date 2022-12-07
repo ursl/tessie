@@ -16,7 +16,6 @@
 
 #include "TECData.hh"
 #include "tLog.hh"
-#include "ioServer.hh"
 
 #ifdef PI
 #include <net/if.h>
@@ -128,8 +127,6 @@ private:
   QWaitCondition fCondition;
 
   QThread   *fIoThread;
-  ioServer  *fIoServer;
-
   CANmessage fCanMsg;
 
   std::string fIoMessage;

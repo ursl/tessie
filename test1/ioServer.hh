@@ -12,7 +12,7 @@ class ioServer: public QObject {
   Q_OBJECT
 
 public:
-  ioServer(driveHardware *);
+  ioServer();
   ~ioServer();
   void run();
   void printFromServer(std::string msg);
@@ -26,7 +26,6 @@ signals:
 
 private:
   tMosq         *fCtrlTessie;
-  driveHardware *fHardware;
 };
 
 #endif // RPCSERVER_H
