@@ -186,7 +186,7 @@ driveHardware::~driveHardware() {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::sentFromServer(string msg) {
+void driveHardware::sentFromServer(QString msg) {
   cout << "now what?" << endl;
 }
 
@@ -304,7 +304,7 @@ void  driveHardware::setTECParameter(float par) {
   QString aline = QString("driveHardware::setTECParameter = ") + QString::number(par, 'f', 2);
   cout << aline.toStdString() << endl;
 
-  emit signalText(aline.toStdString());
+  emit signalText(aline);
 }
 
 

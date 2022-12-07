@@ -108,8 +108,8 @@ MainWindow::~MainWindow() {
 
 
 // ----------------------------------------------------------------------
-void MainWindow::appendText(string line) {
-  ui->textEditLog->append(QString::fromStdString(line));
+void MainWindow::appendText(QString line) {
+  ui->textEditLog->append(line);
 }
 
 

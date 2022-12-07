@@ -50,7 +50,7 @@ string tLog::print(tLogLevel level, std::string print) {
 	 << print;
   string sout = output.str();
   fFile << sout << endl;
-  emit signalText(sout);
+  emit signalText(QString::fromStdString(sout));
   return sout;
 }
 
@@ -65,7 +65,7 @@ void tLog::operator()(tLogLevel level, std::string print) {
   string sout = output.str();
   fFile << sout << endl;
   if (level <= fLevel) {
-    emit signalText(sout);
+    emit signalText(QString::fromStdString(sout));
   }
   cout << sout << endl;
   //FIXME  if (fpGui) fpGui->printText(sout);

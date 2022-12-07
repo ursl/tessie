@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
   ioServer *io = new ioServer();
 
   // -- ioServer signals
-  QObject::connect(io, SIGNAL(sendFromServer(std::string)), hw, SLOT(sentFromServer(std::string)));
+  QObject::connect(io, SIGNAL(sendFromServer(QString)), hw, SLOT(sentFromServer(QString)));
   QObject::connect(ioThread, SIGNAL(started()), io, SLOT(run()));
 
   // -- driveHardware signals
@@ -30,14 +30,14 @@ int main(int argc, char *argv[]) {
 
   // -- MainWindow slots and signals
   QObject::connect(hw, SIGNAL(updateHwDisplay()), &w, SLOT(updateHardwareDisplay()));
-  QObject::connect(hw, SIGNAL(signalText(std::string)), &w, SLOT(appendText(std::string)));
+  QObject::connect(hw, SIGNAL(signalText(QString)), &w, SLOT(appendText(QString)));
 
   QObject::connect(&w, SIGNAL(signalValve(int)), hw, SLOT(toggleFras(int)));
   QObject::connect(&w, SIGNAL(signalTurnOnTEC(int)), hw, SLOT(turnOnTEC(int)));
   QObject::connect(&w, SIGNAL(signalTurnOffTEC(int)), hw, SLOT(turnOffTEC(int)));
 
   // -- stuff
-  QObject::connect(&LOG, SIGNAL(signalText(std::string)), &w, SLOT(appendText(std::string)));
+  QObject::connect(&LOG, SIGNAL(signalText(QString)), &w, SLOT(appendText(QString)));
 
 
   io->moveToThread(ioThread);

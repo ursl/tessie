@@ -27,9 +27,9 @@ public:
     void closeTECDisplay();
 
 public slots:
-    void appendText(std::string line);
-    void  updateHardwareValues();
-    void  updateHardwareDisplay();
+    void appendText(QString line);
+    void updateHardwareValues();
+    void updateHardwareDisplay();
 
     void start();
     void quitProgram();

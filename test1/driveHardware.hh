@@ -99,7 +99,7 @@ public:
 
 
 public slots:
-  void  sentFromServer(std::string msg);
+  void  sentFromServer(QString msg);
   void  toggleFras(int imask);
   void  turnOnTEC(int itec);
   void  turnOffTEC(int itec);
@@ -107,8 +107,8 @@ public slots:
 
 signals:
   void  signalSomething(int x);
-  void  signalText(std::string msg);
-  void  sendToServer(std::string msg);
+  void  signalText(QString msg);
+  void  sendToServer(QString msg);
   void  startServer();
   void  updateHwDisplay();
 

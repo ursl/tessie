@@ -35,7 +35,7 @@ public:
   std::string tStamp() {return timeStamp(false);}
 
 signals:
-  void signalText(std::string x);
+  void signalText(QString x);
 
 private:
   tLog(const tLog&);

@@ -13,15 +13,15 @@ class ioServer: public QObject {
 public:
   ioServer();
   ~ioServer();
-  void printFromServer(std::string msg);
+  void printFromServer(QString msg);
 
 public slots:
   void run();
-  void sentToServer(std::string msg);
+  void sentToServer(QString msg);
   void startServer();
 
 signals:
-  void sendFromServer(std::string msg);
+  void sendFromServer(QString msg);
 
 private:
   tMosq         *fCtrlTessie;
