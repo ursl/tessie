@@ -28,7 +28,6 @@ public:
 
 public slots:
     void appendText(QString line);
-    void updateHardwareValues();
     void updateHardwareDisplay();
 
     void start();
@@ -39,6 +38,7 @@ signals:
     void signalValve(int);
     void signalTurnOnTEC(int);
     void signalTurnOffTEC(int);
+    void signalReadCAN();
 
 private slots:
     QString getTimeString();

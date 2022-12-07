@@ -95,7 +95,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fUIPIDkd.push_back(ui->tec8_PID_kd);
 
 
-  updateHardwareValues();
+//  updateHardwareValues();
 
 //REMOVE  fThread.runPrintout(1,1);
 }
@@ -150,7 +150,7 @@ void MainWindow::quitProgram() {
 
 // ----------------------------------------------------------------------
 void MainWindow::clkRefresh() {
-  updateHardwareValues();
+  updateHardwareDisplay();
 
 }
 
@@ -259,12 +259,6 @@ void MainWindow::guiSetRegName() {
   fLOG(INFO, sbla.str());
 }
 
-
-// ----------------------------------------------------------------------
-void MainWindow::updateHardwareValues() {
-  fpHw->readAllParamsFromCAN();
-  updateHardwareDisplay();
-}
 
 // ----------------------------------------------------------------------
 void MainWindow::updateHardwareDisplay() {
