@@ -35,13 +35,13 @@ void ioServer::sentToServer(QString msg) {
 
 // ----------------------------------------------------------------------
 void ioServer::run() {
-  cout << "ioServer::run() entered" <<endl;
+  cout << "ioServer::run() entered, instantiate tMosq" <<endl;
+
+  fCtrlTessie = new tMosq("tessie", "ctrlTessie", "localhost", 1883);
 
   cout << "startServer()" << endl;
   startServer();
   cout << "  .. done" << endl;
-
-  fCtrlTessie = new tMosq("tessie", "ctrlTessie", "localhost", 1883);
 
   int cntMsg(0);
   while (1) {
