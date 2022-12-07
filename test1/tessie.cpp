@@ -13,9 +13,11 @@ int main(int argc, char *argv[]) {
 
   QThread *hwThread = new QThread();
   driveHardware *hw = new driveHardware(LOG);
+  hw->moveToThread(hwThread);
 
   QThread *ioThread = new QThread();
   ioServer *io = new ioServer();
+  io->moveToThread(ioThread);
 
   QApplication a(argc, argv);
   std::cout << "MainWindow w() call" << std::endl;
@@ -39,11 +41,7 @@ int main(int argc, char *argv[]) {
   // -- stuff
   QObject::connect(&LOG, SIGNAL(signalText(QString)), &w, SLOT(appendText(QString)));
 
-
-  io->moveToThread(ioThread);
   ioThread->start();
-
-  hw->moveToThread(hwThread);
   hwThread->start();
 
   // -- this must be after setGui(...)!
