@@ -28,6 +28,12 @@ public:
 
 public slots:
     void appendText(std::string line);
+    void  updateHardwareValues();
+    void  updateHardwareDisplay();
+
+    void start();
+    void quitProgram();
+
 
 signals:
     void signalValve(int);
@@ -60,8 +66,6 @@ private slots:
     void guiSetRegValue();
     void guiWriteToCAN();
     void guiReadFromCAN();
-
-   // void updateVoltageValue();
 
     void tecSetFromUI(int itec, std::string rname, QWidget *);
 
@@ -127,13 +131,6 @@ private slots:
     void openTEC3() {openTECDisplay(3);}
     void openTEC2() {openTECDisplay(2);}
     void openTEC1() {openTECDisplay(1);}
-
-    void  updateHardwareValues();
-    void  updateHardwareDisplay();
-
-
-    void start();
-    void quitProgram();
 
 private:
     // -- without the following line you cannot 'go to slot'
