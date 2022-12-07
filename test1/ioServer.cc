@@ -5,6 +5,7 @@
 
 #include <chrono>
 #include <thread>
+#include <sys/ioctl.h>
 
 using namespace std;
 
@@ -44,6 +45,8 @@ void ioServer::run() {
   startServer();
   cout << "  .. done" << endl;
 
+  std::chrono::milliseconds milli5   = std::chrono::milliseconds(5);
+
   int cntMsg(0);
   while (1) {
     int nmsg = fCtrlTessie->getNMessages();
@@ -56,7 +59,8 @@ void ioServer::run() {
            << ")" << endl;
       emit sendFromServer(QString::fromStdString(msg));
     } else {
-      //std::this_thread::sleep_for(milli5);
+      cout << "ioServer::run() while(1) loop" << endl;
+      std::this_thread::sleep_for(milli5);
     }
   }
 }
