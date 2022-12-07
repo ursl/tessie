@@ -195,7 +195,7 @@ void driveHardware::sentFromServer(QString msg) {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::run() {
+void driveHardware::doRun() {
   cout << "driveHardware::run() entered" << endl;
   int cnt(0);
   struct timeval tvOld, tvNew;
