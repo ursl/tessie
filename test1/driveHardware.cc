@@ -227,7 +227,7 @@ void driveHardware::run() {
     int tdiff = diff_ms(tvNew, tvOld);
     if (tdiff > 1000.) {
       tvOld = tvNew;
-      if (1) cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
+//      if (1) cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
       readSHT85();
 
       // -- read all parameters from CAN
@@ -236,6 +236,7 @@ void driveHardware::run() {
       fMutex.unlock();
 
       // -- do something with the results
+      if (1) cout << tStamp() << " emit updateHwDispplay tdiff = " << tdiff << endl;
       emit updateHwDisplay();
       dumpCSV();
 

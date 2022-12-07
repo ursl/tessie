@@ -266,6 +266,7 @@ void MainWindow::updateHardwareValues() {
 
 // ----------------------------------------------------------------------
 void MainWindow::updateHardwareDisplay() {
+  cout << "MainWindow::updateHardwareDisplay() entered" << endl;
 
   if (fTECDisplay->isVisible()) {
     // cout << "MainWindow::updateHardwareDisplay() fTECDisplay->isVisible()" << endl;
