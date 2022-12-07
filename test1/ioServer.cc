@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <sstream>
 
+#include <QCoreApplication>
+
 #include <chrono>
 #include <thread>
 #include <sys/ioctl.h>
@@ -46,6 +48,9 @@ void ioServer::doRun() {
 
   int cntMsg(0);
   while (1) {
+    // -- allow signals to reach slots
+    QCoreApplication::processEvents();
+
     int nmsg = fCtrlTessie->getNMessages();
     //cout << "ioServer::run() while(1) loop, nmsg = " << nmsg << endl;
     if (nmsg != cntMsg) {

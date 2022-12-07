@@ -203,6 +203,9 @@ void driveHardware::run() {
 
   cout << "driveHardware::run() start loop" << endl;
   while (1) {
+    // -- allow signals to reach slots
+    QCoreApplication::processEvents();
+
     ++cnt;
     std::this_thread::sleep_for(fMilli5);
     readCAN();
@@ -234,7 +237,6 @@ void driveHardware::run() {
         }
       }
       fCanMsg.clearAllFrames();
-      QCoreApplication::processEvents();
     }
 
 #ifdef PI
@@ -365,7 +367,6 @@ void driveHardware::parseIoMessage() {
     str << "Temp = " << getTemperature();
     QString qmsg = QString::fromStdString(str.str());
     emit signalSendToServer(qmsg);
- // fIoServer->sentToServer(str.str());
     return;
   }
 
@@ -374,7 +375,6 @@ void driveHardware::parseIoMessage() {
     str << "RH = " << getRH();
     QString qmsg = QString::fromStdString(str.str());
     emit signalSendToServer(qmsg);
-    //fIoServer->sentToServer(str.str());
     return;
   }
 
