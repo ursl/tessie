@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
   MainWindow w(LOG, hw, nullptr);
 
   // -- ioServer signals
-  QObject::connect(ioThread, SIGNAL(started()), io, SLOT(doRun()));
+  QObject::connect(ioThread, SIGNAL(started()), io, SLOT(run()));
   bool success = QObject::connect(io, SIGNAL(signalSendFromServer(QString)), hw, SLOT(sentFromServer(QString)));
   Q_ASSERT(success);
   success = QObject::connect(hw, SIGNAL(signalSendToServer(QString)), io, SLOT(sentToServer(QString)));

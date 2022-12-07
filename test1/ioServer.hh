@@ -15,7 +15,7 @@ public:
   void startServer();
 
 public slots:
-  void doRun();
+  void run();
   void sentToServer(QString msg);
 
 signals:

@@ -38,7 +38,7 @@ void ioServer::sentToServer(QString msg) {
 
 
 // ----------------------------------------------------------------------
-void ioServer::doRun() {
+void ioServer::run() {
   cout << "ioServer::run() entered, instantiate tMosq" <<endl;
   fCtrlTessie = new tMosq("tessie", "ctrlTessie", "localhost", 1883);
 
