@@ -14,11 +14,12 @@ public:
   ioServer();
   ~ioServer();
   void printFromServer(QString msg);
+  void start() {startServer(); }
+  void startServer();
 
 public slots:
   void run();
   void sentToServer(QString msg);
-  void startServer();
 
 signals:
   void sendFromServer(QString msg);

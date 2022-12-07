@@ -6,8 +6,6 @@
 #include <chrono>
 #include <thread>
 
-#include "driveHardware.hh"
-
 using namespace std;
 
 // ----------------------------------------------------------------------
