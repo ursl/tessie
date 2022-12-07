@@ -263,9 +263,9 @@ void MainWindow::guiSetRegName() {
 
 // ----------------------------------------------------------------------
 void MainWindow::updateHardwareDisplay() {
-  cout << "MainWindow::updateHardwareDisplay() entered, fpHw->getRunCnt() = "
-       << fpHw->getRunCnt()
-       << endl;
+  if (0) cout << "MainWindow::updateHardwareDisplay() entered, fpHw->getRunCnt() = "
+              << fpHw->getRunCnt()
+              << endl;
 
   if (fTECDisplay->isVisible()) {
     // cout << "MainWindow::updateHardwareDisplay() fTECDisplay->isVisible()" << endl;
