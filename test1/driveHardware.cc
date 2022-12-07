@@ -195,14 +195,12 @@ void driveHardware::sentFromServer(QString msg) {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::doRun() {
+void driveHardware::run() {
   cout << "driveHardware::run() entered" << endl;
   int cnt(0);
   struct timeval tvOld, tvNew;
   gettimeofday(&tvOld, 0);
 
-  //REMOVE fIoServer->startServer();
-  //REMOVE emit startServer();
   cout << "driveHardware::run() start loop" << endl;
   while (1) {
     ++cnt;
@@ -236,6 +234,7 @@ void driveHardware::doRun() {
         }
       }
       fCanMsg.clearAllFrames();
+      QCoreApplication::processEvents();
     }
 
 #ifdef PI

@@ -47,7 +47,7 @@ void ioServer::doRun() {
   int cntMsg(0);
   while (1) {
     int nmsg = fCtrlTessie->getNMessages();
-    cout << "ioServer::run() while(1) loop, nmsg = " << nmsg << endl;
+    //cout << "ioServer::run() while(1) loop, nmsg = " << nmsg << endl;
     if (nmsg != cntMsg) {
       string msg = fCtrlTessie->getMessage();
       cout << "ioServer: ->" << msg << "<-" << endl;

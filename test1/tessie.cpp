@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
   Q_ASSERT(success);
 
   // -- driveHardware signals
-  QObject::connect(hwThread, SIGNAL(started()), hw, SLOT(doRun()));
+  QObject::connect(hwThread, SIGNAL(started()), hw, SLOT(run()));
 
   // -- MainWindow slots and signals
   QObject::connect(hw, SIGNAL(signalUpdateHwDisplay()), &w, SLOT(updateHardwareDisplay()));
