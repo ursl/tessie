@@ -24,6 +24,7 @@ ioServer::~ioServer() {
 
 // ----------------------------------------------------------------------
 void ioServer::sentToServer(QString msg) {
+  cout << "ioServer received " << msg.toStdString() << endl;
   while (1) {
     bool ok = fCtrlTessie->sendMessage(msg.toStdString().c_str());
     usleep(50000);
@@ -50,7 +51,10 @@ void ioServer::run() {
       string msg = fCtrlTessie->getMessage();
       cout << "ioServer: ->" << msg << "<-" << endl;
       cntMsg = nmsg;
-      printFromServer(QString::fromStdString(msg));
+      cout << "emit sendFromServer("
+           << msg
+           << ")" << endl;
+      emit sendFromServer(QString::fromStdString(msg));
     } else {
       //std::this_thread::sleep_for(milli5);
     }
@@ -73,8 +77,3 @@ void ioServer::startServer() {
 }
 
 
-// ----------------------------------------------------------------------
-void ioServer::printFromServer(QString msg) {
-//  QString qmsg = QString::fromStdString(msg);
-  //fHardware->getIoMessage(msg);
-}

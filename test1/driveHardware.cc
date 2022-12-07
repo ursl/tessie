@@ -237,7 +237,7 @@ void driveHardware::run() {
       fMutex.unlock();
 
       // -- do something with the results
-      if (1) cout << tStamp() << " emit updateHwDispplay tdiff = " << tdiff << endl;
+      if (0) cout << tStamp() << " emit updateHwDisplay tdiff = " << tdiff << endl;
       emit updateHwDisplay();
       dumpCSV();
 

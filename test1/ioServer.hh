@@ -13,7 +13,6 @@ class ioServer: public QObject {
 public:
   ioServer();
   ~ioServer();
-  void printFromServer(QString msg);
   void startServer();
 
 public slots:
