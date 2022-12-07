@@ -128,10 +128,11 @@ QString MainWindow::getTimeString() {
 
 // ----------------------------------------------------------------------
 void MainWindow::setCheckBoxTEC(int itec, bool state) {
+  cout << "MainWindow::setCheckBoxTEC(" << itec << "," << state << ")" << endl;
   fUICheckBox[itec-1]->setChecked(state);
   if (state) {
     emit signalTurnOnTEC(itec);
-//REMVOE    fThread.turnOnTEC(itec);
+//REMOVE    fThread.turnOnTEC(itec);
   } else {
     emit signalTurnOffTEC(itec);
 //REMOVE    fThread.turnOffTEC(itec);
