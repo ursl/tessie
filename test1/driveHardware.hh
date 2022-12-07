@@ -107,7 +107,7 @@ public slots:
 signals:
   void  signalSomething(int x);
   void  signalText(QString msg);
-  void  sendToServer(QString msg);
+  void  signalSendToServer(QString msg);
 //REMOVE  void  startServer();
   void  signalUpdateHwDisplay();
 
@@ -121,7 +121,6 @@ private:
   QMutex fMutex;
   QWaitCondition fCondition;
 
-  QThread   *fIoThread;
   CANmessage fCanMsg;
 
   std::string fIoMessage;

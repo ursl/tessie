@@ -5,7 +5,6 @@
 
 #include "tMosq.hh"
 
-class driveHardware;
 // ----------------------------------------------------------------------
 class ioServer: public QObject {
   Q_OBJECT

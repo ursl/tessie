@@ -212,7 +212,7 @@ void driveHardware::doRun() {
     int tdiff = diff_ms(tvNew, tvOld);
     if (tdiff > 1000.) {
       tvOld = tvNew;
-     if (1) cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
+     if (0) cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
       readSHT85();
 
       // -- read all parameters from CAN
@@ -364,6 +364,8 @@ void driveHardware::parseIoMessage() {
   if (string::npos != fIoMessage.find("getTemp")) {
     stringstream str;
     str << "Temp = " << getTemperature();
+    QString qmsg = QString::fromStdString(str.str());
+    emit signalSendToServer(qmsg);
  // fIoServer->sentToServer(str.str());
     return;
   }
@@ -371,6 +373,8 @@ void driveHardware::parseIoMessage() {
   if (string::npos != fIoMessage.find("getRH")) {
     stringstream str;
     str << "RH = " << getRH();
+    QString qmsg = QString::fromStdString(str.str());
+    emit signalSendToServer(qmsg);
     //fIoServer->sentToServer(str.str());
     return;
   }
@@ -378,6 +382,8 @@ void driveHardware::parseIoMessage() {
   if (string::npos != fIoMessage.find("getDP")) {
     stringstream str;
     str << "DP = " << getDP();
+    QString qmsg = QString::fromStdString(str.str());
+    emit signalSendToServer(qmsg);
     //fIoServer->sentToServer(str.str());
     return;
   }
