@@ -15,7 +15,6 @@ MainWindow::MainWindow(tLog &x, QWidget *parent) :
   ui(new Ui::MainWindow),
   fLOG(x),
   fThread(x) {
-  fLOG.setHw(&fThread);
   ui->setupUi(this);
 
   fTECDisplay  = new TECDisplay(this);
@@ -98,10 +97,7 @@ MainWindow::MainWindow(tLog &x, QWidget *parent) :
 
   updateHardwareValues();
 
-  connect(&fThread, &driveHardware::updateHwDisplay, this, &MainWindow::updateHardwareDisplay);
-  connect(&fThread, &driveHardware::signalText, this, &MainWindow::appendText);
-
-  fThread.runPrintout(1,1);
+//REMOVE  fThread.runPrintout(1,1);
 }
 
 
@@ -179,18 +175,22 @@ void MainWindow::tecSetFromUI(int itec, std::string rname, QWidget *qw) {
 // ----------------------------------------------------------------------
 void MainWindow::clkValve0() {
   fThread.toggleFras(1);
+  emit signalValve(1);
 }
 
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValve1() {
   fThread.toggleFras(2);
+  emit signalValve(2);
 }
 
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValveAll() {
   fThread.toggleFras(3);
+  emit signalValve(3);
+
 }
 
 

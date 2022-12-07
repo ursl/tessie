@@ -15,34 +15,37 @@ int main(int argc, char *argv[]) {
   std::cout << "MainWindow w() call" << std::endl;
   MainWindow w(LOG, nullptr);
 
-
-  /*
-QThread* thread = new QThread;
-Worker* worker = new Worker();
-worker->moveToThread(thread);
-connect(worker, SIGNAL(error(QString)), this, SLOT(errorString(QString)));
-connect(thread, SIGNAL(started()), worker, SLOT(process()));
-connect(worker, SIGNAL(finished()), thread, SLOT(quit()));
-connect(worker, SIGNAL(finished()), worker, SLOT(deleteLater()));
-connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
-thread->start();
-  */
-
-
   QThread *hwThread = new QThread();
   driveHardware *hw = new driveHardware(LOG);
 
-
   QThread *ioThread = new QThread();
   ioServer *io = new ioServer();
+
+  // -- ioServer signals
   QObject::connect(io, SIGNAL(sendFromServer(std::string)), hw, SLOT(sentFromServer(std::string)));
+  QObject::connect(ioThread, SIGNAL(started()), io, SLOT(run()));
+
+  // -- driveHardware signals
+  QObject::connect(hwThread, SIGNAL(started()), hw, SLOT(run()));
+
+  // -- MainWindow slots and signals
+  QObject::connect(hw, SIGNAL(updateHwDisplay()), &w, SLOT(updateHardwareDisplay()));
+  QObject::connect(hw, SIGNAL(signalText(std::string)), &w, SLOT(appendText(std::string)));
+
+  QObject::connect(&w, SIGNAL(signalValve(int)), hw, SLOT(toggleFras(int)));
+  QObject::connect(&w, SIGNAL(signalTurnOnTEC(int)), hw, SLOT(turnOnTEC(int)));
+  QObject::connect(&w, SIGNAL(signalTurnOffTEC(int)), hw, SLOT(turnOffTEC(int)));
+
+  // -- stuff
+  QObject::connect(&LOG, SIGNAL(signalText(std::string)), &w, SLOT(appendText(std::string)));
 
 
   io->moveToThread(ioThread);
   ioThread->start();
 
-  std::cout << "LOG.setGUI(&w) call" << std::endl;
-  LOG.setGui(&w);
+  hw->moveToThread(hwThread);
+  hwThread->start();
+
   // -- this must be after setGui(...)!
   LOG(INFO, "start tessie");
 

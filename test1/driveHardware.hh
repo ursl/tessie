@@ -3,10 +3,7 @@
 
 #include <iostream>
 
-#include <QtCore/QThread>
-#include <QtCore/QMutex>
-#include <QtCore/QWaitCondition>
-#include <QtCore/QTime>
+#include <QtCore/QObject>
 
 #include <fstream>
 #include <time.h>
@@ -38,11 +35,11 @@ const unsigned int CANBUS_TECREC  = 0x000;
 
 
 // ----------------------------------------------------------------------
-class driveHardware: public QThread {
+class driveHardware: public QObject {
   Q_OBJECT
 
 public:
-  driveHardware(tLog &x, QObject *parent = nullptr);
+  driveHardware(tLog &x);
   ~driveHardware();
 
   void  shutDown();
@@ -62,13 +59,10 @@ public:
 
   // -- controlling the FRAS/valve(s)
   void  talkToFras();
-  void  toggleFras(int imask);
   void  entertainFras();
 
   // -- controlling the TEC
   void  setTECParameter(float par); // ???
-  void  turnOnTEC(int itec);
-  void  turnOffTEC(int itec);
 
   void  setId(int x);
   void  setRegister(int x);
@@ -106,6 +100,10 @@ public:
 
 public slots:
   void  sentFromServer(std::string msg);
+  void  toggleFras(int imask);
+  void  turnOnTEC(int itec);
+  void  turnOffTEC(int itec);
+  void  run();
 
 signals:
   void  signalSomething(int x);
@@ -115,13 +113,11 @@ signals:
   void  updateHwDisplay();
 
 protected:
-  void        run() override;
   void        initTECData();
   TECData     initAllTECRegister();
   int         diff_ms(timeval t1, timeval t2);
 
 private:
-  QObject *fParent;
   tLog&   fLOG;
   QMutex fMutex;
   QWaitCondition fCondition;

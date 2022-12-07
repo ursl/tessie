@@ -24,8 +24,7 @@
 using namespace std;
 
 // ----------------------------------------------------------------------
-driveHardware::driveHardware(tLog& x, QObject *parent): QThread(parent), fLOG(x) {
-  fParent    = parent;
+driveHardware::driveHardware(tLog& x): fLOG(x) {
   fRestart   = false;
   fAbort     = false;
   fCANReg    = 0;
@@ -180,10 +179,6 @@ driveHardware::~driveHardware() {
   fCondition.wakeOne();
   fMutex.unlock();
 
-  fIoThread->quit();
-  fIoThread->wait();
-
-  wait();
 #ifdef PI
   shutDown();
 #endif
@@ -199,17 +194,17 @@ void driveHardware::sentFromServer(string msg) {
 // ----------------------------------------------------------------------
 void driveHardware::runPrintout(int reg, float val) {
   cout << "driveHardware::runPrintout() " << endl;
-  QMutexLocker locker(&fMutex);
+//  QMutexLocker locker(&fMutex);
 
-  this->fCANReg = reg; // ??
-  this->fCANVal = val; // ??
+//  this->fCANReg = reg; // ??
+//  this->fCANVal = val; // ??
 
-  if (!isRunning()) {
-      start(LowPriority);
-    } else {
-      fRestart = true;
-      fCondition.wakeOne();
-    }
+//  if (!isRunning()) {
+//      start(LowPriority);
+//    } else {
+//      fRestart = true;
+//      fCondition.wakeOne();
+//    }
 
 }
 

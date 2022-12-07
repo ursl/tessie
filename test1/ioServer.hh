@@ -8,16 +8,15 @@
 class driveHardware;
 // ----------------------------------------------------------------------
 class ioServer: public QObject {
-
   Q_OBJECT
 
 public:
   ioServer();
   ~ioServer();
-  void run();
   void printFromServer(std::string msg);
 
 public slots:
+  void run();
   void sentToServer(std::string msg);
   void startServer();
 

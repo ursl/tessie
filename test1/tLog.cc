@@ -3,12 +3,11 @@
 #include <sstream>
 
 #include "tLog.hh"
-#include "MainWindow.h"
 
 using namespace std;
 
 // ----------------------------------------------------------------------
-tLog::tLog(string fname): fpGui(0), fpHw(0), fLevel(INFO), fFileName(fname) {
+tLog::tLog(string fname): fLevel(INFO), fFileName(fname) {
   fFile.open(fFileName, ios_base::app);
   int filesize = fFile.tellp();
   if (filesize > 1000) {
@@ -51,10 +50,7 @@ string tLog::print(tLogLevel level, std::string print) {
 	 << print;
   string sout = output.str();
   fFile << sout << endl;
-  //  if (level <= fLevel) {
-    QString qsout(QString::fromStdString(sout));
-    emit signalText(qsout);
-  //  }
+  emit signalText(sout);
   return sout;
 }
 
@@ -69,11 +65,10 @@ void tLog::operator()(tLogLevel level, std::string print) {
   string sout = output.str();
   fFile << sout << endl;
   if (level <= fLevel) {
-    QString qsout(QString::fromStdString(sout));
-    emit signalText(qsout);
+    emit signalText(sout);
   }
   cout << sout << endl;
-  if (fpGui) fpGui->printText(sout);
+  //FIXME  if (fpGui) fpGui->printText(sout);
 }
 
 

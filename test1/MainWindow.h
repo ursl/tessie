@@ -26,8 +26,15 @@ public:
     void openTECDisplay(int itec);
     void closeTECDisplay();
 
-private slots:
+public slots:
     void appendText(std::string line);
+
+signals:
+    void signalValve(int);
+    void signalTurnOnTEC(int);
+    void signalTurnOffTEC(int);
+
+private slots:
     QString getTimeString();
 
     void clkValve0();

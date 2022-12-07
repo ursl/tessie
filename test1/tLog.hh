@@ -34,17 +34,13 @@ public:
   std::string timeStamp(bool filestamp = true);
   std::string tStamp() {return timeStamp(false);}
 
-  void setGui(MainWindow *x) {fpGui = x;}
-  void setHw(driveHardware *x) {fpHw = x;}
 signals:
-  void signalText(QString x);
+  void signalText(std::string x);
 
 private:
   tLog(const tLog&);
   tLog& operator = (const tLog&);
 
-  MainWindow *fpGui;
-  driveHardware *fpHw;
   tLogLevel fLevel;
   std::string fFileName;
   std::ofstream fFile;
