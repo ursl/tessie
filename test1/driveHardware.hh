@@ -79,6 +79,7 @@ public:
   int   getRunTime();
   int   getNCANbusErrors();
   int   getNI2CErrors() {return fI2CErrorCounter;}
+  int   getRunCnt() {return fRunCnt;}
 
   // -- simply returns the value stored in fTECData
   float getTECRegister(int itec, std::string regname);
@@ -147,8 +148,10 @@ private:
 
   int fI2CErrorCounter;
 
+  // -- timing and wall-clock ticks (or so)
   std::chrono::milliseconds fMilli5, fMilli10, fMilli100;
   struct timeval ftvStart;
+  int    fRunCnt;
 
   // -- access and data from SHT85
   char fSHT85Data[6], fSHT85Config[2];

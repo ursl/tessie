@@ -10,16 +10,16 @@
 using namespace std;
 
 // -------------------------------------------------------------------------------
-MainWindow::MainWindow(tLog &x, QWidget *parent) :
+MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow),
-  fLOG(x),
-  fThread(x) {
+  fLOG(x), fpHw(h) {
   ui->setupUi(this);
+
 
   fTECDisplay  = new TECDisplay(this);
   fTECDisplay->close();
-  fTECDisplay->setHardware(&fThread);
+  fTECDisplay->setHardware(fpHw);
 
   ui->labelVersion->setText("2022/12/01-01");
 
@@ -130,9 +130,11 @@ QString MainWindow::getTimeString() {
 void MainWindow::setCheckBoxTEC(int itec, bool state) {
   fUICheckBox[itec-1]->setChecked(state);
   if (state) {
-    fThread.turnOnTEC(itec);
+    emit signalTurnOnTEC(itec);
+//REMVOE    fThread.turnOnTEC(itec);
   } else {
-    fThread.turnOffTEC(itec);
+    emit signalTurnOffTEC(itec);
+//REMOVE    fThread.turnOffTEC(itec);
   }
 
 }
@@ -166,7 +168,7 @@ void MainWindow::tecSetFromUI(int itec, std::string rname, QWidget *qw) {
   qle->setStyleSheet("QLineEdit {color : red; }");
   QString sval = qle->text();
   float xval = sval.toFloat();
-  fThread.setTECRegister(itec, rname, xval);
+  fpHw->setTECRegister(itec, rname, xval);
   qle->clearFocus();
 }
 
@@ -174,21 +176,21 @@ void MainWindow::tecSetFromUI(int itec, std::string rname, QWidget *qw) {
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValve0() {
-  fThread.toggleFras(1);
+//REMOVE  fThread.toggleFras(1);
   emit signalValve(1);
 }
 
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValve1() {
-  fThread.toggleFras(2);
+//REMOVE  fThread.toggleFras(2);
   emit signalValve(2);
 }
 
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValveAll() {
-  fThread.toggleFras(3);
+//REMOVE  fThread.toggleFras(3);
   emit signalValve(3);
 
 }
@@ -214,13 +216,13 @@ void MainWindow::guiWriteToCAN() {
                          ;
 
   fLOG(INFO, sbla.str());
-  fThread.setTECRegister(fGuiTecId, fGuiRegName, fGuiRegValue);
+  fpHw->setTECRegister(fGuiTecId, fGuiRegName, fGuiRegValue);
 }
 
 
 // ----------------------------------------------------------------------
 void MainWindow::guiReadFromCAN() {
-  float fval = fThread.getTECRegisterFromCAN(fGuiTecId, fGuiRegName);
+  float fval = fpHw->getTECRegisterFromCAN(fGuiTecId, fGuiRegName);
   ui->textTECValue->setText(QString::number(fval, 'f', 2));
 }
 
@@ -260,54 +262,57 @@ void MainWindow::guiSetRegName() {
 
 // ----------------------------------------------------------------------
 void MainWindow::updateHardwareValues() {
-  fThread.readAllParamsFromCAN();
+  fpHw->readAllParamsFromCAN();
   updateHardwareDisplay();
 }
 
 // ----------------------------------------------------------------------
 void MainWindow::updateHardwareDisplay() {
-  cout << "MainWindow::updateHardwareDisplay() entered" << endl;
+  cout << "MainWindow::updateHardwareDisplay() entered, fpHw->getRunCnt() = "
+       << fpHw->getRunCnt()
+       << endl;
 
   if (fTECDisplay->isVisible()) {
     // cout << "MainWindow::updateHardwareDisplay() fTECDisplay->isVisible()" << endl;
     fTECDisplay->updateHardwareDisplay();
   }
 
-  ui->lineEditTemp->setText(QString::number(fThread.getTemperature(), 'f', 2));
-  ui->lineEditRH->setText(QString::number(fThread.getRH(), 'f', 2));
-  ui->lineEditDP->setText(QString::number(fThread.getDP(), 'f', 2));
-  ui->lineEditCANbusError->setText(QString::number(fThread.getNCANbusErrors()));
-  ui->lineEditI2CError->setText(QString::number(fThread.getNI2CErrors()));
-  ui->lineEditRunTime->setText(QString::number(fThread.getRunTime()));
+  ui->lineEditTemp->setText(QString::number(fpHw->getTemperature(), 'f', 2));
+  ui->lineEditRH->setText(QString::number(fpHw->getRH(), 'f', 2));
+  ui->lineEditDP->setText(QString::number(fpHw->getDP(), 'f', 2));
+  ui->lineEditCANbusError->setText(QString::number(fpHw->getNCANbusErrors()));
+  ui->lineEditI2CError->setText(QString::number(fpHw->getNI2CErrors()));
+  ui->lineEditRunTime->setText(QString::number(fpHw->getRunTime()));
 
 
   for (unsigned int ivec = 0; ivec < 8; ++ivec) {
+    cout << "Temp_Set = " << fpHw->getTECRegister(ivec+1, "Temp_Set") << endl;
     if (!fUIControlVoltageSet[ivec]->hasFocus()) {
-      fUIControlVoltageSet[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "ControlVoltage_Set"), 'f', 2));
+      fUIControlVoltageSet[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "ControlVoltage_Set"), 'f', 2));
       fUIControlVoltageSet[ivec]->setStyleSheet("QLineEdit {color : green; }");
     }
     if (!fUITemp_Set[ivec]->hasFocus()) {
-      fUITemp_Set[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "Temp_Set"), 'f', 2));
+      fUITemp_Set[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "Temp_Set"), 'f', 2));
       fUITemp_Set[ivec]->setStyleSheet("QLineEdit {color : green; }");
     }
     if (!fUIPIDki[ivec]->hasFocus()) {
-      fUIPIDki[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "PID_ki"), 'f', 2));
+      fUIPIDki[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "PID_ki"), 'f', 2));
       fUIPIDki[ivec]->setStyleSheet("QLineEdit {color : green; }");
     }
     if (!fUIPIDkp[ivec]->hasFocus()) {
-      fUIPIDkp[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "PID_kp"), 'f', 2));
+      fUIPIDkp[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "PID_kp"), 'f', 2));
       fUIPIDkp[ivec]->setStyleSheet("QLineEdit {color : green; }");
     }
     if (!fUIPIDkd[ivec]->hasFocus()) {
-      fUIPIDkd[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "PID_kd"), 'f', 2));
+      fUIPIDkd[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "PID_kd"), 'f', 2));
       fUIPIDkd[ivec]->setStyleSheet("QLineEdit {color : green; }");
     }
 
-    fUITempM[ivec]->setText(QString::number(fThread.getTECRegister(ivec+1, "Temp_M"), 'f', 2));
+    fUITempM[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "Temp_M"), 'f', 2));
     fUITempM[ivec]->setStyleSheet("QLineEdit {color : green; }");
 
     bool state(false);
-    if (fThread.getTECRegister(ivec+1, "PowerState") > 0.5) {
+    if (fpHw->getTECRegister(ivec+1, "PowerState") > 0.5) {
       state = true;
     }
 

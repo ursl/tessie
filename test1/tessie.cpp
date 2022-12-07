@@ -11,15 +11,15 @@
 int main(int argc, char *argv[]) {
   tLog LOG;
 
-  QApplication a(argc, argv);
-  std::cout << "MainWindow w() call" << std::endl;
-  MainWindow w(LOG, nullptr);
-
   QThread *hwThread = new QThread();
   driveHardware *hw = new driveHardware(LOG);
 
   QThread *ioThread = new QThread();
   ioServer *io = new ioServer();
+
+  QApplication a(argc, argv);
+  std::cout << "MainWindow w() call" << std::endl;
+  MainWindow w(LOG, hw, nullptr);
 
   // -- ioServer signals
   QObject::connect(io, SIGNAL(sendFromServer(QString)), hw, SLOT(sentFromServer(QString)));

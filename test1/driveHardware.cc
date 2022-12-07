@@ -27,6 +27,7 @@ using namespace std;
 driveHardware::driveHardware(tLog& x): fLOG(x) {
   fRestart   = false;
   fAbort     = false;
+  fRunCnt    = 0;
   fCANReg    = 0;
   fCANVal    = 0.;
   QDateTime dt = QDateTime::currentDateTime();
@@ -410,7 +411,7 @@ void driveHardware::parseIoMessage() {
 
 // ----------------------------------------------------------------------
 // DECREPIT
-void driveHardware::readCANmessage() {
+void driveHardware::readCANmessage(/*DECREPIT*/) {
   fCANReadIntVal   += 1;
   fCANReadFloatVal += 0.1;
 #ifdef PI
@@ -849,6 +850,7 @@ TECData  driveHardware::initAllTECRegister() {
 
 // ----------------------------------------------------------------------
 void driveHardware::readAllParamsFromCANPublic() {
+  ++fRunCnt;
   // -- what to read
   vector<string> regnames = {"Temp_M"
                             , "ControlVoltage_Set"

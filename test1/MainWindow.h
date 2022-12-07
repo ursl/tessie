@@ -17,7 +17,7 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
 public:
-    MainWindow(tLog &x, QWidget *parent = nullptr);
+    MainWindow(tLog &x, driveHardware *h, QWidget *parent = nullptr);
     ~MainWindow();
 
     void printText(std::string line);
@@ -139,7 +139,7 @@ private:
     Ui::MainWindow *ui;
 
     tLog&         fLOG;
-    driveHardware fThread;
+    driveHardware *fpHw;
     TECDisplay    *fTECDisplay;
 
     std::string fGuiRegName;
