@@ -47,7 +47,7 @@ void ioServer::doRun() {
   cout << "  .. done" << endl;
 
   int cntMsg(0);
-  while (1) {
+ // while (1) {
     // -- allow signals to reach slots
     QCoreApplication::processEvents();
 
@@ -65,7 +65,7 @@ void ioServer::doRun() {
     } else {
       std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
-  }
+ // }
 }
 
 
