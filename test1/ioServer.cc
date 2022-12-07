@@ -38,8 +38,8 @@ void ioServer::sentToServer(QString msg) {
 
 
 // ----------------------------------------------------------------------
-void ioServer::run() {
-  cout << "ioServer::run() entered, instantiate tMosq" <<endl;
+void ioServer::doRun() {
+  cout << "ioServer::doRun() entered, instantiate tMosq" <<endl;
   fCtrlTessie = new tMosq("tessie", "ctrlTessie", "localhost", 1883);
 
   cout << "startServer()" << endl;
@@ -47,12 +47,12 @@ void ioServer::run() {
   cout << "  .. done" << endl;
 
   int cntMsg(0);
- // while (1) {
+  while (1) {
     // -- allow signals to reach slots
     QCoreApplication::processEvents();
 
     int nmsg = fCtrlTessie->getNMessages();
-    //cout << "ioServer::run() while(1) loop, nmsg = " << nmsg << endl;
+    //cout << "ioServer::doRun() while(1) loop, nmsg = " << nmsg << endl;
     if (nmsg != cntMsg) {
       string msg = fCtrlTessie->getMessage();
       cout << "ioServer: ->" << msg << "<-" << endl;
@@ -63,9 +63,9 @@ void ioServer::run() {
       QString qmsg = QString::fromStdString(msg);
       emit signalSendFromServer(qmsg);
     } else {
-      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+      //   std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
- // }
+  }
 }
 
 

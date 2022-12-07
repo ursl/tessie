@@ -195,13 +195,13 @@ void driveHardware::sentFromServer(QString msg) {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::run() {
-  cout << "driveHardware::run() entered" << endl;
+void driveHardware::doRun() {
+  cout << "driveHardware::doRun() entered" << endl;
   int cnt(0);
   struct timeval tvOld, tvNew;
   gettimeofday(&tvOld, 0);
 
-  cout << "driveHardware::run() start loop" << endl;
+  cout << "driveHardware::doRun() start loop" << endl;
   while (1) {
     // -- allow signals to reach slots
     QCoreApplication::processEvents();
@@ -687,7 +687,7 @@ void  driveHardware::turnOnTEC(int itec) {
   stringstream sbla; sbla << "turnOnTEC("
                           << itec << ")"
                           << " reg = " << fCANReg << hex
-                          << " canID = " << fCANId << dec
+                          << " canID = 0x" << fCANId << dec
                               ;
   fLOG(INFO, sbla.str());
 
@@ -713,7 +713,7 @@ void  driveHardware::turnOffTEC(int itec) {
   stringstream sbla; sbla << "turnOffTEC("
                           << itec << ")"
                           << " reg = " << fCANReg << hex
-                          << " canID = 0x" << fCANId
+                          << " canID = 0x" << fCANId << dec
                              ;
   fLOG(INFO, sbla.str());
 

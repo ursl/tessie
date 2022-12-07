@@ -102,7 +102,7 @@ public slots:
   void  toggleFras(int imask);
   void  turnOnTEC(int itec);
   void  turnOffTEC(int itec);
-  void  run();
+  void  doRun();
 
 signals:
   void  signalSomething(int x);
