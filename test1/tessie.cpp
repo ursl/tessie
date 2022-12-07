@@ -23,13 +23,13 @@ int main(int argc, char *argv[]) {
 
   // -- ioServer signals
   QObject::connect(ioThread, SIGNAL(started()), io, SLOT(run()));
-  QObject::connect(io, SIGNAL(sendFromServer(QString)), hw, SLOT(sentFromServer(QString)));
+  QObject::connect(io, SIGNAL(signalSendFromServer(QString)), hw, SLOT(sentFromServer(QString)));
 
   // -- driveHardware signals
   QObject::connect(hwThread, SIGNAL(started()), hw, SLOT(run()));
 
   // -- MainWindow slots and signals
-  QObject::connect(hw, SIGNAL(updateHwDisplay()), &w, SLOT(updateHardwareDisplay()));
+  QObject::connect(hw, SIGNAL(signalUpdateHwDisplay()), &w, SLOT(updateHardwareDisplay()));
   QObject::connect(hw, SIGNAL(signalText(QString)), &w, SLOT(appendText(QString)));
 
   QObject::connect(&w, SIGNAL(signalValve(int)), hw, SLOT(toggleFras(int)));

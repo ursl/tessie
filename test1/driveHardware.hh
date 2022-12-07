@@ -109,7 +109,7 @@ signals:
   void  signalText(QString msg);
   void  sendToServer(QString msg);
 //REMOVE  void  startServer();
-  void  updateHwDisplay();
+  void  signalUpdateHwDisplay();
 
 protected:
   void        initTECData();

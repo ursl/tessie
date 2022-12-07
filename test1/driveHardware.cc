@@ -221,8 +221,8 @@ void driveHardware::run() {
       fMutex.unlock();
 
       // -- do something with the results
-      if (0) cout << tStamp() << " emit updateHwDisplay tdiff = " << tdiff << endl;
-      emit updateHwDisplay();
+      if (0) cout << tStamp() << " emit signalUpdateHwDisplay tdiff = " << tdiff << endl;
+      emit signalUpdateHwDisplay();
       dumpCSV();
 
       // -- make sure there is no alarm before clearing

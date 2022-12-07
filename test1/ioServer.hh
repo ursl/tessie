@@ -20,7 +20,7 @@ public slots:
   void sentToServer(QString msg);
 
 signals:
-  void sendFromServer(QString msg);
+  void signalSendFromServer(QString msg);
 
 private:
   tMosq         *fCtrlTessie;

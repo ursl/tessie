@@ -45,8 +45,6 @@ void ioServer::run() {
   startServer();
   cout << "  .. done" << endl;
 
-  std::chrono::milliseconds milli5   = std::chrono::milliseconds(5);
-
   int cntMsg(0);
   while (1) {
     int nmsg = fCtrlTessie->getNMessages();
@@ -58,7 +56,8 @@ void ioServer::run() {
       cout << "emit sendFromServer("
            << msg
            << ")" << endl;
-      emit sendFromServer(QString::fromStdString(msg));
+      QString qmsg = QString::fromStdString(msg);
+      emit signalSendFromServer(qmsg);
     } else {
       std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
