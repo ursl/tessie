@@ -14,7 +14,6 @@ public:
   ioServer();
   ~ioServer();
   void printFromServer(QString msg);
-  void start() {startServer(); }
   void startServer();
 
 public slots:
