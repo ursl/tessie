@@ -35,8 +35,9 @@ void ioServer::sentToServer(QString msg) {
 
 // ----------------------------------------------------------------------
 void ioServer::run() {
+  cout << "ioServer::run() entered" <<endl;
   fCtrlTessie = new tMosq("tessie", "ctrlTessie", "localhost", 1883);
-  //chrono::milliseconds milli5 = chrono::milliseconds(5);
+
   int cntMsg(0);
   while (1) {
     int nmsg = fCtrlTessie->getNMessages();
@@ -45,7 +46,6 @@ void ioServer::run() {
       cout << "ioServer: ->" << msg << "<-" << endl;
       cntMsg = nmsg;
       printFromServer(QString::fromStdString(msg));
-
     } else {
       //std::this_thread::sleep_for(milli5);
     }
@@ -64,7 +64,7 @@ void ioServer::startServer() {
       break;
     }
   }
-  run();
+  //run();
 }
 
 
