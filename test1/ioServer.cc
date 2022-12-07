@@ -50,6 +50,7 @@ void ioServer::run() {
   int cntMsg(0);
   while (1) {
     int nmsg = fCtrlTessie->getNMessages();
+    cout << "ioServer::run() while(1) loop, nmsg = " << nmsg << endl;
     if (nmsg != cntMsg) {
       string msg = fCtrlTessie->getMessage();
       cout << "ioServer: ->" << msg << "<-" << endl;
@@ -59,8 +60,7 @@ void ioServer::run() {
            << ")" << endl;
       emit sendFromServer(QString::fromStdString(msg));
     } else {
-      cout << "ioServer::run() while(1) loop" << endl;
-      std::this_thread::sleep_for(milli5);
+      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
   }
 }
