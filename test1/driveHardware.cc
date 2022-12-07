@@ -189,24 +189,8 @@ driveHardware::~driveHardware() {
 // ----------------------------------------------------------------------
 void driveHardware::sentFromServer(QString msg) {
   cout << "now what? received ->" << msg.toStdString() << "<-" << endl;
-}
-
-
-// ----------------------------------------------------------------------
-void driveHardware::runPrintout(int reg, float val) {
-  cout << "driveHardware::runPrintout() " << endl;
-//  QMutexLocker locker(&fMutex);
-
-//  this->fCANReg = reg; // ??
-//  this->fCANVal = val; // ??
-
-//  if (!isRunning()) {
-//      start(LowPriority);
-//    } else {
-//      fRestart = true;
-//      fCondition.wakeOne();
-//    }
-
+  fIoMessage = msg.toStdString();
+  parseIoMessage();
 }
 
 
@@ -217,8 +201,8 @@ void driveHardware::run() {
   struct timeval tvOld, tvNew;
   gettimeofday(&tvOld, 0);
 
-  //  fIoServer->startServer();
-  emit startServer();
+  //REMOVE fIoServer->startServer();
+  //REMOVE emit startServer();
   cout << "driveHardware::run() start loop" << endl;
   while (1) {
     ++cnt;
@@ -373,14 +357,6 @@ void driveHardware::parseCAN() {
   }
 
 }
-
-
-// ----------------------------------------------------------------------
-void driveHardware::getIoMessage(std::string msg) {
-  fIoMessage = msg;
-  parseIoMessage();
-}
-
 
 
 // ----------------------------------------------------------------------

@@ -22,8 +22,8 @@ int main(int argc, char *argv[]) {
   MainWindow w(LOG, hw, nullptr);
 
   // -- ioServer signals
-  QObject::connect(io, SIGNAL(sendFromServer(QString)), hw, SLOT(sentFromServer(QString)));
   QObject::connect(ioThread, SIGNAL(started()), io, SLOT(run()));
+  QObject::connect(io, SIGNAL(sendFromServer(QString)), hw, SLOT(sentFromServer(QString)));
 
   // -- driveHardware signals
   QObject::connect(hwThread, SIGNAL(started()), hw, SLOT(run()));

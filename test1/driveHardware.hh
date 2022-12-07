@@ -44,7 +44,6 @@ public:
 
   void  shutDown();
 
-  void  runPrintout(int reg, float val);
   void dumpCSV();
   std::string timeStamp(bool filestamp = true);
   std::string tStamp() {return timeStamp(false);}
@@ -54,7 +53,6 @@ public:
   void  readCANmessage();
   void  parseCAN();
 
-  void getIoMessage(std::string msg);
   void parseIoMessage();
 
   // -- controlling the FRAS/valve(s)
@@ -110,7 +108,7 @@ signals:
   void  signalSomething(int x);
   void  signalText(QString msg);
   void  sendToServer(QString msg);
-  void  startServer();
+//REMOVE  void  startServer();
   void  updateHwDisplay();
 
 protected:
