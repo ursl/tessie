@@ -25,7 +25,8 @@ int main(int argc, char *argv[]) {
 
   // -- ioServer signals
   QObject::connect(ioThread, SIGNAL(started()), io, SLOT(run()));
-  QObject::connect(io, SIGNAL(signalSendFromServer(QString)), hw, SLOT(sentFromServer(QString)));
+  bool success = QObject::connect(io, SIGNAL(signalSendFromServer(QString)), hw, SLOT(sentFromServer(QString)));
+  Q_ASSERT(success);
 
   // -- driveHardware signals
   QObject::connect(hwThread, SIGNAL(started()), hw, SLOT(run()));
