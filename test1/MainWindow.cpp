@@ -280,7 +280,6 @@ void MainWindow::updateHardwareDisplay() {
 
 
   for (unsigned int ivec = 0; ivec < 8; ++ivec) {
-    cout << "Temp_Set = " << fpHw->getTECRegister(ivec+1, "Temp_Set") << endl;
     if (!fUIControlVoltageSet[ivec]->hasFocus()) {
       fUIControlVoltageSet[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "ControlVoltage_Set"), 'f', 2));
       fUIControlVoltageSet[ivec]->setStyleSheet("QLineEdit {color : green; }");

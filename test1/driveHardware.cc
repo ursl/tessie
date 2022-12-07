@@ -759,16 +759,14 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
   // -- send read request
   sendCANmessage();
   std::this_thread::sleep_for(fMilli10);
+  if (1) cout << "  getTECRegisterFromCAN for tec = " << itec
+              << " register = "<< regname
+              << endl;
+
   if (itec > 0) {
     readCAN();
     fCANReadFloatVal = fCanMsg.getFloat(itec, fCANReg);
-    if (0) cout << "  obtained for tec = " << itec
-                << " register = "<< regname
-                << " value = " << fCANReadFloatVal
-                << " nframes = " << fCanMsg.nFrames()
-                << endl;
     //  readCANmessage();
-
     return fCANReadFloatVal;
   } else {
     readCAN(fNActiveTEC);
