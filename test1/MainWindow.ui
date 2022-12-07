@@ -406,21 +406,21 @@
        <height>23</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="hlayoutTop_PID_kp">
+     <layout class="QHBoxLayout" name="hlayoutTop_Mode">
       <item>
-       <widget class="QLabel" name="labelTop_PID_kp">
+       <widget class="QLabel" name="labelTop_Mode">
         <property name="font">
          <font>
           <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
-         <string>PID_kp                     </string>
+         <string>Mode                       </string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec8_PID_kp">
+       <widget class="QLineEdit" name="tec8_Mode">
         <property name="acceptDrops">
          <bool>false</bool>
         </property>
@@ -430,21 +430,21 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec7_PID_kp">
+       <widget class="QLineEdit" name="tec7_Mode">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec6_PID_kp">
+       <widget class="QLineEdit" name="tec6_Mode">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec5_PID_kp">
+       <widget class="QLineEdit" name="tec5_Mode">
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -461,21 +461,21 @@
        <height>23</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="hlayoutBot_PID_kp">
+     <layout class="QHBoxLayout" name="hlayoutBot_Mode">
       <item>
-       <widget class="QLabel" name="labelBot_PID_kp">
+       <widget class="QLabel" name="labelBot_Mode">
         <property name="font">
          <font>
           <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
-         <string>PID_kp                     </string>
+         <string>Mode                       </string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec1_PID_kp">
+       <widget class="QLineEdit" name="tec1_Mode">
         <property name="acceptDrops">
          <bool>false</bool>
         </property>
@@ -485,21 +485,21 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec2_PID_kp">
+       <widget class="QLineEdit" name="tec2_Mode">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec3_PID_kp">
+       <widget class="QLineEdit" name="tec3_Mode">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec4_PID_kp">
+       <widget class="QLineEdit" name="tec4_Mode">
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -516,21 +516,21 @@
        <height>23</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="hlayoutBot_PID_ki">
+     <layout class="QHBoxLayout" name="hlayoutBot_Supply_U">
       <item>
-       <widget class="QLabel" name="labelBot_PID_ki">
+       <widget class="QLabel" name="labelBot_Supply_U">
         <property name="font">
          <font>
           <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
-         <string>PID_ki                      </string>
+         <string>Supply_U                 </string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec1_PID_ki">
+       <widget class="QLineEdit" name="tec1_Supply_U">
         <property name="acceptDrops">
          <bool>false</bool>
         </property>
@@ -540,76 +540,21 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec2_PID_ki">
+       <widget class="QLineEdit" name="tec2_Supply_U">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec3_PID_ki">
+       <widget class="QLineEdit" name="tec3_Supply_U">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec4_PID_ki">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="layoutWidget_8">
-     <property name="geometry">
-      <rect>
-       <x>200</x>
-       <y>430</y>
-       <width>441</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="hlayoutBot_PID_kd">
-      <item>
-       <widget class="QLabel" name="labelBot_PID_kd">
-        <property name="font">
-         <font>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>PID_kd                     </string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec1_PID_kd">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec2_PID_kd">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec3_PID_kd">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec4_PID_kd">
+       <widget class="QLineEdit" name="tec4_Supply_U">
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -626,21 +571,21 @@
        <height>23</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="hlayoutTop_PID_ki">
+     <layout class="QHBoxLayout" name="hlayoutTop_Supply_U">
       <item>
-       <widget class="QLabel" name="labelTop_PID_ki">
+       <widget class="QLabel" name="labelTop_Supply_U">
         <property name="font">
          <font>
           <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
-         <string>PID_ki                      </string>
+         <string>Supply_U                 </string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec8_PID_ki">
+       <widget class="QLineEdit" name="tec8_Supply_U">
         <property name="acceptDrops">
          <bool>false</bool>
         </property>
@@ -650,76 +595,21 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec7_PID_ki">
+       <widget class="QLineEdit" name="tec7_Supply_U">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec6_PID_ki">
+       <widget class="QLineEdit" name="tec6_Supply_U">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="tec5_PID_ki">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="layoutWidget_10">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>220</y>
-       <width>441</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="hlayoutTop_PID_kd">
-      <item>
-       <widget class="QLabel" name="labelTop_PID_kd">
-        <property name="font">
-         <font>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>PID_kd                     </string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec8_PID_kd">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec7_PID_kd">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec6_PID_kd">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec5_PID_kd">
+       <widget class="QLineEdit" name="tec5_Supply_U">
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -950,9 +840,9 @@
     <widget class="QWidget" name="horizontalLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>310</x>
+       <x>281</x>
        <y>20</y>
-       <width>312</width>
+       <width>341</width>
        <height>32</height>
       </rect>
      </property>
@@ -1762,14 +1652,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>tec8_PID_kp</sender>
+   <sender>tec8_Mode</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
    <slot>tec8PIDkp()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>505</x>
-     <y>270</y>
+     <x>492</x>
+     <y>271</y>
     </hint>
     <hint type="destinationlabel">
      <x>14</x>
@@ -1778,14 +1668,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>tec7_PID_kp</sender>
+   <sender>tec7_Mode</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
    <slot>tec7PIDkp()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>586</x>
-     <y>267</y>
+     <x>581</x>
+     <y>268</y>
     </hint>
     <hint type="destinationlabel">
      <x>24</x>
@@ -1794,7 +1684,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>tec6_PID_kp</sender>
+   <sender>tec6_Mode</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
    <slot>tec6PIDkp()</slot>
@@ -1810,7 +1700,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>tec5_PID_kp</sender>
+   <sender>tec5_Mode</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
    <slot>tec5PIDkp()</slot>
@@ -1826,14 +1716,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>tec8_PID_ki</sender>
+   <sender>tec8_Supply_U</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
    <slot>tec8PIDki()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>504</x>
-     <y>309</y>
+     <x>492</x>
+     <y>310</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -1842,14 +1732,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>tec7_PID_ki</sender>
+   <sender>tec7_Supply_U</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
    <slot>tec7PIDki()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>586</x>
-     <y>307</y>
+     <x>581</x>
+     <y>308</y>
     </hint>
     <hint type="destinationlabel">
      <x>22</x>
@@ -1858,7 +1748,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>tec6_PID_ki</sender>
+   <sender>tec6_Supply_U</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
    <slot>tec6PIDki()</slot>
@@ -1874,7 +1764,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>tec5_PID_ki</sender>
+   <sender>tec5_Supply_U</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
    <slot>tec5PIDki()</slot>
@@ -1886,70 +1776,6 @@
     <hint type="destinationlabel">
      <x>51</x>
      <y>369</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec8_PID_kd</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec8PIDkd()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>505</x>
-     <y>331</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>10</x>
-     <y>402</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec7_PID_kd</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec7PIDkd()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>586</x>
-     <y>336</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>24</x>
-     <y>409</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec6_PID_kd</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec6PIDkd()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>668</x>
-     <y>337</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>37</x>
-     <y>417</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec5_PID_kd</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec5PIDkd()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>749</x>
-     <y>331</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>59</x>
-     <y>424</y>
     </hint>
    </hints>
   </connection>
@@ -2104,8 +1930,8 @@
    <slot>clkValveAll()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>109</x>
-     <y>208</y>
+     <x>70</x>
+     <y>239</y>
     </hint>
     <hint type="destinationlabel">
      <x>631</x>
@@ -2120,8 +1946,8 @@
    <slot>clkValve1()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>109</x>
-     <y>174</y>
+     <x>70</x>
+     <y>205</y>
     </hint>
     <hint type="destinationlabel">
      <x>558</x>
@@ -2136,7 +1962,7 @@
    <slot>clkValve0()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>109</x>
+     <x>70</x>
      <y>140</y>
     </hint>
     <hint type="destinationlabel">
@@ -2206,6 +2032,70 @@
     <hint type="destinationlabel">
      <x>10</x>
      <y>60</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec4_Voltage</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec4VoltSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>760</x>
+     <y>391</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>797</x>
+     <y>385</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec3_Voltage</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec3VoltSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>647</x>
+     <y>392</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>798</x>
+     <y>415</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec2_Voltage</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec2VoltSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>548</x>
+     <y>394</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>799</x>
+     <y>442</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec1_Voltage</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec1VoltSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>474</x>
+     <y>390</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>797</x>
+     <y>468</y>
     </hint>
    </hints>
   </connection>

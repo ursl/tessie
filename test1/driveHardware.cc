@@ -213,7 +213,7 @@ void driveHardware::doRun() {
     int tdiff = diff_ms(tvNew, tvOld);
     if (tdiff > 1000.) {
       tvOld = tvNew;
-     if (0) cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
+      if (0) cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
       readSHT85();
 
       // -- read all parameters from CAN
@@ -238,11 +238,7 @@ void driveHardware::doRun() {
       }
       fCanMsg.clearAllFrames();
     }
-
-#ifdef PI
-      //entertainFras();
-#endif
-    }
+  }
 
 }
 

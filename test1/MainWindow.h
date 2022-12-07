@@ -87,32 +87,23 @@ private slots:
     void tec2TempSet() {tecSetFromUI(2, "Temp_Set", ui->tec2_Temp); }
     void tec1TempSet() {tecSetFromUI(1, "Temp_Set", ui->tec1_Temp); }
 
-    void tec8PIDkp() {tecSetFromUI(8, "PID_kp", ui->tec8_PID_kp); }
-    void tec7PIDkp() {tecSetFromUI(7, "PID_kp", ui->tec7_PID_kp); }
-    void tec6PIDkp() {tecSetFromUI(6, "PID_kp", ui->tec6_PID_kp); }
-    void tec5PIDkp() {tecSetFromUI(5, "PID_kp", ui->tec5_PID_kp); }
-    void tec4PIDkp() {tecSetFromUI(4, "PID_kp", ui->tec4_PID_kp); }
-    void tec3PIDkp() {tecSetFromUI(3, "PID_kp", ui->tec3_PID_kp); }
-    void tec2PIDkp() {tecSetFromUI(2, "PID_kp", ui->tec2_PID_kp); }
-    void tec1PIDkp() {tecSetFromUI(1, "PID_kp", ui->tec1_PID_kp); }
+    void tec8Supply_U() {tecSetFromUI(8, "PID_kp", ui->tec8_Supply_U); }
+    void tec7Supply_U() {tecSetFromUI(7, "PID_kp", ui->tec7_Supply_U); }
+    void tec6Supply_U() {tecSetFromUI(6, "PID_kp", ui->tec6_Supply_U); }
+    void tec5Supply_U() {tecSetFromUI(5, "PID_kp", ui->tec5_Supply_U); }
+    void tec4Supply_U() {tecSetFromUI(4, "PID_kp", ui->tec4_Supply_U); }
+    void tec3Supply_U() {tecSetFromUI(3, "PID_kp", ui->tec3_Supply_U); }
+    void tec2Supply_U() {tecSetFromUI(2, "PID_kp", ui->tec2_Supply_U); }
+    void tec1Supply_U() {tecSetFromUI(1, "PID_kp", ui->tec1_Supply_U); }
 
-    void tec8PIDki() {tecSetFromUI(8, "PID_ki", ui->tec8_PID_ki); }
-    void tec7PIDki() {tecSetFromUI(7, "PID_ki", ui->tec7_PID_ki); }
-    void tec6PIDki() {tecSetFromUI(6, "PID_ki", ui->tec6_PID_ki); }
-    void tec5PIDki() {tecSetFromUI(5, "PID_ki", ui->tec5_PID_ki); }
-    void tec4PIDki() {tecSetFromUI(4, "PID_ki", ui->tec4_PID_ki); }
-    void tec3PIDki() {tecSetFromUI(3, "PID_ki", ui->tec3_PID_ki); }
-    void tec2PIDki() {tecSetFromUI(2, "PID_ki", ui->tec2_PID_ki); }
-    void tec1PIDki() {tecSetFromUI(1, "PID_ki", ui->tec1_PID_ki); }
-
-    void tec8PIDkd() {tecSetFromUI(8, "PID_kd", ui->tec8_PID_kd); }
-    void tec7PIDkd() {tecSetFromUI(7, "PID_kd", ui->tec7_PID_kd); }
-    void tec6PIDkd() {tecSetFromUI(6, "PID_kd", ui->tec6_PID_kd); }
-    void tec5PIDkd() {tecSetFromUI(5, "PID_kd", ui->tec5_PID_kd); }
-    void tec4PIDkd() {tecSetFromUI(4, "PID_kd", ui->tec4_PID_kd); }
-    void tec3PIDkd() {tecSetFromUI(3, "PID_kd", ui->tec3_PID_kd); }
-    void tec2PIDkd() {tecSetFromUI(2, "PID_kd", ui->tec2_PID_kd); }
-    void tec1PIDkd() {tecSetFromUI(1, "PID_kd", ui->tec1_PID_kd); }
+    void tec8Mode() {tecSetFromUI(8, "PID_ki", ui->tec8_Mode); }
+    void tec7Mode() {tecSetFromUI(7, "PID_ki", ui->tec7_Mode); }
+    void tec6Mode() {tecSetFromUI(6, "PID_ki", ui->tec6_Mode); }
+    void tec5Mode() {tecSetFromUI(5, "PID_ki", ui->tec5_Mode); }
+    void tec4Mode() {tecSetFromUI(4, "PID_ki", ui->tec4_Mode); }
+    void tec3Mode() {tecSetFromUI(3, "PID_ki", ui->tec3_Mode); }
+    void tec2Mode() {tecSetFromUI(2, "PID_ki", ui->tec2_Mode); }
+    void tec1Mode() {tecSetFromUI(1, "PID_ki", ui->tec1_Mode); }
 
     void tec8TempM() {tecSetFromUI(8, "Temp_M", ui->tec8_TempM); }
     void tec7TempM() {tecSetFromUI(7, "Temp_M", ui->tec7_TempM); }
@@ -149,8 +140,8 @@ private:
     std::vector<QLineEdit*> fUIControlVoltageSet,
     fUITemp_Set,
     fUITempM,
-    fUIPIDkp,
-    fUIPIDki,
+    fUISupply_U,
+    fUIMode,
     fUIPIDkd;
 
     std::vector<QCheckBox*> fUICheckBox;

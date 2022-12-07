@@ -67,37 +67,23 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fUIControlVoltageSet.push_back(ui->tec7_Voltage);
   fUIControlVoltageSet.push_back(ui->tec8_Voltage);
 
-  fUIPIDkp.push_back(ui->tec1_PID_kp);
-  fUIPIDkp.push_back(ui->tec2_PID_kp);
-  fUIPIDkp.push_back(ui->tec3_PID_kp);
-  fUIPIDkp.push_back(ui->tec4_PID_kp);
-  fUIPIDkp.push_back(ui->tec5_PID_kp);
-  fUIPIDkp.push_back(ui->tec6_PID_kp);
-  fUIPIDkp.push_back(ui->tec7_PID_kp);
-  fUIPIDkp.push_back(ui->tec8_PID_kp);
+  fUIMode.push_back(ui->tec1_Mode);
+  fUIMode.push_back(ui->tec2_Mode);
+  fUIMode.push_back(ui->tec3_Mode);
+  fUIMode.push_back(ui->tec4_Mode);
+  fUIMode.push_back(ui->tec5_Mode);
+  fUIMode.push_back(ui->tec6_Mode);
+  fUIMode.push_back(ui->tec7_Mode);
+  fUIMode.push_back(ui->tec8_Mode);
 
-  fUIPIDki.push_back(ui->tec1_PID_ki);
-  fUIPIDki.push_back(ui->tec2_PID_ki);
-  fUIPIDki.push_back(ui->tec3_PID_ki);
-  fUIPIDki.push_back(ui->tec4_PID_ki);
-  fUIPIDki.push_back(ui->tec5_PID_ki);
-  fUIPIDki.push_back(ui->tec6_PID_ki);
-  fUIPIDki.push_back(ui->tec7_PID_ki);
-  fUIPIDki.push_back(ui->tec8_PID_ki);
-
-  fUIPIDkd.push_back(ui->tec1_PID_kd);
-  fUIPIDkd.push_back(ui->tec2_PID_kd);
-  fUIPIDkd.push_back(ui->tec3_PID_kd);
-  fUIPIDkd.push_back(ui->tec4_PID_kd);
-  fUIPIDkd.push_back(ui->tec5_PID_kd);
-  fUIPIDkd.push_back(ui->tec6_PID_kd);
-  fUIPIDkd.push_back(ui->tec7_PID_kd);
-  fUIPIDkd.push_back(ui->tec8_PID_kd);
-
-
-//  updateHardwareValues();
-
-//REMOVE  fThread.runPrintout(1,1);
+  fUISupply_U.push_back(ui->tec1_Supply_U);
+  fUISupply_U.push_back(ui->tec2_Supply_U);
+  fUISupply_U.push_back(ui->tec3_Supply_U);
+  fUISupply_U.push_back(ui->tec4_Supply_U);
+  fUISupply_U.push_back(ui->tec5_Supply_U);
+  fUISupply_U.push_back(ui->tec6_Supply_U);
+  fUISupply_U.push_back(ui->tec7_Supply_U);
+  fUISupply_U.push_back(ui->tec8_Supply_U);
 }
 
 
@@ -289,17 +275,13 @@ void MainWindow::updateHardwareDisplay() {
       fUITemp_Set[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "Temp_Set"), 'f', 2));
       fUITemp_Set[ivec]->setStyleSheet("QLineEdit {color : green; }");
     }
-    if (!fUIPIDki[ivec]->hasFocus()) {
-      fUIPIDki[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "PID_ki"), 'f', 2));
-      fUIPIDki[ivec]->setStyleSheet("QLineEdit {color : green; }");
+    if (!fUIMode[ivec]->hasFocus()) {
+      fUIMode[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "PID_ki"), 'f', 2));
+      fUIMode[ivec]->setStyleSheet("QLineEdit {color : green; }");
     }
-    if (!fUIPIDkp[ivec]->hasFocus()) {
-      fUIPIDkp[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "PID_kp"), 'f', 2));
-      fUIPIDkp[ivec]->setStyleSheet("QLineEdit {color : green; }");
-    }
-    if (!fUIPIDkd[ivec]->hasFocus()) {
-      fUIPIDkd[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "PID_kd"), 'f', 2));
-      fUIPIDkd[ivec]->setStyleSheet("QLineEdit {color : green; }");
+    if (!fUISupply_U[ivec]->hasFocus()) {
+      fUISupply_U[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "PID_kp"), 'f', 2));
+      fUISupply_U[ivec]->setStyleSheet("QLineEdit {color : green; }");
     }
 
     fUITempM[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "Temp_M"), 'f', 2));
