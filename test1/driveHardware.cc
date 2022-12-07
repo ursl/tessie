@@ -188,7 +188,7 @@ driveHardware::~driveHardware() {
 
 // ----------------------------------------------------------------------
 void driveHardware::sentFromServer(QString msg) {
-  cout << "now what?" << endl;
+  cout << "now what? received ->" << msg.toStdString() << "<-" << endl;
 }
 
 
