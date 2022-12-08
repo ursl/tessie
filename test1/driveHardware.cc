@@ -399,7 +399,9 @@ void driveHardware::answerIoGet(string &what) {
 }
 
 // ----------------------------------------------------------------------
-void driveHardware::answerIoSet(string &what) {
+void driveHardware::answerIoSet(string &awhat) {
+  string what = fIoMessage;
+
   cout << "answerIoSet what ->" << what << "<-" << endl;
   string delimiter(" ");
   size_t pos = 0;
@@ -414,12 +416,11 @@ void driveHardware::answerIoSet(string &what) {
     if (string::npos != regname.find("nada")) {
       cout << "assigning regname ->" << token << "<-" << std::endl;
       regname = token;
-    } else if (value < -900) {
-      cout << "assigning value ->" << token << "<-" << std::endl;
-      value = atof(token.c_str());
     }
     what.erase(0, pos + delimiter.length());
   }
+
+  value = atof(what.c_str());
 
   istringstream str(what);
   str >> regname >> value;
