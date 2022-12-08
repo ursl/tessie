@@ -45,6 +45,8 @@ public:
   void  shutDown();
 
   void dumpCSV();
+  void evtHandler();
+
   std::string timeStamp(bool filestamp = true);
   std::string tStamp() {return timeStamp(false);}
 

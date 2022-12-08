@@ -187,6 +187,15 @@ driveHardware::~driveHardware() {
 
 
 // ----------------------------------------------------------------------
+void driveHardware::evtHandler() {
+  // -- allow signals to reach slots
+  QCoreApplication::processEvents();
+  // -- make sure that no CAN errors are around
+  parseCAN();
+}
+
+
+// ----------------------------------------------------------------------
 void driveHardware::sentFromServer(QString msg) {
   cout << "now what? received ->" << msg.toStdString() << "<-" << endl;
   fIoMessage = msg.toStdString();
@@ -203,8 +212,8 @@ void driveHardware::doRun() {
 
   cout << "driveHardware::doRun() start loop" << endl;
   while (1) {
-    // -- allow signals to reach slots
-    QCoreApplication::processEvents();
+
+    evtHandler();
 
     ++cnt;
     std::this_thread::sleep_for(fMilli5);
@@ -228,6 +237,9 @@ void driveHardware::doRun() {
 
       // -- make sure there is no alarm before clearing
       parseCAN();
+
+      evtHandler();
+
       // -- print errors (if present) accumulated in CANmessage
       if (fCanMsg.nErrors() > 0) {
         deque<string> errs = fCanMsg.getErrors();
@@ -842,6 +854,9 @@ void driveHardware::readAllParamsFromCANPublic() {
                             , "Supply_P"
                             };
   for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
+
+      if (0 == ireg%2) evtHandler();
+
     // -- NOTE: 5 != reg number!
     if (5 == ireg) {
       fTECData[8].reg["Temp_W"].value = getTECRegisterFromCAN(8, regnames[ireg]);
@@ -855,6 +870,8 @@ void driveHardware::readAllParamsFromCANPublic() {
       }
     }
   }
+
+  evtHandler();
 
   // -- read PowerState
   getTECRegisterFromCAN(0, "PowerState");
