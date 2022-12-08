@@ -410,7 +410,7 @@ void driveHardware::answerIoSet(string &what) {
 
 // ----------------------------------------------------------------------
 void driveHardware::parseIoMessage() { 
-  string s1("Temp"), s2("Temperature"), s3("get");
+  string s1("Temp_PT1000"), s2("Temperature"), s3("get");
   // -- GET answers
   if (string::npos != fIoMessage.find("get")) {
 
@@ -442,32 +442,32 @@ void driveHardware::parseIoMessage() {
       return;
     }
 
-    s1 = "Supply_U"; s2 = "Supply_U";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
-    s1 = "Supply_I"; s2 = "Supply_I";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
-    s1 = "Supply_P"; s2 = "Supply_P";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
+    s1 = "Supply_U"; s2 = "Supply_U";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
+    s1 = "Supply_I"; s2 = "Supply_I";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
+    s1 = "Supply_P"; s2 = "Supply_P";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
 
-    s1 = "Peltier_U"; s2 = "Peltier_U";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
-    s1 = "Peltier_I"; s2 = "Peltier_I";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
-    s1 = "Peltier_P"; s2 = "Peltier_P";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
-    s1 = "Peltier_R"; s2 = "Peltier_R";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
+    s1 = "Peltier_U"; s2 = "Peltier_U";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
+    s1 = "Peltier_I"; s2 = "Peltier_I";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
+    s1 = "Peltier_P"; s2 = "Peltier_P";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
+    s1 = "Peltier_R"; s2 = "Peltier_R";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
 
-    s1 = "Temp_W"; s2 = "Temp_W";   if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
-    s1 = "Temp_M"; s2 = "Temp_M";   if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
-    s1 = "Diff"; s2 = "Temp_Diff";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
+    s1 = "Temp_W"; s2 = "Temp_W";   if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
+    s1 = "Temp_M"; s2 = "Temp_M";   if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
+    s1 = "Diff"; s2 = "Temp_Diff";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
 
-    s1 = "Power"; s2 = "PowerState";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
-    s1 = "Mode";  s2 = "Mode";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
+    s1 = "Power"; s2 = "PowerState";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
+    s1 = "Mode";  s2 = "Mode";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
 
-    s1 = "Max"; s2 = "PID_Max";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
-    s1 = "Min"; s2 = "PID_Min";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
-    s1 = "Temp_Set"; s2 = "Temp_Set";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
+    s1 = "Max"; s2 = "PID_Max";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
+    s1 = "Min"; s2 = "PID_Min";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
+    s1 = "Temp_Set"; s2 = "Temp_Set";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
 
 
-    s1 = "PID_kp"; s2 = "kp";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
-    s1 = "PID_ki"; s2 = "ki";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
-    s1 = "PID_kd"; s2 = "kd";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
+    s1 = "kp"; s2 = "PID_kp";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
+    s1 = "ki"; s2 = "PID_ki";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
+    s1 = "kd"; s2 = "PID_kd";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
 
-    s1 = "Voltage";  s2 = "ControlVoltage_Set";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
+    s1 = "Voltage";  s2 = "ControlVoltage_Set";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
 
   } else {
     s3 = "set";
