@@ -423,13 +423,6 @@ void driveHardware::answerIoSet(string &awhat) {
   }
 
   value = atof(what.c_str());
-
-  istringstream str(what);
-  str >> regname >> value;
-  cout << "answerIoSet: " << regname << value << endl;
-  cout << "answerIoSet regname ->" << regname << "<-"
-       << " value ->" << value << "<-"
-       << endl;
   if (value < -900.) {
     fLOG(WARNING, "no proper value: " + what );
   }
