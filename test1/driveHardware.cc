@@ -394,7 +394,7 @@ void driveHardware::answerIoGet(string &what) {
 
 // ----------------------------------------------------------------------
 void driveHardware::answerIoSet(string &what) {
-  stringstream str(what);
+  istringstream str(what);
   string regname;
   float value(-999.);
   str >> regname >> value;
