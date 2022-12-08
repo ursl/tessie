@@ -396,10 +396,12 @@ void driveHardware::answerIoGet(string &what) {
 void driveHardware::answerIoSet(string &what) {
   stringstream str(what);
   string regname;
-  float value(0.);
+  float value(-999.);
   str >> regname >> value;
   cout << "answerIoSet: " << regname << value << endl;
-  return;
+  if (value < -900.) {
+    fLOG(WARNING, "no proper value: " + what );
+  }
   setTECRegister(0, what, value);
 
   QString qmsg = QString::fromStdString(str.str());
@@ -472,16 +474,16 @@ void driveHardware::parseIoMessage() {
   } else {
     s3 = "set";
 
-    s1 = "Mode";  s2 = "Mode";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
-    s1 = "Voltage";  s2 = "ControlVoltage_Set";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
+    s1 = "Mode";  s2 = "Mode";  if (findInIoMessage(s1, s2, s3)) answerIoSet(s1);
+    s1 = "Voltage";  s2 = "ControlVoltage_Set";  if (findInIoMessage(s1, s2, s3)) answerIoSet(s1);
 
-    s1 = "PID_kp"; s2 = "kp";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
-    s1 = "PID_ki"; s2 = "ki";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
-    s1 = "PID_kd"; s2 = "kd";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
+    s1 = "PID_kp"; s2 = "kp";  if (findInIoMessage(s1, s2, s3)) answerIoSet(s1);
+    s1 = "PID_ki"; s2 = "ki";  if (findInIoMessage(s1, s2, s3)) answerIoSet(s1);
+    s1 = "PID_kd"; s2 = "kd";  if (findInIoMessage(s1, s2, s3)) answerIoSet(s1);
 
-    s1 = "Temp_Set"; s2 = "Temp_Set";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
-    s1 = "Max"; s2 = "PID_Max";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
-    s1 = "Min"; s2 = "PID_Min";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s1);
+    s1 = "Temp_Set"; s2 = "Temp_Set";  if (findInIoMessage(s1, s2, s3)) answerIoSet(s1);
+    s1 = "Max"; s2 = "PID_Max";  if (findInIoMessage(s1, s2, s3)) answerIoSet(s1);
+    s1 = "Min"; s2 = "PID_Min";  if (findInIoMessage(s1, s2, s3)) answerIoSet(s1);
   }
 
 }
