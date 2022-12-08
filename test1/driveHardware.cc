@@ -513,6 +513,19 @@ void driveHardware::parseIoMessage() {
     s1 = "Temp_Set"; s2 = "Temp_Set";  if (findInIoMessage(s1, s2, s3)) answerIoSet(fIoMessage);
     s1 = "Max"; s2 = "PID_Max";  if (findInIoMessage(s1, s2, s3)) answerIoSet(fIoMessage);
     s1 = "Min"; s2 = "PID_Min";  if (findInIoMessage(s1, s2, s3)) answerIoSet(fIoMessage);
+
+    s3 = "cmd";
+    s1 = "Power_On";  s2 = "Power_On";  if (findInIoMessage(s1, s2, s3)) {
+      for (int itec = 1; itec <=8; ++itec) {
+        turnOnTEC(itec);
+      }
+    }
+
+    s1 = "Power_Off";  s2 = "Power_Off";  if (findInIoMessage(s1, s2, s3)) {
+      for (int itec = 1; itec <=8; ++itec) {
+        turnOffTEC(itec);
+      }
+    }
   }
 
 }
