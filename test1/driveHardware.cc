@@ -814,16 +814,13 @@ float driveHardware::getTECRegister(int itec, std::string regname) {
 void  driveHardware::turnOnTEC(int itec) {
 
   if (0 == fActiveTEC[itec]) {
-      cout << "TEC " << itec <<  " not active, skipping" << endl;
-      return;
-    }
-
-  printf("driveHardware::turnOnTEC(%d)\n", itec);
+    cout << "TEC " << itec <<  " not active, skipping" << endl;
+    return;
+  }
 
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_CMD);
   fCANReg = 1; // Power_On
   fCANVal = fTECParameter;
-  printf(" (2) send CMD with register %d, canID = %x\n", fCANReg, fCANId);
 
   stringstream sbla; sbla << "turnOnTEC("
                           << itec << ")"
@@ -888,7 +885,6 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
   if (itec > 0) {
     readCAN();
     fCANReadFloatVal = fCanMsg.getFloat(itec, fCANReg);
-    //  readCANmessage();
     return fCANReadFloatVal;
   } else {
     readCAN(fNActiveTEC);
@@ -923,11 +919,8 @@ void driveHardware::setTECRegister(int itec, std::string regname, float value) {
 // ----------------------------------------------------------------------
 void driveHardware::initTECData() {
   for (unsigned int itec = 1; itec <=8; ++itec) {
-      fTECData.insert(make_pair(itec, initAllTECRegister()));
-      // -- just for fun:
-      // fTECData[itec].reg["ControlVoltage_Set"].value = -static_cast<float>(itec);
-      // fTECData[itec].print();
-    }
+    fTECData.insert(make_pair(itec, initAllTECRegister()));
+  }
 }
 
 

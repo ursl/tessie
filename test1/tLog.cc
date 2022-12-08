@@ -70,7 +70,6 @@ void tLog::operator()(tLogLevel level, std::string print) {
   fFile << sout << endl;
   if (level <= fLevel) {
     string teout = teTimeStamp.str();
-    fFile << teout << endl;
     emit signalText(QString::fromStdString(teout));
   }
   cout << sout << endl;
