@@ -232,6 +232,8 @@ void driveHardware::doRun() {
       if (0) cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
       readSHT85();
 
+      entertainFras();
+
       // -- read all parameters from CAN
       fMutex.lock();
       readAllParamsFromCANPublic();
@@ -536,6 +538,13 @@ void driveHardware::parseIoMessage() {
     if (findInIoMessage(s1, s2, s3)) {
       toggleFras(2);
     }
+
+    s1 = "quit";  s2 = "exit";
+    if (findInIoMessage(s1, s2, s3)) {
+      stringstream sbla; sbla << "This is the end, my friend";
+      fLOG(INFO, "This is the end, my friend -- tessie shutting down");
+      exit(0);
+    }
   } else if (string::npos != fIoMessage.find("help")) {
 
     vector<string> vhelp;
@@ -595,6 +604,7 @@ void driveHardware::parseIoMessage() {
       emit signalSendToServer(QString::fromStdString(vhelp[i]));
     }
   }
+  fIoMessage = "";
 }
 
 
