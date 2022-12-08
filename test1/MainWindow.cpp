@@ -163,23 +163,19 @@ void MainWindow::tecSetFromUI(int itec, std::string rname, QWidget *qw) {
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValve0() {
-//REMOVE  fThread.toggleFras(1);
   emit signalValve(1);
 }
 
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValve1() {
-//REMOVE  fThread.toggleFras(2);
   emit signalValve(2);
 }
 
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValveAll() {
-//REMOVE  fThread.toggleFras(3);
   emit signalValve(3);
-
 }
 
 

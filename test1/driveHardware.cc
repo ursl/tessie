@@ -513,69 +513,83 @@ void driveHardware::parseIoMessage() {
     s1 = "Min"; s2 = "PID_Min";  if (findInIoMessage(s1, s2, s3)) answerIoSet(fIoMessage);
   } else if (string::npos != fIoMessage.find("cmd ")) {
     s3 = "cmd ";
-    s1 = "Power_On";  s2 = "Power_On";  if (findInIoMessage(s1, s2, s3)) {
+    s1 = "Power_On";  s2 = "Power_On";
+    if (findInIoMessage(s1, s2, s3)) {
       for (int itec = 1; itec <=8; ++itec) {
         turnOnTEC(itec);
       }
     }
 
-    s1 = "Power_Off";  s2 = "Power_Off";  if (findInIoMessage(s1, s2, s3)) {
+    s1 = "Power_Off";  s2 = "Power_Off";
+    if (findInIoMessage(s1, s2, s3)) {
       for (int itec = 1; itec <=8; ++itec) {
         turnOffTEC(itec);
       }
+    }
+
+    s1 = "valve0";  s2 = "valve0";
+    if (findInIoMessage(s1, s2, s3)) {
+      toggleFras(1);
+    }
+
+    s1 = "valve1";  s2 = "valve1";
+    if (findInIoMessage(s1, s2, s3)) {
+      toggleFras(2);
     }
   } else if (string::npos != fIoMessage.find("help")) {
 
     vector<string> vhelp;
     vhelp.push_back("===================");
     vhelp.push_back("hostname: coldbox01");
-    vhelp.push_back("thread:   ctrlTessie");
+    vhelp.push_back("thread:  ctrlTessie");
     vhelp.push_back("===================");
     vhelp.push_back("cmd messages:");
     vhelp.push_back("-------------");
     vhelp.push_back("cmd Power_On");
     vhelp.push_back("cmd Power_Off");
+    vhelp.push_back("cmd valve0");
+    vhelp.push_back("cmd valve1");
 
     vhelp.push_back("messages to write information:");
     vhelp.push_back("------------------------------");
-    vhelp.push_back("setMode {0,1}");
-    vhelp.push_back("setControlVoltage_Set 1.1");
-    vhelp.push_back("setPID_kp 1.1");
-    vhelp.push_back("setPID_ki 1.1");
-    vhelp.push_back("setPID_kd 1.1");
-    vhelp.push_back("setTemp_Set 1.1");
-    vhelp.push_back("setPID_Max 1.1");
-    vhelp.push_back("setPID_Min 1.1");
+    vhelp.push_back("set Mode {0,1}");
+    vhelp.push_back("set ControlVoltage_Set 1.1");
+    vhelp.push_back("set PID_kp 1.1");
+    vhelp.push_back("set PID_ki 1.1");
+    vhelp.push_back("set PID_kd 1.1");
+    vhelp.push_back("set Temp_Set 1.1");
+    vhelp.push_back("set PID_Max 1.1");
+    vhelp.push_back("set PID_Min 1.1");
 
     vhelp.push_back("messages to obtain information:");
     vhelp.push_back("-------------------------------");
-    vhelp.push_back("getTemp_PT1000");
-    vhelp.push_back("getRH");
-    vhelp.push_back("getDP");
+    vhelp.push_back("get Temp_PT1000");
+    vhelp.push_back("get RH");
+    vhelp.push_back("get DP");
 
-    vhelp.push_back("getTemp_W");
-    vhelp.push_back("getTemp_M");
-    vhelp.push_back("getTemp_Diff");
+    vhelp.push_back("get Temp_W");
+    vhelp.push_back("get Temp_M");
+    vhelp.push_back("get Temp_Diff");
 
-    vhelp.push_back("getPeltier_U");
-    vhelp.push_back("getPeltier_I");
-    vhelp.push_back("getPeltier_R");
-    vhelp.push_back("getPeltier_P");
+    vhelp.push_back("get Peltier_U");
+    vhelp.push_back("get Peltier_I");
+    vhelp.push_back("get Peltier_R");
+    vhelp.push_back("get Peltier_P");
 
-    vhelp.push_back("getSupply_U");
-    vhelp.push_back("getSupply_I");
-    vhelp.push_back("getSupply_P");
+    vhelp.push_back("get Supply_U");
+    vhelp.push_back("get Supply_I");
+    vhelp.push_back("get Supply_P");
 
-    vhelp.push_back("getPowerState");
+    vhelp.push_back("get PowerState");
 
-    vhelp.push_back("getMode");
-    vhelp.push_back("getControlVoltage_Set");
-    vhelp.push_back("getPID_kp");
-    vhelp.push_back("getPID_ki");
-    vhelp.push_back("getPID_kd");
-    vhelp.push_back("getTemp_Set");
-    vhelp.push_back("getPID_Max");
-    vhelp.push_back("getPID_Min");
+    vhelp.push_back("get Mode");
+    vhelp.push_back("get ControlVoltage_Set");
+    vhelp.push_back("get PID_kp");
+    vhelp.push_back("get PID_ki");
+    vhelp.push_back("get PID_kd");
+    vhelp.push_back("get Temp_Set");
+    vhelp.push_back("get PID_Max");
+    vhelp.push_back("get PID_Min");
 
     for (unsigned int i = 0; i < vhelp.size(); ++i) {
       emit signalSendToServer(QString::fromStdString(vhelp[i]));
