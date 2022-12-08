@@ -89,8 +89,6 @@ public:
   float getTECRegisterFromCAN(int itec, std::string regname);
   void  setTECRegister(int itec, std::string regname, float value);
 
-  // -- fill 'all' parameters for dumping into csv or for refreshing the GUI
-  void readAllParamsFromCAN();
   // -- same as above, but with "public" broadcast
   void readAllParamsFromCANPublic();
 

@@ -395,6 +395,17 @@ void driveHardware::parseIoMessage() {
     return;
   }
 
+  if (string::npos != fIoMessage.find("getPID_kp")) {
+    stringstream str;
+    str << "PID_kp = ";
+    for (int i = 1; i <=8; ++i) str << getTECRegister(i, "PID_kp") << ",";
+    QString qmsg = QString::fromStdString(str.str());
+    emit signalSendToServer(qmsg);
+    //fIoServer->sentToServer(str.str());
+    return;
+  }
+
+
 }
 
 
@@ -855,7 +866,7 @@ void driveHardware::readAllParamsFromCANPublic() {
                             };
   for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
 
-      if (0 == ireg%2) evtHandler();
+    if (0 == ireg%2) evtHandler();
 
     // -- NOTE: 5 != reg number!
     if (5 == ireg) {
@@ -880,39 +891,6 @@ void driveHardware::readAllParamsFromCANPublic() {
     if (0 == fActiveTEC[i]) continue;
     fTECData[i].reg["PowerState"].value = fCanMsg.getInt(i, regIdx);
   }
-}
-
-
-// ----------------------------------------------------------------------
-void driveHardware::readAllParamsFromCAN(/*DECREPIT*/) {
-
-  cout << "driveHardware::readAllParamsFromCAN() read Temp_M" << endl;
-  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_M"].value = getTECRegisterFromCAN(i, "Temp_M");
-  //return;
-
-  cout << "driveHardware::readAllParamsFromCAN() read ControlVoltage_Set" << endl;
-  for (int i = 1; i <= 8; ++i) fTECData[i].reg["ControlVoltage_Set"].value = getTECRegisterFromCAN(i, "ControlVoltage_Set");
-
-  cout << "driveHardware::readAllParamsFromCAN() read PID_kp" << endl;
-  for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_kp"].value = getTECRegisterFromCAN(i, "PID_kp");
-
-  cout << "driveHardware::readAllParamsFromCAN() read PID_ki" << endl;
-  for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_ki"].value = getTECRegisterFromCAN(i, "PID_ki");
-
-  cout << "driveHardware::readAllParamsFromCAN() read PID_kd" << endl;
-  for (int i = 1; i <= 8; ++i) fTECData[i].reg["PID_kd"].value = getTECRegisterFromCAN(i, "PID_kd");
-
-  cout << "driveHardware::readAllParamsFromCAN() read all the rest" << endl;
-  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_W"].value = getTECRegisterFromCAN(i, "Temp_W");
-  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Temp_Set"].value = getTECRegisterFromCAN(i, "Temp_Set");
-  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Peltier_I"].value = getTECRegisterFromCAN(i, "Peltier_I");
-  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Peltier_R"].value = getTECRegisterFromCAN(i, "Peltier_R");
-  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Peltier_P"].value = getTECRegisterFromCAN(i, "Peltier_P");
-
-  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_U"].value = getTECRegisterFromCAN(i, "Supply_U");
-  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_I"].value = getTECRegisterFromCAN(i, "Supply_I");
-  for (int i = 1; i <= 8; ++i) fTECData[i].reg["Supply_P"].value = getTECRegisterFromCAN(i, "Supply_P");
-
 }
 
 
