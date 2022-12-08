@@ -477,7 +477,11 @@ void driveHardware::parseIoMessage() {
     s3 = "set";
 
     s1 = "Mode";  s2 = "Mode";  if (findInIoMessage(s1, s2, s3)) answerIoSet(s2);
-    s1 = "Voltage";  s2 = "ControlVoltage_Set";  if (findInIoMessage(s1, s2, s3)) answerIoSet(s2);
+    s1 = "Voltage";  s2 = "ControlVoltage_Set";
+    if (findInIoMessage(s1, s2, s3)) {
+      answerIoSet(s2);
+      return;
+    }
 
     s1 = "PID_kp"; s2 = "kp";  if (findInIoMessage(s1, s2, s3)) answerIoSet(s2);
     s1 = "PID_ki"; s2 = "ki";  if (findInIoMessage(s1, s2, s3)) answerIoSet(s2);
