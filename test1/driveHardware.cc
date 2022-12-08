@@ -402,7 +402,9 @@ void driveHardware::answerIoSet(string &what) {
   if (value < -900.) {
     fLOG(WARNING, "no proper value: " + what );
   }
-  setTECRegister(0, what, value);
+  for (int itec = 1; itec <= 8; ++itec) {
+    setTECRegister(itec, what, value);
+  }
 
   QString qmsg = QString::fromStdString(str.str());
   emit signalSendToServer(qmsg);
