@@ -719,7 +719,7 @@ void  driveHardware::turnOffTEC(int itec) {
 
 // ----------------------------------------------------------------------
 float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
-
+  cout << "getTECRegisterFromCAN regname ->" << regname << "<-" << endl;
   if (itec > 0) {
     if (0 == fActiveTEC[itec]) {
       return -99.;
