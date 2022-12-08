@@ -400,6 +400,7 @@ void driveHardware::answerIoGet(string &what) {
 
 // ----------------------------------------------------------------------
 void driveHardware::answerIoSet(string &what) {
+  cout << "answerIoSet what ->" << what << "<-" << endl;
   string delimiter(" ");
   size_t pos = 0;
   std::string token;
@@ -409,6 +410,7 @@ void driveHardware::answerIoSet(string &what) {
 
   while ((pos = what.find(delimiter)) != std::string::npos) {
     token = what.substr(0, pos);
+    cout << "token ->" << token << "<-" << endl;
     if (string::npos != regname.find("nada")) {
       cout << "assigning regname ->" << token << "<-" << std::endl;
       regname = token;
@@ -422,6 +424,9 @@ void driveHardware::answerIoSet(string &what) {
   istringstream str(what);
   str >> regname >> value;
   cout << "answerIoSet: " << regname << value << endl;
+  cout << "answerIoSet regname ->" << regname << "<-"
+       << " value ->" << value << "<-"
+       << endl;
   if (value < -900.) {
     fLOG(WARNING, "no proper value: " + what );
   }
