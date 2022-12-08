@@ -232,8 +232,6 @@ void driveHardware::doRun() {
       if (0) cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
       readSHT85();
 
-      entertainFras();
-
       // -- read all parameters from CAN
       fMutex.lock();
       readAllParamsFromCANPublic();
@@ -249,6 +247,8 @@ void driveHardware::doRun() {
 
       evtHandler();
 
+      entertainFras();
+
       // -- print errors (if present) accumulated in CANmessage
       if (fCanMsg.nErrors() > 0) {
         deque<string> errs = fCanMsg.getErrors();
@@ -257,7 +257,7 @@ void driveHardware::doRun() {
           errs.pop_front();
         }
       }
-      fCanMsg.clearAllFrames();
+      fCanMsg.clearAllFrames();     
     }
   }
 
@@ -541,6 +541,7 @@ void driveHardware::parseIoMessage() {
 
     s1 = "quit";  s2 = "exit";
     if (findInIoMessage(s1, s2, s3)) {
+      shutDown();
       stringstream sbla; sbla << "This is the end, my friend";
       fLOG(INFO, "This is the end, my friend -- tessie shutting down");
       exit(0);
