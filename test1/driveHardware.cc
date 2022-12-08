@@ -719,7 +719,7 @@ void  driveHardware::turnOffTEC(int itec) {
 
 // ----------------------------------------------------------------------
 float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
-  cout << "getTECRegisterFromCAN regname ->" << regname << "<-" << endl;
+  if (0) cout << "getTECRegisterFromCAN regname ->" << regname << "<-" << endl;
   if (itec > 0) {
     if (0 == fActiveTEC[itec]) {
       return -99.;
@@ -839,7 +839,7 @@ void driveHardware::readAllParamsFromCANPublic() {
                             , "Peltier_P"
                             , "Supply_U"
                             , "Supply_I"
-                             "Supply_P"
+                            , "Supply_P"
                             };
   for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
     // -- NOTE: 5 != reg number!
