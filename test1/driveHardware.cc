@@ -403,6 +403,7 @@ void driveHardware::answerIoGet(string &what) {
 void driveHardware::answerIoSet(string &awhat) {
   string what = fIoMessage;
 
+  replaceAll(what, "set ", "");
   replaceAll(what, "set", "");
   cout << "answerIoSet what ->" << what << "<-" << endl;
   string delimiter(" ");
@@ -432,8 +433,6 @@ void driveHardware::answerIoSet(string &awhat) {
     setTECRegister(itec, regname, value);
   }
 
-//  QString qmsg = QString::fromStdString("set" + what + " to " + to_string(value));
-//  emit signalSendToServer(qmsg);
   return;
 }
 
@@ -442,8 +441,7 @@ void driveHardware::answerIoSet(string &awhat) {
 void driveHardware::parseIoMessage() { 
   string s1("Temp_PT1000"), s2("Temperature"), s3("get");
   // -- GET answers
-  if (string::npos != fIoMessage.find("get")) {
-
+  if (string::npos != fIoMessage.find("get ")) {
     if (findInIoMessage(s1, s2, s3)) {
       stringstream str;
       str << "Temp = " << getTemperature();
@@ -499,8 +497,8 @@ void driveHardware::parseIoMessage() {
 
     s1 = "Voltage";  s2 = "ControlVoltage_Set";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
 
-  } else if (string::npos != fIoMessage.find("set")) {
-    s3 = "set";
+  } else if (string::npos != fIoMessage.find("set ")) {
+    s3 = "set ";
 
     s1 = "Mode";  s2 = "Mode";  if (findInIoMessage(s1, s2, s3)) answerIoSet(fIoMessage);
     s1 = "Voltage";  s2 = "ControlVoltage_Set"; if (findInIoMessage(s1, s2, s3)) answerIoSet(fIoMessage);
@@ -513,8 +511,8 @@ void driveHardware::parseIoMessage() {
     s1 = "Temp_Set"; s2 = "Temp_Set";  if (findInIoMessage(s1, s2, s3)) answerIoSet(fIoMessage);
     s1 = "Max"; s2 = "PID_Max";  if (findInIoMessage(s1, s2, s3)) answerIoSet(fIoMessage);
     s1 = "Min"; s2 = "PID_Min";  if (findInIoMessage(s1, s2, s3)) answerIoSet(fIoMessage);
-  } else if (string::npos != fIoMessage.find("cmd")) {
-    s3 = "cmd";
+  } else if (string::npos != fIoMessage.find("cmd ")) {
+    s3 = "cmd ";
     s1 = "Power_On";  s2 = "Power_On";  if (findInIoMessage(s1, s2, s3)) {
       for (int itec = 1; itec <=8; ++itec) {
         turnOnTEC(itec);
@@ -529,14 +527,17 @@ void driveHardware::parseIoMessage() {
   } else if (string::npos != fIoMessage.find("help")) {
 
     vector<string> vhelp;
+    vhelp.push_back("===================");
     vhelp.push_back("hostname: coldbox01");
     vhelp.push_back("thread:   ctrlTessie");
+    vhelp.push_back("===================");
     vhelp.push_back("cmd messages:");
+    vhelp.push_back("-------------");
     vhelp.push_back("cmd Power_On");
     vhelp.push_back("cmd Power_Off");
-    vhelp.push_back("cmd Power_On");
 
     vhelp.push_back("messages to write information:");
+    vhelp.push_back("------------------------------");
     vhelp.push_back("setMode {0,1}");
     vhelp.push_back("setControlVoltage_Set 1.1");
     vhelp.push_back("setPID_kp 1.1");
@@ -547,6 +548,7 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("setPID_Min 1.1");
 
     vhelp.push_back("messages to obtain information:");
+    vhelp.push_back("-------------------------------");
     vhelp.push_back("getTemp_PT1000");
     vhelp.push_back("getRH");
     vhelp.push_back("getDP");
