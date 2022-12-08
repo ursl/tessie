@@ -62,13 +62,18 @@ void tLog::operator()(tLogLevel level, std::string print) {
   output << timeStamp() << " "
 	 << std::setfill(' ') << std::setw(7) << slevel << " "
 	 << print;
+  stringstream teTimeStamp;
+  teTimeStamp << timeStamp(false)  << " "
+              << std::setfill(' ') << std::setw(7) << slevel << " "
+              << print;
   string sout = output.str();
   fFile << sout << endl;
   if (level <= fLevel) {
-    emit signalText(QString::fromStdString(sout));
+    string teout = teTimeStamp.str();
+    fFile << teout << endl;
+    emit signalText(QString::fromStdString(teout));
   }
   cout << sout << endl;
-  //FIXME  if (fpGui) fpGui->printText(sout);
 }
 
 
