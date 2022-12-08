@@ -59,6 +59,7 @@ public:
   // -- return true if either s1 or s2 in fIoMessage
   bool findInIoMessage(std::string &s1, std::string &s2, std::string &s3);
   void answerIoGet(std::string &what);
+  void answerIoSet(std::string &what);
 
   // -- controlling the FRAS/valve(s)
   void  talkToFras();
