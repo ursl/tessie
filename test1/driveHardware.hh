@@ -56,6 +56,8 @@ public:
   void  parseCAN();
 
   void parseIoMessage();
+  // -- return true if either s1 or s2 in fIoMessage
+  bool findInIoMessage(std::string &s1, std::string &s2);
 
   // -- controlling the FRAS/valve(s)
   void  talkToFras();

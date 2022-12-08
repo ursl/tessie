@@ -369,8 +369,22 @@ void driveHardware::parseCAN() {
 
 
 // ----------------------------------------------------------------------
+bool driveHardware::findInIoMessage(string &s1, string &s2) {
+  bool result(false);
+
+  if (string::npos != fIoMessage.find("get")) {
+    if (string::npos != fIoMessage.find(s1)) return true;
+    if (string::npos != fIoMessage.find(s2)) return true;
+  }
+
+  return result;
+}
+
+
+// ----------------------------------------------------------------------
 void driveHardware::parseIoMessage() {
-  if (string::npos != fIoMessage.find("getTemp")) {
+  string s1("Temp"), s2("");
+  if (findInIoMessage(s1, s2)) {
     stringstream str;
     str << "Temp = " << getTemperature();
     QString qmsg = QString::fromStdString(str.str());
@@ -378,7 +392,9 @@ void driveHardware::parseIoMessage() {
     return;
   }
 
-  if (string::npos != fIoMessage.find("getRH")) {
+  s1 = string("RH");
+  s2 = string("humidity");
+  if (findInIoMessage(s1, s2)) {
     stringstream str;
     str << "RH = " << getRH();
     QString qmsg = QString::fromStdString(str.str());
@@ -386,7 +402,9 @@ void driveHardware::parseIoMessage() {
     return;
   }
 
-  if (string::npos != fIoMessage.find("getDP")) {
+  s1 = string("DP");
+  s2 = string("dew point");
+  if (findInIoMessage(s1, s2)) {
     stringstream str;
     str << "DP = " << getDP();
     QString qmsg = QString::fromStdString(str.str());
@@ -395,10 +413,15 @@ void driveHardware::parseIoMessage() {
     return;
   }
 
-  if (string::npos != fIoMessage.find("getPID_kp")) {
+  s1 = string("PID_kp");
+  s2 = string("kp");
+  if (findInIoMessage(s1, s2)) {
     stringstream str;
     str << "PID_kp = ";
-    for (int i = 1; i <=8; ++i) str << getTECRegister(i, "PID_kp") << ",";
+    for (int i = 1; i <=8; ++i) {
+      str << getTECRegister(i, "PID_kp");
+      if (i < 8) str << ",";
+    }
     QString qmsg = QString::fromStdString(str.str());
     emit signalSendToServer(qmsg);
     //fIoServer->sentToServer(str.str());
