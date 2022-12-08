@@ -29,7 +29,8 @@ SOURCES += \
     tLog.cc \
     ioServer.cc \
     tMosq.cc \
-    tessie.cpp
+    tessie.cpp \
+    util.cc
 
 HEADERS += \
     CANmessage.hh \
@@ -41,7 +42,8 @@ HEADERS += \
     driveHardware.hh \
     tLog.hh \\
     ioServer.hh \
-    tMosq.hh
+    tMosq.hh \
+    util.hh
 
 FORMS += \
     MainWindow.ui \

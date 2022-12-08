@@ -25,6 +25,7 @@
 
 #include <thread>
 
+#include "util.hh"
 #include "tLog.hh"
 
 using namespace std;
@@ -402,6 +403,7 @@ void driveHardware::answerIoGet(string &what) {
 void driveHardware::answerIoSet(string &awhat) {
   string what = fIoMessage;
 
+  replaceAll(what, "set", "");
   cout << "answerIoSet what ->" << what << "<-" << endl;
   string delimiter(" ");
   size_t pos = 0;
