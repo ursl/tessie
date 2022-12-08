@@ -370,20 +370,18 @@ void driveHardware::parseCAN() {
 
 // ----------------------------------------------------------------------
 bool driveHardware::findInIoMessage(string &s1, string &s2) {
-  bool result(false);
-
   if (string::npos != fIoMessage.find("get")) {
     if (string::npos != fIoMessage.find(s1)) return true;
     if (string::npos != fIoMessage.find(s2)) return true;
   }
 
-  return result;
+  return false;
 }
 
 
 // ----------------------------------------------------------------------
 void driveHardware::parseIoMessage() {
-  string s1("Temp"), s2("");
+  string s1("Temp"), s2("Temperature");
   if (findInIoMessage(s1, s2)) {
     stringstream str;
     str << "Temp = " << getTemperature();
