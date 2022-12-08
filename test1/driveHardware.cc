@@ -2,6 +2,12 @@
 #include <iostream>
 #include <unistd.h>
 #include <sstream>
+#include <string>
+#include <cstdlib>
+
+#include <fstream>
+#include <iomanip>
+#include <unistd.h>
 
 #include <net/if.h>
 #include <sys/ioctl.h>
@@ -394,9 +400,26 @@ void driveHardware::answerIoGet(string &what) {
 
 // ----------------------------------------------------------------------
 void driveHardware::answerIoSet(string &what) {
-  istringstream str(what);
-  string regname;
+  string delimiter(" ");
+  size_t pos = 0;
+  std::string token;
+
+  string regname("nada");
   float value(-999.);
+
+  while ((pos = what.find(delimiter)) != std::string::npos) {
+    token = what.substr(0, pos);
+    if (string::npos != regname.find("nada")) {
+      cout << "assigning regname ->" << token << "<-" << std::endl;
+      regname = token;
+    } else if (value < -900) {
+      cout << "assigning value ->" << token << "<-" << std::endl;
+      value = atof(token.c_str());
+    }
+    what.erase(0, pos + delimiter.length());
+  }
+
+  istringstream str(what);
   str >> regname >> value;
   cout << "answerIoSet: " << regname << value << endl;
   if (value < -900.) {
