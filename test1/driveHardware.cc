@@ -405,8 +405,10 @@ void driveHardware::answerIoSet(string &what) {
   for (int itec = 1; itec <= 8; ++itec) {
     setTECRegister(itec, what, value);
   }
+  getTECRegisterFromCAN(0, regname);
+  emit signalUpdateHwDisplay();
 
-  QString qmsg = QString::fromStdString(str.str());
+  QString qmsg = QString::fromStdString("set" + what);
   emit signalSendToServer(qmsg);
   return;
 }
