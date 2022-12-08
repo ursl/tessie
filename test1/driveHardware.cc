@@ -406,8 +406,8 @@ void driveHardware::answerIoSet(string &what) {
     setTECRegister(itec, what, value);
   }
 
-  QString qmsg = QString::fromStdString("set" + what);
-  emit signalSendToServer(qmsg);
+//  QString qmsg = QString::fromStdString("set" + what + " to " + to_string(value));
+//  emit signalSendToServer(qmsg);
   return;
 }
 
