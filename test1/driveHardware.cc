@@ -425,9 +425,11 @@ void driveHardware::answerIoSet(string &awhat) {
   value = atof(what.c_str());
   if (value < -900.) {
     fLOG(WARNING, "no proper value: " + what );
+  } else {
+    cout << "assigning value ->" << value << "<-" << std::endl;
   }
   for (int itec = 1; itec <= 8; ++itec) {
-    setTECRegister(itec, what, value);
+    setTECRegister(itec, regname, value);
   }
 
 //  QString qmsg = QString::fromStdString("set" + what + " to " + to_string(value));
