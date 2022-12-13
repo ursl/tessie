@@ -32,7 +32,6 @@ void ioServer::sentToServer(QString msg) {
     bool ok = fCtrlTessie->sendMessage(msg.toStdString().c_str());
     if (ok) break;
     usleep(10000);
-    //    if (fCtrlTessie->published()) break;
   }
 }
 
@@ -49,18 +48,16 @@ void ioServer::doRun() {
     // -- allow signals to reach slots
     QCoreApplication::processEvents();
 
-    int nmsg = fCtrlTessie->getNMessages();
     //cout << "ioServer::doRun() while(1) loop, nmsg = " << nmsg << endl;
-    if (nmsg != cntMsg) {
+    if (fCtrlTessie->getNMessages() > 0) {
       string msg = fCtrlTessie->getMessage();
-      cout << "ioServer: from tmosq received ->" << msg << "<-" << endl;
-      cntMsg = nmsg;
-      cout << "emit sendFromServer("
+      cout << "ioServer::doRun> Qt emit sendFromServer("
            << msg
            << ")" << endl;
       QString qmsg = QString::fromStdString(msg);
       emit signalSendFromServer(qmsg);
     } else {
+      std::this_thread::sleep_for(std::chrono::milliseconds(2));
       //   std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
   }

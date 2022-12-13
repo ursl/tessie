@@ -51,17 +51,17 @@ void tMosq::on_message(const struct mosquitto_message *message) {
   }
   fMessageId = message->mid;
   fMessages.push(smsg);
-  ++fNMessages;
+  fNMessages = fMessages.size();
 }
 
 
 // ----------------------------------------------------------------------
 string tMosq::getMessage() {
-  cout << "tMosq::getMessage, fNMessages = " << fNMessages << endl;
   string msg("nada");
   if (fMessages.empty()) return msg;
   msg = fMessages.front();
   fMessages.pop();
+  fNMessages = fMessages.size();
   return msg;
 }
 
@@ -90,7 +90,6 @@ void tMosq::on_connect(int rc) {
 // ----------------------------------------------------------------------
 void tMosq::on_publish(int mid) {
   cout << ">> tMosq - Message (" << mid << ") succeeded to be published " << endl;
-  fPublished = true;
   fMessageId = mid;
 }
 

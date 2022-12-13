@@ -22,7 +22,6 @@ public:
   ~tMosq();
 
   bool        sendMessage(const char *message);
-  bool        published() {return fPublished;}
   std::string getMessage();
   int         getNMessages() {return fNMessages;}
 
@@ -34,7 +33,6 @@ private:
   int        fPort;
   int        fKeepalive;
 
-  int        fPublished;
   bool       fConnected;
 
 
