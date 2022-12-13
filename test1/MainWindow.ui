@@ -90,9 +90,9 @@
     <widget class="QPushButton" name="buttonRefresh">
      <property name="geometry">
       <rect>
-       <x>150</x>
+       <x>199</x>
        <y>20</y>
-       <width>100</width>
+       <width>51</width>
        <height>32</height>
       </rect>
      </property>
