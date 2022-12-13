@@ -87,78 +87,6 @@
       <string>lock all</string>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkBoxTEC1">
-     <property name="geometry">
-      <rect>
-       <x>320</x>
-       <y>260</y>
-       <width>82</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>TEC 1</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBoxTEC2">
-     <property name="geometry">
-      <rect>
-       <x>400</x>
-       <y>260</y>
-       <width>82</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>TEC 2</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBoxTEC3">
-     <property name="geometry">
-      <rect>
-       <x>480</x>
-       <y>260</y>
-       <width>82</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>TEC 3</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkBoxTEC4">
-     <property name="geometry">
-      <rect>
-       <x>560</x>
-       <y>260</y>
-       <width>82</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>TEC 4</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="buttonRefresh">
      <property name="geometry">
       <rect>
@@ -966,6 +894,135 @@
       </item>
      </layout>
     </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>240</y>
+       <width>341</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayoutBottom" stretch="10,10,10,10,10,10,10,10">
+      <property name="spacing">
+       <number>10</number>
+      </property>
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <widget class="QCheckBox" name="checkBoxTEC1">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButtonTEC1">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>TEC 1</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBoxTEC2">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButtonTEC2">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>TEC 2</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBoxTEC3">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButtonTEC3">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>TEC 3</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBoxTEC4">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButtonTEC4">
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>TEC 4</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
    <widget class="QToolButton" name="buttonQuit">
     <property name="geometry">
@@ -1335,10 +1392,6 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <tabstops>
-  <tabstop>checkBoxTEC1</tabstop>
-  <tabstop>checkBoxTEC2</tabstop>
-  <tabstop>checkBoxTEC3</tabstop>
-  <tabstop>checkBoxTEC4</tabstop>
   <tabstop>checkBoxTEC5</tabstop>
   <tabstop>checkboxTECLockAll</tabstop>
   <tabstop>textTECName</tabstop>
@@ -1347,22 +1400,6 @@
  </tabstops>
  <resources/>
  <connections>
-  <connection>
-   <sender>checkBoxTEC1</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>checkTEC1(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>521</x>
-     <y>379</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>423</x>
-     <y>320</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>pushButtonTEC7</sender>
    <signal>clicked()</signal>
@@ -1392,54 +1429,6 @@
     <hint type="destinationlabel">
      <x>324</x>
      <y>304</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxTEC2</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>checkTEC2(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>601</x>
-     <y>379</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>546</x>
-     <y>306</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxTEC3</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>checkTEC3(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>681</x>
-     <y>379</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>611</x>
-     <y>318</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxTEC4</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>checkTEC4(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>761</x>
-     <y>379</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>676</x>
-     <y>328</y>
     </hint>
    </hints>
   </connection>
@@ -1968,6 +1957,134 @@
     <hint type="destinationlabel">
      <x>797</x>
      <y>468</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxTEC1</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkTEC1(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>432</x>
+     <y>353</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxTEC2</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkTEC2(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>515</x>
+     <y>353</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxTEC3</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkTEC3(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>602</x>
+     <y>353</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxTEC4</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkTEC4(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>690</x>
+     <y>353</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButtonTEC1</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openTEC1()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>467</x>
+     <y>355</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButtonTEC2</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openTEC2()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>555</x>
+     <y>355</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButtonTEC3</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openTEC3()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>642</x>
+     <y>355</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButtonTEC4</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openTEC4()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>730</x>
+     <y>355</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
     </hint>
    </hints>
   </connection>
