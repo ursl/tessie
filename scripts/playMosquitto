@@ -1,0 +1,36 @@
+#!/usr/bin/env perl
+
+# ----------------------------------------------------------------------
+# usage: ./scripts/mt -n 5 -v 1.2 -s 100000
+# ----------------------------------------------------------------------
+
+use Time::HiRes qw(usleep nanosleep);
+
+use Getopt::Std;
+getopts('n:s:v:');
+
+# -- number of steps
+if (!$opt_n) {
+    $opt_n = 10;
+}
+
+# -- start value
+if (!$opt_v) {
+    $opt_v = 1.0;
+}
+
+# -- sleep microseconds (0.5seconds by default)
+if (!$opt_s) {
+    $opt_s = 500000;
+}
+
+
+for ($i = 0; $i < $opt_n; $i++) {
+    $v = $opt_v + $i/$opt_n;
+    print "voltage = $v\n";
+    system("mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \"get Temp_M\" ");
+    system("mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \"get Temp_W\" ");
+    system("mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \"set ControlVoltage_Set $v\" ");
+    system("mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \"get ControlVoltage_Set\" ");
+    usleep($opt_s);
+}
