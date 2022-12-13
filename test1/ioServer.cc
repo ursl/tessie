@@ -30,8 +30,8 @@ void ioServer::sentToServer(QString msg) {
   cout << "ioServer received " << msg.toStdString() << endl;
   while (1) {
     bool ok = fCtrlTessie->sendMessage(msg.toStdString().c_str());
-    usleep(50000);
     if (ok) break;
+    usleep(10000);
     //    if (fCtrlTessie->published()) break;
   }
 }
@@ -42,9 +42,7 @@ void ioServer::doRun() {
   cout << "ioServer::doRun() entered, instantiate tMosq" <<endl;
   fCtrlTessie = new tMosq("tessie", "ctrlTessie", "localhost", 1883);
 
-  cout << "startServer()" << endl;
   startServer();
-  cout << "  .. done" << endl;
 
   int cntMsg(0);
   while (1) {
@@ -55,7 +53,7 @@ void ioServer::doRun() {
     //cout << "ioServer::doRun() while(1) loop, nmsg = " << nmsg << endl;
     if (nmsg != cntMsg) {
       string msg = fCtrlTessie->getMessage();
-      cout << "ioServer: ->" << msg << "<-" << endl;
+      cout << "ioServer: from tmosq received ->" << msg << "<-" << endl;
       cntMsg = nmsg;
       cout << "emit sendFromServer("
            << msg

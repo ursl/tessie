@@ -49,6 +49,7 @@ void tMosq::on_message(const struct mosquitto_message *message) {
     smsg = string(buffer);
     smsg = string((char*)message->payload);
   }
+  fMessageId = message->mid;
   fMessages.push(smsg);
   ++fNMessages;
 }
@@ -88,7 +89,8 @@ void tMosq::on_connect(int rc) {
 
 // ----------------------------------------------------------------------
 void tMosq::on_publish(int mid) {
-  cout << ">> tMosq - Message (" << mid << ") succeed to be published " << endl;
+  cout << ">> tMosq - Message (" << mid << ") succeeded to be published " << endl;
   fPublished = true;
+  fMessageId = mid;
 }
 

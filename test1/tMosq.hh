@@ -45,6 +45,7 @@ private:
 
   // -- messages counter
   int                     fNMessages;
+  int                     fMessageId;
   std::queue<std::string> fMessages;
 };
 
