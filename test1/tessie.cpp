@@ -19,13 +19,12 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < argc; i++){
     if (!strcmp(argv[i],"-h")) {
       cout << "List of arguments:" << endl;
-      cout << "-f              start in fullscreen (not window)" << endl;
+      cout << "-d [DEBUG|INFO|WARNING|ERROR|ALL] set debug level" << endl;
+      cout << "-f                                start in fullscreen (not window)" << endl;
       return 0;
     }
-    if (!strcmp(argv[i], "-w")) {doRunFullScreen = true;}
-    if (!strcmp(argv[i], "-d")) {
-      LOG.setLevel(argv[++i]);
-    }
+    if (!strcmp(argv[i], "-f")) {doRunFullScreen = true;}
+    if (!strcmp(argv[i], "-d")) {LOG.setLevel(argv[++i]);}
   }
 
 
@@ -68,11 +67,11 @@ int main(int argc, char *argv[]) {
   // -- this must be after setGui(...)!
   LOG(INFO, "start tessie");
 
-  std::cout << "MainWindow w.show() call" << std::endl;
-
   if (doRunFullScreen) {
+    std::cout << "MainWindow w.showFullScreen() call" << std::endl;
     w.showFullScreen();
   } else {
+    std::cout << "MainWindow w.show() call" << std::endl;
     w.show();
   }
 
