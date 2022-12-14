@@ -7,9 +7,27 @@
 #include "ioServer.hh"
 
 
+using namespace std;
+
 // -------------------------------------------------------------------------------
 int main(int argc, char *argv[]) {
   tLog LOG;
+
+  // -- by default run in full screen mode
+  bool doRunFullScreen(false);
+
+  for (int i = 0; i < argc; i++){
+    if (!strcmp(argv[i],"-h")) {
+      cout << "List of arguments:" << endl;
+      cout << "-f              start in fullscreen (not window)" << endl;
+      return 0;
+    }
+    if (!strcmp(argv[i], "-w")) {doRunFullScreen = true;}
+    if (!strcmp(argv[i], "-d")) {
+      LOG.setLevel(argv[++i]);
+    }
+  }
+
 
   QThread *hwThread = new QThread();
   driveHardware *hw = new driveHardware(LOG);
@@ -51,7 +69,13 @@ int main(int argc, char *argv[]) {
   LOG(INFO, "start tessie");
 
   std::cout << "MainWindow w.show() call" << std::endl;
-  w.show();
+
+  if (doRunFullScreen) {
+    w.showFullScreen();
+  } else {
+    w.show();
+  }
+
   std::cout << "MainWindow w.show() done" << std::endl;
   return a.exec();
 }
