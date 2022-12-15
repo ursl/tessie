@@ -1055,9 +1055,8 @@ TECData  driveHardware::initAllTECRegister() {
 // ----------------------------------------------------------------------
 void driveHardware::readAllParamsFromCANPublic() {
   ++fRunCnt;
-  // -- what to read
-  vector<string> regnames = {"Mode"
-                            , "ControlVoltage_Set"
+  // -- what to read: float
+  vector<string> regnames = {"ControlVoltage_Set"
                             , "PID_kp"
                             , "PID_ki"
                             , "PID_kd"
@@ -1074,8 +1073,6 @@ void driveHardware::readAllParamsFromCANPublic() {
                             , "Supply_U"
                             , "Supply_I"
                             , "Supply_P"
-                            , "PowerState"
-                            , "Error"
                             , "Ref_U"
 
                             };
@@ -1099,13 +1096,30 @@ void driveHardware::readAllParamsFromCANPublic() {
 
   evtHandler();
 
-  // -- read PowerState
+  // -- read integer Mode
+  getTECRegisterFromCAN(0, "Mode");
+  int regIdx = fTECData[1].getIdx("Mode");
+  for (int i = 1; i <= 8; ++i) {
+    if (0 == fActiveTEC[i]) continue;
+    fTECData[i].reg["Mode"].value = fCanMsg.getInt(i, regIdx);
+  }
+
+  // -- read integer PowerState
   getTECRegisterFromCAN(0, "PowerState");
-  int regIdx = fTECData[1].getIdx("PowerState");
+  regIdx = fTECData[1].getIdx("PowerState");
   for (int i = 1; i <= 8; ++i) {
     if (0 == fActiveTEC[i]) continue;
     fTECData[i].reg["PowerState"].value = fCanMsg.getInt(i, regIdx);
   }
+
+  // -- read integer Error
+  getTECRegisterFromCAN(0, "Error");
+  regIdx = fTECData[1].getIdx("Error");
+  for (int i = 1; i <= 8; ++i) {
+    if (0 == fActiveTEC[i]) continue;
+    fTECData[i].reg["Error"].value = fCanMsg.getInt(i, regIdx);
+  }
+
 }
 
 
