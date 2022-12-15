@@ -1022,7 +1022,7 @@ TECData  driveHardware::initAllTECRegister() {
   b = {-99.,   "PID_kd",               4, 1}; tdata.reg.insert(make_pair(b.name, b));
   b = {23.1,   "Temp_Set",             5, 1}; tdata.reg.insert(make_pair(b.name, b));
   b = {-99.,   "PID_Max",              6, 1}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-1.,   "PID_Min",              7, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-1.,    "PID_Min",              7, 1}; tdata.reg.insert(make_pair(b.name, b));
 
   // -- read-only registers
   b = {-99.,   "Temp_W",               8, 2}; tdata.reg.insert(make_pair(b.name, b));
@@ -1079,6 +1079,8 @@ void driveHardware::readAllParamsFromCANPublic() {
                             , "Supply_U"
                             , "Supply_I"
                             , "Supply_P"
+                            , "PowerState"
+                            , "Error"
                             , "Ref_U"
 
                             };
@@ -1086,9 +1088,11 @@ void driveHardware::readAllParamsFromCANPublic() {
 
     if (0 == ireg%2) evtHandler();
 
-    // -- NOTE: (ireg = 5) != (reg number = 5)!
-    if (5 == ireg) {
+    // -- NOTE: ireg != regnumber
+    if (7 == ireg) {
       fTECData[8].reg["Temp_W"].value = getTECRegisterFromCAN(8, regnames[ireg]);
+    } else if (9 == ireg) {
+      fTECData[8].reg["Temp_Diff"].value = getTECRegisterFromCAN(8, regnames[ireg]);
     } else {
       getTECRegisterFromCAN(0, regnames[ireg]);
       if (0) cout << "  " << tStamp() << " reading broadcast "<< regnames[ireg] << endl;
