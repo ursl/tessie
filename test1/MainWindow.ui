@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>506</height>
+    <height>587</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -386,7 +386,7 @@
        <x>200</x>
        <y>320</y>
        <width>441</width>
-       <height>23</height>
+       <height>25</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="hlayoutBot_Mode">
@@ -428,61 +428,6 @@
       </item>
       <item>
        <widget class="QLineEdit" name="tec4_Mode">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="layoutWidget_7">
-     <property name="geometry">
-      <rect>
-       <x>200</x>
-       <y>400</y>
-       <width>441</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="hlayoutBot_Supply_U">
-      <item>
-       <widget class="QLabel" name="labelBot_Supply_U">
-        <property name="font">
-         <font>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Supply_U                 </string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec1_Supply_U">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec2_Supply_U">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec3_Supply_U">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec4_Supply_U">
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -1018,6 +963,61 @@
         </property>
         <property name="text">
          <string>TEC 4</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_7">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>350</y>
+       <width>441</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="hlayoutBot_Supply_U">
+      <item>
+       <widget class="QLabel" name="labelBot_Supply_U">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Supply_U                 </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec1_Supply_U">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec2_Supply_U">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec3_Supply_U">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="tec4_Supply_U">
+        <property name="frame">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
