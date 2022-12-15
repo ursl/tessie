@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-#define NREG 18
+#define NREG 21
 #define ADDRESS_FRAS 0x42
 
 class canFrame {
