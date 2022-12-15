@@ -45,11 +45,12 @@ void TECDisplay::updateHardwareDisplay() {
     // -- only TEC8 has the PT1000 connected and read out
     if (8 == fTECDisplayItec) {
       ui->value_08->setText(QString::number(fThread->getTECRegister(fTECDisplayItec, "Temp_W"), 'f', 2));
+      ui->value_10->setText(QString::number(fThread->getTECRegister(fTECDisplayItec, "Temp_Diff"), 'f', 2));
     } else {
       ui->value_08->setText("n/a");
+      ui->value_10->setText("n/a");
     }
     ui->value_09->setText(QString::number(fThread->getTECRegister(fTECDisplayItec, "Temp_M"), 'f', 2));
-    ui->value_10->setText(QString::number(fThread->getTECRegister(fTECDisplayItec, "Temp_Diff"), 'f', 2));
     ui->value_11->setText(QString::number(fThread->getTECRegister(fTECDisplayItec, "Peltier_U"), 'f', 2));
     ui->value_12->setText(QString::number(fThread->getTECRegister(fTECDisplayItec, "Peltier_I"), 'f', 2));
     ui->value_13->setText(QString::number(fThread->getTECRegister(fTECDisplayItec, "Peltier_R"), 'f', 4));
