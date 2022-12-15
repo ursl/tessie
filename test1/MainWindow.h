@@ -49,7 +49,7 @@ private slots:
 
     void clkRefresh();
 
-    // -- I don't know how to change this in Qtcreator ...
+    // -- I don't know how to change this into using arrays/vectors in QtCreator ...
     void checkTEC1(bool checked) {setCheckBoxTEC(1, checked); }
     void checkTEC2(bool checked) {setCheckBoxTEC(2, checked); }
     void checkTEC3(bool checked) {setCheckBoxTEC(3, checked); }

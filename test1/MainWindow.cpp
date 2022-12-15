@@ -160,7 +160,6 @@ void MainWindow::tecSetFromUI(int itec, std::string rname, QWidget *qw) {
 }
 
 
-
 // ----------------------------------------------------------------------
 void MainWindow::clkValve0() {
   emit signalValve(1);
@@ -308,3 +307,6 @@ void MainWindow::closeTECDisplay() {
   cout << "closeTECDisplay()"  << endl;
   fTECDisplay->close();
 }
+
+
+
