@@ -87,23 +87,23 @@ private slots:
     void tec2TempSet() {tecSetFromUI(2, "Temp_Set", ui->tec2_Temp); }
     void tec1TempSet() {tecSetFromUI(1, "Temp_Set", ui->tec1_Temp); }
 
-    void tec8Supply_U() {tecSetFromUI(8, "PID_kp", ui->tec8_Supply_U); }
-    void tec7Supply_U() {tecSetFromUI(7, "PID_kp", ui->tec7_Supply_U); }
-    void tec6Supply_U() {tecSetFromUI(6, "PID_kp", ui->tec6_Supply_U); }
-    void tec5Supply_U() {tecSetFromUI(5, "PID_kp", ui->tec5_Supply_U); }
-    void tec4Supply_U() {tecSetFromUI(4, "PID_kp", ui->tec4_Supply_U); }
-    void tec3Supply_U() {tecSetFromUI(3, "PID_kp", ui->tec3_Supply_U); }
-    void tec2Supply_U() {tecSetFromUI(2, "PID_kp", ui->tec2_Supply_U); }
-    void tec1Supply_U() {tecSetFromUI(1, "PID_kp", ui->tec1_Supply_U); }
+    void tec8Supply_U() {tecSetFromUI(8, "Supply_U", ui->tec8_Supply_U); }
+    void tec7Supply_U() {tecSetFromUI(7, "Supply_U", ui->tec7_Supply_U); }
+    void tec6Supply_U() {tecSetFromUI(6, "Supply_U", ui->tec6_Supply_U); }
+    void tec5Supply_U() {tecSetFromUI(5, "Supply_U", ui->tec5_Supply_U); }
+    void tec4Supply_U() {tecSetFromUI(4, "Supply_U", ui->tec4_Supply_U); }
+    void tec3Supply_U() {tecSetFromUI(3, "Supply_U", ui->tec3_Supply_U); }
+    void tec2Supply_U() {tecSetFromUI(2, "Supply_U", ui->tec2_Supply_U); }
+    void tec1Supply_U() {tecSetFromUI(1, "Supply_U", ui->tec1_Supply_U); }
 
-    void tec8Mode() {tecSetFromUI(8, "PID_ki", ui->tec8_Mode); }
-    void tec7Mode() {tecSetFromUI(7, "PID_ki", ui->tec7_Mode); }
-    void tec6Mode() {tecSetFromUI(6, "PID_ki", ui->tec6_Mode); }
-    void tec5Mode() {tecSetFromUI(5, "PID_ki", ui->tec5_Mode); }
-    void tec4Mode() {tecSetFromUI(4, "PID_ki", ui->tec4_Mode); }
-    void tec3Mode() {tecSetFromUI(3, "PID_ki", ui->tec3_Mode); }
-    void tec2Mode() {tecSetFromUI(2, "PID_ki", ui->tec2_Mode); }
-    void tec1Mode() {tecSetFromUI(1, "PID_ki", ui->tec1_Mode); }
+    void tec8Mode() {tecSetFromUI(8, "Mode", ui->tec8_Mode); }
+    void tec7Mode() {tecSetFromUI(7, "Mode", ui->tec7_Mode); }
+    void tec6Mode() {tecSetFromUI(6, "Mode", ui->tec6_Mode); }
+    void tec5Mode() {tecSetFromUI(5, "Mode", ui->tec5_Mode); }
+    void tec4Mode() {tecSetFromUI(4, "Mode", ui->tec4_Mode); }
+    void tec3Mode() {tecSetFromUI(3, "Mode", ui->tec3_Mode); }
+    void tec2Mode() {tecSetFromUI(2, "Mode", ui->tec2_Mode); }
+    void tec1Mode() {tecSetFromUI(1, "Mode", ui->tec1_Mode); }
 
     void tec8TempM() {tecSetFromUI(8, "Temp_M", ui->tec8_TempM); }
     void tec7TempM() {tecSetFromUI(7, "Temp_M", ui->tec7_TempM); }

@@ -250,7 +250,6 @@ void MainWindow::updateHardwareDisplay() {
               << endl;
 
   if (fTECDisplay->isVisible()) {
-    // cout << "MainWindow::updateHardwareDisplay() fTECDisplay->isVisible()" << endl;
     fTECDisplay->updateHardwareDisplay();
   }
 
@@ -272,7 +271,7 @@ void MainWindow::updateHardwareDisplay() {
       fUITemp_Set[ivec]->setStyleSheet("QLineEdit {color : green; }");
     }
     if (!fUIMode[ivec]->hasFocus()) {
-      fUIMode[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "Mode"), 'f', 2));
+      fUIMode[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "Mode")));
       fUIMode[ivec]->setStyleSheet("QLineEdit {color : green; }");
     }
     if (!fUISupply_U[ivec]->hasFocus()) {
