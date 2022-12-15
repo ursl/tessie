@@ -956,7 +956,7 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
   // -- send read request
   sendCANmessage();
   std::this_thread::sleep_for(fMilli10);
-  if (1) cout << "  getTECRegisterFromCAN for tec = " << itec
+  if (0) cout << "  getTECRegisterFromCAN for tec = " << itec
               << " register = "<< regname
               << " regidx = " << fCANReg
               << endl;
@@ -1056,19 +1056,28 @@ TECData  driveHardware::initAllTECRegister() {
 void driveHardware::readAllParamsFromCANPublic() {
   ++fRunCnt;
   // -- what to read
-  vector<string> regnames = {"Temp_M"
+  vector<string> regnames = {"Mode"
                             , "ControlVoltage_Set"
                             , "PID_kp"
                             , "PID_ki"
                             , "PID_kd"
-                            , "Temp_W"
                             , "Temp_Set"
+                            , "PID_Max"
+                            , "PID_Min"
+                            , "Temp_W"
+                            , "Temp_M"
+                            , "Temp_Diff"
+                            , "Peltier_U"
                             , "Peltier_I"
                             , "Peltier_R"
                             , "Peltier_P"
                             , "Supply_U"
                             , "Supply_I"
                             , "Supply_P"
+                            , "PowerState"
+                            , "Error"
+                            , "Ref_U"
+
                             };
   for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
 
