@@ -272,11 +272,11 @@ void MainWindow::updateHardwareDisplay() {
       fUITemp_Set[ivec]->setStyleSheet("QLineEdit {color : green; }");
     }
     if (!fUIMode[ivec]->hasFocus()) {
-      fUIMode[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "PID_ki"), 'f', 2));
+      fUIMode[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "Mode"), 'f', 2));
       fUIMode[ivec]->setStyleSheet("QLineEdit {color : green; }");
     }
     if (!fUISupply_U[ivec]->hasFocus()) {
-      fUISupply_U[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "PID_kp"), 'f', 2));
+      fUISupply_U[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "Supply_U"), 'f', 2));
       fUISupply_U[ivec]->setStyleSheet("QLineEdit {color : green; }");
     }
 
