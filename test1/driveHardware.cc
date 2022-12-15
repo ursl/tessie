@@ -401,6 +401,7 @@ void driveHardware::answerIoGet(string &what) {
   return;
 }
 
+
 // ----------------------------------------------------------------------
 void driveHardware::answerIoSet(string &awhat) {
   string what = fIoMessage;
@@ -499,6 +500,10 @@ void driveHardware::parseIoMessage() {
 
     s1 = "Voltage";  s2 = "ControlVoltage_Set";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
 
+    s1 = "Error"; s2 = "Error";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
+    s1 = "Ref_U"; s2 = "Ref_U";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
+
+
   } else if (string::npos != fIoMessage.find("set ")) {
     s3 = "set ";
 
@@ -513,6 +518,7 @@ void driveHardware::parseIoMessage() {
     s1 = "Temp_Set"; s2 = "Temp_Set";  if (findInIoMessage(s1, s2, s3)) answerIoSet(fIoMessage);
     s1 = "Max"; s2 = "PID_Max";  if (findInIoMessage(s1, s2, s3)) answerIoSet(fIoMessage);
     s1 = "Min"; s2 = "PID_Min";  if (findInIoMessage(s1, s2, s3)) answerIoSet(fIoMessage);
+    s1 = "Ref_U"; s2 = "Ref_U";  if (findInIoMessage(s1, s2, s3)) answerIoSet(fIoMessage);
   } else if (string::npos != fIoMessage.find("cmd ")) {
     s3 = "cmd ";
     s1 = "Power_On";  s2 = "Power_On";
