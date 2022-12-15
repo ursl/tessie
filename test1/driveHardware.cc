@@ -1008,32 +1008,41 @@ TECData  driveHardware::initAllTECRegister() {
 
   TECRegister b;
   // -- read/write registers
-  b = {1,   "Mode",                 0, 1}; tdata.reg.insert(make_pair(b.name, b));
-  b = {0.,  "ControlVoltage_Set",   1, 1}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99., "PID_kp",              2, 1}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99., "PID_ki",              3, 1}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99., "PID_kd",              4, 1}; tdata.reg.insert(make_pair(b.name, b));
-  b = {23.1, "Temp_Set",            5, 1}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99., "PID_Max",             6, 1}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99., "PID_Min",             7, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {1,      "Mode",                 0, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {0.,     "ControlVoltage_Set",   1, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "PID_kp",              2, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "PID_ki",              3, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "PID_kd",              4, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {23.1,   "Temp_Set",            5, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "PID_Max",             6, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "PID_Min",             7, 1}; tdata.reg.insert(make_pair(b.name, b));
   // -- read-only registers
-  b = {-99., "Temp_W",              8, 2}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99., "Temp_M",              9, 2}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99., "Temp_Diff",          10, 2}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99., "Peltier_U",          11, 2}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99., "Peltier_I",          12, 2}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99., "Peltier_R",          13, 2}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99., "Peltier_P",          14, 2}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99., "Supply_U",           15, 2}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99., "Supply_I",           16, 2}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99., "Supply_P",           17, 2}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99., "PowerState",         18, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "Temp_W",              8, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "Temp_M",              9, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "Temp_Diff",          10, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "Peltier_U",          11, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "Peltier_I",          12, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "Peltier_R",          13, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "Peltier_P",          14, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "Supply_U",           15, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "Supply_I",           16, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "Supply_P",           17, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "PowerState",         18, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {0,      "Error",              19, 2}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "Ref_U",              20, 1}; tdata.reg.insert(make_pair(b.name, b));
+
   // -- commands
-  b = {-99., "No Command",          0, 3}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99., "Power_On",            1, 3}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99., "Power_Off",           2, 3}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99., "Watchdog",            3, 3}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99., "Alarm",               4, 3}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "NoCommand",           0, 3}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "Power_On",            1, 3}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "Power_Off",           2, 3}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "Watchdog",            3, 3}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "Alarm",               4, 3}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "ClearError",          5, 3}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "GetSWVersion",        6, 3}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "SaveVariables",       7, 3}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-99.,   "LoadVariables",       8, 3}; tdata.reg.insert(make_pair(b.name, b));
+
+  b = {-99.,   "Reboot/Reset",      255, 3}; tdata.reg.insert(make_pair(b.name, b));
 
   return tdata;
 }
@@ -1061,7 +1070,7 @@ void driveHardware::readAllParamsFromCANPublic() {
 
     if (0 == ireg%2) evtHandler();
 
-    // -- NOTE: 5 != reg number!
+    // -- NOTE: (ireg = 5) != (reg number = 5)!
     if (5 == ireg) {
       fTECData[8].reg["Temp_W"].value = getTECRegisterFromCAN(8, regnames[ireg]);
     } else {

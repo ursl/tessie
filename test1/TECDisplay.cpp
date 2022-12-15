@@ -1,6 +1,8 @@
 #include "TECDisplay.h"
 #include "ui_TECDisplay.h"
 
+#include <sstream>
+
 using namespace std;
 
 // -------------------------------------------------------------------------------
@@ -53,6 +55,17 @@ void TECDisplay::updateHardwareDisplay() {
     ui->value_17->setText(QString::number(fThread->getTECRegister(fTECDisplayItec, "Supply_P"), 'f', 2));
     ui->value_18->setText(QString::number(fThread->getTECRegister(fTECDisplayItec, "PowerState"), 'f', 2));
 
+    // -- special treatment for "Error" to only use the stringstream in case of error != 0
+    int error = fThread->getTECRegister(fTECDisplayItec, "Error");
+    string serror("0x0000");
+    if (error != 0) {
+      std::stringstream stream;
+      stream << "0x" << std::setfill ('0') << setw(4) << uppercase << std::hex << error;
+      serror = stream.str();
+    }
+
+    ui->value_19->setText(QString::fromStdString(serror));
+    ui->value_20->setText(QString::number(fThread->getTECRegister(fTECDisplayItec, "Ref_U"), 'f', 2));
   } else {
       // cout << "TECDisplay::updateHardwareDisplay() not visible}" << endl;
   }

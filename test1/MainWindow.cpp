@@ -21,7 +21,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fTECDisplay->close();
   fTECDisplay->setHardware(fpHw);
 
-  ui->labelVersion->setText("2022/12/08-00");
+  ui->labelVersion->setText("2022/12/15-00");
 
   ui->lineEditRunTime->setAlignment(Qt::AlignRight);
   ui->lineEditCANbusError->setAlignment(Qt::AlignRight);
@@ -282,6 +282,8 @@ void MainWindow::updateHardwareDisplay() {
 
     fUITempM[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "Temp_M"), 'f', 2));
     fUITempM[ivec]->setStyleSheet("QLineEdit {color : green; }");
+
+    fUISupply_U[ivec]->setText(QString::number(fpHw->getTECRegister(ivec+1, "Supply_U"), 'f', 2));
 
     bool state(false);
     if (fpHw->getTECRegister(ivec+1, "PowerState") > 0.5) {

@@ -24,39 +24,9 @@
   </property>
   <property name="palette">
    <palette>
-    <active>
-     <colorrole role="Window">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>240</red>
-        <green>194</green>
-        <blue>130</blue>
-       </color>
-      </brush>
-     </colorrole>
-    </active>
-    <inactive>
-     <colorrole role="Window">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>236</red>
-        <green>236</green>
-        <blue>236</blue>
-       </color>
-      </brush>
-     </colorrole>
-    </inactive>
-    <disabled>
-     <colorrole role="Window">
-      <brush brushstyle="SolidPattern">
-       <color alpha="255">
-        <red>240</red>
-        <green>194</green>
-        <blue>130</blue>
-       </color>
-      </brush>
-     </colorrole>
-    </disabled>
+    <active/>
+    <inactive/>
+    <disabled/>
    </palette>
   </property>
   <property name="windowTitle">
@@ -87,41 +57,15 @@
      <x>30</x>
      <y>30</y>
      <width>231</width>
-     <height>531</height>
+     <height>491</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout" rowminimumheight="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0">
+   <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" rowminimumheight="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0">
     <property name="verticalSpacing">
      <number>0</number>
     </property>
-    <item row="11" column="0">
-     <widget class="QLabel" name="label_11">
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Peltier_U</string>
-      </property>
-     </widget>
-    </item>
-    <item row="14" column="0">
-     <widget class="QLabel" name="label_14">
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Peltier_P</string>
-      </property>
-     </widget>
-    </item>
-    <item row="16" column="1">
-     <widget class="QLineEdit" name="value_16">
+    <item row="8" column="1">
+     <widget class="QLineEdit" name="value_08">
       <property name="font">
        <font>
         <family>Arial</family>
@@ -130,21 +74,8 @@
       </property>
      </widget>
     </item>
-    <item row="12" column="0">
-     <widget class="QLabel" name="label_12">
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Peltier_I</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="value_00">
+    <item row="13" column="1">
+     <widget class="QLineEdit" name="value_13">
       <property name="font">
        <font>
         <family>Arial</family>
@@ -153,8 +84,8 @@
       </property>
      </widget>
     </item>
-    <item row="9" column="0">
-     <widget class="QLabel" name="label_09">
+    <item row="18" column="0">
+     <widget class="QLabel" name="label_18">
       <property name="font">
        <font>
         <family>Arial</family>
@@ -162,7 +93,73 @@
        </font>
       </property>
       <property name="text">
-       <string>Temp_M</string>
+       <string>PowerState</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="value_03">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+     </widget>
+    </item>
+    <item row="18" column="1">
+     <widget class="QLineEdit" name="value_18">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+     </widget>
+    </item>
+    <item row="14" column="1">
+     <widget class="QLineEdit" name="value_14">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_00">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Mode</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="label_04">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>PID_kd</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="1">
+     <widget class="QLineEdit" name="value_09">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
       </property>
      </widget>
     </item>
@@ -179,8 +176,8 @@
       </property>
      </widget>
     </item>
-    <item row="7" column="1">
-     <widget class="QLineEdit" name="value_07">
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="value_02">
       <property name="font">
        <font>
         <family>Arial</family>
@@ -189,8 +186,8 @@
       </property>
      </widget>
     </item>
-    <item row="15" column="0">
-     <widget class="QLabel" name="label_15">
+    <item row="13" column="0">
+     <widget class="QLabel" name="label_13">
       <property name="font">
        <font>
         <family>Arial</family>
@@ -198,7 +195,33 @@
        </font>
       </property>
       <property name="text">
-       <string>Supply_U</string>
+       <string>Peltier_R</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0">
+     <widget class="QLabel" name="label_06">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>PID_Max</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_01">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>ControlVoltage_Set</string>
       </property>
      </widget>
     </item>
@@ -225,8 +248,8 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="1">
-     <widget class="QLineEdit" name="value_04">
+    <item row="5" column="1">
+     <widget class="QLineEdit" name="value_05">
       <property name="font">
        <font>
         <family>Arial</family>
@@ -235,8 +258,8 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="0">
-     <widget class="QLabel" name="label_06">
+    <item row="14" column="0">
+     <widget class="QLabel" name="label_14">
       <property name="font">
        <font>
         <family>Arial</family>
@@ -244,42 +267,12 @@
        </font>
       </property>
       <property name="text">
-       <string>PID_Max</string>
+       <string>Peltier_P</string>
       </property>
      </widget>
     </item>
-    <item row="17" column="1">
-     <widget class="QLineEdit" name="value_17">
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>8</pointsize>
-       </font>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="1">
-     <widget class="QLineEdit" name="value_03">
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>8</pointsize>
-       </font>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="1">
-     <widget class="QLineEdit" name="value_06">
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>8</pointsize>
-       </font>
-      </property>
-     </widget>
-    </item>
-    <item row="13" column="0">
-     <widget class="QLabel" name="label_13">
+    <item row="7" column="0">
+     <widget class="QLabel" name="label_07">
       <property name="font">
        <font>
         <family>Arial</family>
@@ -287,17 +280,33 @@
        </font>
       </property>
       <property name="text">
-       <string>Peltier_R</string>
+       <string>PID_Min</string>
       </property>
      </widget>
     </item>
-    <item row="18" column="1">
-     <widget class="QLineEdit" name="value_18">
+    <item row="5" column="0">
+     <widget class="QLabel" name="label_05">
       <property name="font">
        <font>
         <family>Arial</family>
-        <pointsize>8</pointsize>
+        <pointsize>10</pointsize>
        </font>
+      </property>
+      <property name="text">
+       <string>Temp_Set</string>
+      </property>
+     </widget>
+    </item>
+    <item row="15" column="0">
+     <widget class="QLabel" name="label_15">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Supply_U</string>
       </property>
      </widget>
     </item>
@@ -314,97 +323,64 @@
       </property>
      </widget>
     </item>
-    <item row="15" column="1">
-     <widget class="QLineEdit" name="value_15">
+    <item row="6" column="1">
+     <widget class="QLineEdit" name="value_06">
       <property name="font">
        <font>
         <family>Arial</family>
         <pointsize>8</pointsize>
        </font>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="value_00">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+     </widget>
+    </item>
+    <item row="12" column="0">
+     <widget class="QLabel" name="label_12">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Peltier_I</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QLineEdit" name="value_04">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="0">
+     <widget class="QLabel" name="label_11">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Peltier_U</string>
       </property>
      </widget>
     </item>
     <item row="12" column="1">
      <widget class="QLineEdit" name="value_12">
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>8</pointsize>
-       </font>
-      </property>
-     </widget>
-    </item>
-    <item row="9" column="1">
-     <widget class="QLineEdit" name="value_09">
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>8</pointsize>
-       </font>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0">
-     <widget class="QLabel" name="label_04">
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>PID_kd</string>
-      </property>
-     </widget>
-    </item>
-    <item row="10" column="0">
-     <widget class="QLabel" name="label_10">
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Temp_Diff</string>
-      </property>
-     </widget>
-    </item>
-    <item row="10" column="1">
-     <widget class="QLineEdit" name="value_10">
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>8</pointsize>
-       </font>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QLineEdit" name="value_02">
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>8</pointsize>
-       </font>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_01">
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>ControlVoltage_Set</string>
-      </property>
-     </widget>
-    </item>
-    <item row="13" column="1">
-     <widget class="QLineEdit" name="value_13">
       <property name="font">
        <font>
         <family>Arial</family>
@@ -423,6 +399,26 @@
       </property>
       <property name="text">
        <string>Supply_P</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QLineEdit" name="value_07">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+     </widget>
+    </item>
+    <item row="17" column="1">
+     <widget class="QLineEdit" name="value_17">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
       </property>
      </widget>
     </item>
@@ -449,8 +445,8 @@
       </property>
      </widget>
     </item>
-    <item row="8" column="1">
-     <widget class="QLineEdit" name="value_08">
+    <item row="16" column="1">
+     <widget class="QLineEdit" name="value_16">
       <property name="font">
        <font>
         <family>Arial</family>
@@ -459,8 +455,8 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_00">
+    <item row="9" column="0">
+     <widget class="QLabel" name="label_09">
       <property name="font">
        <font>
         <family>Arial</family>
@@ -468,12 +464,38 @@
        </font>
       </property>
       <property name="text">
-       <string>Mode</string>
+       <string>Temp_M</string>
       </property>
      </widget>
     </item>
-    <item row="14" column="1">
-     <widget class="QLineEdit" name="value_14">
+    <item row="10" column="0">
+     <widget class="QLabel" name="label_10">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Temp_Diff</string>
+      </property>
+     </widget>
+    </item>
+    <item row="19" column="0">
+     <widget class="QLabel" name="label_19">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Error</string>
+      </property>
+     </widget>
+    </item>
+    <item row="15" column="1">
+     <widget class="QLineEdit" name="value_15">
       <property name="font">
        <font>
         <family>Arial</family>
@@ -482,34 +504,8 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="0">
-     <widget class="QLabel" name="label_05">
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Temp_Set</string>
-      </property>
-     </widget>
-    </item>
-    <item row="18" column="0">
-     <widget class="QLabel" name="label_18">
-      <property name="font">
-       <font>
-        <family>Arial</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>PowerState</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="1">
-     <widget class="QLineEdit" name="value_05">
+    <item row="10" column="1">
+     <widget class="QLineEdit" name="value_10">
       <property name="font">
        <font>
         <family>Arial</family>
@@ -518,8 +514,8 @@
       </property>
      </widget>
     </item>
-    <item row="7" column="0">
-     <widget class="QLabel" name="label_07">
+    <item row="20" column="0">
+     <widget class="QLabel" name="label_20">
       <property name="font">
        <font>
         <family>Arial</family>
@@ -527,7 +523,27 @@
        </font>
       </property>
       <property name="text">
-       <string>PID_Min</string>
+       <string>Ref_U</string>
+      </property>
+     </widget>
+    </item>
+    <item row="19" column="1">
+     <widget class="QLineEdit" name="value_19">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+     </widget>
+    </item>
+    <item row="20" column="1">
+     <widget class="QLineEdit" name="value_20">
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
       </property>
      </widget>
     </item>
@@ -547,6 +563,30 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>value_20</tabstop>
+  <tabstop>value_19</tabstop>
+  <tabstop>value_18</tabstop>
+  <tabstop>value_07</tabstop>
+  <tabstop>value_11</tabstop>
+  <tabstop>value_04</tabstop>
+  <tabstop>value_17</tabstop>
+  <tabstop>value_03</tabstop>
+  <tabstop>value_06</tabstop>
+  <tabstop>value_00</tabstop>
+  <tabstop>value_15</tabstop>
+  <tabstop>value_12</tabstop>
+  <tabstop>value_09</tabstop>
+  <tabstop>value_10</tabstop>
+  <tabstop>value_02</tabstop>
+  <tabstop>value_13</tabstop>
+  <tabstop>value_01</tabstop>
+  <tabstop>value_08</tabstop>
+  <tabstop>value_14</tabstop>
+  <tabstop>value_05</tabstop>
+  <tabstop>value_16</tabstop>
+  <tabstop>pushButton</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
