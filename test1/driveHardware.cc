@@ -689,9 +689,6 @@ void driveHardware::readCANmessage(/*DECREPIT*/) {
 }
 
 
-
-
-
 // ----------------------------------------------------------------------
 void driveHardware::sendCANmessage() {
  //fMutex.lock();
@@ -727,7 +724,13 @@ void driveHardware::sendCANmessage() {
   fFrameW.data[0] = fCANReg;
 
   if (dlength > 1) {
-      memcpy(data, &fCANVal, sizeof fCANVal);
+      int intCanVal = 0;
+      if (0 == fCANReg) {
+        intCanVal = static_cast<unsigned int>(fCANVal);
+        memcpy(data, &intCanVal, sizeof intCanVal);
+      } else {
+        memcpy(data, &fCANVal, sizeof fCANVal);
+      }
       fFrameW.data[1] = data[0];
       fFrameW.data[2] = data[1];
       fFrameW.data[3] = data[2];
