@@ -956,8 +956,9 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
   // -- send read request
   sendCANmessage();
   std::this_thread::sleep_for(fMilli10);
-  if (0) cout << "  getTECRegisterFromCAN for tec = " << itec
+  if (1) cout << "  getTECRegisterFromCAN for tec = " << itec
               << " register = "<< regname
+              << " regidx = " << fCANReg
               << endl;
 
   if (itec > 0) {
@@ -1015,7 +1016,7 @@ TECData  driveHardware::initAllTECRegister() {
   b = {-99.,   "PID_kd",               4, 1}; tdata.reg.insert(make_pair(b.name, b));
   b = {23.1,   "Temp_Set",             5, 1}; tdata.reg.insert(make_pair(b.name, b));
   b = {-99.,   "PID_Max",              6, 1}; tdata.reg.insert(make_pair(b.name, b));
-  b = {-99.,   "PID_Min",              7, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {-1.,   "PID_Min",              7, 1}; tdata.reg.insert(make_pair(b.name, b));
 
   // -- read-only registers
   b = {-99.,   "Temp_W",               8, 2}; tdata.reg.insert(make_pair(b.name, b));
