@@ -166,12 +166,25 @@ void MainWindow::tecSetFromUI(int itec, std::string rname, QWidget *qw) {
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValve0() {
+  // -- negate!
+  if (!fpHw->getStatusValve0()) {
+    ui->buttonValve0->setStyleSheet("QPushButton {background-color: #A3C1DA; color: black;}");
+  } else {
+    ui->buttonValve0->setStyleSheet("QPushButton {background-color: gray; color: black;}");
+  }
+
   emit signalValve(1);
 }
 
 
 // ----------------------------------------------------------------------
 void MainWindow::clkValve1() {
+  // -- negate!
+  if (!fpHw->getStatusValve1()) {
+    ui->buttonValve1->setStyleSheet("QPushButton {background-color: #A3C1DA; color: black;}");
+  } else {
+    ui->buttonValve1->setStyleSheet("QPushButton {background-color: gray; color: black;}");
+  }
   emit signalValve(2);
 }
 
