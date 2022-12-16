@@ -415,8 +415,18 @@ void driveHardware::answerIoSet(string &awhat) {
 
   string regname("nada");
   float value(-999.);
+  int tec(0);
 
-  while ((pos = what.find(delimiter)) != std::string::npos) {
+  if ((pos = what.find("tec ")) != string::npos) {
+    token = what.substr(0, pos);
+    what.erase(0, pos + delimiter.length());
+    if ((pos = what.find(" set ")) != string::npos) {
+      token = what.substr(0, pos);
+      cout << "token ->" << token << "<-" << endl;
+    }
+  }
+
+  while ((pos = what.find(delimiter)) != string::npos) {
     token = what.substr(0, pos);
     cout << "token ->" << token << "<-" << endl;
     if (string::npos != regname.find("nada")) {
@@ -432,6 +442,7 @@ void driveHardware::answerIoSet(string &awhat) {
   } else {
     cout << "assigning value ->" << value << "<-" << std::endl;
   }
+  return;
   for (int itec = 1; itec <= 8; ++itec) {
     setTECRegister(itec, regname, value);
   }
@@ -476,7 +487,6 @@ void driveHardware::parseIoMessage() {
     }
 
     s1 = "Mode";  s2 = "Mode";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
-
     s1 = "Voltage";  s2 = "ControlVoltage_Set";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
 
     s1 = "kp"; s2 = "PID_kp";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
