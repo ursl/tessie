@@ -435,7 +435,7 @@ void driveHardware::answerIoSet(string &awhat) {
     replaceAll(what, "set ", "");
     replaceAll(what, "set", "");
     // -- original parse
-    delimiter = " set ";
+    delimiter = " ";
     while ((pos = what.find(delimiter)) != string::npos) {
       token = what.substr(pos);
       cout << "token ->" << token << "<-" << endl;
