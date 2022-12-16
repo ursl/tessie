@@ -45,6 +45,12 @@ void CANmessage::addFrame(canFrame &x) {
     filled = true;
   }
 
+  if (!filled && (0 == x.fTec) && (0 == x.fType)
+      && (0 == x.fPrivate) && (1 == x.fShift)) {
+    // -- ignore (public) TEC watchdog commands
+    filled = true;
+  }
+
   if (!filled && (0 == x.fTec) && (4 == ((x.fCanId & 0x40)>>4))
       && (0 == x.fPrivate) && (0 == x.fShift)) {
     // -- ignore FRAS entertainment 40 and 41
