@@ -953,7 +953,7 @@
       <x>10</x>
       <y>50</y>
       <width>101</width>
-      <height>141</height>
+      <height>431</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -966,9 +966,9 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>40</y>
-       <width>302</width>
-       <height>100</height>
+       <y>30</y>
+       <width>101</width>
+       <height>71</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -1022,31 +1022,6 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="buttonValveAll">
-        <property name="minimumSize">
-         <size>
-          <width>60</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>60</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>all valves</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
     <widget class="QLabel" name="labelTECFrame_3">
@@ -1069,194 +1044,194 @@
       <string>N valves</string>
      </property>
     </widget>
-   </widget>
-   <widget class="QFrame" name="frameSHT85">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>190</y>
-      <width>101</width>
-      <height>161</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <widget class="QLineEdit" name="lineEditRH">
+    <widget class="QFrame" name="frameSHT85">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>80</y>
-       <width>81</width>
-       <height>21</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEditTemp">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>81</width>
-       <height>21</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelTemp">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>10</y>
-       <width>71</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>T [deg C]</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelRH">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>60</y>
-       <width>58</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>RH [%]</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEditDP">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>130</y>
-       <width>81</width>
-       <height>21</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelDP">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
+       <x>0</x>
        <y>110</y>
-       <width>71</width>
-       <height>16</height>
+       <width>101</width>
+       <height>161</height>
       </rect>
      </property>
-     <property name="font">
-      <font>
-       <pointsize>8</pointsize>
-      </font>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
-     <property name="text">
-      <string>DP [deg C]</string>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
      </property>
+     <widget class="QLineEdit" name="lineEditRH">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEditTemp">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelTemp">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>10</y>
+        <width>71</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>T [deg C]</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelRH">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>60</y>
+        <width>58</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>RH [%]</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEditDP">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>130</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelDP">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>110</y>
+        <width>71</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>DP [deg C]</string>
+      </property>
+     </widget>
     </widget>
-   </widget>
-   <widget class="QFrame" name="frameCANbus">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>350</y>
-      <width>101</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <property name="palette">
-     <palette>
-      <active/>
-      <inactive/>
-      <disabled/>
-     </palette>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <widget class="QLabel" name="labelCANbusError">
+    <widget class="QFrame" name="frameCANbus">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>0</y>
-       <width>81</width>
-       <height>16</height>
+       <x>0</x>
+       <y>280</y>
+       <width>101</width>
+       <height>101</height>
       </rect>
      </property>
-     <property name="font">
-      <font>
-       <pointsize>5</pointsize>
-      </font>
+     <property name="palette">
+      <palette>
+       <active/>
+       <inactive/>
+       <disabled/>
+      </palette>
      </property>
-     <property name="text">
-      <string>Errors: CAN/I2C</string>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEditCANbusError">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>81</width>
-       <height>21</height>
-      </rect>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
      </property>
-    </widget>
-    <widget class="QLabel" name="labelCANbusRunTime">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>60</y>
-       <width>81</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>6</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Runtime [sec]</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEditRunTime">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>80</y>
-       <width>81</width>
-       <height>21</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEditI2CError">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>40</y>
-       <width>81</width>
-       <height>21</height>
-      </rect>
-     </property>
+     <widget class="QLabel" name="labelCANbusError">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>5</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Errors: CAN/I2C</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEditCANbusError">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="labelCANbusRunTime">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>60</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>6</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Runtime [sec]</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEditRunTime">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEditI2CError">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QLabel" name="labelVersion">
@@ -1670,22 +1645,6 @@
     <hint type="destinationlabel">
      <x>789</x>
      <y>208</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonValveAll</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>clkValveAll()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>70</x>
-     <y>189</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>631</x>
-     <y>37</y>
     </hint>
    </hints>
   </connection>

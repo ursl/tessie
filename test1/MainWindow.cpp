@@ -84,6 +84,10 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fUISupply_U.push_back(ui->tec6_Supply_U);
   fUISupply_U.push_back(ui->tec7_Supply_U);
   fUISupply_U.push_back(ui->tec8_Supply_U);
+
+  ui->buttonValve0->setStyleSheet("QPushButton {background-color: gray; color: black;}");
+  ui->buttonValve1->setStyleSheet("QPushButton {background-color: gray; color: black;}");
+
 }
 
 
@@ -173,13 +177,6 @@ void MainWindow::clkValve1() {
 
 
 // ----------------------------------------------------------------------
-void MainWindow::clkValveAll() {
-  emit signalValve(3);
-}
-
-
-
-// ----------------------------------------------------------------------
 void MainWindow::checkTECAll(bool checked) {
   stringstream sbla; sbla << "checkTECTAll clicked " << checked;
   fLOG(INFO, sbla.str());
@@ -263,6 +260,11 @@ void MainWindow::updateHardwareDisplay() {
     ui->buttonValve0->setStyleSheet("QPushButton {background-color: #A3C1DA; color: black;}");
   } else {
     ui->buttonValve0->setStyleSheet("QPushButton {background-color: gray; color: black;}");
+  }
+  if (fpHw->getStatusValve1()) {
+    ui->buttonValve1->setStyleSheet("QPushButton {background-color: #A3C1DA; color: black;}");
+  } else {
+    ui->buttonValve1->setStyleSheet("QPushButton {background-color: gray; color: black;}");
   }
 
   for (unsigned int ivec = 0; ivec < 8; ++ivec) {

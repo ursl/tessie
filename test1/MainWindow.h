@@ -45,7 +45,6 @@ private slots:
 
     void clkValve0();
     void clkValve1();
-    void clkValveAll();
 
     void clkRefresh();
 
