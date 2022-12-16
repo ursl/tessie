@@ -51,7 +51,8 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>9</pointsize>
+       <family>Menlo</family>
+       <pointsize>8</pointsize>
        <bold>true</bold>
       </font>
      </property>
@@ -1059,7 +1060,8 @@
      </property>
      <property name="font">
       <font>
-       <pointsize>9</pointsize>
+       <family>Menlo</family>
+       <pointsize>8</pointsize>
        <bold>true</bold>
       </font>
      </property>
