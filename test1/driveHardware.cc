@@ -406,8 +406,6 @@ void driveHardware::answerIoGet(string &what) {
 void driveHardware::answerIoSet(string &awhat) {
   string what = fIoMessage;
 
-  replaceAll(what, "set ", "");
-  replaceAll(what, "set", "");
   cout << "answerIoSet what ->" << what << "<-" << endl;
   string delimiter(" ");
   size_t pos = 0;
@@ -424,6 +422,7 @@ void driveHardware::answerIoSet(string &awhat) {
       cout << "tokens: ";
       for (unsigned int ii = 0; ii < tokens.size(); ++ii) cout << tokens[ii] << " ";
       cout << endl;
+      return;
     }
     tec     = atoi(tokens[1].c_str());
     regname = tokens[3];
@@ -433,6 +432,8 @@ void driveHardware::answerIoSet(string &awhat) {
          << "<- tec = " << tec
          << endl;
   } else {
+    replaceAll(what, "set ", "");
+    replaceAll(what, "set", "");
     // -- original parse
     delimiter = " set ";
     while ((pos = what.find(delimiter)) != string::npos) {
