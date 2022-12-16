@@ -424,11 +424,16 @@ void driveHardware::answerIoSet(string &awhat) {
     delimiter = " set ";
     if ((pos = what.find(delimiter)) != string::npos) {
       token = what.substr(0, pos);
-      tec = atoi(token.c_str());
-      cout << "token ->" << token << "<- tec = " << tec << endl;
+      what.erase(0, pos + delimiter.length());
+      cout << "what ->" << what << "<-" << endl;
     }
-    what.erase(0, pos + delimiter.length());
-    cout << "what ->" << what << "<-" << endl;
+    delimiter = " ";
+    if ((pos = what.find(delimiter)) != string::npos) {
+      token = what.substr(0, pos);
+      tec = atoi(token.c_str());
+      what.erase(0, pos + delimiter.length());
+      cout << "what ->" << what << "<-" << endl;
+    }
   }
 
   // -- original parse
@@ -447,7 +452,10 @@ void driveHardware::answerIoSet(string &awhat) {
   if (value < -900.) {
     fLOG(WARNING, "no proper value: " + what );
   } else {
-    cout << "assigning value ->" << value << "<- to tec = " << tec << endl;
+    cout << "register ->" << regname
+         << "<- value ->" << value
+         << "<- tec = " << tec
+         << endl;
   }
   return;
   for (int itec = 1; itec <= 8; ++itec) {
