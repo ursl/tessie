@@ -420,6 +420,10 @@ void driveHardware::answerIoSet(string &awhat) {
 
   if (sscanf(what.c_str(), "tec %d set %s %f", &tec, creg, &value)) {
     regname = string(creg);
+    cout << "register ->" << regname
+         << "<- value ->" << value
+         << "<- tec = " << tec
+         << endl;
   } else {
     // -- original parse
     delimiter = " set ";
