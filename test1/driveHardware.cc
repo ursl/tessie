@@ -417,12 +417,13 @@ void driveHardware::answerIoSet(string &awhat) {
   float value(-999.);
   int tec(0);
 
+  // -- check whether tec X is prefixed
   if ((pos = what.find("tec ")) != string::npos) {
     token = what.substr(0, pos);
-    what.erase(0, pos + delimiter.length());
     if ((pos = what.find(" set ")) != string::npos) {
       token = what.substr(0, pos);
-      cout << "token ->" << token << "<-" << endl;
+      tec = atoi(token.c_str());
+      cout << "token ->" << token << "<- tec = " << tec << endl;
     }
   }
 
