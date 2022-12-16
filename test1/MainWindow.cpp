@@ -259,6 +259,11 @@ void MainWindow::updateHardwareDisplay() {
   ui->lineEditI2CError->setText(QString::number(fpHw->getNI2CErrors()));
   ui->lineEditRunTime->setText(QString::number(fpHw->getRunTime()));
 
+  if (fpHw->getStatusValve0()) {
+    ui->buttonValve0->setStyleSheet("QButton {color: green; }");
+  } else {
+    ui->buttonValve0->setStyleSheet("QButton {color: gray; }");
+  }
 
   for (unsigned int ivec = 0; ivec < 8; ++ivec) {
     if (!fUIControlVoltageSet[ivec]->hasFocus()) {

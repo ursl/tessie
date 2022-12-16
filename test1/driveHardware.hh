@@ -63,6 +63,9 @@ public:
 
   // -- controlling the FRAS/valve(s)
   void  entertainFras();
+  bool  getStatusValve0() {return ((fValveMask & 1) == 1);}
+  bool  getStatusValve1() {return ((fValveMask & 2) == 2);}
+  bool  getStatusValve()  {return (getStatusValve0() && getStatusValve1());}
 
   // -- controlling the TEC
   void  setTECParameter(float par); // ???
