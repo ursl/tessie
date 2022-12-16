@@ -21,9 +21,9 @@
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>100</y>
+      <y>90</y>
       <width>661</width>
-      <height>461</height>
+      <height>411</height>
      </rect>
     </property>
     <property name="font">
@@ -86,409 +86,6 @@
      <property name="text">
       <string>lock all</string>
      </property>
-    </widget>
-    <widget class="QPushButton" name="buttonRefresh">
-     <property name="geometry">
-      <rect>
-       <x>199</x>
-       <y>0</y>
-       <width>51</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Refresh</string>
-     </property>
-    </widget>
-    <widget class="QWidget" name="layoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>40</y>
-       <width>441</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="hlayoutTop_Voltage">
-      <item>
-       <widget class="QLabel" name="labelTop_Voltage">
-        <property name="font">
-         <font>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>ControlVoltage_Set</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec8_Voltage">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec7_Voltage">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec6_Voltage">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec5_Voltage">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="layoutWidget_2">
-     <property name="geometry">
-      <rect>
-       <x>200</x>
-       <y>230</y>
-       <width>441</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="hlayoutBot_Voltage">
-      <item>
-       <widget class="QLabel" name="labelBot_Voltage">
-        <property name="font">
-         <font>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>ControlVoltage_Set</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec1_Voltage">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec2_Voltage">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec3_Voltage">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec4_Voltage">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="layoutWidget_3">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>70</y>
-       <width>441</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="hlayoutTop_Temp">
-      <item>
-       <widget class="QLabel" name="labelTop_Temp">
-        <property name="font">
-         <font>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Temp_Set                </string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec8_Temp">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec7_Temp">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec6_Temp">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec5_Temp">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="layoutWidget_4">
-     <property name="geometry">
-      <rect>
-       <x>200</x>
-       <y>260</y>
-       <width>441</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="hlayoutBot_Temp">
-      <item>
-       <widget class="QLabel" name="labelBot_Temp">
-        <property name="font">
-         <font>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Temp_Set                </string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec1_Temp">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec2_Temp">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec3_Temp">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec4_Temp">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="layoutWidget_5">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>130</y>
-       <width>441</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="hlayoutTop_Mode">
-      <item>
-       <widget class="QLabel" name="labelTop_Mode">
-        <property name="font">
-         <font>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Mode                         </string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec8_Mode">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec7_Mode">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec6_Mode">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec5_Mode">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="layoutWidget_6">
-     <property name="geometry">
-      <rect>
-       <x>200</x>
-       <y>320</y>
-       <width>441</width>
-       <height>25</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="hlayoutBot_Mode">
-      <item>
-       <widget class="QLabel" name="labelBot_Mode">
-        <property name="font">
-         <font>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Mode                       </string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec1_Mode">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec2_Mode">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec3_Mode">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec4_Mode">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="layoutWidget_9">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>160</y>
-       <width>441</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="hlayoutTop_Supply_U">
-      <item>
-       <widget class="QLabel" name="labelTop_Supply_U">
-        <property name="font">
-         <font>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Supply_U                 </string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec8_Supply_U">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec7_Supply_U">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec6_Supply_U">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="tec5_Supply_U">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
     </widget>
     <widget class="QTextEdit" name="textTECValue">
      <property name="geometry">
@@ -600,30 +197,99 @@
       <string>Write</string>
      </property>
     </widget>
-    <widget class="QWidget" name="layoutWidget_11">
+    <widget class="QWidget" name="gridLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>190</x>
-       <y>100</y>
-       <width>441</width>
-       <height>23</height>
+       <x>180</x>
+       <y>10</y>
+       <width>464</width>
+       <height>389</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="hlayoutTop_TempM">
-      <item>
-       <widget class="QLabel" name="labelTop_TempM">
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="2" column="2">
+       <widget class="QLineEdit" name="tec7_Temp">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <widget class="QPushButton" name="pushButtonTEC1">
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Arial</family>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>TEC 1</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBoxTEC1">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="4" column="3">
+       <widget class="QLineEdit" name="tec6_Mode">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="buttonRefresh">
         <property name="font">
          <font>
           <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
-         <string>Temp_ M                 </string>
+         <string>Refresh</string>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QLineEdit" name="tec8_TempM">
+      <item row="5" column="0">
+       <widget class="QLabel" name="labelTop_Supply_U">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Supply_U                 </string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="4">
+       <widget class="QLineEdit" name="tec4_Voltage">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QLineEdit" name="tec1_Temp">
         <property name="acceptDrops">
          <bool>false</bool>
         </property>
@@ -632,40 +298,269 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QLineEdit" name="tec7_TempM">
+      <item row="0" column="2">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QPushButton" name="pushButtonTEC7">
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Arial</family>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>TEC 7</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBoxTEC7">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="labelBot_Temp">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Temp_Set                </string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="2">
+       <widget class="QLineEdit" name="tec2_Temp">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="labelTop_Temp">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Temp_Set                </string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="4">
+       <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <item>
+         <widget class="QPushButton" name="pushButtonTEC4">
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>TEC 4</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBoxTEC4">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="6" column="2">
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <item>
+         <widget class="QPushButton" name="pushButtonTEC2">
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Arial</family>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>TEC 2</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBoxTEC2">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="10" column="0">
+       <widget class="QLabel" name="labelBot_Mode">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Mode                       </string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QLineEdit" name="tec1_Voltage">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="4">
+       <widget class="QLineEdit" name="tec4_TempM">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="tec8_Voltage">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="3">
+       <widget class="QLineEdit" name="tec6_Supply_U">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="3">
+       <widget class="QLineEdit" name="tec3_Temp">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="4">
+       <widget class="QLineEdit" name="tec4_Mode">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QLineEdit" name="tec1_TempM">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QPushButton" name="pushButtonTEC5">
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>TEC 5</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBoxTEC5">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="10" column="3">
+       <widget class="QLineEdit" name="tec3_Mode">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="labelBot_Voltage_2">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="tec8_Temp">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QLineEdit" name="tec6_Voltage">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3">
        <widget class="QLineEdit" name="tec6_TempM">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QLineEdit" name="tec5_TempM">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="layoutWidget_12">
-     <property name="geometry">
-      <rect>
-       <x>200</x>
-       <y>290</y>
-       <width>441</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="hlayoutBot_TempM">
-      <item>
+      <item row="9" column="0">
        <widget class="QLabel" name="labelBot_TempM">
         <property name="font">
          <font>
@@ -677,8 +572,15 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QLineEdit" name="tec1_TempM">
+      <item row="3" column="2">
+       <widget class="QLineEdit" name="tec7_TempM">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="tec8_Mode">
         <property name="acceptDrops">
          <bool>false</bool>
         </property>
@@ -687,298 +589,284 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item row="7" column="2">
+       <widget class="QLineEdit" name="tec2_Voltage">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="labelTop_Mode">
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Mode                         </string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="QLineEdit" name="tec7_Supply_U">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="2">
        <widget class="QLineEdit" name="tec2_TempM">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item>
+      <item row="6" column="3">
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <item>
+         <widget class="QPushButton" name="pushButtonTEC3">
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>TEC 3</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBoxTEC3">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="tec8_TempM">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
+       <widget class="QLineEdit" name="tec7_Mode">
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="3">
        <widget class="QLineEdit" name="tec3_TempM">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QLineEdit" name="tec4_TempM">
+      <item row="7" column="3">
+       <widget class="QLineEdit" name="tec3_Voltage">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="horizontalLayoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>281</x>
-       <y>0</y>
-       <width>341</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayoutTop" stretch="10,10,10,10,10,10,10,10">
-      <property name="spacing">
-       <number>10</number>
-      </property>
-      <property name="leftMargin">
-       <number>5</number>
-      </property>
-      <property name="rightMargin">
-       <number>5</number>
-      </property>
-      <item>
-       <widget class="QCheckBox" name="checkBoxTEC8">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string/>
+      <item row="10" column="2">
+       <widget class="QLineEdit" name="tec2_Mode">
+        <property name="frame">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonTEC8">
-        <property name="maximumSize">
-         <size>
-          <width>50</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>TEC 8</string>
+      <item row="2" column="3">
+       <widget class="QLineEdit" name="tec6_Temp">
+        <property name="frame">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QCheckBox" name="checkBoxTEC7">
-        <property name="text">
-         <string/>
+      <item row="10" column="1">
+       <widget class="QLineEdit" name="tec1_Mode">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonTEC7">
-        <property name="maximumSize">
-         <size>
-          <width>50</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>TEC 7</string>
+      <item row="3" column="4">
+       <widget class="QLineEdit" name="tec5_TempM">
+        <property name="frame">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QCheckBox" name="checkBoxTEC6">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonTEC6">
-        <property name="maximumSize">
-         <size>
-          <width>50</width>
-          <height>30</height>
-         </size>
-        </property>
+      <item row="3" column="0">
+       <widget class="QLabel" name="labelTop_TempM">
         <property name="font">
          <font>
           <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
-         <string>TEC 6</string>
+         <string>Temp_ M                 </string>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QCheckBox" name="checkBoxTEC5">
-        <property name="text">
-         <string/>
+      <item row="5" column="1">
+       <widget class="QLineEdit" name="tec8_Supply_U">
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonTEC5">
-        <property name="maximumSize">
-         <size>
-          <width>50</width>
-          <height>30</height>
-         </size>
+      <item row="5" column="4">
+       <widget class="QLineEdit" name="tec5_Supply_U">
+        <property name="frame">
+         <bool>false</bool>
         </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelTop_Voltage">
         <property name="font">
          <font>
           <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
-         <string>TEC 5</string>
+         <string>ControlVoltage_Set</string>
         </property>
        </widget>
       </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="horizontalLayoutWidget_2">
-     <property name="geometry">
-      <rect>
-       <x>290</x>
-       <y>190</y>
-       <width>341</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayoutBottom" stretch="10,10,10,10,10,10,10,10">
-      <property name="spacing">
-       <number>10</number>
-      </property>
-      <property name="leftMargin">
-       <number>5</number>
-      </property>
-      <property name="rightMargin">
-       <number>5</number>
-      </property>
-      <item>
-       <widget class="QCheckBox" name="checkBoxTEC1">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string/>
+      <item row="1" column="4">
+       <widget class="QLineEdit" name="tec5_Voltage">
+        <property name="frame">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonTEC1">
-        <property name="maximumSize">
-         <size>
-          <width>50</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>TEC 1</string>
+      <item row="2" column="4">
+       <widget class="QLineEdit" name="tec5_Temp">
+        <property name="frame">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QCheckBox" name="checkBoxTEC2">
-        <property name="text">
-         <string/>
+      <item row="4" column="4">
+       <widget class="QLineEdit" name="tec5_Mode">
+        <property name="frame">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonTEC2">
-        <property name="maximumSize">
-         <size>
-          <width>50</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>TEC 2</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="checkBoxTEC3">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonTEC3">
-        <property name="maximumSize">
-         <size>
-          <width>50</width>
-          <height>30</height>
-         </size>
-        </property>
+      <item row="7" column="0">
+       <widget class="QLabel" name="labelBot_Voltage">
         <property name="font">
          <font>
           <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
-         <string>TEC 3</string>
+         <string>ControlVoltage_Set</string>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QCheckBox" name="checkBoxTEC4">
-        <property name="text">
-         <string/>
+      <item row="8" column="4">
+       <widget class="QLineEdit" name="tec4_Temp">
+        <property name="frame">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonTEC4">
-        <property name="maximumSize">
-         <size>
-          <width>50</width>
-          <height>30</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>TEC 4</string>
+      <item row="0" column="3">
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QPushButton" name="pushButtonTEC6">
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>TEC 6</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBoxTEC6">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QPushButton" name="pushButtonTEC8">
+          <property name="maximumSize">
+           <size>
+            <width>40</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Arial</family>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>TEC 8</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="checkBoxTEC8">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLineEdit" name="tec7_Voltage">
+        <property name="frame">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="layoutWidget_7">
-     <property name="geometry">
-      <rect>
-       <x>200</x>
-       <y>350</y>
-       <width>441</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="hlayoutBot_Supply_U">
-      <item>
+      <item row="11" column="0">
        <widget class="QLabel" name="labelBot_Supply_U">
         <property name="font">
          <font>
@@ -990,7 +878,7 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item row="11" column="1">
        <widget class="QLineEdit" name="tec1_Supply_U">
         <property name="acceptDrops">
          <bool>false</bool>
@@ -1000,21 +888,21 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item row="11" column="2">
        <widget class="QLineEdit" name="tec2_Supply_U">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item>
+      <item row="11" column="3">
        <widget class="QLineEdit" name="tec3_Supply_U">
         <property name="frame">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item>
+      <item row="11" column="4">
        <widget class="QLineEdit" name="tec4_Supply_U">
         <property name="frame">
          <bool>false</bool>
@@ -1392,7 +1280,6 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <tabstops>
-  <tabstop>checkBoxTEC5</tabstop>
   <tabstop>checkboxTECLockAll</tabstop>
   <tabstop>textTECName</tabstop>
   <tabstop>buttonQuit</tabstop>

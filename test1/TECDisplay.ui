@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
-    <height>560</height>
+    <width>250</width>
+    <height>483</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>300</width>
+    <width>250</width>
     <height>200</height>
    </size>
   </property>
@@ -43,7 +43,7 @@
     <rect>
      <x>140</x>
      <y>0</y>
-     <width>71</width>
+     <width>51</width>
      <height>32</height>
     </rect>
    </property>
@@ -54,10 +54,10 @@
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>10</x>
      <y>30</y>
      <width>231</width>
-     <height>491</height>
+     <height>441</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0" rowminimumheight="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0">
