@@ -219,7 +219,6 @@ void driveHardware::doRun() {
 
   cout << "driveHardware::doRun() start loop" << endl;
   while (1) {
-
     evtHandler();
 
     ++cnt;
@@ -776,13 +775,6 @@ void driveHardware::entertainTECs() {
   fCANId = (CANBUS_SHIFT | CANBUS_PUBLIC | CANBUS_TECREC | CANBUS_CMD);
   fCANReg = 3; // Watchdog
   fCANVal = fTECParameter;
-
-  stringstream sbla; sbla << "Watchdog "
-                          << " reg = " << fCANReg << hex
-                          << " canID = 0x" << fCANId << dec
-                              ;
-  fLOG(INFO, sbla.str());
-
   sendCANmessage();
 }
 
@@ -820,45 +812,6 @@ void driveHardware::entertainFras() {
   int nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
 #endif
 }
-
-
-//// ----------------------------------------------------------------------
-//void driveHardware::talkToFras() {
-//  fValveMask = static_cast<int>(fCANVal);
-//  //  fMutex.lock();
-
-//  //            TEC:   ssP'..tt'aaaa
-//  //           FRAS:   0aa'aaaa'akkk
-//  //  fFrameW.can_id = 000'0100'0000 -> 0x040 for process
-//  //  fFrameW.can_id = 000'0100'0001 -> 0x041 for service
-//  //  fFrameW.can_id = 000'0100'0010 -> 0x042 for control
-//  unsigned int canid = 0x40;
-//#ifdef PI
-//  fFrameW.can_id = canid;
-//  int dlength(1);
-//  fFrameW.can_dlc = dlength;
-//  fFrameW.data[0] = fValveMask;
-//#endif
-//  stringstream sbla; sbla << "talkToFras "
-//                          << " reg = 0x"  << hex << canid
-//                          << " data = " << fCANVal;
-//  cout << "sbla: " << sbla.str() << endl;
-//  fLOG(INFO, sbla.str());
-
-//  // -- Send message
-//#ifdef PI
-//  setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
-//  int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
-//  if (nbytes != sizeof(fFrameW)) {
-//      printf("Send Error frame[0]!\r\n");
-//  }
-
-//  // -- this is required to absorb the write request from fSr
-//  nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
-
-//  //  fMutex.unlock();
-//#endif
-//}
 
 
 // ----------------------------------------------------------------------
@@ -919,44 +872,32 @@ void  driveHardware::turnOnTEC(int itec) {
     cout << "TEC " << itec <<  " not active, skipping" << endl;
     return;
   }
-
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_CMD);
   fCANReg = 1; // Power_On
   fCANVal = fTECParameter;
-
   stringstream sbla; sbla << "turnOnTEC("
                           << itec << ")"
                           << " reg = " << fCANReg << hex
-                          << " canID = 0x" << fCANId << dec
-                              ;
+                          << " canID = 0x" << fCANId << dec;
   fLOG(INFO, sbla.str());
-
   sendCANmessage();
 }
 
 
 // ----------------------------------------------------------------------
 void  driveHardware::turnOffTEC(int itec) {
-
   if (0 == fActiveTEC[itec]) {
-      cout << "TEC " << itec <<  " not active, skipping" << endl;
-      return;
-    }
-
-  printf("driveHardware::turnOffTEC(%d)\n", itec);
-
+    cout << "TEC " << itec <<  " not active, skipping" << endl;
+    return;
+  }
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_CMD);
   fCANReg = 2; // Power_Off
   fCANVal = fTECParameter;
-  printf(" send CMD with register %d, canID = %x\n", fCANReg, fCANId);
-
   stringstream sbla; sbla << "turnOffTEC("
                           << itec << ")"
                           << " reg = " << fCANReg << hex
-                          << " canID = 0x" << fCANId << dec
-                             ;
+                          << " canID = 0x" << fCANId << dec;
   fLOG(INFO, sbla.str());
-
   sendCANmessage();
 }
 

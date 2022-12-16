@@ -62,7 +62,6 @@ public:
   void answerIoSet(std::string &what);
 
   // -- controlling the FRAS/valve(s)
-  //void  talkToFras();
   void  entertainFras();
 
   // -- controlling the TEC
