@@ -17,3 +17,22 @@ void replaceAll(string &str, const string &from, const string &to) {
     start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
   }
 }
+
+// ----------------------------------------------------------------------
+vector<string> split(const string &s, char delim) {
+  vector<string> elems;
+  split(s, delim, elems);
+  return elems;
+}
+
+
+// ----------------------------------------------------------------------
+void /*vector<string>&*/ split(const string &s, char delim, vector<string> &elems) {
+  stringstream ss(s);
+  string item;
+  while (getline(ss, item, delim)) {
+    elems.push_back(item);
+  }
+  //  return elems;
+}
+

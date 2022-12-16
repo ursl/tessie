@@ -416,10 +416,18 @@ void driveHardware::answerIoSet(string &awhat) {
   string regname("nada");
   float value(-999.);
   int tec(0);
-  char creg[100];
 
-  if (sscanf(what.c_str(), "tec %d set %s %f", &tec, creg, &value)) {
-    regname = string(creg);
+  if (string::npos != what.find("tec")) {
+    vector<string> tokens = split(what, ' ');
+    if (tokens.size() != 5) {
+      cout << "could not parse line ->" << what << "<-" << endl;
+      cout << "tokens: ";
+      for (unsigned int ii = 0; ii < tokens.size(); ++ii) cout << tokens[ii] << " ";
+      cout << endl;
+    }
+    tec     = atoi(tokens[1].c_str());
+    regname = tokens[3];
+    value   = atof(tokens[4].c_str());
     cout << "register ->" << regname
          << "<- value ->" << value
          << "<- tec = " << tec
