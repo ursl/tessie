@@ -442,10 +442,10 @@ void driveHardware::answerIoSet(string &awhat) {
 
 // ----------------------------------------------------------------------
 void driveHardware::parseIoMessage() { 
-  string s1("Temp_PT1000"), s2("Temperature"), s3("get");
+  string s1("Temp"), s2("Temperature"), s3("get"), s0("Temp_");
   // -- GET answers
   if (string::npos != fIoMessage.find("get ")) {
-    if (findInIoMessage(s1, s2, s3)) {
+    if (!findInIoMessage(s0, s0, s3) && findInIoMessage(s1, s2, s3)) {
       stringstream str;
       str << "Temp = " << getTemperature();
       QString qmsg = QString::fromStdString(str.str());
@@ -503,6 +503,21 @@ void driveHardware::parseIoMessage() {
     s1 = "Error"; s2 = "Error";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
     s1 = "Ref_U"; s2 = "Ref_U";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
 
+    s1 = "valve0"; s2 = "valve0";
+    if (findInIoMessage(s1, s2, s3)) {
+      stringstream str;
+      str << "valve0" << " = " << getStatusValve0();
+      QString qmsg = QString::fromStdString(str.str());
+      emit signalSendToServer(qmsg);
+    }
+
+    s1 = "valve1"; s2 = "valve1";
+    if (findInIoMessage(s1, s2, s3)) {
+      stringstream str;
+      str << "valve0" << " = " << getStatusValve1();
+      QString qmsg = QString::fromStdString(str.str());
+      emit signalSendToServer(qmsg);
+    }
 
   } else if (string::npos != fIoMessage.find("set ")) {
     s3 = "set ";
