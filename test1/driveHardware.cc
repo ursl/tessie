@@ -428,6 +428,7 @@ void driveHardware::answerIoSet(string &awhat) {
       cout << "token ->" << token << "<- tec = " << tec << endl;
     }
     what.erase(0, pos + delimiter.length());
+    cout << "what ->" << what << "<-" << endl;
   }
 
   // -- original parse
@@ -446,7 +447,7 @@ void driveHardware::answerIoSet(string &awhat) {
   if (value < -900.) {
     fLOG(WARNING, "no proper value: " + what );
   } else {
-    cout << "assigning value ->" << value << "<-" << std::endl;
+    cout << "assigning value ->" << value << "<- to tec = " << tec << endl;
   }
   return;
   for (int itec = 1; itec <= 8; ++itec) {
