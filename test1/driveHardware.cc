@@ -420,26 +420,23 @@ void driveHardware::answerIoSet(string &awhat) {
   // -- check whether tec X is prefixed
   delimiter = "tec ";
   if ((pos = what.find(delimiter)) != string::npos) {
-    token = what.substr(0, pos);
-    delimiter = " set ";
+    delimiter = "set ";
     if ((pos = what.find(delimiter)) != string::npos) {
       token = what.substr(0, pos);
-      what.erase(0, pos + delimiter.length());
-      cout << "what ->" << what << "<-" << endl;
     }
-    delimiter = " ";
-    if ((pos = what.find(delimiter)) != string::npos) {
-      token = what.substr(0, pos);
+    delimiter = "tec ";
+    if ((pos = token.find(delimiter)) != string::npos) {
+      token.erase(0, pos + delimiter.length());
+      cout << "token ->" << token << "<-" << endl;
       tec = atoi(token.c_str());
-      what.erase(0, pos + delimiter.length());
       cout << "what ->" << what << "<-" << endl;
     }
   }
 
   // -- original parse
-  delimiter = " ";
+  delimiter = " set ";
   while ((pos = what.find(delimiter)) != string::npos) {
-    token = what.substr(0, pos);
+    token = what.substr(pos);
     cout << "token ->" << token << "<-" << endl;
     if (string::npos != regname.find("nada")) {
       cout << "assigning regname ->" << token << "<-" << std::endl;
