@@ -416,36 +416,25 @@ void driveHardware::answerIoSet(string &awhat) {
   string regname("nada");
   float value(-999.);
   int tec(0);
+  char creg[100];
 
-  // -- check whether tec X is prefixed
-  delimiter = "tec ";
-  if ((pos = what.find(delimiter)) != string::npos) {
-    delimiter = "set ";
-    if ((pos = what.find(delimiter)) != string::npos) {
-      token = what.substr(0, pos);
-    }
-    delimiter = "tec ";
-    if ((pos = token.find(delimiter)) != string::npos) {
-      token.erase(0, pos + delimiter.length());
+  if (sscanf(what.c_str(), "tec %d set %s %f", &tec, creg, &value)) {
+    regname = string(creg);
+  } else {
+    // -- original parse
+    delimiter = " set ";
+    while ((pos = what.find(delimiter)) != string::npos) {
+      token = what.substr(pos);
       cout << "token ->" << token << "<-" << endl;
-      tec = atoi(token.c_str());
-      cout << "what ->" << what << "<-" << endl;
+      if (string::npos != regname.find("nada")) {
+        cout << "assigning regname ->" << token << "<-" << std::endl;
+        regname = token;
+      }
+      what.erase(0, pos + delimiter.length());
     }
+    value = atof(what.c_str());
   }
 
-  // -- original parse
-  delimiter = " set ";
-  while ((pos = what.find(delimiter)) != string::npos) {
-    token = what.substr(pos);
-    cout << "token ->" << token << "<-" << endl;
-    if (string::npos != regname.find("nada")) {
-      cout << "assigning regname ->" << token << "<-" << std::endl;
-      regname = token;
-    }
-    what.erase(0, pos + delimiter.length());
-  }
-
-  value = atof(what.c_str());
   if (value < -900.) {
     fLOG(WARNING, "no proper value: " + what );
   } else {
