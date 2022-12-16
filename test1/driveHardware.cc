@@ -415,37 +415,18 @@ void driveHardware::answerIoSet(string &awhat) {
   float value(-999.);
   int tec(0);
 
-  if (string::npos != what.find("tec")) {
-    vector<string> tokens = split(what, ' ');
-    if (tokens.size() != 5) {
-      cout << "could not parse line ->" << what << "<-" << endl;
-      cout << "tokens: ";
-      for (unsigned int ii = 0; ii < tokens.size(); ++ii) cout << tokens[ii] << " ";
-      cout << endl;
-      return;
+  vector<string> tokens = split(what, ' ');
+  for (unsigned int it = 0; it < tokens.size(); ++it) {
+    if (string::npos != tokens[it].find("tec")) {
+      ++it;
+      tec = atoi(tokens[it].c_str());
     }
-    tec     = atoi(tokens[1].c_str());
-    regname = tokens[3];
-    value   = atof(tokens[4].c_str());
-    cout << "register ->" << regname
-         << "<- value ->" << value
-         << "<- tec = " << tec
-         << endl;
-  } else {
-    replaceAll(what, "set ", "");
-    replaceAll(what, "set", "");
-    // -- original parse
-    delimiter = " ";
-    while ((pos = what.find(delimiter)) != string::npos) {
-      token = what.substr(pos);
-      cout << "token ->" << token << "<-" << endl;
-      if (string::npos != regname.find("nada")) {
-        cout << "assigning regname ->" << token << "<-" << std::endl;
-        regname = token;
-      }
-      what.erase(0, pos + delimiter.length());
+    if (string::npos != tokens[it].find("set")) {
+      ++it;
+      regname = tokens[it];
+      ++it;
+      value = atof(tokens[it].c_str());
     }
-    value = atof(what.c_str());
   }
 
   if (value < -900.) {
@@ -458,9 +439,9 @@ void driveHardware::answerIoSet(string &awhat) {
   }
   return;
   for (int itec = 1; itec <= 8; ++itec) {
+    if ((0 != tec) && (itec != tec)) continue;
     setTECRegister(itec, regname, value);
   }
-
   return;
 }
 
