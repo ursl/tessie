@@ -437,7 +437,7 @@ void driveHardware::answerIoSet(string &awhat) {
          << "<- tec = " << tec
          << endl;
   }
-  return;
+
   for (int itec = 1; itec <= 8; ++itec) {
     if ((0 != tec) && (itec != tec)) continue;
     setTECRegister(itec, regname, value);
@@ -588,14 +588,14 @@ void driveHardware::parseIoMessage() {
 
     vhelp.push_back("> messages to write information:");
     vhelp.push_back("> ------------------------------");
-    vhelp.push_back("> set Mode {0,1}");
-    vhelp.push_back("> set ControlVoltage_Set 1.1");
-    vhelp.push_back("> set PID_kp 1.1");
-    vhelp.push_back("> set PID_ki 1.1");
-    vhelp.push_back("> set PID_kd 1.1");
-    vhelp.push_back("> set Temp_Set 1.1");
-    vhelp.push_back("> set PID_Max 1.1");
-    vhelp.push_back("> set PID_Min 1.1");
+    vhelp.push_back("> [tec {0|x}] set Mode {0,1}");
+    vhelp.push_back("> [tec {0|x}] set ControlVoltage_Set 1.1");
+    vhelp.push_back("> [tec {0|x}] set PID_kp 1.1");
+    vhelp.push_back("> [tec {0|x}] set PID_ki 1.1");
+    vhelp.push_back("> [tec {0|x}] set PID_kd 1.1");
+    vhelp.push_back("> [tec {0|x}] set Temp_Set 1.1");
+    vhelp.push_back("> [tec {0|x}] set PID_Max 1.1");
+    vhelp.push_back("> [tec {0|x}] set PID_Min 1.1");
 
     vhelp.push_back("> messages to obtain information:");
     vhelp.push_back("> -------------------------------");
