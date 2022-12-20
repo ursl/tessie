@@ -539,6 +539,33 @@ void driveHardware::parseIoMessage() {
     s1 = "Max"; s2 = "PID_Max";  if (findInIoMessage(s1, s2, s3)) answerIoSet(fIoMessage);
     s1 = "Min"; s2 = "PID_Min";  if (findInIoMessage(s1, s2, s3)) answerIoSet(fIoMessage);
     s1 = "Ref_U"; s2 = "Ref_U";  if (findInIoMessage(s1, s2, s3)) answerIoSet(fIoMessage);
+
+    s1 = "valve0"; s2 = "Valve0";
+    if (findInIoMessage(s1, s2, s3)) {
+      if (string::npos != fIoMessage.find("on")) {
+        if (!getStatusValve0()) {
+          toggleFras(1);
+        }
+      } else if (string::npos != fIoMessage.find("off")) {
+        if (getStatusValve0()) {
+          toggleFras(1);
+        }
+      }
+    }
+
+    s1 = "valve1"; s2 = "Valve1";
+    if (findInIoMessage(s1, s2, s3)) {
+      if (string::npos != fIoMessage.find("on")) {
+        if (!getStatusValve0()) {
+          toggleFras(2);
+        }
+      } else if (string::npos != fIoMessage.find("off")) {
+        if (getStatusValve0()) {
+          toggleFras(2);
+        }
+      }
+    }
+
   } else if (string::npos != fIoMessage.find("cmd ")) {
     s3 = "cmd ";
     s1 = "Power_On";  s2 = "Power_On";
@@ -579,6 +606,7 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> hostname: coldbox01");
     vhelp.push_back("> thread:  ctrlTessie");
     vhelp.push_back("> ===================");
+    vhelp.push_back("> ");
     vhelp.push_back("> cmd messages:");
     vhelp.push_back("> -------------");
     vhelp.push_back("> cmd Power_On");
@@ -586,6 +614,7 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> cmd valve0");
     vhelp.push_back("> cmd valve1");
 
+    vhelp.push_back("> ");
     vhelp.push_back("> messages to write information:");
     vhelp.push_back("> ------------------------------");
     vhelp.push_back("> [tec {0|x}] set Mode {0,1}");
@@ -596,7 +625,10 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> [tec {0|x}] set Temp_Set 1.1");
     vhelp.push_back("> [tec {0|x}] set PID_Max 1.1");
     vhelp.push_back("> [tec {0|x}] set PID_Min 1.1");
+    vhelp.push_back("> set valve0 [on|off]");
+    vhelp.push_back("> set valve1 [on|off]");
 
+    vhelp.push_back("> ");
     vhelp.push_back("> messages to obtain information:");
     vhelp.push_back("> -------------------------------");
     vhelp.push_back("> get Temp");
