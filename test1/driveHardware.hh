@@ -77,6 +77,7 @@ public:
   int   getId();
   int   getRegister();
   float getValue();
+  int   getSWVersion(int itec = 0);
 
   // -- environmental data
   void  readSHT85();

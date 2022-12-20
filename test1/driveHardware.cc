@@ -302,6 +302,30 @@ int driveHardware::getTECRegisterIdx(std::string rname) {
 
 
 // ----------------------------------------------------------------------
+int driveHardware::getSWVersion(int itec) {
+  int version(0);
+  if (0 == fActiveTEC[itec]) {
+    cout << "TEC " << itec <<  " not active, skipping" << endl;
+    return version;
+  }
+  fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_CMD);
+  fCANReg = 6; // GetSWVersion
+  fCANVal = 0; // nothing required
+  stringstream sbla; sbla << "getSWVersion("
+                          << itec << ")"
+                          << " reg = " << fCANReg << hex
+                          << " canID = 0x" << fCANId << dec;
+  fLOG(INFO, sbla.str());
+  sendCANmessage();
+  std::this_thread::sleep_for(fMilli10);
+  readCAN();
+
+
+  return version;
+}
+
+
+// ----------------------------------------------------------------------
 void  driveHardware::setTECParameter(float par) {
   fTECParameter = par;
   //  printf("driveHardware::setTECParameter = %f\n", fTECParameter);
@@ -520,6 +544,14 @@ void driveHardware::parseIoMessage() {
     if (findInIoMessage(s1, s2, s3)) {
       stringstream str;
       str << "valve1" << " = " << (getStatusValve1()?"on":"off");
+      QString qmsg = QString::fromStdString(str.str());
+      emit signalSendToServer(qmsg);
+    }
+
+    s1 = "GetSWVersion"; s2 = "Version";
+    if (findInIoMessage(s1, s2, s3)) {
+      stringstream str;
+      str << "GetSWVersion" << " = " << getSWVersion();
       QString qmsg = QString::fromStdString(str.str());
       emit signalSendToServer(qmsg);
     }
