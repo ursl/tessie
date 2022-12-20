@@ -551,7 +551,7 @@ void driveHardware::parseIoMessage() {
     s1 = "GetSWVersion"; s2 = "Version";
     if (findInIoMessage(s1, s2, s3)) {
       stringstream str;
-      str << "GetSWVersion" << " = " << getSWVersion();
+      str << "GetSWVersion" << " = " << getSWVersion(1);
       QString qmsg = QString::fromStdString(str.str());
       emit signalSendToServer(qmsg);
     }
