@@ -432,8 +432,6 @@ void driveHardware::answerIoSet(string &awhat) {
 
   cout << "answerIoSet what ->" << what << "<-" << endl;
   string delimiter(" ");
-  size_t pos = 0;
-  std::string token;
 
   string regname("nada");
   float value(-999.);
@@ -465,6 +463,62 @@ void driveHardware::answerIoSet(string &awhat) {
   for (int itec = 1; itec <= 8; ++itec) {
     if ((0 != tec) && (itec != tec)) continue;
     setTECRegister(itec, regname, value);
+  }
+  return;
+}
+
+
+// ----------------------------------------------------------------------
+void driveHardware::answerIoCmd() {
+  string what = fIoMessage;
+
+  cout << "answerIoCmd what ->" << what << "<-" << endl;
+  string delimiter(" ");
+
+  string cmdname("nada");
+  int tec(0);
+
+  vector<string> tokens = split(what, ' ');
+  for (unsigned int it = 0; it < tokens.size(); ++it) {
+    if (string::npos != tokens[it].find("tec")) {
+      ++it;
+      tec = atoi(tokens[it].c_str());
+    }
+    if (string::npos != tokens[it].find("cmd")) {
+      ++it;
+      cmdname = tokens[it];
+    }
+  }
+
+  if (string::npos != cmdname.find("ClearError")) {
+    fCANReg = 5;
+  } else if (string::npos != cmdname.find("GetSWVersion")) {
+      fCANReg = 6;
+  } else if (string::npos != cmdname.find("SaveVariables")) {
+      fCANReg = 7;
+  } else if (string::npos != cmdname.find("LoadVariables")) {
+      fCANReg = 8;
+  } else if (string::npos != cmdname.find("Reboot")) {
+      fCANReg = 255;
+  } else if (string::npos != cmdname.find("Reset")) {
+      fCANReg = 255;
+  }
+
+  for (int itec = 1; itec <= 8; ++itec) {
+    if ((0 != tec) && (itec != tec)) continue;
+    fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_CMD);
+    fCANVal = 0; // nothing required
+    stringstream sbla; sbla << cmdname << " tec("
+                            << itec << ")"
+                            << " reg = " << fCANReg << hex
+                            << " canID = 0x" << fCANId << dec;
+    fLOG(INFO, sbla.str());
+    sendCANmessage();
+    std::this_thread::sleep_for(fMilli10);
+    readCAN();
+    if (6 == fCANReg) {
+        // fCanMsg.
+      }
   }
   return;
 }
@@ -580,11 +634,11 @@ void driveHardware::parseIoMessage() {
     s1 = "valve1"; s2 = "Valve1";
     if (findInIoMessage(s1, s2, s3)) {
       if (string::npos != fIoMessage.find("on")) {
-        if (!getStatusValve0()) {
+        if (!getStatusValve1()) {
           toggleFras(2);
         }
       } else if (string::npos != fIoMessage.find("off")) {
-        if (getStatusValve0()) {
+        if (getStatusValve1()) {
           toggleFras(2);
         }
       }
@@ -620,6 +674,14 @@ void driveHardware::parseIoMessage() {
     if (findInIoMessage(s1, s2, s3)) {
       stringstream str;
       str << "GetSWVersion" << " = " << getSWVersion(1);
+      QString qmsg = QString::fromStdString(str.str());
+      emit signalSendToServer(qmsg);
+    }
+
+    s1 = "Reset"; s2 = "Reboot";
+    if (findInIoMessage(s1, s2, s3)) {
+      stringstream str;
+      str << "Reset/Reboot" << " = " << getSWVersion(1);
       QString qmsg = QString::fromStdString(str.str());
       emit signalSendToServer(qmsg);
     }
