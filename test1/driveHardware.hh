@@ -60,6 +60,7 @@ public:
   bool findInIoMessage(std::string &s1, std::string &s2, std::string &s3);
   void answerIoGet(std::string &what);
   void answerIoSet(std::string &what);
+  void answerIoCmd();
 
   // -- controlling the FRAS/valve(s)
   void  entertainFras();
