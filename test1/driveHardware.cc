@@ -505,6 +505,22 @@ void driveHardware::parseIoMessage() {
       return;
     }
 
+    s1 = "valve0"; s2 = "Valve0";
+    if (findInIoMessage(s1, s2, s3)) {
+      stringstream str;
+      str << "valve0" << " = " << (getStatusValve0()?"on":"off");
+      QString qmsg = QString::fromStdString(str.str());
+      emit signalSendToServer(qmsg);
+    }
+
+    s1 = "valve1"; s2 = "Valve1";
+    if (findInIoMessage(s1, s2, s3)) {
+      stringstream str;
+      str << "valve1" << " = " << (getStatusValve1()?"on":"off");
+      QString qmsg = QString::fromStdString(str.str());
+      emit signalSendToServer(qmsg);
+    }
+
     s1 = "Mode";  s2 = "Mode";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
     s1 = "Voltage";  s2 = "ControlVoltage_Set";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
 
@@ -531,30 +547,6 @@ void driveHardware::parseIoMessage() {
     s1 = "Power"; s2 = "PowerState";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
     s1 = "Error"; s2 = "Error";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
     s1 = "Ref_U"; s2 = "Ref_U";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
-
-    s1 = "valve0"; s2 = "Valve0";
-    if (findInIoMessage(s1, s2, s3)) {
-      stringstream str;
-      str << "valve0" << " = " << (getStatusValve0()?"on":"off");
-      QString qmsg = QString::fromStdString(str.str());
-      emit signalSendToServer(qmsg);
-    }
-
-    s1 = "valve1"; s2 = "Valve1";
-    if (findInIoMessage(s1, s2, s3)) {
-      stringstream str;
-      str << "valve1" << " = " << (getStatusValve1()?"on":"off");
-      QString qmsg = QString::fromStdString(str.str());
-      emit signalSendToServer(qmsg);
-    }
-
-    s1 = "GetSWVersion"; s2 = "Version";
-    if (findInIoMessage(s1, s2, s3)) {
-      stringstream str;
-      str << "GetSWVersion" << " = " << getSWVersion(1);
-      QString qmsg = QString::fromStdString(str.str());
-      emit signalSendToServer(qmsg);
-    }
 
   } else if (string::npos != fIoMessage.find("set ")) {
     s3 = "set ";
@@ -622,6 +614,14 @@ void driveHardware::parseIoMessage() {
     s1 = "valve1";  s2 = "valve1";
     if (findInIoMessage(s1, s2, s3)) {
       toggleFras(2);
+    }
+
+    s1 = "GetSWVersion"; s2 = "Version";
+    if (findInIoMessage(s1, s2, s3)) {
+      stringstream str;
+      str << "GetSWVersion" << " = " << getSWVersion(1);
+      QString qmsg = QString::fromStdString(str.str());
+      emit signalSendToServer(qmsg);
     }
 
     s1 = "quit";  s2 = "exit";
