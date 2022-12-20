@@ -511,7 +511,7 @@ void driveHardware::parseIoMessage() {
     s1 = "valve0"; s2 = "Valve0";
     if (findInIoMessage(s1, s2, s3)) {
       stringstream str;
-      str << "valve0" << " = " << getStatusValve0();
+      str << "valve0" << " = " << (getStatusValve0()?"on":"off");
       QString qmsg = QString::fromStdString(str.str());
       emit signalSendToServer(qmsg);
     }
@@ -519,7 +519,7 @@ void driveHardware::parseIoMessage() {
     s1 = "valve1"; s2 = "Valve1";
     if (findInIoMessage(s1, s2, s3)) {
       stringstream str;
-      str << "valve0" << " = " << getStatusValve1();
+      str << "valve1" << " = " << (getStatusValve1()?"on":"off");
       QString qmsg = QString::fromStdString(str.str());
       emit signalSendToServer(qmsg);
     }
@@ -613,6 +613,7 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> cmd Power_Off");
     vhelp.push_back("> cmd valve0");
     vhelp.push_back("> cmd valve1");
+    vhelp.push_back("> cmd GetSWVersion");
 
     vhelp.push_back("> ");
     vhelp.push_back("> messages to write information:");
@@ -625,8 +626,8 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> [tec {0|x}] set Temp_Set 1.1");
     vhelp.push_back("> [tec {0|x}] set PID_Max 1.1");
     vhelp.push_back("> [tec {0|x}] set PID_Min 1.1");
-    vhelp.push_back("> set valve0 [on|off]");
-    vhelp.push_back("> set valve1 [on|off]");
+    vhelp.push_back("> set valve0 {on|off}");
+    vhelp.push_back("> set valve1 {on|off}");
 
     vhelp.push_back("> ");
     vhelp.push_back("> messages to obtain information:");
