@@ -23,12 +23,16 @@ CANmessage::CANmessage() {
 // ----------------------------------------------------------------------
 void CANmessage::addFrame(canFrame &x) {
   bool filled(false);
-  // -- received a CAN message from a TEC
-  if ((1 <= x.fTec) && (x.fTec <= 8)) {
-    if (1 == x.fTec) {
-      cout << "DBX: ";
-      x.dump();
-    }
+
+  if ((1 <= x.fTec) && (x.fTec <= 8) && (0 == x.fType)
+      && (1 == x.fPrivate) && (1 == x.fShift)) {
+    // -- cmd GetSWVersion 301
+    cout << "DBX "; x.dump();
+    filled = true;
+  }
+
+  // -- received a CAN READ message from a TEC
+  if ((1 <= x.fTec) && (x.fTec <= 8) && (1 == x.fType)) {
     fMapFrames[x.fTec][x.fReg].push_front(x);
     filled = true;
   }
@@ -208,6 +212,16 @@ int CANmessage::getFRASMessage() {
   return result;
 }
 
+
+// ----------------------------------------------------------------------
+canFrame CANmessage::getFrame() {
+  canFrame result;
+  if (fqFrames.size() > 0) {
+    result = fqFrames.front();
+    fqFrames.pop_front();
+  }
+  return result;
+}
 
 // ----------------------------------------------------------------------
 int CANmessage::getAlarm() {

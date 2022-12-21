@@ -32,26 +32,22 @@ public:
   void addFrame(canFrame &x);
 
   // -- read float and erase frame
-//  float getFloatV(unsigned int itec, unsigned int ireg);
   float getFloat(unsigned int itec, unsigned int ireg);
   // -- read int and erase frame
-//  int getIntV(unsigned int itec, unsigned int ireg);
   int getInt(unsigned int itec, unsigned int ireg);
   // -- check for FRAS message (0x42), returns 1 (0) if there is one (none)
-  int getFRASMessageV();
   int getFRASMessage();
   // -- check for alarm
-  int getAlarmV();
   int getAlarm();
+  // -- get a raw frame
+  canFrame getFrame();
 
 private:
-//  std::vector<canFrame> fFrames;
-  std::vector<canFrame> fFRASFrames;
-
-  // map<tec, map<reg, deque<canFrame>>>
   std::map<int, std::map<int, std::deque<canFrame>>> fMapFrames;
   std::deque<canFrame>                 fqFRASFrames;
   std::deque<canFrame>                 fqAlarmFrames;
+  // -- all the other frames (in response to commands, error code, ...)
+  std::deque<canFrame>                 fqFrames;
 
   int                      fErrorCounter;
   std::deque<std::string>  fqErrors;

@@ -311,14 +311,17 @@ int driveHardware::getSWVersion(int itec) {
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_CMD);
   fCANReg = 6; // GetSWVersion
   fCANVal = 0; // nothing required
-  stringstream sbla; sbla << "getSWVersion("
-                          << itec << ")"
-                          << " reg = " << fCANReg << hex
-                          << " canID = 0x" << fCANId << dec;
-  fLOG(INFO, sbla.str());
   sendCANmessage();
   std::this_thread::sleep_for(fMilli10);
   readCAN();
+
+  canFrame a = fCanMsg.getFrame();
+  stringstream sbla; sbla << "getSWVersion("
+                          << itec << ")"
+                          << " reg = " << fCANReg << hex
+                          << " canID = 0x" << fCANId << dec
+                          << " version = " << a.fIntVal;
+  fLOG(INFO, sbla.str());
 
 
   return version;
@@ -517,8 +520,8 @@ void driveHardware::answerIoCmd() {
     std::this_thread::sleep_for(fMilli10);
     readCAN();
     if (6 == fCANReg) {
-        // fCanMsg.
-      }
+
+    }
   }
   return;
 }

@@ -53,10 +53,9 @@ canFrame::canFrame(int canid, int len, unsigned char *data) {
           fAlarm = 0xdeadface;
         }
       } else if (6 == fReg) {
-        // -- software version
-        char ndata[4] = {0,0,0,0};
-        for (int i = 0; i < len; ++i) ndata[i] = fData[i+1];
-        memcpy(&fIntVal, ndata, sizeof fIntVal);
+        // -- software version in one byte
+        char ndata = fData[1];
+        fIntVal = static_cast<int>(ndata);
       }
     }
 
