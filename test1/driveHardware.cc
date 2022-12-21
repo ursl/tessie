@@ -440,10 +440,10 @@ void driveHardware::answerIoGet(string &awhat) {
   stringstream str;
   str << regname << " = ";
   int ntec(1);
-  for (int itec = 1; itec <=8; ++itec) {
+  for (int itec = 1; itec <= 8; ++itec) {
     if ((0 != tec) && (itec != tec)) continue;
     if (ntec > 1) str << ",";
-    str << getTECRegister(itec, what);
+    str << getTECRegister(itec, regname);
     ++ntec;
   }
   QString qmsg = QString::fromStdString(str.str());
