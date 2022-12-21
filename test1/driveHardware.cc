@@ -507,6 +507,8 @@ void driveHardware::answerIoCmd() {
       fCANReg = 255;
   }
 
+  stringstream str;
+  str << cmdname << " = ";
   for (int itec = 1; itec <= 8; ++itec) {
     if ((0 != tec) && (itec != tec)) continue;
     fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_CMD);
@@ -519,10 +521,14 @@ void driveHardware::answerIoCmd() {
     sendCANmessage();
     std::this_thread::sleep_for(fMilli10);
     readCAN();
+    canFrame a = fCanMsg.getFrame();
     if (6 == fCANReg) {
-
+      str << a.fIntVal;
+      if (itec < 8) str << ",";
     }
   }
+  QString qmsg = QString::fromStdString(str.str());
+  emit signalSendToServer(qmsg);
   return;
 }
 
