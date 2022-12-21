@@ -62,7 +62,13 @@ void CANmessage::addFrame(canFrame &x) {
 
   if (!filled && (0 == x.fTec) && (4 == ((x.fCanId & 0x40)>>4))
       && (0 == x.fPrivate) && (0 == x.fShift)) {
-    // -- ignore FRAS entertainment 40 and 41
+    // -- ignore FRAS entertainment 40
+    filled = true;
+  }
+
+  if (!filled && (1 == x.fTec) && (4 == ((x.fCanId & 0x40)>>4))
+      && (0 == x.fPrivate) && (0 == x.fShift)) {
+    // -- ignore FRAS entertainment 41
     filled = true;
   }
 
