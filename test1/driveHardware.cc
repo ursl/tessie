@@ -552,7 +552,7 @@ void driveHardware::answerIoCmd() {
       ++ntec;
     } else if (6 == fCANReg) {
       if (ntec > 1) str << ",";
-      str << itec;
+      str << a.fIntVal;
       ++ntec;
     } else if (7 == fCANReg) {
       if (ntec > 1) str << ",";
