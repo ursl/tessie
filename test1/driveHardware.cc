@@ -416,12 +416,35 @@ bool driveHardware::findInIoMessage(string &s1, string &s2, string &s3) {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::answerIoGet(string &what) {
+void driveHardware::answerIoGet(string &awhat) {
+  string what = fIoMessage;
+
+  cout << "answerIoSet what ->" << what << "<-" << endl;
+  string delimiter(" ");
+
+  string regname("nada");
+  int tec(0);
+
+  vector<string> tokens = split(what, ' ');
+  for (unsigned int it = 0; it < tokens.size(); ++it) {
+    if (string::npos != tokens[it].find("tec")) {
+      ++it;
+      tec = atoi(tokens[it].c_str());
+    }
+    if (string::npos != tokens[it].find("get")) {
+      ++it;
+      regname = tokens[it];
+    }
+  }
+
   stringstream str;
   str << what << " = ";
-  for (int i = 1; i <=8; ++i) {
-    str << getTECRegister(i, what);
-    if (i < 8) str << ",";
+  int ntec(0);
+  for (int itec = 1; itec <=8; ++itec) {
+    if ((0 != tec) && (itec != tec)) continue;
+    if (ntec > 1) str << ",";
+    str << getTECRegister(itec, what);
+    ++ntec;
   }
   QString qmsg = QString::fromStdString(str.str());
   emit signalSendToServer(qmsg);
@@ -509,6 +532,7 @@ void driveHardware::answerIoCmd() {
 
   stringstream str;
   str << cmdname << " = ";
+  int ntec(0);
   for (int itec = 1; itec <= 8; ++itec) {
     if ((0 != tec) && (itec != tec)) continue;
     fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_CMD);
@@ -523,8 +547,9 @@ void driveHardware::answerIoCmd() {
     readCAN();
     canFrame a = fCanMsg.getFrame();
     if (6 == fCANReg) {
+      if (ntec > 1) str << ",";
       str << a.fIntVal;
-      if (itec < 8) str << ",";
+      ++ntec;
     }
   }
   QString qmsg = QString::fromStdString(str.str());
