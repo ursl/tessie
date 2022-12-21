@@ -438,8 +438,8 @@ void driveHardware::answerIoGet(string &awhat) {
   }
 
   stringstream str;
-  str << what << " = ";
-  int ntec(0);
+  str << regname << " = ";
+  int ntec(1);
   for (int itec = 1; itec <=8; ++itec) {
     if ((0 != tec) && (itec != tec)) continue;
     if (ntec > 1) str << ",";
@@ -532,7 +532,7 @@ void driveHardware::answerIoCmd() {
 
   stringstream str;
   str << cmdname << " = ";
-  int ntec(0);
+  int ntec(1);
   for (int itec = 1; itec <= 8; ++itec) {
     if ((0 != tec) && (itec != tec)) continue;
     fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_CMD);
