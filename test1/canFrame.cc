@@ -36,21 +36,30 @@ canFrame::canFrame(int canid, int len, unsigned char *data) {
     if (5 == fdlen) {
       char ndata[4];
       for (int i = 0; i < len; ++i) ndata[i] = fData[i+1];
-       memcpy(&fIntVal, ndata, sizeof fIntVal);
-       memcpy(&fFloatVal, ndata, sizeof fFloatVal);
-     } else {
-       fIntVal   = -99;
-       fFloatVal = -99.;
-     }
+      memcpy(&fIntVal, ndata, sizeof fIntVal);
+      memcpy(&fFloatVal, ndata, sizeof fFloatVal);
+    } else {
+      fIntVal   = -99;
+      fFloatVal = -99.;
+    }
 
-    // -- alarms
-    if ((0 == fType) && (4 == fReg)) {
-      if (fIntVal > 0) {
-        fAlarm = fIntVal;
-      } else {
-        fAlarm = 0xdeadface;
+    // -- non-data cases
+    if (0 == fType) {
+      if (4 == fReg) {
+        // -- alarms
+        if (fIntVal > 0) {
+          fAlarm = fIntVal;
+        } else {
+          fAlarm = 0xdeadface;
+        }
+      } else if (6 == fReg) {
+        // -- software version
+        char ndata[4] = {0,0,0,0};
+        for (int i = 0; i < len; ++i) ndata[i] = fData[i+1];
+        memcpy(&fIntVal, ndata, sizeof fIntVal);
       }
     }
+
   }
 }
 
