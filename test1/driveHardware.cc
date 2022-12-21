@@ -546,9 +546,25 @@ void driveHardware::answerIoCmd() {
     std::this_thread::sleep_for(fMilli10);
     readCAN();
     canFrame a = fCanMsg.getFrame();
-    if (6 == fCANReg) {
+    if (5 == fCANReg) {
       if (ntec > 1) str << ",";
-      str << a.fIntVal;
+      str << itec;
+      ++ntec;
+    } else if (6 == fCANReg) {
+      if (ntec > 1) str << ",";
+      str << itec;
+      ++ntec;
+    } else if (7 == fCANReg) {
+      if (ntec > 1) str << ",";
+      str << itec;
+      ++ntec;
+    } else if (8 == fCANReg) {
+      if (ntec > 1) str << ",";
+      str << itec;
+      ++ntec;
+    } else if (255 == fCANReg) {
+      if (ntec > 1) str << ",";
+      str << itec;
       ++ntec;
     }
   }
@@ -704,17 +720,29 @@ void driveHardware::parseIoMessage() {
       toggleFras(2);
     }
 
+    s1 = "ClearError"; s2 = "ClearError";
+    if (findInIoMessage(s1, s2, s3)) {
+      answerIoCmd();
+    }
+
     s1 = "GetSWVersion"; s2 = "Version";
+    if (findInIoMessage(s1, s2, s3)) {
+      answerIoCmd();
+    }
+
+    s1 = "SaveVariables"; s2 = "Save";
+    if (findInIoMessage(s1, s2, s3)) {
+      answerIoCmd();
+    }
+
+    s1 = "LoadVariables"; s2 = "Load";
     if (findInIoMessage(s1, s2, s3)) {
       answerIoCmd();
     }
 
     s1 = "Reset"; s2 = "Reboot";
     if (findInIoMessage(s1, s2, s3)) {
-      stringstream str;
-      str << "Reset/Reboot" << " = " << getSWVersion(1);
-      QString qmsg = QString::fromStdString(str.str());
-      emit signalSendToServer(qmsg);
+      answerIoCmd();
     }
 
     s1 = "quit";  s2 = "exit";
@@ -732,13 +760,19 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> thread:  ctrlTessie");
     vhelp.push_back("> ===================");
     vhelp.push_back("> ");
+    vhelp.push_back("> Note: [tec {0|x}] can be before or after {get|set|cmd}");
+    vhelp.push_back("> ");
     vhelp.push_back("> cmd messages:");
     vhelp.push_back("> -------------");
     vhelp.push_back("> cmd Power_On");
     vhelp.push_back("> cmd Power_Off");
     vhelp.push_back("> cmd valve0");
     vhelp.push_back("> cmd valve1");
-    vhelp.push_back("> cmd GetSWVersion");
+    vhelp.push_back("> cmd [tec {0|x}] ClearError");
+    vhelp.push_back("> cmd [tec {0|x}] GetSWVersion");
+    vhelp.push_back("> cmd [tec {0|x}] SaveVariables");
+    vhelp.push_back("> cmd [tec {0|x}] LoadVariables");
+    vhelp.push_back("> cmd [tec {0|x}] Reboot");
 
     vhelp.push_back("> ");
     vhelp.push_back("> messages to write information:");
