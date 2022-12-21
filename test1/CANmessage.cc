@@ -25,6 +25,10 @@ void CANmessage::addFrame(canFrame &x) {
   bool filled(false);
   // -- received a CAN message from a TEC
   if ((1 <= x.fTec) && (x.fTec <= 8)) {
+    if (1 == x.fTec) {
+      cout << "DBX: ";
+      x.dump();
+    }
     fMapFrames[x.fTec][x.fReg].push_front(x);
     filled = true;
   }
