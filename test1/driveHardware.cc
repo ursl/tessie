@@ -763,31 +763,31 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> get valve0");
     vhelp.push_back("> get valve1");
 
-    vhelp.push_back("> get Mode");
-    vhelp.push_back("> get ControlVoltage_Set");
-    vhelp.push_back("> get PID_kp");
-    vhelp.push_back("> get PID_ki");
-    vhelp.push_back("> get PID_kd");
-    vhelp.push_back("> get Temp_Set");
-    vhelp.push_back("> get PID_Max");
-    vhelp.push_back("> get PID_Min");
+    vhelp.push_back("> get [tec {0|x}] Mode");
+    vhelp.push_back("> get [tec {0|x}] ControlVoltage_Set");
+    vhelp.push_back("> get [tec {0|x}] PID_kp");
+    vhelp.push_back("> get [tec {0|x}] PID_ki");
+    vhelp.push_back("> get [tec {0|x}] PID_kd");
+    vhelp.push_back("> get [tec {0|x}] Temp_Set");
+    vhelp.push_back("> get [tec {0|x}] PID_Max");
+    vhelp.push_back("> get [tec {0|x}] PID_Min");
 
-    vhelp.push_back("> get Temp_W");
-    vhelp.push_back("> get Temp_M");
-    vhelp.push_back("> get Temp_Diff");
+    vhelp.push_back("> get [tec {0|x}] Temp_W");
+    vhelp.push_back("> get [tec {0|x}] Temp_M");
+    vhelp.push_back("> get [tec {0|x}] Temp_Diff");
 
-    vhelp.push_back("> get Peltier_U");
-    vhelp.push_back("> get Peltier_I");
-    vhelp.push_back("> get Peltier_R");
-    vhelp.push_back("> get Peltier_P");
+    vhelp.push_back("> get [tec {0|x}] Peltier_U");
+    vhelp.push_back("> get [tec {0|x}] Peltier_I");
+    vhelp.push_back("> get [tec {0|x}] Peltier_R");
+    vhelp.push_back("> get [tec {0|x}] Peltier_P");
 
-    vhelp.push_back("> get Supply_U");
-    vhelp.push_back("> get Supply_I");
-    vhelp.push_back("> get Supply_P");
+    vhelp.push_back("> get [tec {0|x}] Supply_U");
+    vhelp.push_back("> get [tec {0|x}] Supply_I");
+    vhelp.push_back("> get [tec {0|x}] Supply_P");
 
-    vhelp.push_back("> get PowerState");
-    vhelp.push_back("> get Error");
-    vhelp.push_back("> get Ref_U");
+    vhelp.push_back("> get [tec {0|x}] PowerState");
+    vhelp.push_back("> get [tec {0|x}] Error");
+    vhelp.push_back("> get [tec {0|x}] Ref_U");
 
     for (unsigned int i = 0; i < vhelp.size(); ++i) {
       emit signalSendToServer(QString::fromStdString(vhelp[i]));
