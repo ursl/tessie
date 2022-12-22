@@ -443,7 +443,7 @@ void driveHardware::answerIoGet(string &awhat) {
   for (int itec = 1; itec <= 8; ++itec) {
     if ((0 != tec) && (itec != tec)) continue;
     if (ntec > 1) str << ",";
-    str << getTECRegister(itec, regname);
+    str << getTECRegisterFromCAN(itec, regname);
     ++ntec;
   }
   QString qmsg = QString::fromStdString(str.str());
