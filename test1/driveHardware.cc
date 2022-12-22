@@ -204,7 +204,6 @@ void driveHardware::evtHandler() {
 
 // ----------------------------------------------------------------------
 void driveHardware::sentFromServer(QString msg) {
-  cout << "now what? received ->" << msg.toStdString() << "<-" << endl;
   fIoMessage = msg.toStdString();
   parseIoMessage();
 }
@@ -223,6 +222,7 @@ void driveHardware::doRun() {
 
     ++cnt;
     std::this_thread::sleep_for(fMilli5);
+    evtHandler();
     readCAN();
     gettimeofday(&tvNew, 0);
     int tdiff = diff_ms(tvNew, tvOld);
@@ -235,6 +235,8 @@ void driveHardware::doRun() {
       fMutex.lock();
       readAllParamsFromCANPublic();
       fMutex.unlock();
+
+      evtHandler();
 
       // -- do something with the results
       if (0) cout << tStamp() << " emit signalUpdateHwDisplay tdiff = " << tdiff << endl;
