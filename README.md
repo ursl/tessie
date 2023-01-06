@@ -13,14 +13,3 @@ cd ../
 qmake -o Makefile test0.pro
 make
 ```
-
-## RPC communication
-
-works from MAC and/or linux to raspberry pi (tessie.psi.ch)
-
-```shell
-cd rpc
-make all
-./trpc_client tessie settemp 17
-./trpc_client tessie gettemp
-```
