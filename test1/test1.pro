@@ -40,7 +40,7 @@ HEADERS += \
     TECRegister.hh \
     canFrame.hh \
     driveHardware.hh \
-    tLog.hh \\
+    tLog.hh \
     ioServer.hh \
     tMosq.hh \
     util.hh
@@ -50,6 +50,6 @@ FORMS += \
     TECDisplay.ui
 
 # Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+#qnx: target.path = /tmp/$${TARGET}/bin
+#else: unix:!android: target.path = /opt/$${TARGET}/bin
+#!isEmpty(target.path): INSTALLS += target

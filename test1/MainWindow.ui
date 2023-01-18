@@ -159,7 +159,7 @@
       </font>
      </property>
      <property name="text">
-      <string>TEC Reg Value</string>
+      <string>TEC Reg Value </string>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButtonRead">
