@@ -1386,7 +1386,7 @@ void driveHardware::readSHT85() {
     st          = (fSHT85Data[3]<<8) + fSHT85Data[4];
     fSHT85RH    = (st * 100.0) / norm;
 
-    fSHT85DP = calcDP(0);
+    fSHT85DP = calcDP(1);
 
     // -- print
     if (0) {
@@ -1441,6 +1441,10 @@ float driveHardware::calcDP(int mode) {
   if (0 == mode) {
     dp = fSHT85Temp - (100. - fSHT85RH)/5.; // most simple approximation
   } else if (1 == mode) {
+    double A1(17.625), B1(243.04);
+    double td0 = B1 * (log(fSHT85RH/100.) + (A1*fSHT85Temp)/(B1 + fSHT85Temp));
+    double td1 = A1 - log(fSHT85RH/100.) - (A1*fSHT85Temp)/(B1 + fSHT85Temp);
+    dp = td0/td1;
 
   }
 
