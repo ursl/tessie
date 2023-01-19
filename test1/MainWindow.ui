@@ -427,7 +427,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Mode                       </string>
+         <string>Mode (0=T/1=V)        </string>
         </property>
        </widget>
       </item>
@@ -605,7 +605,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Mode                         </string>
+         <string>Mode (0=T/1=V)              </string>
         </property>
        </widget>
       </item>
