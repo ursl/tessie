@@ -1386,10 +1386,7 @@ void driveHardware::readSHT85() {
     st          = (fSHT85Data[3]<<8) + fSHT85Data[4];
     fSHT85RH    = (st * 100.0) / norm;
 
-    // -- calculate dew point
-    //    https://doi.org/10.1175/BAMS-86-2-225
-    double td0 = fSHT85Temp - (100. - fSHT85RH)/5.; // most simple approximation
-    fSHT85DP = static_cast<float>(td0);
+    fSHT85DP = calcDP(0);
 
     // -- print
     if (0) {
@@ -1433,4 +1430,19 @@ int driveHardware::getNCANbusErrors() {
 int driveHardware::diff_ms(timeval t1, timeval t2) {
   return (((t1.tv_sec - t2.tv_sec) * 1000000) +
           (t1.tv_usec - t2.tv_usec))/1000;
+}
+
+
+// ----------------------------------------------------------------------
+// -- calculate dew point
+//    https://doi.org/10.1175/BAMS-86-2-225
+float driveHardware::calcDP(int mode) {
+  double dp(0.);
+  if (0 == mode) {
+    dp = fSHT85Temp - (100. - fSHT85RH)/5.; // most simple approximation
+  } else if (1 == mode) {
+
+  }
+
+  return static_cast<float>(dp);
 }

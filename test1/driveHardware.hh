@@ -85,6 +85,7 @@ public:
   float getTemperature();
   float getRH();
   float getDP();
+  float calcDP(int mode = 0);
   int   getRunTime();
   int   getNCANbusErrors();
   int   getNI2CErrors() {return fI2CErrorCounter;}
