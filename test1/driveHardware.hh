@@ -46,6 +46,7 @@ public:
 
   void dumpCSV();
   void evtHandler();
+  void ensureSafety();
 
   std::string timeStamp(bool filestamp = true);
   std::string tStamp() {return timeStamp(false);}
@@ -67,10 +68,11 @@ public:
   bool  getStatusValve0() {return ((fValveMask & 1) == 1);}
   bool  getStatusValve1() {return ((fValveMask & 2) == 2);}
   bool  getStatusValve()  {return (getStatusValve0() && getStatusValve1());}
-
+  void  turnOnValve(int i); // i = 0 or 1
+  void  turnOffValve(int i); // i = 0 or 1
   // -- controlling the TEC
   void  setTECParameter(float par); // ???
-  void entertainTECs();
+  void  entertainTECs();
 
   void  setId(int x);
   void  setRegister(int x);

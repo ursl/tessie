@@ -267,6 +267,15 @@ void driveHardware::doRun() {
 
 
 // ----------------------------------------------------------------------
+void driveHardware::ensureSafety() {
+  // -- temperatures
+  if (fSHT85Temp > 40.) {
+
+  }
+}
+
+
+// ----------------------------------------------------------------------
 void driveHardware::setRegister(int reg) {
   fCANReg = reg;
 }
@@ -345,6 +354,9 @@ void  driveHardware::setTECParameter(float par) {
 void driveHardware::shutDown() {
   // FIXME: do a poff for all TEC controllers. set all relais outputs to 0.
 #ifdef PI
+  for (int itec = 1; itec <=8; ++itec) {
+    turnOffTEC(itec);
+  }
   close(fSw);
   close(fSr);
   close(fSHT85File);
@@ -1033,6 +1045,28 @@ void driveHardware::entertainFras() {
 
 
 // ----------------------------------------------------------------------
+void driveHardware::turnOnValve(int i) {
+  if (0 == i) {
+    if (!getStatusValve0()) toggleFras(1);
+  }
+  if (1 == i) {
+    if (!getStatusValve1()) toggleFras(2);
+  }
+}
+
+
+// ----------------------------------------------------------------------
+void driveHardware::turnOffValve(int i) {
+  if (0 == i) {
+    if (getStatusValve0()) toggleFras(1);
+  }
+  if (1 == i) {
+    if (getStatusValve1()) toggleFras(2);
+  }
+}
+
+
+// ----------------------------------------------------------------------
 void driveHardware::toggleFras(int imask) {
   int old = fValveMask;
   fValveMask = old xor imask;
@@ -1341,7 +1375,6 @@ void driveHardware::dumpCSV() {
 //  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_kp"].value;
 //  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_ki"].value;
 //  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_kd"].value;
-
   for (int i = 1; i <= 8; ++i) {
     sprintf(cs, "%+5.2f", fTECData[i].reg["Temp_M"].value);
     if (fActiveTEC[i]) output << "," << cs;
