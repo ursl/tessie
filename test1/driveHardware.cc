@@ -269,11 +269,31 @@ void driveHardware::doRun() {
 // ----------------------------------------------------------------------
 void driveHardware::ensureSafety() {
   // -- temperatures
-  if (fSHT85Temp > 40.) {
-
+  if (fSHT85Temp > SAFETY_MAXSHT85TEMP) {
+    fLOG(ERROR, stringstream("Box air temperature = " +
+                             to_string(fSHT85Temp) +
+                             "exceeds SAFETY_MAXSHT85TEMP = " +
+                             to_string(SAFETY_MAXSHT85TEMP)).str());
+    shutDown();
+  }
+  if (fTECData[8].reg["Temp_W"].value > SAFETY_MAXTEMPW) {
+    fLOG(ERROR, stringstream("Water temperature = " +
+                             to_string(fTECData[8].reg["Temp_W"].value) +
+                             "exceeds SAFETY_MAXTEMPW = " +
+                             to_string(SAFETY_MAXTEMPW)).str());
+    shutDown();
+  }
+  for (int itec = 1; itec <= 8; ++itec) {
+    double mtemp = fTECData[itec].reg["Temp_M"].value;
+    if (mtemp > SAFETY_MAXTEMPM) {
+      fLOG(ERROR, stringstream("module temperature = " +
+                               to_string(mtemp) +
+                               "exceeds SAFETY_MAXTEMPM = " +
+                               to_string(SAFETY_MAXTEMPM)).str());
+      shutDown();
+    }
   }
 }
-
 
 // ----------------------------------------------------------------------
 void driveHardware::setRegister(int reg) {
