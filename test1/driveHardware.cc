@@ -400,11 +400,13 @@ void driveHardware::shutDown() {
   // FIXME: do a poff for all TEC controllers. set all relais outputs to 0.
 #ifdef PI
   for (int itec = 1; itec <=8; ++itec) {
+    setTECRegister(itec, "ControlVoltage_Set", 0.0);
     turnOffTEC(itec);
   }
-  close(fSw);
-  close(fSr);
-  close(fSHT85File);
+  // -- no?!
+  //  close(fSw);
+  //  close(fSr);
+  //  close(fSHT85File);
 #endif
 }
 
