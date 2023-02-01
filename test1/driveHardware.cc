@@ -320,10 +320,9 @@ void driveHardware::ensureSafety() {
         fShutDownCounter = 1;
         shutDown();
       }
+      ++fShutDownCounter;
     }
-
   }
-  ++fShutDownCounter;
 }
 
 // ----------------------------------------------------------------------
@@ -403,14 +402,14 @@ void  driveHardware::setTECParameter(float par) {
 
 // ----------------------------------------------------------------------
 void driveHardware::shutDown() {
-  cout << "fShutDownCounter = " << fShutDownCounter << endl;
+  cout << "DBX DBX fShutDownCounter = " << fShutDownCounter << endl;
   // -- don't call this while things are warming up (from a previous shutDown call)
-  if (5 == fShutDownCounter) {
+  if (fShutDownCounter > 5) {
     fShutDownCounter = 0;
     return;
   }
 #ifdef PI
-  cout << "shutDown turn off TECs " << endl;
+  cout << "  DBX shutDown turn off TECs " << endl;
   for (int itec = 1; itec <= 8; ++itec) {
     setTECRegister(itec, "ControlVoltage_Set", 0.0);
     turnOffTEC(itec);
