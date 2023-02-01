@@ -406,6 +406,10 @@ void driveHardware::shutDown() {
     setTECRegister(itec, "ControlVoltage_Set", 0.0);
     std::this_thread::sleep_for(fMilli5);
   }
+
+  std::this_thread::sleep_for(5*fMilli100);
+  emit signalUpdateHwDisplay();
+
   // -- wait 5 seconds
   for (int i = 0; i < 50; ++i) std::this_thread::sleep_for(fMilli100);
 
