@@ -15,6 +15,7 @@ make
 ```
 
 ## hints for operating tessie with a running mosquitto server
+```shell
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 on"
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 on"
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 4.5"
@@ -25,8 +26,10 @@ mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 0.0"
 
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 off"
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off"
+```
 
 ## help on MQTT commands
+```shell
 ===================
 hostname: coldbox01
 thread:  ctrlTessie
@@ -98,3 +101,4 @@ mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_Off"
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 0.0" 
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 off" 
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off" 
+```
