@@ -268,7 +268,7 @@ void driveHardware::doRun() {
 
 // ----------------------------------------------------------------------
 void driveHardware::ensureSafety() {
-  // -- temperatures
+  // -- air temperatures
   if (fSHT85Temp > SAFETY_MAXSHT85TEMP) {
     fLOG(ERROR, stringstream("Box air temperature = " +
                              to_string(fSHT85Temp) +
@@ -276,6 +276,17 @@ void driveHardware::ensureSafety() {
                              to_string(SAFETY_MAXSHT85TEMP)).str());
     shutDown();
   }
+
+  // -- dew point
+  if ((fSHT85Temp - SAFETY_DPMARGIN) < fSHT85DP) {
+    fLOG(ERROR, stringstream("Box air temperature = " +
+                             to_string(fSHT85Temp) +
+                             "is too close to dew point = " +
+                             to_string(fSHT85DP)).str());
+    shutDown();
+  }
+
+  // -- check water temperature
   if (fTECData[8].reg["Temp_W"].value > SAFETY_MAXTEMPW) {
     fLOG(ERROR, stringstream("Water temperature = " +
                              to_string(fTECData[8].reg["Temp_W"].value) +
@@ -283,6 +294,8 @@ void driveHardware::ensureSafety() {
                              to_string(SAFETY_MAXTEMPW)).str());
     shutDown();
   }
+
+  // -- check module temperatures
   for (int itec = 1; itec <= 8; ++itec) {
     double mtemp = fTECData[itec].reg["Temp_M"].value;
     if (mtemp > SAFETY_MAXTEMPM) {
@@ -293,6 +306,7 @@ void driveHardware::ensureSafety() {
       shutDown();
     }
   }
+
 }
 
 // ----------------------------------------------------------------------
