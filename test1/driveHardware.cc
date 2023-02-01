@@ -408,6 +408,10 @@ void driveHardware::shutDown() {
   }
 
   std::this_thread::sleep_for(5*fMilli100);
+  // -- read all parameters from CAN
+  fMutex.lock();
+  readAllParamsFromCANPublic();
+  fMutex.unlock();
   emit signalUpdateHwDisplay();
 
   // -- wait 5 seconds
