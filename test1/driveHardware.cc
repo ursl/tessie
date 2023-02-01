@@ -313,7 +313,9 @@ void driveHardware::ensureSafety() {
       fLOG(ERROR, stringstream("module " + to_string(itec) + " temperature = " +
                                to_string(mtemp) +
                                " is too close to dew point = " +
-                               to_string(fSHT85DP)).str());
+                               to_string(fSHT85DP)
+                               + " fShutDownCounter = " + to_string(fShutDownCounter)
+                               ).str());
       if (fShutDownCounter < 1) {
         fShutDownCounter = 1;
         shutDown();
@@ -401,12 +403,14 @@ void  driveHardware::setTECParameter(float par) {
 
 // ----------------------------------------------------------------------
 void driveHardware::shutDown() {
+  cout << "fShutDownCounter = " << fShutDownCounter << endl;
   // -- don't call this while things are warming up (from a previous shutDown call)
   if (5 == fShutDownCounter) {
     fShutDownCounter = 0;
     return;
   }
 #ifdef PI
+  cout << "shutDown turn off TECs " << endl
   for (int itec = 1; itec <= 8; ++itec) {
     setTECRegister(itec, "ControlVoltage_Set", 0.0);
     turnOffTEC(itec);
