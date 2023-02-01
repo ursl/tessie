@@ -159,6 +159,7 @@ private:
   std::ofstream fCsvFile;
 
   int fI2CErrorCounter;
+  int fShutDownCounter;
 
   // -- timing and wall-clock ticks (or so)
   std::chrono::milliseconds fMilli5, fMilli10, fMilli100;

@@ -44,6 +44,7 @@ driveHardware::driveHardware(tLog& x): fLOG(x) {
   fCANReadFloatVal = 3.1415;
 
   fI2CErrorCounter = 0;
+  fShutDownCounter = 0;
 
   gettimeofday(&ftvStart, 0);
   fMilli5   = std::chrono::milliseconds(5);
@@ -274,7 +275,7 @@ void driveHardware::ensureSafety() {
   if (fSHT85Temp > SAFETY_MAXSHT85TEMP) {
     fLOG(ERROR, stringstream("Box air temperature = " +
                              to_string(fSHT85Temp) +
-                             "exceeds SAFETY_MAXSHT85TEMP = " +
+                             " exceeds SAFETY_MAXSHT85TEMP = " +
                              to_string(SAFETY_MAXSHT85TEMP)).str());
     shutDown();
   }
@@ -283,7 +284,7 @@ void driveHardware::ensureSafety() {
   if ((fSHT85Temp - SAFETY_DPMARGIN) < fSHT85DP) {
     fLOG(ERROR, stringstream("Box air temperature = " +
                              to_string(fSHT85Temp) +
-                             "is too close to dew point = " +
+                             " is too close to dew point = " +
                              to_string(fSHT85DP)).str());
     shutDown();
   }
@@ -292,7 +293,7 @@ void driveHardware::ensureSafety() {
   if (fTECData[8].reg["Temp_W"].value > SAFETY_MAXTEMPW) {
     fLOG(ERROR, stringstream("Water temperature = " +
                              to_string(fTECData[8].reg["Temp_W"].value) +
-                             "exceeds SAFETY_MAXTEMPW = " +
+                             " exceeds SAFETY_MAXTEMPW = " +
                              to_string(SAFETY_MAXTEMPW)).str());
     shutDown();
   }
@@ -303,7 +304,7 @@ void driveHardware::ensureSafety() {
     if (mtemp > SAFETY_MAXTEMPM) {
       fLOG(ERROR, stringstream("module temperature = " +
                                to_string(mtemp) +
-                               "exceeds SAFETY_MAXTEMPM = " +
+                               " exceeds SAFETY_MAXTEMPM = " +
                                to_string(SAFETY_MAXTEMPM)).str());
       shutDown();
     }
@@ -311,13 +312,16 @@ void driveHardware::ensureSafety() {
     if ((mtemp - SAFETY_DPMARGIN) < fSHT85DP) {
       fLOG(ERROR, stringstream("module " + to_string(itec) + " temperature = " +
                                to_string(mtemp) +
-                               "is too close to dew point = " +
+                               " is too close to dew point = " +
                                to_string(fSHT85DP)).str());
-      shutDown();
+      if (fShutDownCounter < 1) {
+        fShutDownCounter = 1;
+        shutDown();
+      }
     }
 
   }
-
+  ++fShutDownCounter;
 }
 
 // ----------------------------------------------------------------------
@@ -397,9 +401,13 @@ void  driveHardware::setTECParameter(float par) {
 
 // ----------------------------------------------------------------------
 void driveHardware::shutDown() {
-  // FIXME: do a poff for all TEC controllers. set all relais outputs to 0.
+  // -- don't call this while things are warming up (from a previous shutDown call)
+  if (5 == fShutDownCounter) {
+    fShutDownCounter = 0;
+    return;
+  }
 #ifdef PI
-  for (int itec = 1; itec <=8; ++itec) {
+  for (int itec = 1; itec <= 8; ++itec) {
     setTECRegister(itec, "ControlVoltage_Set", 0.0);
     turnOffTEC(itec);
   }
