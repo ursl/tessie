@@ -871,6 +871,17 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> get [tec {0|x}] Error");
     vhelp.push_back("> get [tec {0|x}] Ref_U");
 
+    vhelp.push_back("> Tutorial for getting started:");
+    vhelp.push_back("> mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \" set valve0 on\" ");
+    vhelp.push_back("> mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \"set valve1 on\" ");
+    vhelp.push_back("> mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \"set ControlVoltage_Set 4.5\" ");
+    vhelp.push_back("> mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \"cmd Power_On\" ");
+    vhelp.push_back("> mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \"cmd Power_Off\" ");
+    vhelp.push_back("> mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \"set ControlVoltage_Set 0.0\" ");
+    vhelp.push_back("> mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \"set valve0 off\" ");
+    vhelp.push_back("> mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \"set valve1 off\" ");
+
+
     for (unsigned int i = 0; i < vhelp.size(); ++i) {
       emit signalSendToServer(QString::fromStdString(vhelp[i]));
     }
