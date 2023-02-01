@@ -410,7 +410,7 @@ void driveHardware::shutDown() {
     return;
   }
 #ifdef PI
-  cout << "shutDown turn off TECs " << endl
+  cout << "shutDown turn off TECs " << endl;
   for (int itec = 1; itec <= 8; ++itec) {
     setTECRegister(itec, "ControlVoltage_Set", 0.0);
     turnOffTEC(itec);
