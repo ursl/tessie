@@ -398,10 +398,13 @@ void  driveHardware::setTECParameter(float par) {
 void driveHardware::shutDown() {
   // -- don't call this while things are warming up (from a previous shutDown call)
 #ifdef PI
-  cout << "  DBX shutDown turn off TECs " << endl;
+  for (int itec = 1; itec <= 8; ++itec) {
+    turnOffTEC(itec);
+    std::this_thread::sleep_for(fMilli5);
+  }
   for (int itec = 1; itec <= 8; ++itec) {
     setTECRegister(itec, "ControlVoltage_Set", 0.0);
-    turnOffTEC(itec);
+    std::this_thread::sleep_for(fMilli5);
   }
   // -- wait 5 seconds
   for (int i = 0; i < 50; ++i) std::this_thread::sleep_for(fMilli100);
