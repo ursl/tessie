@@ -44,7 +44,6 @@ driveHardware::driveHardware(tLog& x): fLOG(x) {
   fCANReadFloatVal = 3.1415;
 
   fI2CErrorCounter = 0;
-  fShutDownCounter = 0;
 
   gettimeofday(&ftvStart, 0);
   fMilli5   = std::chrono::milliseconds(5);
@@ -314,13 +313,8 @@ void driveHardware::ensureSafety() {
                                to_string(mtemp) +
                                " is too close to dew point = " +
                                to_string(fSHT85DP)
-                               + " fShutDownCounter = " + to_string(fShutDownCounter)
                                ).str());
-      if (fShutDownCounter < 1) {
-        fShutDownCounter = 1;
-        shutDown();
-      }
-      ++fShutDownCounter;
+      shutDown();
     }
   }
 }
@@ -402,18 +396,16 @@ void  driveHardware::setTECParameter(float par) {
 
 // ----------------------------------------------------------------------
 void driveHardware::shutDown() {
-  cout << "DBX DBX fShutDownCounter = " << fShutDownCounter << endl;
   // -- don't call this while things are warming up (from a previous shutDown call)
-  if (fShutDownCounter > 5) {
-    fShutDownCounter = 0;
-    return;
-  }
 #ifdef PI
   cout << "  DBX shutDown turn off TECs " << endl;
   for (int itec = 1; itec <= 8; ++itec) {
     setTECRegister(itec, "ControlVoltage_Set", 0.0);
     turnOffTEC(itec);
   }
+  // -- wait 5 seconds
+  for (int i = 0; i < 50; ++i) std::this_thread::sleep_for(fMilli100);
+
   // -- no?!
   //  close(fSw);
   //  close(fSr);
