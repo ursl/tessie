@@ -251,6 +251,8 @@ void driveHardware::doRun() {
       entertainFras();
       entertainTECs();
 
+      ensureSafety();
+
       // -- print errors (if present) accumulated in CANmessage
       if (fCanMsg.nErrors() > 0) {
         deque<string> errs = fCanMsg.getErrors();
