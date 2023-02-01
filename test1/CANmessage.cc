@@ -48,6 +48,11 @@ void CANmessage::addFrame(canFrame &x) {
     filled = true;
   }
 
+  if (!filled && (0 <= x.fTec) && (x.fTec <= 8) && (2 == x.fType)) {
+    // -- ignore writes
+    filled = true;
+  }
+
   if (!filled && (0 == x.fTec) && (1 == x.fType)
       && (0 == x.fPrivate) && (1 == x.fShift)) {
     // -- ignore read requests 210
