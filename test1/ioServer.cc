@@ -40,6 +40,7 @@ void ioServer::sentToServer(QString msg) {
 void ioServer::doRun() {
   cout << "ioServer::doRun() entered, instantiate tMosq" <<endl;
   fCtrlTessie = new tMosq("tessie", "ctrlTessie", "localhost", 1883);
+  fMoniTessie = new tMosq("tessie", "monTessie", "localhost", 1883);
 
   startServer();
 
@@ -71,6 +72,12 @@ void ioServer::startServer() {
     int rc = fCtrlTessie->loop();
     if (rc) {
       fCtrlTessie->reconnect();
+    } else {
+      break;
+    }
+    int rm = fMoniTessie->loop();
+    if (rm) {
+      fMoniTessie->reconnect();
     } else {
       break;
     }

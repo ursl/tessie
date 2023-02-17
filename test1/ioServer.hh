@@ -23,6 +23,7 @@ signals:
 
 private:
   tMosq         *fCtrlTessie;
+  tMosq         *fMoniTessie;
 };
 
 #endif // RPCSERVER_H

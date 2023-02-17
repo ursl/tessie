@@ -242,6 +242,7 @@ void driveHardware::doRun() {
       if (0) cout << tStamp() << " emit signalUpdateHwDisplay tdiff = " << tdiff << endl;
       emit signalUpdateHwDisplay();
       dumpCSV();
+      dumpMQTT();
 
       // -- make sure there is no alarm before clearing
       parseCAN();
@@ -428,7 +429,7 @@ void driveHardware::shutDown() {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::readCAN(int nreads) {
+void driveHardware::readCAN(int ) {
   //fMutex.lock();
 #ifdef PI
   int nbytes(0);
@@ -493,7 +494,7 @@ bool driveHardware::findInIoMessage(string &s1, string &s2, string &s3) {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::answerIoGet(string &awhat) {
+void driveHardware::answerIoGet(string &) {
   string what = fIoMessage;
 
   cout << "answerIoSet what ->" << what << "<-" << endl;
@@ -530,7 +531,7 @@ void driveHardware::answerIoGet(string &awhat) {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::answerIoSet(string &awhat) {
+void driveHardware::answerIoSet(string &) {
   string what = fIoMessage;
 
   cout << "answerIoSet what ->" << what << "<-" << endl;
@@ -596,15 +597,15 @@ void driveHardware::answerIoCmd() {
   if (string::npos != cmdname.find("ClearError")) {
     fCANReg = 5;
   } else if (string::npos != cmdname.find("GetSWVersion")) {
-      fCANReg = 6;
+    fCANReg = 6;
   } else if (string::npos != cmdname.find("SaveVariables")) {
-      fCANReg = 7;
+    fCANReg = 7;
   } else if (string::npos != cmdname.find("LoadVariables")) {
-      fCANReg = 8;
+    fCANReg = 8;
   } else if (string::npos != cmdname.find("Reboot")) {
-      fCANReg = 255;
+    fCANReg = 255;
   } else if (string::npos != cmdname.find("Reset")) {
-      fCANReg = 255;
+    fCANReg = 255;
   }
 
   stringstream str;
@@ -1419,6 +1420,19 @@ void driveHardware::readAllParamsFromCANPublic() {
 
 
 // ----------------------------------------------------------------------
+void driveHardware::dumpMQTT() {
+  stringstream output;
+
+  string sline("");
+
+  emit signalSendToServer(QString::fromStdString(sline));
+
+
+
+}
+
+
+// ----------------------------------------------------------------------
 void driveHardware::dumpCSV() {
   stringstream output;
   char cs[100];
@@ -1446,20 +1460,10 @@ void driveHardware::dumpCSV() {
     if (fActiveTEC[i]) output << "," << cs;
   }
 
-//  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_kp"].value;
-//  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_ki"].value;
-//  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["PID_kd"].value;
   for (int i = 1; i <= 8; ++i) {
     sprintf(cs, "%+5.2f", fTECData[i].reg["Temp_M"].value);
     if (fActiveTEC[i]) output << "," << cs;
   }
-
-//  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Peltier_I"].value;
-//  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Peltier_R"].value;
-//  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Peltier_P"].value;
-//  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Supply_U"].value;
-//  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Supply_I"].value;
-//  for (int i = 1; i <= 8; ++i) output << "," << fTECData[i].reg["Supply_P"].value;
 
   fCsvFile <<  output.str() << endl;
 }

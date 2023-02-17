@@ -49,7 +49,7 @@ void CANmessage::addFrame(canFrame &x) {
   }
 
   if (!filled && (0 <= x.fTec) && (x.fTec <= 8) && (2 == x.fType)) {
-    // -- ignore writes
+    // -- ignore writes?!?!
     filled = true;
   }
 

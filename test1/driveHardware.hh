@@ -48,6 +48,7 @@ public:
   void  shutDown();
 
   void dumpCSV();
+  void dumpMQTT();
   void evtHandler();
   void ensureSafety();
 
