@@ -61,6 +61,19 @@ void ioServer::doRun() {
       std::this_thread::sleep_for(std::chrono::milliseconds(2));
       //   std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
+
+    if (fMoniTessie->getNMessages() > 0) {
+      string msg = fMoniTessie->getMessage();
+      cout << "ioServer::doRun> Qt emit sendFromServer("
+           << msg
+           << ")" << endl;
+      QString qmsg = QString::fromStdString(msg);
+      emit signalSendFromServer(qmsg);
+    } else {
+      std::this_thread::sleep_for(std::chrono::milliseconds(2));
+      //   std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    }
+
   }
 }
 
