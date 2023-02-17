@@ -39,12 +39,12 @@ void ioServer::sentToServer(QString msg) {
 // ----------------------------------------------------------------------
 void ioServer::doRun() {
   cout << "ioServer::doRun() entered, instantiate tMosq" <<endl;
-  fCtrlTessie = new tMosq("tessie", "ctrlTessie", "localhost", 1883);
-  fMoniTessie = new tMosq("tessie", "monTessie", "localhost", 1883);
+  fCtrlTessie = new tMosq("tessieCtrl", "ctrlTessie", "localhost", 1883);
+  fMoniTessie = new tMosq("tessieMoni", "monTessie", "localhost", 1883);
 
   startServer();
 
-  int cntMsg(0);
+  //int cntMsg(0);
   while (1) {
     // -- allow signals to reach slots
     QCoreApplication::processEvents();
