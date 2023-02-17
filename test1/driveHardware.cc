@@ -1422,54 +1422,31 @@ void driveHardware::readAllParamsFromCANPublic() {
 // ----------------------------------------------------------------------
 void driveHardware::dumpMQTT() {
   static map<int, TECData> oldTECData;
-  // -- what to read: float
-  vector<string> regnames = {
-    "ControlVoltage_Set"
-    , "PID_kp"
-    , "PID_ki"
-    , "PID_kd"
-    , "Temp_Set"
-    , "PID_Max"
-    , "PID_Min"
-    , "Temp_W"
-    , "Temp_M"
-    , "Temp_Diff"
-    , "Peltier_U"
-    , "Peltier_I"
-    , "Peltier_R"
-    , "Peltier_P"
-    , "Supply_U"
-    , "Supply_I"
-    , "Supply_P"
-    , "PowerState"
-    , "Error"
-    , "Ref_U"
-  };
 
+  // -- what to read: float
   map<string, double> tolerances = {
       {"ControlVoltage_Set", 0.1}
-//      , "PID_kp"
-//      , "PID_ki"
-//      , "PID_kd"
-//      , "Temp_Set"
-//      , "PID_Max"
-//      , "PID_Min"
-//      , "Temp_W"
-//      , "Temp_M"
-//      , "Temp_Diff"
-//      , "Peltier_U"
-//      , "Peltier_I"
-//      , "Peltier_R"
-//      , "Peltier_P"
-//      , "Supply_U"
-//      , "Supply_I"
-//      , "Supply_P"
-//      , "PowerState"
-//      , "Error"
-//      , "Ref_U"
+      , {"PID_kp", 0.1}
+      , {"PID_ki", 0.1}
+      , {"PID_kd", 0.1}
+      , {"Temp_Set", 0.1}
+      , {"PID_Max", 0.1}
+      , {"PID_Min", 0.1}
+      , {"Temp_W", 0.1}
+      , {"Temp_M", 0.1}
+      , {"Temp_Diff", 0.1}
+      , {"Peltier_U", 0.1}
+      , {"Peltier_I", 0.1}
+      , {"Peltier_R", 0.1}
+      , {"Peltier_P", 0.1}
+      , {"Supply_U", 0.1}
+      , {"Supply_I", 0.1}
+      , {"Supply_P", 0.1}
+      , {"PowerState", 0.1}
+      , {"Error", 0.5}
+      , {"Ref_U", 0.1}
   };
 
-//  for (unsigned int ir = 0; ir < regnames.size(); ++ir) {
   for (auto const &skey: tolerances) {
     stringstream ss;
     ss << skey.first << " = ";
