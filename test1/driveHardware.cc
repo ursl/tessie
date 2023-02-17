@@ -1425,9 +1425,9 @@ void driveHardware::readAllParamsFromCANPublic() {
 void driveHardware::dumpMQTT() {
   stringstream output;
 
-  string sline("");
+  string sline("send to monTessie");
 
-  //emit signalSendToServer(QString::fromStdString(sline));
+  emit signalSendToMonitor(QString::fromStdString(sline));
 
 
 
