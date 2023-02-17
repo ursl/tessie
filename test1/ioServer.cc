@@ -27,7 +27,7 @@ ioServer::~ioServer() {
 
 // ----------------------------------------------------------------------
 void ioServer::sentToServer(QString msg) {
-  cout << "ioServer::sentToServer received " << msg.toStdString() << endl;
+  if (0) cout << "ioServer::sentToServer received " << msg.toStdString() << endl;
   while (1) {
     bool ok = fCtrlTessie->sendMessage(msg.toStdString().c_str());
     if (ok) break;
@@ -38,7 +38,7 @@ void ioServer::sentToServer(QString msg) {
 
 // ----------------------------------------------------------------------
 void ioServer::sentToMonitor(QString msg) {
-  cout << "ioServer::sentToMonitor received " << msg.toStdString() << endl;
+  if (0) cout << "ioServer::sentToMonitor received " << msg.toStdString() << endl;
   while (1) {
     bool ok = fMoniTessie->sendMessage(msg.toStdString().c_str());
     if (ok) break;

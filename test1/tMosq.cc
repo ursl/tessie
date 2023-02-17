@@ -42,7 +42,7 @@ bool tMosq::sendMessage(const char *message) {
 // ----------------------------------------------------------------------
 void tMosq::on_message(const struct mosquitto_message *message) {
   string smsg("");
-  cout << "tMosq::on_message received a message, fNMessages = " << fNMessages << endl;
+  if (0) cout << "tMosq::on_message received a message, fNMessages = " << fNMessages << endl;
   if (!strcmp(message->topic, fTopic)){
     char *buffer = new char[message->payloadlen+1];
     memcpy(buffer, message->payload, message->payloadlen*sizeof(char));
@@ -89,7 +89,7 @@ void tMosq::on_connect(int rc) {
 
 // ----------------------------------------------------------------------
 void tMosq::on_publish(int mid) {
-  cout << ">> tMosq - Message (" << mid << ") succeeded to be published " << endl;
+  if (0) cout << ">> tMosq - Message (" << mid << ") succeeded to be published " << endl;
   fMessageId = mid;
 }
 
