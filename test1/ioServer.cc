@@ -40,7 +40,7 @@ void ioServer::sentToServer(QString msg) {
 void ioServer::doRun() {
   cout << "ioServer::doRun() entered, instantiate tMosq" <<endl;
   fCtrlTessie = new tMosq("tessieCtrl", "ctrlTessie", "localhost", 1883);
-  fMoniTessie = new tMosq("tessieMoni", "monTessie", "localhost", 1883);
+//  fMoniTessie = new tMosq("tessieMoni", "monTessie", "localhost", 1883);
 
   startServer();
 
@@ -62,17 +62,17 @@ void ioServer::doRun() {
       //   std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
 
-    if (fMoniTessie->getNMessages() > 0) {
-      string msg = fMoniTessie->getMessage();
-      cout << "ioServer::doRun> Qt emit sendFromServer("
-           << msg
-           << ")" << endl;
-      QString qmsg = QString::fromStdString(msg);
-      emit signalSendFromServer(qmsg);
-    } else {
-      std::this_thread::sleep_for(std::chrono::milliseconds(2));
-      //   std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    }
+//    if (fMoniTessie->getNMessages() > 0) {
+//      string msg = fMoniTessie->getMessage();
+//      cout << "ioServer::doRun> Qt emit sendFromServer("
+//           << msg
+//           << ")" << endl;
+//      QString qmsg = QString::fromStdString(msg);
+//      emit signalSendFromServer(qmsg);
+//    } else {
+//      std::this_thread::sleep_for(std::chrono::milliseconds(2));
+//      //   std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+//    }
 
   }
 }
@@ -88,12 +88,12 @@ void ioServer::startServer() {
     } else {
       break;
     }
-    int rm = fMoniTessie->loop();
-    if (rm) {
-      fMoniTessie->reconnect();
-    } else {
-      break;
-    }
+//    int rm = fMoniTessie->loop();
+//    if (rm) {
+//      fMoniTessie->reconnect();
+//    } else {
+//      break;
+//    }
   }
   //run();
 }
