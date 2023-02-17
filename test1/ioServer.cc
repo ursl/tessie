@@ -31,7 +31,7 @@ void ioServer::sentToServer(QString msg) {
   while (1) {
     bool ok = fCtrlTessie->sendMessage(msg.toStdString().c_str());
     if (ok) break;
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    std::this_thread::sleep_for(std::chrono::milliseconds(2));
   }
 }
 
@@ -42,7 +42,7 @@ void ioServer::sentToMonitor(QString msg) {
   while (1) {
     bool ok = fMoniTessie->sendMessage(msg.toStdString().c_str());
     if (ok) break;
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    std::this_thread::sleep_for(std::chrono::milliseconds(2));
   }
 }
 
@@ -55,7 +55,6 @@ void ioServer::doRun() {
 
   startServer();
 
-  //int cntMsg(0);
   while (1) {
     // -- allow signals to reach slots
     QCoreApplication::processEvents();
@@ -68,16 +67,16 @@ void ioServer::doRun() {
            << ")" << endl;
       QString qmsg = QString::fromStdString(msg);
       emit signalSendFromServer(qmsg);
-    } else if (fMoniTessie->getNMessages() > 0) {
-      string msg = fMoniTessie->getMessage();
-      cout << "ioServer::doRun> Qt emit sendFromServer("
-           << msg
-           << ")" << endl;
-      QString qmsg = QString::fromStdString(msg);
-      emit signalSendFromServer(qmsg);
+// -- monTessie is write only!
+//    } else if (fMoniTessie->getNMessages() > 0) {
+//      string msg = fMoniTessie->getMessage();
+//      cout << "ioServer::doRun> Qt emit sendFromServer("
+//           << msg
+//           << ")" << endl;
+//      QString qmsg = QString::fromStdString(msg);
+//      emit signalSendFromServer(qmsg);
     } else {
       std::this_thread::sleep_for(std::chrono::milliseconds(2));
-      //   std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
 
   }
