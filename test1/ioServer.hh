@@ -24,6 +24,7 @@ signals:
 private:
   std::string    fName;
   tMosq         *fCtrlTessie;
+  tMosq         *fMoniTessie;
 };
 
 #endif // RPCSERVER_H

@@ -40,7 +40,7 @@ void ioServer::sentToServer(QString msg) {
 void ioServer::doRun() {
   cout << "ioServer::doRun() entered, instantiate tMosq" <<endl;
   fCtrlTessie = new tMosq(fName.c_str(), fName.c_str(), "localhost", 1883);
-//  fMoniTessie = new tMosq("tessieMoni", "monTessie", "localhost", 1883);
+  fMoniTessie = new tMosq("tessieMoni", "monTessie", "localhost", 1883);
 
   startServer();
 
