@@ -1427,7 +1427,7 @@ void driveHardware::dumpMQTT() {
 
   string sline("");
 
-  emit signalSendToServer(QString::fromStdString(sline));
+  //emit signalSendToServer(QString::fromStdString(sline));
 
 
 
