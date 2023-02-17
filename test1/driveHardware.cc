@@ -1440,8 +1440,8 @@ void driveHardware::dumpMQTT() {
       , {"Peltier_R", 0.1}
       , {"Peltier_P", 0.1}
       , {"Supply_U", 0.1}
-      , {"Supply_I", 0.1}
-      , {"Supply_P", 0.1}
+      , {"Supply_I", 1.0}
+      , {"Supply_P", 1.0}
       , {"PowerState", 0.1}
       , {"Error", 0.5}
       , {"Ref_U", 0.1}
