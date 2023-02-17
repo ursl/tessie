@@ -1421,43 +1421,69 @@ void driveHardware::readAllParamsFromCANPublic() {
 
 // ----------------------------------------------------------------------
 void driveHardware::dumpMQTT() {
-  stringstream output;
-
-  string sline("send to monTessie");
-
+  static map<int, TECData> oldTECData;
   // -- what to read: float
   vector<string> regnames = {
-//    "ControlVoltage_Set"
-//    , "PID_kp"
-//    , "PID_ki"
-//    , "PID_kd"
-//    , "Temp_Set"
-//    , "PID_Max"
-//    , "PID_Min"
-//    , "Temp_W"
-    "Temp_M"
-//    , "Temp_Diff"
-//    , "Peltier_U"
-//    , "Peltier_I"
-//    , "Peltier_R"
-//    , "Peltier_P"
-//    , "Supply_U"
-//    , "Supply_I"
-//    , "Supply_P"
-//    , "PowerState"
-//    , "Error"
-//    , "Ref_U"
-    };
+    "ControlVoltage_Set"
+    , "PID_kp"
+    , "PID_ki"
+    , "PID_kd"
+    , "Temp_Set"
+    , "PID_Max"
+    , "PID_Min"
+    , "Temp_W"
+    , "Temp_M"
+    , "Temp_Diff"
+    , "Peltier_U"
+    , "Peltier_I"
+    , "Peltier_R"
+    , "Peltier_P"
+    , "Supply_U"
+    , "Supply_I"
+    , "Supply_P"
+    , "PowerState"
+    , "Error"
+    , "Ref_U"
+  };
 
-  for (unsigned int ir = 0; ir < regnames.size(); ++ir) {
+  map<string, double> tolerances = {
+      {"ControlVoltage_Set", 0.1}
+//      , "PID_kp"
+//      , "PID_ki"
+//      , "PID_kd"
+//      , "Temp_Set"
+//      , "PID_Max"
+//      , "PID_Min"
+//      , "Temp_W"
+//      , "Temp_M"
+//      , "Temp_Diff"
+//      , "Peltier_U"
+//      , "Peltier_I"
+//      , "Peltier_R"
+//      , "Peltier_P"
+//      , "Supply_U"
+//      , "Supply_I"
+//      , "Supply_P"
+//      , "PowerState"
+//      , "Error"
+//      , "Ref_U"
+  };
+
+//  for (unsigned int ir = 0; ir < regnames.size(); ++ir) {
+  for (auto const &skey: tolerances) {
     stringstream ss;
-    ss << regnames[ir] << " = ";
+    ss << skey.first << " = ";
+    bool printit(false);
     for (int i = 1; i <= 8; ++i) {
-      ss << fTECData[i].reg[regnames[ir]].value;
-      if (i < 8) ss << ", ";
+      ss << fTECData[i].reg[skey.first].value;
+      if (fabs(fTECData[i].reg[skey.first].value - oldTECData[i].reg[skey.first].value) > tolerances[skey.first]) {
+        printit = true;
+      }
+      if (i < 8) ss << ",";
     }
-    emit signalSendToMonitor(QString::fromStdString(ss.str()));
+    if (printit)  emit signalSendToMonitor(QString::fromStdString(ss.str()));
   }
+  oldTECData = fTECData;
 }
 
 
