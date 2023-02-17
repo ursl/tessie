@@ -1373,9 +1373,7 @@ void driveHardware::readAllParamsFromCANPublic() {
 
                             };
   for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
-
     if (0 == ireg%2) evtHandler();
-
     // -- NOTE: ireg != regnumber
     if (7 == ireg) {
       fTECData[8].reg["Temp_W"].value = getTECRegisterFromCAN(8, regnames[ireg]);
@@ -1427,10 +1425,39 @@ void driveHardware::dumpMQTT() {
 
   string sline("send to monTessie");
 
-  emit signalSendToMonitor(QString::fromStdString(sline));
+  // -- what to read: float
+  vector<string> regnames = {
+//    "ControlVoltage_Set"
+//    , "PID_kp"
+//    , "PID_ki"
+//    , "PID_kd"
+//    , "Temp_Set"
+//    , "PID_Max"
+//    , "PID_Min"
+//    , "Temp_W"
+    "Temp_M"
+//    , "Temp_Diff"
+//    , "Peltier_U"
+//    , "Peltier_I"
+//    , "Peltier_R"
+//    , "Peltier_P"
+//    , "Supply_U"
+//    , "Supply_I"
+//    , "Supply_P"
+//    , "PowerState"
+//    , "Error"
+//    , "Ref_U"
+    };
 
-
-
+  for (unsigned int ir = 0; ir < regnames.size(); ++ir) {
+    stringstream ss;
+    ss << regnames[ir] << " = ";
+    for (int i = 1; i <= 8; ++i) {
+      ss << fTECData[i].reg[regnames[ir]].value;
+      if (i < 8) ss << ", ";
+    }
+    emit signalSendToMonitor(QString::fromStdString(ss.str()));
+  }
 }
 
 
