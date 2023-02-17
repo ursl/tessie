@@ -12,7 +12,7 @@
 using namespace std;
 
 // ----------------------------------------------------------------------
-ioServer::ioServer() {
+ioServer::ioServer(string name) : fName(name) {
   // should not be here?!
   //  fCtrlTessie = new tMosq("tessie", "ctrlTessie", "localhost", 1883);
 
@@ -39,7 +39,7 @@ void ioServer::sentToServer(QString msg) {
 // ----------------------------------------------------------------------
 void ioServer::doRun() {
   cout << "ioServer::doRun() entered, instantiate tMosq" <<endl;
-  fCtrlTessie = new tMosq("tessie", "ctrlTessie", "localhost", 1883);
+  fCtrlTessie = new tMosq(fName.c_str(), fName.c_str(), "localhost", 1883);
 //  fMoniTessie = new tMosq("tessieMoni", "monTessie", "localhost", 1883);
 
   startServer();

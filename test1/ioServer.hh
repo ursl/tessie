@@ -10,7 +10,7 @@ class ioServer: public QObject {
   Q_OBJECT
 
 public:
-  ioServer();
+  ioServer(std::string name = "ctrlTessie");
   ~ioServer();
   void startServer();
 
@@ -22,8 +22,8 @@ signals:
   void signalSendFromServer(QString msg);
 
 private:
+  std::string    fName;
   tMosq         *fCtrlTessie;
-  tMosq         *fMoniTessie;
 };
 
 #endif // RPCSERVER_H
