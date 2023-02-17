@@ -124,6 +124,7 @@ signals:
   void  signalSomething(int x);
   void  signalText(QString msg);
   void  signalSendToServer(QString msg);
+  void  signalSendToMonitor(QString msg);
 //REMOVE  void  startServer();
   void  signalUpdateHwDisplay();
 

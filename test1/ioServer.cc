@@ -27,11 +27,22 @@ ioServer::~ioServer() {
 
 // ----------------------------------------------------------------------
 void ioServer::sentToServer(QString msg) {
-  cout << "ioServer received " << msg.toStdString() << endl;
+  cout << "ioServer::sentToServer received " << msg.toStdString() << endl;
   while (1) {
     bool ok = fCtrlTessie->sendMessage(msg.toStdString().c_str());
     if (ok) break;
-    usleep(10000);
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+  }
+}
+
+
+// ----------------------------------------------------------------------
+void ioServer::sentToMonitor(QString msg) {
+  cout << "ioServer::sentToMonitor received " << msg.toStdString() << endl;
+  while (1) {
+    bool ok = fMoniTessie->sendMessage(msg.toStdString().c_str());
+    if (ok) break;
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
   }
 }
 

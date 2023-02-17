@@ -17,6 +17,7 @@ public:
 public slots:
   void doRun();
   void sentToServer(QString msg);
+  void sentToMonitor(QString msg);
 
 signals:
   void signalSendFromServer(QString msg);
