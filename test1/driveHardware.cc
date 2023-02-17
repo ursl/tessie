@@ -429,9 +429,8 @@ void driveHardware::shutDown() {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::readCAN(int ) {
+void driveHardware::readCAN(int nreads) {
   //fMutex.lock();
-#ifdef PI
   int nbytes(0);
 
   bool DBX(false);
@@ -447,7 +446,9 @@ void driveHardware::readCAN(int ) {
   ++nreads;
   while (nreads > 0) {
     if (DBX) cout << "read(fSr, &fFrameR, sizeof(fFrameR)) ... nreads = " << nreads << endl;
+#ifdef PI
     nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
+#endif
     if (DBX) cout << "  nbytes = " << nbytes << endl;
 
     // -- this is an alternative to 'read()'
@@ -456,13 +457,14 @@ void driveHardware::readCAN(int ) {
 
     if (nbytes > -1) {
       if (1) {
+#ifdef PI
         canFrame f(fFrameR.can_id, fFrameR.can_dlc, fFrameR.data);
         fCanMsg.addFrame(f);
+#endif
       }
     }
     --nreads;
   }
-#endif
   parseCAN();
   //fMutex.unlock();
   return;
