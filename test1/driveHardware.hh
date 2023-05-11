@@ -106,7 +106,7 @@ public:
   void  setTECRegister(int itec, std::string regname, float value);
 
   // -- same as above, but with "public" broadcast
-  void readAllParamsFromCANPublic();
+  void  readAllParamsFromCANPublic();
 
   // -- AFTER readCANmessage() these can be used to get the relevant value
   float getCANReadFloatVal() {return fCANReadFloatVal;}
