@@ -102,3 +102,9 @@ mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 0.0"
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 off" 
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off" 
 ```
+
+## Subscribing to monitoring information
+```
+mosquitto_sub -h coldbox01 -t "monTessie"
+```
+Only values (changes) outside of a window a published
