@@ -1556,10 +1556,13 @@ void driveHardware::readSHT85() {
 // ----------------------------------------------------------------------
 void driveHardware::readVProbe() {
 #ifdef PI
+    int length;
+    unsigned char buffer[60] = {0};
+
     length = 3;			//<<< Number of bytes to read
     // read() returns the number of bytes actually read, if it doesn't match
     // then an error occurred (e.g. no response from the device)
-    if (read(file_i2c, buffer, length) != length) {
+    if (read(fVProbeFile, buffer, length) != length) {
         //ERROR HANDLING: i2c transaction failed
         printf("Failed to read from the i2c bus.\n");
     } else {
