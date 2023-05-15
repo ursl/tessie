@@ -108,6 +108,7 @@ driveHardware::driveHardware(tLog& x): fLOG(x) {
 
   // -- get I2C device, test I2C address is 0x3e
   ioctl(fVProbeFile, I2C_SLAVE, 0x3e);
+  readVProbe();
 
 #endif
 
@@ -1555,7 +1556,15 @@ void driveHardware::readSHT85() {
 // ----------------------------------------------------------------------
 void driveHardware::readVProbe() {
 #ifdef PI
-
+    length = 3;			//<<< Number of bytes to read
+    // read() returns the number of bytes actually read, if it doesn't match
+    // then an error occurred (e.g. no response from the device)
+    if (read(file_i2c, buffer, length) != length) {
+        //ERROR HANDLING: i2c transaction failed
+        printf("Failed to read from the i2c bus.\n");
+    } else {
+        printf("Data read: %s\n", buffer);
+    }
 
 #endif
 }
