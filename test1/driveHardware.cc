@@ -107,7 +107,7 @@ driveHardware::driveHardware(tLog& x): fLOG(x) {
   }
 
   // -- get I2C device, test I2C address is 0x3e
-  ioctl(fVProbeFile, I2C_SLAVE, I2C_ADDR);
+  ioctl(fVProbeFile, I2C_SLAVE, 0x3e);
 
 #endif
 
