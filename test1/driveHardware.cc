@@ -97,6 +97,18 @@ driveHardware::driveHardware(tLog& x): fLOG(x) {
   ioctl(fSHT85File, I2C_SLAVE, I2C_ADDR);
 
   readSHT85();
+
+
+  if ((fVProbeFile = open(bus, O_RDWR)) < 0) {
+    cout << "Failed to open the bus." << endl;
+    exit(1);
+  } else {
+    cout << "I2C bus opened with fVProbeFile = " << fVProbeFile << endl;
+  }
+
+  // -- get I2C device, test I2C address is 0x3e
+  ioctl(fVProbeFile, I2C_SLAVE, I2C_ADDR);
+
 #endif
 
 
@@ -1537,6 +1549,25 @@ void driveHardware::readSHT85() {
       cout << "Relative Humidity:      " << fSHT85RH << endl;
     }
   }
+#endif
+}
+
+// ----------------------------------------------------------------------
+void driveHardware::readVProbe() {
+#ifdef PI
+  // -- send high repeatability measurement command
+  //    command msb, command lsb(0x2C, 0x06)
+  write(fSHT85File, 0x3e, 2);
+  std::this_thread::sleep_for(fMilli100);
+
+  // -- read 6 bytes of data
+  //    temp msb, temp lsb, temp CRC, humidity msb, humidity lsb, humidity CRC
+  if (read(fSHT85File, fSHT85Data, 6) != 6) {
+    fLOG(WARNING, "I2C Error: Input/output Error with SHT85");
+    ++fI2CErrorCounter;
+  }
+
+
 #endif
 }
 

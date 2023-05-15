@@ -88,6 +88,7 @@ public:
 
   // -- environmental data
   void  readSHT85();
+  void  readVProbe();
   float getTemperature();
   float getRH();
   float getDP();
@@ -169,7 +170,7 @@ private:
 
   // -- access and data from SHT85
   char fSHT85Data[6], fSHT85Config[2];
-  int  fSHT85File;
+  int  fSHT85File, fVProbeFile;
   float fSHT85Temp, fSHT85RH, fSHT85DP;
 
 #ifdef PI
