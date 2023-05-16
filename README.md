@@ -15,26 +15,27 @@ make
 ```
 
 ## hints for operating tessie from a remote computer
+In a shell on your computer `laptop`, do
 ```shell
-ssh -Y "coldbox" (or whatever hostname your Raspberry Pi has; assuming you have a login there)
-cd tessie/test1
-./tessie
+laptop>ssh -Y "coldbox" (or whatever hostname your Raspberry Pi has; assuming you have a login there)
+coldbox>cd tessie/test1
+coldbox>./tessie
 ```
 
 
-In another window on your computer run the mosquittto_pub commands, e.g.,
+In another window on your computer `laptop` run the mosquittto_pub commands, e.g.,
 ```shell
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 on"
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 on"
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 4.5"
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On"
+laptop>mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 on"
+laptop>mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 on"
+laptop>mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 4.5"
+laptop>mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On"
 ```
 
 See below for a help text on the ctrlTessie commands.
 
 In another window on your computer run the monitor, if desired
 ```shell
-  mosquitto_sub -h coldbox01 -t "monTessie"
+laptop>mosquitto_sub -h coldbox01 -t "monTessie"
 ```
 
 
