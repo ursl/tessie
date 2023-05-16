@@ -1567,10 +1567,14 @@ void driveHardware::readVProbe() {
     int length;
     unsigned char buffer[60] = {0};
 
+    // -- FIXME set I2C address
+    ioctl(fSHT85File, I2C_SLAVE, I2C_SHT85_ADDR);
+
+
     length = 16;			//<<< Number of bytes to read
     // read() returns the number of bytes actually read, if it doesn't match
     // then an error occurred (e.g. no response from the device)
-    if (read(fVProbeFile, buffer, length) != length) {
+    if (read(fSHT85File, buffer, length) != length) {
         //ERROR HANDLING: i2c transaction failed
         printf("Failed to read from the i2c bus.\n");
     } else {
