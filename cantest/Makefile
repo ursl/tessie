@@ -19,6 +19,9 @@ can_receive:can_receive.c
 i2ctest: i2ctest.c
 	gcc -o $@  $^
 
+i2ctest2: i2ctest2.c
+	gcc -o $@  $^
+
 container: container.cc
 	$(CXX) $(CFLAGS) -o $@  $^
 
