@@ -2,7 +2,7 @@
 
 Etymology: tessie sounds better than TC (box), for temperature cycling (box)
 
-## hints for starting with test1
+## Hints for compilation and running locally on a coldbox
 
 ```shell
 git clone git@github.com:ursl/tessie
@@ -14,7 +14,34 @@ make
 ./tessie
 ```
 
-## hints for operating tessie with a running mosquitto server
+## Hints for operating tessie from a remote computer
+In a shell on your computer `laptop`, do
+```shell
+laptop>ssh -Y "coldbox" (or whatever hostname your Raspberry Pi has; assuming you have a login there)
+coldbox>cd tessie/test1
+coldbox>./tessie
+```
+
+
+In another window on your computer `laptop` run the mosquittto_pub commands, e.g.,
+```shell
+mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 on"
+mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 on"
+mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 4.5"
+mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On"
+```
+
+See below for a help text on the MQTT/ctrlTessie commands.
+
+In another window on your computer `laptop` run the monitor, if desired
+```shell
+mosquitto_sub -h coldbox01 -t "monTessie"
+```
+
+
+
+## Hints for operating tessie with mosquitto
+The following assumes that your `coldbox01` has `tessie` up and running, and that on your computer `laptop` has mosquitto installed
 ```shell
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 on"
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 on"
@@ -28,7 +55,7 @@ mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 off"
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off"
 ```
 
-## help on MQTT commands
+## Help on MQTT/ctrlTessie commands
 ```shell
 ===================
 hostname: coldbox01
