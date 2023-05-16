@@ -2,7 +2,7 @@
 
 Etymology: tessie sounds better than TC (box), for temperature cycling (box)
 
-## hints for compilation and running locally on a coldbox
+## Hints for compilation and running locally on a coldbox
 
 ```shell
 git clone git@github.com:ursl/tessie
@@ -14,7 +14,7 @@ make
 ./tessie
 ```
 
-## hints for operating tessie from a remote computer
+## Hints for operating tessie from a remote computer
 In a shell on your computer `laptop`, do
 ```shell
 laptop>ssh -Y "coldbox" (or whatever hostname your Raspberry Pi has; assuming you have a login there)
@@ -40,7 +40,7 @@ mosquitto_sub -h coldbox01 -t "monTessie"
 
 
 
-## hints for operating tessie with mosquitto
+## Hints for operating tessie with mosquitto
 The following assumes that your `coldbox01` has `tessie` up and running, and that on your computer `laptop` has mosquitto installed
 ```shell
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 on"
@@ -55,7 +55,7 @@ mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 off"
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off"
 ```
 
-## help on MQTT commands
+## Help on MQTT commands
 ```shell
 ===================
 hostname: coldbox01
