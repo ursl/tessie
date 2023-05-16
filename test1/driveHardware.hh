@@ -170,7 +170,7 @@ private:
 
   // -- access and data from SHT85
   char fSHT85Data[6], fSHT85Config[2];
-  int  fSHT85File, fVProbeFile;
+  int  fSHT85File;
   float fSHT85Temp, fSHT85RH, fSHT85DP;
 
 #ifdef PI

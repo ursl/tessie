@@ -19,7 +19,7 @@
 #endif
 
 // -- i2c address of SHT85 sensor
-#define I2C_ADDR 0x44
+#define I2C_SHT85_ADDR 0x44
 
 #include <chrono>
 
@@ -93,21 +93,10 @@ driveHardware::driveHardware(tLog& x): fLOG(x) {
     cout << "I2C bus opened with fSHT85File = " << fSHT85File << endl;
   }
 
-  // -- get I2C device, SHT85 I2C address is 0x44
-  ioctl(fSHT85File, I2C_SLAVE, I2C_ADDR);
-
+  // -- read Sensirion SHT85 humidity/temperature sensor
   readSHT85();
 
-
-  if ((fVProbeFile = open(bus, O_RDWR)) < 0) {
-    cout << "Failed to open the bus." << endl;
-    exit(1);
-  } else {
-    cout << "I2C bus opened with fVProbeFile = " << fVProbeFile << endl;
-  }
-
-  // -- get I2C device, test I2C address is 0x3e
-  ioctl(fVProbeFile, I2C_SLAVE, 0x3e);
+  // -- eventually read the VProbe card(s)
   readVProbe();
 
 #endif
@@ -286,28 +275,37 @@ void driveHardware::doRun() {
 void driveHardware::ensureSafety() {
   // -- air temperatures
   if (fSHT85Temp > SAFETY_MAXSHT85TEMP) {
-    fLOG(ERROR, stringstream("Box air temperature = " +
-                             to_string(fSHT85Temp) +
-                             " exceeds SAFETY_MAXSHT85TEMP = " +
-                             to_string(SAFETY_MAXSHT85TEMP)).str());
+    stringstream a("Box air temperature = " +
+                   to_string(fSHT85Temp) +
+                   " exceeds SAFETY_MAXSHT85TEMP = " +
+                   to_string(SAFETY_MAXSHT85TEMP));
+    fLOG(ERROR, a.str());
+    emit signalSendToMonitor(QString::fromStdString(a.str()));
+    emit signalSendToServer(QString::fromStdString(a.str()));
     shutDown();
   }
 
   // -- dew point vs air temperature
   if ((fSHT85Temp - SAFETY_DPMARGIN) < fSHT85DP) {
-    fLOG(ERROR, stringstream("Box air temperature = " +
-                             to_string(fSHT85Temp) +
-                             " is too close to dew point = " +
-                             to_string(fSHT85DP)).str());
+    stringstream a("Box air temperature = " +
+                    to_string(fSHT85Temp) +
+                    " is too close to dew point = " +
+                    to_string(fSHT85DP));
+    fLOG(ERROR, a.str());
+    emit signalSendToMonitor(QString::fromStdString(a.str()));
+    emit signalSendToServer(QString::fromStdString(a.str()));
     shutDown();
   }
 
   // -- check water temperature
   if (fTECData[8].reg["Temp_W"].value > SAFETY_MAXTEMPW) {
-    fLOG(ERROR, stringstream("Water temperature = " +
-                             to_string(fTECData[8].reg["Temp_W"].value) +
-                             " exceeds SAFETY_MAXTEMPW = " +
-                             to_string(SAFETY_MAXTEMPW)).str());
+    stringstream a("Water temperature = " +
+                    to_string(fTECData[8].reg["Temp_W"].value) +
+                    " exceeds SAFETY_MAXTEMPW = " +
+                    to_string(SAFETY_MAXTEMPW));
+    fLOG(ERROR, a.str());
+    emit signalSendToMonitor(QString::fromStdString(a.str()));
+    emit signalSendToServer(QString::fromStdString(a.str()));
     shutDown();
   }
 
@@ -315,19 +313,25 @@ void driveHardware::ensureSafety() {
   for (int itec = 1; itec <= 8; ++itec) {
     double mtemp = fTECData[itec].reg["Temp_M"].value;
     if (mtemp > SAFETY_MAXTEMPM) {
-      fLOG(ERROR, stringstream("module temperature = " +
-                               to_string(mtemp) +
-                               " exceeds SAFETY_MAXTEMPM = " +
-                               to_string(SAFETY_MAXTEMPM)).str());
+      stringstream a("module temperature = " +
+                      to_string(mtemp) +
+                      " exceeds SAFETY_MAXTEMPM = " +
+                      to_string(SAFETY_MAXTEMPM));
+      fLOG(ERROR, a.str());
+      emit signalSendToMonitor(QString::fromStdString(a.str()));
+      emit signalSendToServer(QString::fromStdString(a.str()));
       shutDown();
     }
 
     if ((mtemp - SAFETY_DPMARGIN) < fSHT85DP) {
-      fLOG(ERROR, stringstream("module " + to_string(itec) + " temperature = " +
-                               to_string(mtemp) +
-                               " is too close to dew point = " +
-                               to_string(fSHT85DP)
-                               ).str());
+      stringstream a("module " + to_string(itec) + " temperature = " +
+                     to_string(mtemp) +
+                     " is too close to dew point = " +
+                     to_string(fSHT85DP)
+                    );
+      fLOG(ERROR, a.str());
+      emit signalSendToMonitor(QString::fromStdString(a.str()));
+      emit signalSendToServer(QString::fromStdString(a.str()));
       shutDown();
     }
   }
@@ -1521,6 +1525,9 @@ string driveHardware::timeStamp(bool filestamp) {
 // ----------------------------------------------------------------------
 void driveHardware::readSHT85() {
 #ifdef PI
+  // -- set SHT85 I2C address
+  ioctl(fSHT85File, I2C_SLAVE, I2C_SHT85_ADDR);
+
   // -- send high repeatability measurement command
   //    command msb, command lsb(0x2C, 0x06)
   write(fSHT85File, fSHT85Config, 2);
@@ -1556,10 +1563,11 @@ void driveHardware::readSHT85() {
 // ----------------------------------------------------------------------
 void driveHardware::readVProbe() {
 #ifdef PI
+    // TODO FIXME implement this once something is installed
     int length;
     unsigned char buffer[60] = {0};
 
-    length = 3;			//<<< Number of bytes to read
+    length = 16;			//<<< Number of bytes to read
     // read() returns the number of bytes actually read, if it doesn't match
     // then an error occurred (e.g. no response from the device)
     if (read(fVProbeFile, buffer, length) != length) {
