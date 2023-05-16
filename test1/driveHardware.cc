@@ -215,7 +215,8 @@ void driveHardware::sentFromServer(QString msg) {
 void driveHardware::doRun() {
   cout << "driveHardware::doRun() entered" << endl;
   int cnt(0);
-  struct timeval tvOld, tvNew;
+  struct timeval tvVeryOld, tvOld, tvNew;
+  gettimeofday(&tvVeryOld, 0);
   gettimeofday(&tvOld, 0);
 
   cout << "driveHardware::doRun() start loop" << endl;
@@ -228,6 +229,10 @@ void driveHardware::doRun() {
     readCAN();
     gettimeofday(&tvNew, 0);
     int tdiff = diff_ms(tvNew, tvOld);
+    int tdiff2 = diff_ms(tvNew, tvVeryOld);
+    if (tdiff2 > 10000.) {
+        dumpMQTT(1);
+    }
     if (tdiff > 1000.) {
       tvOld = tvNew;
       if (0) cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
@@ -1437,7 +1442,7 @@ void driveHardware::readAllParamsFromCANPublic() {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::dumpMQTT() {
+void driveHardware::dumpMQTT(int all) {
   static map<int, TECData> oldTECData;
 
   // -- what to read: float
@@ -1470,8 +1475,12 @@ void driveHardware::dumpMQTT() {
     bool printit(false);
     for (int i = 1; i <= 8; ++i) {
       ss << fTECData[i].reg[skey.first].value;
-      if (fabs(fTECData[i].reg[skey.first].value - oldTECData[i].reg[skey.first].value) > tolerances[skey.first]) {
+      if (1 == all) {
         printit = true;
+      } else {
+        if (fabs(fTECData[i].reg[skey.first].value - oldTECData[i].reg[skey.first].value) > tolerances[skey.first]) {
+          printit = true;
+        }
       }
       if (i < 8) ss << ",";
     }

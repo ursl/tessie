@@ -48,7 +48,7 @@ public:
   void  shutDown();
 
   void dumpCSV();
-  void dumpMQTT();
+  void dumpMQTT(int all = 0);
   void evtHandler();
   void ensureSafety();
 
