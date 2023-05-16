@@ -1572,13 +1572,14 @@ void driveHardware::readSHT85() {
 
 // ----------------------------------------------------------------------
 void driveHardware::readVProbe() {
+  return;
 #ifdef PI
     // TODO FIXME implement this once something is installed
     int length;
     unsigned char buffer[60] = {0};
 
     // -- FIXME set I2C address
-    ioctl(fSHT85File, I2C_SLAVE, I2C_SHT85_ADDR);
+    ioctl(fSHT85File, I2C_SLAVE, 0x3e);
 
 
     length = 16;			//<<< Number of bytes to read
