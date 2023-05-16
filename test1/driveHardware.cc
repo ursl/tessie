@@ -1056,6 +1056,7 @@ void driveHardware::sendCANmessage() {
   if (dlength > 1) {
       unsigned int intCanVal = 0;
       if (0 == fCANReg) {
+        cout << "interpreting as unsigned int" << endl;
         intCanVal = static_cast<unsigned int>(fCANVal);
         memcpy(data, &intCanVal, sizeof intCanVal);
       } else {
