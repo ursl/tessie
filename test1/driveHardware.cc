@@ -1054,7 +1054,7 @@ void driveHardware::sendCANmessage() {
   fFrameW.data[0] = fCANReg;
 
   if (dlength > 1) {
-      int intCanVal = 0;
+      unsigned int intCanVal = 0;
       if (0 == fCANReg) {
         intCanVal = static_cast<unsigned int>(fCANVal);
         memcpy(data, &intCanVal, sizeof intCanVal);
