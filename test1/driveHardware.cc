@@ -1468,6 +1468,7 @@ void driveHardware::dumpMQTT(int all) {
       , {"PowerState", 0.1}
       , {"Error", 0.5}
       , {"Ref_U", 0.1}
+      , {"Mode", 0.1}
   };
 
   for (auto const &skey: tolerances) {
