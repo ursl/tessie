@@ -33,7 +33,7 @@ laptop>mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On"
 
 See below for a help text on the ctrlTessie commands.
 
-In another window on your computer run the monitor, if desired
+In another window on your computer `laptop` run the monitor, if desired
 ```shell
 laptop>mosquitto_sub -h coldbox01 -t "monTessie"
 ```
