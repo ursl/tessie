@@ -41,7 +41,7 @@ laptop>mosquitto_sub -h coldbox01 -t "monTessie"
 
 
 ## hints for operating tessie with mosquitto
-The following assumes that your `coldbox01` has `tessie` up and running.
+The following assumes that your `coldbox01` has `tessie` up and running, and that on your computer `laptop` has mosquitto installed
 ```shell
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 on"
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 on"
