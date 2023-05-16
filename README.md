@@ -31,7 +31,7 @@ mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 4.5"
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On"
 ```
 
-See below for a help text on the ctrlTessie commands.
+See below for a help text on the MQTT/ctrlTessie commands.
 
 In another window on your computer `laptop` run the monitor, if desired
 ```shell
@@ -55,7 +55,7 @@ mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 off"
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off"
 ```
 
-## Help on MQTT commands
+## Help on MQTT/ctrlTessie commands
 ```shell
 ===================
 hostname: coldbox01
