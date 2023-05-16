@@ -231,7 +231,8 @@ void driveHardware::doRun() {
     int tdiff = diff_ms(tvNew, tvOld);
     int tdiff2 = diff_ms(tvNew, tvVeryOld);
     if (tdiff2 > 10000.) {
-        dumpMQTT(1);
+      tvVeryOld = tvNew;
+      dumpMQTT(1);
     }
     if (tdiff > 1000.) {
       tvOld = tvNew;
