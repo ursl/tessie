@@ -25,17 +25,17 @@ coldbox>./tessie
 
 In another window on your computer `laptop` run the mosquittto_pub commands, e.g.,
 ```shell
-laptop>mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 on"
-laptop>mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 on"
-laptop>mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 4.5"
-laptop>mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On"
+mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 on"
+mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 on"
+mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 4.5"
+mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On"
 ```
 
 See below for a help text on the ctrlTessie commands.
 
 In another window on your computer `laptop` run the monitor, if desired
 ```shell
-laptop>mosquitto_sub -h coldbox01 -t "monTessie"
+mosquitto_sub -h coldbox01 -t "monTessie"
 ```
 
 
