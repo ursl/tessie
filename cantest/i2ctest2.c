@@ -12,13 +12,13 @@
 // ----------------------------------------------------------------------
 void readI2c(int file) {
   // -- read 16 bytes of data
-  char data[16] = {0};
-  int readl = read(file, data, 16); 
-  if (readl != 16) {
+  char data[18] = {0};
+  int readl = read(file, data, 18); 
+  if (readl != 18) {
     printf("Error : Input/output Error readl = %d\n", readl);
   } else {
     printf("Bytes read: ");
-    for (int i = 0; i < 16; i = i+2) {
+    for (int i = 0; i < 18; i = i+2) {
       printf("%02x%02x ", data[i], data[i+1]);
     }
     printf("\n");          
