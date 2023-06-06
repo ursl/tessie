@@ -1329,9 +1329,9 @@ TECData  driveHardware::initAllTECRegister() {
   // -- read/write registers
   b = {1,      "Mode",                 0, 1}; tdata.reg.insert(make_pair(b.name, b));
   b = {0.,     "ControlVoltage_Set",   1, 1}; tdata.reg.insert(make_pair(b.name, b));
-  b = {1.,   "PID_kp",               2, 1}; tdata.reg.insert(make_pair(b.name, b));
-  b = {2.,   "PID_ki",               3, 1}; tdata.reg.insert(make_pair(b.name, b));
-  b = {3.,   "PID_kd",               4, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {1.,     "PID_kp",               2, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {2.,     "PID_ki",               3, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {3.,     "PID_kd",               4, 1}; tdata.reg.insert(make_pair(b.name, b));
   b = {23.1,   "Temp_Set",             5, 1}; tdata.reg.insert(make_pair(b.name, b));
   b = {-99.,   "PID_Max",              6, 1}; tdata.reg.insert(make_pair(b.name, b));
   b = {-1.,    "PID_Min",              7, 1}; tdata.reg.insert(make_pair(b.name, b));
