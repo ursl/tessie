@@ -1090,7 +1090,7 @@ void driveHardware::sendCANmessage() {
   setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
   int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
   if (nbytes != sizeof(fFrameW)) {
-      printf("    Send Error frame[0]!\r\n");
+      printf("CAN BUS Send Error frame[0]!\r\n");
     }
 
   // -- this is required to absorb the write request from fSr
@@ -1124,7 +1124,7 @@ void driveHardware::entertainFras() {
       setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
       int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
       if (nbytes != sizeof(fFrameW)) {
-          printf("Send Error frame[0]!\r\n");
+          printf("CAN BUS Send Error frame[0]!\r\n");
         }
     } else {
       fFrameW.can_id = 0x40;
@@ -1136,7 +1136,7 @@ void driveHardware::entertainFras() {
       setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
       int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
       if (nbytes != sizeof(fFrameW)) {
-          printf("Send Error frame[0]!\r\n");
+          printf("CAN BUS Send Error frame[0]!\r\n");
         }
     }
   // -- this is required to absorb the write request from fSr
@@ -1194,7 +1194,7 @@ void driveHardware::toggleFras(int imask) {
   setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
   int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
   if (nbytes != sizeof(fFrameW)) {
-      printf("Send Error frame[0]!\r\n");
+      printf("CAN BUS Send Error frame[0]!\r\n");
   }
 
   // -- this is required to absorb the write request from fSr
