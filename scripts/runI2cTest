@@ -1,0 +1,23 @@
+#!/usr/bin/env perl
+
+# ----------------------------------------------------------------------
+# usage: ./scripts/runI2cTest 
+# ----------------------------------------------------------------------
+
+use Time::HiRes qw(usleep nanosleep);
+
+use Getopt::Std;
+getopts('n:s:v:');
+
+
+# -- sleep microseconds (0.5seconds by default)
+if (!$opt_s) {
+    $opt_s = 500000;
+}
+
+
+while (1) {
+    system("date >> i2cdetect.log");
+    system("sudo i2cdetect -y 0 >> i2cdetect.log");
+    usleep($opt_s);
+}
