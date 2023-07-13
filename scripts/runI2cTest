@@ -7,12 +7,12 @@
 use Time::HiRes qw(usleep nanosleep);
 
 use Getopt::Std;
-getopts('n:s:v:');
+getopts('s:');
 
 
-# -- sleep microseconds (0.5seconds by default)
+# -- sleep microseconds (1 second by default)
 if (!$opt_s) {
-    $opt_s = 500000;
+    $opt_s = 1000000;
 }
 
 
