@@ -33,6 +33,7 @@
     </property>
     <property name="font">
      <font>
+      <family>.AppleSystemUIFont</family>
       <pointsize>8</pointsize>
      </font>
     </property>
@@ -86,6 +87,7 @@
      </property>
      <property name="font">
       <font>
+       <family>.AppleSystemUIFont</family>
        <pointsize>8</pointsize>
       </font>
      </property>
@@ -124,6 +126,7 @@
      </property>
      <property name="font">
       <font>
+       <family>.AppleSystemUIFont</family>
        <pointsize>8</pointsize>
       </font>
      </property>
@@ -142,6 +145,7 @@
      </property>
      <property name="font">
       <font>
+       <family>.AppleSystemUIFont</family>
        <pointsize>8</pointsize>
       </font>
      </property>
@@ -160,6 +164,7 @@
      </property>
      <property name="font">
       <font>
+       <family>.AppleSystemUIFont</family>
        <pointsize>8</pointsize>
       </font>
      </property>
@@ -178,6 +183,7 @@
      </property>
      <property name="font">
       <font>
+       <family>.AppleSystemUIFont</family>
        <pointsize>8</pointsize>
       </font>
      </property>
@@ -196,6 +202,7 @@
      </property>
      <property name="font">
       <font>
+       <family>.AppleSystemUIFont</family>
        <pointsize>8</pointsize>
       </font>
      </property>
@@ -209,7 +216,7 @@
        <x>180</x>
        <y>10</y>
        <width>464</width>
-       <height>341</height>
+       <height>389</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout">
@@ -267,6 +274,7 @@
        <widget class="QPushButton" name="buttonRefresh">
         <property name="font">
          <font>
+          <family>.AppleSystemUIFont</family>
           <pointsize>8</pointsize>
          </font>
         </property>
@@ -279,6 +287,7 @@
        <widget class="QLabel" name="labelTop_Supply_U">
         <property name="font">
          <font>
+          <family>.AppleSystemUIFont</family>
           <pointsize>8</pointsize>
          </font>
         </property>
@@ -338,6 +347,7 @@
        <widget class="QLabel" name="labelBot_Temp">
         <property name="font">
          <font>
+          <family>.AppleSystemUIFont</family>
           <pointsize>8</pointsize>
          </font>
         </property>
@@ -357,6 +367,7 @@
        <widget class="QLabel" name="labelTop_Temp">
         <property name="font">
          <font>
+          <family>.AppleSystemUIFont</family>
           <pointsize>8</pointsize>
          </font>
         </property>
@@ -377,6 +388,7 @@
           </property>
           <property name="font">
            <font>
+            <family>.AppleSystemUIFont</family>
             <pointsize>8</pointsize>
            </font>
           </property>
@@ -428,6 +440,7 @@
        <widget class="QLabel" name="labelBot_Mode">
         <property name="font">
          <font>
+          <family>.AppleSystemUIFont</family>
           <pointsize>8</pointsize>
          </font>
         </property>
@@ -506,6 +519,7 @@
           </property>
           <property name="font">
            <font>
+            <family>.AppleSystemUIFont</family>
             <pointsize>8</pointsize>
            </font>
           </property>
@@ -534,6 +548,7 @@
        <widget class="QLabel" name="labelBot_Voltage_2">
         <property name="font">
          <font>
+          <family>.AppleSystemUIFont</family>
           <pointsize>8</pointsize>
          </font>
         </property>
@@ -570,6 +585,7 @@
        <widget class="QLabel" name="labelBot_TempM">
         <property name="font">
          <font>
+          <family>.AppleSystemUIFont</family>
           <pointsize>8</pointsize>
          </font>
         </property>
@@ -606,6 +622,7 @@
        <widget class="QLabel" name="labelTop_Mode">
         <property name="font">
          <font>
+          <family>.AppleSystemUIFont</family>
           <pointsize>8</pointsize>
          </font>
         </property>
@@ -640,6 +657,7 @@
           </property>
           <property name="font">
            <font>
+            <family>.AppleSystemUIFont</family>
             <pointsize>8</pointsize>
            </font>
           </property>
@@ -723,6 +741,7 @@
        <widget class="QLabel" name="labelTop_TempM">
         <property name="font">
          <font>
+          <family>.AppleSystemUIFont</family>
           <pointsize>8</pointsize>
          </font>
         </property>
@@ -752,6 +771,7 @@
        <widget class="QLabel" name="labelTop_Voltage">
         <property name="font">
          <font>
+          <family>.AppleSystemUIFont</family>
           <pointsize>8</pointsize>
          </font>
         </property>
@@ -785,6 +805,7 @@
        <widget class="QLabel" name="labelBot_Voltage">
         <property name="font">
          <font>
+          <family>.AppleSystemUIFont</family>
           <pointsize>8</pointsize>
          </font>
         </property>
@@ -812,6 +833,7 @@
           </property>
           <property name="font">
            <font>
+            <family>.AppleSystemUIFont</family>
             <pointsize>8</pointsize>
            </font>
           </property>
@@ -876,6 +898,7 @@
        <widget class="QLabel" name="labelBot_Supply_U">
         <property name="font">
          <font>
+          <family>.AppleSystemUIFont</family>
           <pointsize>8</pointsize>
          </font>
         </property>
@@ -959,7 +982,7 @@
       <x>20</x>
       <y>40</y>
       <width>101</width>
-      <height>401</height>
+      <height>444</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -967,6 +990,7 @@
       <widget class="QToolButton" name="buttonQuit">
        <property name="font">
         <font>
+         <family>.AppleSystemUIFont</family>
          <pointsize>8</pointsize>
         </font>
        </property>
@@ -1010,7 +1034,7 @@
         </font>
        </property>
        <property name="text">
-        <string>valve 0</string>
+        <string>Flush</string>
        </property>
       </widget>
      </item>
@@ -1035,7 +1059,7 @@
         </font>
        </property>
        <property name="text">
-        <string>valve 1</string>
+        <string>Rinse</string>
        </property>
       </widget>
      </item>
@@ -1056,6 +1080,7 @@
       <widget class="QLabel" name="labelTemp">
        <property name="font">
         <font>
+         <family>.AppleSystemUIFont</family>
          <pointsize>8</pointsize>
         </font>
        </property>
@@ -1071,6 +1096,7 @@
       <widget class="QLabel" name="labelRH">
        <property name="font">
         <font>
+         <family>.AppleSystemUIFont</family>
          <pointsize>8</pointsize>
         </font>
        </property>
@@ -1086,6 +1112,7 @@
       <widget class="QLabel" name="labelDP">
        <property name="font">
         <font>
+         <family>.AppleSystemUIFont</family>
          <pointsize>8</pointsize>
         </font>
        </property>
@@ -1114,6 +1141,7 @@
       <widget class="QLabel" name="labelCANbusError">
        <property name="font">
         <font>
+         <family>.AppleSystemUIFont</family>
          <pointsize>5</pointsize>
         </font>
        </property>
@@ -1132,6 +1160,7 @@
       <widget class="QLabel" name="labelCANbusRunTime">
        <property name="font">
         <font>
+         <family>.AppleSystemUIFont</family>
          <pointsize>6</pointsize>
         </font>
        </property>
