@@ -1623,7 +1623,10 @@ int driveHardware::getRunTime() {
 
 // ----------------------------------------------------------------------
 int driveHardware::getNCANbusErrors() {
-  return fCanMsg.nErrors();
+  fCANErrorOld = fCANErrorCounter;
+  fCANErrorCounter = fCanMsg.nErrors();
+
+  return fCANErrorCounter;
 }
 
 

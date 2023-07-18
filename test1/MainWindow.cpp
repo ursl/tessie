@@ -267,6 +267,11 @@ void MainWindow::updateHardwareDisplay() {
   ui->lineEditRH->setText(QString::number(fpHw->getRH(), 'f', 2));
   ui->lineEditDP->setText(QString::number(fpHw->getDP(), 'f', 2));
   ui->lineEditCANbusError->setText(QString::number(fpHw->getNCANbusErrors()));
+  if (fpHw->redCANErrors() > 0) {
+    ui->lineEditI2CError->setStyleSheet("QLineEdit {background-color : red; }");
+  } else {
+    ui->lineEditI2CError->setStyleSheet("QLineEdit {background-color : white; }");
+  }
   ui->lineEditI2CError->setText(QString::number(fpHw->getNI2CErrors()));
   if (fpHw->redI2CErrors() > 0) {
     ui->lineEditI2CError->setStyleSheet("QLineEdit {background-color : red; }");
