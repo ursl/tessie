@@ -1549,6 +1549,7 @@ void driveHardware::readSHT85() {
   //    temp msb, temp lsb, temp CRC, humidity msb, humidity lsb, humidity CRC
   if (read(fSHT85File, fSHT85Data, 6) != 6) {
     fLOG(WARNING, "I2C Error: Input/output Error with SHT85");
+    fI2cErrorOld = fI2CErrorCounter;
     ++fI2CErrorCounter;
   } else {
     // -- convert the data

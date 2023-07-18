@@ -962,7 +962,7 @@
      <rect>
       <x>20</x>
       <y>10</y>
-      <width>101</width>
+      <width>91</width>
       <height>16</height>
      </rect>
     </property>
@@ -982,7 +982,7 @@
       <x>20</x>
       <y>40</y>
       <width>101</width>
-      <height>444</height>
+      <height>468</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1191,8 +1191,8 @@
    <slot>openTEC7()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>571</x>
-     <y>130</y>
+     <x>553</x>
+     <y>133</y>
     </hint>
     <hint type="destinationlabel">
      <x>129</x>
@@ -1223,8 +1223,8 @@
    <slot>checkTEC5(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>695</x>
-     <y>122</y>
+     <x>772</x>
+     <y>125</y>
     </hint>
     <hint type="destinationlabel">
      <x>739</x>
@@ -1239,8 +1239,8 @@
    <slot>checkTEC6(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>607</x>
-     <y>122</y>
+     <x>684</x>
+     <y>125</y>
     </hint>
     <hint type="destinationlabel">
      <x>672</x>
@@ -1255,8 +1255,8 @@
    <slot>checkTEC7(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>520</x>
-     <y>122</y>
+     <x>595</x>
+     <y>125</y>
     </hint>
     <hint type="destinationlabel">
      <x>524</x>
@@ -1287,8 +1287,8 @@
    <slot>clkRefresh()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>311</x>
-     <y>142</y>
+     <x>312</x>
+     <y>136</y>
     </hint>
     <hint type="destinationlabel">
      <x>248</x>
@@ -1303,8 +1303,8 @@
    <slot>checkTEC8(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>432</x>
-     <y>122</y>
+     <x>504</x>
+     <y>125</y>
     </hint>
     <hint type="destinationlabel">
      <x>760</x>
@@ -1607,8 +1607,8 @@
    <slot>openTEC8()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>483</x>
-     <y>130</y>
+     <x>471</x>
+     <y>133</y>
     </hint>
     <hint type="destinationlabel">
      <x>745</x>
@@ -1623,8 +1623,8 @@
    <slot>openTEC6()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>658</x>
-     <y>130</y>
+     <x>642</x>
+     <y>133</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1639,8 +1639,8 @@
    <slot>openTEC5()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>746</x>
-     <y>130</y>
+     <x>731</x>
+     <y>133</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1655,8 +1655,8 @@
    <slot>quitProgram()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>75</x>
-     <y>84</y>
+     <x>52</x>
+     <y>60</y>
     </hint>
     <hint type="destinationlabel">
      <x>10</x>
@@ -1735,8 +1735,8 @@
    <slot>checkTEC1(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>435</x>
-     <y>312</y>
+     <x>504</x>
+     <y>324</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1751,8 +1751,8 @@
    <slot>checkTEC2(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>529</x>
-     <y>312</y>
+     <x>595</x>
+     <y>324</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1767,8 +1767,8 @@
    <slot>checkTEC3(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>616</x>
-     <y>312</y>
+     <x>684</x>
+     <y>324</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1783,8 +1783,8 @@
    <slot>checkTEC4(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>704</x>
-     <y>312</y>
+     <x>772</x>
+     <y>324</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1799,8 +1799,8 @@
    <slot>openTEC1()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>490</x>
-     <y>320</y>
+     <x>471</x>
+     <y>332</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1815,8 +1815,8 @@
    <slot>openTEC2()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>580</x>
-     <y>320</y>
+     <x>553</x>
+     <y>332</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1831,8 +1831,8 @@
    <slot>openTEC3()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>667</x>
-     <y>320</y>
+     <x>642</x>
+     <y>332</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1847,8 +1847,8 @@
    <slot>openTEC4()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>755</x>
-     <y>320</y>
+     <x>731</x>
+     <y>332</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1879,8 +1879,8 @@
    <slot>tec7Mode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>534</x>
-     <y>240</y>
+     <x>595</x>
+     <y>261</y>
     </hint>
     <hint type="destinationlabel">
      <x>798</x>
@@ -1895,8 +1895,8 @@
    <slot>tec6Mode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>614</x>
-     <y>240</y>
+     <x>684</x>
+     <y>261</y>
     </hint>
     <hint type="destinationlabel">
      <x>796</x>
@@ -1911,8 +1911,8 @@
    <slot>tec5Mode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>700</x>
-     <y>236</y>
+     <x>772</x>
+     <y>261</y>
     </hint>
     <hint type="destinationlabel">
      <x>796</x>
@@ -1927,8 +1927,8 @@
    <slot>tec1Mode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>459</x>
-     <y>430</y>
+     <x>507</x>
+     <y>456</y>
     </hint>
     <hint type="destinationlabel">
      <x>796</x>
@@ -1943,8 +1943,8 @@
    <slot>tec2Mode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>540</x>
-     <y>432</y>
+     <x>595</x>
+     <y>456</y>
     </hint>
     <hint type="destinationlabel">
      <x>798</x>
@@ -1959,8 +1959,8 @@
    <slot>tec3Mode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>640</x>
-     <y>430</y>
+     <x>684</x>
+     <y>456</y>
     </hint>
     <hint type="destinationlabel">
      <x>795</x>
@@ -1991,8 +1991,8 @@
    <slot>tec1Supply_U()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>468</x>
-     <y>462</y>
+     <x>507</x>
+     <y>487</y>
     </hint>
     <hint type="destinationlabel">
      <x>798</x>
@@ -2007,8 +2007,8 @@
    <slot>tec2Supply_U()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>567</x>
-     <y>459</y>
+     <x>595</x>
+     <y>487</y>
     </hint>
     <hint type="destinationlabel">
      <x>795</x>
@@ -2023,8 +2023,8 @@
    <slot>tec3Mode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>619</x>
-     <y>458</y>
+     <x>684</x>
+     <y>487</y>
     </hint>
     <hint type="destinationlabel">
      <x>794</x>
@@ -2039,8 +2039,8 @@
    <slot>tec4Mode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>749</x>
-     <y>453</y>
+     <x>772</x>
+     <y>487</y>
     </hint>
     <hint type="destinationlabel">
      <x>794</x>
@@ -2055,8 +2055,8 @@
    <slot>tec5Supply_U()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>715</x>
-     <y>264</y>
+     <x>772</x>
+     <y>292</y>
     </hint>
     <hint type="destinationlabel">
      <x>795</x>
@@ -2071,8 +2071,8 @@
    <slot>tec6Supply_U()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>638</x>
-     <y>266</y>
+     <x>684</x>
+     <y>292</y>
     </hint>
     <hint type="destinationlabel">
      <x>797</x>
@@ -2087,8 +2087,8 @@
    <slot>tec7Supply_U()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>566</x>
-     <y>264</y>
+     <x>595</x>
+     <y>292</y>
     </hint>
     <hint type="destinationlabel">
      <x>796</x>
@@ -2119,8 +2119,8 @@
    <slot>tec8TempSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>425</x>
-     <y>361</y>
+     <x>507</x>
+     <y>394</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -2135,8 +2135,8 @@
    <slot>tec7TempSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>522</x>
-     <y>372</y>
+     <x>595</x>
+     <y>394</y>
     </hint>
     <hint type="destinationlabel">
      <x>432</x>
@@ -2151,8 +2151,8 @@
    <slot>tec6TempSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>610</x>
-     <y>370</y>
+     <x>684</x>
+     <y>394</y>
     </hint>
     <hint type="destinationlabel">
      <x>442</x>
@@ -2167,8 +2167,8 @@
    <slot>tec5TempSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>707</x>
-     <y>372</y>
+     <x>772</x>
+     <y>394</y>
     </hint>
     <hint type="destinationlabel">
      <x>673</x>
@@ -2183,8 +2183,8 @@
    <slot>tec1TempM()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>441</x>
-     <y>400</y>
+     <x>507</x>
+     <y>425</y>
     </hint>
     <hint type="destinationlabel">
      <x>261</x>
@@ -2199,8 +2199,8 @@
    <slot>tec2TempM()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>562</x>
-     <y>401</y>
+     <x>595</x>
+     <y>425</y>
     </hint>
     <hint type="destinationlabel">
      <x>469</x>
@@ -2215,8 +2215,8 @@
    <slot>tec3TempM()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>630</x>
-     <y>401</y>
+     <x>684</x>
+     <y>425</y>
     </hint>
     <hint type="destinationlabel">
      <x>531</x>
@@ -2231,8 +2231,8 @@
    <slot>tec4TempM()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>725</x>
-     <y>401</y>
+     <x>772</x>
+     <y>425</y>
     </hint>
     <hint type="destinationlabel">
      <x>719</x>

@@ -21,7 +21,8 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fTECDisplay->close();
   fTECDisplay->setHardware(fpHw);
 
-  ui->labelVersion->setText("2023/06/15-01");
+  ui->labelVersion->setText("2023/07/18-01");
+  //ui->labelStatus->setText("OK");
 
   ui->lineEditRunTime->setAlignment(Qt::AlignRight);
   ui->lineEditCANbusError->setAlignment(Qt::AlignRight);
@@ -267,6 +268,12 @@ void MainWindow::updateHardwareDisplay() {
   ui->lineEditDP->setText(QString::number(fpHw->getDP(), 'f', 2));
   ui->lineEditCANbusError->setText(QString::number(fpHw->getNCANbusErrors()));
   ui->lineEditI2CError->setText(QString::number(fpHw->getNI2CErrors()));
+  if (fpHw->redI2CErrors() > 0) {
+    ui->lineEditI2CError->setStyleSheet("QLineEdit {background-color : red; }");
+  } else {
+    ui->lineEditI2CError->setStyleSheet("QLineEdit {background-color : white; }");
+  }
+
   ui->lineEditRunTime->setText(QString::number(fpHw->getRunTime()));
 
   if (fpHw->getStatusValve0()) {

@@ -96,6 +96,7 @@ public:
   int   getRunTime();
   int   getNCANbusErrors();
   int   getNI2CErrors() {return fI2CErrorCounter;}
+  int   redI2CErrors() {return fI2CErrorCounter - fI2CErrorOld;}
   int   getRunCnt() {return fRunCnt;}
 
   // -- simply returns the value stored in fTECData
@@ -161,7 +162,7 @@ private:
   std::string fCsvFileName;
   std::ofstream fCsvFile;
 
-  int fI2CErrorCounter;
+  int fI2CErrorCounter, fI2CErrorOld;
 
   // -- timing and wall-clock ticks (or so)
   std::chrono::milliseconds fMilli5, fMilli10, fMilli100;
