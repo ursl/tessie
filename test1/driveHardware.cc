@@ -31,12 +31,13 @@
 using namespace std;
 
 // ----------------------------------------------------------------------
-driveHardware::driveHardware(tLog& x): fLOG(x) {
+driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fRestart   = false;
   fAbort     = false;
   fRunCnt    = 0;
   fCANReg    = 0;
   fCANVal    = 0.;
+  fVerbose   = verbose;
   QDateTime dt = QDateTime::currentDateTime();
   fDateAndTime = dt.date().toString() + "  " +  dt.time().toString("hh:mm");
 
@@ -261,19 +262,6 @@ void driveHardware::doRun() {
       entertainTECs();
 
       ensureSafety();
-
-      // -- print errors (if present) accumulated in CANmessage
-      int nerrs = fCanMsg.nErrors();
-      if (nerrs > 0) {
-        fCANErrorOld = fCANErrorCounter;
-        fCANErrorCounter = nerrs;
-        deque<string> errs = fCanMsg.getErrors();
-        while (errs.size() > 0) {
-          fLOG(WARNING, errs.front());
-          errs.pop_front();
-        }
-      }
-      fCanMsg.clearAllFrames();     
     }
   }
 
@@ -506,6 +494,29 @@ void driveHardware::parseCAN() {
   if (fCanMsg.getAlarm() > 0) {
     cout << "received alarm from CAN bus, do something!" << endl;
   }
+
+  // -- print errors (if present) accumulated in CANmessage
+  int nerrs = fCanMsg.nErrors();
+  if (nerrs > 0) {
+    fCANErrorOld = fCANErrorCounter;
+    fCANErrorCounter = nerrs;
+    deque<string> errs = fCanMsg.getErrors();
+    int errRepeat(0);
+    while (errs.size() > 0) {
+      string errmsg = errs.front();
+      if (string::npos != errmsg.find("parse issue")) {
+          ++errRepeat;
+      }
+      if (errRepeat < 5) {
+          fLOG(WARNING, errmsg);
+      }
+      errs.pop_front();
+    }
+    if (errRepeat > 5) {
+      fLOG(WARNING, "truncated warning message " + to_string(errRepeat) + " times");
+    }
+  }
+  fCanMsg.clearAllFrames();
 
 }
 
@@ -1093,8 +1104,8 @@ void driveHardware::sendCANmessage() {
   setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
   int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
   if (nbytes != sizeof(fFrameW)) {
-      printf("CAN BUS Send Error frame[0]!\r\n");
-    }
+    printf("CAN BUS Send Error frame[0]!\r\n");
+  }
 
   // -- this is required to absorb the write request from fSr
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
@@ -1127,8 +1138,8 @@ void driveHardware::entertainFras() {
       setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
       int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
       if (nbytes != sizeof(fFrameW)) {
-          printf("CAN BUS Send Error frame[0]!\r\n");
-        }
+        if (fVerbose > 0) printf("CAN BUS Send Error frame[0]!\r\n");
+      }
     } else {
       fFrameW.can_id = 0x40;
       int dlength(1);
@@ -1139,8 +1150,8 @@ void driveHardware::entertainFras() {
       setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
       int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
       if (nbytes != sizeof(fFrameW)) {
-          printf("CAN BUS Send Error frame[0]!\r\n");
-        }
+        if (fVerbose > 0) printf("CAN BUS Send Error frame[0]!\r\n");
+      }
     }
   // -- this is required to absorb the write request from fSr
   int nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
@@ -1197,7 +1208,7 @@ void driveHardware::toggleFras(int imask) {
   setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
   int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
   if (nbytes != sizeof(fFrameW)) {
-      printf("CAN BUS Send Error frame[0]!\r\n");
+    printf("CAN BUS Send Error frame[0]!\r\n");
   }
 
   // -- this is required to absorb the write request from fSr

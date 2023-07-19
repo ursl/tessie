@@ -42,7 +42,7 @@ class driveHardware: public QObject {
   Q_OBJECT
 
 public:
-  driveHardware(tLog &x);
+  driveHardware(tLog &x, int verbose);
   ~driveHardware();
 
   void  shutDown();
@@ -147,6 +147,7 @@ private:
 
   bool    fRestart;
   bool    fAbort;
+  int     fVerbose;
   int     fCANId;
   int     fCANReg;
   float   fCANVal;
