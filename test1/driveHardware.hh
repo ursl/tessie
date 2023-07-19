@@ -94,7 +94,7 @@ public:
   float getDP();
   float calcDP(int mode = 0);
   int   getRunTime();
-  int   getNCANbusErrors();
+  int   getNCANbusErrors() {return fCANErrorCounter;}
   int   redCANErrors() {return fCANErrorCounter - fCANErrorOld;}
   int   getNI2CErrors() {return fI2CErrorCounter;}
   int   redI2CErrors() {return fI2CErrorCounter - fI2CErrorOld;}

@@ -263,7 +263,10 @@ void driveHardware::doRun() {
       ensureSafety();
 
       // -- print errors (if present) accumulated in CANmessage
-      if (fCanMsg.nErrors() > 0) {
+      int nerrs = fCanMsg.nErrors();
+      if (nerrs > 0) {
+        fCANErrorOld = fCANErrorCounter;
+        fCANErrorCounter = nerrs;
         deque<string> errs = fCanMsg.getErrors();
         while (errs.size() > 0) {
           fLOG(WARNING, errs.front());
@@ -1620,15 +1623,6 @@ int driveHardware::getRunTime() {
   int dt = tv.tv_sec - ftvStart.tv_sec;
   return dt;
 }
-
-// ----------------------------------------------------------------------
-int driveHardware::getNCANbusErrors() {
-  fCANErrorOld = fCANErrorCounter;
-  fCANErrorCounter = fCanMsg.nErrors();
-
-  return fCANErrorCounter;
-}
-
 
 // ----------------------------------------------------------------------
 int driveHardware::diff_ms(timeval t1, timeval t2) {
