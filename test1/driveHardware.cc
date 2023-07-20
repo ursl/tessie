@@ -328,7 +328,7 @@ void driveHardware::ensureSafety() {
       emit signalSetBackground(qtec, "red");
     }
 
-    if ((mtemp - SAFETY_DPMARGIN) < fSHT85DP) {
+    if (fabs(mtemp - SAFETY_DPMARGIN) < fSHT85DP) {
       stringstream a("==ALARM== module " + to_string(itec) + " temperature = " +
                      to_string(mtemp) +
                      " is too close to dew point = " +
