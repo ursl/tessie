@@ -525,8 +525,8 @@ void driveHardware::parseCAN() {
     if (errRepeat > 5) {
       fLOG(WARNING, "truncated warning message " + to_string(errRepeat) + " times");
     }
+    fCanMsg.clearAllFrames();
   }
-  fCanMsg.clearAllFrames();
 
 }
 
