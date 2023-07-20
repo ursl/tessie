@@ -280,6 +280,7 @@ void driveHardware::ensureSafety() {
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
     if (0) shutDown();
+    cout << "signalSetBackground(\"T\", red)" << endl;
     emit signalSetBackground("T", "red");
   }
 
@@ -293,6 +294,7 @@ void driveHardware::ensureSafety() {
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
     if (0) shutDown();
+    cout << "signalSetBackground(\"DP\", red)" << endl;
     emit signalSetBackground("DP", "red");
   }
 
@@ -321,6 +323,7 @@ void driveHardware::ensureSafety() {
       emit signalSendToServer(QString::fromStdString(a.str()));
       if (0) shutDown();
       QString qtec = QString::fromStdString("tec"+to_string(itec));
+      cout << "signalSetBackground(" << qtec.toStdString() << ", red)" << endl;
       emit signalSetBackground(qtec, "red");
     }
 
@@ -335,6 +338,7 @@ void driveHardware::ensureSafety() {
       emit signalSendToServer(QString::fromStdString(a.str()));
       if (0) shutDown();
       QString qtec = QString::fromStdString("tec"+to_string(itec));
+      cout << "signalSetBackground(" << qtec.toStdString() << ", red)" << endl;
       emit signalSetBackground(qtec, "red");
     }
   }

@@ -108,14 +108,19 @@ void MainWindow::appendText(QString line) {
 void MainWindow::setBackground(QString name, QString color) {
   QString cstring = "QLineEdit {background-color : " + color + "; }";
   if (name == "T") {
+    cout << "MainWindow::setBackground ui->lineEditTemp->setStyleSheet(" << cstring.toStdString() << endl;
     ui->lineEditTemp->setStyleSheet(cstring);
   } else if (name == "RH") {
+    cout << "MainWindow::setBackground ui->lineEditRH->setStyleSheet(" << cstring.toStdString() << endl;
     ui->lineEditRH->setStyleSheet(cstring);
   } else if (name == "DP") {
+    cout << "MainWindow::setBackground ui->lineEditDP->setStyleSheet(" << cstring.toStdString() << endl;
     ui->lineEditDP->setStyleSheet(cstring);
   } else if (name.contains("tec")) {
     name.remove(0, 3);
     int itec = name.toInt();
+    cout << "MainWindow::setBackground fUITempM[" << itec-1 << "]->setStyleSheet("
+         << cstring.toStdString() << endl;
     fUITempM[itec-1]->setStyleSheet(cstring);
   }
 
