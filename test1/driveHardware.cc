@@ -45,6 +45,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fCANReadFloatVal = 3.1415;
 
   fI2CErrorCounter = 0;
+  fI2CErrorOld = 0;
 
   gettimeofday(&ftvStart, 0);
   fMilli5   = std::chrono::milliseconds(5);
@@ -506,8 +507,6 @@ void driveHardware::parseCAN() {
   }
   // -- print errors (if present) accumulated in CANmessage
   int nerrs = fCanMsg.nErrors();
-  cout << "nerrs = " << nerrs << endl;
-  return;
   if (nerrs > 0) {
     fCANErrorOld = fCANErrorCounter;
     fCANErrorCounter = nerrs;
