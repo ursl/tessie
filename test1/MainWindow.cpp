@@ -105,6 +105,24 @@ void MainWindow::appendText(QString line) {
 
 
 // ----------------------------------------------------------------------
+void MainWindow::setBackground(QString name, QString color) {
+  QString cstring = "QLineEdit {background-color : " + color + "; }";
+  if (name == "T") {
+    ui->lineEditTemp->setStyleSheet(cstring);
+  } else if (name == "RH") {
+    ui->lineEditRH->setStyleSheet(cstring);
+  } else if (name == "DP") {
+    ui->lineEditDP->setStyleSheet(cstring);
+  } else if (name.contains("tec")) {
+    name.remove(0, 3);
+    int itec = name.toInt();
+    fUITempM[itec-1]->setStyleSheet(cstring);
+  }
+
+}
+
+
+// ----------------------------------------------------------------------
 void MainWindow::printText(string line) {
   ui->textEditLog->append(QString::fromStdString(line));
 }

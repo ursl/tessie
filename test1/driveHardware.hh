@@ -125,6 +125,7 @@ public slots:
 
 signals:
   void  signalSomething(int x);
+  void  signalSetBackground(QString name, QString color);
   void  signalText(QString msg);
   void  signalSendToServer(QString msg);
   void  signalSendToMonitor(QString msg);

@@ -279,7 +279,8 @@ void driveHardware::ensureSafety() {
     fLOG(ERROR, a.str());
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
-    shutDown();
+    if (0) shutDown();
+    emit signalSetBackground("T", "red");
   }
 
   // -- dew point vs air temperature
@@ -291,7 +292,8 @@ void driveHardware::ensureSafety() {
     fLOG(ERROR, a.str());
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
-    shutDown();
+    if (0) shutDown();
+    emit signalSetBackground("DP", "red");
   }
 
   // -- check water temperature
@@ -303,7 +305,7 @@ void driveHardware::ensureSafety() {
     fLOG(ERROR, a.str());
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
-    shutDown();
+    if (0) shutDown();
   }
 
   // -- check module temperatures (1) value and (2) against dew point
@@ -317,7 +319,9 @@ void driveHardware::ensureSafety() {
       fLOG(ERROR, a.str());
       emit signalSendToMonitor(QString::fromStdString(a.str()));
       emit signalSendToServer(QString::fromStdString(a.str()));
-      shutDown();
+      if (0) shutDown();
+      QString qtec = QString::fromStdString("tec"+to_string(itec));
+      emit signalSetBackground(qtec, "red");
     }
 
     if ((mtemp - SAFETY_DPMARGIN) < fSHT85DP) {
@@ -329,7 +333,9 @@ void driveHardware::ensureSafety() {
       fLOG(ERROR, a.str());
       emit signalSendToMonitor(QString::fromStdString(a.str()));
       emit signalSendToServer(QString::fromStdString(a.str()));
-      shutDown();
+      if (0) shutDown();
+      QString qtec = QString::fromStdString("tec"+to_string(itec));
+      emit signalSetBackground(qtec, "red");
     }
   }
 }
