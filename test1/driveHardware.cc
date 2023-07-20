@@ -504,9 +504,10 @@ void driveHardware::parseCAN() {
   if (fCanMsg.getAlarm() > 0) {
     cout << "received alarm from CAN bus, do something!" << endl;
   }
-  return;
   // -- print errors (if present) accumulated in CANmessage
   int nerrs = fCanMsg.nErrors();
+  cout << "nerrs = " << nerrs << endl;
+  return;
   if (nerrs > 0) {
     fCANErrorOld = fCANErrorCounter;
     fCANErrorCounter = nerrs;
