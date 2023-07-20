@@ -1576,6 +1576,7 @@ void driveHardware::readSHT85() {
     fI2CErrorOld = fI2CErrorCounter;
     ++fI2CErrorCounter;
   } else {
+    fI2CErrorOld = fI2CErrorCounter;
     // -- convert the data
     //double cTemp = (((fSHT85Data[0] * 256) + fSHT85Data[1]) * 175.0) / 65535.0  - 45.0;
     //double humidity = (((fSHT85Data[3] * 256) + fSHT85Data[4])) * 100.0 / 65535.0;
