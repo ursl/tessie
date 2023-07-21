@@ -263,6 +263,30 @@ void driveHardware::doRun() {
       entertainTECs();
 
       ensureSafety();
+
+      // -- print errors (if present) accumulated in CANmessage
+      int nerrs = fCanMsg.nErrors();
+      if (nerrs > 0) {
+        fCANErrorOld = fCANErrorCounter;
+        fCANErrorCounter = nerrs;
+        deque<string> errs = fCanMsg.getErrors();
+        int errRepeat(0);
+        while (errs.size() > 0) {
+          string errmsg = errs.front();
+          if (string::npos != errmsg.find("parse issue")) {
+            ++errRepeat;
+          }
+          if (errRepeat < 2) {
+           fLOG(WARNING, errmsg);
+          }
+          errs.pop_front();
+        }
+        if (errRepeat > 2) {
+          fLOG(WARNING, "truncated warning message " + to_string(errRepeat-2) + " times");
+        }
+        fCanMsg.clearAllFrames();
+      }
+
     }
   }
 
@@ -504,28 +528,6 @@ void driveHardware::parseCAN() {
 
   if (fCanMsg.getAlarm() > 0) {
     cout << "received alarm from CAN bus, do something!" << endl;
-  }
-  // -- print errors (if present) accumulated in CANmessage
-  int nerrs = fCanMsg.nErrors();
-  if (nerrs > 0) {
-    fCANErrorOld = fCANErrorCounter;
-    fCANErrorCounter = nerrs;
-    deque<string> errs = fCanMsg.getErrors();
-    int errRepeat(0);
-    while (errs.size() > 0) {
-      string errmsg = errs.front();
-      if (string::npos != errmsg.find("parse issue")) {
-          ++errRepeat;
-      }
-      if (errRepeat < 5) {
-          fLOG(WARNING, errmsg);
-      }
-      errs.pop_front();
-    }
-    if (errRepeat > 5) {
-      fLOG(WARNING, "truncated warning message " + to_string(errRepeat) + " times");
-    }
-    fCanMsg.clearAllFrames();
   }
 
 }
