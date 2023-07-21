@@ -21,7 +21,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fTECDisplay->close();
   fTECDisplay->setHardware(fpHw);
 
-  ui->labelVersion->setText("2023/07/21-01");
+  ui->labelVersion->setText("2023/07/21-03");
   //ui->labelStatus->setText("OK");
 
   ui->lineEditRunTime->setAlignment(Qt::AlignRight);

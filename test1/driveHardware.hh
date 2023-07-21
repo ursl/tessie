@@ -165,8 +165,8 @@ private:
   std::string fCsvFileName;
   std::ofstream fCsvFile;
 
-  int fCANErrorCounter, fCANErrorOld;
-  int fI2CErrorCounter, fI2CErrorOld;
+  int fCANErrorCounter{0}, fCANErrorOld{0};
+  int fI2CErrorCounter{0}, fI2CErrorOld{0};
 
   // -- timing and wall-clock ticks (or so)
   std::chrono::milliseconds fMilli5, fMilli10, fMilli100;
