@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<head>
+  <title>tessie node interface</title>
+</head>
+<script>
+  function fetchMostRecentData() {
+      fetch("/data")
+          .then(response => response.json())
+          .then(data => updateView(data))
+          .catch(err => showError(err));
+  }
+  
+  function updateView(data) {
+      let container = document.getElementById("app");
+      
+      container.innerHTML = `
+    <tr>
+      <td>${MQTT.title}</td>
+      <td>${MQTT.data}</td>
+    </tr>
+  `;
+  }
+  
+  function showError(err) {
+      console.error(err);
+      alert("Something went wrong");
+  }
+  // call fetchMostRecentData once every 1s
+  setInterval(fetchMostRecentData, 1000);
+</script>
+
