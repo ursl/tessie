@@ -131,6 +131,7 @@ signals:
   void  signalSendToMonitor(QString msg);
 //REMOVE  void  startServer();
   void  signalUpdateHwDisplay();
+  void  signalAlarm();
 
 protected:
   void        initTECData();

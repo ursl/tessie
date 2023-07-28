@@ -58,6 +58,7 @@ int main(int argc, char *argv[]) {
   QObject::connect(hw, SIGNAL(signalUpdateHwDisplay()), &w, SLOT(updateHardwareDisplay()));
   QObject::connect(hw, SIGNAL(signalText(QString)), &w, SLOT(appendText(QString)));
   QObject::connect(hw, SIGNAL(signalSetBackground(QString,QString)), &w, SLOT(setBackground(QString,QString)));
+  QObject::connect(hw, SIGNAL(signalAlarm()), &w, SLOT(showAlarm()));
 
   QObject::connect(&w, SIGNAL(signalValve(int)), hw, SLOT(toggleFras(int)));
   QObject::connect(&w, SIGNAL(signalTurnOnTEC(int)), hw, SLOT(turnOnTEC(int)));

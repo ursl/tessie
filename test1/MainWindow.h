@@ -30,6 +30,7 @@ public slots:
     void appendText(QString line);
     void updateHardwareDisplay();
     void setBackground(QString name, QString color);
+    void showAlarm();
 
     void start();
     void quitProgram();

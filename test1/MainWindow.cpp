@@ -161,7 +161,6 @@ void MainWindow::quitProgram() {
 // ----------------------------------------------------------------------
 void MainWindow::clkRefresh() {
   updateHardwareDisplay();
-
 }
 
 // ----------------------------------------------------------------------
@@ -268,6 +267,12 @@ void MainWindow::guiSetRegName() {
   stringstream sbla; sbla << "GUI changed reg name ->" << qline.toStdString().c_str() << "<- in string: " << ssbla;
   fGuiRegName = ssbla;
   fLOG(INFO, sbla.str());
+}
+
+
+// ----------------------------------------------------------------------
+void MainWindow::showAlarm() {
+    cout << "showAlarm!" << endl;
 }
 
 
