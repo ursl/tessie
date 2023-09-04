@@ -271,6 +271,20 @@ void MainWindow::guiSetRegName() {
 
 
 // ----------------------------------------------------------------------
+void MainWindow::guiFlashLoadButtonRead() {
+  cout << "guiFlashLoadButtonRead()"  << endl;
+
+}
+
+
+// ----------------------------------------------------------------------
+void MainWindow::guiFlashSaveButtonRead() {
+    cout << "guiFlashSaveButtonRead()"  << endl;
+
+}
+
+
+// ----------------------------------------------------------------------
 void MainWindow::showAlarm() {
     cout << "showAlarm!" << endl;
 }
@@ -360,11 +374,9 @@ void MainWindow::openTECDisplay(int itec) {
   fTECDisplay->show();
 }
 
+
 // ----------------------------------------------------------------------
 void MainWindow::closeTECDisplay() {
   cout << "closeTECDisplay()"  << endl;
   fTECDisplay->close();
 }
-
-
-

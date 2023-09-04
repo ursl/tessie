@@ -68,6 +68,10 @@ private slots:
     void guiWriteToCAN();
     void guiReadFromCAN();
 
+    void guiFlashLoadButtonRead();
+    void guiFlashSaveButtonRead();
+
+
     void tecSetFromUI(int itec, std::string rname, QWidget *);
 
     void tec8VoltSet() {tecSetFromUI(8, "ControlVoltage_Set", ui->tec8_Voltage); }

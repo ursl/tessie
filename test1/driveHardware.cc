@@ -235,6 +235,8 @@ void driveHardware::doRun() {
     if (tdiff2 > 10000.) {
       tvVeryOld = tvNew;
       dumpMQTT(1);
+    // FIXME
+    // signalAlarm()
     }
     if (tdiff > 1000.) {
       tvOld = tvNew;

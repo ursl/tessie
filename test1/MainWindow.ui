@@ -175,8 +175,8 @@
     <widget class="QPushButton" name="pushButtonRead">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>290</y>
+       <x>20</x>
+       <y>280</y>
        <width>51</width>
        <height>32</height>
       </rect>
@@ -194,8 +194,8 @@
     <widget class="QPushButton" name="pushButtonWrite">
      <property name="geometry">
       <rect>
-       <x>70</x>
-       <y>290</y>
+       <x>80</x>
+       <y>280</y>
        <width>51</width>
        <height>32</height>
       </rect>
@@ -940,6 +940,63 @@
       </item>
      </layout>
     </widget>
+    <widget class="QPushButton" name="flashLoadButtonRead">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>340</y>
+       <width>41</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>.AppleSystemUIFont</family>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Load </string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelFlashButtons">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>320</y>
+       <width>141</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>.AppleSystemUIFont</family>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>FLASH Variables</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="flashSaveButtonRead">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>340</y>
+       <width>41</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>.AppleSystemUIFont</family>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Save</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QTextEdit" name="textEditLog">
     <property name="geometry">
@@ -1270,7 +1327,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>553</x>
-     <y>133</y>
+     <y>124</y>
     </hint>
     <hint type="destinationlabel">
      <x>129</x>
@@ -1302,7 +1359,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>772</x>
-     <y>125</y>
+     <y>120</y>
     </hint>
     <hint type="destinationlabel">
      <x>739</x>
@@ -1318,7 +1375,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>684</x>
-     <y>125</y>
+     <y>120</y>
     </hint>
     <hint type="destinationlabel">
      <x>672</x>
@@ -1334,7 +1391,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>595</x>
-     <y>125</y>
+     <y>120</y>
     </hint>
     <hint type="destinationlabel">
      <x>524</x>
@@ -1349,8 +1406,8 @@
    <slot>tec8VoltSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>489</x>
-     <y>161</y>
+     <x>507</x>
+     <y>159</y>
     </hint>
     <hint type="destinationlabel">
      <x>110</x>
@@ -1365,8 +1422,8 @@
    <slot>clkRefresh()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>312</x>
-     <y>136</y>
+     <x>313</x>
+     <y>131</y>
     </hint>
     <hint type="destinationlabel">
      <x>248</x>
@@ -1382,7 +1439,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>504</x>
-     <y>125</y>
+     <y>120</y>
     </hint>
     <hint type="destinationlabel">
      <x>760</x>
@@ -1397,8 +1454,8 @@
    <slot>tec8TempSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>491</x>
-     <y>191</y>
+     <x>507</x>
+     <y>190</y>
     </hint>
     <hint type="destinationlabel">
      <x>17</x>
@@ -1413,8 +1470,8 @@
    <slot>tec7TempSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>581</x>
-     <y>191</y>
+     <x>595</x>
+     <y>190</y>
     </hint>
     <hint type="destinationlabel">
      <x>36</x>
@@ -1429,8 +1486,8 @@
    <slot>tec6TempSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>670</x>
-     <y>191</y>
+     <x>684</x>
+     <y>190</y>
     </hint>
     <hint type="destinationlabel">
      <x>52</x>
@@ -1445,8 +1502,8 @@
    <slot>tec5TempSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>759</x>
-     <y>191</y>
+     <x>772</x>
+     <y>190</y>
     </hint>
     <hint type="destinationlabel">
      <x>70</x>
@@ -1461,8 +1518,8 @@
    <slot>tec7VoltSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>579</x>
-     <y>161</y>
+     <x>595</x>
+     <y>159</y>
     </hint>
     <hint type="destinationlabel">
      <x>24</x>
@@ -1477,8 +1534,8 @@
    <slot>tec6VoltSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>669</x>
-     <y>161</y>
+     <x>684</x>
+     <y>159</y>
     </hint>
     <hint type="destinationlabel">
      <x>49</x>
@@ -1493,8 +1550,8 @@
    <slot>tec5VoltSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>759</x>
-     <y>161</y>
+     <x>772</x>
+     <y>159</y>
     </hint>
     <hint type="destinationlabel">
      <x>83</x>
@@ -1557,8 +1614,8 @@
    <slot>guiWriteToCAN()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>210</x>
-     <y>411</y>
+     <x>220</x>
+     <y>401</y>
     </hint>
     <hint type="destinationlabel">
      <x>91</x>
@@ -1573,8 +1630,8 @@
    <slot>guiReadFromCAN()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>408</y>
+     <x>156</x>
+     <y>398</y>
     </hint>
     <hint type="destinationlabel">
      <x>106</x>
@@ -1686,7 +1743,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>471</x>
-     <y>133</y>
+     <y>124</y>
     </hint>
     <hint type="destinationlabel">
      <x>745</x>
@@ -1702,7 +1759,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>642</x>
-     <y>133</y>
+     <y>124</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1718,7 +1775,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>731</x>
-     <y>133</y>
+     <y>124</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1749,8 +1806,8 @@
    <slot>tec4VoltSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>769</x>
-     <y>351</y>
+     <x>772</x>
+     <y>345</y>
     </hint>
     <hint type="destinationlabel">
      <x>797</x>
@@ -1765,8 +1822,8 @@
    <slot>tec3VoltSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>679</x>
-     <y>351</y>
+     <x>684</x>
+     <y>345</y>
     </hint>
     <hint type="destinationlabel">
      <x>798</x>
@@ -1781,8 +1838,8 @@
    <slot>tec2VoltSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>589</x>
-     <y>351</y>
+     <x>595</x>
+     <y>345</y>
     </hint>
     <hint type="destinationlabel">
      <x>799</x>
@@ -1797,8 +1854,8 @@
    <slot>tec1VoltSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>499</x>
-     <y>351</y>
+     <x>507</x>
+     <y>345</y>
     </hint>
     <hint type="destinationlabel">
      <x>797</x>
@@ -1814,7 +1871,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>504</x>
-     <y>324</y>
+     <y>310</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1830,7 +1887,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>595</x>
-     <y>324</y>
+     <y>310</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1846,7 +1903,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>684</x>
-     <y>324</y>
+     <y>310</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1862,7 +1919,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>772</x>
-     <y>324</y>
+     <y>310</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1878,7 +1935,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>471</x>
-     <y>332</y>
+     <y>314</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1894,7 +1951,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>553</x>
-     <y>332</y>
+     <y>314</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1910,7 +1967,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>642</x>
-     <y>332</y>
+     <y>314</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1926,7 +1983,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>731</x>
-     <y>332</y>
+     <y>314</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1958,7 +2015,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>595</x>
-     <y>261</y>
+     <y>252</y>
     </hint>
     <hint type="destinationlabel">
      <x>798</x>
@@ -1974,7 +2031,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>684</x>
-     <y>261</y>
+     <y>252</y>
     </hint>
     <hint type="destinationlabel">
      <x>796</x>
@@ -1990,7 +2047,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>772</x>
-     <y>261</y>
+     <y>252</y>
     </hint>
     <hint type="destinationlabel">
      <x>796</x>
@@ -2006,7 +2063,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>507</x>
-     <y>456</y>
+     <y>438</y>
     </hint>
     <hint type="destinationlabel">
      <x>796</x>
@@ -2022,7 +2079,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>595</x>
-     <y>456</y>
+     <y>438</y>
     </hint>
     <hint type="destinationlabel">
      <x>798</x>
@@ -2038,7 +2095,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>684</x>
-     <y>456</y>
+     <y>438</y>
     </hint>
     <hint type="destinationlabel">
      <x>795</x>
@@ -2070,7 +2127,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>507</x>
-     <y>487</y>
+     <y>469</y>
     </hint>
     <hint type="destinationlabel">
      <x>798</x>
@@ -2086,7 +2143,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>595</x>
-     <y>487</y>
+     <y>469</y>
     </hint>
     <hint type="destinationlabel">
      <x>795</x>
@@ -2102,7 +2159,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>684</x>
-     <y>487</y>
+     <y>469</y>
     </hint>
     <hint type="destinationlabel">
      <x>794</x>
@@ -2118,7 +2175,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>772</x>
-     <y>487</y>
+     <y>469</y>
     </hint>
     <hint type="destinationlabel">
      <x>794</x>
@@ -2134,7 +2191,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>772</x>
-     <y>292</y>
+     <y>283</y>
     </hint>
     <hint type="destinationlabel">
      <x>795</x>
@@ -2150,7 +2207,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>684</x>
-     <y>292</y>
+     <y>283</y>
     </hint>
     <hint type="destinationlabel">
      <x>797</x>
@@ -2166,7 +2223,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>595</x>
-     <y>292</y>
+     <y>283</y>
     </hint>
     <hint type="destinationlabel">
      <x>796</x>
@@ -2198,7 +2255,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>507</x>
-     <y>394</y>
+     <y>376</y>
     </hint>
     <hint type="destinationlabel">
      <x>414</x>
@@ -2214,7 +2271,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>595</x>
-     <y>394</y>
+     <y>376</y>
     </hint>
     <hint type="destinationlabel">
      <x>432</x>
@@ -2230,7 +2287,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>684</x>
-     <y>394</y>
+     <y>376</y>
     </hint>
     <hint type="destinationlabel">
      <x>442</x>
@@ -2246,7 +2303,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>772</x>
-     <y>394</y>
+     <y>376</y>
     </hint>
     <hint type="destinationlabel">
      <x>673</x>
@@ -2262,7 +2319,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>507</x>
-     <y>425</y>
+     <y>407</y>
     </hint>
     <hint type="destinationlabel">
      <x>261</x>
@@ -2278,7 +2335,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>595</x>
-     <y>425</y>
+     <y>407</y>
     </hint>
     <hint type="destinationlabel">
      <x>469</x>
@@ -2294,7 +2351,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>684</x>
-     <y>425</y>
+     <y>407</y>
     </hint>
     <hint type="destinationlabel">
      <x>531</x>
@@ -2310,11 +2367,43 @@
    <hints>
     <hint type="sourcelabel">
      <x>772</x>
-     <y>425</y>
+     <y>407</y>
     </hint>
     <hint type="destinationlabel">
      <x>719</x>
      <y>-4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>flashLoadButtonRead</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>guiFlashLoadButtonRead()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>175</x>
+     <y>448</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>215</x>
+     <y>505</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>flashSaveButtonRead</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>guiFlashSaveButtonRead()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>236</x>
+     <y>444</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>128</x>
+     <y>504</y>
     </hint>
    </hints>
   </connection>
@@ -2393,5 +2482,7 @@
   <slot>tec3Supply_U()</slot>
   <slot>tec2Supply_U()</slot>
   <slot>tec1Supply_U()</slot>
+  <slot>guiFlashLoadButtonRead()</slot>
+  <slot>guiFlashSaveButtonRead()</slot>
  </slots>
 </ui>
