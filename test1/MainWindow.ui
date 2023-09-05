@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1119</width>
-    <height>912</height>
+    <width>858</width>
+    <height>559</height>
    </rect>
   </property>
   <property name="font">
@@ -25,9 +25,9 @@
    <widget class="QFrame" name="frameTECController">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>120</x>
       <y>100</y>
-      <width>736</width>
+      <width>691</width>
       <height>408</height>
      </rect>
     </property>
@@ -1150,7 +1150,7 @@
      <rect>
       <x>130</x>
       <y>20</y>
-      <width>661</width>
+      <width>581</width>
       <height>71</height>
      </rect>
     </property>
