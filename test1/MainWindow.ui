@@ -27,8 +27,8 @@
      <rect>
       <x>130</x>
       <y>100</y>
-      <width>751</width>
-      <height>819</height>
+      <width>736</width>
+      <height>408</height>
      </rect>
     </property>
     <property name="font">
@@ -48,12 +48,18 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_16">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout">
+      <layout class="QFormLayout" name="formLayout">
        <property name="sizeConstraint">
-        <enum>QLayout::SetMaximumSize</enum>
+        <enum>QLayout::SetFixedSize</enum>
        </property>
-       <item>
+       <item row="0" column="0">
         <widget class="QLabel" name="labelTECFrame">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>50</verstretch>
+          </sizepolicy>
+         </property>
          <property name="font">
           <font>
            <family>Menlo</family>
@@ -66,8 +72,14 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="1" column="0">
         <widget class="QCheckBox" name="checkboxTECLockAll">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>.AppleSystemUIFont</family>
@@ -79,8 +91,14 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="2" column="0">
         <widget class="QPushButton" name="buttonRefresh">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>.AppleSystemUIFont</family>
@@ -92,8 +110,26 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="3" column="0">
         <widget class="QLabel" name="labelTECFrame_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>.AppleSystemUIFont</family>
@@ -105,11 +141,42 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QTextEdit" name="textTECNumber"/>
+       <item row="4" column="0">
+        <widget class="QTextEdit" name="textTECNumber">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>30</height>
+          </size>
+         </property>
+        </widget>
        </item>
-       <item>
+       <item row="5" column="0">
         <widget class="QLabel" name="labelTECName">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>.AppleSystemUIFont</family>
@@ -121,11 +188,42 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QTextEdit" name="textTECName"/>
+       <item row="6" column="0">
+        <widget class="QTextEdit" name="textTECName">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>30</height>
+          </size>
+         </property>
+        </widget>
        </item>
-       <item>
+       <item row="7" column="0">
         <widget class="QLabel" name="labelTECValue">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>.AppleSystemUIFont</family>
@@ -137,41 +235,104 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QTextEdit" name="textTECValue"/>
+       <item row="8" column="0">
+        <widget class="QTextEdit" name="textTECValue">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>30</height>
+          </size>
+         </property>
+        </widget>
        </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_12">
-         <item>
-          <widget class="QPushButton" name="pushButtonWrite">
-           <property name="font">
-            <font>
-             <family>.AppleSystemUIFont</family>
-             <pointsize>8</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Write</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButtonRead">
-           <property name="font">
-            <font>
-             <family>.AppleSystemUIFont</family>
-             <pointsize>8</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Read</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+       <item row="9" column="0">
+        <widget class="QGroupBox" name="horizontalGroupBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,1">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMaximumSize</enum>
+          </property>
+          <property name="topMargin">
+           <number>1</number>
+          </property>
+          <property name="rightMargin">
+           <number>1</number>
+          </property>
+          <property name="bottomMargin">
+           <number>1</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="pushButtonWrite">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>.AppleSystemUIFont</family>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Write</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButtonRead">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>.AppleSystemUIFont</family>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Read</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
-       <item>
+       <item row="10" column="0">
         <widget class="QLabel" name="labelFlashButtons">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>.AppleSystemUIFont</family>
@@ -183,35 +344,55 @@
          </property>
         </widget>
        </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_13">
-         <item>
-          <widget class="QPushButton" name="flashSaveButtonRead">
-           <property name="font">
-            <font>
-             <family>.AppleSystemUIFont</family>
-             <pointsize>8</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Save</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="flashLoadButtonRead">
-           <property name="font">
-            <font>
-             <family>.AppleSystemUIFont</family>
-             <pointsize>8</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Load </string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+       <item row="11" column="0">
+        <widget class="QGroupBox" name="horizontalGroupBox_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_13">
+          <item>
+           <widget class="QPushButton" name="flashSaveButtonRead">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>.AppleSystemUIFont</family>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Save</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="flashLoadButtonRead">
+            <property name="font">
+             <font>
+              <family>.AppleSystemUIFont</family>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Load </string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </item>
@@ -1255,102 +1436,6 @@
  <resources/>
  <connections>
   <connection>
-   <sender>checkboxTECLockAll</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>checkTECAll(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>224</x>
-     <y>169</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>324</x>
-     <y>304</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>textTECNumber</sender>
-   <signal>textChanged()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>guiSetCanID()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>164</x>
-     <y>242</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>30</x>
-     <y>451</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>textTECName</sender>
-   <signal>textChanged()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>guiSetRegName()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>182</x>
-     <y>300</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>55</x>
-     <y>459</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>textTECValue</sender>
-   <signal>textChanged()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>guiSetRegValue()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>197</x>
-     <y>365</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>74</x>
-     <y>465</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButtonWrite</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>guiWriteToCAN()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>220</x>
-     <y>401</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>91</x>
-     <y>474</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButtonRead</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>guiReadFromCAN()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>156</x>
-     <y>398</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>106</x>
-     <y>483</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>buttonValve1</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
@@ -1395,38 +1480,6 @@
     <hint type="destinationlabel">
      <x>10</x>
      <y>60</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>flashLoadButtonRead</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>guiFlashLoadButtonRead()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>175</x>
-     <y>448</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>215</x>
-     <y>505</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>flashSaveButtonRead</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>guiFlashSaveButtonRead()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>236</x>
-     <y>444</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>128</x>
-     <y>504</y>
     </hint>
    </hints>
   </connection>
@@ -1651,22 +1704,6 @@
     <hint type="destinationlabel">
      <x>795</x>
      <y>367</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonRefresh</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>clkRefresh()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>313</x>
-     <y>131</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>248</x>
-     <y>67</y>
     </hint>
    </hints>
   </connection>
@@ -2339,6 +2376,86 @@
     <hint type="destinationlabel">
      <x>673</x>
      <y>2</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>textTECValue</sender>
+   <signal>textChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>guiSetRegValue()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>197</x>
+     <y>365</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>74</x>
+     <y>465</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonRefresh</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>clkRefresh()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>313</x>
+     <y>131</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>248</x>
+     <y>67</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkboxTECLockAll</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkTECAll(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>224</x>
+     <y>169</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>304</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>textTECNumber</sender>
+   <signal>textChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>guiSetCanID()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>164</x>
+     <y>242</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>30</x>
+     <y>451</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>textTECName</sender>
+   <signal>textChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>guiSetRegName()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>182</x>
+     <y>300</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>55</x>
+     <y>459</y>
     </hint>
    </hints>
   </connection>
