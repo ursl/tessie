@@ -1306,7 +1306,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditRunTime"/>
+      <widget class="QLineEdit" name="lineEditRunTime">
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
