@@ -46,514 +46,406 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_16">
+    <layout class="QHBoxLayout" name="horizontalLayout_16" stretch="0,5">
      <item>
-      <layout class="QFormLayout" name="formLayout">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetFixedSize</enum>
-       </property>
-       <item row="0" column="0">
-        <widget class="QLabel" name="labelTECFrame">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>50</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <family>Menlo</family>
-           <pointsize>8</pointsize>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>TEC controller</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QCheckBox" name="checkboxTECLockAll">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>lock all</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QPushButton" name="buttonRefresh">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Refresh</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="labelTECFrame_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="baseSize">
-          <size>
-           <width>0</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>TEC number</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QTextEdit" name="textTECNumber">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>30</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="labelTECName">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="baseSize">
-          <size>
-           <width>0</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>TEC Register</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QTextEdit" name="textTECName">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>30</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="labelTECValue">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="baseSize">
-          <size>
-           <width>0</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>TEC Reg Value </string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QTextEdit" name="textTECValue">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>30</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0">
-        <widget class="QGroupBox" name="horizontalGroupBox">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,1">
-          <property name="sizeConstraint">
-           <enum>QLayout::SetMaximumSize</enum>
+      <widget class="QGroupBox" name="verticalGroupBox">
+       <layout class="QFormLayout" name="formLayout">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetFixedSize</enum>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="labelTECFrame">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>50</verstretch>
+           </sizepolicy>
           </property>
-          <property name="topMargin">
-           <number>1</number>
+          <property name="font">
+           <font>
+            <family>Menlo</family>
+            <pointsize>8</pointsize>
+            <bold>true</bold>
+           </font>
           </property>
-          <property name="rightMargin">
-           <number>1</number>
+          <property name="text">
+           <string>TEC controller</string>
           </property>
-          <property name="bottomMargin">
-           <number>1</number>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="labelTECFrame_2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
-          <item>
-           <widget class="QPushButton" name="pushButtonWrite">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>.AppleSystemUIFont</family>
-              <pointsize>8</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Write</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButtonRead">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>.AppleSystemUIFont</family>
-              <pointsize>8</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Read</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="10" column="0">
-        <widget class="QLabel" name="labelFlashButtons">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>FLASH Variables</string>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="0">
-        <widget class="QGroupBox" name="horizontalGroupBox_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_13">
-          <item>
-           <widget class="QPushButton" name="flashSaveButtonRead">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>.AppleSystemUIFont</family>
-              <pointsize>8</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Save</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="flashLoadButtonRead">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="baseSize">
-             <size>
-              <width>0</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>.AppleSystemUIFont</family>
-              <pointsize>8</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Load </string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>.AppleSystemUIFont</family>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>TEC number</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="labelTECName">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>.AppleSystemUIFont</family>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>TEC Register</string>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QLabel" name="labelTECValue">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>.AppleSystemUIFont</family>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>TEC Reg Value </string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="0">
+         <widget class="QLabel" name="labelFlashButtons">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>.AppleSystemUIFont</family>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>FLASH Variables</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QTextEdit" name="textTECNumber">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>30</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QTextEdit" name="textTECName">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>30</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QTextEdit" name="textTECValue">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>30</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="1">
+         <widget class="QGroupBox" name="horizontalGroupBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,1">
+           <property name="sizeConstraint">
+            <enum>QLayout::SetMaximumSize</enum>
+           </property>
+           <property name="topMargin">
+            <number>1</number>
+           </property>
+           <property name="rightMargin">
+            <number>1</number>
+           </property>
+           <property name="bottomMargin">
+            <number>1</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="pushButtonWrite">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>.AppleSystemUIFont</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Write</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButtonRead">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>.AppleSystemUIFont</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Read</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="10" column="1">
+         <widget class="QGroupBox" name="horizontalGroupBox_2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_13">
+           <item>
+            <widget class="QPushButton" name="flashSaveButtonRead">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>.AppleSystemUIFont</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Save</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="flashLoadButtonRead">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="baseSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>.AppleSystemUIFont</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Load </string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="buttonRefresh">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>.AppleSystemUIFont</family>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Refresh</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QCheckBox" name="checkboxTECLockAll">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>.AppleSystemUIFont</family>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>lock all</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </item>
      <item>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="2" column="2">
-        <widget class="QLineEdit" name="tec7_Temp">
+       <item row="11" column="4">
+        <widget class="QLineEdit" name="tec4_Supply_U">
          <property name="frame">
           <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout_5">
-         <item>
-          <widget class="QPushButton" name="pushButtonTEC1">
-           <property name="maximumSize">
-            <size>
-             <width>40</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Arial</family>
-             <pointsize>8</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>1</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBoxTEC1">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="4" column="3">
-        <widget class="QLineEdit" name="tec6_Mode">
+       <item row="5" column="2">
+        <widget class="QLineEdit" name="tec7_Supply_U">
          <property name="frame">
           <bool>false</bool>
          </property>
         </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="labelTop_Supply_U">
-         <property name="font">
-          <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Supply_U                 </string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="4">
-        <widget class="QLineEdit" name="tec4_Voltage">
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QLineEdit" name="tec1_Temp">
-         <property name="acceptDrops">
-          <bool>false</bool>
-         </property>
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
-          <widget class="QPushButton" name="pushButtonTEC7">
-           <property name="maximumSize">
-            <size>
-             <width>40</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Arial</family>
-             <pointsize>8</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>7</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBoxTEC7">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-        </layout>
        </item>
        <item row="8" column="0">
         <widget class="QLabel" name="labelBot_Temp">
-         <property name="font">
-          <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Temp_Set                </string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="2">
-        <widget class="QLineEdit" name="tec2_Temp">
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="labelTop_Temp">
          <property name="font">
           <font>
            <family>.AppleSystemUIFont</family>
@@ -595,10 +487,38 @@
          </item>
         </layout>
        </item>
-       <item row="6" column="2">
-        <layout class="QHBoxLayout" name="horizontalLayout_6">
+       <item row="5" column="3">
+        <widget class="QLineEdit" name="tec6_Supply_U">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QLineEdit" name="tec6_Mode">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="4">
+        <widget class="QLineEdit" name="tec4_Voltage">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QLineEdit" name="tec7_TempM">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
-          <widget class="QPushButton" name="pushButtonTEC2">
+          <widget class="QPushButton" name="pushButtonTEC1">
            <property name="maximumSize">
             <size>
              <width>40</width>
@@ -612,12 +532,18 @@
             </font>
            </property>
            <property name="text">
-            <string>2</string>
+            <string>1</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="checkBoxTEC2">
+          <widget class="QCheckBox" name="checkBoxTEC1">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -625,72 +551,8 @@
          </item>
         </layout>
        </item>
-       <item row="10" column="0">
-        <widget class="QLabel" name="labelBot_Mode">
-         <property name="font">
-          <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Mode (0=T/1=V)        </string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QLineEdit" name="tec1_Voltage">
-         <property name="acceptDrops">
-          <bool>false</bool>
-         </property>
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="4">
-        <widget class="QLineEdit" name="tec4_TempM">
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="tec8_Voltage">
-         <property name="acceptDrops">
-          <bool>false</bool>
-         </property>
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="3">
-        <widget class="QLineEdit" name="tec6_Supply_U">
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="3">
-        <widget class="QLineEdit" name="tec3_Temp">
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="4">
-        <widget class="QLineEdit" name="tec4_Mode">
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1">
-        <widget class="QLineEdit" name="tec1_TempM">
-         <property name="acceptDrops">
-          <bool>false</bool>
-         </property>
+       <item row="7" column="2">
+        <widget class="QLineEdit" name="tec2_Voltage">
          <property name="frame">
           <bool>false</bool>
          </property>
@@ -726,8 +588,8 @@
          </item>
         </layout>
        </item>
-       <item row="10" column="3">
-        <widget class="QLineEdit" name="tec3_Mode">
+       <item row="9" column="4">
+        <widget class="QLineEdit" name="tec4_TempM">
          <property name="frame">
           <bool>false</bool>
          </property>
@@ -746,49 +608,35 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="tec8_Temp">
-         <property name="acceptDrops">
-          <bool>false</bool>
-         </property>
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <widget class="QLineEdit" name="tec6_Voltage">
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="3">
-        <widget class="QLineEdit" name="tec6_TempM">
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="labelBot_TempM">
-         <property name="font">
-          <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Temp_M                   </string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QLineEdit" name="tec7_TempM">
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
+       <item row="0" column="3">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QPushButton" name="pushButtonTEC6">
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>.AppleSystemUIFont</family>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>6</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxTEC6">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item row="4" column="1">
         <widget class="QLineEdit" name="tec8_Mode">
@@ -800,8 +648,92 @@
          </property>
         </widget>
        </item>
-       <item row="7" column="2">
-        <widget class="QLineEdit" name="tec2_Voltage">
+       <item row="9" column="3">
+        <widget class="QLineEdit" name="tec3_TempM">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="2">
+        <widget class="QLineEdit" name="tec2_Temp">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLineEdit" name="tec7_Voltage">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QLineEdit" name="tec1_Temp">
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="tec8_Supply_U">
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="3">
+        <widget class="QLineEdit" name="tec3_Temp">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="labelTop_Voltage">
+         <property name="font">
+          <font>
+           <family>Academy Engraved LET</family>
+           <pointsize>6</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>ControlVoltage_Set</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QLineEdit" name="tec7_Mode">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="labelBot_Mode">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Mode (0=T/1=V)        </string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="1">
+        <widget class="QLineEdit" name="tec1_Supply_U">
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
          <property name="frame">
           <bool>false</bool>
          </property>
@@ -820,8 +752,95 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="2">
-        <widget class="QLineEdit" name="tec7_Supply_U">
+       <item row="2" column="2">
+        <widget class="QLineEdit" name="tec7_Temp">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QPushButton" name="pushButtonTEC2">
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>2</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxTEC2">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="labelTop_TempM">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Temp_ M                 </string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="3">
+        <widget class="QLineEdit" name="tec3_Mode">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QPushButton" name="pushButtonTEC7">
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>7</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxTEC7">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="7" column="3">
+        <widget class="QLineEdit" name="tec3_Voltage">
          <property name="frame">
           <bool>false</bool>
          </property>
@@ -864,53 +883,29 @@
          </item>
         </layout>
        </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="tec8_TempM">
-         <property name="acceptDrops">
-          <bool>false</bool>
-         </property>
+       <item row="10" column="4">
+        <widget class="QLineEdit" name="tec4_Mode">
          <property name="frame">
           <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="4" column="2">
-        <widget class="QLineEdit" name="tec7_Mode">
+       <item row="1" column="4">
+        <widget class="QLineEdit" name="tec5_Voltage">
          <property name="frame">
           <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="9" column="3">
-        <widget class="QLineEdit" name="tec3_TempM">
+       <item row="4" column="4">
+        <widget class="QLineEdit" name="tec5_Mode">
          <property name="frame">
           <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="7" column="3">
-        <widget class="QLineEdit" name="tec3_Voltage">
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="2">
-        <widget class="QLineEdit" name="tec2_Mode">
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="3">
-        <widget class="QLineEdit" name="tec6_Temp">
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="1">
-        <widget class="QLineEdit" name="tec1_Mode">
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="tec8_Voltage">
          <property name="acceptDrops">
           <bool>false</bool>
          </property>
@@ -926,8 +921,8 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="labelTop_TempM">
+       <item row="5" column="0">
+        <widget class="QLabel" name="labelTop_Supply_U">
          <property name="font">
           <font>
            <family>.AppleSystemUIFont</family>
@@ -935,12 +930,38 @@
           </font>
          </property>
          <property name="text">
-          <string>Temp_ M                 </string>
+          <string>Supply_U                 </string>
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
-        <widget class="QLineEdit" name="tec8_Supply_U">
+       <item row="2" column="0">
+        <widget class="QLabel" name="labelTop_Temp">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Temp_Set                </string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0">
+        <widget class="QLabel" name="labelBot_Supply_U">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Supply_U                 </string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QLineEdit" name="tec1_TempM">
          <property name="acceptDrops">
           <bool>false</bool>
          </property>
@@ -949,28 +970,31 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="4">
-        <widget class="QLineEdit" name="tec5_Supply_U">
+       <item row="9" column="0">
+        <widget class="QLabel" name="labelBot_TempM">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Temp_M                   </string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="3">
+        <widget class="QLineEdit" name="tec3_Supply_U">
          <property name="frame">
           <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="labelTop_Voltage">
-         <property name="font">
-          <font>
-           <family>Academy Engraved LET</family>
-           <pointsize>6</pointsize>
-          </font>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="tec8_TempM">
+         <property name="acceptDrops">
+          <bool>false</bool>
          </property>
-         <property name="text">
-          <string>ControlVoltage_Set</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="4">
-        <widget class="QLineEdit" name="tec5_Voltage">
          <property name="frame">
           <bool>false</bool>
          </property>
@@ -982,63 +1006,6 @@
           <bool>false</bool>
          </property>
         </widget>
-       </item>
-       <item row="4" column="4">
-        <widget class="QLineEdit" name="tec5_Mode">
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="labelBot_Voltage">
-         <property name="font">
-          <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>ControlVoltage_Set</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="4">
-        <widget class="QLineEdit" name="tec4_Temp">
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <widget class="QPushButton" name="pushButtonTEC6">
-           <property name="maximumSize">
-            <size>
-             <width>40</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>.AppleSystemUIFont</family>
-             <pointsize>8</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>6</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBoxTEC6">
-           <property name="text">
-            <string/>
-           </property>
-          </widget>
-         </item>
-        </layout>
        </item>
        <item row="0" column="1">
         <layout class="QHBoxLayout" name="horizontalLayout">
@@ -1076,15 +1043,70 @@
          </item>
         </layout>
        </item>
-       <item row="1" column="2">
-        <widget class="QLineEdit" name="tec7_Voltage">
+       <item row="3" column="3">
+        <widget class="QLineEdit" name="tec6_TempM">
          <property name="frame">
           <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="11" column="0">
-        <widget class="QLabel" name="labelBot_Supply_U">
+       <item row="7" column="1">
+        <widget class="QLineEdit" name="tec1_Voltage">
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QLineEdit" name="tec6_Temp">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="4">
+        <widget class="QLineEdit" name="tec5_Supply_U">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QLineEdit" name="tec6_Voltage">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="tec8_Temp">
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="4">
+        <widget class="QLineEdit" name="tec4_Temp">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="2">
+        <widget class="QLineEdit" name="tec2_Mode">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="labelBot_Voltage">
          <property name="font">
           <font>
            <family>.AppleSystemUIFont</family>
@@ -1092,17 +1114,7 @@
           </font>
          </property>
          <property name="text">
-          <string>Supply_U                 </string>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="1">
-        <widget class="QLineEdit" name="tec1_Supply_U">
-         <property name="acceptDrops">
-          <bool>false</bool>
-         </property>
-         <property name="frame">
-          <bool>false</bool>
+          <string>ControlVoltage_Set</string>
          </property>
         </widget>
        </item>
@@ -1113,15 +1125,11 @@
          </property>
         </widget>
        </item>
-       <item row="11" column="3">
-        <widget class="QLineEdit" name="tec3_Supply_U">
-         <property name="frame">
+       <item row="10" column="1">
+        <widget class="QLineEdit" name="tec1_Mode">
+         <property name="acceptDrops">
           <bool>false</bool>
          </property>
-        </widget>
-       </item>
-       <item row="11" column="4">
-        <widget class="QLineEdit" name="tec4_Supply_U">
          <property name="frame">
           <bool>false</bool>
          </property>
@@ -1454,7 +1462,6 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <tabstops>
-  <tabstop>textTECName</tabstop>
   <tabstop>textEditLog</tabstop>
  </tabstops>
  <resources/>
@@ -2400,86 +2407,6 @@
     <hint type="destinationlabel">
      <x>673</x>
      <y>2</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>textTECValue</sender>
-   <signal>textChanged()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>guiSetRegValue()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>197</x>
-     <y>365</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>74</x>
-     <y>465</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonRefresh</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>clkRefresh()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>313</x>
-     <y>131</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>248</x>
-     <y>67</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkboxTECLockAll</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>checkTECAll(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>224</x>
-     <y>169</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>324</x>
-     <y>304</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>textTECNumber</sender>
-   <signal>textChanged()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>guiSetCanID()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>164</x>
-     <y>242</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>30</x>
-     <y>451</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>textTECName</sender>
-   <signal>textChanged()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>guiSetRegName()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>182</x>
-     <y>300</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>55</x>
-     <y>459</y>
     </hint>
    </hints>
   </connection>
