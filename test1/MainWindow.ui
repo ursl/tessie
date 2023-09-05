@@ -771,8 +771,8 @@
        <widget class="QLabel" name="labelTop_Voltage">
         <property name="font">
          <font>
-          <family>.AppleSystemUIFont</family>
-          <pointsize>8</pointsize>
+          <family>Academy Engraved LET</family>
+          <pointsize>6</pointsize>
          </font>
         </property>
         <property name="text">
@@ -1137,8 +1137,8 @@
       <widget class="QLabel" name="labelTemp">
        <property name="font">
         <font>
-         <family>.AppleSystemUIFont</family>
-         <pointsize>8</pointsize>
+         <family>Arial</family>
+         <pointsize>5</pointsize>
         </font>
        </property>
        <property name="text">
@@ -1153,8 +1153,9 @@
       <widget class="QLabel" name="labelRH">
        <property name="font">
         <font>
-         <family>.AppleSystemUIFont</family>
-         <pointsize>8</pointsize>
+         <family>Apple Chancery</family>
+         <pointsize>5</pointsize>
+         <italic>true</italic>
         </font>
        </property>
        <property name="text">
@@ -1169,8 +1170,8 @@
       <widget class="QLabel" name="labelDP">
        <property name="font">
         <font>
-         <family>.AppleSystemUIFont</family>
-         <pointsize>8</pointsize>
+         <family>Arial</family>
+         <pointsize>5</pointsize>
         </font>
        </property>
        <property name="text">
@@ -1198,7 +1199,7 @@
       <widget class="QLabel" name="labelCANbusError">
        <property name="font">
         <font>
-         <family>.AppleSystemUIFont</family>
+         <family>American Typewriter</family>
          <pointsize>5</pointsize>
         </font>
        </property>
@@ -1295,8 +1296,8 @@
       <widget class="QLabel" name="labelCANbusRunTime">
        <property name="font">
         <font>
-         <family>.AppleSystemUIFont</family>
-         <pointsize>6</pointsize>
+         <family>Arial</family>
+         <pointsize>5</pointsize>
         </font>
        </property>
        <property name="text">
