@@ -9,18 +9,17 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>798</width>
+    <width>800</width>
     <height>541</height>
    </rect>
   </property>
   <property name="font">
    <font>
-    <family>Arial</family>
-    <pointsize>12</pointsize>
+    <family>.AppleSystemUIFont</family>
    </font>
   </property>
   <property name="windowTitle">
-   <string>tessie</string>
+   <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QFrame" name="frameTECController">
@@ -28,14 +27,14 @@
      <rect>
       <x>130</x>
       <y>90</y>
-      <width>654</width>
-      <height>409</height>
+      <width>661</width>
+      <height>411</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Arial</family>
-      <pointsize>10</pointsize>
+      <family>.AppleSystemUIFont</family>
+      <pointsize>8</pointsize>
      </font>
     </property>
     <property name="mouseTracking">
@@ -58,8 +57,8 @@
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
-       <pointsize>10</pointsize>
+       <family>Menlo</family>
+       <pointsize>8</pointsize>
        <bold>true</bold>
       </font>
      </property>
@@ -76,12 +75,6 @@
        <height>21</height>
       </rect>
      </property>
-     <property name="font">
-      <font>
-       <family>Arial</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
     </widget>
     <widget class="QCheckBox" name="checkboxTECLockAll">
      <property name="geometry">
@@ -94,8 +87,8 @@
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
-       <pointsize>10</pointsize>
+       <family>.AppleSystemUIFont</family>
+       <pointsize>8</pointsize>
       </font>
      </property>
      <property name="text">
@@ -111,12 +104,6 @@
        <height>21</height>
       </rect>
      </property>
-     <property name="font">
-      <font>
-       <family>Arial</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
     </widget>
     <widget class="QTextEdit" name="textTECNumber">
      <property name="geometry">
@@ -126,12 +113,6 @@
        <width>91</width>
        <height>21</height>
       </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Arial</family>
-       <pointsize>10</pointsize>
-      </font>
      </property>
     </widget>
     <widget class="QLabel" name="labelTECFrame_2">
@@ -145,8 +126,8 @@
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
-       <pointsize>10</pointsize>
+       <family>.AppleSystemUIFont</family>
+       <pointsize>8</pointsize>
       </font>
      </property>
      <property name="text">
@@ -164,8 +145,8 @@
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
-       <pointsize>10</pointsize>
+       <family>.AppleSystemUIFont</family>
+       <pointsize>8</pointsize>
       </font>
      </property>
      <property name="text">
@@ -183,8 +164,8 @@
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
-       <pointsize>10</pointsize>
+       <family>.AppleSystemUIFont</family>
+       <pointsize>8</pointsize>
       </font>
      </property>
      <property name="text">
@@ -202,8 +183,8 @@
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
-       <pointsize>10</pointsize>
+       <family>.AppleSystemUIFont</family>
+       <pointsize>8</pointsize>
       </font>
      </property>
      <property name="text">
@@ -221,8 +202,8 @@
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
-       <pointsize>10</pointsize>
+       <family>.AppleSystemUIFont</family>
+       <pointsize>8</pointsize>
       </font>
      </property>
      <property name="text">
@@ -238,21 +219,9 @@
        <height>389</height>
       </rect>
      </property>
-     <property name="font">
-      <font>
-       <family>Arial</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="2" column="2">
        <widget class="QLineEdit" name="tec7_Temp">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -271,7 +240,7 @@
           <property name="font">
            <font>
             <family>Arial</family>
-            <pointsize>10</pointsize>
+            <pointsize>8</pointsize>
            </font>
           </property>
           <property name="text">
@@ -287,12 +256,6 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
           <property name="text">
            <string/>
           </property>
@@ -302,12 +265,6 @@
       </item>
       <item row="4" column="3">
        <widget class="QLineEdit" name="tec6_Mode">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -317,8 +274,8 @@
        <widget class="QPushButton" name="buttonRefresh">
         <property name="font">
          <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
+          <family>.AppleSystemUIFont</family>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
@@ -330,8 +287,8 @@
        <widget class="QLabel" name="labelTop_Supply_U">
         <property name="font">
          <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
+          <family>.AppleSystemUIFont</family>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
@@ -341,12 +298,6 @@
       </item>
       <item row="7" column="4">
        <widget class="QLineEdit" name="tec4_Voltage">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -354,12 +305,6 @@
       </item>
       <item row="8" column="1">
        <widget class="QLineEdit" name="tec1_Temp">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="acceptDrops">
          <bool>false</bool>
         </property>
@@ -381,7 +326,7 @@
           <property name="font">
            <font>
             <family>Arial</family>
-            <pointsize>10</pointsize>
+            <pointsize>8</pointsize>
            </font>
           </property>
           <property name="text">
@@ -391,12 +336,6 @@
         </item>
         <item>
          <widget class="QCheckBox" name="checkBoxTEC7">
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
           <property name="text">
            <string/>
           </property>
@@ -408,8 +347,8 @@
        <widget class="QLabel" name="labelBot_Temp">
         <property name="font">
          <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
+          <family>.AppleSystemUIFont</family>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
@@ -419,12 +358,6 @@
       </item>
       <item row="8" column="2">
        <widget class="QLineEdit" name="tec2_Temp">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -434,8 +367,8 @@
        <widget class="QLabel" name="labelTop_Temp">
         <property name="font">
          <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
+          <family>.AppleSystemUIFont</family>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
@@ -455,8 +388,8 @@
           </property>
           <property name="font">
            <font>
-            <family>Arial</family>
-            <pointsize>10</pointsize>
+            <family>.AppleSystemUIFont</family>
+            <pointsize>8</pointsize>
            </font>
           </property>
           <property name="text">
@@ -466,12 +399,6 @@
         </item>
         <item>
          <widget class="QCheckBox" name="checkBoxTEC4">
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
           <property name="text">
            <string/>
           </property>
@@ -492,7 +419,7 @@
           <property name="font">
            <font>
             <family>Arial</family>
-            <pointsize>10</pointsize>
+            <pointsize>8</pointsize>
            </font>
           </property>
           <property name="text">
@@ -502,12 +429,6 @@
         </item>
         <item>
          <widget class="QCheckBox" name="checkBoxTEC2">
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
           <property name="text">
            <string/>
           </property>
@@ -519,8 +440,8 @@
        <widget class="QLabel" name="labelBot_Mode">
         <property name="font">
          <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
+          <family>.AppleSystemUIFont</family>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
@@ -530,12 +451,6 @@
       </item>
       <item row="7" column="1">
        <widget class="QLineEdit" name="tec1_Voltage">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="acceptDrops">
          <bool>false</bool>
         </property>
@@ -546,12 +461,6 @@
       </item>
       <item row="9" column="4">
        <widget class="QLineEdit" name="tec4_TempM">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -559,12 +468,6 @@
       </item>
       <item row="1" column="1">
        <widget class="QLineEdit" name="tec8_Voltage">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="acceptDrops">
          <bool>false</bool>
         </property>
@@ -575,12 +478,6 @@
       </item>
       <item row="5" column="3">
        <widget class="QLineEdit" name="tec6_Supply_U">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -588,12 +485,6 @@
       </item>
       <item row="8" column="3">
        <widget class="QLineEdit" name="tec3_Temp">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -601,12 +492,6 @@
       </item>
       <item row="10" column="4">
        <widget class="QLineEdit" name="tec4_Mode">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -614,12 +499,6 @@
       </item>
       <item row="9" column="1">
        <widget class="QLineEdit" name="tec1_TempM">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="acceptDrops">
          <bool>false</bool>
         </property>
@@ -640,8 +519,8 @@
           </property>
           <property name="font">
            <font>
-            <family>Arial</family>
-            <pointsize>10</pointsize>
+            <family>.AppleSystemUIFont</family>
+            <pointsize>8</pointsize>
            </font>
           </property>
           <property name="text">
@@ -651,12 +530,6 @@
         </item>
         <item>
          <widget class="QCheckBox" name="checkBoxTEC5">
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
           <property name="text">
            <string/>
           </property>
@@ -666,12 +539,6 @@
       </item>
       <item row="10" column="3">
        <widget class="QLineEdit" name="tec3_Mode">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -681,8 +548,8 @@
        <widget class="QLabel" name="labelBot_Voltage_2">
         <property name="font">
          <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
+          <family>.AppleSystemUIFont</family>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
@@ -692,12 +559,6 @@
       </item>
       <item row="2" column="1">
        <widget class="QLineEdit" name="tec8_Temp">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="acceptDrops">
          <bool>false</bool>
         </property>
@@ -708,12 +569,6 @@
       </item>
       <item row="1" column="3">
        <widget class="QLineEdit" name="tec6_Voltage">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -721,12 +576,6 @@
       </item>
       <item row="3" column="3">
        <widget class="QLineEdit" name="tec6_TempM">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -736,8 +585,8 @@
        <widget class="QLabel" name="labelBot_TempM">
         <property name="font">
          <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
+          <family>.AppleSystemUIFont</family>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
@@ -747,12 +596,6 @@
       </item>
       <item row="3" column="2">
        <widget class="QLineEdit" name="tec7_TempM">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -760,12 +603,6 @@
       </item>
       <item row="4" column="1">
        <widget class="QLineEdit" name="tec8_Mode">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="acceptDrops">
          <bool>false</bool>
         </property>
@@ -776,12 +613,6 @@
       </item>
       <item row="7" column="2">
        <widget class="QLineEdit" name="tec2_Voltage">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -791,8 +622,8 @@
        <widget class="QLabel" name="labelTop_Mode">
         <property name="font">
          <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
+          <family>.AppleSystemUIFont</family>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
@@ -802,12 +633,6 @@
       </item>
       <item row="5" column="2">
        <widget class="QLineEdit" name="tec7_Supply_U">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -815,12 +640,6 @@
       </item>
       <item row="9" column="2">
        <widget class="QLineEdit" name="tec2_TempM">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -838,8 +657,8 @@
           </property>
           <property name="font">
            <font>
-            <family>Arial</family>
-            <pointsize>10</pointsize>
+            <family>.AppleSystemUIFont</family>
+            <pointsize>8</pointsize>
            </font>
           </property>
           <property name="text">
@@ -849,12 +668,6 @@
         </item>
         <item>
          <widget class="QCheckBox" name="checkBoxTEC3">
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
           <property name="text">
            <string/>
           </property>
@@ -864,12 +677,6 @@
       </item>
       <item row="3" column="1">
        <widget class="QLineEdit" name="tec8_TempM">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="acceptDrops">
          <bool>false</bool>
         </property>
@@ -880,12 +687,6 @@
       </item>
       <item row="4" column="2">
        <widget class="QLineEdit" name="tec7_Mode">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -893,12 +694,6 @@
       </item>
       <item row="9" column="3">
        <widget class="QLineEdit" name="tec3_TempM">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -906,12 +701,6 @@
       </item>
       <item row="7" column="3">
        <widget class="QLineEdit" name="tec3_Voltage">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -919,12 +708,6 @@
       </item>
       <item row="10" column="2">
        <widget class="QLineEdit" name="tec2_Mode">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -932,12 +715,6 @@
       </item>
       <item row="2" column="3">
        <widget class="QLineEdit" name="tec6_Temp">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -945,12 +722,6 @@
       </item>
       <item row="10" column="1">
        <widget class="QLineEdit" name="tec1_Mode">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="acceptDrops">
          <bool>false</bool>
         </property>
@@ -961,12 +732,6 @@
       </item>
       <item row="3" column="4">
        <widget class="QLineEdit" name="tec5_TempM">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -976,8 +741,8 @@
        <widget class="QLabel" name="labelTop_TempM">
         <property name="font">
          <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
+          <family>.AppleSystemUIFont</family>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
@@ -987,12 +752,6 @@
       </item>
       <item row="5" column="1">
        <widget class="QLineEdit" name="tec8_Supply_U">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="acceptDrops">
          <bool>false</bool>
         </property>
@@ -1003,12 +762,6 @@
       </item>
       <item row="5" column="4">
        <widget class="QLineEdit" name="tec5_Supply_U">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -1018,8 +771,8 @@
        <widget class="QLabel" name="labelTop_Voltage">
         <property name="font">
          <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
+          <family>.AppleSystemUIFont</family>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
@@ -1029,12 +782,6 @@
       </item>
       <item row="1" column="4">
        <widget class="QLineEdit" name="tec5_Voltage">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -1042,12 +789,6 @@
       </item>
       <item row="2" column="4">
        <widget class="QLineEdit" name="tec5_Temp">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -1055,12 +796,6 @@
       </item>
       <item row="4" column="4">
        <widget class="QLineEdit" name="tec5_Mode">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -1070,8 +805,8 @@
        <widget class="QLabel" name="labelBot_Voltage">
         <property name="font">
          <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
+          <family>.AppleSystemUIFont</family>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
@@ -1081,12 +816,6 @@
       </item>
       <item row="8" column="4">
        <widget class="QLineEdit" name="tec4_Temp">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -1104,8 +833,8 @@
           </property>
           <property name="font">
            <font>
-            <family>Arial</family>
-            <pointsize>10</pointsize>
+            <family>.AppleSystemUIFont</family>
+            <pointsize>8</pointsize>
            </font>
           </property>
           <property name="text">
@@ -1115,12 +844,6 @@
         </item>
         <item>
          <widget class="QCheckBox" name="checkBoxTEC6">
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
           <property name="text">
            <string/>
           </property>
@@ -1141,7 +864,7 @@
           <property name="font">
            <font>
             <family>Arial</family>
-            <pointsize>10</pointsize>
+            <pointsize>8</pointsize>
            </font>
           </property>
           <property name="text">
@@ -1157,12 +880,6 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
           <property name="text">
            <string/>
           </property>
@@ -1172,12 +889,6 @@
       </item>
       <item row="1" column="2">
        <widget class="QLineEdit" name="tec7_Voltage">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -1187,8 +898,8 @@
        <widget class="QLabel" name="labelBot_Supply_U">
         <property name="font">
          <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
+          <family>.AppleSystemUIFont</family>
+          <pointsize>8</pointsize>
          </font>
         </property>
         <property name="text">
@@ -1198,12 +909,6 @@
       </item>
       <item row="11" column="1">
        <widget class="QLineEdit" name="tec1_Supply_U">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="acceptDrops">
          <bool>false</bool>
         </property>
@@ -1214,12 +919,6 @@
       </item>
       <item row="11" column="2">
        <widget class="QLineEdit" name="tec2_Supply_U">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -1227,12 +926,6 @@
       </item>
       <item row="11" column="3">
        <widget class="QLineEdit" name="tec3_Supply_U">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -1240,12 +933,6 @@
       </item>
       <item row="11" column="4">
        <widget class="QLineEdit" name="tec4_Supply_U">
-        <property name="font">
-         <font>
-          <family>Arial</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
         <property name="frame">
          <bool>false</bool>
         </property>
@@ -1264,8 +951,8 @@
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
-       <pointsize>10</pointsize>
+       <family>.AppleSystemUIFont</family>
+       <pointsize>8</pointsize>
       </font>
      </property>
      <property name="text">
@@ -1283,8 +970,8 @@
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
-       <pointsize>10</pointsize>
+       <family>.AppleSystemUIFont</family>
+       <pointsize>8</pointsize>
       </font>
      </property>
      <property name="text">
@@ -1302,8 +989,8 @@
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
-       <pointsize>10</pointsize>
+       <family>.AppleSystemUIFont</family>
+       <pointsize>8</pointsize>
       </font>
      </property>
      <property name="text">
@@ -1322,8 +1009,8 @@
     </property>
     <property name="font">
      <font>
-      <family>Arial</family>
-      <pointsize>10</pointsize>
+      <family>Courier New</family>
+      <pointsize>7</pointsize>
      </font>
     </property>
    </widget>
@@ -1339,7 +1026,7 @@
     <property name="font">
      <font>
       <family>Arial</family>
-      <pointsize>10</pointsize>
+      <pointsize>8</pointsize>
      </font>
     </property>
     <property name="text">
@@ -1355,19 +1042,13 @@
       <height>466</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <family>Arial</family>
-      <pointsize>10</pointsize>
-     </font>
-    </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
       <widget class="QToolButton" name="buttonQuit">
        <property name="font">
         <font>
-         <family>Arial</family>
-         <pointsize>10</pointsize>
+         <family>.AppleSystemUIFont</family>
+         <pointsize>8</pointsize>
         </font>
        </property>
        <property name="text">
@@ -1379,8 +1060,8 @@
       <widget class="QLabel" name="labelTECFrame_3">
        <property name="font">
         <font>
-         <family>Arial</family>
-         <pointsize>10</pointsize>
+         <family>Menlo</family>
+         <pointsize>8</pointsize>
          <bold>true</bold>
         </font>
        </property>
@@ -1406,7 +1087,7 @@
        <property name="font">
         <font>
          <family>Arial</family>
-         <pointsize>10</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
        <property name="text">
@@ -1431,7 +1112,7 @@
        <property name="font">
         <font>
          <family>Arial</family>
-         <pointsize>10</pointsize>
+         <pointsize>8</pointsize>
         </font>
        </property>
        <property name="text">
@@ -1441,12 +1122,6 @@
      </item>
      <item>
       <spacer name="horizontalSpacer">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -1462,8 +1137,8 @@
       <widget class="QLabel" name="labelTemp">
        <property name="font">
         <font>
-         <family>Arial</family>
-         <pointsize>10</pointsize>
+         <family>.AppleSystemUIFont</family>
+         <pointsize>8</pointsize>
         </font>
        </property>
        <property name="text">
@@ -1472,21 +1147,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditTemp">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-      </widget>
+      <widget class="QLineEdit" name="lineEditTemp"/>
      </item>
      <item>
       <widget class="QLabel" name="labelRH">
        <property name="font">
         <font>
-         <family>Arial</family>
-         <pointsize>10</pointsize>
+         <family>.AppleSystemUIFont</family>
+         <pointsize>8</pointsize>
         </font>
        </property>
        <property name="text">
@@ -1495,21 +1163,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditRH">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-      </widget>
+      <widget class="QLineEdit" name="lineEditRH"/>
      </item>
      <item>
       <widget class="QLabel" name="labelDP">
        <property name="font">
         <font>
-         <family>Arial</family>
-         <pointsize>10</pointsize>
+         <family>.AppleSystemUIFont</family>
+         <pointsize>8</pointsize>
         </font>
        </property>
        <property name="text">
@@ -1518,23 +1179,10 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditDP">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-      </widget>
+      <widget class="QLineEdit" name="lineEditDP"/>
      </item>
      <item>
       <spacer name="horizontalSpacer_2">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -1550,8 +1198,8 @@
       <widget class="QLabel" name="labelCANbusError">
        <property name="font">
         <font>
-         <family>Arial</family>
-         <pointsize>10</pointsize>
+         <family>.AppleSystemUIFont</family>
+         <pointsize>5</pointsize>
         </font>
        </property>
        <property name="text">
@@ -1572,7 +1220,7 @@
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>10</pointsize>
+           <pointsize>5</pointsize>
           </font>
          </property>
          <property name="text">
@@ -1593,12 +1241,6 @@
            <width>60</width>
            <height>20</height>
           </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Arial</family>
-           <pointsize>10</pointsize>
-          </font>
          </property>
          <property name="layoutDirection">
           <enum>Qt::RightToLeft</enum>
@@ -1623,7 +1265,7 @@
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>10</pointsize>
+           <pointsize>5</pointsize>
           </font>
          </property>
          <property name="text">
@@ -1639,12 +1281,6 @@
            <height>20</height>
           </size>
          </property>
-         <property name="font">
-          <font>
-           <family>Arial</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
          <property name="layoutDirection">
           <enum>Qt::RightToLeft</enum>
          </property>
@@ -1659,8 +1295,8 @@
       <widget class="QLabel" name="labelCANbusRunTime">
        <property name="font">
         <font>
-         <family>Arial</family>
-         <pointsize>10</pointsize>
+         <family>.AppleSystemUIFont</family>
+         <pointsize>6</pointsize>
         </font>
        </property>
        <property name="text">
@@ -1669,14 +1305,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEditRunTime">
-       <property name="font">
-        <font>
-         <family>Arial</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-      </widget>
+      <widget class="QLineEdit" name="lineEditRunTime"/>
      </item>
     </layout>
    </widget>
