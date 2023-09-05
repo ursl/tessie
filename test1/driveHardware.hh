@@ -115,6 +115,9 @@ public:
   float getCANReadFloatVal() {return fCANReadFloatVal;}
   int   getCANReadIntVal() {return fCANReadIntVal;}
 
+  // -- FLASH save/load
+  void loadFromFlash();
+  void saveToFlash();
 
 public slots:
   void  sentFromServer(QString msg);

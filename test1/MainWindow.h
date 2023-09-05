@@ -68,10 +68,6 @@ private slots:
     void guiWriteToCAN();
     void guiReadFromCAN();
 
-    void guiFlashLoadButtonRead();
-    void guiFlashSaveButtonRead();
-
-
     void tecSetFromUI(int itec, std::string rname, QWidget *);
 
     void tec8VoltSet() {tecSetFromUI(8, "ControlVoltage_Set", ui->tec8_Voltage); }
@@ -127,6 +123,9 @@ private slots:
     void openTEC3() {openTECDisplay(3);}
     void openTEC2() {openTECDisplay(2);}
     void openTEC1() {openTECDisplay(1);}
+
+    void guiFlashLoadButtonRead();
+    void guiFlashSaveButtonRead();
 
 private:
     // -- without the following line you cannot 'go to slot'

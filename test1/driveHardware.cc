@@ -1342,6 +1342,24 @@ void driveHardware::setTECRegister(int itec, std::string regname, float value) {
 
 
 // ----------------------------------------------------------------------
+void driveHardware::loadFromFlash() {
+    fCANId = (CANBUS_SHIFT | CANBUS_PUBLIC | CANBUS_TECREC | CANBUS_CMD);
+    fCANReg = 8; // Load Variables
+    fCANVal = fTECParameter;
+    sendCANmessage();
+}
+
+
+// ----------------------------------------------------------------------
+void driveHardware::saveToFlash() {
+    fCANId = (CANBUS_SHIFT | CANBUS_PUBLIC | CANBUS_TECREC | CANBUS_CMD);
+    fCANReg = 8; // Save Variables
+    fCANVal = fTECParameter;
+    sendCANmessage();
+}
+
+
+// ----------------------------------------------------------------------
 void driveHardware::initTECData() {
   for (unsigned int itec = 1; itec <=8; ++itec) {
     fTECData.insert(make_pair(itec, initAllTECRegister()));

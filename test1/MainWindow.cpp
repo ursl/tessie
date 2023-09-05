@@ -273,6 +273,7 @@ void MainWindow::guiSetRegName() {
 // ----------------------------------------------------------------------
 void MainWindow::guiFlashLoadButtonRead() {
   cout << "guiFlashLoadButtonRead()"  << endl;
+  fpHw->loadFromFlash();
 
 }
 
@@ -280,7 +281,7 @@ void MainWindow::guiFlashLoadButtonRead() {
 // ----------------------------------------------------------------------
 void MainWindow::guiFlashSaveButtonRead() {
     cout << "guiFlashSaveButtonRead()"  << endl;
-
+    fpHw->saveToFlash();
 }
 
 
