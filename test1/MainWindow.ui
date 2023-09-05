@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>541</height>
+    <width>1119</width>
+    <height>912</height>
    </rect>
   </property>
   <property name="font">
@@ -26,9 +26,9 @@
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>90</y>
-      <width>661</width>
-      <height>411</height>
+      <y>100</y>
+      <width>751</width>
+      <height>819</height>
      </rect>
     </property>
     <property name="font">
@@ -46,957 +46,885 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="labelTECFrame">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>121</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Menlo</family>
-       <pointsize>8</pointsize>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>TEC controller</string>
-     </property>
-    </widget>
-    <widget class="QTextEdit" name="textTECName">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>190</y>
-       <width>151</width>
-       <height>21</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="checkboxTECLockAll">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>50</y>
-       <width>85</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>.AppleSystemUIFont</family>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>lock all</string>
-     </property>
-    </widget>
-    <widget class="QTextEdit" name="textTECValue">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>250</y>
-       <width>91</width>
-       <height>21</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QTextEdit" name="textTECNumber">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>130</y>
-       <width>91</width>
-       <height>21</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelTECFrame_2">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>110</y>
-       <width>141</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>.AppleSystemUIFont</family>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>TEC number</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelTECName">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>170</y>
-       <width>141</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>.AppleSystemUIFont</family>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>TEC Register</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelTECValue">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>230</y>
-       <width>141</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>.AppleSystemUIFont</family>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>TEC Reg Value </string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonRead">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>280</y>
-       <width>51</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>.AppleSystemUIFont</family>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Read</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButtonWrite">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>280</y>
-       <width>51</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>.AppleSystemUIFont</family>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Write</string>
-     </property>
-    </widget>
-    <widget class="QWidget" name="gridLayoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>180</x>
-       <y>10</y>
-       <width>464</width>
-       <height>389</height>
-      </rect>
-     </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="2" column="2">
-       <widget class="QLineEdit" name="tec7_Temp">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="1">
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
-        <item>
-         <widget class="QPushButton" name="pushButtonTEC1">
-          <property name="maximumSize">
-           <size>
-            <width>40</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>1</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="checkBoxTEC1">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="4" column="3">
-       <widget class="QLineEdit" name="tec6_Mode">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0">
-       <widget class="QPushButton" name="buttonRefresh">
-        <property name="font">
-         <font>
-          <family>.AppleSystemUIFont</family>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Refresh</string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="0">
-       <widget class="QLabel" name="labelTop_Supply_U">
-        <property name="font">
-         <font>
-          <family>.AppleSystemUIFont</family>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Supply_U                 </string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="4">
-       <widget class="QLineEdit" name="tec4_Voltage">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="1">
-       <widget class="QLineEdit" name="tec1_Temp">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="QPushButton" name="pushButtonTEC7">
-          <property name="maximumSize">
-           <size>
-            <width>40</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>7</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="checkBoxTEC7">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="8" column="0">
-       <widget class="QLabel" name="labelBot_Temp">
-        <property name="font">
-         <font>
-          <family>.AppleSystemUIFont</family>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Temp_Set                </string>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="2">
-       <widget class="QLineEdit" name="tec2_Temp">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="labelTop_Temp">
-        <property name="font">
-         <font>
-          <family>.AppleSystemUIFont</family>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Temp_Set                </string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="4">
-       <layout class="QHBoxLayout" name="horizontalLayout_8">
-        <item>
-         <widget class="QPushButton" name="pushButtonTEC4">
-          <property name="maximumSize">
-           <size>
-            <width>40</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>.AppleSystemUIFont</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>4</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="checkBoxTEC4">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="6" column="2">
-       <layout class="QHBoxLayout" name="horizontalLayout_6">
-        <item>
-         <widget class="QPushButton" name="pushButtonTEC2">
-          <property name="maximumSize">
-           <size>
-            <width>40</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>2</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="checkBoxTEC2">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="10" column="0">
-       <widget class="QLabel" name="labelBot_Mode">
-        <property name="font">
-         <font>
-          <family>.AppleSystemUIFont</family>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Mode (0=T/1=V)        </string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="1">
-       <widget class="QLineEdit" name="tec1_Voltage">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="4">
-       <widget class="QLineEdit" name="tec4_TempM">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="tec8_Voltage">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="3">
-       <widget class="QLineEdit" name="tec6_Supply_U">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="3">
-       <widget class="QLineEdit" name="tec3_Temp">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="10" column="4">
-       <widget class="QLineEdit" name="tec4_Mode">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="1">
-       <widget class="QLineEdit" name="tec1_TempM">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="4">
-       <layout class="QHBoxLayout" name="horizontalLayout_4">
-        <item>
-         <widget class="QPushButton" name="pushButtonTEC5">
-          <property name="maximumSize">
-           <size>
-            <width>40</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>.AppleSystemUIFont</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>5</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="checkBoxTEC5">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="10" column="3">
-       <widget class="QLineEdit" name="tec3_Mode">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0">
-       <widget class="QLabel" name="labelBot_Voltage_2">
-        <property name="font">
-         <font>
-          <family>.AppleSystemUIFont</family>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="tec8_Temp">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3">
-       <widget class="QLineEdit" name="tec6_Voltage">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="3">
-       <widget class="QLineEdit" name="tec6_TempM">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="0">
-       <widget class="QLabel" name="labelBot_TempM">
-        <property name="font">
-         <font>
-          <family>.AppleSystemUIFont</family>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Temp_M                   </string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="2">
-       <widget class="QLineEdit" name="tec7_TempM">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLineEdit" name="tec8_Mode">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="2">
-       <widget class="QLineEdit" name="tec2_Voltage">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="labelTop_Mode">
-        <property name="font">
-         <font>
-          <family>.AppleSystemUIFont</family>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Mode (0=T/1=V)              </string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="2">
-       <widget class="QLineEdit" name="tec7_Supply_U">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="2">
-       <widget class="QLineEdit" name="tec2_TempM">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="3">
-       <layout class="QHBoxLayout" name="horizontalLayout_7">
-        <item>
-         <widget class="QPushButton" name="pushButtonTEC3">
-          <property name="maximumSize">
-           <size>
-            <width>40</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>.AppleSystemUIFont</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>3</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="checkBoxTEC3">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="tec8_TempM">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="2">
-       <widget class="QLineEdit" name="tec7_Mode">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="3">
-       <widget class="QLineEdit" name="tec3_TempM">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="3">
-       <widget class="QLineEdit" name="tec3_Voltage">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="10" column="2">
-       <widget class="QLineEdit" name="tec2_Mode">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="3">
-       <widget class="QLineEdit" name="tec6_Temp">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="10" column="1">
-       <widget class="QLineEdit" name="tec1_Mode">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="4">
-       <widget class="QLineEdit" name="tec5_TempM">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="labelTop_TempM">
-        <property name="font">
-         <font>
-          <family>.AppleSystemUIFont</family>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Temp_ M                 </string>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="1">
-       <widget class="QLineEdit" name="tec8_Supply_U">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="4">
-       <widget class="QLineEdit" name="tec5_Supply_U">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="labelTop_Voltage">
-        <property name="font">
-         <font>
-          <family>Academy Engraved LET</family>
-          <pointsize>6</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>ControlVoltage_Set</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="4">
-       <widget class="QLineEdit" name="tec5_Voltage">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="4">
-       <widget class="QLineEdit" name="tec5_Temp">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="4">
-       <widget class="QLineEdit" name="tec5_Mode">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="0">
-       <widget class="QLabel" name="labelBot_Voltage">
-        <property name="font">
-         <font>
-          <family>.AppleSystemUIFont</family>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>ControlVoltage_Set</string>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="4">
-       <widget class="QLineEdit" name="tec4_Temp">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="3">
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <item>
-         <widget class="QPushButton" name="pushButtonTEC6">
-          <property name="maximumSize">
-           <size>
-            <width>40</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>.AppleSystemUIFont</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>6</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="checkBoxTEC6">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="0" column="1">
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QPushButton" name="pushButtonTEC8">
-          <property name="maximumSize">
-           <size>
-            <width>40</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>Arial</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>8</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QCheckBox" name="checkBoxTEC8">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="1" column="2">
-       <widget class="QLineEdit" name="tec7_Voltage">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="11" column="0">
-       <widget class="QLabel" name="labelBot_Supply_U">
-        <property name="font">
-         <font>
-          <family>.AppleSystemUIFont</family>
-          <pointsize>8</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Supply_U                 </string>
-        </property>
-       </widget>
-      </item>
-      <item row="11" column="1">
-       <widget class="QLineEdit" name="tec1_Supply_U">
-        <property name="acceptDrops">
-         <bool>false</bool>
-        </property>
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="11" column="2">
-       <widget class="QLineEdit" name="tec2_Supply_U">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="11" column="3">
-       <widget class="QLineEdit" name="tec3_Supply_U">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="11" column="4">
-       <widget class="QLineEdit" name="tec4_Supply_U">
-        <property name="frame">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QPushButton" name="flashLoadButtonRead">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>340</y>
-       <width>41</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>.AppleSystemUIFont</family>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Load </string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labelFlashButtons">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>320</y>
-       <width>141</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>.AppleSystemUIFont</family>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>FLASH Variables</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="flashSaveButtonRead">
-     <property name="geometry">
-      <rect>
-       <x>80</x>
-       <y>340</y>
-       <width>41</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>.AppleSystemUIFont</family>
-       <pointsize>8</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Save</string>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout_16">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMaximumSize</enum>
+       </property>
+       <item>
+        <widget class="QLabel" name="labelTECFrame">
+         <property name="font">
+          <font>
+           <family>Menlo</family>
+           <pointsize>8</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>TEC controller</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkboxTECLockAll">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>lock all</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonRefresh">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Refresh</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelTECFrame_2">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>TEC number</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="textTECNumber"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelTECName">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>TEC Register</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="textTECName"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelTECValue">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>TEC Reg Value </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="textTECValue"/>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_12">
+         <item>
+          <widget class="QPushButton" name="pushButtonWrite">
+           <property name="font">
+            <font>
+             <family>.AppleSystemUIFont</family>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Write</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButtonRead">
+           <property name="font">
+            <font>
+             <family>.AppleSystemUIFont</family>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Read</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="labelFlashButtons">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>FLASH Variables</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_13">
+         <item>
+          <widget class="QPushButton" name="flashSaveButtonRead">
+           <property name="font">
+            <font>
+             <family>.AppleSystemUIFont</family>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Save</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="flashLoadButtonRead">
+           <property name="font">
+            <font>
+             <family>.AppleSystemUIFont</family>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Load </string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="2" column="2">
+        <widget class="QLineEdit" name="tec7_Temp">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QPushButton" name="pushButtonTEC1">
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxTEC1">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="4" column="3">
+        <widget class="QLineEdit" name="tec6_Mode">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="labelTop_Supply_U">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Supply_U                 </string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="4">
+        <widget class="QLineEdit" name="tec4_Voltage">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QLineEdit" name="tec1_Temp">
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QPushButton" name="pushButtonTEC7">
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>7</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxTEC7">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="labelBot_Temp">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Temp_Set                </string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="2">
+        <widget class="QLineEdit" name="tec2_Temp">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="labelTop_Temp">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Temp_Set                </string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="4">
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <item>
+          <widget class="QPushButton" name="pushButtonTEC4">
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>.AppleSystemUIFont</family>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>4</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxTEC4">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="6" column="2">
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QPushButton" name="pushButtonTEC2">
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>2</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxTEC2">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="labelBot_Mode">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Mode (0=T/1=V)        </string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLineEdit" name="tec1_Voltage">
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="4">
+        <widget class="QLineEdit" name="tec4_TempM">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="tec8_Voltage">
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="3">
+        <widget class="QLineEdit" name="tec6_Supply_U">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="3">
+        <widget class="QLineEdit" name="tec3_Temp">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="4">
+        <widget class="QLineEdit" name="tec4_Mode">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QLineEdit" name="tec1_TempM">
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="4">
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QPushButton" name="pushButtonTEC5">
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>.AppleSystemUIFont</family>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>5</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxTEC5">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="10" column="3">
+        <widget class="QLineEdit" name="tec3_Mode">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="labelBot_Voltage_2">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>TEC select</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="tec8_Temp">
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QLineEdit" name="tec6_Voltage">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QLineEdit" name="tec6_TempM">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="labelBot_TempM">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Temp_M                   </string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QLineEdit" name="tec7_TempM">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="tec8_Mode">
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <widget class="QLineEdit" name="tec2_Voltage">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="labelTop_Mode">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Mode (0=T/1=V)              </string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QLineEdit" name="tec7_Supply_U">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="2">
+        <widget class="QLineEdit" name="tec2_TempM">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="3">
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QPushButton" name="pushButtonTEC3">
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>.AppleSystemUIFont</family>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>3</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxTEC3">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="tec8_TempM">
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QLineEdit" name="tec7_Mode">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="3">
+        <widget class="QLineEdit" name="tec3_TempM">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="3">
+        <widget class="QLineEdit" name="tec3_Voltage">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="2">
+        <widget class="QLineEdit" name="tec2_Mode">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QLineEdit" name="tec6_Temp">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <widget class="QLineEdit" name="tec1_Mode">
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="4">
+        <widget class="QLineEdit" name="tec5_TempM">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="labelTop_TempM">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Temp_ M                 </string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="tec8_Supply_U">
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="4">
+        <widget class="QLineEdit" name="tec5_Supply_U">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="labelTop_Voltage">
+         <property name="font">
+          <font>
+           <family>Academy Engraved LET</family>
+           <pointsize>6</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>ControlVoltage_Set</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <widget class="QLineEdit" name="tec5_Voltage">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="4">
+        <widget class="QLineEdit" name="tec5_Temp">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="4">
+        <widget class="QLineEdit" name="tec5_Mode">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="labelBot_Voltage">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>ControlVoltage_Set</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="4">
+        <widget class="QLineEdit" name="tec4_Temp">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QPushButton" name="pushButtonTEC6">
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>.AppleSystemUIFont</family>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>6</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxTEC6">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="1">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QPushButton" name="pushButtonTEC8">
+           <property name="maximumSize">
+            <size>
+             <width>40</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Arial</family>
+             <pointsize>8</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>8</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBoxTEC8">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLineEdit" name="tec7_Voltage">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0">
+        <widget class="QLabel" name="labelBot_Supply_U">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Supply_U                 </string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="1">
+        <widget class="QLineEdit" name="tec1_Supply_U">
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="2">
+        <widget class="QLineEdit" name="tec2_Supply_U">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="3">
+        <widget class="QLineEdit" name="tec3_Supply_U">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="4">
+        <widget class="QLineEdit" name="tec4_Supply_U">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </widget>
    <widget class="QTextEdit" name="textEditLog">
     <property name="geometry">
@@ -1321,28 +1249,11 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <tabstops>
-  <tabstop>checkboxTECLockAll</tabstop>
   <tabstop>textTECName</tabstop>
   <tabstop>textEditLog</tabstop>
  </tabstops>
  <resources/>
  <connections>
-  <connection>
-   <sender>pushButtonTEC7</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>openTEC7()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>553</x>
-     <y>124</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>129</x>
-     <y>124</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>checkboxTECLockAll</sender>
    <signal>clicked(bool)</signal>
@@ -1356,214 +1267,6 @@
     <hint type="destinationlabel">
      <x>324</x>
      <y>304</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxTEC5</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>checkTEC5(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>772</x>
-     <y>120</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>739</x>
-     <y>116</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxTEC6</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>checkTEC6(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>684</x>
-     <y>120</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>672</x>
-     <y>124</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxTEC7</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>checkTEC7(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>595</x>
-     <y>120</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>524</x>
-     <y>137</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec8_Voltage</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec8VoltSet()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>507</x>
-     <y>159</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>110</x>
-     <y>235</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonRefresh</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>clkRefresh()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>313</x>
-     <y>131</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>248</x>
-     <y>67</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxTEC8</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>checkTEC8(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>504</x>
-     <y>120</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>760</x>
-     <y>9</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec8_Temp</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec8TempSet()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>507</x>
-     <y>190</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>17</x>
-     <y>257</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec7_Temp</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec7TempSet()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>595</x>
-     <y>190</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>36</x>
-     <y>265</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec6_Temp</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec6TempSet()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>684</x>
-     <y>190</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>52</x>
-     <y>273</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec5_Temp</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec5TempSet()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>772</x>
-     <y>190</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>70</x>
-     <y>280</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec7_Voltage</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec7VoltSet()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>595</x>
-     <y>159</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>24</x>
-     <y>247</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec6_Voltage</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec6VoltSet()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>684</x>
-     <y>159</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>49</x>
-     <y>253</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec5_Voltage</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec5VoltSet()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>772</x>
-     <y>159</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>83</x>
-     <y>269</y>
     </hint>
    </hints>
   </connection>
@@ -1648,70 +1351,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>tec8_TempM</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec8TempM()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>491</x>
-     <y>221</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>788</x>
-     <y>246</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec7_TempM</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec7TempM()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>580</x>
-     <y>221</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>798</x>
-     <y>231</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec6_TempM</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec6TempM()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>670</x>
-     <y>221</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>793</x>
-     <y>219</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec5_TempM</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec5TempM()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>759</x>
-     <y>221</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>789</x>
-     <y>208</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>buttonValve1</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
@@ -1744,54 +1383,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButtonTEC8</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>openTEC8()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>471</x>
-     <y>124</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>745</x>
-     <y>51</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButtonTEC6</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>openTEC6()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>642</x>
-     <y>124</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButtonTEC5</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>openTEC5()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>731</x>
-     <y>124</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>buttonQuit</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
@@ -1804,6 +1395,150 @@
     <hint type="destinationlabel">
      <x>10</x>
      <y>60</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>flashLoadButtonRead</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>guiFlashLoadButtonRead()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>175</x>
+     <y>448</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>215</x>
+     <y>505</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>flashSaveButtonRead</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>guiFlashSaveButtonRead()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>236</x>
+     <y>444</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>128</x>
+     <y>504</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec2_Temp</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec7TempSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>595</x>
+     <y>376</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>432</x>
+     <y>-4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec6_Mode</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec6Mode()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>684</x>
+     <y>252</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>796</x>
+     <y>179</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec8_Temp</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec8TempSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>507</x>
+     <y>190</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>17</x>
+     <y>257</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec7_Supply_U</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec7Supply_U()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>595</x>
+     <y>283</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>796</x>
+     <y>32</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec3_TempM</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec3TempM()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>684</x>
+     <y>407</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>531</x>
+     <y>-3</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButtonTEC4</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openTEC4()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>731</x>
+     <y>314</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec7_Voltage</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec7VoltSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>595</x>
+     <y>159</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>24</x>
+     <y>247</y>
     </hint>
    </hints>
   </connection>
@@ -1824,34 +1559,146 @@
    </hints>
   </connection>
   <connection>
-   <sender>tec3_Voltage</sender>
+   <sender>tec1_TempM</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>tec3VoltSet()</slot>
+   <slot>tec1TempM()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>684</x>
-     <y>345</y>
+     <x>507</x>
+     <y>407</y>
     </hint>
     <hint type="destinationlabel">
-     <x>798</x>
-     <y>415</y>
+     <x>261</x>
+     <y>8</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>tec2_Voltage</sender>
+   <sender>tec1_Supply_U</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>tec2VoltSet()</slot>
+   <slot>tec1Supply_U()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>507</x>
+     <y>469</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>798</x>
+     <y>547</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec8_Voltage</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec8VoltSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>507</x>
+     <y>159</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>110</x>
+     <y>235</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec4_TempM</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec4TempM()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>772</x>
+     <y>407</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>719</x>
+     <y>-4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec3_Supply_U</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec3Mode()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>684</x>
+     <y>469</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>794</x>
+     <y>328</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec3_Mode</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec3Mode()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>684</x>
+     <y>438</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>795</x>
+     <y>367</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonRefresh</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>clkRefresh()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>313</x>
+     <y>131</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>248</x>
+     <y>67</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec8_Supply_U</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec8Supply_U()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>435</x>
+     <y>275</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>798</x>
+     <y>18</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec2_Supply_U</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec2Supply_U()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>595</x>
-     <y>345</y>
+     <y>469</y>
     </hint>
     <hint type="destinationlabel">
-     <x>799</x>
-     <y>442</y>
+     <x>795</x>
+     <y>339</y>
     </hint>
    </hints>
   </connection>
@@ -1872,34 +1719,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBoxTEC1</sender>
-   <signal>clicked(bool)</signal>
+   <sender>tec8_TempM</sender>
+   <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>checkTEC1(bool)</slot>
+   <slot>tec8TempM()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>504</x>
-     <y>310</y>
+     <x>491</x>
+     <y>221</y>
     </hint>
     <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>checkBoxTEC2</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>checkTEC2(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>595</x>
-     <y>310</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>399</x>
-     <y>299</y>
+     <x>788</x>
+     <y>246</y>
     </hint>
    </hints>
   </connection>
@@ -1916,6 +1747,86 @@
     <hint type="destinationlabel">
      <x>399</x>
      <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButtonTEC7</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openTEC7()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>553</x>
+     <y>124</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>129</x>
+     <y>124</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec5_Temp</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec5TempSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>772</x>
+     <y>190</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>70</x>
+     <y>280</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec4_Mode</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec4Mode()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>711</x>
+     <y>436</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>795</x>
+     <y>353</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec7_Temp</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec7TempSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>595</x>
+     <y>190</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>36</x>
+     <y>265</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxTEC7</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkTEC7(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>595</x>
+     <y>120</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>524</x>
+     <y>137</y>
     </hint>
    </hints>
   </connection>
@@ -1952,18 +1863,34 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButtonTEC2</sender>
+   <sender>pushButtonTEC6</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>openTEC2()</slot>
+   <slot>openTEC6()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>553</x>
-     <y>314</y>
+     <x>642</x>
+     <y>124</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
      <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec3_Temp</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec6TempSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>684</x>
+     <y>376</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>442</x>
+     <y>2</y>
     </hint>
    </hints>
   </connection>
@@ -1984,14 +1911,46 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButtonTEC4</sender>
-   <signal>clicked()</signal>
+   <sender>tec6_Voltage</sender>
+   <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>openTEC4()</slot>
+   <slot>tec6VoltSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>731</x>
-     <y>314</y>
+     <x>684</x>
+     <y>159</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>49</x>
+     <y>253</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec7_TempM</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec7TempM()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>580</x>
+     <y>221</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>798</x>
+     <y>231</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxTEC1</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkTEC1(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>504</x>
+     <y>310</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -2016,34 +1975,34 @@
    </hints>
   </connection>
   <connection>
-   <sender>tec7_Mode</sender>
+   <sender>tec1_Mode</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>tec7Mode()</slot>
+   <slot>tec1Mode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>595</x>
-     <y>252</y>
+     <x>507</x>
+     <y>438</y>
     </hint>
     <hint type="destinationlabel">
-     <x>798</x>
-     <y>303</y>
+     <x>796</x>
+     <y>496</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>tec6_Mode</sender>
-   <signal>returnPressed()</signal>
+   <sender>pushButtonTEC8</sender>
+   <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>tec6Mode()</slot>
+   <slot>openTEC8()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>684</x>
-     <y>252</y>
+     <x>471</x>
+     <y>124</y>
     </hint>
     <hint type="destinationlabel">
-     <x>796</x>
-     <y>179</y>
+     <x>745</x>
+     <y>51</y>
     </hint>
    </hints>
   </connection>
@@ -2064,194 +2023,18 @@
    </hints>
   </connection>
   <connection>
-   <sender>tec1_Mode</sender>
+   <sender>tec5_TempM</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>tec1Mode()</slot>
+   <slot>tec5TempM()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>507</x>
-     <y>438</y>
+     <x>759</x>
+     <y>221</y>
     </hint>
     <hint type="destinationlabel">
-     <x>796</x>
-     <y>496</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec2_Mode</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec2Mode()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>595</x>
-     <y>438</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>798</x>
-     <y>522</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec3_Mode</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec3Mode()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>684</x>
-     <y>438</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>795</x>
-     <y>367</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec4_Mode</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec4Mode()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>711</x>
-     <y>436</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>795</x>
-     <y>353</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec1_Supply_U</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec1Supply_U()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>507</x>
-     <y>469</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>798</x>
-     <y>547</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec2_Supply_U</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec2Supply_U()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>595</x>
-     <y>469</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>795</x>
-     <y>339</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec3_Supply_U</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec3Mode()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>684</x>
-     <y>469</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>794</x>
-     <y>328</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec4_Supply_U</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec4Mode()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>772</x>
-     <y>469</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>794</x>
-     <y>134</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec5_Supply_U</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec5Supply_U()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>772</x>
-     <y>283</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>795</x>
-     <y>92</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec6_Supply_U</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec6Supply_U()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>684</x>
-     <y>283</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>797</x>
-     <y>68</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec7_Supply_U</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec7Supply_U()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>595</x>
-     <y>283</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>796</x>
-     <y>32</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>tec8_Supply_U</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tec8Supply_U()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>435</x>
-     <y>275</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>798</x>
-     <y>18</y>
+     <x>789</x>
+     <y>208</y>
     </hint>
    </hints>
   </connection>
@@ -2272,66 +2055,162 @@
    </hints>
   </connection>
   <connection>
-   <sender>tec2_Temp</sender>
+   <sender>tec7_Mode</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>tec7TempSet()</slot>
+   <slot>tec7Mode()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>595</x>
-     <y>376</y>
+     <y>252</y>
     </hint>
     <hint type="destinationlabel">
-     <x>432</x>
-     <y>-4</y>
+     <x>798</x>
+     <y>303</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>tec3_Temp</sender>
-   <signal>returnPressed()</signal>
+   <sender>pushButtonTEC2</sender>
+   <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>tec6TempSet()</slot>
+   <slot>openTEC2()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>684</x>
-     <y>376</y>
+     <x>553</x>
+     <y>314</y>
     </hint>
     <hint type="destinationlabel">
-     <x>442</x>
-     <y>2</y>
+     <x>399</x>
+     <y>299</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>tec4_Temp</sender>
+   <sender>tec2_Voltage</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>tec5TempSet()</slot>
+   <slot>tec2VoltSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>595</x>
+     <y>345</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>799</x>
+     <y>442</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec5_Supply_U</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec5Supply_U()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>772</x>
-     <y>376</y>
+     <y>283</y>
     </hint>
     <hint type="destinationlabel">
-     <x>673</x>
-     <y>2</y>
+     <x>795</x>
+     <y>92</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>tec1_TempM</sender>
+   <sender>tec3_Voltage</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>tec1TempM()</slot>
+   <slot>tec3VoltSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>507</x>
-     <y>407</y>
+     <x>684</x>
+     <y>345</y>
     </hint>
     <hint type="destinationlabel">
-     <x>261</x>
-     <y>8</y>
+     <x>798</x>
+     <y>415</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec6_Supply_U</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec6Supply_U()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>684</x>
+     <y>283</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>797</x>
+     <y>68</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec5_Voltage</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec5VoltSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>772</x>
+     <y>159</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>83</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec2_Mode</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec2Mode()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>595</x>
+     <y>438</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>798</x>
+     <y>522</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec6_TempM</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec6TempM()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>670</x>
+     <y>221</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>793</x>
+     <y>219</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxTEC8</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkTEC8(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>504</x>
+     <y>120</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>760</x>
+     <y>9</y>
     </hint>
    </hints>
   </connection>
@@ -2352,66 +2231,114 @@
    </hints>
   </connection>
   <connection>
-   <sender>tec3_TempM</sender>
+   <sender>tec6_Temp</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>tec3TempM()</slot>
+   <slot>tec6TempSet()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>684</x>
-     <y>407</y>
+     <y>190</y>
     </hint>
     <hint type="destinationlabel">
-     <x>531</x>
-     <y>-3</y>
+     <x>52</x>
+     <y>273</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>tec4_TempM</sender>
-   <signal>returnPressed()</signal>
+   <sender>checkBoxTEC6</sender>
+   <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
-   <slot>tec4TempM()</slot>
+   <slot>checkTEC6(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>684</x>
+     <y>120</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>672</x>
+     <y>124</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxTEC5</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkTEC5(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>772</x>
-     <y>407</y>
+     <y>120</y>
     </hint>
     <hint type="destinationlabel">
-     <x>719</x>
-     <y>-4</y>
+     <x>739</x>
+     <y>116</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>flashLoadButtonRead</sender>
-   <signal>clicked()</signal>
+   <sender>tec4_Supply_U</sender>
+   <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>guiFlashLoadButtonRead()</slot>
+   <slot>tec4Mode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>175</x>
-     <y>448</y>
+     <x>772</x>
+     <y>469</y>
     </hint>
     <hint type="destinationlabel">
-     <x>215</x>
-     <y>505</y>
+     <x>794</x>
+     <y>134</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>flashSaveButtonRead</sender>
+   <sender>pushButtonTEC5</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>guiFlashSaveButtonRead()</slot>
+   <slot>openTEC5()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>236</x>
-     <y>444</y>
+     <x>731</x>
+     <y>124</y>
     </hint>
     <hint type="destinationlabel">
-     <x>128</x>
-     <y>504</y>
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBoxTEC2</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkTEC2(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>595</x>
+     <y>310</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tec4_Temp</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tec5TempSet()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>772</x>
+     <y>376</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>673</x>
+     <y>2</y>
     </hint>
    </hints>
   </connection>
