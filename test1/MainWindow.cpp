@@ -315,6 +315,8 @@ void MainWindow::updateHardwareDisplay() {
     fTECDisplay->updateHardwareDisplay();
   }
 
+
+
   ui->lineEditTemp->setText(QString::number(fpHw->getTemperature(), 'f', 2));
   ui->lineEditRH->setText(QString::number(fpHw->getRH(), 'f', 2));
   ui->lineEditDP->setText(QString::number(fpHw->getDP(), 'f', 2));
@@ -395,3 +397,5 @@ void MainWindow::closeTECDisplay() {
   cout << "closeTECDisplay()"  << endl;
   fTECDisplay->close();
 }
+
+
