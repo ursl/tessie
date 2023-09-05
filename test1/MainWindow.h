@@ -26,6 +26,8 @@ public:
     void openTECDisplay(int itec);
     void closeTECDisplay();
 
+    void setExpertMode(bool x = false);
+
 public slots:
     void appendText(QString line);
     void updateHardwareDisplay();
@@ -147,6 +149,8 @@ private:
     fUISupply_U,
     fUIMode,
     fUIPIDkd;
+
+    bool fExpertMode{false};
 
     std::vector<QCheckBox*> fUICheckBox;
 };

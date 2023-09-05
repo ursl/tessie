@@ -89,6 +89,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   ui->buttonValve0->setStyleSheet("QPushButton {background-color: gray; color: black;}");
   ui->buttonValve1->setStyleSheet("QPushButton {background-color: gray; color: black;}");
 
+  ui->flashSaveButtonRead->setEnabled(false);
 }
 
 
@@ -101,6 +102,17 @@ MainWindow::~MainWindow() {
 // ----------------------------------------------------------------------
 void MainWindow::appendText(QString line) {
   ui->textEditLog->append(line);
+}
+
+
+// ----------------------------------------------------------------------
+void MainWindow::setExpertMode(bool x) {
+    fExpertMode = x;
+    if (fExpertMode) {
+        ui->flashSaveButtonRead->setEnabled(true);
+    } else {
+        ui->flashSaveButtonRead->setEnabled(false);
+    }
 }
 
 
