@@ -27,8 +27,8 @@ int main(int argc, char *argv[]) {
     }
     if (!strcmp(argv[i], "-f")) {doRunFullScreen = true;}
     if (!strcmp(argv[i], "-d")) {LOG.setLevel(argv[++i]);}
-    if (!strcmp(argv[i], "-v ")) {verbose = 1;}
-    if (!strcmp(argv[i], "-x ")) {expert = true;}
+    if (!strcmp(argv[i], "-v")) {verbose = 1;}
+    if (!strcmp(argv[i], "-x")) {expert = true;}
   }
 
 
