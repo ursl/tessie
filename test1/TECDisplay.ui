@@ -27,10 +27,10 @@
     <active>
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
-       <color alpha="128">
-        <red>215</red>
-        <green>201</green>
-        <blue>26</blue>
+       <color alpha="255">
+        <red>202</red>
+        <green>177</green>
+        <blue>34</blue>
        </color>
       </brush>
      </colorrole>
@@ -49,10 +49,10 @@
     <disabled>
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
-       <color alpha="128">
-        <red>215</red>
-        <green>201</green>
-        <blue>26</blue>
+       <color alpha="255">
+        <red>202</red>
+        <green>177</green>
+        <blue>34</blue>
        </color>
       </brush>
      </colorrole>
