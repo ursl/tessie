@@ -1214,7 +1214,7 @@ void driveHardware::toggleFras(int imask) {
   fFrameW.can_dlc = dlength;
   fFrameW.data[0] = fValveMask;
 #endif
-  stringstream sbla; sbla << "toggleFRAS(" << imask << ")";
+  stringstream sbla; sbla << "toggleFRAS(" << (imask == 1? "flush)": "rinse)");
   fLOG(INFO, sbla.str().c_str());
 
   // -- Send message
