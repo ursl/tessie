@@ -47,7 +47,8 @@ HEADERS += \
 
 FORMS += \
     MainWindow.ui \
-    TECDisplay.ui
+    TECDisplay.ui \
+    TECExpert.ui
 
 # Default rules for deployment.
 #qnx: target.path = /tmp/$${TARGET}/bin
