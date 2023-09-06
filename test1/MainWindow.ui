@@ -1318,7 +1318,7 @@
      <rect>
       <x>20</x>
       <y>30</y>
-      <width>141</width>
+      <width>149</width>
       <height>491</height>
      </rect>
     </property>
@@ -1536,9 +1536,15 @@
           </property>
           <property name="maximumSize">
            <size>
-            <width>60</width>
+            <width>50</width>
             <height>20</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Arial</family>
+            <pointsize>9</pointsize>
+           </font>
           </property>
           <property name="layoutDirection">
            <enum>Qt::RightToLeft</enum>
@@ -1569,11 +1575,23 @@
         </item>
         <item>
          <widget class="QLineEdit" name="lineEditI2CError">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="maximumSize">
            <size>
-            <width>60</width>
+            <width>50</width>
             <height>20</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Arial</family>
+            <pointsize>9</pointsize>
+           </font>
           </property>
           <property name="layoutDirection">
            <enum>Qt::RightToLeft</enum>
