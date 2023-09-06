@@ -178,6 +178,17 @@ void MainWindow::clkRefresh() {
   updateHardwareDisplay();
 }
 
+
+// ----------------------------------------------------------------------
+void MainWindow::guiTecModsPushButton() {
+  stringstream sbla; sbla << "guiTecModsPushButton clicked!";
+  fLOG(INFO, sbla.str());
+
+  fTECExpert  = new TECExpert(this);
+  //fTECExpert->show();
+
+}
+
 // ----------------------------------------------------------------------
 void MainWindow::start() {
   stringstream sbla; sbla << "Startup";

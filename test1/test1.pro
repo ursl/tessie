@@ -24,6 +24,7 @@ SOURCES += \
     CANmessage.cc \
     MainWindow.cpp \
     TECDisplay.cpp \
+    TECExpert.cpp \
     canFrame.cc \
     driveHardware.cc \
     tLog.cc \
@@ -37,6 +38,7 @@ HEADERS += \
     MainWindow.h \
     TECData.hh \
     TECDisplay.h \
+    TECExpert.h \
     TECRegister.hh \
     canFrame.hh \
     driveHardware.hh \
@@ -47,8 +49,7 @@ HEADERS += \
 
 FORMS += \
     MainWindow.ui \
-    TECDisplay.ui \
-    TECExpert.ui
+    TECDisplay.ui
 
 # Default rules for deployment.
 #qnx: target.path = /tmp/$${TARGET}/bin

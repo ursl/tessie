@@ -7,6 +7,8 @@
 
 #include "driveHardware.hh"
 #include "TECDisplay.h"
+#include "TECExpert.h"
+
 #include "tLog.hh"
 
 QT_BEGIN_NAMESPACE
@@ -128,6 +130,7 @@ private slots:
 
     void guiFlashLoadButtonRead();
     void guiFlashSaveButtonRead();
+    void guiTecModsPushButton();
 
 private:
     // -- without the following line you cannot 'go to slot'
@@ -138,6 +141,7 @@ private:
     tLog&         fLOG;
     driveHardware *fpHw;
     TECDisplay    *fTECDisplay;
+    TECExpert     *fTECExpert;
 
     std::string fGuiRegName;
     int         fGuiTecId;

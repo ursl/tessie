@@ -131,6 +131,34 @@
           </property>
          </widget>
         </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="buttonRefresh">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <horstretch>10</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>.AppleSystemUIFont</family>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>Refresh</string>
+          </property>
+         </widget>
+        </item>
         <item row="3" column="0">
          <widget class="QLabel" name="labelTECFrame_2">
           <property name="sizePolicy">
@@ -272,59 +300,6 @@
           </property>
          </widget>
         </item>
-        <item row="11" column="0">
-         <widget class="QLabel" name="labelFlashButtons">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>.AppleSystemUIFont</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>FLASH Variables</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="buttonRefresh">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-            <horstretch>10</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>.AppleSystemUIFont</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
-          </property>
-          <property name="text">
-           <string>Refresh</string>
-          </property>
-         </widget>
-        </item>
         <item row="8" column="0">
          <widget class="QLabel" name="labelFlashButtons_2">
           <property name="sizePolicy">
@@ -348,98 +323,6 @@
           <property name="text">
            <string>CANBUS </string>
           </property>
-         </widget>
-        </item>
-        <item row="11" column="1">
-         <widget class="QWidget" name="horizontalWidget_2" native="true">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>40</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>40</height>
-           </size>
-          </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_13">
-           <item>
-            <widget class="QPushButton" name="flashSaveButtonRead">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>.AppleSystemUIFont</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Save</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="flashLoadButtonRead">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="baseSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>.AppleSystemUIFont</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Load </string>
-             </property>
-            </widget>
-           </item>
-          </layout>
          </widget>
         </item>
         <item row="8" column="1">
@@ -537,25 +420,128 @@
           </layout>
          </widget>
         </item>
-        <item row="12" column="0">
-         <widget class="QLabel" name="label">
+        <item row="11" column="0">
+         <widget class="QLabel" name="labelFlashButtons">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>.AppleSystemUIFont</family>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
           <property name="text">
-           <string/>
+           <string>FLASH Variables</string>
           </property>
          </widget>
         </item>
-        <item row="14" column="0">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>TextLabel</string>
+        <item row="11" column="1">
+         <widget class="QWidget" name="horizontalWidget_2" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_13">
+           <item>
+            <widget class="QPushButton" name="flashSaveButtonRead">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>.AppleSystemUIFont</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Save</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="flashLoadButtonRead">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="baseSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>.AppleSystemUIFont</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Load </string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
-        <item row="14" column="1">
-         <widget class="QLineEdit" name="lineEdit"/>
+        <item row="13" column="0">
+         <widget class="QLineEdit" name="tecModsPasswordEdit"/>
         </item>
-        <item row="15" column="1">
-         <widget class="QPushButton" name="pushButton">
+        <item row="13" column="1">
+         <widget class="QPushButton" name="tecModsPushButton">
           <property name="text">
            <string>TEC mods</string>
           </property>
@@ -1669,7 +1655,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>70</x>
-     <y>155</y>
+     <y>148</y>
     </hint>
     <hint type="destinationlabel">
      <x>558</x>
@@ -1685,7 +1671,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>70</x>
-     <y>121</y>
+     <y>114</y>
     </hint>
     <hint type="destinationlabel">
      <x>362</x>
@@ -1701,7 +1687,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>52</x>
-     <y>60</y>
+     <y>50</y>
     </hint>
     <hint type="destinationlabel">
      <x>10</x>
@@ -1732,8 +1718,8 @@
    <slot>tec6Mode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>704</x>
-     <y>279</y>
+     <x>683</x>
+     <y>286</y>
     </hint>
     <hint type="destinationlabel">
      <x>796</x>
@@ -1764,8 +1750,8 @@
    <slot>tec7Supply_U()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>595</x>
-     <y>283</y>
+     <x>614</x>
+     <y>290</y>
     </hint>
     <hint type="destinationlabel">
      <x>796</x>
@@ -1780,8 +1766,8 @@
    <slot>tec3TempM()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>704</x>
-     <y>458</y>
+     <x>683</x>
+     <y>472</y>
     </hint>
     <hint type="destinationlabel">
      <x>531</x>
@@ -1796,8 +1782,8 @@
    <slot>openTEC4()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>755</x>
-     <y>352</y>
+     <x>722</x>
+     <y>363</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -1828,8 +1814,8 @@
    <slot>tec4VoltSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>796</x>
-     <y>412</y>
+     <x>750</x>
+     <y>426</y>
     </hint>
     <hint type="destinationlabel">
      <x>797</x>
@@ -1892,8 +1878,8 @@
    <slot>tec4TempM()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>796</x>
-     <y>458</y>
+     <x>750</x>
+     <y>472</y>
     </hint>
     <hint type="destinationlabel">
      <x>719</x>
@@ -1908,8 +1894,8 @@
    <slot>tec3Mode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>704</x>
-     <y>504</y>
+     <x>683</x>
+     <y>518</y>
     </hint>
     <hint type="destinationlabel">
      <x>794</x>
@@ -1924,8 +1910,8 @@
    <slot>tec3Mode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>704</x>
-     <y>481</y>
+     <x>683</x>
+     <y>495</y>
     </hint>
     <hint type="destinationlabel">
      <x>795</x>
@@ -1940,8 +1926,8 @@
    <slot>tec8Supply_U()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>447</x>
-     <y>294</y>
+     <x>492</x>
+     <y>301</y>
     </hint>
     <hint type="destinationlabel">
      <x>798</x>
@@ -2004,8 +1990,8 @@
    <slot>checkTEC3(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>700</x>
-     <y>352</y>
+     <x>683</x>
+     <y>362</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -2036,8 +2022,8 @@
    <slot>tec5TempSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>796</x>
-     <y>233</y>
+     <x>750</x>
+     <y>240</y>
     </hint>
     <hint type="destinationlabel">
      <x>70</x>
@@ -2100,8 +2086,8 @@
    <slot>checkTEC4(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>792</x>
-     <y>352</y>
+     <x>750</x>
+     <y>362</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -2132,8 +2118,8 @@
    <slot>openTEC6()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>662</x>
-     <y>150</y>
+     <x>655</x>
+     <y>153</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -2148,8 +2134,8 @@
    <slot>tec6TempSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>704</x>
-     <y>435</y>
+     <x>683</x>
+     <y>449</y>
     </hint>
     <hint type="destinationlabel">
      <x>442</x>
@@ -2164,8 +2150,8 @@
    <slot>openTEC3()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>662</x>
-     <y>352</y>
+     <x>655</x>
+     <y>363</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -2180,8 +2166,8 @@
    <slot>tec6VoltSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>704</x>
-     <y>210</y>
+     <x>683</x>
+     <y>217</y>
     </hint>
     <hint type="destinationlabel">
      <x>49</x>
@@ -2212,8 +2198,8 @@
    <slot>checkTEC1(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>522</x>
-     <y>352</y>
+     <x>550</x>
+     <y>362</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -2228,8 +2214,8 @@
    <slot>tec8Mode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>455</x>
-     <y>270</y>
+     <x>500</x>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel">
      <x>797</x>
@@ -2276,8 +2262,8 @@
    <slot>tec5Mode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>796</x>
-     <y>279</y>
+     <x>750</x>
+     <y>286</y>
     </hint>
     <hint type="destinationlabel">
      <x>796</x>
@@ -2292,8 +2278,8 @@
    <slot>tec5TempM()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>783</x>
-     <y>256</y>
+     <x>750</x>
+     <y>263</y>
     </hint>
     <hint type="destinationlabel">
      <x>789</x>
@@ -2372,8 +2358,8 @@
    <slot>tec5Supply_U()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>772</x>
-     <y>283</y>
+     <x>739</x>
+     <y>290</y>
     </hint>
     <hint type="destinationlabel">
      <x>795</x>
@@ -2388,8 +2374,8 @@
    <slot>tec3VoltSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>704</x>
-     <y>412</y>
+     <x>683</x>
+     <y>426</y>
     </hint>
     <hint type="destinationlabel">
      <x>798</x>
@@ -2404,8 +2390,8 @@
    <slot>tec6Supply_U()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>684</x>
-     <y>283</y>
+     <x>677</x>
+     <y>290</y>
     </hint>
     <hint type="destinationlabel">
      <x>797</x>
@@ -2420,8 +2406,8 @@
    <slot>tec5VoltSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>796</x>
-     <y>210</y>
+     <x>750</x>
+     <y>217</y>
     </hint>
     <hint type="destinationlabel">
      <x>83</x>
@@ -2452,8 +2438,8 @@
    <slot>tec6TempM()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>690</x>
-     <y>256</y>
+     <x>683</x>
+     <y>263</y>
     </hint>
     <hint type="destinationlabel">
      <x>793</x>
@@ -2468,8 +2454,8 @@
    <slot>checkTEC8(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>522</x>
-     <y>149</y>
+     <x>550</x>
+     <y>153</y>
     </hint>
     <hint type="destinationlabel">
      <x>760</x>
@@ -2500,8 +2486,8 @@
    <slot>tec6TempSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>704</x>
-     <y>233</y>
+     <x>683</x>
+     <y>240</y>
     </hint>
     <hint type="destinationlabel">
      <x>52</x>
@@ -2516,8 +2502,8 @@
    <slot>checkTEC6(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>700</x>
-     <y>149</y>
+     <x>683</x>
+     <y>153</y>
     </hint>
     <hint type="destinationlabel">
      <x>672</x>
@@ -2532,8 +2518,8 @@
    <slot>checkTEC5(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>792</x>
-     <y>149</y>
+     <x>750</x>
+     <y>153</y>
     </hint>
     <hint type="destinationlabel">
      <x>739</x>
@@ -2548,8 +2534,8 @@
    <slot>tec4Mode()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>796</x>
-     <y>504</y>
+     <x>750</x>
+     <y>518</y>
     </hint>
     <hint type="destinationlabel">
      <x>794</x>
@@ -2564,8 +2550,8 @@
    <slot>openTEC5()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>755</x>
-     <y>150</y>
+     <x>722</x>
+     <y>153</y>
     </hint>
     <hint type="destinationlabel">
      <x>399</x>
@@ -2596,12 +2582,60 @@
    <slot>tec5TempSet()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>796</x>
-     <y>435</y>
+     <x>750</x>
+     <y>449</y>
     </hint>
     <hint type="destinationlabel">
      <x>673</x>
      <y>2</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>flashSaveButtonRead</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>guiFlashSaveButtonRead()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>272</x>
+     <y>400</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>134</x>
+     <y>524</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>flashLoadButtonRead</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>guiFlashLoadButtonRead()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>331</x>
+     <y>401</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>301</x>
+     <y>524</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tecModsPushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>guiTecModsPushButton()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>299</x>
+     <y>456</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>391</x>
+     <y>526</y>
     </hint>
    </hints>
   </connection>
@@ -2682,5 +2716,6 @@
   <slot>tec1Supply_U()</slot>
   <slot>guiFlashLoadButtonRead()</slot>
   <slot>guiFlashSaveButtonRead()</slot>
+  <slot>guiTecModsPushButton()</slot>
  </slots>
 </ui>
