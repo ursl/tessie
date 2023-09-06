@@ -32,6 +32,8 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   ui->lineEditRH->setAlignment(Qt::AlignRight);
   ui->lineEditDP->setAlignment(Qt::AlignRight);
 
+  ui->horizontalGroupBox_2->setAlignment(Qt::AlignCenter);
+
   fUICheckBox.push_back(ui->checkBoxTEC1);
   fUICheckBox.push_back(ui->checkBoxTEC2);
   fUICheckBox.push_back(ui->checkBoxTEC3);
