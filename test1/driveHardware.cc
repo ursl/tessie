@@ -1346,6 +1346,10 @@ void driveHardware::loadFromFlash() {
     fCANId = (CANBUS_SHIFT | CANBUS_PUBLIC | CANBUS_TECREC | CANBUS_CMD);
     fCANReg = 8; // Load Variables
     fCANVal = fTECParameter;
+
+    QString aline = QString("load settings from FLASH");
+    fLOG(INFO, aline.toStdString().c_str());
+
     sendCANmessage();
 }
 
@@ -1353,7 +1357,7 @@ void driveHardware::loadFromFlash() {
 // ----------------------------------------------------------------------
 void driveHardware::saveToFlash() {
     fCANId = (CANBUS_SHIFT | CANBUS_PUBLIC | CANBUS_TECREC | CANBUS_CMD);
-    fCANReg = 8; // Save Variables
+    fCANReg = 7; // Save Variables
     fCANVal = fTECParameter;
     sendCANmessage();
 }

@@ -46,9 +46,24 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_16" stretch="0,10">
+    <layout class="QHBoxLayout" name="horizontalLayout_16" stretch="0,0">
      <property name="spacing">
       <number>10</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetNoConstraint</enum>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
      </property>
      <item>
       <widget class="QGroupBox" name="verticalGroupBox">
@@ -60,7 +75,16 @@
        </property>
        <layout class="QFormLayout" name="formLayout">
         <property name="sizeConstraint">
-         <enum>QLayout::SetFixedSize</enum>
+         <enum>QLayout::SetNoConstraint</enum>
+        </property>
+        <property name="fieldGrowthPolicy">
+         <enum>QFormLayout::FieldsStayAtSizeHint</enum>
+        </property>
+        <property name="horizontalSpacing">
+         <number>0</number>
+        </property>
+        <property name="verticalSpacing">
+         <number>0</number>
         </property>
         <item row="0" column="0">
          <widget class="QLabel" name="labelTECFrame">
@@ -79,6 +103,31 @@
           </property>
           <property name="text">
            <string>TEC controller</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QCheckBox" name="checkboxTECLockAll">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>10</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>.AppleSystemUIFont</family>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>lock all</string>
           </property>
          </widget>
         </item>
@@ -113,6 +162,22 @@
           </property>
          </widget>
         </item>
+        <item row="3" column="1">
+         <widget class="QTextEdit" name="textTECNumber">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>30</height>
+           </size>
+          </property>
+         </widget>
+        </item>
         <item row="5" column="0">
          <widget class="QLabel" name="labelTECName">
           <property name="sizePolicy">
@@ -141,6 +206,22 @@
           </property>
           <property name="text">
            <string>TEC Register</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QTextEdit" name="textTECName">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>30</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -175,63 +256,6 @@
           </property>
          </widget>
         </item>
-        <item row="10" column="0">
-         <widget class="QLabel" name="labelFlashButtons">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>.AppleSystemUIFont</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>FLASH Variables</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QTextEdit" name="textTECNumber">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>100</width>
-            <height>30</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QTextEdit" name="textTECName">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>100</width>
-            <height>30</height>
-           </size>
-          </property>
-         </widget>
-        </item>
         <item row="7" column="1">
          <widget class="QTextEdit" name="textTECValue">
           <property name="sizePolicy">
@@ -262,7 +286,7 @@
             <height>30</height>
            </size>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,1">
+          <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="0,0">
            <property name="sizeConstraint">
             <enum>QLayout::SetMaximumSize</enum>
            </property>
@@ -277,6 +301,15 @@
            </property>
            <item>
             <widget class="QPushButton" name="pushButtonWrite">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="maximumSize">
               <size>
                <width>16777215</width>
@@ -296,6 +329,12 @@
            </item>
            <item>
             <widget class="QPushButton" name="pushButtonRead">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="maximumSize">
               <size>
                <width>16777215</width>
@@ -316,6 +355,31 @@
           </layout>
          </widget>
         </item>
+        <item row="10" column="0">
+         <widget class="QLabel" name="labelFlashButtons">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>.AppleSystemUIFont</family>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>FLASH Variables</string>
+          </property>
+         </widget>
+        </item>
         <item row="10" column="1">
          <widget class="QGroupBox" name="horizontalGroupBox_2">
           <property name="sizePolicy">
@@ -333,10 +397,16 @@
           <layout class="QHBoxLayout" name="horizontalLayout_13">
            <item>
             <widget class="QPushButton" name="flashSaveButtonRead">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>30</height>
+               <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
@@ -358,10 +428,16 @@
            </item>
            <item>
             <widget class="QPushButton" name="flashLoadButtonRead">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>30</height>
+               <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
@@ -373,7 +449,7 @@
              <property name="baseSize">
               <size>
                <width>0</width>
-               <height>30</height>
+               <height>0</height>
               </size>
              </property>
              <property name="font">
@@ -393,8 +469,8 @@
         <item row="1" column="1">
          <widget class="QPushButton" name="buttonRefresh">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <horstretch>10</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
@@ -410,27 +486,11 @@
             <pointsize>8</pointsize>
            </font>
           </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
           <property name="text">
            <string>Refresh</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QCheckBox" name="checkboxTECLockAll">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>.AppleSystemUIFont</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>lock all</string>
           </property>
          </widget>
         </item>
@@ -440,7 +500,7 @@
      <item>
       <layout class="QGridLayout" name="gridLayout">
        <property name="spacing">
-        <number>0</number>
+        <number>2</number>
        </property>
        <item row="11" column="4">
         <widget class="QLineEdit" name="tec4_Supply_U">
@@ -471,6 +531,9 @@
        </item>
        <item row="6" column="4">
         <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <property name="spacing">
+          <number>10</number>
+         </property>
          <item>
           <widget class="QPushButton" name="pushButtonTEC4">
            <property name="maximumSize">
@@ -529,6 +592,9 @@
        </item>
        <item row="6" column="1">
         <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <property name="spacing">
+          <number>10</number>
+         </property>
          <item>
           <widget class="QPushButton" name="pushButtonTEC1">
            <property name="maximumSize">
@@ -572,6 +638,9 @@
        </item>
        <item row="0" column="4">
         <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <property name="spacing">
+          <number>10</number>
+         </property>
          <item>
           <widget class="QPushButton" name="pushButtonTEC5">
            <property name="maximumSize">
@@ -622,6 +691,9 @@
        </item>
        <item row="0" column="3">
         <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <property name="spacing">
+          <number>10</number>
+         </property>
          <item>
           <widget class="QPushButton" name="pushButtonTEC6">
            <property name="maximumSize">
@@ -773,6 +845,9 @@
        </item>
        <item row="6" column="2">
         <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <property name="spacing">
+          <number>10</number>
+         </property>
          <item>
           <widget class="QPushButton" name="pushButtonTEC2">
            <property name="maximumSize">
@@ -823,6 +898,9 @@
        </item>
        <item row="0" column="2">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>10</number>
+         </property>
          <item>
           <widget class="QPushButton" name="pushButtonTEC7">
            <property name="maximumSize">
@@ -867,6 +945,9 @@
        </item>
        <item row="6" column="3">
         <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <property name="spacing">
+          <number>10</number>
+         </property>
          <item>
           <widget class="QPushButton" name="pushButtonTEC3">
            <property name="maximumSize">
@@ -1021,6 +1102,9 @@
        </item>
        <item row="0" column="1">
         <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>10</number>
+         </property>
          <item>
           <widget class="QPushButton" name="pushButtonTEC8">
            <property name="maximumSize">
