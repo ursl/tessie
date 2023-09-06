@@ -1276,7 +1276,7 @@
       <x>20</x>
       <y>40</y>
       <width>101</width>
-      <height>466</height>
+      <height>479</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1385,6 +1385,22 @@
      </item>
      <item>
       <widget class="QLineEdit" name="lineEditTemp"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelTempWater">
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>5</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Water T [deg C]</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEditTempWater"/>
      </item>
      <item>
       <widget class="QLabel" name="labelRH">

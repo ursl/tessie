@@ -318,6 +318,7 @@ void MainWindow::updateHardwareDisplay() {
 
 
   ui->lineEditTemp->setText(QString::number(fpHw->getTemperature(), 'f', 2));
+  ui->lineEditTempWater->setText(QString::number(fpHw->getTECRegister(8, "Temp_W"), 'f', 2));
   ui->lineEditRH->setText(QString::number(fpHw->getRH(), 'f', 2));
   ui->lineEditDP->setText(QString::number(fpHw->getDP(), 'f', 2));
   ui->lineEditCANbusError->setText(QString::number(fpHw->getNCANbusErrors()));
