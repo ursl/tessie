@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>816</width>
-    <height>550</height>
+    <height>558</height>
    </rect>
   </property>
   <property name="font">
@@ -25,10 +25,10 @@
    <widget class="QFrame" name="frameTECController">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>172</x>
       <y>100</y>
-      <width>631</width>
-      <height>411</height>
+      <width>581</width>
+      <height>421</height>
      </rect>
     </property>
     <property name="font">
@@ -66,7 +66,7 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QGroupBox" name="verticalGroupBox">
+      <widget class="QWidget" name="verticalWidget" native="true">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -1263,9 +1263,9 @@
    <widget class="QTextEdit" name="textEditLog">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>230</x>
       <y>20</y>
-      <width>581</width>
+      <width>521</width>
       <height>71</height>
      </rect>
     </property>
@@ -1299,9 +1299,9 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>40</y>
-      <width>101</width>
-      <height>471</height>
+      <y>30</y>
+      <width>141</width>
+      <height>491</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -2544,38 +2544,6 @@
     <hint type="destinationlabel">
      <x>673</x>
      <y>2</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>flashSaveButtonRead</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>guiFlashSaveButtonRead()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>213</x>
-     <y>452</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>129</x>
-     <y>509</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>flashLoadButtonRead</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>guiFlashLoadButtonRead()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>288</x>
-     <y>451</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>231</x>
-     <y>510</y>
     </hint>
    </hints>
   </connection>
