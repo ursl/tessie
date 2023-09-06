@@ -28,6 +28,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   ui->lineEditCANbusError->setAlignment(Qt::AlignRight);
   ui->lineEditI2CError->setAlignment(Qt::AlignRight);
   ui->lineEditTemp->setAlignment(Qt::AlignRight);
+  ui->lineEditTempWater->setAlignment(Qt::AlignRight);
   ui->lineEditRH->setAlignment(Qt::AlignRight);
   ui->lineEditDP->setAlignment(Qt::AlignRight);
 
