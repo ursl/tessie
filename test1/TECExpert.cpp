@@ -188,7 +188,7 @@ void TECExpert::tecSetFromUI(int itec, std::string rname, QLineEdit *ql) {
   QString sval = ql->text();
   float xval = sval.toFloat();
   cout << "xval = " << xval << " itec = " << itec << endl;
-  fThread->setTECRegister(itec, "ControlVoltage_Set", xval);
+  fThread->setTECRegister(itec, rname, xval);
 }
 
 
