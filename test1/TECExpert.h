@@ -27,7 +27,7 @@ private:
   std::map<int, QLineEdit*> fMapTecMode,
     fMapTecControlVoltageSet,
     fMapTecPIDkp,  fMapTecPIDki,  fMapTecPIDkd,
-    fMapTecPIDMax, fMapTecPIDMin, fMapTecRegfU;
+    fMapTecPIDMax, fMapTecPIDMin, fMapTecRefU;
 };
 
 #endif // TECEXPERT_H
