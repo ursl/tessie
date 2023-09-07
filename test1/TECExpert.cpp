@@ -4,15 +4,17 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QPlainTextEdit>
+#include <QLineEdit>
 
 #include <sstream>
 
 using namespace std;
 
 // -------------------------------------------------------------------------------
-TECExpert::TECExpert(QWidget *) {
+TECExpert::TECExpert(QWidget *, driveHardware *x) : fThread(x) {
   fUI = new QWidget();
-  fUI->setFixedSize(QSize(500, 300));
+  int height(35);
+  fUI->setFixedSize(QSize(500, (1+5)*height));
 
   QPushButton *quitButton = new QPushButton("Close", fUI);
   connect(quitButton, &QPushButton::clicked, this, &TECExpert::close);
@@ -50,12 +52,30 @@ TECExpert::TECExpert(QWidget *) {
 
   leftLayout->addWidget(quitButton, 0, 0);
 
-  QPlainTextEdit *pte;
+  QLineEdit *pte;
   for (int ix = 1; ix <= 8; ++ix) {
       for (int iy = 1; iy <= 5; ++iy) {
-        pte = new QPlainTextEdit(fUI);
-        pte->setMaximumHeight(40);
-        pte->insertPlainText("0");
+        pte = new QLineEdit(fUI);
+        pte->setMaximumHeight(height);
+        switch (iy) {
+        case 1:
+            pte->setText(QString::number(fThread->getTECRegister(ix, "Mode")));
+            break;
+        case 2:
+            pte->setText(QString::number(fThread->getTECRegister(ix, "ControlVoltage_Set")));
+            break;
+        case 3:
+            pte->setText(QString::number(fThread->getTECRegister(ix, "PID_kp")));
+            break;
+        case 4:
+            pte->setText(QString::number(fThread->getTECRegister(ix, "PID_ki")));
+            break;
+        case 5:
+            pte->setText(QString::number(fThread->getTECRegister(ix, "PID_kd")));
+            break;
+        default:
+            break;
+        }
         leftLayout->addWidget(pte, iy, ix);
       }
   }

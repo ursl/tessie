@@ -10,7 +10,7 @@ class TECExpert : public QWidget {
   Q_OBJECT
 
 public:
-  explicit TECExpert(QWidget *parent = nullptr);
+  explicit TECExpert(QWidget *parent = nullptr, driveHardware *x = 0);
   ~TECExpert();
   void setHardware(driveHardware *);
   void close();
