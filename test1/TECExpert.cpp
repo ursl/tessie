@@ -64,7 +64,7 @@ TECExpert::TECExpert(MainWindow *m, driveHardware *x) : fThread(x), fUI(0), fMW(
         pte->setMaximumHeight(height);
         pte->setText(QString::number(fThread->getTECRegister(ix, regs[iy].toStdString())));
         leftLayout->addWidget(pte, iy, ix);
-        QObject::connect(pte, SIGNAL(returnPressed), this, SLOT(tecVoltSet));
+        QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tecVoltSet()));
       }
   }
   fUI->setLayout(leftLayout);
