@@ -24,7 +24,10 @@ private:
   driveHardware *fThread;
   QWidget *fUI;
   MainWindow *fMW;
-  std::map<int, QLineEdit*> fMapTecMode, fMapTecControlVoltageSet;
+  std::map<int, QLineEdit*> fMapTecMode,
+    fMapTecControlVoltageSet,
+    fMapTecPIDkp,  fMapTecPIDki,  fMapTecPIDkd,
+    fMapTecPIDMax, fMapTecPIDMin, fMapTecRegfU;
 };
 
 #endif // TECEXPERT_H

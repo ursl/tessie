@@ -56,9 +56,15 @@ TECExpert::TECExpert(MainWindow *m, driveHardware *x) : fThread(x), fUI(0), fMW(
       for (unsigned int iy = 1; iy <= regs.size(); ++iy) {
         pte = new QLineEdit(fUI);
         switch (iy) {
-          case 1:
-            fMapTecMode.insert(make_pair(1, pte));
-            break;
+          case 1: fMapTecMode.insert(make_pair(ix, pte)); break;
+          case 2: fMapTecControlVoltageSet.insert(make_pair(ix, pte)); break;
+          case 3: fMapTecPIDkp.insert(make_pair(ix, pte)); break;
+          case 4: fMapTecPIDki.insert(make_pair(ix, pte)); break;
+          case 5: fMapTecPIDkd.insert(make_pair(ix, pte)); break;
+          case 6: fMapTecPIDMax.insert(make_pair(ix, pte)); break;
+          case 7: fMapTecPIDMin.insert(make_pair(ix, pte)); break;
+          case 8: fMapTecRefU.insert(make_pair(ix, pte)); break;
+
           default:
             break;
         }
@@ -94,7 +100,7 @@ void TECExpert::setHardware(driveHardware *x) {
 
 // -------------------------------------------------------------------------------
 void TECExpert::tecVoltSet() {
-  for(auto it: fMapTecMode) {
+  for(auto it: fMapTecControlVoltageSet) {
     QString sval = it.second->text();
     float xval = sval.toFloat();
     cout << "xval = " << xval << " it.first = " << it.first << endl;
