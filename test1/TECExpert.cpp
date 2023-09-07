@@ -58,7 +58,7 @@ TECExpert::TECExpert(MainWindow *m, driveHardware *x) : fThread(x), fUI(0), fMW(
         switch (iy) {
           case 1:
             fMapTecMode.insert(make_pair(ix, pte));
-            QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tecModeSet(ix)));
+            QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tecModeSet()));
             break;
           case 2:
             fMapTecControlVoltageSet.insert(make_pair(ix, pte));
@@ -134,9 +134,8 @@ void TECExpert::tecVoltageSet() {
 
 
 // -------------------------------------------------------------------------------
-void TECExpert::tecModeSet(int itec) {
+void TECExpert::tecModeSet() {
   for(auto it: fMapTecMode) {
-    if (itec != it.first) continue;
     QString sval = it.second->text();
     float xval = sval.toFloat();
     cout << "xval = " << xval << " it.first = " << it.first << endl;
