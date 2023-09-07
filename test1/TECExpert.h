@@ -18,7 +18,7 @@ public:
   void close();
 
 public slots:
-  void tecVoltSet();
+  void tecVoltageSet();
   void tecModeSet();
   void tecPIDkpSet();
   void tecPIDkiSet();

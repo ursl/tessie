@@ -123,7 +123,7 @@ void TECExpert::setHardware(driveHardware *x) {
 
 
 // -------------------------------------------------------------------------------
-void TECExpert::tecVoltSet() {
+void TECExpert::tecVoltageSet() {
   for(auto it: fMapTecControlVoltageSet) {
     QString sval = it.second->text();
     float xval = sval.toFloat();
