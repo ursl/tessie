@@ -127,7 +127,7 @@ TECExpert::TECExpert(MainWindow *m, driveHardware *x) : fThread(x), fUI(0), fMW(
             if (8 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec8PIDMaxSet()));
             break;
           case 7:
-            fMapTecRefU.insert(make_pair(ix, pte));
+            fMapTecPIDMin.insert(make_pair(ix, pte));
             //QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tecPIDMinSet()));
             if (1 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec1PIDMinSet()));
             if (2 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec2PIDMinSet()));
