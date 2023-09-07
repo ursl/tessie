@@ -8,6 +8,7 @@
 #include <QObject>
 
 #include <sstream>
+#include <iostream>
 
 using namespace std;
 
@@ -96,6 +97,7 @@ void TECExpert::tecVoltSet() {
   for(auto it: fMapTecMode) {
     QString sval = it.second->text();
     float xval = sval.toFloat();
+    cout << "xval = " << xval << " it.first = " << it.first << endl;
     fThread->setTECRegister(it.first, "ControlVoltage_Set", xval);
   }
 }
