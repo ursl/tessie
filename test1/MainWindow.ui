@@ -551,7 +551,7 @@
       </widget>
      </item>
      <item>
-      <layout class="QGridLayout" name="gridLayout">
+      <layout class="QGridLayout" name="gridLayout" rowstretch="10,0,0,0,0,0,0,0,0,0,0,0">
        <property name="spacing">
         <number>2</number>
        </property>
