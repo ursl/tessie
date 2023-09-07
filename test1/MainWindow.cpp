@@ -59,7 +59,6 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fUITempM.push_back(ui->tec7_TempM);
   fUITempM.push_back(ui->tec8_TempM);
 
-
   fUIControlVoltageSet.push_back(ui->tec1_Voltage);
   fUIControlVoltageSet.push_back(ui->tec2_Voltage);
   fUIControlVoltageSet.push_back(ui->tec3_Voltage);

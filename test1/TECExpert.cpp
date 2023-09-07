@@ -1,16 +1,18 @@
 #include "TECExpert.h"
 
+#include "MainWindow.h"
+
 #include <QPushButton>
 #include <QGridLayout>
 #include <QLabel>
-#include <QLineEdit>
+#include <QObject>
 
 #include <sstream>
 
 using namespace std;
 
 // -------------------------------------------------------------------------------
-TECExpert::TECExpert(QWidget *, driveHardware *x) : fThread(x) {
+TECExpert::TECExpert(MainWindow *m, driveHardware *x) : fThread(x), fUI(0), fMW(m) {
   fUI = new QWidget();
 
   int height(35);
@@ -50,11 +52,19 @@ TECExpert::TECExpert(QWidget *, driveHardware *x) : fThread(x) {
 
   QLineEdit *pte;
   for (int ix = 1; ix <= 8; ++ix) {
-      for (int iy = 1; iy <= 8; ++iy) {
+      for (unsigned int iy = 1; iy <= regs.size(); ++iy) {
         pte = new QLineEdit(fUI);
+        switch (iy) {
+          case 1:
+            fMapTecMode.insert(make_pair(1, pte));
+            break;
+          default:
+            break;
+        }
         pte->setMaximumHeight(height);
         pte->setText(QString::number(fThread->getTECRegister(ix, regs[iy].toStdString())));
         leftLayout->addWidget(pte, iy, ix);
+        QObject::connect(pte, SIGNAL(returnPressed), this, SLOT(tecVoltSet));
       }
   }
   fUI->setLayout(leftLayout);
@@ -78,4 +88,14 @@ void TECExpert::close() {
 // -------------------------------------------------------------------------------
 void TECExpert::setHardware(driveHardware *x) {
   fThread = x;
+}
+
+
+// -------------------------------------------------------------------------------
+void TECExpert::tecVoltSet() {
+  for(auto it: fMapTecMode) {
+    QString sval = it.second->text();
+    float xval = sval.toFloat();
+    fThread->setTECRegister(it.first, "ControlVoltage_Set", xval);
+  }
 }

@@ -39,6 +39,14 @@ public slots:
     void start();
     void quitProgram();
 
+    void tec8VoltSet() {tecSetFromUI(8, "ControlVoltage_Set", ui->tec8_Voltage); }
+    void tec7VoltSet() {tecSetFromUI(7, "ControlVoltage_Set", ui->tec7_Voltage); }
+    void tec6VoltSet() {tecSetFromUI(6, "ControlVoltage_Set", ui->tec6_Voltage); }
+    void tec5VoltSet() {tecSetFromUI(5, "ControlVoltage_Set", ui->tec5_Voltage); }
+    void tec4VoltSet() {tecSetFromUI(4, "ControlVoltage_Set", ui->tec4_Voltage); }
+    void tec3VoltSet() {tecSetFromUI(3, "ControlVoltage_Set", ui->tec3_Voltage); }
+    void tec2VoltSet() {tecSetFromUI(2, "ControlVoltage_Set", ui->tec2_Voltage); }
+    void tec1VoltSet() {tecSetFromUI(1, "ControlVoltage_Set", ui->tec1_Voltage); }
 
 signals:
     void signalValve(int);
@@ -73,15 +81,6 @@ private slots:
     void guiReadFromCAN();
 
     void tecSetFromUI(int itec, std::string rname, QWidget *);
-
-    void tec8VoltSet() {tecSetFromUI(8, "ControlVoltage_Set", ui->tec8_Voltage); }
-    void tec7VoltSet() {tecSetFromUI(7, "ControlVoltage_Set", ui->tec7_Voltage); }
-    void tec6VoltSet() {tecSetFromUI(6, "ControlVoltage_Set", ui->tec6_Voltage); }
-    void tec5VoltSet() {tecSetFromUI(5, "ControlVoltage_Set", ui->tec5_Voltage); }
-    void tec4VoltSet() {tecSetFromUI(4, "ControlVoltage_Set", ui->tec4_Voltage); }
-    void tec3VoltSet() {tecSetFromUI(3, "ControlVoltage_Set", ui->tec3_Voltage); }
-    void tec2VoltSet() {tecSetFromUI(2, "ControlVoltage_Set", ui->tec2_Voltage); }
-    void tec1VoltSet() {tecSetFromUI(1, "ControlVoltage_Set", ui->tec1_Voltage); }
 
     void tec8TempSet() {tecSetFromUI(8, "Temp_Set", ui->tec8_Temp); }
     void tec7TempSet() {tecSetFromUI(7, "Temp_Set", ui->tec7_Temp); }
