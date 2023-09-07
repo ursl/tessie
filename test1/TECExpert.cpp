@@ -3,7 +3,6 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include <QLabel>
-#include <QPlainTextEdit>
 #include <QLineEdit>
 
 #include <sstream>
@@ -15,16 +14,17 @@ TECExpert::TECExpert(QWidget *, driveHardware *x) : fThread(x) {
   fUI = new QWidget();
 
   int height(35);
-  map<int, QString> vregs{{1,"Mode"},
-                         {2,"Control_Voltage"},
+  map<int, QString> regs{{1,"Mode"},
+                         {2,"ControlVoltage_Set"},
                          {3,"PID_kp"},
                          {4,"PID_ki"},
                          {5,"PID_kd"},
                          {6,"PID_Max"},
                          {7,"PID_Min"},
-                         {8,"Ref_U"}};
+                         {8,"Ref_U"}
+                         };
 
-  fUI->setFixedSize(QSize(600, vregs.size()*height));
+  fUI->setFixedSize(QSize(600, regs.size()*height));
 
   QPushButton *quitButton = new QPushButton("Close", fUI);
   connect(quitButton, &QPushButton::clicked, this, &TECExpert::close);
@@ -40,7 +40,7 @@ TECExpert::TECExpert(QWidget *, driveHardware *x) : fThread(x) {
     leftLayout->addWidget(b, 0, i);
   }
 
-  for (auto it: vregs) {
+  for (auto it: regs) {
       b = new QLabel(fUI);
       b->setText(it.second);
       leftLayout->addWidget(b, it.first, 0);
@@ -53,12 +53,11 @@ TECExpert::TECExpert(QWidget *, driveHardware *x) : fThread(x) {
       for (int iy = 1; iy <= 8; ++iy) {
         pte = new QLineEdit(fUI);
         pte->setMaximumHeight(height);
-        pte->setText(QString::number(fThread->getTECRegister(ix, vregs[iy].toStdString())));
+        pte->setText(QString::number(fThread->getTECRegister(ix, regs[iy].toStdString())));
         leftLayout->addWidget(pte, iy, ix);
       }
   }
   fUI->setLayout(leftLayout);
-
   fUI->show();
 }
 
