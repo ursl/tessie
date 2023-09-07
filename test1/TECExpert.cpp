@@ -56,14 +56,38 @@ TECExpert::TECExpert(MainWindow *m, driveHardware *x) : fThread(x), fUI(0), fMW(
       for (unsigned int iy = 1; iy <= regs.size(); ++iy) {
         pte = new QLineEdit(fUI);
         switch (iy) {
-          case 1: fMapTecMode.insert(make_pair(ix, pte)); break;
-          case 2: fMapTecControlVoltageSet.insert(make_pair(ix, pte)); break;
-          case 3: fMapTecPIDkp.insert(make_pair(ix, pte)); break;
-          case 4: fMapTecPIDki.insert(make_pair(ix, pte)); break;
-          case 5: fMapTecPIDkd.insert(make_pair(ix, pte)); break;
-          case 6: fMapTecPIDMax.insert(make_pair(ix, pte)); break;
-          case 7: fMapTecPIDMin.insert(make_pair(ix, pte)); break;
-          case 8: fMapTecRefU.insert(make_pair(ix, pte)); break;
+          case 1:
+            fMapTecMode.insert(make_pair(ix, pte));
+            QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tecModeSet()));
+            break;
+          case 2:
+            fMapTecControlVoltageSet.insert(make_pair(ix, pte));
+            QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tecVoltageSet()));
+            break;
+          case 3:
+            fMapTecPIDkp.insert(make_pair(ix, pte));
+            QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tecPIDkpSet()));
+            break;
+          case 4:
+            fMapTecPIDki.insert(make_pair(ix, pte));
+            QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tecPIDkiSet()));
+            break;
+          case 5:
+            fMapTecPIDkd.insert(make_pair(ix, pte));
+            QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tecPIDkdSet()));
+            break;
+          case 6:
+            fMapTecPIDMax.insert(make_pair(ix, pte));
+            QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tecPIDMaxSet()));
+            break;
+          case 7:
+            fMapTecPIDMin.insert(make_pair(ix, pte));
+            QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tecPIDMinSet()));
+            break;
+          case 8:
+            fMapTecRefU.insert(make_pair(ix, pte));
+            QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tecRefUSet()));
+            break;
 
           default:
             break;
@@ -71,7 +95,6 @@ TECExpert::TECExpert(MainWindow *m, driveHardware *x) : fThread(x), fUI(0), fMW(
         pte->setMaximumHeight(height);
         pte->setText(QString::number(fThread->getTECRegister(ix, regs[iy].toStdString())));
         leftLayout->addWidget(pte, iy, ix);
-        QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tecVoltSet()));
       }
   }
   fUI->setLayout(leftLayout);
@@ -98,6 +121,7 @@ void TECExpert::setHardware(driveHardware *x) {
 }
 
 
+
 // -------------------------------------------------------------------------------
 void TECExpert::tecVoltSet() {
   for(auto it: fMapTecControlVoltageSet) {
@@ -105,5 +129,82 @@ void TECExpert::tecVoltSet() {
     float xval = sval.toFloat();
     cout << "xval = " << xval << " it.first = " << it.first << endl;
     fThread->setTECRegister(it.first, "ControlVoltage_Set", xval);
+  }
+}
+
+
+// -------------------------------------------------------------------------------
+void TECExpert::tecModeSet() {
+  for(auto it: fMapTecMode) {
+    QString sval = it.second->text();
+    float xval = sval.toFloat();
+    cout << "xval = " << xval << " it.first = " << it.first << endl;
+    fThread->setTECRegister(it.first, "Mode", xval);
+  }
+}
+
+
+// -------------------------------------------------------------------------------
+void TECExpert::tecPIDkpSet() {
+  for(auto it: fMapTecControlVoltageSet) {
+    QString sval = it.second->text();
+    float xval = sval.toFloat();
+    cout << "xval = " << xval << " it.first = " << it.first << endl;
+    fThread->setTECRegister(it.first, "PID_kp", xval);
+  }
+}
+
+
+// -------------------------------------------------------------------------------
+void TECExpert::tecPIDkiSet() {
+  for(auto it: fMapTecControlVoltageSet) {
+    QString sval = it.second->text();
+    float xval = sval.toFloat();
+    cout << "xval = " << xval << " it.first = " << it.first << endl;
+    fThread->setTECRegister(it.first, "PID_ki", xval);
+  }
+}
+
+
+// -------------------------------------------------------------------------------
+void TECExpert::tecPIDkdSet() {
+  for(auto it: fMapTecControlVoltageSet) {
+    QString sval = it.second->text();
+    float xval = sval.toFloat();
+    cout << "xval = " << xval << " it.first = " << it.first << endl;
+    fThread->setTECRegister(it.first, "PID_kd", xval);
+  }
+}
+
+
+// -------------------------------------------------------------------------------
+void TECExpert::tecPIDMaxSet() {
+  for(auto it: fMapTecControlVoltageSet) {
+    QString sval = it.second->text();
+    float xval = sval.toFloat();
+    cout << "xval = " << xval << " it.first = " << it.first << endl;
+    fThread->setTECRegister(it.first, "PID_Max", xval);
+  }
+}
+
+
+// -------------------------------------------------------------------------------
+void TECExpert::tecPIDMinSet() {
+  for(auto it: fMapTecControlVoltageSet) {
+    QString sval = it.second->text();
+    float xval = sval.toFloat();
+    cout << "xval = " << xval << " it.first = " << it.first << endl;
+    fThread->setTECRegister(it.first, "PID_Min", xval);
+  }
+}
+
+
+// -------------------------------------------------------------------------------
+void TECExpert::tecRefUSet() {
+  for(auto it: fMapTecControlVoltageSet) {
+    QString sval = it.second->text();
+    float xval = sval.toFloat();
+    cout << "xval = " << xval << " it.first = " << it.first << endl;
+    fThread->setTECRegister(it.first, "Ref_U", xval);
   }
 }

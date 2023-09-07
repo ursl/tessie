@@ -19,6 +19,13 @@ public:
 
 public slots:
   void tecVoltSet();
+  void tecModeSet();
+  void tecPIDkpSet();
+  void tecPIDkiSet();
+  void tecPIDkdSet();
+  void tecPIDMaxSet();
+  void tecPIDMinSet();
+  void tecRefUSet();
 
 private:
   driveHardware *fThread;
