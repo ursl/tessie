@@ -66,7 +66,6 @@ TECExpert::TECExpert(MainWindow *m, driveHardware *x) : fThread(x), fUI(0), fMW(
             if (6 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec6ModeSet()));
             if (7 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec7ModeSet()));
             if (8 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec8ModeSet()));
-
             break;
           case 2:
             fMapTecControlVoltageSet.insert(make_pair(ix, pte));
@@ -92,7 +91,6 @@ TECExpert::TECExpert(MainWindow *m, driveHardware *x) : fThread(x), fUI(0), fMW(
             break;
           case 4:
             fMapTecPIDki.insert(make_pair(ix, pte));
-            // QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tecPIDkiSet()));
             if (1 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec1PIDkiSet()));
             if (2 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec2PIDkiSet()));
             if (3 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec3PIDkiSet()));
@@ -104,7 +102,6 @@ TECExpert::TECExpert(MainWindow *m, driveHardware *x) : fThread(x), fUI(0), fMW(
             break;
           case 5:
             fMapTecPIDkd.insert(make_pair(ix, pte));
-            // QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tecPIDkdSet()));
             if (1 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec1PIDkdSet()));
             if (2 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec2PIDkdSet()));
             if (3 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec3PIDkdSet()));
@@ -116,7 +113,6 @@ TECExpert::TECExpert(MainWindow *m, driveHardware *x) : fThread(x), fUI(0), fMW(
             break;
           case 6:
             fMapTecPIDMax.insert(make_pair(ix, pte));
-            // QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tecPIDMaxSet()));
             if (1 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec1PIDMaxSet()));
             if (2 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec2PIDMaxSet()));
             if (3 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec3PIDMaxSet()));
@@ -128,7 +124,6 @@ TECExpert::TECExpert(MainWindow *m, driveHardware *x) : fThread(x), fUI(0), fMW(
             break;
           case 7:
             fMapTecPIDMin.insert(make_pair(ix, pte));
-            //QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tecPIDMinSet()));
             if (1 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec1PIDMinSet()));
             if (2 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec2PIDMinSet()));
             if (3 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec3PIDMinSet()));
@@ -140,7 +135,6 @@ TECExpert::TECExpert(MainWindow *m, driveHardware *x) : fThread(x), fUI(0), fMW(
             break;
           case 8:
             fMapTecRefU.insert(make_pair(ix, pte));
-            // QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tecRefUSet()));
             if (1 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec1RefUSet()));
             if (2 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec2RefUSet()));
             if (3 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec3RefUSet()));

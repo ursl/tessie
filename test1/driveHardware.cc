@@ -244,9 +244,7 @@ void driveHardware::doRun() {
       readSHT85();
 
       // -- read all parameters from CAN
-      fMutex.lock();
       readAllParamsFromCANPublic();
-      fMutex.unlock();
 
       evtHandler();
 
@@ -481,7 +479,7 @@ void driveHardware::shutDown() {
 
 // ----------------------------------------------------------------------
 void driveHardware::readCAN(int nreads) {
-  //fMutex.lock();
+  fMutex.lock();
   int nbytes(0);
 
   bool DBX(false);
@@ -495,6 +493,7 @@ void driveHardware::readCAN(int nreads) {
   float fdata(0.0);
 
   ++nreads;
+
   while (nreads > 0) {
     if (DBX) cout << "read(fSr, &fFrameR, sizeof(fFrameR)) ... nreads = " << nreads << endl;
 #ifdef PI
@@ -516,8 +515,9 @@ void driveHardware::readCAN(int nreads) {
     }
     --nreads;
   }
+
   parseCAN();
-  //fMutex.unlock();
+  fMutex.unlock();
   return;
 }
 
@@ -1049,7 +1049,7 @@ void driveHardware::readCANmessage(/*DECREPIT*/) {
 
 // ----------------------------------------------------------------------
 void driveHardware::sendCANmessage() {
- //fMutex.lock();
+ fMutex.lock();
 
 #ifdef PI
   int itec = 0;
@@ -1125,7 +1125,7 @@ void driveHardware::sendCANmessage() {
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
 
 #endif
-  //fMutex.unlock();
+  fMutex.unlock();
 }
 
 
@@ -1199,7 +1199,7 @@ void driveHardware::turnOffValve(int i) {
 void driveHardware::toggleFras(int imask) {
   int old = fValveMask;
   fValveMask = old xor imask;
-  //  fMutex.lock();
+  fMutex.lock();
 
   //            TEC:   ssP'..tt'aaaa
   //           FRAS:   0aa'aaaa'akkk
@@ -1229,7 +1229,7 @@ void driveHardware::toggleFras(int imask) {
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
 
 #endif
-  //  fMutex.unlock();
+  fMutex.unlock();
 
 }
 
