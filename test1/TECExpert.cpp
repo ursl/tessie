@@ -121,16 +121,24 @@ void TECExpert::setHardware(driveHardware *x) {
 }
 
 
-
 // -------------------------------------------------------------------------------
-void TECExpert::tecVoltageSet() {
-  for(auto it: fMapTecControlVoltageSet) {
-    QString sval = it.second->text();
-    float xval = sval.toFloat();
-    cout << "xval = " << xval << " it.first = " << it.first << endl;
-    fThread->setTECRegister(it.first, "ControlVoltage_Set", xval);
-  }
+void TECExpert::tecSetFromUI(int itec, std::string rname, QLineEdit *ql) {
+  QString sval = ql->text();
+  float xval = sval.toFloat();
+  cout << "xval = " << xval << " itec = " << itec << endl;
+  fThread->setTECRegister(itec, "ControlVoltage_Set", xval);
 }
+
+
+//// -------------------------------------------------------------------------------
+//void TECExpert::tecVoltageSet() {
+//  for(auto it: fMapTecControlVoltageSet) {
+//    QString sval = it.second->text();
+//    float xval = sval.toFloat();
+//    cout << "xval = " << xval << " it.first = " << it.first << endl;
+//    fThread->setTECRegister(it.first, "ControlVoltage_Set", xval);
+//  }
+//}
 
 
 // -------------------------------------------------------------------------------

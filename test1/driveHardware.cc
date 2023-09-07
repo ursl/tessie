@@ -1400,7 +1400,7 @@ TECData  driveHardware::initAllTECRegister() {
   b = {-99.,   "PowerState",          18, 2}; tdata.reg.insert(make_pair(b.name, b));
   b = {0,      "Error",               19, 2}; tdata.reg.insert(make_pair(b.name, b));
 
-  // -- anothe read/write register
+  // -- another read/write register
   b = {-99.,   "Ref_U",               20, 1}; tdata.reg.insert(make_pair(b.name, b));
 
   // -- commands
