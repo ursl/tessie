@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>TECDisplay</string>
   </property>
   <property name="windowOpacity">
    <double>100.000000000000000</double>
