@@ -19,7 +19,7 @@ public:
 
 public slots:
   void tecVoltageSet();
-  void tecModeSet();
+  void tecModeSet(int);
   void tecPIDkpSet();
   void tecPIDkiSet();
   void tecPIDkdSet();
