@@ -20,9 +20,11 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fLOG(x), fpHw(h) {
   ui->setupUi(this);
 
-
+  // -- this opens within MainWindow (the old state)
   // fTECDisplay  = new TECDisplay(this);
-  fTECDisplay  = new TECDisplay(this);
+  // -- the following opens a new window
+  fTECDisplay  = new TECDisplay();
+
   fTECDisplay->close();
   fTECDisplay->setHardware(fpHw);
 
