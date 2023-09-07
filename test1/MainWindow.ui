@@ -573,8 +573,8 @@
         <widget class="QLabel" name="labelBot_Temp">
          <property name="font">
           <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
+           <family>Arial</family>
+           <pointsize>6</pointsize>
           </font>
          </property>
          <property name="text">
@@ -837,7 +837,7 @@
         <widget class="QLabel" name="labelTop_Voltage">
          <property name="font">
           <font>
-           <family>Academy Engraved LET</family>
+           <family>Arial</family>
            <pointsize>6</pointsize>
           </font>
          </property>
@@ -857,8 +857,8 @@
         <widget class="QLabel" name="labelBot_Mode">
          <property name="font">
           <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
+           <family>Arial</family>
+           <pointsize>6</pointsize>
           </font>
          </property>
          <property name="text">
@@ -880,8 +880,8 @@
         <widget class="QLabel" name="labelTop_Mode">
          <property name="font">
           <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
+           <family>Andale Mono</family>
+           <pointsize>6</pointsize>
           </font>
          </property>
          <property name="text">
@@ -933,8 +933,8 @@
         <widget class="QLabel" name="labelTop_TempM">
          <property name="font">
           <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
+           <family>Arial</family>
+           <pointsize>6</pointsize>
           </font>
          </property>
          <property name="text">
@@ -1071,8 +1071,8 @@
         <widget class="QLabel" name="labelTop_Supply_U">
          <property name="font">
           <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
+           <family>Andale Mono</family>
+           <pointsize>6</pointsize>
           </font>
          </property>
          <property name="text">
@@ -1084,8 +1084,8 @@
         <widget class="QLabel" name="labelTop_Temp">
          <property name="font">
           <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
+           <family>Arial</family>
+           <pointsize>6</pointsize>
           </font>
          </property>
          <property name="text">
@@ -1097,8 +1097,8 @@
         <widget class="QLabel" name="labelBot_Supply_U">
          <property name="font">
           <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
+           <family>Arial</family>
+           <pointsize>6</pointsize>
           </font>
          </property>
          <property name="text">
@@ -1120,8 +1120,8 @@
         <widget class="QLabel" name="labelBot_TempM">
          <property name="font">
           <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
+           <family>Arial</family>
+           <pointsize>6</pointsize>
           </font>
          </property>
          <property name="text">
@@ -1258,8 +1258,8 @@
         <widget class="QLabel" name="labelBot_Voltage">
          <property name="font">
           <font>
-           <family>.AppleSystemUIFont</family>
-           <pointsize>8</pointsize>
+           <family>Arial</family>
+           <pointsize>6</pointsize>
           </font>
          </property>
          <property name="text">
