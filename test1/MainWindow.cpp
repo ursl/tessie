@@ -116,19 +116,6 @@ void MainWindow::appendText(QString line) {
 
 
 // ----------------------------------------------------------------------
-void MainWindow::setExpertMode(bool x) {
-    fExpertMode = x;
-    cout << "MainWindow::setExpertMode(" << fExpertMode << ")" << endl;
-    if (fExpertMode) {
-        ui->flashSaveButtonRead->setEnabled(true);
-        cout << "flashSaveButtonRead->setEnabled(true)" << endl;
-    } else {
-        ui->flashSaveButtonRead->setEnabled(false);
-    }
-}
-
-
-// ----------------------------------------------------------------------
 void MainWindow::setBackground(QString name, QString color) {
   QString cstring = "QLineEdit {background-color : " + color + "; }";
   if (name == "T") {

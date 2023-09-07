@@ -16,7 +16,6 @@ int main(int argc, char *argv[]) {
   // -- by default run in full screen mode
   bool doRunFullScreen(false);
   int verbose(0);
-  bool expert(false);
 
   for (int i = 0; i < argc; i++){
     if (!strcmp(argv[i],"-h")) {
@@ -28,7 +27,6 @@ int main(int argc, char *argv[]) {
     if (!strcmp(argv[i], "-f")) {doRunFullScreen = true;}
     if (!strcmp(argv[i], "-d")) {LOG.setLevel(argv[++i]);}
     if (!strcmp(argv[i], "-v")) {verbose = 1;}
-    if (!strcmp(argv[i], "-x")) {expert = true;}
   }
 
 
@@ -43,7 +41,6 @@ int main(int argc, char *argv[]) {
   QApplication a(argc, argv);
   std::cout << "MainWindow w() call" << std::endl;
   MainWindow w(LOG, hw, nullptr);
-  w.setExpertMode(expert);
 
   // -- ioServer signals
   QObject::connect(ioThread, SIGNAL(started()), io, SLOT(doRun()));

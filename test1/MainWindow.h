@@ -28,8 +28,6 @@ public:
     void openTECDisplay(int itec);
     void closeTECDisplay();
 
-    void setExpertMode(bool x = false);
-
 public slots:
     void appendText(QString line);
     void updateHardwareDisplay();
