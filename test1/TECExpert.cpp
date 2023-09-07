@@ -62,7 +62,14 @@ TECExpert::TECExpert(MainWindow *m, driveHardware *x) : fThread(x), fUI(0), fMW(
             break;
           case 2:
             fMapTecControlVoltageSet.insert(make_pair(ix, pte));
-            QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tecVoltageSet()));
+            if (1 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec1VoltageSet()));
+            if (2 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec2VoltageSet()));
+            if (3 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec3VoltageSet()));
+            if (4 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec4VoltageSet()));
+            if (5 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec5VoltageSet()));
+            if (6 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec6VoltageSet()));
+            if (7 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec7VoltageSet()));
+            if (8 == ix) QObject::connect(pte, SIGNAL(returnPressed()), this, SLOT(tec8VoltageSet()));
             break;
           case 3:
             fMapTecPIDkp.insert(make_pair(ix, pte));
