@@ -1,11 +1,14 @@
 #include "MainWindow.h"
 
 #include <sstream>
+#include <string.h>
+#include <stdio.h>
 
 #include <qpushbutton.h>
 #include <unistd.h>
 
 #include "tLog.hh"
+#include "sha256.hh"
 
 using namespace std;
 
@@ -90,6 +93,11 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   ui->buttonValve1->setStyleSheet("QPushButton {background-color: gray; color: black;}");
 
   ui->flashSaveButtonRead->setEnabled(false);
+  ui->tecModsPushButton->setEnabled(false);
+
+  ui->tecModsPasswordEdit->setEchoMode(QLineEdit::Password);
+
+
 }
 
 
@@ -187,6 +195,47 @@ void MainWindow::guiTecModsPushButton() {
   //fTECExpert->show();
 
 }
+
+
+// ----------------------------------------------------------------------
+void MainWindow::guiEnterPassword() {
+  BYTE hPass[SHA256_BLOCK_SIZE] = {0x34,0xe7,0x9e,0xb7,0x0b,0x6c,0xb0,0xff,0xf7,0x6d,0xd4,0x73,0xdb,0x27,0x61,0x9d,
+                                   0x18,0x8f,0xb1,0xa9,0x8a,0x03,0x73,0xe6,0x36,0xa2,0x59,0x67,0x5b,0x0d,0xc7,0xf4};
+
+   string plainpasswd = ui->tecModsPasswordEdit->text().toStdString();
+   //   const char *bplain = plainpasswd.c_str();
+   BYTE *text1 = (unsigned char*)plainpasswd.c_str();
+
+   BYTE buf[SHA256_BLOCK_SIZE];
+   SHA256_CTX ctx;
+   sha256_init(&ctx);
+   sha256_update(&ctx, text1, strlen((const char*)text1));
+   sha256_final(&ctx, buf);
+   int pass = !memcmp(hPass, buf, SHA256_BLOCK_SIZE);
+
+   cout << "pass = " << pass << "?" << endl;
+
+   // -- code fragment for hashing the stored passwd (requires some minimal editing work :-)
+   if (0) {
+     cout << "{";
+     for (int i = 0; i < SHA256_BLOCK_SIZE; ++i) {
+       cout << hex << "0x" << (buf[i]>>4&0xf) << (buf[i]&0xf) << ",";
+     }
+     cout << dec << endl;
+   }
+
+   if (pass) {
+     fExpertMode = true;
+     ui->flashSaveButtonRead->setEnabled(true);
+     ui->tecModsPushButton->setEnabled(true);
+   } else {
+     fExpertMode = false;
+     ui->flashSaveButtonRead->setEnabled(false);
+     ui->tecModsPushButton->setEnabled(false);
+   }
+
+}
+
 
 // ----------------------------------------------------------------------
 void MainWindow::start() {

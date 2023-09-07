@@ -31,7 +31,8 @@ SOURCES += \
     ioServer.cc \
     tMosq.cc \
     tessie.cpp \
-    util.cc
+    util.cc \
+    sha256.cc
 
 HEADERS += \
     CANmessage.hh \
@@ -45,7 +46,8 @@ HEADERS += \
     tLog.hh \
     ioServer.hh \
     tMosq.hh \
-    util.hh
+    util.hh \
+    sha256.hh
 
 FORMS += \
     MainWindow.ui \
