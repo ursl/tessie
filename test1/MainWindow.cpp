@@ -9,6 +9,7 @@
 
 #include "tLog.hh"
 #include "sha256.hh"
+#include "util.hh"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   ui->setupUi(this);
 
 
+  // fTECDisplay  = new TECDisplay(this);
   fTECDisplay  = new TECDisplay(this);
   fTECDisplay->close();
   fTECDisplay->setHardware(fpHw);
@@ -213,8 +215,6 @@ void MainWindow::guiEnterPassword() {
    sha256_final(&ctx, buf);
    int pass = !memcmp(hPass, buf, SHA256_BLOCK_SIZE);
 
-   cout << "pass = " << pass << "?" << endl;
-
    // -- code fragment for hashing the stored passwd (requires some minimal editing work :-)
    if (0) {
      cout << "{";
@@ -224,15 +224,39 @@ void MainWindow::guiEnterPassword() {
      cout << dec << endl;
    }
 
+   string shost("unknown host");
+   if (const char* env_p = std::getenv("SSH_CLIENT")) {
+    string sshclient = env_p;
+    vector<string> tokens;
+    split(sshclient, ' ', tokens);
+
+    FILE *fp;
+    string command = "/usr/bin/host " + tokens[0];
+    if ((fp = popen(command.c_str(),"r")) == NULL) {
+      fLOG(WARNING, "could not run /usr/bin/host");
+    } else{
+        char bfr[1023] ;
+        while(fgets(bfr, BUFSIZ, fp) != NULL){
+          string sbfr(bfr);
+          sbfr.pop_back();
+          shost = sbfr;
+        }
+        pclose(fp);
+    }
+   }
+
    if (pass) {
      fExpertMode = true;
      ui->flashSaveButtonRead->setEnabled(true);
      ui->tecModsPushButton->setEnabled(true);
+     fLOG(INFO, "expert password entered correctly from host");
    } else {
      fExpertMode = false;
      ui->flashSaveButtonRead->setEnabled(false);
      ui->tecModsPushButton->setEnabled(false);
+     fLOG(INFO, "expert password entered incorrectly from host");
    }
+   fLOG(INFO, shost);
 
 }
 
