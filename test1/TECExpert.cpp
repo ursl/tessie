@@ -52,8 +52,8 @@ TECExpert::TECExpert(MainWindow *m, driveHardware *x) : fThread(x), fUI(0), fMW(
   leftLayout->addWidget(quitButton, 0, 0);
 
   QLineEdit *pte;
-  for (int ix = 1; ix <= 8; ++ix) {
-      for (unsigned int iy = 1; iy <= regs.size(); ++iy) {
+  for (unsigned int iy = 1; iy <= regs.size(); ++iy) {
+    for (int ix = 1; ix <= 8; ++ix) {
         pte = new QLineEdit(fUI);
         switch (iy) {
           case 1:
