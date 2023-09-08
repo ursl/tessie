@@ -28,7 +28,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fTECDisplay->close();
   fTECDisplay->setHardware(fpHw);
 
-  ui->labelVersion->setText("2023/09/07-01");
+  ui->labelVersion->setText("2023/09/08-01");
   //ui->labelStatus->setText("OK");
 
   ui->lineEditRunTime->setAlignment(Qt::AlignRight);
@@ -203,15 +203,6 @@ void MainWindow::guiEnterPassword() {
    sha256_update(&ctx, text1, strlen((const char*)text1));
    sha256_final(&ctx, buf);
    int pass = !memcmp(hPass, buf, SHA256_BLOCK_SIZE);
-
-   // -- code fragment for hashing the stored passwd (requires some minimal editing work :-)
-   if (0) {
-     cout << "{";
-     for (int i = 0; i < SHA256_BLOCK_SIZE; ++i) {
-       cout << hex << "0x" << (buf[i]>>4&0xf) << (buf[i]&0xf) << ",";
-     }
-     cout << dec << endl;
-   }
 
    string shost("unknown host");
    if (const char* env_p = std::getenv("SSH_CLIENT")) {
