@@ -140,8 +140,8 @@ private:
 
     tLog&         fLOG;
     driveHardware *fpHw;
-    TECDisplay    *fTECDisplay;
-    TECExpert     *fTECExpert;
+    TECDisplay    *fTECDisplay{0};
+    TECExpert     *fTECExpert{0};
 
     std::string fGuiRegName;
     int         fGuiTecId;

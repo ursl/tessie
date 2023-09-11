@@ -20,6 +20,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fLOG(x), fpHw(h) {
   ui->setupUi(this);
 
+
   ui->labelVersion->setText("2023/09/08-01");
   //ui->labelStatus->setText("OK");
 
