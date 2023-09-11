@@ -20,14 +20,6 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fLOG(x), fpHw(h) {
   ui->setupUi(this);
 
-  // -- this opens within MainWindow (the old state)
-  // fTECDisplay  = new TECDisplay(this);
-  // -- the following opens a new window
-  fTECDisplay  = new TECDisplay();
-
-  fTECDisplay->close();
-  fTECDisplay->setHardware(fpHw);
-
   ui->labelVersion->setText("2023/09/08-01");
   //ui->labelStatus->setText("OK");
 
@@ -375,7 +367,7 @@ void MainWindow::updateHardwareDisplay() {
               << fpHw->getRunCnt()
               << endl;
 
-  if (fTECDisplay->isVisible()) {
+  if (fTECDisplay && fTECDisplay->isVisible()) {
     fTECDisplay->updateHardwareDisplay();
   }
 
@@ -449,6 +441,18 @@ void MainWindow::updateHardwareDisplay() {
 // ----------------------------------------------------------------------
 void MainWindow::openTECDisplay(int itec) {
   fLOG(INFO, stringstream("openTEC(" + to_string(itec) + ")").str());
+
+  if (!fTECDisplay) {
+    if (fFullScreen) {
+      // -- this opens within MainWindow (the old state)
+      fTECDisplay  = new TECDisplay(this);
+    } else {
+      // -- the following opens a new window
+      fTECDisplay  = new TECDisplay();
+    }
+    fTECDisplay->setHardware(fpHw);
+  }
+
   if (fTECDisplay->isVisible()) {
       fTECDisplay->updateHardwareDisplay();
   }

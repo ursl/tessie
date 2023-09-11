@@ -36,6 +36,7 @@ public slots:
 
     void start();
     void quitProgram();
+    void setFullScreenMode(bool x) {fFullScreen = x;}
 
     void tec8VoltSet() {tecSetFromUI(8, "ControlVoltage_Set", ui->tec8_Voltage); }
     void tec7VoltSet() {tecSetFromUI(7, "ControlVoltage_Set", ui->tec7_Voltage); }
@@ -153,7 +154,7 @@ private:
     fUIMode,
     fUIPIDkd;
 
-    bool fExpertMode{false};
+    bool fExpertMode{false}, fFullScreen{false};
 
     std::vector<QCheckBox*> fUICheckBox;
 };

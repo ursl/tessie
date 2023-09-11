@@ -76,6 +76,7 @@ int main(int argc, char *argv[]) {
   if (doRunFullScreen) {
     std::cout << "MainWindow w.showFullScreen() call" << std::endl;
     w.showFullScreen();
+    w.setFullScreenMode(true);
   } else {
     std::cout << "MainWindow w.show() call" << std::endl;
     w.show();
