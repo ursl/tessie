@@ -157,6 +157,7 @@ TECExpert::~TECExpert() {
 
 // -------------------------------------------------------------------------------
 void TECExpert::close() {
+    fMW->setTECModsZero();
     fUI->close();
     delete this;
 }

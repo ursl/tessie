@@ -28,6 +28,8 @@ public:
     void openTECDisplay(int itec);
     void closeTECDisplay();
 
+    void setTECModsZero() {fTECExpert = NULL;}
+
 public slots:
     void appendText(QString line);
     void updateHardwareDisplay();

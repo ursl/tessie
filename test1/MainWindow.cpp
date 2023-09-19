@@ -175,16 +175,6 @@ void MainWindow::selLock() {
     fLOG(INFO, "selLock");
 }
 
-// ----------------------------------------------------------------------
-void MainWindow::guiTecModsPushButton() {
-  stringstream sbla; sbla << "guiTecModsPushButton clicked!";
-  fLOG(INFO, sbla.str());
-
-  fTECExpert  = new TECExpert(this, fpHw);
-  //fTECExpert->show();
-
-}
-
 
 // ----------------------------------------------------------------------
 void MainWindow::guiEnterPassword() {
@@ -481,4 +471,14 @@ void MainWindow::closeTECDisplay() {
   fTECDisplay->close();
 }
 
+
+// ----------------------------------------------------------------------
+void MainWindow::guiTecModsPushButton() {
+  stringstream sbla; sbla << "guiTecModsPushButton clicked!";
+  fLOG(INFO, sbla.str());
+
+  fTECExpert  = new TECExpert(this, fpHw);
+  //fTECExpert->show();
+
+}
 
