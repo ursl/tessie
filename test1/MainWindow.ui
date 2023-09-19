@@ -1712,7 +1712,7 @@
    <sender>tec2_Temp</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>tec7TempSet()</slot>
+   <slot>tec2TempSet()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>611</x>
@@ -1904,7 +1904,7 @@
    <sender>tec3_Supply_U</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>tec3Mode()</slot>
+   <slot>tec3Supply_U()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>682</x>
@@ -2144,7 +2144,7 @@
    <sender>tec3_Temp</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>tec6TempSet()</slot>
+   <slot>tec3TempSet()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>682</x>
@@ -2304,7 +2304,7 @@
    <sender>tec1_Temp</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>tec8TempSet()</slot>
+   <slot>tec1TempSet()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>519</x>
@@ -2544,7 +2544,7 @@
    <sender>tec4_Supply_U</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>tec4Mode()</slot>
+   <slot>tec4Supply_U()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>750</x>
@@ -2592,7 +2592,7 @@
    <sender>tec4_Temp</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>tec5TempSet()</slot>
+   <slot>tec4TempSet()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>750</x>
@@ -2665,6 +2665,38 @@
     <hint type="destinationlabel">
      <x>370</x>
      <y>521</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonRefresh</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>clkRefresh()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>274</x>
+     <y>128</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>336</x>
+     <y>530</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkboxTECLockAll</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>selLock(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>211</x>
+     <y>122</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>572</x>
+     <y>530</y>
     </hint>
    </hints>
   </connection>
@@ -2747,5 +2779,6 @@
   <slot>guiFlashSaveButtonRead()</slot>
   <slot>guiTecModsPushButton()</slot>
   <slot>guiEnterPassword()</slot>
+  <slot>selLock(bool)</slot>
  </slots>
 </ui>
