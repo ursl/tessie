@@ -21,7 +21,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   ui->setupUi(this);
 
 
-  ui->labelVersion->setText("2023/09/08-01");
+  ui->labelVersion->setText("2023/09/19-01");
   //ui->labelStatus->setText("OK");
 
   ui->lineEditRunTime->setAlignment(Qt::AlignRight);
@@ -360,6 +360,9 @@ void MainWindow::guiFlashLoadButtonRead() {
 void MainWindow::guiFlashSaveButtonRead() {
     cout << "guiFlashSaveButtonRead()"  << endl;
     fpHw->saveToFlash();
+    if (fTECExpert->isVisible()) {
+      fTECExpert->updateHardwareDisplay();
+    }
 }
 
 
@@ -379,6 +382,9 @@ void MainWindow::updateHardwareDisplay() {
     fTECDisplay->updateHardwareDisplay();
   }
 
+  if (fTECExpert && fTECExpert->isVisible()) {
+    fTECExpert->updateHardwareDisplay();
+  }
 
 
   ui->lineEditTemp->setText(QString::number(fpHw->getTemperature(), 'f', 2));

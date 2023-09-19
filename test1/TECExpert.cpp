@@ -175,34 +175,35 @@ void TECExpert::updateHardwareDisplay() {
       for (int ix = 1; ix <= 8; ++ix) {
         switch (iy) {
           case 1:
-            fMapTecMode[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+            if (!fMapTecMode[ix]->hasFocus()) fMapTecMode[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
             break;
           case 2:
-            fMapTecControlVoltageSet[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+            if (!fMapTecControlVoltageSet[ix]->hasFocus()) fMapTecControlVoltageSet[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
             break;
           case 3:
-            fMapTecPIDkp[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+            if (!fMapTecPIDkp[ix]->hasFocus()) fMapTecPIDkp[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
             break;
           case 4:
-            fMapTecPIDki[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+            if (!fMapTecPIDki[ix]->hasFocus()) fMapTecPIDki[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
             break;
           case 5:
-            fMapTecPIDkd[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+            if (!fMapTecPIDkd[ix]->hasFocus()) fMapTecPIDkd[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
             break;
           case 6:
-            fMapTecPIDMax[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+            if (!fMapTecPIDMax[ix]->hasFocus()) fMapTecPIDMax[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
             break;
           case 7:
-            fMapTecPIDMin[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+            if (!fMapTecPIDMin[ix]->hasFocus()) fMapTecPIDMin[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
             break;
           case 8:
-            fMapTecRefU[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+            if (!fMapTecRefU[ix]->hasFocus()) fMapTecRefU[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
             break;
         }
       }
     }
   }
 }
+
 
 // -------------------------------------------------------------------------------
 void TECExpert::tecSetFromUI(int itec, std::string rname, QLineEdit *ql) {
