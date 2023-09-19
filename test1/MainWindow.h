@@ -60,6 +60,7 @@ private slots:
     void clkValve1();
 
     void clkRefresh();
+    void selLock();
 
     // -- I don't know how to change this into using arrays/vectors in QtCreator ...
     void checkTEC1(bool checked) {setCheckBoxTEC(1, checked); }

@@ -171,6 +171,11 @@ void MainWindow::clkRefresh() {
 
 
 // ----------------------------------------------------------------------
+void MainWindow::selLock() {
+    fLOG(INFO, "selLock");
+}
+
+// ----------------------------------------------------------------------
 void MainWindow::guiTecModsPushButton() {
   stringstream sbla; sbla << "guiTecModsPushButton clicked!";
   fLOG(INFO, sbla.str());
@@ -345,7 +350,9 @@ void MainWindow::guiSetRegName() {
 void MainWindow::guiFlashLoadButtonRead() {
   cout << "guiFlashLoadButtonRead()"  << endl;
   fpHw->loadFromFlash();
-
+  if (fTECExpert->isVisible()) {
+    fTECExpert->updateHardwareDisplay();
+  }
 }
 
 

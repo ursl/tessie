@@ -15,6 +15,7 @@ public:
   explicit TECExpert(MainWindow *parent = nullptr, driveHardware *x = 0);
   ~TECExpert();
   void setHardware(driveHardware *);
+  void updateHardwareDisplay();
   void close();
 
   void tecSetFromUI(int itec, std::string rname, QLineEdit *);
@@ -96,6 +97,16 @@ private:
   driveHardware *fThread;
   QWidget *fUI;
   MainWindow *fMW;
+  std::map<int, QString> fRegs{{1,"Mode"},
+                         {2,"ControlVoltage_Set"},
+                         {3,"PID_kp"},
+                         {4,"PID_ki"},
+                         {5,"PID_kd"},
+                         {6,"PID_Max"},
+                         {7,"PID_Min"},
+                         {8,"Ref_U"}
+                         };
+
   std::map<int, QLineEdit*> fMapTecMode,
     fMapTecControlVoltageSet,
     fMapTecPIDkp,  fMapTecPIDki,  fMapTecPIDkd,

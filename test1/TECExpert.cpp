@@ -17,17 +17,8 @@ TECExpert::TECExpert(MainWindow *m, driveHardware *x) : fThread(x), fUI(0), fMW(
   fUI = new QWidget();
 
   int height(35);
-  map<int, QString> regs{{1,"Mode"},
-                         {2,"ControlVoltage_Set"},
-                         {3,"PID_kp"},
-                         {4,"PID_ki"},
-                         {5,"PID_kd"},
-                         {6,"PID_Max"},
-                         {7,"PID_Min"},
-                         {8,"Ref_U"}
-                         };
 
-  fUI->setFixedSize(QSize(600, regs.size()*height));
+  fUI->setFixedSize(QSize(600, fRegs.size()*height));
 
   QPushButton *quitButton = new QPushButton("Close", fUI);
   connect(quitButton, &QPushButton::clicked, this, &TECExpert::close);
@@ -43,7 +34,7 @@ TECExpert::TECExpert(MainWindow *m, driveHardware *x) : fThread(x), fUI(0), fMW(
     leftLayout->addWidget(b, 0, i);
   }
 
-  for (auto it: regs) {
+  for (auto it: fRegs) {
       b = new QLabel(fUI);
       b->setText(it.second);
       leftLayout->addWidget(b, it.first, 0);
@@ -52,7 +43,7 @@ TECExpert::TECExpert(MainWindow *m, driveHardware *x) : fThread(x), fUI(0), fMW(
   leftLayout->addWidget(quitButton, 0, 0);
 
   QLineEdit *pte;
-  for (unsigned int iy = 1; iy <= regs.size(); ++iy) {
+  for (unsigned int iy = 1; iy <= fRegs.size(); ++iy) {
     for (int ix = 1; ix <= 8; ++ix) {
         pte = new QLineEdit(fUI);
         switch (iy) {
@@ -149,7 +140,7 @@ TECExpert::TECExpert(MainWindow *m, driveHardware *x) : fThread(x), fUI(0), fMW(
             break;
         }
         pte->setMaximumHeight(height);
-        pte->setText(QString::number(fThread->getTECRegister(ix, regs[iy].toStdString())));
+        pte->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
         leftLayout->addWidget(pte, iy, ix);
       }
   }
@@ -176,6 +167,42 @@ void TECExpert::setHardware(driveHardware *x) {
   fThread = x;
 }
 
+
+// -------------------------------------------------------------------------------
+void TECExpert::updateHardwareDisplay() {
+  if (isVisible()) {
+    for (int iy = 1; iy <= 8; ++iy) {
+      for (int ix = 1; ix <= 8; ++ix) {
+        switch (iy) {
+          case 1:
+            fMapTecMode[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+            break;
+          case 2:
+            fMapTecControlVoltageSet[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+            break;
+          case 3:
+            fMapTecPIDkp[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+            break;
+          case 4:
+            fMapTecPIDki[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+            break;
+          case 5:
+            fMapTecPIDkd[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+            break;
+          case 6:
+            fMapTecPIDMax[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+            break;
+          case 7:
+            fMapTecPIDMin[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+            break;
+          case 8:
+            fMapTecRefU[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+            break;
+        }
+      }
+    }
+  }
+}
 
 // -------------------------------------------------------------------------------
 void TECExpert::tecSetFromUI(int itec, std::string rname, QLineEdit *ql) {
