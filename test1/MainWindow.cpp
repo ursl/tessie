@@ -350,7 +350,7 @@ void MainWindow::guiSetRegName() {
 void MainWindow::guiFlashLoadButtonRead() {
   cout << "guiFlashLoadButtonRead()"  << endl;
   fpHw->loadFromFlash();
-  if (fTECExpert->isVisible()) {
+  if (fTECExpert && fTECExpert->isVisible()) {
     fTECExpert->updateHardwareDisplay();
   }
 }
@@ -360,7 +360,7 @@ void MainWindow::guiFlashLoadButtonRead() {
 void MainWindow::guiFlashSaveButtonRead() {
     cout << "guiFlashSaveButtonRead()"  << endl;
     fpHw->saveToFlash();
-    if (fTECExpert->isVisible()) {
+    if (fTECExpert && fTECExpert->isVisible()) {
       fTECExpert->updateHardwareDisplay();
     }
 }
