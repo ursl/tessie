@@ -172,39 +172,37 @@ void TECExpert::setHardware(driveHardware *x) {
 // -------------------------------------------------------------------------------
 void TECExpert::updateHardwareDisplay() {
   cout << "TECExpert:  start     " << "updateHardwareDisplay: fMapTecMode " << endl;
-  if (isVisible()) {
-    for (int iy = 1; iy <= 8; ++iy) {
-      for (int ix = 1; ix <= 8; ++ix) {
-        switch (iy) {
-          case 1:
-            cout << "TECExpert:  isVisible  " << "updateHardwareDisplay: fMapTecMode " << endl;
-            if (!fMapTecMode[ix]->hasFocus()) {
-              fMapTecMode[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
-              cout << "TECExpert: !focus    " << "updateHardwareDisplay: fMapTecMode " << endl;
-            }
-            break;
-          case 2:
-            if (!fMapTecControlVoltageSet[ix]->hasFocus()) fMapTecControlVoltageSet[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
-            break;
-          case 3:
-            if (!fMapTecPIDkp[ix]->hasFocus()) fMapTecPIDkp[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
-            break;
-          case 4:
-            if (!fMapTecPIDki[ix]->hasFocus()) fMapTecPIDki[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
-            break;
-          case 5:
-            if (!fMapTecPIDkd[ix]->hasFocus()) fMapTecPIDkd[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
-            break;
-          case 6:
-            if (!fMapTecPIDMax[ix]->hasFocus()) fMapTecPIDMax[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
-            break;
-          case 7:
-            if (!fMapTecPIDMin[ix]->hasFocus()) fMapTecPIDMin[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
-            break;
-          case 8:
-            if (!fMapTecRefU[ix]->hasFocus()) fMapTecRefU[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
-            break;
-        }
+  for (int iy = 1; iy <= 8; ++iy) {
+    for (int ix = 1; ix <= 8; ++ix) {
+      switch (iy) {
+        case 1:
+          cout << "TECExpert:  isVisible  " << "updateHardwareDisplay: fMapTecMode " << endl;
+          if (!fMapTecMode[ix]->hasFocus()) {
+            fMapTecMode[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+            cout << "TECExpert: !focus    " << "updateHardwareDisplay: fMapTecMode " << endl;
+          }
+          break;
+        case 2:
+          if (!fMapTecControlVoltageSet[ix]->hasFocus()) fMapTecControlVoltageSet[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+          break;
+        case 3:
+          if (!fMapTecPIDkp[ix]->hasFocus()) fMapTecPIDkp[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+          break;
+        case 4:
+          if (!fMapTecPIDki[ix]->hasFocus()) fMapTecPIDki[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+          break;
+        case 5:
+          if (!fMapTecPIDkd[ix]->hasFocus()) fMapTecPIDkd[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+          break;
+        case 6:
+          if (!fMapTecPIDMax[ix]->hasFocus()) fMapTecPIDMax[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+          break;
+        case 7:
+          if (!fMapTecPIDMin[ix]->hasFocus()) fMapTecPIDMin[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+          break;
+        case 8:
+          if (!fMapTecRefU[ix]->hasFocus()) fMapTecRefU[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+          break;
       }
     }
   }
