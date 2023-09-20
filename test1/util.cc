@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <sstream>
 #include <unistd.h>
+#include <memory>
 
 using namespace std;
 
@@ -35,6 +36,7 @@ void /*vector<string>&*/ split(const string &s, char delim, vector<string> &elem
   }
   //  return elems;
 }
+
 
 // ----------------------------------------------------------------------
 void cleanupString(string &s) {
