@@ -350,7 +350,7 @@ void MainWindow::guiFlashLoadButtonRead() {
 void MainWindow::guiFlashSaveButtonRead() {
     cout << "guiFlashSaveButtonRead()"  << endl;
     fpHw->saveToFlash();
-    if (fTECExpert && fTECExpert->isVisible()) {
+    if (fTECExpert) {
       fTECExpert->updateHardwareDisplay();
     }
 }
@@ -364,7 +364,7 @@ void MainWindow::showAlarm() {
 
 // ----------------------------------------------------------------------
 void MainWindow::updateHardwareDisplay() {
-  if (1) cout << "MainWindow::updateHardwareDisplay() entered, fpHw->getRunCnt() = "
+  if (0) cout << "MainWindow::updateHardwareDisplay() entered, fpHw->getRunCnt() = "
               << fpHw->getRunCnt()
               << endl;
 
@@ -372,16 +372,7 @@ void MainWindow::updateHardwareDisplay() {
     fTECDisplay->updateHardwareDisplay();
   }
 
-  cout << "calling fTECExpert = " << fTECExpert << " isVisble() = ";
   if (fTECExpert) {
-    cout << fTECExpert->isVisible() ;
-  } else {
-    cout << " undefined";
-  }
-  cout << endl;
-
-  if (fTECExpert && fTECExpert->isVisible()) {
-      cout << "calling fTECExpert->updateHardwareDisplay() " << endl;
     fTECExpert->updateHardwareDisplay();
   }
 
