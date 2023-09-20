@@ -5,6 +5,8 @@
 #include <iomanip>
 #include <sstream>
 #include <unistd.h>
+#include <memory.h>
+#include <algorithm>
 
 
 using namespace std;
@@ -44,7 +46,7 @@ void cleanupString(string &s) {
   string::size_type s1 = s.find("#");
   if (string::npos != s1) s.erase(s1);
   if (0 == s.length()) return;
-  string::iterator new_end = std::unique(s.begin(), s.end(), bothAreSpaces);
+  string::iterator new_end = unique(s.begin(), s.end(), bothAreSpaces);
   s.erase(new_end, s.end());
   if (s.substr(0, 1) == string(" ")) s.erase(0, 1);
   if (s.substr(s.length()-1, 1) == string(" ")) s.erase(s.length()-1, 1);
