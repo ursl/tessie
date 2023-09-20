@@ -263,7 +263,8 @@ void MainWindow::clkKillSiren() {
     cleanupString(sbfr);
     vector<string> tokens = split(sbfr, ' ');
     cout << "->" << sbfr << "<-" << " PID = " << tokens[1] << endl;
-    string scommand = "kill -9 " + tokens[1];
+    string scommand = "/usr/bin/kill -9 " + tokens[1];
+    fLOG(INFO, scommand);
     system(scommand.c_str());
   }
   pclose(fp);
