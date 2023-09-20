@@ -266,6 +266,7 @@ void MainWindow::clkKillSiren() {
     string scommand = "/usr/bin/kill -9 " + tokens[1];
     fLOG(INFO, scommand);
     system(scommand.c_str());
+    fAlarmSoundPlaying = false;
   }
   pclose(fp);
 
