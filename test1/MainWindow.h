@@ -157,7 +157,7 @@ private:
     fUIMode,
     fUIPIDkd;
 
-    bool fExpertMode{false}, fFullScreen{false};
+    bool fExpertMode{false}, fFullScreen{false}, fAlarmSoundPlaying{false};
 
     std::vector<QCheckBox*> fUICheckBox;
 };

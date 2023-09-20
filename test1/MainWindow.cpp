@@ -358,10 +358,12 @@ void MainWindow::guiFlashSaveButtonRead() {
 
 // ----------------------------------------------------------------------
 void MainWindow::showAlarm() {
-    cout << "showAlarm!" << endl;
+  if (!fAlarmSoundPlaying) {
+    cout << "showAlarm! Running vlc!!" << endl;
     system("/usr/bin/cvlc -R siren.mp3 &");
+    fAlarmSoundPlaying = true;
+  }
 }
-
 
 // ----------------------------------------------------------------------
 void MainWindow::updateHardwareDisplay() {
