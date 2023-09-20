@@ -21,7 +21,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   ui->setupUi(this);
 
 
-  ui->labelVersion->setText("2023/09/19-01");
+  ui->labelVersion->setText("2023/09/20-01");
   //ui->labelStatus->setText("OK");
 
   ui->lineEditRunTime->setAlignment(Qt::AlignRight);
@@ -364,7 +364,7 @@ void MainWindow::showAlarm() {
 
 // ----------------------------------------------------------------------
 void MainWindow::updateHardwareDisplay() {
-  if (0) cout << "MainWindow::updateHardwareDisplay() entered, fpHw->getRunCnt() = "
+  if (1) cout << "MainWindow::updateHardwareDisplay() entered, fpHw->getRunCnt() = "
               << fpHw->getRunCnt()
               << endl;
 
@@ -372,7 +372,9 @@ void MainWindow::updateHardwareDisplay() {
     fTECDisplay->updateHardwareDisplay();
   }
 
+  cout << "calling fTECExpert = " << fTECExpert << " isVisble() = " <<  fTECExpert->isVisible() << endl;
   if (fTECExpert && fTECExpert->isVisible()) {
+      cout << "calling fTECExpert->updateHardwareDisplay() " << endl;
     fTECExpert->updateHardwareDisplay();
   }
 

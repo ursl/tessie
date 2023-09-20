@@ -171,12 +171,17 @@ void TECExpert::setHardware(driveHardware *x) {
 
 // -------------------------------------------------------------------------------
 void TECExpert::updateHardwareDisplay() {
+  cout << "TECExpert:  start     " << "updateHardwareDisplay: fMapTecMode " << endl;
   if (isVisible()) {
     for (int iy = 1; iy <= 8; ++iy) {
       for (int ix = 1; ix <= 8; ++ix) {
         switch (iy) {
           case 1:
-            if (!fMapTecMode[ix]->hasFocus()) fMapTecMode[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+            cout << "TECExpert:  isVisible  " << "updateHardwareDisplay: fMapTecMode " << endl;
+            if (!fMapTecMode[ix]->hasFocus()) {
+              fMapTecMode[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
+              cout << "TECExpert: !focus    " << "updateHardwareDisplay: fMapTecMode " << endl;
+            }
             break;
           case 2:
             if (!fMapTecControlVoltageSet[ix]->hasFocus()) fMapTecControlVoltageSet[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
