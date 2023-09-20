@@ -372,7 +372,14 @@ void MainWindow::updateHardwareDisplay() {
     fTECDisplay->updateHardwareDisplay();
   }
 
-  cout << "calling fTECExpert = " << fTECExpert << " isVisble() = " <<  fTECExpert->isVisible() << endl;
+  cout << "calling fTECExpert = " << fTECExpert << " isVisble() = ";
+  if (fTECExpert) {
+    cout << fTECExpert->isVisible() ;
+  } else {
+    cout << " undefined";
+  }
+  cout << endl;
+
   if (fTECExpert && fTECExpert->isVisible()) {
       cout << "calling fTECExpert->updateHardwareDisplay() " << endl;
     fTECExpert->updateHardwareDisplay();
