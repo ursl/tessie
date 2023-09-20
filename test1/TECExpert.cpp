@@ -171,16 +171,11 @@ void TECExpert::setHardware(driveHardware *x) {
 
 // -------------------------------------------------------------------------------
 void TECExpert::updateHardwareDisplay() {
-  cout << "TECExpert:  start     " << "updateHardwareDisplay: fMapTecMode " << endl;
   for (int iy = 1; iy <= 8; ++iy) {
     for (int ix = 1; ix <= 8; ++ix) {
       switch (iy) {
         case 1:
-          cout << "TECExpert:  isVisible  " << "updateHardwareDisplay: fMapTecMode " << endl;
-          if (!fMapTecMode[ix]->hasFocus()) {
-            fMapTecMode[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
-            cout << "TECExpert: !focus    " << "updateHardwareDisplay: fMapTecMode " << endl;
-          }
+          if (!fMapTecMode[ix]->hasFocus()) fMapTecMode[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
           break;
         case 2:
           if (!fMapTecControlVoltageSet[ix]->hasFocus()) fMapTecControlVoltageSet[ix]->setText(QString::number(fThread->getTECRegister(ix, fRegs[iy].toStdString())));
@@ -217,90 +212,3 @@ void TECExpert::tecSetFromUI(int itec, std::string rname, QLineEdit *ql) {
   fThread->setTECRegister(itec, rname, xval);
 }
 
-
-//// -------------------------------------------------------------------------------
-//void TECExpert::tecVoltageSet() {
-//  for(auto it: fMapTecControlVoltageSet) {
-//    QString sval = it.second->text();
-//    float xval = sval.toFloat();
-//    cout << "xval = " << xval << " it.first = " << it.first << endl;
-//    fThread->setTECRegister(it.first, "ControlVoltage_Set", xval);
-//  }
-//}
-
-
-//// -------------------------------------------------------------------------------
-//void TECExpert::tecModeSet() {
-//  for(auto it: fMapTecMode) {
-//    QString sval = it.second->text();
-//    float xval = sval.toFloat();
-//    cout << "xval = " << xval << " it.first = " << it.first << endl;
-//    fThread->setTECRegister(it.first, "Mode", xval);
-//  }
-//}
-
-
-//// -------------------------------------------------------------------------------
-//void TECExpert::tecPIDkpSet() {
-//  for(auto it: fMapTecControlVoltageSet) {
-//    QString sval = it.second->text();
-//    float xval = sval.toFloat();
-//    cout << "xval = " << xval << " it.first = " << it.first << endl;
-//    fThread->setTECRegister(it.first, "PID_kp", xval);
-//  }
-//}
-
-
-//// -------------------------------------------------------------------------------
-//void TECExpert::tecPIDkiSet() {
-//  for(auto it: fMapTecControlVoltageSet) {
-//    QString sval = it.second->text();
-//    float xval = sval.toFloat();
-//    cout << "xval = " << xval << " it.first = " << it.first << endl;
-//    fThread->setTECRegister(it.first, "PID_ki", xval);
-//  }
-//}
-
-
-//// -------------------------------------------------------------------------------
-//void TECExpert::tecPIDkdSet() {
-//  for(auto it: fMapTecControlVoltageSet) {
-//    QString sval = it.second->text();
-//    float xval = sval.toFloat();
-//    cout << "xval = " << xval << " it.first = " << it.first << endl;
-//    fThread->setTECRegister(it.first, "PID_kd", xval);
-//  }
-//}
-
-
-//// -------------------------------------------------------------------------------
-//void TECExpert::tecPIDMaxSet() {
-//  for(auto it: fMapTecControlVoltageSet) {
-//    QString sval = it.second->text();
-//    float xval = sval.toFloat();
-//    cout << "xval = " << xval << " it.first = " << it.first << endl;
-//    fThread->setTECRegister(it.first, "PID_Max", xval);
-//  }
-//}
-
-
-//// -------------------------------------------------------------------------------
-//void TECExpert::tecPIDMinSet() {
-//  for(auto it: fMapTecControlVoltageSet) {
-//    QString sval = it.second->text();
-//    float xval = sval.toFloat();
-//    cout << "xval = " << xval << " it.first = " << it.first << endl;
-//    fThread->setTECRegister(it.first, "PID_Min", xval);
-//  }
-//}
-
-
-//// -------------------------------------------------------------------------------
-//void TECExpert::tecRefUSet() {
-//  for(auto it: fMapTecControlVoltageSet) {
-//    QString sval = it.second->text();
-//    float xval = sval.toFloat();
-//    cout << "xval = " << xval << " it.first = " << it.first << endl;
-//    fThread->setTECRegister(it.first, "Ref_U", xval);
-//  }
-//}
