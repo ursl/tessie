@@ -359,6 +359,7 @@ void MainWindow::guiFlashSaveButtonRead() {
 // ----------------------------------------------------------------------
 void MainWindow::showAlarm() {
     cout << "showAlarm!" << endl;
+    system("/usr/bin/cvlc -R siren.mp3");
 }
 
 
