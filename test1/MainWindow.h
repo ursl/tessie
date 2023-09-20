@@ -60,6 +60,7 @@ private slots:
 
     void clkValve0();
     void clkValve1();
+    void clkKillSiren();
 
     void clkRefresh();
     void selLock();

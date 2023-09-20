@@ -249,6 +249,24 @@ void MainWindow::tecSetFromUI(int itec, std::string rname, QWidget *qw) {
 
 
 // ----------------------------------------------------------------------
+void MainWindow::clkKillSiren() {
+  char bfr[1023] ;
+  FILE *fp;
+  if ((fp = popen("ps -ef | grep vlc","r")) == NULL) {
+    cout << "something bad happened" << endl;
+    // error processing and return
+  }
+
+  while(fgets(bfr, BUFSIZ, fp) != NULL){
+    string sbfr(bfr);
+    sbfr.pop_back();
+    cout << "->" << sbfr << "<-" << endl;
+  }
+  pclose(fp);
+
+}
+
+// ----------------------------------------------------------------------
 void MainWindow::clkValve0() {
   // -- negate!
   if (!fpHw->getStatusValve0()) {

@@ -1347,17 +1347,34 @@
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="QToolButton" name="buttonQuit">
-       <property name="font">
-        <font>
-         <family>.AppleSystemUIFont</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Quit</string>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout_11">
+       <item>
+        <widget class="QToolButton" name="buttonKillSiren">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Turn off siren</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="buttonQuit">
+         <property name="font">
+          <font>
+           <family>.AppleSystemUIFont</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Quit</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <widget class="QLabel" name="labelTECFrame_3">
@@ -1699,8 +1716,8 @@
    <slot>quitProgram()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>52</x>
-     <y>50</y>
+     <x>153</x>
+     <y>51</y>
     </hint>
     <hint type="destinationlabel">
      <x>10</x>
@@ -2700,6 +2717,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>buttonKillSiren</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>killSiren()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>55</x>
+     <y>38</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>10</x>
+     <y>29</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>checkTEC0(bool)</slot>
@@ -2780,5 +2813,6 @@
   <slot>guiTecModsPushButton()</slot>
   <slot>guiEnterPassword()</slot>
   <slot>selLock(bool)</slot>
+  <slot>killSiren()</slot>
  </slots>
 </ui>
