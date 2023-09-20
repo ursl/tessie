@@ -260,7 +260,9 @@ void MainWindow::clkKillSiren() {
   while(fgets(bfr, BUFSIZ, fp) != NULL){
     string sbfr(bfr);
     sbfr.pop_back();
-    cout << "->" << sbfr << "<-" << endl;
+    cleanupString(sbfr);
+    vector<string> tokens = split(sbfr, ' ');
+    cout << "->" << sbfr << "<-" << " PID = " << tokens[1] << endl;
   }
   pclose(fp);
 
