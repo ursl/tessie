@@ -2721,15 +2721,15 @@
    <sender>buttonKillSiren</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>killSiren()</slot>
+   <slot>clkKillSiren()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>55</x>
-     <y>38</y>
+     <x>57</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
-     <x>10</x>
-     <y>29</y>
+     <x>18</x>
+     <y>28</y>
     </hint>
    </hints>
   </connection>
@@ -2813,6 +2813,6 @@
   <slot>guiTecModsPushButton()</slot>
   <slot>guiEnterPassword()</slot>
   <slot>selLock(bool)</slot>
-  <slot>killSiren()</slot>
+  <slot>clkKillSiren()</slot>
  </slots>
 </ui>
