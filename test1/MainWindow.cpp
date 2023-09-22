@@ -91,7 +91,6 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   ui->flashSaveButtonRead->setEnabled(false);
   ui->tecModsPushButton->setEnabled(false);
-
   ui->tecModsPasswordEdit->setEchoMode(QLineEdit::Password);
 
 

@@ -295,7 +295,7 @@
           <item>
            <widget class="QPushButton" name="pushButtonWrite">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
@@ -328,6 +328,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="pushButtonRead">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
               <horstretch>0</horstretch>
@@ -667,7 +670,7 @@
           <item>
            <widget class="QCheckBox" name="checkBox">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="font">
              <font>
@@ -2155,7 +2158,7 @@
    <slot>checkTEC3(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>682</x>
+     <x>704</x>
      <y>393</y>
     </hint>
     <hint type="destinationlabel">
@@ -2235,7 +2238,7 @@
    <slot>checkTEC7(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>604</x>
+     <x>618</x>
      <y>180</y>
     </hint>
     <hint type="destinationlabel">
@@ -2251,7 +2254,7 @@
    <slot>checkTEC4(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>749</x>
+     <x>781</x>
      <y>393</y>
     </hint>
     <hint type="destinationlabel">
@@ -2267,7 +2270,7 @@
    <slot>openTEC1()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>485</x>
+     <x>491</x>
      <y>383</y>
     </hint>
     <hint type="destinationlabel">
@@ -2411,7 +2414,7 @@
    <slot>openTEC8()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>485</x>
+     <x>491</x>
      <y>181</y>
     </hint>
     <hint type="destinationlabel">
@@ -2667,7 +2670,7 @@
    <slot>checkTEC6(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>682</x>
+     <x>704</x>
      <y>184</y>
     </hint>
     <hint type="destinationlabel">
@@ -2683,7 +2686,7 @@
    <slot>checkTEC5(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>749</x>
+     <x>781</x>
      <y>184</y>
     </hint>
     <hint type="destinationlabel">
@@ -2731,7 +2734,7 @@
    <slot>checkTEC2(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>604</x>
+     <x>618</x>
      <y>383</y>
     </hint>
     <hint type="destinationlabel">
@@ -2795,8 +2798,8 @@
    <slot>guiTecModsPushButton()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>299</x>
-     <y>456</y>
+     <x>332</x>
+     <y>433</y>
     </hint>
     <hint type="destinationlabel">
      <x>391</x>
@@ -2811,8 +2814,8 @@
    <slot>guiEnterPassword()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>221</x>
-     <y>456</y>
+     <x>231</x>
+     <y>427</y>
     </hint>
     <hint type="destinationlabel">
      <x>370</x>
@@ -2827,8 +2830,8 @@
    <slot>clkRefresh()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>274</x>
-     <y>128</y>
+     <x>333</x>
+     <y>173</y>
     </hint>
     <hint type="destinationlabel">
      <x>336</x>
@@ -2843,8 +2846,8 @@
    <slot>selLock(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>211</x>
-     <y>122</y>
+     <x>197</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel">
      <x>572</x>
@@ -2865,6 +2868,22 @@
     <hint type="destinationlabel">
      <x>18</x>
      <y>28</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>checkDisableSiren(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>217</x>
+     <y>450</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>171</x>
+     <y>495</y>
     </hint>
    </hints>
   </connection>
@@ -2949,5 +2968,6 @@
   <slot>guiEnterPassword()</slot>
   <slot>selLock(bool)</slot>
   <slot>clkKillSiren()</slot>
+  <slot>checkDisableSiren(bool)</slot>
  </slots>
 </ui>
