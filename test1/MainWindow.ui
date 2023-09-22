@@ -629,7 +629,7 @@
             </property>
             <property name="maximumSize">
              <size>
-              <width>16777215</width>
+              <width>100</width>
               <height>20</height>
              </size>
             </property>
@@ -666,6 +666,9 @@
          <layout class="QHBoxLayout" name="horizontalLayout_28">
           <item>
            <widget class="QCheckBox" name="checkBox">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="font">
              <font>
               <family>Academy Engraved LET</family>
