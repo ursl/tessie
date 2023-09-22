@@ -247,64 +247,6 @@
           </item>
          </layout>
         </item>
-        <item row="15" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_20">
-          <item>
-           <widget class="QLineEdit" name="tecModsPasswordEdit">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>20</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="tecModsPushButton">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Academy Engraved LET</family>
-              <pointsize>8</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>TEC mods</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="18" column="0">
-         <widget class="QCheckBox" name="checkBox">
-          <property name="font">
-           <font>
-            <family>Academy Engraved LET</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Disable Siren</string>
-          </property>
-         </widget>
-        </item>
         <item row="7" column="0" colspan="2">
          <layout class="QHBoxLayout" name="horizontalLayout_26">
           <property name="topMargin">
@@ -670,6 +612,68 @@
             </property>
             <property name="text">
              <string>Refresh</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="15" column="0" colspan="2">
+         <layout class="QHBoxLayout" name="horizontalLayout_20">
+          <item>
+           <widget class="QLineEdit" name="tecModsPasswordEdit">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>20</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="tecModsPushButton">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Academy Engraved LET</family>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>TEC mods</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="16" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_28">
+          <item>
+           <widget class="QCheckBox" name="checkBox">
+            <property name="font">
+             <font>
+              <family>Academy Engraved LET</family>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Disable Siren</string>
             </property>
            </widget>
           </item>
