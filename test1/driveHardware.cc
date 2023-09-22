@@ -1234,7 +1234,7 @@ void driveHardware::toggleFras(int imask) {
      sstatus = "off";
    }
   }
-  stringstream sbla; sbla << "toggleFRAS(" << (imask == 1? "flush)": "rinse) ") << sstatus;
+  stringstream sbla; sbla << "toggleFRAS(" << (imask == 1? "flush) ": "rinse) ") << sstatus;
   fLOG(INFO, sbla.str().c_str());
 
   // -- Send message
