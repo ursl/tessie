@@ -668,7 +668,7 @@
         <item row="16" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout_28">
           <item>
-           <widget class="QCheckBox" name="checkBox">
+           <widget class="QCheckBox" name="checkBoxDisableSiren">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -2872,7 +2872,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox</sender>
+   <sender>checkBoxDisableSiren</sender>
    <signal>clicked(bool)</signal>
    <receiver>MainWindow</receiver>
    <slot>checkDisableSiren(bool)</slot>

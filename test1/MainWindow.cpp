@@ -89,10 +89,11 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   ui->buttonValve0->setStyleSheet("QPushButton {background-color: gray; color: black;}");
   ui->buttonValve1->setStyleSheet("QPushButton {background-color: gray; color: black;}");
 
+  // -- Note: if slot not visible - manually delete ui_MainWindow.h, make clean, make
   ui->flashSaveButtonRead->setEnabled(false);
   ui->tecModsPushButton->setEnabled(false);
   ui->tecModsPasswordEdit->setEchoMode(QLineEdit::Password);
-
+  ui->checkBoxDisableSiren->setEnabled(false);
 
 }
 
@@ -223,11 +224,13 @@ void MainWindow::guiEnterPassword() {
      fExpertMode = true;
      ui->flashSaveButtonRead->setEnabled(true);
      ui->tecModsPushButton->setEnabled(true);
+     ui->checkBoxDisableSiren->setEnabled(true);
      fLOG(INFO, "expert password entered correctly from host");
    } else {
      fExpertMode = false;
      ui->flashSaveButtonRead->setEnabled(false);
      ui->tecModsPushButton->setEnabled(false);
+     ui->checkBoxDisableSiren->setEnabled(false);
      fLOG(INFO, "expert password entered incorrectly from host");
    }
    fLOG(INFO, shost);
