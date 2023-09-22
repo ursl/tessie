@@ -124,72 +124,7 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
-         <widget class="QCheckBox" name="checkboxTECLockAll">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>10</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>100</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>100</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>.AppleSystemUIFont</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>lock all</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="buttonRefresh">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>50</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>50</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <family>.AppleSystemUIFont</family>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
-          </property>
-          <property name="text">
-           <string>Refresh</string>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="0">
+        <item row="11" column="0">
          <widget class="QLabel" name="labelTECFrame_4">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -215,7 +150,7 @@
           </property>
          </widget>
         </item>
-        <item row="13" column="0" colspan="2">
+        <item row="14" column="0" colspan="2">
          <layout class="QHBoxLayout" name="horizontalLayout_22">
           <item>
            <widget class="QLabel" name="labelFlashButtons">
@@ -253,13 +188,13 @@
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>30</height>
+              <height>20</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>30</height>
+              <height>20</height>
              </size>
             </property>
             <property name="font">
@@ -284,13 +219,13 @@
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>30</height>
+              <height>20</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>30</height>
+              <height>20</height>
              </size>
             </property>
             <property name="baseSize">
@@ -312,13 +247,38 @@
           </item>
          </layout>
         </item>
-        <item row="14" column="0">
+        <item row="15" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout_20">
           <item>
-           <widget class="QLineEdit" name="tecModsPasswordEdit"/>
+           <widget class="QLineEdit" name="tecModsPasswordEdit">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>20</height>
+             </size>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="tecModsPushButton">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>20</height>
+             </size>
+            </property>
             <property name="font">
              <font>
               <family>Academy Engraved LET</family>
@@ -332,7 +292,7 @@
           </item>
          </layout>
         </item>
-        <item row="17" column="0">
+        <item row="18" column="0">
          <widget class="QCheckBox" name="checkBox">
           <property name="font">
            <font>
@@ -345,7 +305,7 @@
           </property>
          </widget>
         </item>
-        <item row="6" column="0" colspan="2">
+        <item row="7" column="0" colspan="2">
          <layout class="QHBoxLayout" name="horizontalLayout_26">
           <property name="topMargin">
            <number>2</number>
@@ -457,7 +417,7 @@
           </item>
          </layout>
         </item>
-        <item row="5" column="0" colspan="2">
+        <item row="6" column="0" colspan="2">
          <layout class="QHBoxLayout" name="horizontalLayout_25">
           <property name="topMargin">
            <number>2</number>
@@ -514,7 +474,7 @@
           </item>
          </layout>
         </item>
-        <item row="4" column="0" colspan="2">
+        <item row="5" column="0" colspan="2">
          <layout class="QHBoxLayout" name="horizontalLayout_24">
           <property name="topMargin">
            <number>2</number>
@@ -577,7 +537,7 @@
           </item>
          </layout>
         </item>
-        <item row="3" column="0" colspan="2">
+        <item row="4" column="0" colspan="2">
          <layout class="QHBoxLayout" name="horizontalLayout_23">
           <property name="topMargin">
            <number>2</number>
@@ -635,6 +595,81 @@
               <width>100</width>
               <height>20</height>
              </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="3" column="0" colspan="2">
+         <layout class="QHBoxLayout" name="horizontalLayout_27">
+          <property name="topMargin">
+           <number>2</number>
+          </property>
+          <property name="bottomMargin">
+           <number>2</number>
+          </property>
+          <item>
+           <widget class="QCheckBox" name="checkboxTECLockAll">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>10</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>100</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>.AppleSystemUIFont</family>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>lock all</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="buttonRefresh">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>50</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>.AppleSystemUIFont</family>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="text">
+             <string>Refresh</string>
             </property>
            </widget>
           </item>
@@ -1235,13 +1270,6 @@
          </property>
         </widget>
        </item>
-       <item row="11" column="3">
-        <widget class="QLineEdit" name="tec3_Supply_U">
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
        <item row="3" column="1">
         <widget class="QLineEdit" name="tec8_TempM">
          <property name="acceptDrops">
@@ -1385,6 +1413,13 @@
          <property name="acceptDrops">
           <bool>false</bool>
          </property>
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="3">
+        <widget class="QLineEdit" name="tec3_Supply_U">
          <property name="frame">
           <bool>false</bool>
          </property>
