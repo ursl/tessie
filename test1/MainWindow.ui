@@ -614,6 +614,26 @@
           </item>
          </layout>
         </item>
+        <item row="15" column="0">
+         <layout class="QHBoxLayout" name="horizontalLayout_20">
+          <item>
+           <widget class="QLineEdit" name="tecModsPasswordEdit"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="tecModsPushButton">
+            <property name="font">
+             <font>
+              <family>Academy Engraved LET</family>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>TEC mods</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
        </layout>
       </widget>
      </item>
@@ -1731,34 +1751,6 @@
          <family>Arial</family>
          <pointsize>8</pointsize>
         </font>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>180</x>
-      <y>450</y>
-      <width>181</width>
-      <height>33</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_20">
-     <item>
-      <widget class="QLineEdit" name="tecModsPasswordEdit"/>
-     </item>
-     <item>
-      <widget class="QPushButton" name="tecModsPushButton">
-       <property name="font">
-        <font>
-         <family>Academy Engraved LET</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>TEC mods</string>
        </property>
       </widget>
      </item>
