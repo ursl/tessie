@@ -1219,7 +1219,22 @@ void driveHardware::toggleFras(int imask) {
   fFrameW.can_dlc = dlength;
   fFrameW.data[0] = fValveMask;
 #endif
-  stringstream sbla; sbla << "toggleFRAS(" << (imask == 1? "flush)": "rinse)");
+  string sstatus("");
+  if (1 == imask) {
+   if (getStatusValve0()) {
+     sstatus = "on";
+   } else {
+     sstatus = "off";
+   }
+  }
+  if (2 == imask) {
+   if (getStatusValve1()) {
+     sstatus = "on";
+   } else {
+     sstatus = "off";
+   }
+  }
+  stringstream sbla; sbla << "toggleFRAS(" << (imask == 1? "flush)": "rinse) ") << sstatus;
   fLOG(INFO, sbla.str().c_str());
 
   // -- Send message
