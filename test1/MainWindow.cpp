@@ -157,6 +157,13 @@ void MainWindow::setCheckBoxTEC(int itec, bool state) {
 
 
 // ----------------------------------------------------------------------
+void MainWindow::setCheckDisableSiren(bool state) {
+  cout << "MainWindow::setCheckDisableSiren(" << state << ")" << endl;
+  fDisableSiren = state;
+}
+
+
+// ----------------------------------------------------------------------
 void MainWindow::quitProgram() {
   stringstream sbla; sbla << "This is the end, my friend";
   fLOG(INFO, "This is the end, my friend -- tessie shutting down");
@@ -382,10 +389,12 @@ void MainWindow::guiFlashSaveButtonRead() {
 
 // ----------------------------------------------------------------------
 void MainWindow::showAlarm() {
-  if (!fAlarmSoundPlaying) {
-    cout << "showAlarm! Running vlc!!" << endl;
-    system("/usr/bin/cvlc -R siren.mp3 &");
-    fAlarmSoundPlaying = true;
+  if (!fDisableSiren) {
+    if (!fAlarmSoundPlaying) {
+      cout << "showAlarm! Running vlc!!" << endl;
+      system("/usr/bin/cvlc -R siren.mp3 &");
+      fAlarmSoundPlaying = true;
+    }
   }
 }
 

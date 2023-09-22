@@ -27,7 +27,7 @@
      <rect>
       <x>172</x>
       <y>100</y>
-      <width>581</width>
+      <width>621</width>
       <height>421</height>
      </rect>
     </property>
@@ -537,13 +537,16 @@
           </layout>
          </widget>
         </item>
-        <item row="13" column="0">
-         <widget class="QLineEdit" name="tecModsPasswordEdit"/>
-        </item>
-        <item row="13" column="1">
-         <widget class="QPushButton" name="tecModsPushButton">
+        <item row="14" column="1">
+         <widget class="QCheckBox" name="checkBox">
+          <property name="font">
+           <font>
+            <family>Academy Engraved LET</family>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
           <property name="text">
-           <string>TEC mods</string>
+           <string>Disable Siren</string>
           </property>
          </widget>
         </item>
@@ -1306,7 +1309,7 @@
      <rect>
       <x>230</x>
       <y>20</y>
-      <width>521</width>
+      <width>561</width>
       <height>71</height>
      </rect>
     </property>
@@ -1664,6 +1667,34 @@
          <family>Arial</family>
          <pointsize>8</pointsize>
         </font>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>380</y>
+      <width>225</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_20">
+     <item>
+      <widget class="QLineEdit" name="tecModsPasswordEdit"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="tecModsPushButton">
+       <property name="font">
+        <font>
+         <family>Academy Engraved LET</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>TEC mods</string>
        </property>
       </widget>
      </item>

@@ -24,6 +24,7 @@ public:
 
     void printText(std::string line);
     void setCheckBoxTEC(int itec, bool state);
+    void setCheckDisableSiren(bool state);
 
     void openTECDisplay(int itec);
     void closeTECDisplay();
@@ -74,6 +75,8 @@ private slots:
     void checkTEC6(bool checked) {setCheckBoxTEC(6, checked); }
     void checkTEC7(bool checked) {setCheckBoxTEC(7, checked); }
     void checkTEC8(bool checked) {setCheckBoxTEC(8, checked); }
+
+    void checkDisableSiren(bool checked) {setCheckDisableSiren(checked);}
 
     void checkTECAll(bool checked);
 
@@ -158,7 +161,7 @@ private:
     fUIMode,
     fUIPIDkd;
 
-    bool fExpertMode{false}, fFullScreen{false}, fAlarmSoundPlaying{false};
+    bool fExpertMode{false}, fFullScreen{false}, fAlarmSoundPlaying{false}, fDisableSiren{false};
 
     std::vector<QCheckBox*> fUICheckBox;
 };
