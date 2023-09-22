@@ -583,6 +583,32 @@
           </item>
          </layout>
         </item>
+        <item row="12" column="0">
+         <widget class="QLabel" name="labelTECFrame_4">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>10</horstretch>
+            <verstretch>50</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="font">
+           <font>
+            <family>Menlo</family>
+            <pointsize>8</pointsize>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Box</enum>
+          </property>
+          <property name="text">
+           <string>Expert section</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>
@@ -1709,7 +1735,7 @@
     <property name="geometry">
      <rect>
       <x>180</x>
-      <y>440</y>
+      <y>450</y>
       <width>181</width>
       <height>33</height>
      </rect>
