@@ -424,6 +424,7 @@ void MainWindow::updateHardwareDisplay() {
   if (fpHw->redCANErrors() > 0) {
     cout << "Setting CANbus error counter line edit to red" << endl;
     ui->lineEditCANbusError->setStyleSheet("QLineEdit {background-color : red; }");
+    system("/usr/bin/cvlc -R houstonwehaveaproblem.mp3");
   } else {
     ui->lineEditCANbusError->setStyleSheet("QLineEdit {background-color : white; }");
   }
@@ -431,6 +432,7 @@ void MainWindow::updateHardwareDisplay() {
   if (fpHw->redI2CErrors() > 0) {
     cout << "Setting I2C error counter line edit to red" << endl;
     ui->lineEditI2CError->setStyleSheet("QLineEdit {background-color : red; }");
+    system("/usr/bin/cvlc -R houstonwehaveaproblem.mp3");
   } else {
     ui->lineEditI2CError->setStyleSheet("QLineEdit {background-color : white; }");
   }
