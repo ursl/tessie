@@ -25,6 +25,7 @@ SOURCES += \
     MainWindow.cpp \
     TECDisplay.cpp \
     TECExpert.cpp \
+    TECTune.cpp \
     canFrame.cc \
     driveHardware.cc \
     tLog.cc \
@@ -41,6 +42,7 @@ HEADERS += \
     TECDisplay.h \
     TECExpert.h \
     TECRegister.hh \
+    TECTune.h \
     canFrame.hh \
     driveHardware.hh \
     tLog.hh \

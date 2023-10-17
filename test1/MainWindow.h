@@ -8,6 +8,7 @@
 #include "driveHardware.hh"
 #include "TECDisplay.h"
 #include "TECExpert.h"
+#include "TECTune.h"
 
 #include "tLog.hh"
 
@@ -149,6 +150,7 @@ private:
     driveHardware *fpHw;
     TECDisplay    *fTECDisplay{0};
     TECExpert     *fTECExpert{0};
+    TECTune       *fTECTune{0};
 
     std::string fGuiRegName;
     int         fGuiTecId;
