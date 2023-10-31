@@ -44,8 +44,6 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fCANReadIntVal = 3;
   fCANReadFloatVal = 3.1415;
 
-  fFanRunning = false;
-
   fI2CErrorCounter = 0;
   fI2CErrorOld = 0;
 
@@ -1309,8 +1307,8 @@ void  driveHardware::turnOnTEC(int itec) {
   fLOG(INFO, sbla.str());
   sendCANmessage();
 
-  if (!fFanRunning) {
-
+  if (!getStatusFan()) {
+    turnOnFan();
   }
 }
 
@@ -1330,8 +1328,22 @@ void  driveHardware::turnOffTEC(int itec) {
                           << " canID = 0x" << fCANId << dec;
   fLOG(INFO, sbla.str());
   sendCANmessage();
-}
 
+  // -- check whether any TEC is still turned on. If not, turn off fan.
+  bool oneRunning(false);
+  for (int itec = 0; itec < 8; ++itec) {
+    if (0 == fActiveTEC[itec]) continue;
+    if (1 == fTECData[itec].reg["PowerState"]) {
+      oneRunning = true;
+      break;
+    }
+  }
+  if (oneRunning) {
+
+  } else {
+    turnOffFan();
+  }
+}
 
 // ----------------------------------------------------------------------
 float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
