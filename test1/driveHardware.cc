@@ -1388,6 +1388,7 @@ void driveHardware::initTECData() {
   for (unsigned int itec = 1; itec <=8; ++itec) {
     fTECData.insert(make_pair(itec, initAllTECRegister()));
   }
+  fTECSetPoints = fTECData;
 }
 
 
@@ -1646,7 +1647,9 @@ void driveHardware::readSHT85() {
 
 // ----------------------------------------------------------------------
 void driveHardware::readVProbe() {
-  return;
+  // "i2cscanaddress"
+
+    return;
 #ifdef PI
     // TODO FIXME implement this once something is installed
     int length;
