@@ -1333,7 +1333,7 @@ void  driveHardware::turnOffTEC(int itec) {
   bool oneRunning(false);
   for (int itec = 0; itec < 8; ++itec) {
     if (0 == fActiveTEC[itec]) continue;
-    if (1 == fTECData[itec].reg["PowerState"]) {
+    if (1 == static_cast<int>(fTECData[itec].reg["PowerState"].value)) {
       oneRunning = true;
       break;
     }
