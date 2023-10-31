@@ -72,8 +72,12 @@ public:
   bool  getStatusValve0() {return ((fValveMask & 1) == 1);}
   bool  getStatusValve1() {return ((fValveMask & 2) == 2);}
   bool  getStatusValve()  {return (getStatusValve0() && getStatusValve1());}
+  bool  getStatusFan() {return ((fValveMask & 4) == 4);}
   void  turnOnValve(int i); // i = 0 or 1
   void  turnOffValve(int i); // i = 0 or 1
+  void  turnOnFan();
+  void  turnOffFan();
+
   // -- controlling the TEC
   void  setTECParameter(float par); // ???
   void  entertainTECs();
@@ -197,8 +201,9 @@ private:
 
   // -- all the registers, one element per TEC
   // -- this is a map instead of a vector to avoid the mismatch between '0' and '1'
-  std::map<int, TECData> fTECData, fTECSetPoints;
+  std::map<int, TECData> fTECData;
 
+  bool fFanRunning;
 };
 
 #endif // DRIVEHARDWARE_H

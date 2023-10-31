@@ -44,6 +44,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fCANReadIntVal = 3;
   fCANReadFloatVal = 3.1415;
 
+  fFanRunning = false;
+
   fI2CErrorCounter = 0;
   fI2CErrorOld = 0;
 
@@ -1179,6 +1181,18 @@ void driveHardware::entertainFras() {
 
 
 // ----------------------------------------------------------------------
+void driveHardware::turnOnFan() {
+  if (!getStatusFan()) toggleFras(4);
+}
+
+
+// ----------------------------------------------------------------------
+void driveHardware::turnOffFan() {
+  if (getStatusFan()) toggleFras(4);
+}
+
+
+// ----------------------------------------------------------------------
 void driveHardware::turnOnValve(int i) {
   if (0 == i) {
     if (!getStatusValve0()) toggleFras(1);
@@ -1234,7 +1248,19 @@ void driveHardware::toggleFras(int imask) {
      sstatus = "off";
    }
   }
-  stringstream sbla; sbla << "toggleFRAS(" << (imask == 1? "flush) ": "rinse) ") << sstatus;
+  if (4 == imask) {
+   if (getStatusFan()) {
+     sstatus = "on";
+   } else {
+     sstatus = "off";
+   }
+  }
+  stringstream sbla;
+  if ((1 == imask) || (2 == imask)) {
+    sbla << "toggleFRAS(" << (imask == 1? "flush) ": "rinse) ") << sstatus;
+  } else {
+    sbla << "toggleFRAS(fan)" << sstatus;
+  }
   fLOG(INFO, sbla.str().c_str());
 
   // -- Send message
@@ -1282,6 +1308,10 @@ void  driveHardware::turnOnTEC(int itec) {
                           << " canID = 0x" << fCANId << dec;
   fLOG(INFO, sbla.str());
   sendCANmessage();
+
+  if (!fFanRunning) {
+
+  }
 }
 
 
@@ -1388,7 +1418,6 @@ void driveHardware::initTECData() {
   for (unsigned int itec = 1; itec <=8; ++itec) {
     fTECData.insert(make_pair(itec, initAllTECRegister()));
   }
-  fTECSetPoints = fTECData;
 }
 
 
