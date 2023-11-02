@@ -1074,7 +1074,13 @@ void driveHardware::entertainTECs() {
 // ----------------------------------------------------------------------
 void driveHardware::entertainFras() {
 #ifdef PI
-  fMutex.lock();
+  if (fMutex.tryLock()) {
+    fLOG(INFO, "obtained mutex lock");
+  } else {
+    fLOG(INFO, "CANNOT obtain mutex lock");
+    return;
+  }
+  //  fMutex.lock();
   if (0 == fValveMask) {
       fFrameW.can_id = CAN_RTR_FLAG | 0x41;
       int dlength(0);
