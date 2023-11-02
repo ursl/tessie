@@ -186,10 +186,10 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
 // ----------------------------------------------------------------------
 driveHardware::~driveHardware() {
 
-  fMutex.lock();
+  // fMutex.lock();
   fAbort = true;
   fCondition.wakeOne();
-  fMutex.unlock();
+  // fMutex.unlock();
 
 #ifdef PI
   shutDown();
@@ -1074,6 +1074,7 @@ void driveHardware::entertainTECs() {
 // ----------------------------------------------------------------------
 void driveHardware::entertainFras() {
 #ifdef PI
+  fMutex.lock();
   if (0 == fValveMask) {
       fFrameW.can_id = CAN_RTR_FLAG | 0x41;
       int dlength(0);
@@ -1103,6 +1104,8 @@ void driveHardware::entertainFras() {
     }
   // -- this is required to absorb the write request from fSr
   int nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
+
+  fMutex.unlock();
 #endif
 }
 
