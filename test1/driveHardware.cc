@@ -979,80 +979,6 @@ void driveHardware::parseIoMessage() {
 
 
 // ----------------------------------------------------------------------
-// DECREPIT
-void driveHardware::readCANmessage(/*DECREPIT*/) {
-  fCANReadIntVal   += 1;
-  fCANReadFloatVal += 0.1;
-#ifdef PI
-  int nbytes(0);
-
-  // -- send read request
-  sendCANmessage();
-
-  bool DBX(false);
-  int itec = 0;
-  int ireg = 0;
-
-  static int cntCAN(0);
-
-  char data[4] = {0, 0, 0, 0};
-
-  unsigned int idata(0);
-  float fdata(0.0);
-
-  nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
-
-  // -- this is an alternative to 'read()'
-  //  socklen_t len = sizeof(fAddrR);
-  //  nbytes = recvfrom(fSr, &fFrameR, sizeof(fFrameR), 0, (struct sockaddr*)&fAddrR, &len);
-
-  if (nbytes > -1) {
-
-      if (DBX) {
-          printf("can_id = 0x%X ncan_dlc = %d \n", fFrameR.can_id, fFrameR.can_dlc);
-          int i = 0;
-          cout << "data[] = ";
-          if (DBX) for (i = 0; i < fFrameR.can_dlc; i++) {
-              printf("%3d ", fFrameR.data[i]);
-            }
-        }
-
-      itec    = fFrameR.can_id & 0xf;
-      ireg    = fFrameR.data[0];
-      data[0] = fFrameR.data[1];
-      data[1] = fFrameR.data[2];
-      data[2] = fFrameR.data[3];
-      data[3] = fFrameR.data[4];
-
-      if (DBX) cout << " ireg = " << ireg << " (fCANReg = " << fCANReg << ") ";
-
-      memcpy(&fdata, data, sizeof fdata);
-      memcpy(&idata, data, sizeof idata);
-      if (DBX) {
-          printf("float = %f/uint32 = %u", fdata, idata);
-          ++cntCAN;
-          printf(" (received CAN message %d)", cntCAN);
-        }
-      if (DBX) cout << endl;
-
-      stringstream sbla; sbla << "CAN read canid = " << hex << fFrameR.can_id
-                              << " tec = " << itec
-                              << " reg = 0x"  << hex << ireg
-                              << " value = " << fdata;
-      if (DBX) cout << "sbla: " << sbla.str() << endl;
-      fLOG(INFO, sbla.str());
-
-
-      fCANReadIntVal = idata;
-      fCANReadFloatVal = fdata;
-    }
-#endif
-
-  return;
-}
-
-
-// ----------------------------------------------------------------------
 void driveHardware::sendCANmessage() {
  fMutex.lock();
 
@@ -1136,10 +1062,12 @@ void driveHardware::sendCANmessage() {
 
 // ----------------------------------------------------------------------
 void driveHardware::entertainTECs() {
+#ifdef PI
   fCANId = (CANBUS_SHIFT | CANBUS_PUBLIC | CANBUS_TECREC | CANBUS_CMD);
   fCANReg = 3; // Watchdog
   fCANVal = fTECParameter;
   sendCANmessage();
+#endif
 }
 
 // ----------------------------------------------------------------------
@@ -1257,7 +1185,7 @@ void driveHardware::toggleFras(int imask) {
   if ((1 == imask) || (2 == imask)) {
     sbla << "toggleFRAS(" << (imask == 1? "flush) ": "rinse) ") << sstatus;
   } else {
-    sbla << "toggleFRAS(fan)" << sstatus;
+    sbla << "toggleFRAS(fan) " << sstatus;
   }
   fLOG(INFO, sbla.str().c_str());
 
