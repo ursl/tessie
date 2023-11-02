@@ -186,10 +186,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
 // ----------------------------------------------------------------------
 driveHardware::~driveHardware() {
 
-  // fMutex.lock();
   fAbort = true;
   fCondition.wakeOne();
-  // fMutex.unlock();
 
 #ifdef PI
   shutDown();
@@ -1146,6 +1144,7 @@ void driveHardware::turnOffValve(int i) {
 
 // ----------------------------------------------------------------------
 void driveHardware::toggleFras(int imask) {
+  fMutex.lock();
   int old = fValveMask;
   fValveMask = old xor imask;
 
@@ -1195,7 +1194,6 @@ void driveHardware::toggleFras(int imask) {
 
   // -- Send message
 #ifdef PI
-  fMutex.lock();
   setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
   int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
   if (nbytes != sizeof(fFrameW)) {
@@ -1205,8 +1203,8 @@ void driveHardware::toggleFras(int imask) {
   // -- this is required to absorb the write request from fSr
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
 
-  fMutex.unlock();
 #endif
+  fMutex.unlock();
 
 }
 
