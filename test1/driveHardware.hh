@@ -57,7 +57,6 @@ public:
 
   void  readCAN(int nreads = 1);
   void  sendCANmessage();
-  void  readCANmessage();
   void  parseCAN();
 
   void parseIoMessage();
