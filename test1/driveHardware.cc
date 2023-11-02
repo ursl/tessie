@@ -1070,6 +1070,7 @@ void driveHardware::entertainTECs() {
 #endif
 }
 
+
 // ----------------------------------------------------------------------
 void driveHardware::entertainFras() {
 #ifdef PI
@@ -1267,7 +1268,7 @@ void  driveHardware::turnOffTEC(int itec) {
     }
   }
   if (oneRunning) {
-
+    // do nothing
   } else {
     turnOffFan();
   }
