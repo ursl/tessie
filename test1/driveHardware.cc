@@ -99,7 +99,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   readSHT85();
 
   // -- eventually read the VProbe card(s)
-  readVProbe();
+  readVProbe(5);
 
 #endif
 
@@ -1618,9 +1618,11 @@ void driveHardware::readSHT85() {
 }
 
 // ----------------------------------------------------------------------
-void driveHardware::readVProbe() {
+void driveHardware::readVProbe(int ipos) {
   // "i2cscanaddress"
 
+  int addresses[] = {((0x3<<1) & 2*ipos), ((0x3<<1) & 2*ipos+1)};
+  cout << "reading from addresses " << hex << addresses[0] << " and " << addresses[1] << dec << endl;
     return;
 #ifdef PI
     // TODO FIXME implement this once something is installed
@@ -1631,7 +1633,7 @@ void driveHardware::readVProbe() {
     ioctl(fSHT85File, I2C_SLAVE, 0x3e);
 
 
-    length = 16;			//<<< Number of bytes to read
+    length = 18;			//<<< Number of bytes to read
     // read() returns the number of bytes actually read, if it doesn't match
     // then an error occurred (e.g. no response from the device)
     if (read(fSHT85File, buffer, length) != length) {
