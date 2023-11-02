@@ -467,9 +467,7 @@ void driveHardware::shutDown() {
   // -- wait 5 seconds
   for (int i = 0; i < 5; ++i) {
     // -- read all parameters from CAN
-    fMutex.lock();
     readAllParamsFromCANPublic();
-    fMutex.unlock();
     emit signalUpdateHwDisplay();
     std::this_thread::sleep_for(10*fMilli100);
   }
@@ -520,9 +518,9 @@ void driveHardware::readCAN(int nreads) {
     }
     --nreads;
   }
+  fMutex.unlock();
 
   parseCAN();
-  fMutex.unlock();
   return;
 }
 
@@ -980,7 +978,6 @@ void driveHardware::parseIoMessage() {
 
 // ----------------------------------------------------------------------
 void driveHardware::sendCANmessage() {
- fMutex.lock();
 
 #ifdef PI
   int itec = 0;
@@ -1044,7 +1041,10 @@ void driveHardware::sendCANmessage() {
       for (int i = 0; i < fFrameW.can_dlc; ++i) {
           printf("    data[%d] = %2x/%3d\r\n", i, fFrameW.data[i], fFrameW.data[i]);
         }
-    }
+  }
+
+  fMutex.lock();
+
   //6.Send message
   setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
   int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
@@ -1055,8 +1055,9 @@ void driveHardware::sendCANmessage() {
   // -- this is required to absorb the write request from fSr
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
 
-#endif
   fMutex.unlock();
+
+#endif
 }
 
 
@@ -1075,9 +1076,7 @@ void driveHardware::entertainTECs() {
 void driveHardware::entertainFras() {
 #ifdef PI
   if (fMutex.tryLock()) {
-    fLOG(INFO, "obtained mutex lock");
   } else {
-    fLOG(INFO, "CANNOT obtain mutex lock");
     return;
   }
   //  fMutex.lock();
@@ -1110,7 +1109,6 @@ void driveHardware::entertainFras() {
     }
   // -- this is required to absorb the write request from fSr
   int nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
-
   fMutex.unlock();
 #endif
 }
@@ -1154,7 +1152,6 @@ void driveHardware::turnOffValve(int i) {
 void driveHardware::toggleFras(int imask) {
   int old = fValveMask;
   fValveMask = old xor imask;
-  fMutex.lock();
 
   //            TEC:   ssP'..tt'aaaa
   //           FRAS:   0aa'aaaa'akkk
@@ -1169,6 +1166,7 @@ void driveHardware::toggleFras(int imask) {
   fFrameW.can_dlc = dlength;
   fFrameW.data[0] = fValveMask;
 #endif
+
   string sstatus("");
   if (1 == imask) {
    if (getStatusValve0()) {
@@ -1201,6 +1199,7 @@ void driveHardware::toggleFras(int imask) {
 
   // -- Send message
 #ifdef PI
+  fMutex.lock();
   setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
   int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
   if (nbytes != sizeof(fFrameW)) {
@@ -1210,8 +1209,8 @@ void driveHardware::toggleFras(int imask) {
   // -- this is required to absorb the write request from fSr
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
 
-#endif
   fMutex.unlock();
+#endif
 
 }
 
