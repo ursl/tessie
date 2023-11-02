@@ -98,11 +98,10 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   // -- read Sensirion SHT85 humidity/temperature sensor
   readSHT85();
 
-  // -- eventually read the VProbe card(s)
-  readVProbe(5);
-
 #endif
 
+  // -- eventually read the VProbe card(s)
+  //  for (int i = 1; i <= 8; ++i) readVProbe(i);
 
 #ifdef PI
   // -- write CAN socket
@@ -1618,10 +1617,12 @@ void driveHardware::readSHT85() {
 }
 
 // ----------------------------------------------------------------------
-void driveHardware::readVProbe(int ipos) {
+void driveHardware::readVProbe(int pos) {
   // "i2cscanaddress"
 
-  int addresses[] = {((0x3<<1) & 2*ipos), ((0x3<<1) & 2*ipos+1)};
+  int ipos = pos - 1;
+  cout << "pos = " << pos << " ipos = " << ipos << endl;
+  int addresses[] = {((0x3<<4) | 2*ipos), ((0x3<<4) | 2*ipos+1)};
   cout << "reading from addresses " << hex << addresses[0] << " and " << addresses[1] << dec << endl;
     return;
 #ifdef PI
