@@ -242,8 +242,7 @@ void corrTemps(string filename = "/Users/ursl/data/tessie/tessie.csv") {
   TGraph *chip15 = ((TGraph*)gDirectory->Get("Chip_15/D_B(0)_O(0)_H(0)_DQM_INTERNAL_NTC_Chip(15)"));
   chip15->SetMarkerColor(kCyan);  chip15->SetLineColor(kCyan);
   chip15->Draw("pl");
-  tleg->AddEntry(chip15, "Chip 15");
-
+  tleg->AddEntry(chip15, "Chip 15");  
   
   tleg->SetHeader("2023/11/02");
   tleg->Draw();
@@ -255,10 +254,64 @@ void corrTemps(string filename = "/Users/ursl/data/tessie/tessie.csv") {
   tl->SetTextSize(0.03);
   tl->DrawLatex(0.77, 0.91, "AS/NP/UL");
 
-  string pdfname = filename;
+  string pdfname = "temperatures-" + filename.substr(filename.rfind("/")+1);
   replaceAll(pdfname, ".csv", ".pdf");
   c0.SaveAs(pdfname.c_str());
 
+  TGraph *gcorr = new TGraph();
+  
+  int ix, tx, ti;
+  for (int i = 0; i < chip15->GetN(); ++i) {
+    ix = chip15->GetPointX(i);
+
+    for (int t = 0; t < vg[7]->GetN(); ++t) {
+      tx = vg[7]->GetPointX(t);
+      if (tx == ix) {
+        ti = t;
+        break;
+      }
+    }
+    
+    double iy = chip15->GetPointY(i);
+    double ty = vg[7]->GetPointY(ti);
+    gcorr->AddPoint(ty, iy);
+    //  m->SetMarkerColor(i);;
+    cout << ix << "/" << tx << " date: " << ":  iy = " << iy << " ty = " << ty << endl;
+  }
+
+  c0.Clear();
+  gcorr->SetMarkerStyle(24);
+  gcorr->SetMarkerSize(0.6);
+  gcorr->Draw("ap");
+  gcorr->GetXaxis()->SetTitle("TEC8 temperature [C]");
+  gcorr->GetYaxis()->SetTitle("chip15 temperature [C]");
+
+  if (0) {
+    double x, y;
+    TMarker *m(0); 
+    for (int i = 1; i < gcorr->GetN(); ++i) {
+      gcorr->GetPoint(i, x, y);
+      m = new TMarker(x, y, 24);
+      cout << "Marker at " << x << "/" << y << endl;
+      if (i < 100) {
+        m->SetMarkerColor(kRed);
+      } else if (i < 200) {
+        m->SetMarkerColor(kBlue);
+      } else {
+        m->SetMarkerColor(kGreen);
+      }
+      m->SetMarkerSize(1);
+      //    m->DrawMarker(x, y);
+      m->Draw();
+    }
+  }
+
+  string pdfname2 = "corr-" + filename.substr(filename.rfind("/")+1);
+  replaceAll(pdfname2, ".csv", ".pdf");
+  c0.SaveAs(pdfname2.c_str());
+
+
+  
   TFile *fOut = TFile::Open("tessie.root", "RECREATE");
   for (int it = 0; it < 8; ++it) {
     fOut->Append(vg[it]);
