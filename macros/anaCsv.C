@@ -160,7 +160,7 @@ void plotTempM(string filename = "csv/230120-tessie.csv") {
 
 
 // ----------------------------------------------------------------------
-void corrTemps(string filename = "/Users/ursl/data/tessie/tessie.csv") {
+void corrTemps(string filename = "/Users/ursl/data/tessie/231103-tessie.csv") {
   // gFile->cd("Detector/Board_0/OpticalGroup_0/Hybrid_0")
   // ((TGraph*)gDirectory->Get("Chip_12/D_B(0)_O(0)_H(0)_DQM_INTERNAL_NTC_Chip(12)"))
   // ((TGraph*)gDirectory->Get("Chip_13/D_B(0)_O(0)_H(0)_DQM_INTERNAL_NTC_Chip(13)"))
@@ -215,9 +215,10 @@ void corrTemps(string filename = "/Users/ursl/data/tessie/tessie.csv") {
     }                   
   }
 
-  TLegend *tleg = newLegend(0.12, 0.2, 0.4, 0.7);
+  TLegend *tleg = newLegend(0.15, 0.15, 0.4, 0.5);
   for (int it = 0; it < 8; ++it) {
-    tleg->AddEntry(vg[it], Form("TEC %d", it+1));
+    TLegendEntry *tle = tleg->AddEntry(vg[it], Form("TEC %d", it+1));
+    tle->SetTextSize(0.03);
     if (0 == it) {
       vg[it]->Draw("alp");
       vg[it]->GetXaxis()->SetTitle("time");
@@ -227,32 +228,36 @@ void corrTemps(string filename = "/Users/ursl/data/tessie/tessie.csv") {
     }
   }
   
-  TFile *as = TFile::Open("/Users/ursl/data/tessie/MonitorDQM_02-11-23_15h00m28.root");
+  //  TFile *as = TFile::Open("/Users/ursl/data/tessie/MonitorDQM_02-11-23_15h00m28.root");
+  TFile *as = TFile::Open("/Users/ursl/data/tessie/MonitorDQM_03-11-23_10h59m34.root");
   as->cd("Detector/Board_0/OpticalGroup_0/Hybrid_0");
   TGraph *chip13 = ((TGraph*)gDirectory->Get("Chip_13/D_B(0)_O(0)_H(0)_DQM_INTERNAL_NTC_Chip(13)"));
   chip13->SetMarkerColor(kRed);  chip13->SetLineColor(kRed);
   chip13->Draw("pl");
-  tleg->AddEntry(chip13, "Chip 13");
+  TLegendEntry *tle = tleg->AddEntry(chip13, "Chip 13");
+  tle->SetTextSize(0.03);
 
   TGraph *chip14 = ((TGraph*)gDirectory->Get("Chip_14/D_B(0)_O(0)_H(0)_DQM_INTERNAL_NTC_Chip(14)"));
   chip14->SetMarkerColor(kBlue);  chip14->SetLineColor(kBlue);
   chip14->Draw("pl");
-  tleg->AddEntry(chip14, "Chip 14");
+  tle = tleg->AddEntry(chip14, "Chip 14");
+  tle->SetTextSize(0.03);
 
   TGraph *chip15 = ((TGraph*)gDirectory->Get("Chip_15/D_B(0)_O(0)_H(0)_DQM_INTERNAL_NTC_Chip(15)"));
   chip15->SetMarkerColor(kCyan);  chip15->SetLineColor(kCyan);
   chip15->Draw("pl");
-  tleg->AddEntry(chip15, "Chip 15");  
+  tle = tleg->AddEntry(chip15, "Chip 15");  
+  tle->SetTextSize(0.03);
   
-  tleg->SetHeader("2023/11/02");
+  tleg->SetHeader("2023/11/03");
   tleg->Draw();
   vg[0]->GetXaxis()->SetTimeDisplay(1);
-  vg[0]->GetXaxis()->SetLimits(1698932500., 1698936696.);
-  vg[0]->SetMaximum(15.);
-  vg[0]->SetMinimum(-50.);
+  vg[0]->GetXaxis()->SetLimits(1699005400, 1699008500.);
+  vg[0]->SetMaximum(40.);
+  vg[0]->SetMinimum(-48.);
   
   tl->SetTextSize(0.03);
-  tl->DrawLatex(0.77, 0.91, "AS/NP/UL");
+  tl->DrawLatex(0.80, 0.91, "NP/UL");
 
   string pdfname = "temperatures-" + filename.substr(filename.rfind("/")+1);
   replaceAll(pdfname, ".csv", ".pdf");
