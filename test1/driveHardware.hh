@@ -55,8 +55,8 @@ public:
   std::string timeStamp(bool filestamp = true);
   std::string tStamp() {return timeStamp(false);}
 
-  void  readCAN(int nreads = 1);
-  void  sendCANmessage();
+  void  readCAN(int nreads = 1, bool setMutex = true);
+  void  sendCANmessage(bool setMutex = true);
   void  parseCAN();
 
   void parseIoMessage();

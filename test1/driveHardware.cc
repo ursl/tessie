@@ -232,8 +232,8 @@ void driveHardware::doRun() {
     if (tdiff2 > 10000.) {
       tvVeryOld = tvNew;
       dumpMQTT(1);
-    // FIXME
-    // signalAlarm()
+      // FIXME
+      // signalAlarm()
     }
     if (tdiff > 1000.) {
       tvOld = tvNew;
@@ -414,9 +414,12 @@ int driveHardware::getSWVersion(int itec) {
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_CMD);
   fCANReg = 6; // GetSWVersion
   fCANVal = 0; // nothing required
-  sendCANmessage();
+  
+  fMutex.lock();
+  sendCANmessage(false);
   std::this_thread::sleep_for(fMilli10);
-  readCAN();
+  readCAN(1, false);
+  fMutex.unlock();
 
   canFrame a = fCanMsg.getFrame();
   stringstream sbla; sbla << "getSWVersion("
@@ -474,8 +477,8 @@ void driveHardware::shutDown() {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::readCAN(int nreads) {
-  fMutex.lock();
+void driveHardware::readCAN(int nreads, bool setMutex) {
+  if (setMutex) fMutex.lock();
   int nbytes(0);
 
   bool DBX(false);
@@ -511,7 +514,7 @@ void driveHardware::readCAN(int nreads) {
     }
     --nreads;
   }
-  fMutex.unlock();
+  if (setMutex) fMutex.unlock();
 
   parseCAN();
   return;
@@ -669,9 +672,11 @@ void driveHardware::answerIoCmd() {
                             << " reg = " << fCANReg << hex
                             << " canID = 0x" << fCANId << dec;
     fLOG(INFO, sbla.str());
-    sendCANmessage();
+    fMutex.lock();
+    sendCANmessage(false);
     std::this_thread::sleep_for(fMilli10);
-    readCAN();
+    readCAN(1, false);
+    fMutex.unlock();
     canFrame a = fCanMsg.getFrame();
     if (5 == fCANReg) {
       if (ntec > 1) str << ",";
@@ -970,7 +975,7 @@ void driveHardware::parseIoMessage() {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::sendCANmessage() {
+void driveHardware::sendCANmessage(bool setMutex) {
 
 #ifdef PI
   int itec = 0;
@@ -1036,7 +1041,7 @@ void driveHardware::sendCANmessage() {
         }
   }
 
-  fMutex.lock();
+  if (setMutex) fMutex.lock();
 
   //6.Send message
   setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
@@ -1048,7 +1053,7 @@ void driveHardware::sendCANmessage() {
   // -- this is required to absorb the write request from fSr
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
 
-  fMutex.unlock();
+  if (setMutex) fMutex.unlock();
 
 #endif
 }
@@ -1291,8 +1296,10 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
     fCANId = (0 | CANBUS_SHIFT | CANBUS_PUBLIC | CANBUS_TECREC | CANBUS_READ);
     fCANReg = fTECData[1].getIdx(regname);
   }
+
   // -- send read request
-  sendCANmessage();
+  fMutex.lock();
+  sendCANmessage(false);
   std::this_thread::sleep_for(fMilli10);
   if (0) cout << "  getTECRegisterFromCAN for tec = " << itec
               << " register = "<< regname
@@ -1300,11 +1307,13 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
               << endl;
 
   if (itec > 0) {
-    readCAN();
+    readCAN(1, false);
+    fMutex.unlock();
     fCANReadFloatVal = fCanMsg.getFloat(itec, fCANReg);
     return fCANReadFloatVal;
   } else {
-    readCAN(fNActiveTEC);
+    readCAN(fNActiveTEC, false);
+    fMutex.unlock();
     return -97;
   }
   return -96;
@@ -1335,23 +1344,23 @@ void driveHardware::setTECRegister(int itec, std::string regname, float value) {
 
 // ----------------------------------------------------------------------
 void driveHardware::loadFromFlash() {
-    fCANId = (CANBUS_SHIFT | CANBUS_PUBLIC | CANBUS_TECREC | CANBUS_CMD);
-    fCANReg = 8; // Load Variables
-    fCANVal = fTECParameter;
-
-    QString aline = QString("load settings from FLASH");
-    fLOG(INFO, aline.toStdString().c_str());
-
-    sendCANmessage();
+  fCANId = (CANBUS_SHIFT | CANBUS_PUBLIC | CANBUS_TECREC | CANBUS_CMD);
+  fCANReg = 8; // Load Variables
+  fCANVal = fTECParameter;
+  
+  QString aline = QString("load settings from FLASH");
+  fLOG(INFO, aline.toStdString().c_str());
+  
+  sendCANmessage();
 }
 
 
 // ----------------------------------------------------------------------
 void driveHardware::saveToFlash() {
-    fCANId = (CANBUS_SHIFT | CANBUS_PUBLIC | CANBUS_TECREC | CANBUS_CMD);
-    fCANReg = 7; // Save Variables
-    fCANVal = fTECParameter;
-    sendCANmessage();
+  fCANId = (CANBUS_SHIFT | CANBUS_PUBLIC | CANBUS_TECREC | CANBUS_CMD);
+  fCANReg = 7; // Save Variables
+  fCANVal = fTECParameter;
+  sendCANmessage();
 }
 
 
@@ -1438,6 +1447,7 @@ void driveHardware::readAllParamsFromCANPublic() {
                             , "Ref_U"
 
                             };
+  
   for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
     if (0 == ireg%2) evtHandler();
     // -- NOTE: ireg != regnumber
