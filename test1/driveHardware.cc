@@ -349,7 +349,7 @@ void driveHardware::ensureSafety() {
       emit signalSetBackground(qtec, "red");
     }
 
-    if (mtemp  < fSHT85DP + SAFETY_DPMARGIN) {
+    if ((mtemp > -90.) && (mtemp < fSHT85DP + SAFETY_DPMARGIN)) {
       stringstream a("==ALARM== module " + to_string(itec) + " temperature = " +
                      to_string(mtemp) +
                      " is too close to dew point = " +
@@ -1334,7 +1334,8 @@ void driveHardware::setTECRegister(int itec, std::string regname, float value) {
 
   fCANVal = value;
 
-  QString aline = QString("write TEC register ") + QString::number(fCANReg, 'd', 0)
+  QString aline = QString("write TEC ") +  + QString::number(itec, 'd', 1)
+    + QString(" register ") + QString::number(fCANReg, 'd', 0)
     + QString(" value =  ") + QString::number(fCANVal, 'f', 2)
     + QString(", canID = 0x") + QString::number(fCANId, 'x', 0)
     ;
