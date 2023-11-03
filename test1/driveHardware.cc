@@ -1334,7 +1334,7 @@ void driveHardware::setTECRegister(int itec, std::string regname, float value) {
 
   fCANVal = value;
 
-  QString aline = QString("write TEC ") +  QString::number(itec, 'd', 1)
+  QString aline = QString("write TEC ") +  QString::number(itec, 'd', 0)
     + QString(" register ") + QString::number(fCANReg, 'd', 0)
     + QString(" value =  ") + QString::number(fCANVal, 'f', 2)
     + QString(", canID = 0x") + QString::number(fCANId, 'x', 0)
