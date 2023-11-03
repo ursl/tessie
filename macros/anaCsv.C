@@ -258,4 +258,16 @@ void corrTemps(string filename = "/Users/ursl/data/tessie/tessie.csv") {
   string pdfname = filename;
   replaceAll(pdfname, ".csv", ".pdf");
   c0.SaveAs(pdfname.c_str());
+
+  TFile *fOut = TFile::Open("tessie.root", "RECREATE");
+  for (int it = 0; it < 8; ++it) {
+    fOut->Append(vg[it]);
+  }
+  as->Remove(chip13); fOut->Append(chip13); 
+  as->Remove(chip14); fOut->Append(chip14);
+  as->Remove(chip15); fOut->Append(chip15);
+
+  fOut->Write();
+  fOut->Close();
+  
 }
