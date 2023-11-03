@@ -135,7 +135,7 @@ signals:
   void  signalText(QString msg);
   void  signalSendToServer(QString msg);
   void  signalSendToMonitor(QString msg);
-//REMOVE  void  startServer();
+  //REMOVE  void  startServer();
   void  signalUpdateHwDisplay();
   void  signalAlarm();
 

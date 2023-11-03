@@ -108,24 +108,24 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   memset(&fFrameW, 0, sizeof(struct can_frame));
   fSw = socket(PF_CAN, SOCK_RAW, CAN_RAW);
   if (fSw < 0) {
-      perror("socket PF_CAN failed");
-      return;
-    }
+    perror("socket PF_CAN failed");
+    return;
+  }
 
   strcpy(fIfrW.ifr_name, "can0");
   int ret = ioctl(fSw, SIOCGIFINDEX, &fIfrW);
   if (ret < 0) {
-      perror("ioctl failed");
-      return;
-    }
+    perror("ioctl failed");
+    return;
+  }
   
   fAddrW.can_family = AF_CAN;
   fAddrW.can_ifindex = fIfrW.ifr_ifindex;
   ret = bind(fSw, (struct sockaddr *)&fAddrW, sizeof(fAddrW));
   if (ret < 0) {
-      perror("bind failed");
-      return;
-    }
+    perror("bind failed");
+    return;
+  }
 
   setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
 
@@ -134,24 +134,24 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   memset(&fFrameR, 0, sizeof(struct can_frame));
   fSr = socket(PF_CAN, SOCK_RAW, CAN_RAW);
   if (fSr < 0) {
-      perror("socket PF_CAN failed");
-      return;
-    }
+    perror("socket PF_CAN failed");
+    return;
+  }
 
   strcpy(fIfrR.ifr_name, "can0");
   ret = ioctl(fSr, SIOCGIFINDEX, &fIfrR);
   if (ret < 0) {
-      perror("ioctl failed");
-      return;
-    }
+    perror("ioctl failed");
+    return;
+  }
   
   fAddrR.can_family = AF_CAN;
   fAddrR.can_ifindex = fIfrR.ifr_ifindex;
   ret = bind(fSr, (struct sockaddr *)&fAddrR, sizeof(fAddrR));
   if (ret < 0) {
-      perror("bind failed");
-      return;
-    }
+    perror("bind failed");
+    return;
+  }
 
   //4.Define receive rules
   struct can_filter rfilter[1];
@@ -169,13 +169,13 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   // setsockopt(fSr, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
 
   if (1) {
-      // https://stackoverflow.com/questions/13547721/udp-socket-set-timeout
-      struct timeval tv;
-      tv.tv_sec = 0;
-      tv.tv_usec = 10; // 0.1 millisecond
-      if (setsockopt(fSr /*rcv_sock*/, SOL_SOCKET, SO_RCVTIMEO, &tv,sizeof(tv)) < 0) {
-        perror("Error in setting up time out");
-      }
+    // https://stackoverflow.com/questions/13547721/udp-socket-set-timeout
+    struct timeval tv;
+    tv.tv_sec = 0;
+    tv.tv_usec = 10; // 0.1 millisecond
+    if (setsockopt(fSr /*rcv_sock*/, SOL_SOCKET, SO_RCVTIMEO, &tv,sizeof(tv)) < 0) {
+      perror("Error in setting up time out");
+    }
   }
 
 #endif
@@ -274,7 +274,7 @@ void driveHardware::doRun() {
             ++errRepeat;
           }
           if (errRepeat < 2) {
-           fLOG(WARNING, errmsg);
+            fLOG(WARNING, errmsg);
           }
           errs.pop_front();
         }
@@ -309,9 +309,9 @@ void driveHardware::ensureSafety() {
   // -- dew point vs air temperature
   if ((fSHT85Temp - SAFETY_DPMARGIN) < fSHT85DP) {
     stringstream a("==ALARM== Box air temperature = " +
-                    to_string(fSHT85Temp) +
-                    " is too close to dew point = " +
-                    to_string(fSHT85DP));
+                   to_string(fSHT85Temp) +
+                   " is too close to dew point = " +
+                   to_string(fSHT85DP));
     fLOG(ERROR, a.str());
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
@@ -323,9 +323,9 @@ void driveHardware::ensureSafety() {
   // -- check water temperature
   if (fTECData[8].reg["Temp_W"].value > SAFETY_MAXTEMPW) {
     stringstream a("==ALARM== Water temperature = " +
-                    to_string(fTECData[8].reg["Temp_W"].value) +
-                    " exceeds SAFETY_MAXTEMPW = " +
-                    to_string(SAFETY_MAXTEMPW));
+                   to_string(fTECData[8].reg["Temp_W"].value) +
+                   " exceeds SAFETY_MAXTEMPW = " +
+                   to_string(SAFETY_MAXTEMPW));
     fLOG(ERROR, a.str());
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
@@ -337,9 +337,9 @@ void driveHardware::ensureSafety() {
     double mtemp = fTECData[itec].reg["Temp_M"].value;
     if (mtemp > SAFETY_MAXTEMPM) {
       stringstream a("==ALARM== module temperature = " +
-                      to_string(mtemp) +
-                      " exceeds SAFETY_MAXTEMPM = " +
-                      to_string(SAFETY_MAXTEMPM));
+                     to_string(mtemp) +
+                     " exceeds SAFETY_MAXTEMPM = " +
+                     to_string(SAFETY_MAXTEMPM));
       fLOG(ERROR, a.str());
       emit signalSendToMonitor(QString::fromStdString(a.str()));
       emit signalSendToServer(QString::fromStdString(a.str()));
@@ -354,7 +354,7 @@ void driveHardware::ensureSafety() {
                      to_string(mtemp) +
                      " is too close to dew point = " +
                      to_string(fSHT85DP)
-                    );
+                     );
       fLOG(ERROR, a.str());
       emit signalSendToMonitor(QString::fromStdString(a.str()));
       emit signalSendToServer(QString::fromStdString(a.str()));
@@ -983,62 +983,62 @@ void driveHardware::sendCANmessage(bool setMutex) {
   if (0) cout << "sendCANmessage() TEC " << itec << endl;
 
   if ((itec > 0) && (0 == fActiveTEC[itec])) {
-      if (0) cout << "TEC " << itec <<  " not active, skipping" << endl;
-      return;
+    if (0) cout << "TEC " << itec <<  " not active, skipping" << endl;
+    return;
   }
 
   char data[4] = {0, 0, 0, 0};
   fFrameW.can_id = fCANId;
   int dlength(0), command(0);
   if (0x0 == ((0x0f0 & fCANId)>>4)) {
-      // -- x0x is command access and no subsequent 4 bytes are required.
-      //    fCANReg indicates the command type
-      dlength = 1;
-      command = 1;
-    }
+    // -- x0x is command access and no subsequent 4 bytes are required.
+    //    fCANReg indicates the command type
+    dlength = 1;
+    command = 1;
+  }
   if (0x1 & ((0x0f0 & fCANId)>>4)) {
-      // -- x1x is read access and no subsequent 4 bytes are required
-      dlength = 1;
-    }
+    // -- x1x is read access and no subsequent 4 bytes are required
+    dlength = 1;
+  }
   if (0x2 & ((0x0f0 & fCANId)>>4)) {
-      // -- x2x is write access and the subsequent 4 bytes are the value to be written
-      dlength = 5;
-    }
+    // -- x2x is write access and the subsequent 4 bytes are the value to be written
+    dlength = 5;
+  }
   fFrameW.can_dlc = dlength;
   fFrameW.data[0] = fCANReg;
 
   if (dlength > 1) {
-      unsigned int intCanVal = 0;
-      if (0 == fCANReg) {
-        intCanVal = static_cast<unsigned int>(fCANVal);
-        cout << "DBX interpreting as unsigned int ->" << intCanVal << "<-" << endl;
-        memcpy(data, &intCanVal, sizeof intCanVal);
-      } else {
-        memcpy(data, &fCANVal, sizeof fCANVal);
-      }
-      fFrameW.data[1] = data[0];
-      fFrameW.data[2] = data[1];
-      fFrameW.data[3] = data[2];
-      fFrameW.data[4] = data[3];
+    unsigned int intCanVal = 0;
+    if (0 == fCANReg) {
+      intCanVal = static_cast<unsigned int>(fCANVal);
+      cout << "DBX interpreting as unsigned int ->" << intCanVal << "<-" << endl;
+      memcpy(data, &intCanVal, sizeof intCanVal);
+    } else {
+      memcpy(data, &fCANVal, sizeof fCANVal);
     }
+    fFrameW.data[1] = data[0];
+    fFrameW.data[2] = data[1];
+    fFrameW.data[3] = data[2];
+    fFrameW.data[4] = data[3];
+  }
 
   if (0) {
-      if (1 == command) {
-          cout << "   sendCANmessage: canid = " << fCANId << " cmd = " << fCANReg
-               << endl;
-        } else {
-          cout << "   canid = " << fCANId << " reg = " << fCANReg
-               << " value = " << fCANVal
-               << " dlength = " << dlength
-               << endl;
+    if (1 == command) {
+      cout << "   sendCANmessage: canid = " << fCANId << " cmd = " << fCANReg
+           << endl;
+    } else {
+      cout << "   canid = " << fCANId << " reg = " << fCANReg
+           << " value = " << fCANVal
+           << " dlength = " << dlength
+           << endl;
 
-        }
-      printf("    can_id  = 0x%X (from sendCANmessage())\n", fFrameW.can_id);
-      printf("    can_dlc = %d\n", fFrameW.can_dlc);
+    }
+    printf("    can_id  = 0x%X (from sendCANmessage())\n", fFrameW.can_id);
+    printf("    can_dlc = %d\n", fFrameW.can_dlc);
 
-      for (int i = 0; i < fFrameW.can_dlc; ++i) {
-          printf("    data[%d] = %2x/%3d\r\n", i, fFrameW.data[i], fFrameW.data[i]);
-        }
+    for (int i = 0; i < fFrameW.can_dlc; ++i) {
+      printf("    data[%d] = %2x/%3d\r\n", i, fFrameW.data[i], fFrameW.data[i]);
+    }
   }
 
   if (setMutex) fMutex.lock();
@@ -1052,6 +1052,9 @@ void driveHardware::sendCANmessage(bool setMutex) {
 
   // -- this is required to absorb the write request from fSr
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
+
+  // -- wait a bit
+  std::this_thread::sleep_for(fMilli5);
 
   if (setMutex) fMutex.unlock();
 
@@ -1079,32 +1082,32 @@ void driveHardware::entertainFras() {
   }
   //  fMutex.lock();
   if (0 == fValveMask) {
-      fFrameW.can_id = CAN_RTR_FLAG | 0x41;
-      int dlength(0);
-      fFrameW.can_dlc = dlength;
-      // stringstream sbla; sbla << "entertainFras "
-      //                         << " reg = 0x"  << hex << fFrameW.can_id;
-      // cout << "sbla: " << sbla.str() << endl;
+    fFrameW.can_id = CAN_RTR_FLAG | 0x41;
+    int dlength(0);
+    fFrameW.can_dlc = dlength;
+    // stringstream sbla; sbla << "entertainFras "
+    //                         << " reg = 0x"  << hex << fFrameW.can_id;
+    // cout << "sbla: " << sbla.str() << endl;
 
-      // -- Send message
-      setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
-      int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
-      if (nbytes != sizeof(fFrameW)) {
-        if (fVerbose > 0) printf("CAN BUS Send Error frame[0]!\r\n");
-      }
-    } else {
-      fFrameW.can_id = 0x40;
-      int dlength(1);
-      fFrameW.can_dlc = dlength;
-      fFrameW.data[0] = fValveMask;
-
-      // -- Send message
-      setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
-      int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
-      if (nbytes != sizeof(fFrameW)) {
-        if (fVerbose > 0) printf("CAN BUS Send Error frame[0]!\r\n");
-      }
+    // -- Send message
+    setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
+    int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
+    if (nbytes != sizeof(fFrameW)) {
+      if (fVerbose > 0) printf("CAN BUS Send Error frame[0]!\r\n");
     }
+  } else {
+    fFrameW.can_id = 0x40;
+    int dlength(1);
+    fFrameW.can_dlc = dlength;
+    fFrameW.data[0] = fValveMask;
+
+    // -- Send message
+    setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
+    int nbytes = write(fSw, &fFrameW, sizeof(fFrameW));
+    if (nbytes != sizeof(fFrameW)) {
+      if (fVerbose > 0) printf("CAN BUS Send Error frame[0]!\r\n");
+    }
+  }
   // -- this is required to absorb the write request from fSr
   int nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
   fMutex.unlock();
@@ -1168,25 +1171,25 @@ void driveHardware::toggleFras(int imask) {
 
   string sstatus("");
   if (1 == imask) {
-   if (getStatusValve0()) {
-     sstatus = "on";
-   } else {
-     sstatus = "off";
-   }
+    if (getStatusValve0()) {
+      sstatus = "on";
+    } else {
+      sstatus = "off";
+    }
   }
   if (2 == imask) {
-   if (getStatusValve1()) {
-     sstatus = "on";
-   } else {
-     sstatus = "off";
-   }
+    if (getStatusValve1()) {
+      sstatus = "on";
+    } else {
+      sstatus = "off";
+    }
   }
   if (4 == imask) {
-   if (getStatusFan()) {
-     sstatus = "on";
-   } else {
-     sstatus = "off";
-   }
+    if (getStatusFan()) {
+      sstatus = "on";
+    } else {
+      sstatus = "off";
+    }
   }
   stringstream sbla;
   if ((1 == imask) || (2 == imask)) {
@@ -1216,13 +1219,13 @@ void driveHardware::toggleFras(int imask) {
 // ----------------------------------------------------------------------
 float driveHardware::getTECRegister(int itec, std::string regname) {
   if (fTECData.find(itec) == fTECData.end()) {
-      return -1.;
-    }
+    return -1.;
+  }
   if (fTECData[itec].reg.find(regname) != fTECData[itec].reg.end()) {
-      return fTECData[itec].reg[regname].value;
-    } else {
-      return -3.;
-    }
+    return fTECData[itec].reg[regname].value;
+  } else {
+    return -3.;
+  }
 }
 
 
@@ -1332,9 +1335,9 @@ void driveHardware::setTECRegister(int itec, std::string regname, float value) {
   fCANVal = value;
 
   QString aline = QString("write TEC register ") + QString::number(fCANReg, 'd', 0)
-      + QString(" value =  ") + QString::number(fCANVal, 'f', 2)
-      + QString(", canID = 0x") + QString::number(fCANId, 'x', 0)
-      ;
+    + QString(" value =  ") + QString::number(fCANVal, 'f', 2)
+    + QString(", canID = 0x") + QString::number(fCANId, 'x', 0)
+    ;
 
   fLOG(INFO, aline.toStdString().c_str());
 
@@ -1426,27 +1429,27 @@ void driveHardware::readAllParamsFromCANPublic() {
   ++fRunCnt;
   // -- what to read: float
   vector<string> regnames = {"ControlVoltage_Set"
-                            , "PID_kp"
-                            , "PID_ki"
-                            , "PID_kd"
-                            , "Temp_Set"
-                            , "PID_Max"
-                            , "PID_Min"
-                            , "Temp_W"
-                            , "Temp_M"
-                            , "Temp_Diff"
-                            , "Peltier_U"
-                            , "Peltier_I"
-                            , "Peltier_R"
-                            , "Peltier_P"
-                            , "Supply_U"
-                            , "Supply_I"
-                            , "Supply_P"
-                            , "PowerState"
-                            , "Error"
-                            , "Ref_U"
+                             , "PID_kp"
+                             , "PID_ki"
+                             , "PID_kd"
+                             , "Temp_Set"
+                             , "PID_Max"
+                             , "PID_Min"
+                             , "Temp_W"
+                             , "Temp_M"
+                             , "Temp_Diff"
+                             , "Peltier_U"
+                             , "Peltier_I"
+                             , "Peltier_R"
+                             , "Peltier_P"
+                             , "Supply_U"
+                             , "Supply_I"
+                             , "Supply_P"
+                             , "PowerState"
+                             , "Error"
+                             , "Ref_U"
 
-                            };
+  };
   
   for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
     if (0 == ireg%2) evtHandler();
@@ -1501,27 +1504,27 @@ void driveHardware::dumpMQTT(int all) {
 
   // -- what to read: float
   map<string, double> tolerances = {
-      {"ControlVoltage_Set", 0.1}
-      , {"PID_kp", 0.1}
-      , {"PID_ki", 0.1}
-      , {"PID_kd", 0.1}
-      , {"Temp_Set", 0.1}
-      , {"PID_Max", 0.1}
-      , {"PID_Min", 0.1}
-      , {"Temp_W", 0.1}
-      , {"Temp_M", 0.1}
-      , {"Temp_Diff", 0.1}
-      , {"Peltier_U", 0.1}
-      , {"Peltier_I", 0.1}
-      , {"Peltier_R", 0.1}
-      , {"Peltier_P", 0.1}
-      , {"Supply_U", 0.1}
-      , {"Supply_I", 1.0}
-      , {"Supply_P", 1.0}
-      , {"PowerState", 0.1}
-      , {"Error", 0.5}
-      , {"Ref_U", 0.1}
-      , {"Mode", 0.1}
+    {"ControlVoltage_Set", 0.1}
+    , {"PID_kp", 0.1}
+    , {"PID_ki", 0.1}
+    , {"PID_kd", 0.1}
+    , {"Temp_Set", 0.1}
+    , {"PID_Max", 0.1}
+    , {"PID_Min", 0.1}
+    , {"Temp_W", 0.1}
+    , {"Temp_M", 0.1}
+    , {"Temp_Diff", 0.1}
+    , {"Peltier_U", 0.1}
+    , {"Peltier_I", 0.1}
+    , {"Peltier_R", 0.1}
+    , {"Peltier_P", 0.1}
+    , {"Supply_U", 0.1}
+    , {"Supply_I", 1.0}
+    , {"Supply_P", 1.0}
+    , {"PowerState", 0.1}
+    , {"Error", 0.5}
+    , {"Ref_U", 0.1}
+    , {"Mode", 0.1}
   };
 
   for (auto const &skey: tolerances) {
@@ -1634,25 +1637,25 @@ void driveHardware::readVProbe(int pos) {
   cout << "pos = " << pos << " ipos = " << ipos << endl;
   int addresses[] = {((0x3<<4) | 2*ipos), ((0x3<<4) | 2*ipos+1)};
   cout << "reading from addresses " << hex << addresses[0] << " and " << addresses[1] << dec << endl;
-    return;
+  return;
 #ifdef PI
-    // TODO FIXME implement this once something is installed
-    int length;
-    unsigned char buffer[60] = {0};
+  // TODO FIXME implement this once something is installed
+  int length;
+  unsigned char buffer[60] = {0};
 
-    // -- FIXME set I2C address
-    ioctl(fSHT85File, I2C_SLAVE, 0x3e);
+  // -- FIXME set I2C address
+  ioctl(fSHT85File, I2C_SLAVE, 0x3e);
 
 
-    length = 18;			//<<< Number of bytes to read
-    // read() returns the number of bytes actually read, if it doesn't match
-    // then an error occurred (e.g. no response from the device)
-    if (read(fSHT85File, buffer, length) != length) {
-        //ERROR HANDLING: i2c transaction failed
-        printf("Failed to read from the i2c bus.\n");
-    } else {
-        printf("Data read: %s\n", buffer);
-    }
+  length = 18;			//<<< Number of bytes to read
+  // read() returns the number of bytes actually read, if it doesn't match
+  // then an error occurred (e.g. no response from the device)
+  if (read(fSHT85File, buffer, length) != length) {
+    //ERROR HANDLING: i2c transaction failed
+    printf("Failed to read from the i2c bus.\n");
+  } else {
+    printf("Data read: %s\n", buffer);
+  }
 
 #endif
 }
