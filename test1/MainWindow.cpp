@@ -249,7 +249,7 @@ void MainWindow::start() {
 // ----------------------------------------------------------------------
 void MainWindow::tecSetFromUI(int itec, std::string rname, QWidget *qw) {
   QLineEdit *qle = (QLineEdit*)qw;
-  qle->setStyleSheet("QLineEdit {color : red; }");
+  qle->setStyleSheet("QLineEdit {color : blue; }");
   QString sval = qle->text();
   float xval = sval.toFloat();
   fpHw->setTECRegister(itec, rname, xval);
