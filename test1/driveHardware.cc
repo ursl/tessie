@@ -23,8 +23,8 @@
 #define I2C_SHT85_ADDR 0x44
 
 // -- define GPIO pins of side light (BCM addresses!)
-#define GPIOGREEN 0
-#define GPIORED   2
+#define GPIOGREEN 0  // red
+#define GPIORED   2  // green
 #define GPIOYELLO 3
 
 #include <chrono>
@@ -107,15 +107,12 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
 
   cout << "wiringPiSetup() " << endl;
   wiringPiSetup();
-  cout << "   green  " << endl;
   pinMode(GPIOGREEN, OUTPUT);
-  cout << "   red  " << endl;
   pinMode(GPIORED,   OUTPUT);
-  cout << "   yellow  " << endl;
   pinMode(GPIOYELLO, OUTPUT);
 
   cout << "   blink 1 " << endl;
-  for (int i = 0; i < 5; ++i) {
+  for (int i = 0; i < 2; ++i) {
     digitalWrite(GPIOGREEN, HIGH);
     std::this_thread::sleep_for(5*fMilli100);
     digitalWrite(GPIOGREEN, LOW);
@@ -123,7 +120,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   }      
 
   cout << "   blink 2 " << endl;
-  for (int i = 0; i < 5; ++i) {
+  for (int i = 0; i < 2; ++i) {
     digitalWrite(GPIORED, HIGH);
     std::this_thread::sleep_for(5*fMilli100);
     digitalWrite(GPIORED, LOW);
@@ -131,7 +128,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   }      
 
   cout << "   blink 3 " << endl;
-  for (int i = 0; i < 5; ++i) {
+  for (int i = 0; i < 2; ++i) {
     digitalWrite(GPIOYELLO, HIGH);
     std::this_thread::sleep_for(5*fMilli100);
     digitalWrite(GPIOYELLO, LOW);
