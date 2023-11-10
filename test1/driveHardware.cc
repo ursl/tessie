@@ -15,6 +15,7 @@
 #include <fcntl.h>
 
 #ifdef PI
+#include <wiringPi.h>
 #include <linux/i2c-dev.h>
 #endif
 
