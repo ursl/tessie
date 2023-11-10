@@ -22,10 +22,10 @@
 // -- i2c address of SHT85 sensor
 #define I2C_SHT85_ADDR 0x44
 
-// -- define GPIO pins of side light
+// -- define GPIO pins of side light (BCM addresses!)
 #define GPIOGREEN 0
-#define GPIORED   27
-#define GPIOYELLO 22
+#define GPIORED   2
+#define GPIOYELLO 3
 
 #include <chrono>
 
@@ -116,6 +116,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
 
   cout << "   set green to high  " << endl;
   digitalWrite(GPIOGREEN, HIGH);
+  digitalWrite(GPIORED, HIGH);
 
 #endif
 
