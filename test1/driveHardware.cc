@@ -22,6 +22,11 @@
 // -- i2c address of SHT85 sensor
 #define I2C_SHT85_ADDR 0x44
 
+// -- define GPIO pins of side light
+#define GPIOGREEN 17
+#define GPIORED   27
+#define GPIOYELLO 22
+
 #include <chrono>
 
 #include <thread>
@@ -98,6 +103,13 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
 
   // -- read Sensirion SHT85 humidity/temperature sensor
   readSHT85();
+
+  wiringPiSetup();
+  pinMode(GPIOGREEN, OUTPUT);
+  pinMode(GPIORED,   OUTPUT);
+  pinMode(GPIOYELLO, OUTPUT);
+
+  digitalWrite(GPIOGREEN, HIGH);
 
 #endif
 
@@ -191,6 +203,7 @@ driveHardware::~driveHardware() {
 
 #ifdef PI
   shutDown();
+  digitalWrite(GPIOGREEN, LOW);
 #endif
 }
 
