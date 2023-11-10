@@ -102,13 +102,19 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   }
 
   // -- read Sensirion SHT85 humidity/temperature sensor
+  cout << "initial readout SHT85" << endl;
   readSHT85();
 
+  cout << "wiringPiSetup() " << endl;
   wiringPiSetup();
+  cout << "   green  " << endl;
   pinMode(GPIOGREEN, OUTPUT);
+  cout << "   red  " << endl;
   pinMode(GPIORED,   OUTPUT);
+  cout << "   yellow  " << endl;
   pinMode(GPIOYELLO, OUTPUT);
 
+  cout << "   set green to high  " << endl;
   digitalWrite(GPIOGREEN, HIGH);
 
 #endif
