@@ -23,7 +23,7 @@
 #define I2C_SHT85_ADDR 0x44
 
 // -- define GPIO pins of side light
-#define GPIOGREEN 17
+#define GPIOGREEN 0
 #define GPIORED   27
 #define GPIOYELLO 22
 
