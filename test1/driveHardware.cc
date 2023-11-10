@@ -114,9 +114,29 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   cout << "   yellow  " << endl;
   pinMode(GPIOYELLO, OUTPUT);
 
-  cout << "   set green to high  " << endl;
-  digitalWrite(GPIOGREEN, HIGH);
-  digitalWrite(GPIORED, HIGH);
+  cout << "   blink 1 " << endl;
+  for (int i = 0; i < 5; ++i) {
+    digitalWrite(GPIOGREEN, HIGH);
+    std::this_thread::sleep_for(5*fMilli100);
+    digitalWrite(GPIOGREEN, LOW);
+    std::this_thread::sleep_for(5*fMilli100);
+  }      
+
+  cout << "   blink 2 " << endl;
+  for (int i = 0; i < 5; ++i) {
+    digitalWrite(GPIORED, HIGH);
+    std::this_thread::sleep_for(5*fMilli100);
+    digitalWrite(GPIORED, LOW);
+    std::this_thread::sleep_for(5*fMilli100);
+  }      
+
+  cout << "   blink 3 " << endl;
+  for (int i = 0; i < 5; ++i) {
+    digitalWrite(GPIOYELLO, HIGH);
+    std::this_thread::sleep_for(5*fMilli100);
+    digitalWrite(GPIOYELLO, LOW);
+    std::this_thread::sleep_for(5*fMilli100);
+  }      
 
 #endif
 
@@ -211,6 +231,8 @@ driveHardware::~driveHardware() {
 #ifdef PI
   shutDown();
   digitalWrite(GPIOGREEN, LOW);
+  digitalWrite(GPIORED, LOW);
+  digitalWrite(GPIOYELLO, LOW);
 #endif
 }
 
