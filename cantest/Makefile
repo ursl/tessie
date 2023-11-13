@@ -25,6 +25,9 @@ i2ctest2: i2ctest2.c
 container: container.cc
 	$(CXX) $(CFLAGS) -o $@  $^
 
+prt: prt.cc
+	$(CXX) $(CFLAGS) -o $@  $^
+
 mqtt: mqtt.o
 	$(CXX) $(LIB_LDFLAGS) -o $@ $^ $(MQTTLIBDIR) 
 
