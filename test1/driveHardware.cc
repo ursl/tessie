@@ -1761,7 +1761,7 @@ void driveHardware::readVProbe(int pos) {
   double vddd3 = (v[8] - v[14])*1.e3;
 
   stringstream output;
-  output << timeStamp() << " " <<  std::setprecision(5)
+  output << fLOG.shortTimeStamp() << " " <<  std::setprecision(5)
          << vin << "   " 
          << voffs << "   "
          << vdda0 << "   " << vddd0 << "   "
