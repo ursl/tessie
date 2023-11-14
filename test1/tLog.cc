@@ -142,3 +142,31 @@ string tLog::timeStamp(bool filestamp) {
          << std::setfill('0') << std::setw(3) << ((long)tv.tv_usec)/1000;
   return result.str();
 }
+
+
+// ----------------------------------------------------------------------
+string tLog::shortTimeStamp() {
+  char buffer[11];
+  time_t t;
+  time(&t);
+  tm r;
+  strftime(buffer, sizeof(buffer), "%X", localtime_r(&t, &r));
+  struct timeval tv;
+  gettimeofday(&tv, 0);
+
+  tm *ltm = localtime(&t);
+  int year  = 1900 + ltm->tm_year;
+  int month = 1 + ltm->tm_mon;
+  int day   = ltm->tm_mday;
+  int hour  = ltm->tm_hour;
+  int min   = ltm->tm_min;
+  int sec   = ltm->tm_sec;
+  std::stringstream result;
+  result << year << "/"
+         << std::setfill('0') << std::setw(2) << month << "/"
+         << std::setfill('0') << std::setw(2) << day << " ";
+  result << std::setfill('0') << std::setw(2) << hour << ":"
+         << std::setfill('0') << std::setw(2) << min << ":"
+         << std::setfill('0') << std::setw(2) << sec ;
+  return result.str();
+}
