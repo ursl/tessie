@@ -137,9 +137,13 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
 
 #endif
 
+
+  //  cout << "test hex printout: " << hex << 0xBA << dec << endl;
   // -- eventually read the VProbe card(s)
   //  for (int i = 1; i <= 8; ++i) readVProbe(i);
-
+  readVProbe(0);
+  return;
+  
 #ifdef PI
   // -- write CAN socket
   memset(&fFrameW, 0, sizeof(struct can_frame));
@@ -1674,32 +1678,99 @@ void driveHardware::readSHT85() {
 void driveHardware::readVProbe(int pos) {
   // "i2cscanaddress"
 
+  float VDD(3.3114);
+  int order[] = {6, 5, 9, 10, 11, 7, 8, 12, 4, 3, 2, 13, 14, 26, 8, 1};  
+  int length(18); // A = 10, B = 11, C = 12, D = 13, E = 14, F = 15
+  unsigned char bufferC0[18] = {0x00, 0x0C, 0x00, 0x08, 0x00, 0x07, 0x00, 0x0B, 0x00, 0x0A,
+                                0x00, 0x09, 0x00, 0x05, 0x00, 0x06, 0xff, 0xff};
+  unsigned char bufferC1[18] = {0x00, 0x01, 0x00, 0x08, 0x02, 0x06, 0x01, 0x04, 0x01, 0x03,
+                                0x00, 0x02, 0x00, 0x03, 0x00, 0x04, 0xff, 0xff};
+
+  unsigned char *buffer(0);
+  
+  cout << "bufferC0: ";
+  for (int i = 0; i < 18; i +=2) {
+    cout << dec << "i = " << i << ": 0x" << hex
+         << static_cast<int>(bufferC0[i])
+         << static_cast<int>(bufferC0[i+1])
+         << ". ";
+  }
+  cout << endl;
+  cout << "bufferC1: ";
+  for (int i = 0; i < 18; i +=2) {
+    cout << dec << "i = " << i << ": 0x" << hex
+         << static_cast<int>(bufferC1[i])
+         << static_cast<int>(bufferC1[i+1])
+         << ". ";
+  }
+  cout << endl;
+
+  double v[16] = {0}; 
+  
   int ipos = pos - 1;
   cout << "pos = " << pos << " ipos = " << ipos << endl;
   int addresses[] = {((0x3<<4) | 2*ipos), ((0x3<<4) | 2*ipos+1)};
   cout << "reading from addresses " << hex << addresses[0] << " and " << addresses[1] << dec << endl;
-  return;
-#ifdef PI
-  // TODO FIXME implement this once something is installed
-  int length;
-  unsigned char buffer[60] = {0};
+  //PI #ifdef PI
 
   // -- FIXME set I2C address
   for (int iaddr = 0; iaddr < 2; ++iaddr) {
+    if (0 == iaddr)
+      buffer = bufferC0;
+    else
+      buffer = bufferC1;
+    
+#ifdef PI
     ioctl(fSHT85File, I2C_SLAVE, addresses[iaddr]);
-
-    length = 18;			//<<< Number of bytes to read
-    // read() returns the number of bytes actually read, if it doesn't match
-    // then an error occurred (e.g. no response from the device)
-    if (read(fSHT85File, buffer, length) != length) {
-      //ERROR HANDLING: i2c transaction failed
+    
+    if (read(fSHT85File, (iaddr == 0? bufferC0 : bufferC1), length) != length) {
       printf("Failed to read from the i2c bus.\n");
+      return;
     } else {
       printf("Data read: %s\n", buffer);
     }
+#else
+    cout << "using default data instead of reading from I2C bus, iaddr = " << iaddr << endl;
+#endif
+    for (int i = 0; i < 18; i +=2) {
+      cout << dec << "i = " << i << ": 0x" << hex
+           << static_cast<int>(buffer[i])
+           << static_cast<int>(buffer[i+1])
+           << ". ";
+    }
+    cout << endl;
+
+    for (int i = 0; i < 8; ++i) {
+      v[iaddr*8 + i] = static_cast<double>((buffer[i] + (buffer[i+1]<<8)))/65536.*VDD;
+      cout << "i = " << i/2 << ": buffer[] = "
+           << hex
+           << static_cast<int>(buffer[i] + (buffer[i+1]<<8)) << " -> " << v[iaddr*i]
+           << dec << endl;
+    }
   }
 
-#endif
+  double vin   = (v[2] - v[10])*1.e3;
+  double voffs = (v[1] - 0.25*(v[11] + v[3] + v[7] + v[14]))*1.e3;
+  double vdda0 = (v[12] - v[11])*1.e3;
+  double vddd0 = (v[0] - v[11])*1.e3;
+  double vdda1 = (v[4] - v[3])*1.e3;
+  double vddd1 = (v[5] - v[3])*1.e3;
+  double vdda2 = (v[6] - v[7])*1.e3;
+  double vddd2 = (v[15] - v[7])*1.e3;
+  double vdda3 = (v[13] - v[14])*1.e3;
+  double vddd3 = (v[8] - v[14])*1.e3;
+
+  stringstream output;
+  output << timeStamp() << " " <<  std::setprecision(5)
+         << vin << "   " 
+         << voffs << "   "
+         << vdda0 << "   " << vddd0 << "   "
+         << vdda1 << "   " << vddd1 << "   "
+         << vdda2 << "   " << vddd2 << "   "
+         << vdda3 << "   " << vddd3 << "   ";
+
+  fVprobeVoltages = output.str();
+  cout << fVprobeVoltages << endl;
 }
 
 // ----------------------------------------------------------------------

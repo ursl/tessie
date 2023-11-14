@@ -185,6 +185,9 @@ private:
   int  fSHT85File;
   float fSHT85Temp, fSHT85RH, fSHT85DP;
 
+  // -- data from VProbe
+  std::string fVprobeVoltages;
+  
 #ifdef PI
   int    fSw; 
   struct sockaddr_can fAddrW;
