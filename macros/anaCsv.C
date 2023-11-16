@@ -146,7 +146,7 @@ void plotTempM(string filename = "csv/230120-tessie.csv") {
     if (0 == it) {
       vg[it]->Draw("alp");
       vg[it]->GetXaxis()->SetTitle("seconds since start");
-      vg[it]->GetYaxis()->SetTitle("Temperature [C]");
+      vg[it]->GetYaxis()->SetTitle("Temperature [#circC]");
     } else {
       vg[it]->Draw("lp");
     }
@@ -222,7 +222,7 @@ void corrTemps(string filename = "/Users/ursl/data/tessie/231103-tessie.csv") {
     if (0 == it) {
       vg[it]->Draw("alp");
       vg[it]->GetXaxis()->SetTitle("time");
-      vg[it]->GetYaxis()->SetTitle("Temperature [C]");
+      vg[it]->GetYaxis()->SetTitle("Temperature [#circC]");
     } else {
       vg[it]->Draw("lp");
     }
@@ -288,8 +288,8 @@ void corrTemps(string filename = "/Users/ursl/data/tessie/231103-tessie.csv") {
   gcorr->SetMarkerStyle(24);
   gcorr->SetMarkerSize(0.6);
   gcorr->Draw("ap");
-  gcorr->GetXaxis()->SetTitle("TEC8 temperature [C]");
-  gcorr->GetYaxis()->SetTitle("chip15 temperature [C]");
+  gcorr->GetXaxis()->SetTitle("TEC8 temperature [#circC]");
+  gcorr->GetYaxis()->SetTitle("chip15 temperature [#circC]");
 
   if (0) {
     double x, y;
@@ -382,7 +382,34 @@ void corrTempM2TempHDI(string filename = "/Users/ursl/data/tessie/231103b-tessie
     }                   
   }
 
-  TLegend *tleg = newLegend(0.15, 0.15, 0.4, 0.5);
+  TFile *md0 = TFile::Open("/Users/ursl/data/tessie/MonitorDQM_03-11-23_14h46m45.root");
+  md0->cd("Detector/Board_0/OpticalGroup_0/Hybrid_0");
+  TGraph *chip14 = ((TGraph*)gDirectory->Get("Chip_14/D_B(0)_O(0)_H(0)_DQM_INTERNAL_NTC_Chip(14)"));
+  for (int i = 0; i < chip14->GetN(); ++i) {
+    double iy = chip14->GetPointY(i);
+    if (iy < -40.) chip14->SetPointY(i, chip14->GetPointY(i-1));
+  }
+  chip14->SetMarkerColor(kBlack);  chip14->SetLineColor(kBlack); chip14->SetLineWidth(2);
+  chip14->Draw("p");
+
+  TGraph *chip15 = ((TGraph*)gDirectory->Get("Chip_15/D_B(0)_O(0)_H(0)_DQM_INTERNAL_NTC_Chip(15)"));
+  for (int i = 0; i < chip15->GetN(); ++i) {
+    double iy = chip15->GetPointY(i);
+    if (iy < -40.) chip15->SetPointY(i, chip15->GetPointY(i-1));
+  }
+  chip15->SetMarkerColor(kGray+1);  chip15->SetLineColor(kGray+1); chip15->SetLineWidth(2);
+  chip15->Draw("p");
+  
+  TFile *md1 = TFile::Open("/Users/ursl/data/tessie/MonitorDQM_03-11-23_14h56m28.root");
+  md1->cd("Detector/Board_0/OpticalGroup_0/Hybrid_0");
+  TGraph *chip14a = ((TGraph*)gDirectory->Get("Chip_14/D_B(0)_O(0)_H(0)_DQM_INTERNAL_NTC_Chip(14)"));
+  chip14a->SetMarkerColor(kBlack);  chip14a->SetLineColor(kBlack); chip14a->SetLineWidth(2);
+  chip14a->Draw("p");
+  TGraph *chip15a = ((TGraph*)gDirectory->Get("Chip_15/D_B(0)_O(0)_H(0)_DQM_INTERNAL_NTC_Chip(15)"));
+  chip15a->SetMarkerColor(kGray+1);  chip15a->SetLineColor(kGray+1); chip15a->SetLineWidth(2);
+  chip15a->Draw("p");
+  
+  TLegend *tleg = newLegend(0.15, 0.12, 0.4, 0.47);
   for (int it = 0; it < 8; ++it) {
     TLegendEntry *tle(0);
     if (it == 0) {
@@ -396,29 +423,41 @@ void corrTempM2TempHDI(string filename = "/Users/ursl/data/tessie/231103b-tessie
     if (0 == it) {
       vg[it]->Draw("alp");
       vg[it]->GetXaxis()->SetTitle("time");
-      vg[it]->GetYaxis()->SetTitle("Temperature [C]");
+      vg[it]->GetYaxis()->SetTitle("Temperature [#circC]");
     } else {
       vg[it]->Draw("lp");
     }
   }
   
+  TLegendEntry *tle = tleg->AddEntry(chip14, "Chip 14 (HDI r/o)");
+  tle->SetTextSize(0.03);
+  tle = tleg->AddEntry(chip15, "Chip 15 (HDI r/o)");
+  tle->SetTextSize(0.03);
+  
   tleg->SetHeader("2023/11/03");
   tleg->Draw();
   vg[0]->GetXaxis()->SetTimeDisplay(1);
   vg[0]->GetXaxis()->SetLimits(1699018796, 1699022316);
-  // 0]->GetXaxis()->SetLimits(1699028500.);
   vg[0]->SetMaximum(40.);
   vg[0]->SetMinimum(-48.);
   
+  pl->SetLineColor(kBlack);
+  pl->SetLineWidth(2);
+  pl->SetLineStyle(kDashed);
+  pl->DrawLine(1699018796, -35., 1699022316., -35.);
+
   tl->SetTextSize(0.03);
   tl->DrawLatex(0.80, 0.91, "NP/UL");
 
-  pl->SetNDC(kTRUE);
-  pl->DrawLine(0.2, 0., 0.2, 1.);
+  chip14->Draw("pl");
+  chip14a->Draw("pl");
+  chip15->Draw("pl");
+  chip15a->Draw("pl");
   
   string pdfname = "temperaturesHDI-" + filename.substr(filename.rfind("/")+1);
   replaceAll(pdfname, ".csv", ".pdf");
   c0.SaveAs(pdfname.c_str());
+
 
   TGraph *gcorr = new TGraph();
   
@@ -445,12 +484,18 @@ void corrTempM2TempHDI(string filename = "/Users/ursl/data/tessie/231103b-tessie
   gcorr->SetMarkerStyle(24);
   gcorr->SetMarkerSize(0.6);
   gcorr->Draw("ap");
-  gcorr->GetXaxis()->SetTitle("HDI temperature [C]");
-  gcorr->GetYaxis()->SetTitle("TEC8 temperature [C]");
+  gcorr->GetXaxis()->SetLimits(-38., 32.);
+  gcorr->GetYaxis()->SetLimits(-40., 25.);
+  gcorr->GetXaxis()->SetTitle("HDI temperature [#circC]");
+  gcorr->GetYaxis()->SetTitle("TEC8 temperature [#circC]");
 
   tl->SetTextSize(0.03);
   tl->DrawLatex(0.80, 0.91, "NP/UL");
 
+  pl->SetLineWidth(2);
+  pl->SetLineStyle(kDashed);
+  pl->SetLineColor(kRed);
+  pl->DrawLine(-38., -38., 25.8, 25.8);
   
   if (0) {
     double x, y;
