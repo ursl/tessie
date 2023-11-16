@@ -23,8 +23,8 @@
 #define I2C_SHT85_ADDR 0x44
 
 // -- define GPIO pins of side light (BCM addresses!)
-#define GPIOGREEN 0  // red
-#define GPIORED   2  // green
+#define GPIORED 0  // red
+#define GPIOGREEN   2  // green
 #define GPIOYELLO 3
 
 #include <chrono>
