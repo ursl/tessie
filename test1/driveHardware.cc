@@ -239,6 +239,32 @@ driveHardware::~driveHardware() {
 
 
 // ----------------------------------------------------------------------
+void driveHardware::doWarning(string errmsg, bool nothing) {
+  static struct timeval tvWarningSet;
+
+  static int i; 
+  if (nothing) {
+    struct timeval tvNow; 
+    gettimeofday(&tvNow, 0);
+    int tdiff = diff_ms(tvNow, tvWarningSet);
+    if (tdiff > 10000) {
+#ifdef PI
+      digitalWrite(GPIOYELLO, LOW);
+#endif
+    }
+  } else {
+    gettimeofday(&tvWarningSet, 0);
+    fLOG(WARNING, errmsg);
+#ifdef PI
+    digitalWrite(GPIOYELLO, HIGH);
+#endif
+  }
+
+
+}
+
+
+// ----------------------------------------------------------------------
 void driveHardware::evtHandler() {
   // -- allow signals to reach slots
   QCoreApplication::processEvents();
@@ -318,16 +344,16 @@ void driveHardware::doRun() {
             ++errRepeat;
           }
           if (errRepeat < 2) {
-            fLOG(WARNING, errmsg);
+            doWarning(errmsg);
           }
           errs.pop_front();
         }
         if (errRepeat > 2) {
-          fLOG(WARNING, "truncated warning message " + to_string(errRepeat-2) + " times");
+          doWarning("truncated warning message " + to_string(errRepeat-2) + " times");
         }
         fCanMsg.clearAllFrames();
       }
-
+      doWarning("nothing", true);
     }
   }
 
