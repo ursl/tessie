@@ -24,8 +24,8 @@
 
 // -- define GPIO pins of side light (BCM addresses!)
 #define GPIORED 0  // red
-#define GPIOGREEN   2  // green
-#define GPIOYELLO 3
+#define GPIOYELLO   2  // green
+#define GPIOGREEN 3
 
 #include <chrono>
 
