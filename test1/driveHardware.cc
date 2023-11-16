@@ -259,7 +259,7 @@ void driveHardware::doWarning(string errmsg, bool nothing) {
     digitalWrite(GPIOYELLO, HIGH);
 #endif
   }
-
+  cout << "hallo" << endl;
 
 }
 
