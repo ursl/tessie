@@ -344,16 +344,16 @@ void driveHardware::doRun() {
             ++errRepeat;
           }
           if (errRepeat < 2) {
-            doWarning(errmsg);
+            //            doWarning(errmsg);
           }
           errs.pop_front();
         }
         if (errRepeat > 2) {
-          doWarning("truncated warning message " + to_string(errRepeat-2) + " times");
+          //          doWarning("truncated warning message " + to_string(errRepeat-2) + " times");
         }
         fCanMsg.clearAllFrames();
       }
-      doWarning("nothing", true);
+      //      doWarning("nothing", true);
     }
   }
 
