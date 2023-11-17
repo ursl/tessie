@@ -1765,8 +1765,11 @@ void driveHardware::readVProbe(int pos) {
            << std::setfill('0') << std::setw(4)
            << hex
            << static_cast<int>(buffer[2*i] + (buffer[2*i+1]<<8)) << " -> " << v[iaddr*8+i]
-           << dec << endl;
+           << dec
+           << " at idx = " << iaddr*8+i
+           << endl;
     }
+    cout.flags( f );
   }
 
   double vin   = (v[2] - v[10]);
