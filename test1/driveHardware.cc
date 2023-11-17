@@ -23,8 +23,8 @@
 #define I2C_SHT85_ADDR 0x44
 
 // -- define GPIO pins of side light (BCM addresses!)
-#define GPIORED 2  
-#define GPIOYELLO 0  
+#define GPIORED 0  
+#define GPIOYELLO 2  
 #define GPIOGREEN 3
 
 #include <chrono>
@@ -112,6 +112,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   pinMode(GPIOYELLO, OUTPUT);
 
   digitalWrite(GPIOGREEN, HIGH);
+  digitalWrite(GPIORED, LOW);
+  digitalWrite(GPIOYELLO, LOW);
 
 #endif
 
