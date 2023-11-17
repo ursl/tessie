@@ -1760,7 +1760,7 @@ void driveHardware::readVProbe(int pos) {
     cout.flags( f );
     
     for (int i = 0; i < 8; ++i) {
-      v[iaddr*8+i] = static_cast<double>((buffer[2*i] + (buffer[2*i+1]<<8)))/65536.*VDD;
+      v[iaddr*8+i] = static_cast<double>(static_cast<unsigned int>((buffer[2*i] + (buffer[2*i+1]<<8))))/65536.*VDD;
       cout << "i = " << i << ": buffer[] = "
            << std::setfill('0') << std::setw(4)
            << hex
@@ -1779,6 +1779,11 @@ void driveHardware::readVProbe(int pos) {
     cout.flags( f );
   }
 
+// v[] printout:
+// 0.0282451 1.27164 1.23091 1.34718 0.0301652 1.67293 0.542064 1.28442 1.2822 0.0312263 1.23278 1.25506 0.0241018 0.0332979 0.542418 1.29387 
+// 2023/11/17 11:03:43 -0.0018695   0.16437   -1.231   -1.2268   -1.317   0.32575   -0.74236   0.0094487   -0.50912   0.73978   
+
+  
   double vin   = (v[2] - v[10]);
   double voffs = (v[1] - 0.25*(v[11] + v[3] + v[7] + v[14]));
   double vdda0 = (v[12] - v[11]);
