@@ -1693,7 +1693,7 @@ void driveHardware::readSHT85() {
 void driveHardware::readVProbe(int pos) {
   // "i2cscanaddress"
 
-  float VDD(3.3114);
+  double VDD(3.3114);
   int order[] = {6, 5, 9, 10, 11, 7, 8, 12, 4, 3, 2, 13, 14, 26, 8, 1};  
   int length(18); // A = 10, B = 11, C = 12, D = 13, E = 14, F = 15
   unsigned char bufferC0[18] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -1760,7 +1760,7 @@ void driveHardware::readVProbe(int pos) {
     cout.flags( f );
     
     for (int i = 0; i < 8; ++i) {
-      v[iaddr*8+i] = static_cast<double>(static_cast<unsigned int>((buffer[2*i] + (buffer[2*i+1]<<8))))/65536.*VDD;
+      v[iaddr*8+i] = static_cast<unsigned int>(buffer[2*i] + (buffer[2*i+1]<<8))*VDD/65536;
       cout << "i = " << i << ": buffer[] = "
            << std::setfill('0') << std::setw(4)
            << hex
