@@ -208,9 +208,6 @@ driveHardware::~driveHardware() {
 
 #ifdef PI
   shutDown();
-  digitalWrite(GPIOGREEN, LOW);
-  digitalWrite(GPIORED, LOW);
-  digitalWrite(GPIOYELLO, LOW);
 #endif
 }
 
@@ -527,6 +524,11 @@ void driveHardware::shutDown() {
     std::this_thread::sleep_for(10*fMilli100);
   }
 
+
+  digitalWrite(GPIOGREEN, LOW);
+  digitalWrite(GPIORED, LOW);
+  digitalWrite(GPIOYELLO, LOW);
+  
   // -- no?!
   //  close(fSw);
   //  close(fSr);
