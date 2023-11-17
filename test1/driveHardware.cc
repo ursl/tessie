@@ -1752,6 +1752,7 @@ void driveHardware::readVProbe(int pos) {
       cout << dec << "i = " << i << ": 0x" << hex
            << std::setfill('0') << std::setw(2)
            << static_cast<int>(buffer[i])
+           << std::setfill('0') << std::setw(2)
            << static_cast<int>(buffer[i+1])
            << ". ";
     }
