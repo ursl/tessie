@@ -142,7 +142,6 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   // -- eventually read the VProbe card(s)
   //  for (int i = 1; i <= 8; ++i) readVProbe(i);
   readVProbe(0);
-  return;
   
 #ifdef PI
   // -- write CAN socket
