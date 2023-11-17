@@ -1770,6 +1770,13 @@ void driveHardware::readVProbe(int pos) {
            << endl;
     }
     cout.flags( f );
+
+    cout << "v[] printout:" << endl;
+    for (int i = 0; i < 16; ++i) {
+      cout << std::setw(5) << v[i] << " ";
+    }
+    cout << endl;
+    cout.flags( f );
   }
 
   double vin   = (v[2] - v[10]);
