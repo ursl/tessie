@@ -1769,16 +1769,16 @@ void driveHardware::readVProbe(int pos) {
     }
   }
 
-  double vin   = (v[2] - v[10])*1.e3;
-  double voffs = (v[1] - 0.25*(v[11] + v[3] + v[7] + v[14]))*1.e3;
-  double vdda0 = (v[12] - v[11])*1.e3;
-  double vddd0 = (v[0] - v[11])*1.e3;
-  double vdda1 = (v[4] - v[3])*1.e3;
-  double vddd1 = (v[5] - v[3])*1.e3;
-  double vdda2 = (v[6] - v[7])*1.e3;
-  double vddd2 = (v[15] - v[7])*1.e3;
-  double vdda3 = (v[13] - v[14])*1.e3;
-  double vddd3 = (v[8] - v[14])*1.e3;
+  double vin   = (v[2] - v[10]);
+  double voffs = (v[1] - 0.25*(v[11] + v[3] + v[7] + v[14]));
+  double vdda0 = (v[12] - v[11]);
+  double vddd0 = (v[0] - v[11]);
+  double vdda1 = (v[4] - v[3]);
+  double vddd1 = (v[5] - v[3]);
+  double vdda2 = (v[6] - v[7]);
+  double vddd2 = (v[15] - v[7]);
+  double vdda3 = (v[13] - v[14]);
+  double vddd3 = (v[8] - v[14]);
 
   stringstream output;
   output << fLOG.shortTimeStamp() << " " <<  std::setprecision(5)
