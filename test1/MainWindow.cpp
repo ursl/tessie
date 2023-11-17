@@ -166,6 +166,7 @@ void MainWindow::setCheckDisableSiren(bool state) {
 // ----------------------------------------------------------------------
 void MainWindow::quitProgram() {
   stringstream sbla; sbla << "This is the end, my friend";
+  fpHw->shutDown();
   fLOG(INFO, "This is the end, my friend -- tessie shutting down");
   exit(0);
 }
