@@ -510,25 +510,14 @@ void driveHardware::shutDown() {
   digitalWrite(GPIORED, LOW);
   digitalWrite(GPIOYELLO, LOW);
 
+ 
   for (int itec = 1; itec <= 8; ++itec) {
     turnOffTEC(itec);
     std::this_thread::sleep_for(fMilli5);
   }
-  for (int itec = 1; itec <= 8; ++itec) {
-    setTECRegister(itec, "ControlVoltage_Set", 0.0);
-    std::this_thread::sleep_for(fMilli5);
-  }
 
-  std::this_thread::sleep_for(5*fMilli100);
-
-  // -- wait 5 seconds
-  for (int i = 0; i < 5; ++i) {
-    // -- read all parameters from CAN
-    readAllParamsFromCANPublic();
-    emit signalUpdateHwDisplay();
-    std::this_thread::sleep_for(10*fMilli100);
-  }
- 
+  return;
+  
 #endif
 }
 
