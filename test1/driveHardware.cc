@@ -208,9 +208,7 @@ driveHardware::~driveHardware() {
   fAbort = true;
   fCondition.wakeOne();
 
-#ifdef PI
   shutDown();
-#endif
 }
 
 
@@ -507,6 +505,11 @@ void  driveHardware::setTECParameter(float par) {
 void driveHardware::shutDown() {
   // -- don't call this while things are warming up (from a previous shutDown call)
 #ifdef PI
+  cout << "driveHardware::shutDown()" << endl;
+  digitalWrite(GPIOGREEN, LOW);
+  digitalWrite(GPIORED, LOW);
+  digitalWrite(GPIOYELLO, LOW);
+
   for (int itec = 1; itec <= 8; ++itec) {
     turnOffTEC(itec);
     std::this_thread::sleep_for(fMilli5);
@@ -525,16 +528,7 @@ void driveHardware::shutDown() {
     emit signalUpdateHwDisplay();
     std::this_thread::sleep_for(10*fMilli100);
   }
-
-
-  digitalWrite(GPIOGREEN, LOW);
-  digitalWrite(GPIORED, LOW);
-  digitalWrite(GPIOYELLO, LOW);
-  
-  // -- no?!
-  //  close(fSw);
-  //  close(fSr);
-  //  close(fSHT85File);
+ 
 #endif
 }
 
