@@ -343,7 +343,7 @@ void driveHardware::doRun() {
 void driveHardware::ensureSafety() {
   // -- turn on yellow light if Temp < Water temp + 4
 #ifdef PI
-  if (fSHT85Temp <  fTECData[8].reg["Temp_W"].value + 4.0) {
+  if (fSHT85Temp <  fSHT85DP + 4.0) {
     digitalWrite(GPIOYELLO, HIGH);
   } else {
     digitalWrite(GPIOYELLO, LOW);
