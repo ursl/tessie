@@ -827,19 +827,19 @@ void driveHardware::parseIoMessage() {
       emit signalSendToServer(qmsg);
     }
 
-    for (int i = 0; i < 7; ++i) {
-      stringstream str1;
-      str1 << "vprobe" << i; 
-      s1 = str1.str(); s2 = str1.str();
-      cout << "s1 = " << s1 << endl;
-      if (findInIoMessage(s1, s2, s3)) {
-        stringstream str;
-        readVProbe(0);
-        str << fVprobeVoltages; 
-        QString qmsg = QString::fromStdString(str.str());
-        emit signalSendToServer(qmsg);
-      }
-    }
+    // for (int i = 0; i < 7; ++i) {
+    //   stringstream str1;
+    //   str1 << "vprobe" << i; 
+    //   s1 = str1.str(); s2 = str1.str();
+    //   cout << "s1 = " << s1 << endl;
+    //   if (findInIoMessage(s1, s2, s3)) {
+    //     stringstream str;
+    //     readVProbe(0);
+    //     str << fVprobeVoltages; 
+    //     QString qmsg = QString::fromStdString(str.str());
+    //     emit signalSendToServer(qmsg);
+    //   }
+    // }
     
     s1 = "Mode";  s2 = "Mode";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
     s1 = "Voltage";  s2 = "ControlVoltage_Set";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
