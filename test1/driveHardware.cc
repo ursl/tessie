@@ -807,7 +807,6 @@ void driveHardware::parseIoMessage() {
       stringstream str1;
       str1 << "vprobe" << i; 
       s1 = str1.str(); s2 = str1.str();
-      cout << "s1 = " << s1 << endl;
       if (findInIoMessage(s1, s2, s3)) {
         stringstream str;
         readVProbe(i);
@@ -1697,39 +1696,39 @@ void driveHardware::readVProbe(int pos) {
   float VDD(3.3114);
   int order[] = {6, 5, 9, 10, 11, 7, 8, 12, 4, 3, 2, 13, 14, 26, 8, 1};  
   int length(18); // A = 10, B = 11, C = 12, D = 13, E = 14, F = 15
-  unsigned char bufferC0[18] = {0x00, 0x0C, 0x00, 0x08, 0x00, 0x07, 0x00, 0x0B, 0x00, 0x0A,
-                                0x00, 0x09, 0x00, 0x05, 0x00, 0x06, 0xff, 0xff};
-  unsigned char bufferC1[18] = {0x00, 0x01, 0x00, 0x08, 0x02, 0x06, 0x01, 0x04, 0x01, 0x03,
-                                0x00, 0x02, 0x00, 0x03, 0x00, 0x04, 0xff, 0xff};
+  unsigned char bufferC0[18] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xde, 0xad};
+  unsigned char bufferC1[18] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xde, 0xad};
 
   unsigned char *buffer(0);
   
-  cout << "bufferC0: ";
-  for (int i = 0; i < 18; i +=2) {
-    cout << dec << "i = " << i << ": 0x" << hex
-         << static_cast<int>(bufferC0[i])
-         << static_cast<int>(bufferC0[i+1])
-         << ". ";
+  if (0) {
+    cout << "bufferC0: ";
+    for (int i = 0; i < 18; i +=2) {
+      cout << dec << "i = " << i << ": 0x" << hex
+           << static_cast<int>(bufferC0[i])
+           << static_cast<int>(bufferC0[i+1])
+           << ". ";
+    }
+    cout << endl;
+    cout << "bufferC1: ";
+    for (int i = 0; i < 18; i +=2) {
+      cout << dec << "i = " << i << ": 0x" << hex
+           << static_cast<int>(bufferC1[i])
+           << static_cast<int>(bufferC1[i+1])
+           << ". ";
+    }
+    cout << endl;
   }
-  cout << endl;
-  cout << "bufferC1: ";
-  for (int i = 0; i < 18; i +=2) {
-    cout << dec << "i = " << i << ": 0x" << hex
-         << static_cast<int>(bufferC1[i])
-         << static_cast<int>(bufferC1[i+1])
-         << ". ";
-  }
-  cout << endl;
-
+  
   double v[16] = {0}; 
   
   int ipos = pos - 1;
   cout << "pos = " << pos << " ipos = " << ipos << endl;
   int addresses[] = {((0x3<<4) | 2*ipos), ((0x3<<4) | 2*ipos+1)};
-  cout << "reading from addresses " << hex << addresses[0] << " and " << addresses[1] << dec << endl;
-  //PI #ifdef PI
+  cout << "reading from addresses 0x" << hex << addresses[0] << " and 0x" << addresses[1] << dec << endl;
 
-  // -- FIXME set I2C address
   for (int iaddr = 0; iaddr < 2; ++iaddr) {
     if (0 == iaddr)
       buffer = bufferC0;
@@ -1743,7 +1742,7 @@ void driveHardware::readVProbe(int pos) {
       printf("Failed to read from the i2c bus.\n");
       return;
     } else {
-      printf("Data read: %s\n", buffer);
+      printf("Data read from address 0x%d\n", addresses[iaddr]);
     }
 #else
     cout << "using default data instead of reading from I2C bus, iaddr = " << iaddr << endl;
