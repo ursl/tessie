@@ -23,8 +23,8 @@
 #define I2C_SHT85_ADDR 0x44
 
 // -- define GPIO pins of side light (BCM addresses!)
-#define GPIORED 0  // red
-#define GPIOYELLO   2  // green
+#define GPIORED 2  
+#define GPIOYELLO 0  
 #define GPIOGREEN 3
 
 #include <chrono>
@@ -111,29 +111,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   pinMode(GPIORED,   OUTPUT);
   pinMode(GPIOYELLO, OUTPUT);
 
-  cout << "   blink 1 " << endl;
-  for (int i = 0; i < 2; ++i) {
-    digitalWrite(GPIOGREEN, HIGH);
-    std::this_thread::sleep_for(5*fMilli100);
-    digitalWrite(GPIOGREEN, LOW);
-    std::this_thread::sleep_for(5*fMilli100);
-  }      
-
-  cout << "   blink 2 " << endl;
-  for (int i = 0; i < 2; ++i) {
-    digitalWrite(GPIORED, HIGH);
-    std::this_thread::sleep_for(5*fMilli100);
-    digitalWrite(GPIORED, LOW);
-    std::this_thread::sleep_for(5*fMilli100);
-  }      
-
-  cout << "   blink 3 " << endl;
-  for (int i = 0; i < 2; ++i) {
-    digitalWrite(GPIOYELLO, HIGH);
-    std::this_thread::sleep_for(5*fMilli100);
-    digitalWrite(GPIOYELLO, LOW);
-    std::this_thread::sleep_for(5*fMilli100);
-  }      
+  digitalWrite(GPIOGREEN, HIGH);
 
 #endif
 
@@ -239,8 +217,13 @@ driveHardware::~driveHardware() {
 
 // ----------------------------------------------------------------------
 void driveHardware::doWarning(string errmsg, bool nothing) {
-  static struct timeval tvWarningSet;
 
+  fLOG(WARNING, errmsg);
+  return;
+
+  // -- keep code around in case we want to do something with lights
+  static struct timeval tvWarningSet;
+  
   static int i; 
   if (nothing) {
     struct timeval tvNow; 
@@ -253,12 +236,10 @@ void driveHardware::doWarning(string errmsg, bool nothing) {
     }
   } else {
     gettimeofday(&tvWarningSet, 0);
-    fLOG(WARNING, errmsg);
 #ifdef PI
     digitalWrite(GPIOYELLO, HIGH);
 #endif
   }
-  cout << "hallo" << endl;
 
 }
 
@@ -361,6 +342,15 @@ void driveHardware::doRun() {
 
 // ----------------------------------------------------------------------
 void driveHardware::ensureSafety() {
+  // -- turn on yellow light if Temp < Water temp + 4
+#ifdef PI
+  if (fSHT85Temp <  fTECData[8].reg["Temp_W"].value + 4.0) {
+    digitalWrite(GPIOYELLO, HIGH);
+  } else {
+    digitalWrite(GPIOYELLO, LOW);
+  }
+#endif
+  
   // -- air temperatures
   if (fSHT85Temp > SAFETY_MAXSHT85TEMP) {
     stringstream a("==ALARM== Box air temperature = " +

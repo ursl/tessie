@@ -51,7 +51,7 @@ public:
   void dumpMQTT(int all = 0);
   void evtHandler();
   void ensureSafety();
-  void doWarning(std::string s, bool nothing = false); 
+  void doWarning(std::string errmsg, bool nothing = false);
   void doAlarm(std::string s); 
   
   std::string timeStamp(bool filestamp = true);
