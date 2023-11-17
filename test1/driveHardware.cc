@@ -1742,19 +1742,22 @@ void driveHardware::readVProbe(int pos) {
       printf("Failed to read from the i2c bus.\n");
       return;
     } else {
-      printf("Data read from address 0x%d\n", addresses[iaddr]);
+      printf("Data read from address 0x%x\n", addresses[iaddr]);
     }
 #else
     cout << "using default data instead of reading from I2C bus, iaddr = " << iaddr << endl;
 #endif
+    std::ios_base::fmtflags f( cout.flags() );
     for (int i = 0; i < 18; i +=2) {
       cout << dec << "i = " << i << ": 0x" << hex
+           << std::setfill('0') << std::setw(2)
            << static_cast<int>(buffer[i])
            << static_cast<int>(buffer[i+1])
            << ". ";
     }
     cout << endl;
-
+    cout.flags( f );
+    
     for (int i = 0; i < 8; ++i) {
       v[iaddr*8 + i] = static_cast<double>((buffer[i] + (buffer[i+1]<<8)))/65536.*VDD;
       cout << "i = " << i/2 << ": buffer[] = "
