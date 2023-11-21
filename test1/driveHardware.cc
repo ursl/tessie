@@ -198,6 +198,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
     }
   }
 
+  // -- Load TEC parameters from FLASH
+  loadFromFlash();
 #endif
 }
 
