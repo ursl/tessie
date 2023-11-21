@@ -1700,6 +1700,7 @@ void driveHardware::readSHT85() {
 #endif
 }
 
+
 // ----------------------------------------------------------------------
 void driveHardware::readVProbe(int pos) {
   // "i2cscanaddress"
@@ -1748,9 +1749,8 @@ void driveHardware::readVProbe(int pos) {
     
 #ifdef PI
     ioctl(fSHT85File, I2C_SLAVE, addresses[iaddr]);
-    
     if (read(fSHT85File, (iaddr == 0? bufferC0 : bufferC1), length) != length) {
-      printf("Failed to read from the i2c bus.\n");
+      printf("Failed to read from the i2c bus address 0x%x.\n", addresses[iaddr]);
       return;
     } else {
       printf("Data read from address 0x%x\n", addresses[iaddr]);
@@ -1794,7 +1794,7 @@ void driveHardware::readVProbe(int pos) {
 // 0.0282451 1.27164 1.23091 1.34718 0.0301652 1.67293 0.542064 1.28442 1.2822 0.0312263 1.23278 1.25506 0.0241018 0.0332979 0.542418 1.29387 
 // 2023/11/17 11:03:43 -0.0018695   0.16437   -1.231   -1.2268   -1.317   0.32575   -0.74236   0.0094487   -0.50912   0.73978   
 
-  
+  // -- order is not correct
   double vin   = (v[2] - v[10]);
   double voffs = (v[1] - 0.25*(v[11] + v[3] + v[7] + v[14]));
   double vdda0 = (v[12] - v[11]);
