@@ -694,7 +694,11 @@ void driveHardware::answerIoCmd() {
     }
   }
 
-  if (string::npos != cmdname.find("ClearError")) {
+  if (string::npos != cmdname.find("Power_On")) {
+    fCANReg = 1;
+  } else if (string::npos != cmdname.find("Power_Off")) {
+    fCANReg = 2;
+  } else if (string::npos != cmdname.find("ClearError")) {
     fCANReg = 5;
   } else if (string::npos != cmdname.find("GetSWVersion")) {
     fCANReg = 6;
@@ -891,26 +895,18 @@ void driveHardware::parseIoMessage() {
     s3 = "cmd ";
     s1 = "Power_On";  s2 = "Power_On";
     if (findInIoMessage(s1, s2, s3)) {
-      for (int itec = 1; itec <=8; ++itec) {
-        turnOnTEC(itec);
-      }
-    }
-
-    s1 = "loadflash"; s2 = "LoadFlash";
-    if (findInIoMessage(s1, s2, s3)) {
-      loadFromFlash();
-    }
-
-    s1 = "saveflash"; s2 = "saveFlash";
-    if (findInIoMessage(s1, s2, s3)) {
-      saveToFlash();
+      answerIoCmd();
+      // for (int itec = 1; itec <=8; ++itec) {
+      //   turnOnTEC(itec);
+      // }
     }
 
     s1 = "Power_Off";  s2 = "Power_Off";
     if (findInIoMessage(s1, s2, s3)) {
-      for (int itec = 1; itec <=8; ++itec) {
-        turnOffTEC(itec);
-      }
+      answerIoCmd();
+      // for (int itec = 1; itec <=8; ++itec) {
+      //   turnOffTEC(itec);
+      // }
     }
 
     s1 = "valve0";  s2 = "valve0";
@@ -967,10 +963,10 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> ");
     vhelp.push_back("> cmd messages:");
     vhelp.push_back("> -------------");
-    vhelp.push_back("> cmd Power_On");
-    vhelp.push_back("> cmd Power_Off");
     vhelp.push_back("> cmd valve0");
     vhelp.push_back("> cmd valve1");
+    vhelp.push_back("> cmd [tec {0|x}] Power_On");
+    vhelp.push_back("> cmd [tec {0|x}] Power_Off");
     vhelp.push_back("> cmd [tec {0|x}] ClearError");
     vhelp.push_back("> cmd [tec {0|x}] GetSWVersion");
     vhelp.push_back("> cmd [tec {0|x}] SaveVariables");
