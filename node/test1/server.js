@@ -6,6 +6,14 @@ const io = require('socket.io')(server);
 var valve0Status = 0;
 var valve1Status = 0;
 
+// ----------------------------------------------------------------------
+// Usage:
+// ------
+// node server.js
+// http://localhost:3000
+// http://coldbox01.psi.ch:3000
+// ----------------------------------------------------------------------
+
 app.use(express.static('public'));
 
 io.on('connection', (socket) => {
