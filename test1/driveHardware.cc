@@ -896,6 +896,16 @@ void driveHardware::parseIoMessage() {
       }
     }
 
+    s1 = "loadflash"; s2 = "LoadFlash";
+    if (findInIoMessage(s1, s2, s3)) {
+      loadFromFlash();
+    }
+
+    s1 = "saveflash"; s2 = "saveFlash";
+    if (findInIoMessage(s1, s2, s3)) {
+      saveToFlash();
+    }
+
     s1 = "Power_Off";  s2 = "Power_Off";
     if (findInIoMessage(s1, s2, s3)) {
       for (int itec = 1; itec <=8; ++itec) {
