@@ -1739,7 +1739,7 @@ void driveHardware::readVProbe(int pos) {
   int ipos = pos - 1;
   // cout << "pos = " << pos << " ipos = " << ipos << endl;
   int addresses[] = {((0x3<<4) | 2*ipos), ((0x3<<4) | 2*ipos+1)};
-  cout << "reading from addresses 0x" << hex << addresses[0] << " and 0x" << addresses[1] << dec;
+  cout << "reading from addresses 0x" << hex << addresses[0] << " and 0x" << addresses[1] << dec << " ";
 
   for (int iaddr = 0; iaddr < 2; ++iaddr) {
     if (0 == iaddr)
@@ -1750,11 +1750,11 @@ void driveHardware::readVProbe(int pos) {
 #ifdef PI
     ioctl(fSHT85File, I2C_SLAVE, addresses[iaddr]);
     if (read(fSHT85File, (iaddr == 0? bufferC0 : bufferC1), length) != length) {
-      printf("Failed to read from the i2c bus address 0x%x.", addresses[iaddr]);
+      printf("- Failed to read from the VProbe at i2c bus address 0x%x.", addresses[iaddr]);
       cout << endl;
       return;
     } else {
-      printf("Data read from address 0x%x", addresses[iaddr]);
+      printf("- Data read from the VProbe at i2c bus address 0x%x", addresses[iaddr]);
       cout << endl;
     }
 #else
