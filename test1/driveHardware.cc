@@ -960,6 +960,9 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> ===================");
     vhelp.push_back("> ");
     vhelp.push_back("> Note: [tec {0|x}] can be before or after {get|set|cmd}");
+    vhelp.push_back("> Note: [tec {0|x}] can be before or after {get|set|cmd XXX}, e.g.");
+    vhelp.push_back(">       cmd Power_On tec 7");
+    vhelp.push_back(">       tec 7 cmd Power_Off");
     vhelp.push_back("> ");
     vhelp.push_back("> cmd messages:");
     vhelp.push_back("> -------------");
