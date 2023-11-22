@@ -10,9 +10,12 @@ var valve1Status = 0;
 // ----------------------------------------------------------------------
 // Usage:
 // ------
-// node server.js
+// node server1.js
 // http://localhost:3000
 // http://coldbox01.psi.ch:3000
+//
+// Warning: (1) valve1 does not yet work
+//          (2) nothing is broadcast, yet. Only the originating browser is updated.
 // ----------------------------------------------------------------------
 
 app.use(express.static('public'));
