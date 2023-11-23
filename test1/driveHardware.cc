@@ -1578,7 +1578,7 @@ void driveHardware::dumpMQTT(int all) {
      << fSHT85Temp << ", "
      << fTECData[8].reg["Temp_W"].value << ", "
      << fSHT85RH << ", "
-     << fSHT85DP << ", ";
+     << fSHT85DP;
   if (all > -1) emit signalSendToMonitor(QString::fromStdString(ss.str()));
   
   // -- what to read: float
