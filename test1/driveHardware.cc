@@ -280,9 +280,8 @@ void driveHardware::doRun() {
     int tdiff2 = diff_ms(tvNew, tvVeryOld);
     if (tdiff2 > 10000.) {
       tvVeryOld = tvNew;
+      // -- periodically send out everything (all = 1)
       dumpMQTT(1);
-      // FIXME
-      // signalAlarm()
     }
     if (tdiff > 1000.) {
       tvOld = tvNew;
@@ -1573,6 +1572,15 @@ void driveHardware::readAllParamsFromCANPublic() {
 void driveHardware::dumpMQTT(int all) {
   static map<int, TECData> oldTECData;
 
+  // -- dump singular environmental data
+  stringstream ss;
+  ss << "Env = "
+     << fSHT85Temp << ", "
+     << fTECData[8].reg["Temp_W"].value << ", "
+     << fSHT85RH << ", "
+     << fSHT85DP << ", ";
+  if (all > -1) emit signalSendToMonitor(QString::fromStdString(ss.str()));
+  
   // -- what to read: float
   map<string, double> tolerances = {
     {"ControlVoltage_Set", 0.1}
@@ -1615,7 +1623,9 @@ void driveHardware::dumpMQTT(int all) {
     }
     if (printit)  emit signalSendToMonitor(QString::fromStdString(ss.str()));
   }
+
   oldTECData = fTECData;
+    
 }
 
 
