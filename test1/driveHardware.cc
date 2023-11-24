@@ -307,6 +307,8 @@ void driveHardware::doRun() {
       entertainFras();
       entertainTECs();
 
+      checkFan();
+      
       ensureSafety();
 
       // -- print errors (if present) accumulated in CANmessage
@@ -1336,7 +1338,13 @@ void  driveHardware::turnOffTEC(int itec) {
   fLOG(INFO, sbla.str());
   sendCANmessage();
 
-  // -- check whether any TEC is still turned on. If not, turn off fan.
+  checkFan();
+}
+
+
+// ----------------------------------------------------------------------
+// -- check whether any TEC is still turned on. If not, turn off fan.
+void driveHardware::checkFan() {  
   bool oneRunning(false);
   for (int itec = 0; itec < 8; ++itec) {
     if (0 == fActiveTEC[itec]) continue;
@@ -1351,6 +1359,7 @@ void  driveHardware::turnOffTEC(int itec) {
     turnOffFan();
   }
 }
+
 
 // ----------------------------------------------------------------------
 float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
