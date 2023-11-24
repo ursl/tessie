@@ -229,15 +229,9 @@ void driveHardware::doWarning(string errmsg, bool nothing) {
     gettimeofday(&tvNow, 0);
     int tdiff = diff_ms(tvNow, tvWarningSet);
     if (tdiff > 10000) {
-#ifdef PI
-      digitalWrite(GPIOYELLO, LOW);
-#endif
     }
   } else {
     gettimeofday(&tvWarningSet, 0);
-#ifdef PI
-    digitalWrite(GPIOYELLO, HIGH);
-#endif
   }
 
 }
@@ -342,14 +336,6 @@ void driveHardware::doRun() {
 
 // ----------------------------------------------------------------------
 void driveHardware::ensureSafety() {
-  // -- turn on yellow light if Temp < Water temp + 4
-#ifdef PI
-  if (fSHT85Temp <  fSHT85DP + 4.0) {
-    digitalWrite(GPIOYELLO, HIGH);
-  } else {
-    digitalWrite(GPIOYELLO, LOW);
-  }
-#endif
   
   // -- air temperatures
   if (fSHT85Temp > SAFETY_MAXSHT85TEMP) {
@@ -1317,7 +1303,11 @@ void  driveHardware::turnOnTEC(int itec) {
   sendCANmessage();
 
   fTECData[itec].reg["PowerState"].value = 1.;
-    
+
+#ifdef PI
+  digitalWrite(GPIOYELLO, HIGH);
+#endif    
+
   if (!getStatusFan()) {
     turnOnFan();
   }
@@ -1366,6 +1356,9 @@ void driveHardware::checkFan() {
   if (oneRunning) {
     // do nothing
   } else {
+#ifdef PI
+    digitalWrite(GPIOYELLO, LOW);
+#endif    
     turnOffFan();
   }
 }
