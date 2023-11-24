@@ -1357,7 +1357,7 @@ void driveHardware::checkFan() {
       break;
     }
   }
-  if (oneRunning) {
+  if (0 && oneRunning) {
     cout << "static_cast<int>(fTECData[" << idx << "].reg[\"PowerState\"].value) = "
          << static_cast<int>(fTECData[idx].reg["PowerState"].value)
          << endl;
