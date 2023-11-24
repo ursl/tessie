@@ -26,6 +26,7 @@
 #define GPIORED 0  
 #define GPIOYELLO 2  
 #define GPIOGREEN 3
+#define GPIOINT 4
 
 #include <chrono>
 
@@ -110,10 +111,12 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   pinMode(GPIOGREEN, OUTPUT);
   pinMode(GPIORED,   OUTPUT);
   pinMode(GPIOYELLO, OUTPUT);
+  pinMode(GPIOINT,   OUTPUT);
 
   digitalWrite(GPIOGREEN, HIGH);
   digitalWrite(GPIORED, LOW);
   digitalWrite(GPIOYELLO, LOW);
+  digitalWrite(GPIOINT, LOW);
 
 #endif
 
@@ -349,6 +352,9 @@ void driveHardware::ensureSafety() {
     emit signalAlarm();
     cout << "signalSetBackground(\"T\", red)" << endl;
     emit signalSetBackground("T", "red");
+#ifdef PI
+    digitalWrite(GPIOINT, HIGH);
+#endif    
   }
 
   // -- dew point vs air temperature
@@ -375,6 +381,9 @@ void driveHardware::ensureSafety() {
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
     emit signalAlarm();
+#ifdef PI
+    digitalWrite(GPIOINT, HIGH);
+#endif    
   }
 
   // -- check module temperatures (1) value and (2) against dew point
@@ -392,6 +401,9 @@ void driveHardware::ensureSafety() {
       QString qtec = QString::fromStdString("tec"+to_string(itec));
       cout << "signalSetBackground(" << qtec.toStdString() << ", red)" << endl;
       emit signalSetBackground(qtec, "red");
+#ifdef PI
+      digitalWrite(GPIOINT, HIGH);
+#endif    
     }
 
     if ((mtemp > -90.) && (mtemp < fSHT85DP + SAFETY_DPMARGIN)) {
