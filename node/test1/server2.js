@@ -64,7 +64,7 @@ clientMqtt.on('connect', () => {
 })
 
 clientMqtt.on('message', (topMon, payload) => {
-    console.log('Received Message:', topMon, payload.toString());
+    // console.log('Received Message:', topMon, payload.toString());
     if (payload.includes('Env = ')) {
         envString = payload.toString();
     }

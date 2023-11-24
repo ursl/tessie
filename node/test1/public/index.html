@@ -47,7 +47,7 @@
       socket.on('valve1blue', (msg) => {valve1.style.background='#ADD8E6'; });
       socket.on('valve1white', (msg) => {valve1.style.background='#FCF5E5'; });
       socket.on('envString', (msg) => {
-          console.log('envString: ', msg);
+          //          console.log('envString: ', msg);
           const snumbers = msg.toString().replace('Env = ', '');
           const vNumbers = snumbers.split(', ');
           document.getElementById('TempAir').innerHTML = vNumbers[0];
