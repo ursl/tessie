@@ -1316,6 +1316,8 @@ void  driveHardware::turnOnTEC(int itec) {
   fLOG(INFO, sbla.str());
   sendCANmessage();
 
+  fTECData[itec].reg["PowerState"].value = 1;
+    
   if (!getStatusFan()) {
     turnOnFan();
   }

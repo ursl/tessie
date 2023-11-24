@@ -78,7 +78,7 @@ public:
   void  turnOffValve(int i); // i = 0 or 1
   void  turnOnFan();
   void  turnOffFan();
-  void checkFan();
+  void  checkFan();
   
   // -- controlling the TEC
   void  setTECParameter(float par); // ???
