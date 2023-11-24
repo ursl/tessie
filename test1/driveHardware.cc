@@ -1316,7 +1316,7 @@ void  driveHardware::turnOnTEC(int itec) {
   fLOG(INFO, sbla.str());
   sendCANmessage();
 
-  fTECData[itec].reg["PowerState"].value = 1;
+  fTECData[itec].reg["PowerState"].value = 1.;
     
   if (!getStatusFan()) {
     turnOnFan();
@@ -1350,6 +1350,9 @@ void driveHardware::checkFan() {
   bool oneRunning(false);
   for (int itec = 0; itec < 8; ++itec) {
     if (0 == fActiveTEC[itec]) continue;
+    cout << "static_cast<int>(fTECData[" << itec<< "].reg[\"PowerState\"].value) = "
+         << static_cast<int>(fTECData[itec].reg["PowerState"].value)
+         << endl;
     if (1 == static_cast<int>(fTECData[itec].reg["PowerState"].value)) {
       oneRunning = true;
       break;
