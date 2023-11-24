@@ -1348,16 +1348,21 @@ void  driveHardware::turnOffTEC(int itec) {
 // -- check whether any TEC is still turned on. If not, turn off fan.
 void driveHardware::checkFan() {  
   bool oneRunning(false);
+  int idx(-1);
   for (int itec = 1; itec <= 8; ++itec) {
     if (0 == fActiveTEC[itec]) continue;
-    // cout << "static_cast<int>(fTECData[" << itec<< "].reg[\"PowerState\"].value) = "
-    //      << static_cast<int>(fTECData[itec].reg["PowerState"].value)
-    //      << endl;
     if (1 == static_cast<int>(fTECData[itec].reg["PowerState"].value)) {
+      idx = itec;
       oneRunning = true;
       break;
     }
   }
+  if (oneRunning) {
+    cout << "static_cast<int>(fTECData[" << idx << "].reg[\"PowerState\"].value) = "
+         << static_cast<int>(fTECData[idx].reg["PowerState"].value)
+         << endl;
+  }
+  
   if (oneRunning) {
     // do nothing
   } else {
