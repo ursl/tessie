@@ -116,7 +116,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   digitalWrite(GPIOGREEN, HIGH);
   digitalWrite(GPIORED, LOW);
   digitalWrite(GPIOYELLO, LOW);
-  digitalWrite(GPIOINT, LOW);
+  digitalWrite(GPIOINT, HIGH);
 
 #endif
 
@@ -353,7 +353,7 @@ void driveHardware::ensureSafety() {
     cout << "signalSetBackground(\"T\", red)" << endl;
     emit signalSetBackground("T", "red");
 #ifdef PI
-    digitalWrite(GPIOINT, HIGH);
+    digitalWrite(GPIOINT, LOW);
 #endif    
   }
 
@@ -382,7 +382,7 @@ void driveHardware::ensureSafety() {
     emit signalSendToServer(QString::fromStdString(a.str()));
     emit signalAlarm();
 #ifdef PI
-    digitalWrite(GPIOINT, HIGH);
+    digitalWrite(GPIOINT, LOW);
 #endif    
   }
 
@@ -402,7 +402,7 @@ void driveHardware::ensureSafety() {
       cout << "signalSetBackground(" << qtec.toStdString() << ", red)" << endl;
       emit signalSetBackground(qtec, "red");
 #ifdef PI
-      digitalWrite(GPIOINT, HIGH);
+      digitalWrite(GPIOINT, LOW);
 #endif    
     }
 
