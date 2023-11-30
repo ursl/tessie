@@ -226,7 +226,6 @@ void driveHardware::doWarning(string errmsg, bool nothing) {
   // -- keep code around in case we want to do something with lights
   static struct timeval tvWarningSet;
   
-  static int i; 
   if (nothing) {
     struct timeval tvNow; 
     gettimeofday(&tvNow, 0);
@@ -531,12 +530,10 @@ void driveHardware::readCAN(int nreads, bool setMutex) {
   bool DBX(false);
   // if (nreads > 1) DBX = true;
 
-  static int cntCAN(0);
-
-  char data[4] = {0, 0, 0, 0};
-
-  unsigned int idata(0);
-  float fdata(0.0);
+  // static int cntCAN(0);
+  // char data[4] = {0, 0, 0, 0};
+  // unsigned int idata(0);
+  // float fdata(0.0);
 
   ++nreads;
 
@@ -1657,32 +1654,32 @@ void driveHardware::dumpMQTT(int all) {
 void driveHardware::dumpCSV() {
   stringstream output;
   char cs[100];
-  sprintf(cs, "%+5.2f,%05.2f,%+5.2f", fSHT85Temp, fSHT85RH, fSHT85DP);
+  snprintf(cs, sizeof(cs), "%+5.2f,%05.2f,%+5.2f", fSHT85Temp, fSHT85RH, fSHT85DP);
   output << timeStamp() << "," << cs;
 
   // -- only one water temperature reading
   for (int i = 8; i <= 8; ++i) {
-    sprintf(cs, "%+4.1f", fTECData[i].reg["Temp_W"].value);
+    snprintf(cs, sizeof(cs), "%+4.1f", fTECData[i].reg["Temp_W"].value);
     if (fActiveTEC[i]) output << "," << cs;
   }
 
   for (int i = 1; i <= 8; ++i) {
-    sprintf(cs, "%1.0f", fTECData[i].reg["PowerState"].value);
+    snprintf(cs, sizeof(cs), "%1.0f", fTECData[i].reg["PowerState"].value);
     if (fActiveTEC[i]) output << "," << cs;
   }
 
   for (int i = 1; i <= 8; ++i) {
-    sprintf(cs, "%+5.2f", fTECData[i].reg["ControlVoltage_Set"].value);
+    snprintf(cs, sizeof(cs), "%+5.2f", fTECData[i].reg["ControlVoltage_Set"].value);
     if (fActiveTEC[i]) output << "," << cs;
   }
 
   for (int i = 1; i <= 8; ++i) {
-    sprintf(cs, "%+4.1f", fTECData[i].reg["Temp_Set"].value);
+    snprintf(cs, sizeof(cs), "%+4.1f", fTECData[i].reg["Temp_Set"].value);
     if (fActiveTEC[i]) output << "," << cs;
   }
 
   for (int i = 1; i <= 8; ++i) {
-    sprintf(cs, "%+5.2f", fTECData[i].reg["Temp_M"].value);
+    snprintf(cs, sizeof(cs), "%+5.2f", fTECData[i].reg["Temp_M"].value);
     if (fActiveTEC[i]) output << "," << cs;
   }
 
@@ -1737,11 +1734,14 @@ void driveHardware::readSHT85() {
 
 // ----------------------------------------------------------------------
 void driveHardware::readVProbe(int pos) {
-  // "i2cscanaddress"
 
   double VDD(3.3114);
-  int order[] = {6, 5, 9, 10, 11, 7, 8, 12, 4, 3, 2, 13, 14, 26, 8, 1};  
-  int length(18); // A = 10, B = 11, C = 12, D = 13, E = 14, F = 15
+  // -- TP corr. Doc:  6  5  9  10  11  7  8  12  4  3  2  13  14  26  8  1 
+  // -- TP wrong Doc: 12  8  7  11  10  9  5   6  1  8 26  14  13   2  3  4                     
+  // -- Cnt:           0  1  2   3   4  5  6   7  8  9 10  11  12  13 14 15
+  // int order[]  =   {6, 5, 9, 10, 11, 7, 8, 12, 4, 3, 2, 13, 14, 26, 8, 1};  
+  map<int, int> order = {{6, 0}, {5, 1}, {9, 2},  {10, 3},  {11, 4},  {7, 5},   {8, 6},  {12, 7},
+                         {4, 8}, {3, 9}, {2, 10}, {13, 11}, {14, 12}, {26, 13}, {8, 14}, {1, 15}};
   unsigned char bufferC0[18] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                                 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xde, 0xad};
   unsigned char bufferC1[18] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -1782,6 +1782,7 @@ void driveHardware::readVProbe(int pos) {
       buffer = bufferC1;
     
 #ifdef PI
+    int length(18); // A = 10, B = 11, C = 12, D = 13, E = 14, F = 15
     ioctl(fSHT85File, I2C_SLAVE, addresses[iaddr]);
     if (read(fSHT85File, (iaddr == 0? bufferC0 : bufferC1), length) != length) {
       printf("- Failed to read from the VProbe at i2c bus address 0x%x.", addresses[iaddr]);
@@ -1831,16 +1832,16 @@ void driveHardware::readVProbe(int pos) {
 // 2023/11/17 11:03:43 -0.0018695   0.16437   -1.231   -1.2268   -1.317   0.32575   -0.74236   0.0094487   -0.50912   0.73978   
 
   // -- order is not correct
-  double vin   = (v[order[2]] - v[order[10]]);
-  double voffs = (v[order[1]] - 0.25*(v[order[11]] + v[order[3]] + v[order[7]] + v[order[14]]));
-  double vdda0 = (v[order[12]] - v[order[11]]);
-  double vddd0 = (v[order[0]] - v[order[11]]);
-  double vdda1 = (v[order[4]] - v[order[3]]);
-  double vddd1 = (v[order[5]] - v[order[3]]);
-  double vdda2 = (v[order[6]] - v[order[7]]);
-  double vddd2 = (v[order[15]] - v[order[7]]);
-  double vdda3 = (v[order[13]] - v[order[14]]);
-  double vddd3 = (v[order[8]] - v[order[14]]);
+  double vin   = v[2]  - v[10];
+  double voffs = v[1]  - 0.25*(v[11] + v[3] + v[7] + v[14]);
+  double vdda0 = v[12] - v[11];
+  double vddd0 = v[0]  - v[11];
+  double vdda1 = v[4]  - v[3];
+  double vddd1 = v[5]  - v[3];
+  double vdda2 = v[6]  - v[7];
+  double vddd2 = v[15] - v[7];
+  double vdda3 = v[13] - v[14];
+  double vddd3 = v[8]  - v[14];
 
   stringstream output;
   output << fLOG.shortTimeStamp() << " " <<  std::setprecision(5)
