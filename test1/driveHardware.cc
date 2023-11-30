@@ -1777,7 +1777,7 @@ void driveHardware::readVProbe(int pos) {
   int ipos = pos - 1;
   // cout << "pos = " << pos << " ipos = " << ipos << endl;
   int addresses[] = {((0x3<<4) | (2*ipos)), ((0x3<<4) | (2*ipos+1))};
-  cout << "reading from addresses 0x" << hex << addresses[0] << " and 0x" << addresses[1] << dec << " ";
+  // cout << "reading from addresses 0x" << hex << addresses[0] << " and 0x" << addresses[1] << dec << " ";
 
   for (int iaddr = 0; iaddr < 2; ++iaddr) {
     if (0 == iaddr)
@@ -1794,47 +1794,49 @@ void driveHardware::readVProbe(int pos) {
       fVprobeVoltages = "error reading from VPROBE";
       return;
     } else {
-      printf("- Data read from the VProbe at i2c bus address 0x%x", addresses[iaddr]);
-      cout << endl;
+      if (0) {
+        printf("- Data read from the VProbe at i2c bus address 0x%x", addresses[iaddr]);
+        cout << endl;
+      }
     }
 #else
     cout << "using default data instead of reading from I2C bus, iaddr = " << iaddr << endl;
 #endif
     std::ios_base::fmtflags f( cout.flags() );
-    for (int i = 0; i < 18; i +=2) {
-      cout << dec << "i = " << i << ": 0x" << hex
-           << std::setfill('0') << std::setw(2)
-           << static_cast<int>(buffer[i])
-           << std::setfill('0') << std::setw(2)
-           << static_cast<int>(buffer[i+1])
-           << ". ";
+    if (0) {
+      for (int i = 0; i < 18; i +=2) {
+        cout << dec << "i = " << i << ": 0x" << hex
+             << std::setfill('0') << std::setw(2)
+             << static_cast<int>(buffer[i])
+             << std::setfill('0') << std::setw(2)
+             << static_cast<int>(buffer[i+1])
+             << ". ";
+      }
+      cout << endl;
+      cout.flags(f);
     }
-    cout << endl;
-    cout.flags( f );
     
     for (int i = 0; i < 8; ++i) {
       v[iaddr*8+i] = static_cast<unsigned int>(buffer[2*i] + (buffer[2*i+1]<<8))*VDD/65536;
-      cout << "i = " << i << ": buffer[] = "
-           << std::setfill('0') << std::setw(4)
-           << hex
-           << static_cast<int>(buffer[2*i] + (buffer[2*i+1]<<8)) << " -> " << v[iaddr*8+i]
-           << dec
-           << " at idx = " << iaddr*8+i
-           << endl;
+      if (0) {
+        cout << "i = " << i << ": buffer[] = "
+             << std::setfill('0') << std::setw(4)
+             << hex
+             << static_cast<int>(buffer[2*i] + (buffer[2*i+1]<<8)) << " -> " << v[iaddr*8+i]
+             << dec
+             << " at idx = " << iaddr*8+i
+             << endl;
+      }
+      cout.flags( f );
+      
+      cout << "v[] printout:" << endl;
+      for (int i = 0; i < 16; ++i) {
+        cout << std::setw(5) << v[i] << " ";
+      }
+      cout << endl;
+      cout.flags(f);
     }
-    cout.flags( f );
-
-    cout << "v[] printout:" << endl;
-    for (int i = 0; i < 16; ++i) {
-      cout << std::setw(5) << v[i] << " ";
-    }
-    cout << endl;
-    cout.flags( f );
   }
-
-// v[] printout:
-// 0.0282451 1.27164 1.23091 1.34718 0.0301652 1.67293 0.542064 1.28442 1.2822 0.0312263 1.23278 1.25506 0.0241018 0.0332979 0.542418 1.29387 
-// 2023/11/17 11:03:43 -0.0018695   0.16437   -1.231   -1.2268   -1.317   0.32575   -0.74236   0.0094487   -0.50912   0.73978   
 
   double vin   = v[ord[7]]  - v[ord[26]];
   double voffs = v[ord[8]]  - 0.25*(v[ord[14]] + v[ord[11]] + v[ord[6]] + v[ord[3]]);
