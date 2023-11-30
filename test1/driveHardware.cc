@@ -1836,19 +1836,16 @@ void driveHardware::readVProbe(int pos) {
 // 0.0282451 1.27164 1.23091 1.34718 0.0301652 1.67293 0.542064 1.28442 1.2822 0.0312263 1.23278 1.25506 0.0241018 0.0332979 0.542418 1.29387 
 // 2023/11/17 11:03:43 -0.0018695   0.16437   -1.231   -1.2268   -1.317   0.32575   -0.74236   0.0094487   -0.50912   0.73978   
 
-  cout << "ord[2] = " << ord[2] << " v = " << v[ord[2]] << endl;
-  
-  // -- order is not correct
-  double vin   = v[ord[2]]  - v[ord[10]];
-  double voffs = v[ord[1]]  - 0.25*(v[ord[11]] + v[ord[3]] + v[ord[7]] + v[ord[14]]);
-  double vdda0 = v[ord[12]] - v[ord[11]];
-  double vddd0 = v[ord[0]]  - v[ord[11]];
-  double vdda1 = v[ord[4]]  - v[ord[3]];
-  double vddd1 = v[ord[5]]  - v[ord[3]];
-  double vdda2 = v[ord[6]]  - v[ord[7]];
-  double vddd2 = v[ord[15]] - v[ord[7]];
-  double vdda3 = v[ord[13]] - v[ord[14]];
-  double vddd3 = v[ord[8]]  - v[ord[14]];
+  double vin   = v[ord[7]]  - v[ord[26]];
+  double voffs = v[ord[8]]  - 0.25*(v[ord[14]] + v[ord[11]] + v[ord[6]] + v[ord[3]]);
+  double vdda0 = v[ord[13]] - v[ord[14]];
+  double vddd0 = v[ord[12]] - v[ord[14]];
+  double vdda1 = v[ord[10]] - v[ord[11]];
+  double vddd1 = v[ord[9]]  - v[ord[11]];
+  double vdda2 = v[ord[5]]  - v[ord[6]];
+  double vddd2 = v[ord[4]]  - v[ord[6]];
+  double vdda3 = v[ord[2]]  - v[ord[3]];
+  double vddd3 = v[ord[1]]  - v[ord[3]];
 
   stringstream output;
   output << fLOG.shortTimeStamp() << " " <<  std::setprecision(5)
