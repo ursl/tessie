@@ -1826,18 +1826,19 @@ void driveHardware::readVProbe(int pos) {
              << dec
              << " at idx = " << iaddr*8+i
              << endl;
+
+        cout.flags( f );
+        
+        cout << "v[] printout:" << endl;
+        for (int i = 0; i < 16; ++i) {
+          cout << std::setw(5) << v[i] << " ";
+        }
+        cout << endl;
+        cout.flags(f);
       }
-      cout.flags( f );
-      
-      cout << "v[] printout:" << endl;
-      for (int i = 0; i < 16; ++i) {
-        cout << std::setw(5) << v[i] << " ";
-      }
-      cout << endl;
-      cout.flags(f);
     }
   }
-
+  
   double vin   = v[ord[7]]  - v[ord[26]];
   double voffs = v[ord[8]]  - 0.25*(v[ord[14]] + v[ord[11]] + v[ord[6]] + v[ord[3]]);
   double vdda0 = v[ord[13]] - v[ord[14]];
