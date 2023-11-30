@@ -68,7 +68,6 @@ hostname: coldbox01
 thread:  ctrlTessie
 ===================
 
-Note: [tec {0|x}] can be before or after {get|set|cmd}
 Note: [tec {0|x}] can be before or after {get|set|cmd XXX}, e.g.
       cmd Power_On tec 7
       tec 7 cmd Power_Off
