@@ -17,9 +17,9 @@ make
 ## Hints for operating tessie from a remote computer
 In a shell on your computer `laptop`, do
 ```shell
-laptop>ssh -Y "coldbox" (or whatever hostname your Raspberry Pi has; assuming you have a login there)
-coldbox>cd tessie/test1
-coldbox>./tessie
+laptop>ssh -Y "coldbox01" (or whatever hostname your Raspberry Pi has; assuming you have a login there)
+coldbox01>cd tessie/test1
+coldbox01>./tessie
 ```
 
 
