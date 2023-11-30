@@ -1744,8 +1744,8 @@ void driveHardware::readVProbe(int pos) {
   // -- TP wrong Doc: 12  8  7  11  10  9  5   6  1  8 26  14  13   2  3  4                     
   // -- Cnt:           0  1  2   3   4  5  6   7  8  9 10  11  12  13 14 15
   // int order[]  =   {6, 5, 9, 10, 11, 7, 8, 12, 4, 3, 2, 13, 14, 26, 8, 1};  
-  map<int, int> order = {{6, 0}, {5, 1}, {9, 2},  {10, 3},  {11, 4},  {7, 5},   {8, 6},  {12, 7},
-                         {4, 8}, {3, 9}, {2, 10}, {13, 11}, {14, 12}, {26, 13}, {8, 14}, {1, 15}};
+  map<int, int> ord = {{6, 0}, {5, 1}, {9, 2},  {10, 3},  {11, 4},  {7, 5},   {8, 6},  {12, 7},
+                       {4, 8}, {3, 9}, {2, 10}, {13, 11}, {14, 12}, {26, 13}, {1, 15}};
   unsigned char bufferC0[18] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                                 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xde, 0xad};
   unsigned char bufferC1[18] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -1837,16 +1837,16 @@ void driveHardware::readVProbe(int pos) {
 // 2023/11/17 11:03:43 -0.0018695   0.16437   -1.231   -1.2268   -1.317   0.32575   -0.74236   0.0094487   -0.50912   0.73978   
 
   // -- order is not correct
-  double vin   = v[2]  - v[10];
-  double voffs = v[1]  - 0.25*(v[11] + v[3] + v[7] + v[14]);
-  double vdda0 = v[12] - v[11];
-  double vddd0 = v[0]  - v[11];
-  double vdda1 = v[4]  - v[3];
-  double vddd1 = v[5]  - v[3];
-  double vdda2 = v[6]  - v[7];
-  double vddd2 = v[15] - v[7];
-  double vdda3 = v[13] - v[14];
-  double vddd3 = v[8]  - v[14];
+  double vin   = v[ord[2]]  - v[ord[10]];
+  double voffs = v[ord[1]]  - 0.25*(v[ord[11]] + v[ord[3]] + v[ord[7]] + v[ord[14]]);
+  double vdda0 = v[ord[12]] - v[ord[11]];
+  double vddd0 = v[ord[0]]  - v[ord[11]];
+  double vdda1 = v[ord[4]]  - v[ord[3]];
+  double vddd1 = v[ord[5]]  - v[ord[3]];
+  double vdda2 = v[ord[6]]  - v[ord[7]];
+  double vddd2 = v[ord[15]] - v[ord[7]];
+  double vdda3 = v[ord[13]] - v[ord[14]];
+  double vddd3 = v[ord[8]]  - v[ord[14]];
 
   stringstream output;
   output << fLOG.shortTimeStamp() << " " <<  std::setprecision(5)
