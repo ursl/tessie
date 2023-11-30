@@ -960,6 +960,8 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back(">       cmd Power_On tec 7");
     vhelp.push_back(">       tec 7 cmd Power_Off");
     vhelp.push_back("> ");
+    vhelp.push_back("> Note: tec numbering is from 1 .. 8. tec 0 refers to all TECs.");
+    vhelp.push_back("> ");
     vhelp.push_back("> cmd messages:");
     vhelp.push_back("> -------------");
     vhelp.push_back("> cmd valve0");
@@ -994,6 +996,8 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> get DP");
     vhelp.push_back("> get valve0");
     vhelp.push_back("> get valve1");
+    vhelp.push_back("> get vprobe[1-8]");
+    vhelp.push_back("> ");
 
     vhelp.push_back("> get [tec {0|x}] Mode");
     vhelp.push_back("> get [tec {0|x}] ControlVoltage_Set");
@@ -1787,6 +1791,7 @@ void driveHardware::readVProbe(int pos) {
     if (read(fSHT85File, (iaddr == 0? bufferC0 : bufferC1), length) != length) {
       printf("- Failed to read from the VProbe at i2c bus address 0x%x.", addresses[iaddr]);
       cout << endl;
+      fVprobeVoltages = "error reading from VPROBE";
       return;
     } else {
       printf("- Data read from the VProbe at i2c bus address 0x%x", addresses[iaddr]);
