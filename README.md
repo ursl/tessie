@@ -62,9 +62,12 @@ hostname: coldbox01
 thread:  ctrlTessie
 ===================
 
+Note: [tec {0|x}] can be before or after {get|set|cmd}
 Note: [tec {0|x}] can be before or after {get|set|cmd XXX}, e.g.
-      mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On tec 7"
-      mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "tec 7 cmd Power_Off"
+      cmd Power_On tec 7
+      tec 7 cmd Power_Off
+
+Note: tec numbering is from 1 .. 8. tec 0 refers to all TECs.
 
 cmd messages:
 -------------
@@ -98,6 +101,8 @@ get RH
 get DP
 get valve0
 get valve1
+get vprobe[1-8]
+
 get [tec {0|x}] Mode
 get [tec {0|x}] ControlVoltage_Set
 get [tec {0|x}] PID_kp
@@ -119,15 +124,6 @@ get [tec {0|x}] Supply_P
 get [tec {0|x}] PowerState
 get [tec {0|x}] Error
 get [tec {0|x}] Ref_U
-Tutorial for getting started:
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m " set valve0 on" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 on" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 4.5" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_Off" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 0.0" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 off" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off" 
 
 Tutorial for getting started:
 -----------------------------
@@ -138,7 +134,7 @@ mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On"
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_Off" 
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 0.0" 
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 off" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off" 
+mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off"
 ```
 
 ## Subscribing to monitoring information
