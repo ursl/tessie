@@ -1772,7 +1772,7 @@ void driveHardware::readVProbe(int pos) {
   
   int ipos = pos - 1;
   // cout << "pos = " << pos << " ipos = " << ipos << endl;
-  int addresses[] = {((0x3<<4) | 2*ipos), ((0x3<<4) | 2*ipos+1)};
+  int addresses[] = {((0x3<<4) | (2*ipos)), ((0x3<<4) | (2*ipos+1))};
   cout << "reading from addresses 0x" << hex << addresses[0] << " and 0x" << addresses[1] << dec << " ";
 
   for (int iaddr = 0; iaddr < 2; ++iaddr) {
