@@ -1831,16 +1831,16 @@ void driveHardware::readVProbe(int pos) {
 // 2023/11/17 11:03:43 -0.0018695   0.16437   -1.231   -1.2268   -1.317   0.32575   -0.74236   0.0094487   -0.50912   0.73978   
 
   // -- order is not correct
-  double vin   = (v[2] - v[10]);
-  double voffs = (v[1] - 0.25*(v[11] + v[3] + v[7] + v[14]));
-  double vdda0 = (v[12] - v[11]);
-  double vddd0 = (v[0] - v[11]);
-  double vdda1 = (v[4] - v[3]);
-  double vddd1 = (v[5] - v[3]);
-  double vdda2 = (v[6] - v[7]);
-  double vddd2 = (v[15] - v[7]);
-  double vdda3 = (v[13] - v[14]);
-  double vddd3 = (v[8] - v[14]);
+  double vin   = (v[order[2]] - v[order[10]]);
+  double voffs = (v[order[1]] - 0.25*(v[order[11]] + v[order[3]] + v[order[7]] + v[order[14]]));
+  double vdda0 = (v[order[12]] - v[order[11]]);
+  double vddd0 = (v[order[0]] - v[order[11]]);
+  double vdda1 = (v[order[4]] - v[order[3]]);
+  double vddd1 = (v[order[5]] - v[order[3]]);
+  double vdda2 = (v[order[6]] - v[order[7]]);
+  double vddd2 = (v[order[15]] - v[order[7]]);
+  double vdda3 = (v[order[13]] - v[order[14]]);
+  double vddd3 = (v[order[8]] - v[order[14]]);
 
   stringstream output;
   output << fLOG.shortTimeStamp() << " " <<  std::setprecision(5)
