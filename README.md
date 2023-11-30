@@ -62,7 +62,7 @@ mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off"
 ```
 
 ## Help on MQTT/ctrlTessie commands
-You get the following printout by issuing `mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "help"`, in the window where you subscribed to "ctrlTessie" (see above).
+Issue `mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "help"` and then you will get the following printout in the window where you subscribed to "ctrlTessie" (see above).
 
 ```shell
 ===================
