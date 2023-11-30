@@ -17,25 +17,31 @@ make
 ## Hints for operating tessie from a remote computer
 In a shell on your computer `laptop`, do
 ```shell
-laptop>ssh -Y "coldbox" (or whatever hostname your Raspberry Pi has; assuming you have a login there)
-coldbox>cd tessie/test1
-coldbox>./tessie
+laptop>ssh -Y "coldbox01" (or whatever hostname your Raspberry Pi has; assuming you have a login there)
+coldbox01>cd tessie/test1
+coldbox01>./tessie
 ```
 
 
 In another window on your computer `laptop` run the mosquittto_pub commands, e.g.,
 ```shell
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 on"
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 on"
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 4.5"
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On"
+laptop>mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 on"
+laptop>mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 on"
+laptop>mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 4.5"
+laptop>mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On"
 ```
 
 See below for a help text on the MQTT/ctrlTessie commands.
 
+
+If you want to see the response, you have to subscribe in another window, e.g., 
+```shell
+laptop>mosquitto_sub -h coldbox01 -t "ctrlTessie"
+```
+
 In another window on your computer `laptop` run the monitor, if desired
 ```shell
-mosquitto_sub -h coldbox01 -t "monTessie"
+laptop>mosquitto_sub -h coldbox01 -t "monTessie"
 ```
 
 
@@ -56,6 +62,8 @@ mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off"
 ```
 
 ## Help on MQTT/ctrlTessie commands
+Issue `mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "help"` and then you will get the following printout in the window where you subscribed to "ctrlTessie" (see above).
+
 ```shell
 ===================
 hostname: coldbox01
@@ -63,8 +71,10 @@ thread:  ctrlTessie
 ===================
 
 Note: [tec {0|x}] can be before or after {get|set|cmd XXX}, e.g.
-      mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On tec 7"
-      mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "tec 7 cmd Power_Off"
+      cmd Power_On tec 7
+      tec 7 cmd Power_Off
+
+Note: tec numbering is from 1 .. 8. tec 0 refers to all TECs.
 
 cmd messages:
 -------------
@@ -98,6 +108,8 @@ get RH
 get DP
 get valve0
 get valve1
+get vprobe[1-8]
+
 get [tec {0|x}] Mode
 get [tec {0|x}] ControlVoltage_Set
 get [tec {0|x}] PID_kp
@@ -119,15 +131,6 @@ get [tec {0|x}] Supply_P
 get [tec {0|x}] PowerState
 get [tec {0|x}] Error
 get [tec {0|x}] Ref_U
-Tutorial for getting started:
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m " set valve0 on" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 on" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 4.5" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_Off" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 0.0" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 off" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off" 
 
 Tutorial for getting started:
 -----------------------------
@@ -138,7 +141,7 @@ mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On"
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_Off" 
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 0.0" 
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 off" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off" 
+mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off"
 ```
 
 ## Subscribing to monitoring information
