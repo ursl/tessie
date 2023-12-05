@@ -356,6 +356,7 @@ void driveHardware::ensureSafety() {
     emit signalSetBackground("T", "red");
 #ifdef PI
     digitalWrite(GPIOINT, LOW);
+    digitalWrite(GPIORED, HIGH);
 #endif    
   }
 
@@ -371,6 +372,9 @@ void driveHardware::ensureSafety() {
     emit signalAlarm();
     cout << "signalSetBackground(\"DP\", red)" << endl;
     emit signalSetBackground("DP", "red");
+#ifdef PI
+    digitalWrite(GPIORED, HIGH);
+#endif    
   }
 
   // -- check water temperature
@@ -385,6 +389,7 @@ void driveHardware::ensureSafety() {
     emit signalAlarm();
 #ifdef PI
     digitalWrite(GPIOINT, LOW);
+    digitalWrite(GPIORED, HIGH);
 #endif    
   }
 
@@ -405,6 +410,7 @@ void driveHardware::ensureSafety() {
       emit signalSetBackground(qtec, "red");
 #ifdef PI
       digitalWrite(GPIOINT, LOW);
+      digitalWrite(GPIORED, HIGH);
 #endif    
     }
 
@@ -422,6 +428,9 @@ void driveHardware::ensureSafety() {
       QString qtec = QString::fromStdString("tec"+to_string(itec));
       cout << "signalSetBackground(" << qtec.toStdString() << ", red)" << endl;
       emit signalSetBackground(qtec, "red");
+#ifdef PI
+    digitalWrite(GPIORED, HIGH);
+#endif    
     }
   }
 }
