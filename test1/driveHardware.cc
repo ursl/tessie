@@ -400,9 +400,9 @@ void driveHardware::ensureSafety() {
 
   // -- check module temperatures (1) value and (2) against dew point
   for (int itec = 1; itec <= 8; ++itec) {
-    allOK = 4;
     double mtemp = fTECData[itec].reg["Temp_M"].value;
     if (mtemp > SAFETY_MAXTEMPM) {
+      allOK = 4;
       stringstream a("==ALARM== module temperature = " +
                      to_string(mtemp) +
                      " exceeds SAFETY_MAXTEMPM = " +
@@ -443,7 +443,7 @@ void driveHardware::ensureSafety() {
   }
 
   if (0 == allOK) {
-    cout << "allOK = " << allOK << endl;
+    cout << "allOK = " << allOK << ", alarm condition gone, reset siren and red lamp" << endl;
 #ifdef PI
     cout << "set GPIORED = LOW" << endl; 
     digitalWrite(GPIORED, LOW);
@@ -468,12 +468,7 @@ void driveHardware::ensureSafety() {
       pclose(fp);
     }
 #endif    
-  } else {
-    cout << "allOK = " << allOK << endl;
-  }
-
-           
-
+  }          
 }
 
 // ----------------------------------------------------------------------
