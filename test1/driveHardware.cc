@@ -376,6 +376,7 @@ void driveHardware::ensureSafety() {
     cout << "signalSetBackground(\"DP\", red)" << endl;
     emit signalSetBackground("DP", "red");
 #ifdef PI
+    digitalWrite(GPIOINT, LOW);
     digitalWrite(GPIORED, HIGH);
 #endif    
   }
@@ -435,13 +436,16 @@ void driveHardware::ensureSafety() {
       cout << "signalSetBackground(" << qtec.toStdString() << ", red)" << endl;
       emit signalSetBackground(qtec, "red");
 #ifdef PI
+    digitalWrite(GPIOINT, LOW);
     digitalWrite(GPIORED, HIGH);
 #endif    
     }
   }
 
   if (allOK) {
+    cout << "allOK = " << allOK << endl;
 #ifdef PI
+    cout << "set GPIORED = LOW" << endl; 
     digitalWrite(GPIORED, LOW);
 
     char bfr[1023] ;
