@@ -449,9 +449,8 @@ void driveHardware::ensureSafety() {
 #ifdef PI
     cout << "set GPIORED = LOW" << endl; 
     digitalWrite(GPIORED, LOW);
-
+    
     emit signalKillSiren();
-    }
 #endif    
   }          
 
