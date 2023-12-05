@@ -342,10 +342,10 @@ void driveHardware::doRun() {
 // ----------------------------------------------------------------------
 void driveHardware::ensureSafety() {
 
-  bool allOK(true);
+  int allOK(0);
   // -- air temperatures
   if (fSHT85Temp > SAFETY_MAXSHT85TEMP) {
-    allOK = false;
+    allOK = 1;
     stringstream a("==ALARM== Box air temperature = " +
                    to_string(fSHT85Temp) +
                    " exceeds SAFETY_MAXSHT85TEMP = " +
@@ -364,7 +364,7 @@ void driveHardware::ensureSafety() {
 
   // -- dew point vs air temperature
   if ((fSHT85Temp - SAFETY_DPMARGIN) < fSHT85DP) {
-    allOK = false;
+    allOK = 2;
     stringstream a("==ALARM== Box air temperature = " +
                    to_string(fSHT85Temp) +
                    " is too close to dew point = " +
@@ -383,7 +383,7 @@ void driveHardware::ensureSafety() {
 
   // -- check water temperature
   if (fTECData[8].reg["Temp_W"].value > SAFETY_MAXTEMPW) {
-    allOK = false;
+    allOK = 3;
     stringstream a("==ALARM== Water temperature = " +
                    to_string(fTECData[8].reg["Temp_W"].value) +
                    " exceeds SAFETY_MAXTEMPW = " +
@@ -400,7 +400,7 @@ void driveHardware::ensureSafety() {
 
   // -- check module temperatures (1) value and (2) against dew point
   for (int itec = 1; itec <= 8; ++itec) {
-    allOK = false;
+    allOK = 4;
     double mtemp = fTECData[itec].reg["Temp_M"].value;
     if (mtemp > SAFETY_MAXTEMPM) {
       stringstream a("==ALARM== module temperature = " +
@@ -421,7 +421,7 @@ void driveHardware::ensureSafety() {
     }
 
     if ((mtemp > -90.) && (mtemp < fSHT85DP + SAFETY_DPMARGIN)) {
-      allOK = false;
+      allOK = 5;
       stringstream a("==ALARM== module " + to_string(itec) + " temperature = " +
                      to_string(mtemp) +
                      " is too close to dew point = " +
@@ -442,7 +442,7 @@ void driveHardware::ensureSafety() {
     }
   }
 
-  if (allOK) {
+  if (0 == allOK) {
     cout << "allOK = " << allOK << endl;
 #ifdef PI
     cout << "set GPIORED = LOW" << endl; 
@@ -468,7 +468,11 @@ void driveHardware::ensureSafety() {
       pclose(fp);
     }
 #endif    
+  } else {
+    cout << "allOK = " << allOK << endl;
   }
+
+           
 
 }
 
