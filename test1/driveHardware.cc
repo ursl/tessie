@@ -94,6 +94,30 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   
 #ifdef PI
 
+  cout << "wiringPiSetup() " << endl;
+  wiringPiSetup();
+
+  // -- traffic light:
+  // green  = tessie running
+  // yellow = >0 TEC turned on => think before you open the lid
+  // red    = alarm condition active => do something
+  
+  pinMode(GPIOGREEN, OUTPUT);
+  pinMode(GPIORED,   OUTPUT);
+  pinMode(GPIOYELLO, OUTPUT);
+  
+  digitalWrite(GPIOGREEN, HIGH);
+  digitalWrite(GPIORED, LOW);
+  digitalWrite(GPIOYELLO, LOW);
+
+  // -- interlock pin
+  pinMode(GPIOINT,   OUTPUT);
+  digitalWrite(GPIOINT, HIGH);
+
+  // -- ensure that i2c bus has power!
+  pinMode(GPIOPSUEN, OUTPUT);
+  digitalWrite(GPIOPSUEN, HIGH);
+  
   // -- create I2C bus
   cout << "Open I2C bus for SHT85" << endl;
 
@@ -109,20 +133,6 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   cout << "initial readout SHT85" << endl;
   readSHT85();
 
-  cout << "wiringPiSetup() " << endl;
-  wiringPiSetup();
-  pinMode(GPIOGREEN, OUTPUT);
-  pinMode(GPIORED,   OUTPUT);
-  pinMode(GPIOYELLO, OUTPUT);
-  pinMode(GPIOINT,   OUTPUT);
-  pinMode(GPIOPSUEN, OUTPUT);
-  
-  digitalWrite(GPIOGREEN, HIGH);
-  digitalWrite(GPIORED, LOW);
-  digitalWrite(GPIOYELLO, LOW);
-  digitalWrite(GPIOINT, HIGH);
-  digitalWrite(GPIOPSUEN, HIGH);
-  
 #endif
 
 

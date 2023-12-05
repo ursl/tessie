@@ -260,6 +260,7 @@ void MainWindow::tecSetFromUI(int itec, std::string rname, QWidget *qw) {
 
 // ----------------------------------------------------------------------
 void MainWindow::clkKillSiren() {
+  cout << "MainWindow::clkKillSiren() entered" << endl;
   char bfr[1023] ;
   FILE *fp;
   if ((fp = popen("ps -ef | grep vlc","r")) == NULL) {
