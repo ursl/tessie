@@ -26,7 +26,7 @@
 #define GPIORED 0  
 #define GPIOYELLO 2  
 #define GPIOGREEN 3
-#define GPIOPSUEN 24
+#define GPIOPSUEN 5
 #define GPIOINT 4
 
 #include <chrono>
