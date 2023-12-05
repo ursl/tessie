@@ -341,9 +341,11 @@ void driveHardware::doRun() {
 
 // ----------------------------------------------------------------------
 void driveHardware::ensureSafety() {
-  
+
+  bool allOK(true);
   // -- air temperatures
   if (fSHT85Temp > SAFETY_MAXSHT85TEMP) {
+    allOK = false;
     stringstream a("==ALARM== Box air temperature = " +
                    to_string(fSHT85Temp) +
                    " exceeds SAFETY_MAXSHT85TEMP = " +
@@ -362,6 +364,7 @@ void driveHardware::ensureSafety() {
 
   // -- dew point vs air temperature
   if ((fSHT85Temp - SAFETY_DPMARGIN) < fSHT85DP) {
+    allOK = false;
     stringstream a("==ALARM== Box air temperature = " +
                    to_string(fSHT85Temp) +
                    " is too close to dew point = " +
@@ -379,6 +382,7 @@ void driveHardware::ensureSafety() {
 
   // -- check water temperature
   if (fTECData[8].reg["Temp_W"].value > SAFETY_MAXTEMPW) {
+    allOK = false;
     stringstream a("==ALARM== Water temperature = " +
                    to_string(fTECData[8].reg["Temp_W"].value) +
                    " exceeds SAFETY_MAXTEMPW = " +
@@ -395,6 +399,7 @@ void driveHardware::ensureSafety() {
 
   // -- check module temperatures (1) value and (2) against dew point
   for (int itec = 1; itec <= 8; ++itec) {
+    allOK = false;
     double mtemp = fTECData[itec].reg["Temp_M"].value;
     if (mtemp > SAFETY_MAXTEMPM) {
       stringstream a("==ALARM== module temperature = " +
@@ -415,6 +420,7 @@ void driveHardware::ensureSafety() {
     }
 
     if ((mtemp > -90.) && (mtemp < fSHT85DP + SAFETY_DPMARGIN)) {
+      allOK = false;
       stringstream a("==ALARM== module " + to_string(itec) + " temperature = " +
                      to_string(mtemp) +
                      " is too close to dew point = " +
@@ -433,6 +439,13 @@ void driveHardware::ensureSafety() {
 #endif    
     }
   }
+
+  if (allOK) {
+#ifdef PI
+    digitalWrite(GPIORED, LOW);
+#endif    
+  }
+
 }
 
 // ----------------------------------------------------------------------
