@@ -82,7 +82,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
 
   fSHT85Temp = -99.;
   fSHT85RH   = -99.;
-  fSHT85DP   = -99.;
+  fSHT85DP   = -999.;
   for (int i = 0; i < 6; ++i) {
     fSHT85Data[i] = 0;
   }
