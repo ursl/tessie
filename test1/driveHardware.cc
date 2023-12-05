@@ -26,6 +26,7 @@
 #define GPIORED 0  
 #define GPIOYELLO 2  
 #define GPIOGREEN 3
+#define GPIOPSUEN 24
 #define GPIOINT 4
 
 #include <chrono>
@@ -112,12 +113,14 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   pinMode(GPIORED,   OUTPUT);
   pinMode(GPIOYELLO, OUTPUT);
   pinMode(GPIOINT,   OUTPUT);
-
+  pinMode(GPIOPSUEN, OUTPUT);
+  
   digitalWrite(GPIOGREEN, HIGH);
   digitalWrite(GPIORED, LOW);
   digitalWrite(GPIOYELLO, LOW);
   digitalWrite(GPIOINT, HIGH);
-
+  digitalWrite(GPIOPSUEN, HIGH);
+  
 #endif
 
 
