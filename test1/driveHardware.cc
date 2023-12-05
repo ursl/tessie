@@ -90,6 +90,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fSHT85Config[0] = 0x24;   // MSB
   fSHT85Config[1] = 0x00;   // LSB
 
+  fAlarmState = 0; 
+  
 #ifdef PI
 
   // -- create I2C bus
@@ -442,7 +444,7 @@ void driveHardware::ensureSafety() {
     }
   }
 
-  if (0 == allOK) {
+  if ((fAlarmState > 0) && (0 == allOK)) {
     cout << "allOK = " << allOK << ", alarm condition gone, reset siren and red lamp" << endl;
 #ifdef PI
     cout << "set GPIORED = LOW" << endl; 
@@ -469,6 +471,9 @@ void driveHardware::ensureSafety() {
     }
 #endif    
   }          
+
+  // -- keep a record for the next time
+  fAlarmState = allOK;
 }
 
 // ----------------------------------------------------------------------

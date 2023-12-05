@@ -207,6 +207,9 @@ private:
   // -- all the registers, one element per TEC
   // -- this is a map instead of a vector to avoid the mismatch between '0' and '1'
   std::map<int, TECData> fTECData;
+
+  // -- keep alarm state
+  int fAlarmState;
 };
 
 #endif // DRIVEHARDWARE_H
