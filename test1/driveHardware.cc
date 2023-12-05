@@ -450,24 +450,7 @@ void driveHardware::ensureSafety() {
     cout << "set GPIORED = LOW" << endl; 
     digitalWrite(GPIORED, LOW);
 
-    char bfr[1023] ;
-    FILE *fp;
-    if ((fp = popen("ps -ef | grep vlc","r")) == NULL) {
-      cout << "something bad happened" << endl;
-      // error processing and return
-    } else {
-      
-      while(fgets(bfr, BUFSIZ, fp) != NULL){
-        string sbfr(bfr);
-        sbfr.pop_back();
-        cleanupString(sbfr);
-        vector<string> tokens = split(sbfr, ' ');
-        cout << "->" << sbfr << "<-" << " PID = " << tokens[1] << endl;
-        string scommand = "/usr/bin/kill -9 " + tokens[1];
-        fLOG(INFO, scommand);
-        system(scommand.c_str());
-      }
-      pclose(fp);
+    emit signalKillSiren();
     }
 #endif    
   }          
