@@ -141,7 +141,9 @@ signals:
   //REMOVE  void  startServer();
   void  signalUpdateHwDisplay();
   void  signalAlarm();
+  void  signalKillSiren();
 
+  
 protected:
   void        initTECData();
   TECData     initAllTECRegister();
