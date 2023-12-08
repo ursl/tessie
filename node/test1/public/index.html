@@ -4,36 +4,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>test1</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <style>
-      /* Add your CSS styles here */
+      html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     </style>
   </head>
   <body>
-    <button id="valve0" style="background-color:#FCF5E5">Valve0</button>
-    <button id="valve1" style="background-color:#FCF5E5">Valve1</button>
-    <br>
-    <hline>
-      <table>
-        <tr>
-          <td>Air</td>
-          <td> <output id="TempAir" name="TempAir">0</output> </td>
-        </tr>
-        <tr>
-          <td>Water</td>
-          <td><output id="TempWater" name="TempWater">0</output> </td>
-        </tr>
-        <tr>
-          <td>Rel. Humidity</td>
-          <td><output id="RelHum" name="RelHum">0</output> </td>
-        </tr>
-        <tr>
-          <td>Dew point</td>
-          <td><output id="DP" name="DP">0</output> </td>
-        </tr>
-    <hline>
+
+    <div class="w3-container w3-gray">
+  
+      <div class="w3-container w3-blue w3-cell">
+      <div class="w3-container w3-blue w3-cell">  <button id="valve0" style="background-color:#FCF5E5">Valve0</button> </div>
+      <div class="w3-container w3-blue w3-cell">  <button id="valve1" style="background-color:#FCF5E5">Valve1</button> </div>
+      </div>
+      
+      <div class="w3-container w3-green w3-cell">
+        <table>
+          <tr>
+            <td>Air</td>
+            <td> <output id="TempAir" name="TempAir">0</output> </td>
+          </tr>
+          <tr>
+            <td>Water</td>
+            <td><output id="TempWater" name="TempWater">0</output> </td>
+          </tr>
+          <tr>
+            <td>Rel. Humidity</td>
+            <td><output id="RelHum" name="RelHum">0</output> </td>
+          </tr>
+          <tr>
+            <td>Dew point</td>
+            <td><output id="DP" name="DP">0</output> </td>
+          </tr>
+        </table>
+      </div>
+    </div>
     
+    <div class="w3-container w3-cream w3-cell">
+      <table class="w3-table">
+        <tr>
+          <th>Parameter</th>
+          <th>TEC 1</th>
+          <th>TEC 2</th>
+          <th>TEC 3</th>
+          <th>TEC 4</th>
+          <th>TEC 5</th>
+          <th>TEC 6</th>
+          <th>TEC 7</th>
+          <th>TEC 8</th>
+        </tr>
+        <tr>
+          <td>Turn on/off</td>
+          <td><input class="w3-check" id="CheckTEC1" type="checkbox"></td>
+          <td><input class="w3-check" id="CheckTEC2" type="checkbox"></td>
+          <td><input class="w3-check" id="CheckTEC3" type="checkbox"></td>
+          <td><input class="w3-check" id="CheckTEC4" type="checkbox"></td>
+          <td><input class="w3-check" id="CheckTEC5" type="checkbox"></td>
+          <td><input class="w3-check" id="CheckTEC6" type="checkbox"></td>
+          <td><input class="w3-check" id="CheckTEC7" type="checkbox"></td>
+          <td><input class="w3-check" id="CheckTEC8" type="checkbox"></td>
+        </tr>
+
+        <tr>
+          <td>Temp_M [deg C]</td>
+          <td><output id="Temp_M1" name="Temp_M1">wait</output> </td>
+          <td><output id="Temp_M2" name="Temp_M2">wait</output> </td>
+          <td><output id="Temp_M3" name="Temp_M3">wait</output> </td>
+          <td><output id="Temp_M4" name="Temp_M4">wait</output> </td>
+          <td><output id="Temp_M5" name="Temp_M5">wait</output> </td>
+          <td><output id="Temp_M6" name="Temp_M6">wait</output> </td>
+          <td><output id="Temp_M7" name="Temp_M7">wait</output> </td>
+          <td><output id="Temp_M8" name="Temp_M8">wait</output> </td>
+        </tr>
+        <tr>
+          <td>PowerState (0=Off, 1=On)</td>
+          <td><output id="PowerState1" name="PowerState1">wait</output> </td>
+          <td><output id="PowerState2" name="PowerState2">wait</output> </td>
+          <td><output id="PowerState3" name="PowerState3">wait</output> </td>
+          <td><output id="PowerState4" name="PowerState4">wait</output> </td>
+          <td><output id="PowerState5" name="PowerState5">wait</output> </td>
+          <td><output id="PowerState6" name="PowerState6">wait</output> </td>
+          <td><output id="PowerState7" name="PowerState7">wait</output> </td>
+          <td><output id="PowerState8" name="PowerState8">wait</output> </td>
+        </tr>
+        <tr>
+          <td>ControlVoltage_Set [V]</td>
+          <td><output id="ControlVoltage_Set1" name="ControlVoltage_Set1">wait</output> </td>
+          <td><output id="ControlVoltage_Set2" name="ControlVoltage_Set2">wait</output> </td>
+          <td><output id="ControlVoltage_Set3" name="ControlVoltage_Set3">wait</output> </td>
+          <td><output id="ControlVoltage_Set4" name="ControlVoltage_Set4">wait</output> </td>
+          <td><output id="ControlVoltage_Set5" name="ControlVoltage_Set5">wait</output> </td>
+          <td><output id="ControlVoltage_Set6" name="ControlVoltage_Set6">wait</output> </td>
+          <td><output id="ControlVoltage_Set7" name="ControlVoltage_Set7">wait</output> </td>
+          <td><output id="ControlVoltage_Set8" name="ControlVoltage_Set8">wait</output> </td>
+        </tr>
+      </table>
+    </div>      
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
+
+      var mySidebar = document.getElementById("mySidebar");
+
       const socket = io();
       const valve0 = document.getElementById('valve0');
       const valve1 = document.getElementById('valve1');
@@ -46,6 +120,12 @@
 
       socket.on('valve1blue', (msg) => {valve1.style.background='#ADD8E6'; });
       socket.on('valve1white', (msg) => {valve1.style.background='#FCF5E5'; });
+
+      const checktec1 = document.getElementById('CheckTEC1');
+      checktec1.addEventListener('click', (e) => {socket.emit('checktec1'); });
+
+
+
       socket.on('envString', (msg) => {
           //          console.log('envString: ', msg);
           const snumbers = msg.toString().replace('Env = ', '');
@@ -56,6 +136,49 @@
           document.getElementById('DP').innerHTML = vNumbers[3];
       });
 
+      socket.on('Temp_MString', (msg) => {
+          console.log('TempMString: ', msg);
+          const snumbers = msg.toString().replace('Temp_M = ', '');
+          const vNumbers = snumbers.split(',');
+          document.getElementById('Temp_M1').innerHTML = vNumbers[0];
+          document.getElementById('Temp_M2').innerHTML = vNumbers[1];
+          document.getElementById('Temp_M3').innerHTML = vNumbers[2];
+          document.getElementById('Temp_M4').innerHTML = vNumbers[3];
+          document.getElementById('Temp_M5').innerHTML = vNumbers[4];
+          document.getElementById('Temp_M6').innerHTML = vNumbers[5];
+          document.getElementById('Temp_M7').innerHTML = vNumbers[6];
+          document.getElementById('Temp_M8').innerHTML = vNumbers[7];
+      });
+
+      socket.on('PowerStateString', (msg) => {
+          console.log('PowerStateString: ', msg);
+          const snumbers = msg.toString().replace('PowerState = ', '');
+          const vNumbers = snumbers.split(',');
+          document.getElementById('PowerState1').innerHTML = vNumbers[0];
+          document.getElementById('PowerState2').innerHTML = vNumbers[1];
+          document.getElementById('PowerState3').innerHTML = vNumbers[2];
+          document.getElementById('PowerState4').innerHTML = vNumbers[3];
+          document.getElementById('PowerState5').innerHTML = vNumbers[4];
+          document.getElementById('PowerState6').innerHTML = vNumbers[5];
+          document.getElementById('PowerState7').innerHTML = vNumbers[6];
+          document.getElementById('PowerState8').innerHTML = vNumbers[7];
+      });
+
+      socket.on('ControlVoltage_SetString', (msg) => {
+          console.log('ControlVoltage_Set: ', msg);
+          const snumbers = msg.toString().replace('ControlVoltage_Set = ', '');
+          const vNumbers = snumbers.split(',');
+          document.getElementById('ControlVoltage_Set1').innerHTML = vNumbers[0];
+          document.getElementById('ControlVoltage_Set2').innerHTML = vNumbers[1];
+          document.getElementById('ControlVoltage_Set3').innerHTML = vNumbers[2];
+          document.getElementById('ControlVoltage_Set4').innerHTML = vNumbers[3];
+          document.getElementById('ControlVoltage_Set5').innerHTML = vNumbers[4];
+          document.getElementById('ControlVoltage_Set6').innerHTML = vNumbers[5];
+          document.getElementById('ControlVoltage_Set7').innerHTML = vNumbers[6];
+          document.getElementById('ControlVoltage_Set8').innerHTML = vNumbers[7];
+      });
     </script>
+
+
   </body>
 </html>
