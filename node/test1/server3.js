@@ -24,7 +24,7 @@ app.use(express.static('public'));
 
 const protocol = 'mqtt'
 const host = 'coldbox01.psi.ch'
-const port = '80'
+const port = '1883'
 const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
 
 const connectUrl = `${protocol}://${host}:${port}`
@@ -127,7 +127,7 @@ io.on('connection', (socket) => {
 
 
 
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
