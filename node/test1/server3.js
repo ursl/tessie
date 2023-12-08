@@ -7,6 +7,8 @@ const mqtt = require('mqtt')
 var valve0Status = 0;
 var valve1Status = 0;
 
+var checktec1Status = 0;
+
 // ----------------------------------------------------------------------
 // Usage:
 // ------
@@ -30,6 +32,9 @@ const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
 const connectUrl = `${protocol}://${host}:${port}`
 
 let envString = ''
+let PowerStateString = ''
+let ControlVoltage_SetString = ''
+let Temp_MString = ''
 
 // ----------------------------------------------------------------------
 // -- MQTT 
@@ -64,9 +69,17 @@ clientMqtt.on('connect', () => {
 })
 
 clientMqtt.on('message', (topMon, payload) => {
-    // console.log('Received Message:', topMon, payload.toString());
     if (payload.includes('Env = ')) {
         envString = payload.toString();
+    }
+    if (payload.includes('PowerState = ')) {
+        PowerStateString = payload.toString();
+    }
+    if (payload.includes('ControlVoltage_Set = ')) {
+        ControlVoltage_SetString = payload.toString();
+    }
+    if (payload.includes('Temp_M = ')) {
+        Temp_MString = payload.toString();
     }
 })
 
@@ -84,7 +97,30 @@ io.on('connection', (socket) => {
 
     setInterval(() => {
         socket.emit('envString', envString);
+        socket.emit('PowerStateString', PowerStateString);
+        socket.emit('ControlVoltage_SetString', ControlVoltage_SetString);
+        socket.emit('Temp_MString', Temp_MString);
     }, 1000);
+
+    socket.on('checktec1', (msg) => {
+        if (checktec1Status == 0) {
+            checktec1Status = 1;
+            clientMqtt.publish(topCtrl, 'cmd tec 1 Power_On', {qos: 0, retain: false }, (error) => {
+                if (error) {
+                    console.error(error)
+                }
+            })
+        } else {
+            checktec1Status = 0;
+            clientMqtt.publish(topCtrl, 'cmd tec 1 Power_Off', {qos: 0, retain: false }, (error) => {
+                if (error) {
+                    console.error(error)
+                }
+            })
+        }
+        console.log('checktec1 clicked, checktec1Status = ' + checktec1Status);
+    });
+
     
     socket.on('valve0', (msg) => {
         if (valve0Status == 0) {
