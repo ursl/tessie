@@ -58,7 +58,7 @@ clientMqtt.on('connect', () => {
 })
 
 clientMqtt.on('message', (topCtrl, payload) => {
-  console.log('Received Message:', topCtrl, payload.toString())
+//  console.log('Received Message:', topCtrl, payload.toString())
 })
 
 // -- monTessie
@@ -158,6 +158,10 @@ io.on('connection', (socket) => {
         } else {
             socket.emit('valve1blue');
         }
+    });
+
+    socket.on('controlvoltage_set1', (msg) => {
+        console.log('controlvoltage_set1 input received');
     });
 });
 
