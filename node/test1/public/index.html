@@ -69,44 +69,42 @@
 
         <tr>
           <td>Temp_M [deg C]</td>
-          <td><output id="Temp_M1" name="Temp_M1">wait</output> </td>
-          <td><output id="Temp_M2" name="Temp_M2">wait</output> </td>
-          <td><output id="Temp_M3" name="Temp_M3">wait</output> </td>
-          <td><output id="Temp_M4" name="Temp_M4">wait</output> </td>
-          <td><output id="Temp_M5" name="Temp_M5">wait</output> </td>
-          <td><output id="Temp_M6" name="Temp_M6">wait</output> </td>
-          <td><output id="Temp_M7" name="Temp_M7">wait</output> </td>
-          <td><output id="Temp_M8" name="Temp_M8">wait</output> </td>
+          <td id="Temp_M1">wait </td>
+          <td id="Temp_M2">wait </td>
+          <td id="Temp_M3">wait </td>
+          <td id="Temp_M4">wait </td>
+          <td id="Temp_M5">wait </td>
+          <td id="Temp_M6">wait </td>
+          <td id="Temp_M7">wait </td>
+          <td id="Temp_M8">wait </td>
         </tr>
         <tr>
           <td>PowerState (0=Off, 1=On)</td>
-          <td><output id="PowerState1" name="PowerState1">wait</output> </td>
-          <td><output id="PowerState2" name="PowerState2">wait</output> </td>
-          <td><output id="PowerState3" name="PowerState3">wait</output> </td>
-          <td><output id="PowerState4" name="PowerState4">wait</output> </td>
-          <td><output id="PowerState5" name="PowerState5">wait</output> </td>
-          <td><output id="PowerState6" name="PowerState6">wait</output> </td>
-          <td><output id="PowerState7" name="PowerState7">wait</output> </td>
-          <td><output id="PowerState8" name="PowerState8">wait</output> </td>
+          <td id="PowerState1">wait </td>
+          <td id="PowerState2">wait </td>
+          <td id="PowerState3">wait </td>
+          <td id="PowerState4">wait </td>
+          <td id="PowerState5">wait </td>
+          <td id="PowerState6">wait </td>
+          <td id="PowerState7">wait </td>
+          <td id="PowerState8">wait </td>
         </tr>
         <tr>
           <td>ControlVoltage_Set [V]</td>
-          <td><output id="ControlVoltage_Set1" name="ControlVoltage_Set1">wait</output> </td>
-          <td><output id="ControlVoltage_Set2" name="ControlVoltage_Set2">wait</output> </td>
-          <td><output id="ControlVoltage_Set3" name="ControlVoltage_Set3">wait</output> </td>
-          <td><output id="ControlVoltage_Set4" name="ControlVoltage_Set4">wait</output> </td>
-          <td><output id="ControlVoltage_Set5" name="ControlVoltage_Set5">wait</output> </td>
-          <td><output id="ControlVoltage_Set6" name="ControlVoltage_Set6">wait</output> </td>
-          <td><output id="ControlVoltage_Set7" name="ControlVoltage_Set7">wait</output> </td>
-          <td><output id="ControlVoltage_Set8" name="ControlVoltage_Set8">wait</output> </td>
+          <td> <input id="ControlVoltage_Set1" value="wait" onchange="chgControlVoltage_Set1()"> </td>
+          <td id="ControlVoltage_Set2">wait </td>
+          <td id="ControlVoltage_Set3">wait </td>
+          <td id="ControlVoltage_Set4">wait </td>
+          <td id="ControlVoltage_Set5">wait </td>
+          <td id="ControlVoltage_Set6">wait </td>
+          <td id="ControlVoltage_Set7">wait </td>
+          <td id="ControlVoltage_Set8">wait </td>
         </tr>
       </table>
     </div>      
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
-
-      var mySidebar = document.getElementById("mySidebar");
 
       const socket = io();
       const valve0 = document.getElementById('valve0');
@@ -124,8 +122,6 @@
       const checktec1 = document.getElementById('CheckTEC1');
       checktec1.addEventListener('click', (e) => {socket.emit('checktec1'); });
 
-
-
       socket.on('envString', (msg) => {
           //          console.log('envString: ', msg);
           const snumbers = msg.toString().replace('Env = ', '');
@@ -140,43 +136,50 @@
           console.log('TempMString: ', msg);
           const snumbers = msg.toString().replace('Temp_M = ', '');
           const vNumbers = snumbers.split(',');
-          document.getElementById('Temp_M1').innerHTML = vNumbers[0];
-          document.getElementById('Temp_M2').innerHTML = vNumbers[1];
-          document.getElementById('Temp_M3').innerHTML = vNumbers[2];
-          document.getElementById('Temp_M4').innerHTML = vNumbers[3];
-          document.getElementById('Temp_M5').innerHTML = vNumbers[4];
-          document.getElementById('Temp_M6').innerHTML = vNumbers[5];
-          document.getElementById('Temp_M7').innerHTML = vNumbers[6];
-          document.getElementById('Temp_M8').innerHTML = vNumbers[7];
+          document.getElementById('Temp_M1').innerHTML = parseFloat(vNumbers[0]).toFixed(2);
+          document.getElementById('Temp_M2').innerHTML = parseFloat(vNumbers[1]).toFixed(2);
+          document.getElementById('Temp_M3').innerHTML = parseFloat(vNumbers[2]).toFixed(2);
+          document.getElementById('Temp_M4').innerHTML = parseFloat(vNumbers[3]).toFixed(2);
+          document.getElementById('Temp_M5').innerHTML = parseFloat(vNumbers[4]).toFixed(2);
+          document.getElementById('Temp_M6').innerHTML = parseFloat(vNumbers[5]).toFixed(2);
+          document.getElementById('Temp_M7').innerHTML = parseFloat(vNumbers[6]).toFixed(2);
+          document.getElementById('Temp_M8').innerHTML = parseFloat(vNumbers[7]).toFixed(2);
       });
 
       socket.on('PowerStateString', (msg) => {
           console.log('PowerStateString: ', msg);
           const snumbers = msg.toString().replace('PowerState = ', '');
           const vNumbers = snumbers.split(',');
-          document.getElementById('PowerState1').innerHTML = vNumbers[0];
-          document.getElementById('PowerState2').innerHTML = vNumbers[1];
-          document.getElementById('PowerState3').innerHTML = vNumbers[2];
-          document.getElementById('PowerState4').innerHTML = vNumbers[3];
-          document.getElementById('PowerState5').innerHTML = vNumbers[4];
-          document.getElementById('PowerState6').innerHTML = vNumbers[5];
-          document.getElementById('PowerState7').innerHTML = vNumbers[6];
-          document.getElementById('PowerState8').innerHTML = vNumbers[7];
+          document.getElementById('PowerState1').innerHTML = parseInt(vNumbers[0]).toFixed(0);
+          document.getElementById('PowerState2').innerHTML = parseInt(vNumbers[1]).toFixed(0);
+          document.getElementById('PowerState3').innerHTML = parseInt(vNumbers[2]).toFixed(0);
+          document.getElementById('PowerState4').innerHTML = parseInt(vNumbers[3]).toFixed(0);
+          document.getElementById('PowerState5').innerHTML = parseInt(vNumbers[4]).toFixed(0);
+          document.getElementById('PowerState6').innerHTML = parseInt(vNumbers[5]).toFixed(0);
+          document.getElementById('PowerState7').innerHTML = parseInt(vNumbers[6]).toFixed(0);
+          document.getElementById('PowerState8').innerHTML = parseInt(vNumbers[7]).toFixed(0);
       });
 
       socket.on('ControlVoltage_SetString', (msg) => {
           console.log('ControlVoltage_Set: ', msg);
           const snumbers = msg.toString().replace('ControlVoltage_Set = ', '');
           const vNumbers = snumbers.split(',');
-          document.getElementById('ControlVoltage_Set1').innerHTML = vNumbers[0];
-          document.getElementById('ControlVoltage_Set2').innerHTML = vNumbers[1];
-          document.getElementById('ControlVoltage_Set3').innerHTML = vNumbers[2];
-          document.getElementById('ControlVoltage_Set4').innerHTML = vNumbers[3];
-          document.getElementById('ControlVoltage_Set5').innerHTML = vNumbers[4];
-          document.getElementById('ControlVoltage_Set6').innerHTML = vNumbers[5];
-          document.getElementById('ControlVoltage_Set7').innerHTML = vNumbers[6];
-          document.getElementById('ControlVoltage_Set8').innerHTML = vNumbers[7];
+          document.getElementById('ControlVoltage_Set1').innerHTML = parseFloat(vNumbers[0]).toFixed(2);
+          document.getElementById('ControlVoltage_Set2').innerHTML = parseFloat(vNumbers[1]).toFixed(2);
+          document.getElementById('ControlVoltage_Set3').innerHTML = parseFloat(vNumbers[2]).toFixed(2);
+          document.getElementById('ControlVoltage_Set4').innerHTML = parseFloat(vNumbers[3]).toFixed(2);
+          document.getElementById('ControlVoltage_Set5').innerHTML = parseFloat(vNumbers[4]).toFixed(2);
+          document.getElementById('ControlVoltage_Set6').innerHTML = parseFloat(vNumbers[5]).toFixed(2);
+          document.getElementById('ControlVoltage_Set7').innerHTML = parseFloat(vNumbers[6]).toFixed(2);
+          document.getElementById('ControlVoltage_Set8').innerHTML = parseFloat(vNumbers[7]).toFixed(2);
       });
+
+      function chgControlVoltage_Set1() {
+          const controlvoltage_set1 = document.getElementById('ControlVoltage_Set1');
+          socket.emit('controlvoltage_set1');
+      }
+
+
     </script>
 
 
