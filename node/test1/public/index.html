@@ -91,14 +91,14 @@
         </tr>
         <tr>
           <td>ControlVoltage_Set [V]</td>
-          <td> <input id="ControlVoltage_Set1" value="wait" onchange="chgControlVoltage_Set1()"> </td>
-          <td id="ControlVoltage_Set2">wait </td>
-          <td id="ControlVoltage_Set3">wait </td>
-          <td id="ControlVoltage_Set4">wait </td>
-          <td id="ControlVoltage_Set5">wait </td>
-          <td id="ControlVoltage_Set6">wait </td>
-          <td id="ControlVoltage_Set7">wait </td>
-          <td id="ControlVoltage_Set8">wait </td>
+          <td> <input id="ControlVoltage_Set1" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set1()"> </td>
+          <td> <input id="ControlVoltage_Set2" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set2()"></td>
+          <td> <input id="ControlVoltage_Set3" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set3()"></td>
+          <td> <input id="ControlVoltage_Set4" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set4()"></td>
+          <td> <input id="ControlVoltage_Set5" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set5()"></td>
+          <td> <input id="ControlVoltage_Set6" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set6()"></td>
+          <td> <input id="ControlVoltage_Set7" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set7()"></td>
+          <td> <input id="ControlVoltage_Set8" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set8()"></td>
         </tr>
       </table>
     </div>      
@@ -133,7 +133,7 @@
       });
 
       socket.on('Temp_MString', (msg) => {
-          console.log('TempMString: ', msg);
+          //          console.log('TempMString: ', msg);
           const snumbers = msg.toString().replace('Temp_M = ', '');
           const vNumbers = snumbers.split(',');
           document.getElementById('Temp_M1').innerHTML = parseFloat(vNumbers[0]).toFixed(2);
@@ -147,7 +147,7 @@
       });
 
       socket.on('PowerStateString', (msg) => {
-          console.log('PowerStateString: ', msg);
+          //          console.log('PowerStateString: ', msg);
           const snumbers = msg.toString().replace('PowerState = ', '');
           const vNumbers = snumbers.split(',');
           document.getElementById('PowerState1').innerHTML = parseInt(vNumbers[0]).toFixed(0);
@@ -161,25 +161,50 @@
       });
 
       socket.on('ControlVoltage_SetString', (msg) => {
-          console.log('ControlVoltage_Set: ', msg);
+          //          console.log('ControlVoltage_Set: ', msg);
           const snumbers = msg.toString().replace('ControlVoltage_Set = ', '');
           const vNumbers = snumbers.split(',');
-          document.getElementById('ControlVoltage_Set1').innerHTML = parseFloat(vNumbers[0]).toFixed(2);
-          document.getElementById('ControlVoltage_Set2').innerHTML = parseFloat(vNumbers[1]).toFixed(2);
-          document.getElementById('ControlVoltage_Set3').innerHTML = parseFloat(vNumbers[2]).toFixed(2);
-          document.getElementById('ControlVoltage_Set4').innerHTML = parseFloat(vNumbers[3]).toFixed(2);
-          document.getElementById('ControlVoltage_Set5').innerHTML = parseFloat(vNumbers[4]).toFixed(2);
-          document.getElementById('ControlVoltage_Set6').innerHTML = parseFloat(vNumbers[5]).toFixed(2);
-          document.getElementById('ControlVoltage_Set7').innerHTML = parseFloat(vNumbers[6]).toFixed(2);
-          document.getElementById('ControlVoltage_Set8').innerHTML = parseFloat(vNumbers[7]).toFixed(2);
+          document.getElementById('ControlVoltage_Set1').value = parseFloat(vNumbers[0]).toFixed(2);
+          document.getElementById('ControlVoltage_Set2').value = parseFloat(vNumbers[1]).toFixed(2);
+          document.getElementById('ControlVoltage_Set3').value = parseFloat(vNumbers[2]).toFixed(2);
+          document.getElementById('ControlVoltage_Set4').value = parseFloat(vNumbers[3]).toFixed(2);
+          document.getElementById('ControlVoltage_Set5').value = parseFloat(vNumbers[4]).toFixed(2);
+          document.getElementById('ControlVoltage_Set6').value = parseFloat(vNumbers[5]).toFixed(2);
+          document.getElementById('ControlVoltage_Set7').value = parseFloat(vNumbers[6]).toFixed(2);
+          document.getElementById('ControlVoltage_Set8').value = parseFloat(vNumbers[7]).toFixed(2);
       });
 
       function chgControlVoltage_Set1() {
-          const controlvoltage_set1 = document.getElementById('ControlVoltage_Set1');
-          socket.emit('controlvoltage_set1');
+          socket.emit('controlvoltage_set1', document.getElementById('ControlVoltage_Set1').value);
       }
 
+      function chgControlVoltage_Set2() {
+          socket.emit('controlvoltage_set2', document.getElementById('ControlVoltage_Set2').value);
+      }
 
+      function chgControlVoltage_Set3() {
+          socket.emit('controlvoltage_set3', document.getElementById('ControlVoltage_Set3').value);
+      }
+
+      function chgControlVoltage_Set4() {
+          socket.emit('controlvoltage_set4', document.getElementById('ControlVoltage_Set4').value);
+      }
+
+      function chgControlVoltage_Set5() {
+          socket.emit('controlvoltage_set5', document.getElementById('ControlVoltage_Set5').value);
+      }
+
+      function chgControlVoltage_Set6() {
+          socket.emit('controlvoltage_set6', document.getElementById('ControlVoltage_Set6').value);
+      }
+      
+      function chgControlVoltage_Set7() {
+          socket.emit('controlvoltage_set7', document.getElementById('ControlVoltage_Set7').value);
+      }
+
+      function chgControlVoltage_Set8() {
+          socket.emit('controlvoltage_set8', document.getElementById('ControlVoltage_Set8').value);
+      }
     </script>
 
 

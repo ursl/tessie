@@ -161,7 +161,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('controlvoltage_set1', (msg) => {
-        console.log('controlvoltage_set1 input received');
+        console.log('controlvoltage_set1 input received ->' + msg + '<-');
     });
 });
 
