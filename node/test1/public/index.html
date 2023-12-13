@@ -80,14 +80,14 @@
         </tr>
         <tr>
           <td>Turn on/off</td>
-          <td><input class="w3-check" id="CheckTEC1" type="checkbox"></td>
-          <td><input class="w3-check" id="CheckTEC2" type="checkbox"></td>
-          <td><input class="w3-check" id="CheckTEC3" type="checkbox"></td>
-          <td><input class="w3-check" id="CheckTEC4" type="checkbox"></td>
-          <td><input class="w3-check" id="CheckTEC5" type="checkbox"></td>
-          <td><input class="w3-check" id="CheckTEC6" type="checkbox"></td>
-          <td><input class="w3-check" id="CheckTEC7" type="checkbox"></td>
-          <td><input class="w3-check" id="CheckTEC8" type="checkbox"></td>
+          <td><input id="CheckTEC1" type="checkbox"></td>
+          <td><input id="CheckTEC2" type="checkbox"></td>
+          <td><input id="CheckTEC3" type="checkbox"></td>
+          <td><input id="CheckTEC4" type="checkbox"></td>
+          <td><input id="CheckTEC5" type="checkbox"></td>
+          <td><input id="CheckTEC6" type="checkbox"></td>
+          <td><input id="CheckTEC7" type="checkbox"></td>
+          <td><input id="CheckTEC8" type="checkbox"></td>
         </tr>
 
         <tr>
@@ -176,14 +176,27 @@
           //          console.log('PowerStateString: ', msg);
           const snumbers = msg.toString().replace('PowerState = ', '');
           const vNumbers = snumbers.split(',');
-          document.getElementById('PowerState1').innerHTML = parseInt(vNumbers[0]).toFixed(0);
-          document.getElementById('PowerState2').innerHTML = parseInt(vNumbers[1]).toFixed(0);
-          document.getElementById('PowerState3').innerHTML = parseInt(vNumbers[2]).toFixed(0);
-          document.getElementById('PowerState4').innerHTML = parseInt(vNumbers[3]).toFixed(0);
-          document.getElementById('PowerState5').innerHTML = parseInt(vNumbers[4]).toFixed(0);
-          document.getElementById('PowerState6').innerHTML = parseInt(vNumbers[5]).toFixed(0);
-          document.getElementById('PowerState7').innerHTML = parseInt(vNumbers[6]).toFixed(0);
-          document.getElementById('PowerState8').innerHTML = parseInt(vNumbers[7]).toFixed(0);
+
+          for (let i = 1; i <= 8; i++) {
+              let ps = 'PowerState' + i.toString();
+              let ct = 'CheckTEC' + i.toString();
+              // console.log(parseInt(vNumbers[0]).toFixed(0));
+              if (parseInt(vNumbers[i]).toFixed(0) == 1) {
+                  document.getElementById(ps).innerHTML = parseInt(vNumbers[0]).toFixed(0);
+                  document.getElementById(ct).checked = true;             
+              } else {
+                  document.getElementById(ps).innerHTML = parseInt(vNumbers[0]).toFixed(0);
+                  document.getElementById(ct).checked = false;
+              }
+          }
+          
+          // document.getElementById('PowerState2').innerHTML = parseInt(vNumbers[1]).toFixed(0);
+          // document.getElementById('PowerState3').innerHTML = parseInt(vNumbers[2]).toFixed(0);
+          // document.getElementById('PowerState4').innerHTML = parseInt(vNumbers[3]).toFixed(0);
+          // document.getElementById('PowerState5').innerHTML = parseInt(vNumbers[4]).toFixed(0);
+          // document.getElementById('PowerState6').innerHTML = parseInt(vNumbers[5]).toFixed(0);
+          // document.getElementById('PowerState7').innerHTML = parseInt(vNumbers[6]).toFixed(0);
+          // document.getElementById('PowerState8').innerHTML = parseInt(vNumbers[7]).toFixed(0);
       });
 
       socket.on('ControlVoltage_SetString', (msg) => {
