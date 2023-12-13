@@ -172,6 +172,11 @@ io.on('connection', (socket) => {
 
     socket.on('controlvoltage_set', (msg) => {
         console.log('controlvoltage_set input received ->' + msg + '<-');
+        clientMqtt.publish(topCtrl, msg, {qos: 0, retain: false }, (error) => {
+            if (error) {
+                console.error(error)
+            }
+        })
     });
 });
 

@@ -202,8 +202,9 @@
 
       function chgControlVoltage_Set(itec, val) {
           let cmd = "controlvoltage_set " + itec.toString() + " " + val.toString();
-          console.log(cmd);
-          socket.emit('controlvoltage_set', itec, val);
+          let msg = "tec " + itec.toString() + " set ControlVoltage_Set " + val.toString();
+          console.log(cmd + " " + msg);
+          socket.emit('controlvoltage_set', msg);
       }
     </script>
 
