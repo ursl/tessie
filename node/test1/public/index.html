@@ -170,10 +170,12 @@
           for (let i = 1; i <= 8; i++) {
               let ps = 'PowerState' + i.toString();
               let ct = 'CheckTEC' + i.toString();
-              if (parseInt(vNumbers[i]).toFixed(0) == 1) {
+              if (parseInt(vNumbers[i-1]).toFixed(0) == 1) {
                   document.getElementById(ps).innerHTML = parseInt(vNumbers[i-1]).toFixed(0);
+                  document.getElementById(ct).checked = true;
               } else {
                   document.getElementById(ps).innerHTML = parseInt(vNumbers[i-1]).toFixed(0);
+                  document.getElementById(ct).checked = false;
               }
           }
       });
