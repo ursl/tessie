@@ -69,6 +69,7 @@
       <table class="w3-table">
         <tr>
           <th>Parameter</th>
+          <th>all</th>
           <th>TEC 1</th>
           <th>TEC 2</th>
           <th>TEC 3</th>
@@ -80,6 +81,7 @@
         </tr>
         <tr>
           <td>Turn on/off</td>
+          <td><input id="CheckTEC0" type="checkbox" onclick="clkCheckTec(0)"></td>
           <td><input id="CheckTEC1" type="checkbox" onclick="clkCheckTec(1)"></td>
           <td><input id="CheckTEC2" type="checkbox" onclick="clkCheckTec(2)"></td>
           <td><input id="CheckTEC3" type="checkbox" onclick="clkCheckTec(3)"></td>
@@ -91,29 +93,8 @@
         </tr>
 
         <tr>
-          <td>Temp_M [deg C]</td>
-          <td id="Temp_M1">wait </td>
-          <td id="Temp_M2">wait </td>
-          <td id="Temp_M3">wait </td>
-          <td id="Temp_M4">wait </td>
-          <td id="Temp_M5">wait </td>
-          <td id="Temp_M6">wait </td>
-          <td id="Temp_M7">wait </td>
-          <td id="Temp_M8">wait </td>
-        </tr>
-        <tr>
-          <td>PowerState (0=Off, 1=On)</td>
-          <td id="PowerState1">wait </td>
-          <td id="PowerState2">wait </td>
-          <td id="PowerState3">wait </td>
-          <td id="PowerState4">wait </td>
-          <td id="PowerState5">wait </td>
-          <td id="PowerState6">wait </td>
-          <td id="PowerState7">wait </td>
-          <td id="PowerState8">wait </td>
-        </tr>
-        <tr>
           <td>ControlVoltage_Set [V]</td>
+          <td> <input id="ControlVoltage_Set0" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set(0,this.value)"></td>
           <td> <input id="ControlVoltage_Set1" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set(1,this.value)"></td>
           <td> <input id="ControlVoltage_Set2" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set(2,this.value)"></td>
           <td> <input id="ControlVoltage_Set3" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set(3,this.value)"></td>
@@ -123,12 +104,106 @@
           <td> <input id="ControlVoltage_Set7" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set(7,this.value)"></td>
           <td> <input id="ControlVoltage_Set8" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set(8,this.value)"></td>
         </tr>
+
+        <tr>
+          <td> Temp_Set [C] </td>
+          <td> <input id="Temp_Set0" maxlength="3" size="3" value="wait" onchange="chgTemp_Set(0,this.value)"> </td>
+          <td> <input id="Temp_Set1" maxlength="3" size="3" value="wait" onchange="chgTemp_Set(1,this.value)"> </td>
+          <td> <input id="Temp_Set2" maxlength="3" size="3" value="wait" onchange="chgTemp_Set(2,this.value)"> </td>
+          <td> <input id="Temp_Set3" maxlength="3" size="3" value="wait" onchange="chgTemp_Set(3,this.value)"> </td>
+          <td> <input id="Temp_Set4" maxlength="3" size="3" value="wait" onchange="chgTemp_Set(4,this.value)"> </td>
+          <td> <input id="Temp_Set5" maxlength="3" size="3" value="wait" onchange="chgTemp_Set(5,this.value)"> </td>
+          <td> <input id="Temp_Set6" maxlength="3" size="3" value="wait" onchange="chgTemp_Set(6,this.value)"> </td>
+          <td> <input id="Temp_Set7" maxlength="3" size="3" value="wait" onchange="chgTemp_Set(7,this.value)"> </td>
+          <td> <input id="Temp_Set8" maxlength="3" size="3" value="wait" onchange="chgTemp_Set(8,this.value)"> </td>
+        </tr>
+       
+        <tr>
+          <td>Temp_M [deg C]</td>
+          <td> </td>
+          <td id="Temp_M1">wait </td>
+          <td id="Temp_M2">wait </td>
+          <td id="Temp_M3">wait </td>
+          <td id="Temp_M4">wait </td>
+          <td id="Temp_M5">wait </td>
+          <td id="Temp_M6">wait </td>
+          <td id="Temp_M7">wait </td>
+          <td id="Temp_M8">wait </td>
+        </tr>
+
+        <tr>
+          <td>PowerState (0=Off, 1=On)</td>
+          <td> </td>
+          <td id="PowerState1">wait </td>
+          <td id="PowerState2">wait </td>
+          <td id="PowerState3">wait </td>
+          <td id="PowerState4">wait </td>
+          <td id="PowerState5">wait </td>
+          <td id="PowerState6">wait </td>
+          <td id="PowerState7">wait </td>
+          <td id="PowerState8">wait </td>
+        </tr>
+
+        <tr>
+          <td>Mode (0=T, 1=V)</td>
+          <td> <input id="Mode0" maxlength="3" size="3" onchange="chgMode(0,this.value)"></td>
+          <td> <input id="Mode1" maxlength="3" size="3" onchange="chgMode(1,this.value)"></td>
+          <td> <input id="Mode2" maxlength="3" size="3" onchange="chgMode(2,this.value)"></td>
+          <td> <input id="Mode3" maxlength="3" size="3" onchange="chgMode(3,this.value)"></td>
+          <td> <input id="Mode4" maxlength="3" size="3" onchange="chgMode(4,this.value)"></td>
+          <td> <input id="Mode5" maxlength="3" size="3" onchange="chgMode(5,this.value)"></td>
+          <td> <input id="Mode6" maxlength="3" size="3" onchange="chgMode(6,this.value)"></td>
+          <td> <input id="Mode7" maxlength="3" size="3" onchange="chgMode(7,this.value)"></td>
+          <td> <input id="Mode8" maxlength="3" size="3" onchange="chgMode(8,this.value)"></td>
+        </tr>
+
+        <tr>
+          <td>PID_kp</td>
+          <td> <input id="PID_kp0" maxlength="3" size="3" onchange="chgPID_kp(0,this.value)"></td>
+          <td> <input id="PID_kp1" maxlength="3" size="3" onchange="chgPID_kp(1,this.value)"></td>
+          <td> <input id="PID_kp2" maxlength="3" size="3" onchange="chgPID_kp(2,this.value)"></td>
+          <td> <input id="PID_kp3" maxlength="3" size="3" onchange="chgPID_kp(3,this.value)"></td>
+          <td> <input id="PID_kp4" maxlength="3" size="3" onchange="chgPID_kp(4,this.value)"></td>
+          <td> <input id="PID_kp5" maxlength="3" size="3" onchange="chgPID_kp(5,this.value)"></td>
+          <td> <input id="PID_kp6" maxlength="3" size="3" onchange="chgPID_kp(6,this.value)"></td>
+          <td> <input id="PID_kp7" maxlength="3" size="3" onchange="chgPID_kp(7,this.value)"></td>
+          <td> <input id="PID_kp8" maxlength="3" size="3" onchange="chgPID_kp(8,this.value)"></td>
+        </tr>
+
+        <tr>
+          <td>PID_ki</td>
+          <td> <input id="PID_ki0" maxlength="3" size="3" onchange="chgPID_ki(0,this.value)"></td>
+          <td> <input id="PID_ki1" maxlength="3" size="3" onchange="chgPID_ki(1,this.value)"></td>
+          <td> <input id="PID_ki2" maxlength="3" size="3" onchange="chgPID_ki(2,this.value)"></td>
+          <td> <input id="PID_ki3" maxlength="3" size="3" onchange="chgPID_ki(3,this.value)"></td>
+          <td> <input id="PID_ki4" maxlength="3" size="3" onchange="chgPID_ki(4,this.value)"></td>
+          <td> <input id="PID_ki5" maxlength="3" size="3" onchange="chgPID_ki(5,this.value)"></td>
+          <td> <input id="PID_ki6" maxlength="3" size="3" onchange="chgPID_ki(6,this.value)"></td>
+          <td> <input id="PID_ki7" maxlength="3" size="3" onchange="chgPID_ki(7,this.value)"></td>
+          <td> <input id="PID_ki8" maxlength="3" size="3" onchange="chgPID_ki(8,this.value)"></td>
+        </tr>
+
+        <tr>
+          <td>PID_kd</td>
+          <td> <input id="PID_kd0" maxlength="3" size="3" onchange="chgPID_kd(0,this.value)"></td>
+          <td> <input id="PID_kd1" maxlength="3" size="3" onchange="chgPID_kd(1,this.value)"></td>
+          <td> <input id="PID_kd2" maxlength="3" size="3" onchange="chgPID_kd(2,this.value)"></td>
+          <td> <input id="PID_kd3" maxlength="3" size="3" onchange="chgPID_kd(3,this.value)"></td>
+          <td> <input id="PID_kd4" maxlength="3" size="3" onchange="chgPID_kd(4,this.value)"></td>
+          <td> <input id="PID_kd5" maxlength="3" size="3" onchange="chgPID_kd(5,this.value)"></td>
+          <td> <input id="PID_kd6" maxlength="3" size="3" onchange="chgPID_kd(6,this.value)"></td>
+          <td> <input id="PID_kd7" maxlength="3" size="3" onchange="chgPID_kd(7,this.value)"></td>
+          <td> <input id="PID_kd8" maxlength="3" size="3" onchange="chgPID_kd(8,this.value)"></td>
+        </tr>
+
       </table>
     </div>      
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
 
+      let checkedTEC = -1;
+      
       const socket = io();
       const valve0 = document.getElementById('valve0');
       const valve1 = document.getElementById('valve1');
@@ -170,12 +245,18 @@
           for (let i = 1; i <= 8; i++) {
               let ps = 'PowerState' + i.toString();
               let ct = 'CheckTEC' + i.toString();
-              if (parseInt(vNumbers[i-1]).toFixed(0) == 1) {
-                  document.getElementById(ps).innerHTML = parseInt(vNumbers[i-1]).toFixed(0);
-                  document.getElementById(ct).checked = true;
-              } else {
-                  document.getElementById(ps).innerHTML = parseInt(vNumbers[i-1]).toFixed(0);
-                  document.getElementById(ct).checked = false;
+              if (checkedTEC == i) {
+                  // -- do nothing if this instance clicked on CheckTECx
+                  //    This is to avoid the flicker on the checkbox
+                  checkedTEC = -1;
+              } else {          
+                  if (parseInt(vNumbers[i-1]).toFixed(0) == 1) {
+                      document.getElementById(ps).innerHTML = parseInt(vNumbers[i-1]).toFixed(0);
+                      document.getElementById(ct).checked = true;
+                  } else {
+                      document.getElementById(ps).innerHTML = parseInt(vNumbers[i-1]).toFixed(0);
+                      document.getElementById(ct).checked = false;
+                  }
               }
           }
       });
@@ -190,13 +271,89 @@
           }
       });
 
+      socket.on('ModeString', (msg) => {
+          const snumbers = msg.toString().replace('Mode = ', '');
+          const vNumbers = snumbers.split(',');
+          for (let i = 1; i <= 8; i++) {
+              let tm = 'Mode' + i.toString();
+              document.getElementById(tm).value = parseFloat(vNumbers[i-1]).toFixed(0);
+          }
+      });
+
+      socket.on('PID_kpString', (msg) => {
+          const snumbers = msg.toString().replace('PID_kp = ', '');
+          const vNumbers = snumbers.split(',');
+          for (let i = 1; i <= 8; i++) {
+              let tm = 'PID_kp' + i.toString();
+              document.getElementById(tm).value = parseFloat(vNumbers[i-1]).toFixed(2);
+          }
+      });
+
+      socket.on('PID_kiString', (msg) => {
+          const snumbers = msg.toString().replace('PID_ki = ', '');
+          const vNumbers = snumbers.split(',');
+          for (let i = 1; i <= 8; i++) {
+              let tm = 'PID_ki' + i.toString();
+              document.getElementById(tm).value = parseFloat(vNumbers[i-1]).toFixed(2);
+          }
+      });
+
+      socket.on('PID_kdString', (msg) => {
+          const snumbers = msg.toString().replace('PID_kd = ', '');
+          const vNumbers = snumbers.split(',');
+          for (let i = 1; i <= 8; i++) {
+              let tm = 'PID_kd' + i.toString();
+              document.getElementById(tm).value = parseFloat(vNumbers[i-1]).toFixed(2);
+          }
+      });
+
+      socket.on('Temp_SetString', (msg) => {
+          const snumbers = msg.toString().replace('Temp_Set = ', '');
+          const vNumbers = snumbers.split(',');
+          for (let i = 1; i <= 8; i++) {
+              let tm = 'Temp_Set' + i.toString();
+              console.log(msg + " => " + parseFloat(vNumbers[i-1]).toFixed(2)); 
+              document.getElementById(tm).value = parseFloat(vNumbers[i-1]).toFixed(2);
+          }
+      });
+
       function chgControlVoltage_Set(itec, val) {
           let msg = "tec " + itec.toString() + " set ControlVoltage_Set " + val.toString();
           console.log("controlvoltage_set" + msg);
           socket.emit('controlvoltage_set', msg);
       }
 
+      function chgTemp_Set(itec, val) {
+          let msg = "tec " + itec.toString() + " set Temp_Set " + val.toString();
+          console.log("temp_set" + msg);
+          socket.emit('temp_set', msg);
+      }
+
+      function chgMode(itec, val) {
+          let msg = "tec " + itec.toString() + " set Mode " + val.toString();
+          console.log("mode_set" + msg);
+          socket.emit('mode_set', msg);
+      }
+
+      function chgPID_kp(itec, val) {
+          let msg = "tec " + itec.toString() + " set PID_kp " + val.toString();
+          console.log("pid_kp" + msg);
+          socket.emit('pid_kp', msg);
+      }
+      function chgPID_ki(itec, val) {
+          let msg = "tec " + itec.toString() + " set PID_ki " + val.toString();
+          console.log("pid_ki" + msg);
+          socket.emit('pid_ki', msg);
+      }
+      function chgPID_kp(itec, val) {
+          let msg = "tec " + itec.toString() + " set PID_kd " + val.toString();
+          console.log("pid_kd" + msg);
+          socket.emit('pid_kd', msg);
+      }
+
       function clkCheckTec(itec) {
+          checkedTEC = itec;
+          
           let ct = 'CheckTEC' + itec.toString();
           let msg = "tec " + itec.toString();
           if (document.getElementById(ct).checked) {

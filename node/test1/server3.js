@@ -32,7 +32,26 @@ let envString = ''
 let PowerStateString = ''
 let ControlVoltage_SetString = ''
 let Temp_MString = ''
+let PID_kpString = ''
+let PID_kiString = ''
+let PID_kdString = ''
+let Temp_SetString = ''
+let PID_MaxString = ''
+let PID_MinString = ''
+let Temp_DiffString = ''
+let Peltier_UString = ''
+let Peltier_IString = ''
+let Peltier_RString = ''
+let Peltier_PString = ''
+let Supply_UString = ''
+let Supply_IString = ''
+let Supply_PString = ''
+let ErrorString = ''
+let Ref_UString = ''
+let ModeString = ''
 
+    
+    
 // ----------------------------------------------------------------------
 // -- MQTT 
 // ----------------------------------------------------------------------
@@ -78,6 +97,57 @@ clientMqtt.on('message', (topMon, payload) => {
     if (payload.includes('Temp_M = ')) {
         Temp_MString = payload.toString();
     }
+    if (payload.includes('PID_kp = ')) {
+        PID_kpString = payload.toString();
+    }
+    if (payload.includes('PID_ki = ')) {
+        PID_kiString = payload.toString();
+    }
+    if (payload.includes('PID_kd = ')) {
+        PID_kdString = payload.toString();
+    }
+    if (payload.includes('Temp_Set = ')) {
+        Temp_SetString = payload.toString();
+    }
+    if (payload.includes('PID_Max = ')) {
+        PID_MaxString = payload.toString();
+    }
+    if (payload.includes('PID_Min = ')) {
+        PID_MinString = payload.toString();
+    }
+    if (payload.includes('Temp_Diff = ')) {
+        Temp_DiffString = payload.toString();
+    }
+    if (payload.includes('Peltier_U = ')) {
+        Peltier_UString = payload.toString();
+    }
+    if (payload.includes('Peltier_I = ')) {
+        Peltier_IString = payload.toString();
+    }
+    if (payload.includes('Peltier_R = ')) {
+        Peltier_RString = payload.toString();
+    }
+    if (payload.includes('Peltier_P = ')) {
+        Peltier_PString = payload.toString();
+    }
+    if (payload.includes('Supply_U = ')) {
+        Supply_UString = payload.toString();
+    }
+    if (payload.includes('Supply_I = ')) {
+        Supply_IString = payload.toString();
+    }
+    if (payload.includes('Supply_P = ')) {
+        Supply_PString = payload.toString();
+    }
+    if (payload.includes('Error = ')) {
+        ErrorString = payload.toString();
+    }
+    if (payload.includes('Ref_U = ')) {
+        Ref_UString = payload.toString();
+    }
+    if (payload.includes('Mode = ')) {
+        ModeString = payload.toString();
+    }
 })
 
 
@@ -97,6 +167,23 @@ io.on('connection', (socket) => {
         socket.emit('PowerStateString', PowerStateString);
         socket.emit('ControlVoltage_SetString', ControlVoltage_SetString);
         socket.emit('Temp_MString', Temp_MString);
+        socket.emit('PID_kpString', PID_kpString);
+        socket.emit('PID_kiString', PID_kiString);
+        socket.emit('PID_kdString', PID_kdString);
+        socket.emit('Temp_SetString', Temp_SetString);
+        socket.emit('PID_MaxString', PID_MaxString);
+        socket.emit('PID_MinString', PID_MinString);
+        socket.emit('Temp_DiffString', Temp_DiffString);
+        socket.emit('Peltier_UString', Peltier_UString);
+        socket.emit('Peltier_IString', Peltier_IString);
+        socket.emit('Peltier_RString', Peltier_RString);
+        socket.emit('Peltier_PString', Peltier_PString);
+        socket.emit('Supply_UString', Supply_UString);
+        socket.emit('Supply_IString', Supply_IString);
+        socket.emit('Supply_PString', Supply_PString);
+        socket.emit('ErrorString', ErrorString);
+        socket.emit('Ref_UString', Ref_UString);
+        socket.emit('ModeString', ModeString);
     }, 1000);
 
     socket.on('valve0', (msg) => {
@@ -149,6 +236,33 @@ io.on('connection', (socket) => {
 
     socket.on('controlvoltage_set', (msg) => {
         console.log('controlvoltage_set input received ->' + msg + '<-');
+        clientMqtt.publish(topCtrl, msg, {qos: 0, retain: false }, (error) => {
+            if (error) {
+                console.error(error)
+            }
+        })
+    });
+
+    socket.on('temp_set', (msg) => {
+        console.log('temp_set input received ->' + msg + '<-');
+        clientMqtt.publish(topCtrl, msg, {qos: 0, retain: false }, (error) => {
+            if (error) {
+                console.error(error)
+            }
+        })
+    });
+
+    socket.on('mode_set', (msg) => {
+        console.log('mode_set input received ->' + msg + '<-');
+        clientMqtt.publish(topCtrl, msg, {qos: 0, retain: false }, (error) => {
+            if (error) {
+                console.error(error)
+            }
+        })
+    });
+
+    socket.on('pid_kp', (msg) => {
+        console.log('pid_kp input received ->' + msg + '<-');
         clientMqtt.publish(topCtrl, msg, {qos: 0, retain: false }, (error) => {
             if (error) {
                 console.error(error)
