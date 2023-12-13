@@ -15,9 +15,6 @@ var checktec1Status = 0;
 // node server3.js
 // http://localhost:3000
 // http://coldbox01.psi.ch:3000
-//
-// Warning: (1) valve1 does not yet work
-//          (2) nothing is broadcast, yet. Only the originating browser is updated.
 // ----------------------------------------------------------------------
 
 app.use(express.static('public'));
@@ -102,26 +99,6 @@ io.on('connection', (socket) => {
         socket.emit('Temp_MString', Temp_MString);
     }, 1000);
 
-    socket.on('checktec1', (msg) => {
-        if (checktec1Status == 0) {
-            checktec1Status = 1;
-            clientMqtt.publish(topCtrl, 'cmd tec 1 Power_On', {qos: 0, retain: false }, (error) => {
-                if (error) {
-                    console.error(error)
-                }
-            })
-        } else {
-            checktec1Status = 0;
-            clientMqtt.publish(topCtrl, 'cmd tec 1 Power_Off', {qos: 0, retain: false }, (error) => {
-                if (error) {
-                    console.error(error)
-                }
-            })
-        }
-        console.log('checktec1 clicked, checktec1Status = ' + checktec1Status);
-    });
-
-    
     socket.on('valve0', (msg) => {
         if (valve0Status == 0) {
             valve0Status = 1;
@@ -178,6 +155,16 @@ io.on('connection', (socket) => {
             }
         })
     });
+
+    socket.on('checktec', (msg) => {
+        console.log('checktec input received ->' + msg + '<-');
+        clientMqtt.publish(topCtrl, msg, {qos: 0, retain: false }, (error) => {
+            if (error) {
+                console.error(error)
+            }
+        })
+    });
+
 });
 
 
