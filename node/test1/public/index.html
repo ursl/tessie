@@ -30,19 +30,19 @@
         <table>
           <tr>
             <td>Air</td>
-            <td> <output id="TempAir" name="TempAir">0</output> </td>
+            <td id="TempAir">0 </td>
           </tr>
           <tr>
             <td>Water</td>
-            <td><output id="TempWater" name="TempWater">0</output> </td>
+            <td id="TempWater">0 </td>
           </tr>
           <tr>
             <td>Rel. Humidity</td>
-            <td><output id="RelHum" name="RelHum">0</output> </td>
+            <td id="RelHum">0 </td>
           </tr>
           <tr>
             <td>Dew point</td>
-            <td><output id="DP" name="DP">0</output> </td>
+            <td id="DP">0 </td>
           </tr>
         </table>
       </div>
@@ -146,10 +146,10 @@
           //          console.log('envString: ', msg);
           const snumbers = msg.toString().replace('Env = ', '');
           const vNumbers = snumbers.split(', ');
-          document.getElementById('TempAir').innerHTML = vNumbers[0];
-          document.getElementById('TempWater').innerHTML = vNumbers[1];
-          document.getElementById('RelHum').innerHTML = vNumbers[2];
-          document.getElementById('DP').innerHTML = vNumbers[3];
+          document.getElementById('TempAir').innerHTML = parseFloat(vNumbers[0]).toFixed(2);
+          document.getElementById('TempWater').innerHTML = parseFloat(vNumbers[1]).toFixed(2);
+          document.getElementById('RelHum').innerHTML = parseFloat(vNumbers[2]).toFixed(2);
+          document.getElementById('DP').innerHTML = parseFloat(vNumbers[3]).toFixed(2);
           document.getElementById('CANbusErrors').innerHTML = vNumbers[4];
           document.getElementById('I2CErrors').innerHTML = vNumbers[5];
           document.getElementById('RunTime').innerHTML = vNumbers[6];
