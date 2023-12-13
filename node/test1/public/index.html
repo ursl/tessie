@@ -9,18 +9,24 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <style>
       html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+      .mycontainer {
+          display: flex;
+      }
+      .mycontainer > div {
+          width:33%;
+      }
     </style>
   </head>
   <body>
 
-    <div class="w3-container w3-gray">
+    <div class="mycontainer">
   
-      <div class="w3-container w3-blue w3-cell">
-      <div class="w3-container w3-blue w3-cell">  <button id="valve0" style="background-color:#FCF5E5">Valve0</button> </div>
-      <div class="w3-container w3-blue w3-cell">  <button id="valve1" style="background-color:#FCF5E5">Valve1</button> </div>
+      <div style="background-color:DodgerBlue" float="left">
+        <button id="valve0" style="background-color:#FCF5E5">Valve0</button> 
+        <button id="valve1" style="background-color:#FCF5E5">Valve1</button> 
       </div>
       
-      <div class="w3-container w3-green w3-cell">
+      <div style="background-color:MediumSeaGreen" float="center">
         <table>
           <tr>
             <td>Air</td>
@@ -37,6 +43,23 @@
           <tr>
             <td>Dew point</td>
             <td><output id="DP" name="DP">0</output> </td>
+          </tr>
+        </table>
+      </div>
+
+      <div style="background-color:Tomato" float="right">
+        <table>
+          <tr>
+            <td>I2C errors</td>
+            <td id="I2CErrors">0 </td>
+          </tr>
+          <tr>
+            <td>CANbus errors</td>
+            <td id="CANbusErrors">0 </td>
+          </tr>
+          <tr>
+            <td>Run time</td>
+            <td id="RunTime">0 </td>
           </tr>
         </table>
       </div>
@@ -91,14 +114,14 @@
         </tr>
         <tr>
           <td>ControlVoltage_Set [V]</td>
-          <td> <input id="ControlVoltage_Set1" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set1()"> </td>
-          <td> <input id="ControlVoltage_Set2" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set2()"></td>
-          <td> <input id="ControlVoltage_Set3" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set3()"></td>
-          <td> <input id="ControlVoltage_Set4" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set4()"></td>
-          <td> <input id="ControlVoltage_Set5" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set5()"></td>
-          <td> <input id="ControlVoltage_Set6" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set6()"></td>
-          <td> <input id="ControlVoltage_Set7" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set7()"></td>
-          <td> <input id="ControlVoltage_Set8" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set8()"></td>
+          <td> <input id="ControlVoltage_Set1" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set(1,this.value)"></td>
+          <td> <input id="ControlVoltage_Set2" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set(2,this.value)"></td>
+          <td> <input id="ControlVoltage_Set3" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set(3,this.value)"></td>
+          <td> <input id="ControlVoltage_Set4" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set(4,this.value)"></td>
+          <td> <input id="ControlVoltage_Set5" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set(5,this.value)"></td>
+          <td> <input id="ControlVoltage_Set6" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set(6,this.value)"></td>
+          <td> <input id="ControlVoltage_Set7" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set(7,this.value)"></td>
+          <td> <input id="ControlVoltage_Set8" maxlength="3" size="3" value="wait" onchange="chgControlVoltage_Set(8,this.value)"></td>
         </tr>
       </table>
     </div>      
@@ -130,6 +153,9 @@
           document.getElementById('TempWater').innerHTML = vNumbers[1];
           document.getElementById('RelHum').innerHTML = vNumbers[2];
           document.getElementById('DP').innerHTML = vNumbers[3];
+          document.getElementById('CANbusErrors').innerHTML = vNumbers[4];
+          document.getElementById('I2CErrors').innerHTML = vNumbers[5];
+          document.getElementById('RunTime').innerHTML = vNumbers[6];
       });
 
       socket.on('Temp_MString', (msg) => {
@@ -164,46 +190,27 @@
           //          console.log('ControlVoltage_Set: ', msg);
           const snumbers = msg.toString().replace('ControlVoltage_Set = ', '');
           const vNumbers = snumbers.split(',');
-          document.getElementById('ControlVoltage_Set1').value = parseFloat(vNumbers[0]).toFixed(2);
-          document.getElementById('ControlVoltage_Set2').value = parseFloat(vNumbers[1]).toFixed(2);
-          document.getElementById('ControlVoltage_Set3').value = parseFloat(vNumbers[2]).toFixed(2);
-          document.getElementById('ControlVoltage_Set4').value = parseFloat(vNumbers[3]).toFixed(2);
-          document.getElementById('ControlVoltage_Set5').value = parseFloat(vNumbers[4]).toFixed(2);
-          document.getElementById('ControlVoltage_Set6').value = parseFloat(vNumbers[5]).toFixed(2);
-          document.getElementById('ControlVoltage_Set7').value = parseFloat(vNumbers[6]).toFixed(2);
-          document.getElementById('ControlVoltage_Set8').value = parseFloat(vNumbers[7]).toFixed(2);
+          if (document.activeElement != document.getElementById('ControlVoltage_Set1'))
+              document.getElementById('ControlVoltage_Set1').value = parseFloat(vNumbers[0]).toFixed(2);
+          if (document.activeElement != document.getElementById('ControlVoltage_Set2'))
+              document.getElementById('ControlVoltage_Set2').value = parseFloat(vNumbers[1]).toFixed(2);
+          if (document.activeElement != document.getElementById('ControlVoltage_Set3'))
+              document.getElementById('ControlVoltage_Set3').value = parseFloat(vNumbers[2]).toFixed(2);
+          if (document.activeElement != document.getElementById('ControlVoltage_Set4'))
+              document.getElementById('ControlVoltage_Set4').value = parseFloat(vNumbers[3]).toFixed(2);
+          if (document.activeElement != document.getElementById('ControlVoltage_Set5'))
+              document.getElementById('ControlVoltage_Set5').value = parseFloat(vNumbers[4]).toFixed(2);
+          if (document.activeElement != document.getElementById('ControlVoltage_Set6'))
+              document.getElementById('ControlVoltage_Set6').value = parseFloat(vNumbers[5]).toFixed(2);
+          if (document.activeElement != document.getElementById('ControlVoltage_Set7'))
+              document.getElementById('ControlVoltage_Set7').value = parseFloat(vNumbers[6]).toFixed(2);
+          if (document.activeElement != document.getElementById('ControlVoltage_Set8'))
+              document.getElementById('ControlVoltage_Set8').value = parseFloat(vNumbers[7]).toFixed(2);
       });
 
-      function chgControlVoltage_Set1() {
-          socket.emit('controlvoltage_set1', document.getElementById('ControlVoltage_Set1').value);
-      }
-
-      function chgControlVoltage_Set2() {
-          socket.emit('controlvoltage_set2', document.getElementById('ControlVoltage_Set2').value);
-      }
-
-      function chgControlVoltage_Set3() {
-          socket.emit('controlvoltage_set3', document.getElementById('ControlVoltage_Set3').value);
-      }
-
-      function chgControlVoltage_Set4() {
-          socket.emit('controlvoltage_set4', document.getElementById('ControlVoltage_Set4').value);
-      }
-
-      function chgControlVoltage_Set5() {
-          socket.emit('controlvoltage_set5', document.getElementById('ControlVoltage_Set5').value);
-      }
-
-      function chgControlVoltage_Set6() {
-          socket.emit('controlvoltage_set6', document.getElementById('ControlVoltage_Set6').value);
-      }
-      
-      function chgControlVoltage_Set7() {
-          socket.emit('controlvoltage_set7', document.getElementById('ControlVoltage_Set7').value);
-      }
-
-      function chgControlVoltage_Set8() {
-          socket.emit('controlvoltage_set8', document.getElementById('ControlVoltage_Set8').value);
+      function chgControlVoltage_Set(itec, val) {
+          console.log("setting TEC" + itec + " to value = " + val);
+          //          socket.emit('controlvoltage_set1', document.getElementById('ControlVoltage_Set1').value);
       }
     </script>
 
