@@ -149,8 +149,18 @@ io.on('connection', (socket) => {
     socket.on('valve1', (msg) => {
         if (valve1Status == 0) {
             valve1Status = 1;
+            clientMqtt.publish(topCtrl, 'set valve1 on', {qos: 0, retain: false }, (error) => {
+                if (error) {
+                    console.error(error)
+                }
+            })
         } else {
             valve1Status = 0;
+            clientMqtt.publish(topCtrl, 'set valve1 off', {qos: 0, retain: false }, (error) => {
+                if (error) {
+                    console.error(error)
+                }
+            })
         }
         console.log('valve1 clicked, valve1Status = ' + valve1Status);
         if (valve1Status == 0) {
@@ -160,8 +170,8 @@ io.on('connection', (socket) => {
         }
     });
 
-    socket.on('controlvoltage_set1', (msg) => {
-        console.log('controlvoltage_set1 input received ->' + msg + '<-');
+    socket.on('controlvoltage_set', (msg) => {
+        console.log('controlvoltage_set input received ->' + msg + '<-');
     });
 });
 

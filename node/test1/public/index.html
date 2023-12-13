@@ -173,57 +173,37 @@
       });
 
       socket.on('PowerStateString', (msg) => {
-          //          console.log('PowerStateString: ', msg);
           const snumbers = msg.toString().replace('PowerState = ', '');
           const vNumbers = snumbers.split(',');
 
           for (let i = 1; i <= 8; i++) {
               let ps = 'PowerState' + i.toString();
               let ct = 'CheckTEC' + i.toString();
-              // console.log(parseInt(vNumbers[0]).toFixed(0));
               if (parseInt(vNumbers[i]).toFixed(0) == 1) {
-                  document.getElementById(ps).innerHTML = parseInt(vNumbers[0]).toFixed(0);
+                  document.getElementById(ps).innerHTML = parseInt(vNumbers[i-1]).toFixed(0);
                   document.getElementById(ct).checked = true;             
               } else {
-                  document.getElementById(ps).innerHTML = parseInt(vNumbers[0]).toFixed(0);
+                  document.getElementById(ps).innerHTML = parseInt(vNumbers[i-1]).toFixed(0);
                   document.getElementById(ct).checked = false;
               }
           }
-          
-          // document.getElementById('PowerState2').innerHTML = parseInt(vNumbers[1]).toFixed(0);
-          // document.getElementById('PowerState3').innerHTML = parseInt(vNumbers[2]).toFixed(0);
-          // document.getElementById('PowerState4').innerHTML = parseInt(vNumbers[3]).toFixed(0);
-          // document.getElementById('PowerState5').innerHTML = parseInt(vNumbers[4]).toFixed(0);
-          // document.getElementById('PowerState6').innerHTML = parseInt(vNumbers[5]).toFixed(0);
-          // document.getElementById('PowerState7').innerHTML = parseInt(vNumbers[6]).toFixed(0);
-          // document.getElementById('PowerState8').innerHTML = parseInt(vNumbers[7]).toFixed(0);
       });
 
       socket.on('ControlVoltage_SetString', (msg) => {
           //          console.log('ControlVoltage_Set: ', msg);
           const snumbers = msg.toString().replace('ControlVoltage_Set = ', '');
           const vNumbers = snumbers.split(',');
-          if (document.activeElement != document.getElementById('ControlVoltage_Set1'))
-              document.getElementById('ControlVoltage_Set1').value = parseFloat(vNumbers[0]).toFixed(2);
-          if (document.activeElement != document.getElementById('ControlVoltage_Set2'))
-              document.getElementById('ControlVoltage_Set2').value = parseFloat(vNumbers[1]).toFixed(2);
-          if (document.activeElement != document.getElementById('ControlVoltage_Set3'))
-              document.getElementById('ControlVoltage_Set3').value = parseFloat(vNumbers[2]).toFixed(2);
-          if (document.activeElement != document.getElementById('ControlVoltage_Set4'))
-              document.getElementById('ControlVoltage_Set4').value = parseFloat(vNumbers[3]).toFixed(2);
-          if (document.activeElement != document.getElementById('ControlVoltage_Set5'))
-              document.getElementById('ControlVoltage_Set5').value = parseFloat(vNumbers[4]).toFixed(2);
-          if (document.activeElement != document.getElementById('ControlVoltage_Set6'))
-              document.getElementById('ControlVoltage_Set6').value = parseFloat(vNumbers[5]).toFixed(2);
-          if (document.activeElement != document.getElementById('ControlVoltage_Set7'))
-              document.getElementById('ControlVoltage_Set7').value = parseFloat(vNumbers[6]).toFixed(2);
-          if (document.activeElement != document.getElementById('ControlVoltage_Set8'))
-              document.getElementById('ControlVoltage_Set8').value = parseFloat(vNumbers[7]).toFixed(2);
+          for (let i = 1; i <= 8; i++) {
+              let cv = 'ControlVoltage_Set' + i.toString();
+              if (document.activeElement != document.getElementById(cv))
+                  document.getElementById(cv).value = parseFloat(vNumbers[i-1]).toFixed(2);
+          }
       });
 
       function chgControlVoltage_Set(itec, val) {
-          console.log("setting TEC" + itec + " to value = " + val);
-          //          socket.emit('controlvoltage_set1', document.getElementById('ControlVoltage_Set1').value);
+          let cmd = "controlvoltage_set " + itec.toString() + " " + val.toString();
+          console.log(cmd);
+          socket.emit('controlvoltage_set', itec, val);
       }
     </script>
 
