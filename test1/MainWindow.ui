@@ -1491,7 +1491,7 @@
          <property name="font">
           <font>
            <family>Menlo</family>
-           <pointsize>8</pointsize>
+           <pointsize>6</pointsize>
           </font>
          </property>
          <property name="text">
@@ -1504,7 +1504,7 @@
          <property name="font">
           <font>
            <family>Menlo</family>
-           <pointsize>8</pointsize>
+           <pointsize>6</pointsize>
           </font>
          </property>
          <property name="text">
