@@ -16,6 +16,8 @@
           width:33%;
       }
     </style>
+    <audio id="houston" src="houstonwehaveaproblem_loud.mp3" preload="auto"></audio>
+
   </head>
   <body>
 
@@ -239,6 +241,11 @@
           }
       });
 
+      if (parseFloat(document.getElementById('Temp_M1').innerHTML) < 15.)  {
+          document.getElementById('houston').play();
+          alert("Houston?!");
+      }
+      
       socket.on('PowerStateString', (msg) => {
           const snumbers = msg.toString().replace('PowerState = ', '');
           const vNumbers = snumbers.split(',');
