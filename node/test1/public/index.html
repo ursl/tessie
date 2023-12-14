@@ -328,8 +328,8 @@
       });
 
       socket.on('AlarmString', (msg) => {
-          const salarm = msg.toString().replace('==ALARM== ', '');
           console.log(salarm);
+          const salarm = msg.toString().replace('==ALARM== ', '');
           //          alert(salarm);
       });
       
