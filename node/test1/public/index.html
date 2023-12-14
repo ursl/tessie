@@ -322,7 +322,6 @@
           const vNumbers = snumbers.split(',');
           for (let i = 1; i <= 8; i++) {
               let tm = 'Temp_Set' + i.toString();
-              console.log(msg + " => " + parseFloat(vNumbers[i-1]).toFixed(2)); 
               if (document.activeElement != document.getElementById(tm))
                   document.getElementById(tm).value = parseFloat(vNumbers[i-1]).toFixed(2);
           }
