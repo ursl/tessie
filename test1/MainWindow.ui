@@ -1714,14 +1714,14 @@
           </property>
           <property name="maximumSize">
            <size>
-            <width>50</width>
-            <height>20</height>
+            <width>100</width>
+            <height>50</height>
            </size>
           </property>
           <property name="font">
            <font>
             <family>Arial</family>
-            <pointsize>9</pointsize>
+            <pointsize>6</pointsize>
            </font>
           </property>
           <property name="layoutDirection">
@@ -1743,7 +1743,7 @@
           <property name="font">
            <font>
             <family>Arial</family>
-            <pointsize>5</pointsize>
+            <pointsize>6</pointsize>
            </font>
           </property>
           <property name="text">
@@ -1761,8 +1761,8 @@
           </property>
           <property name="maximumSize">
            <size>
-            <width>50</width>
-            <height>20</height>
+            <width>100</width>
+            <height>50</height>
            </size>
           </property>
           <property name="font">
