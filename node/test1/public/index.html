@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <audio id="houston" src="houstonwehaveaproblem_loud.mp3" preload="auto"></audio>
     <style>
       html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       .mycontainer {
@@ -18,8 +19,6 @@
     </style>
   </head>
   <body>
-    <audio id="houston" src="public/houstonwehaveaproblem_loud.mp3" preload="auto"></audio>
-
     <div class="mycontainer">
   
       <div style="background-color:DodgerBlue" float="left">
@@ -214,9 +213,11 @@
       //     alert("Houston?!");
       // }
 
-      var mp3_url = 'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3';
-
-      valve0.addEventListener('click', (e) => {socket.emit('valve0'); (new Audio(mp3_url)).play(); });
+      // -- this works: 
+      // var mp3_url = 'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3';
+      // new Audio(mp3_url)).play();
+      
+      valve0.addEventListener('click', (e) => {socket.emit('valve0'); (document.getElementById('houston').play(); });
       valve1.addEventListener('click', (e) => {socket.emit('valve1'); });
 
       socket.on('valve0blue', (msg) => {valve0.style.background='#ADD8E6'; });
