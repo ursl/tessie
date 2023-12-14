@@ -1687,12 +1687,6 @@
        <layout class="QHBoxLayout" name="horizontalLayout_9">
         <item>
          <widget class="QLabel" name="labelCANErrors">
-          <property name="maximumSize">
-           <size>
-            <width>30</width>
-            <height>16777215</height>
-           </size>
-          </property>
           <property name="font">
            <font>
             <family>Arial</family>
@@ -1706,22 +1700,10 @@
         </item>
         <item>
          <widget class="QLineEdit" name="lineEditCANbusError">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>100</width>
-            <height>50</height>
-           </size>
-          </property>
           <property name="font">
            <font>
             <family>Arial</family>
-            <pointsize>6</pointsize>
+            <pointsize>8</pointsize>
            </font>
           </property>
           <property name="layoutDirection">
@@ -1734,16 +1716,10 @@
         </item>
         <item>
          <widget class="QLabel" name="labelI2CErrors">
-          <property name="maximumSize">
-           <size>
-            <width>30</width>
-            <height>16777215</height>
-           </size>
-          </property>
           <property name="font">
            <font>
             <family>Arial</family>
-            <pointsize>6</pointsize>
+            <pointsize>5</pointsize>
            </font>
           </property>
           <property name="text">
@@ -1753,29 +1729,11 @@
         </item>
         <item>
          <widget class="QLineEdit" name="lineEditI2CError">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>100</width>
-            <height>50</height>
-           </size>
-          </property>
           <property name="font">
            <font>
             <family>Arial</family>
-            <pointsize>9</pointsize>
+            <pointsize>8</pointsize>
            </font>
-          </property>
-          <property name="layoutDirection">
-           <enum>Qt::RightToLeft</enum>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
         </item>
