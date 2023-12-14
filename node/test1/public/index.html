@@ -203,7 +203,8 @@
 
       let checkedTEC = -1;
 
-      const audio = new Audio('houstonwehaveaproblem_loud.mp3');
+      const houston = new Audio('houstonwehaveaproblem_loud.mp3');
+      const siren = new Audio('siren.mp3');
       // -- this works: 
       // var mp3_url = 'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3';
       // (new Audio(mp3_url)).play();
@@ -213,7 +214,7 @@
       const valve0 = document.getElementById('valve0');
       const valve1 = document.getElementById('valve1');
 
-      valve0.addEventListener('click', (e) => {socket.emit('valve0'); audio.play(); });
+      valve0.addEventListener('click', (e) => {socket.emit('valve0'); });
       valve1.addEventListener('click', (e) => {socket.emit('valve1'); });
 
       socket.on('valve0blue', (msg) => {valve0.style.background='#ADD8E6'; });
@@ -328,9 +329,15 @@
       });
 
       socket.on('AlarmString', (msg) => {
-          console.log(salarm);
+          console.log(msg.toString());
           const salarm = msg.toString().replace('==ALARM== ', '');
-          //          alert(salarm);
+          siren.play();
+      });
+
+      socket.on('WarningString', (msg) => {
+          console.log(msg.toString());
+          const salarm = msg.toString().replace('==WARNING== ', '');
+          houston.play();
       });
       
       function chgControlVoltage_Set(itec, val) {

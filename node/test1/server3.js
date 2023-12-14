@@ -86,6 +86,10 @@ clientMqtt.on('connect', () => {
 })
 
 clientMqtt.on('message', (topMon, payload) => {
+    // -- reset strings
+    AlarmString = '';
+    WarningString = '';
+
     if (payload.includes('Env = ')) {
         envString = payload.toString();
     }
@@ -191,8 +195,12 @@ io.on('connection', (socket) => {
         socket.emit('ErrorString', ErrorString);
         socket.emit('Ref_UString', Ref_UString);
         socket.emit('ModeString', ModeString);
-        socket.emit('WarningString', WarningString);
-        socket.emit('AlarmString', AlarmString);
+        if (WarningString.length != 0) {
+            socket.emit('WarningString', WarningString);
+        }
+        if (AlarmString.length != 0) {
+            socket.emit('AlarmString', AlarmString);
+        }
     }, 1000);
 
     socket.on('valve0', (msg) => {
