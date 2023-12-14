@@ -758,6 +758,16 @@ void driveHardware::answerIoCmd() {
   int ntec(1);
   for (int itec = 1; itec <= 8; ++itec) {
     if ((0 != tec) && (itec != tec)) continue;
+    // -- use the proper functions to also control YELLO and the fan
+    if (1 == fCANReg) {
+      turnOnTEC(itec);
+      continue;
+    }
+    if (2 == fCANReg) {
+      turnOffTEC(itec);
+      continue;
+    }
+
     fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_CMD);
     fCANVal = 0; // nothing required
     stringstream sbla; sbla << cmdname << " tec("
