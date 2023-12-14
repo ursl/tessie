@@ -7,7 +7,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <audio id="houston" src="houstonwehaveaproblem_loud.mp3" preload="auto"></audio>
     <style>
       html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       .mycontainer {
@@ -203,6 +202,9 @@
     <script>
 
       let checkedTEC = -1;
+
+      //      <audio id="houston" src="houstonwehaveaproblem_loud.mp3" preload="auto"></audio>
+      const audio = new Audio("houstonwehaveaproblem_loud.mp3");
       
       const socket = io();
       const valve0 = document.getElementById('valve0');
@@ -217,7 +219,7 @@
       // var mp3_url = 'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3';
       // new Audio(mp3_url)).play();
       
-      valve0.addEventListener('click', (e) => {socket.emit('valve0'); (document.getElementById('houston').play(); });
+      valve0.addEventListener('click', (e) => {socket.emit('valve0'); (audio.play(); });
       valve1.addEventListener('click', (e) => {socket.emit('valve1'); });
 
       socket.on('valve0blue', (msg) => {valve0.style.background='#ADD8E6'; });
