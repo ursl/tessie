@@ -15,7 +15,7 @@
   </property>
   <property name="font">
    <font>
-    <family>.AppleSystemUIFont</family>
+    <family>Menlo</family>
    </font>
   </property>
   <property name="windowTitle">
@@ -33,7 +33,7 @@
     </property>
     <property name="font">
      <font>
-      <family>.AppleSystemUIFont</family>
+      <family>Menlo</family>
       <pointsize>8</pointsize>
      </font>
     </property>
@@ -199,7 +199,7 @@
             </property>
             <property name="font">
              <font>
-              <family>.AppleSystemUIFont</family>
+              <family>Menlo</family>
               <pointsize>8</pointsize>
              </font>
             </property>
@@ -236,7 +236,7 @@
             </property>
             <property name="font">
              <font>
-              <family>.AppleSystemUIFont</family>
+              <family>Menlo</family>
               <pointsize>8</pointsize>
              </font>
             </property>
@@ -283,7 +283,7 @@
             </property>
             <property name="font">
              <font>
-              <family>.AppleSystemUIFont</family>
+              <family>Menlo</family>
               <pointsize>8</pointsize>
              </font>
             </property>
@@ -317,7 +317,7 @@
             </property>
             <property name="font">
              <font>
-              <family>.AppleSystemUIFont</family>
+              <family>Menlo</family>
               <pointsize>8</pointsize>
              </font>
             </property>
@@ -351,7 +351,7 @@
             </property>
             <property name="font">
              <font>
-              <family>.AppleSystemUIFont</family>
+              <family>Menlo</family>
               <pointsize>8</pointsize>
              </font>
             </property>
@@ -392,7 +392,7 @@
             </property>
             <property name="font">
              <font>
-              <family>.AppleSystemUIFont</family>
+              <family>Menlo</family>
               <pointsize>8</pointsize>
              </font>
             </property>
@@ -455,7 +455,7 @@
             </property>
             <property name="font">
              <font>
-              <family>.AppleSystemUIFont</family>
+              <family>Menlo</family>
               <pointsize>8</pointsize>
              </font>
             </property>
@@ -518,7 +518,7 @@
             </property>
             <property name="font">
              <font>
-              <family>.AppleSystemUIFont</family>
+              <family>Menlo</family>
               <pointsize>8</pointsize>
              </font>
             </property>
@@ -575,7 +575,7 @@
             </property>
             <property name="font">
              <font>
-              <family>.AppleSystemUIFont</family>
+              <family>Menlo</family>
               <pointsize>8</pointsize>
              </font>
             </property>
@@ -606,7 +606,7 @@
             </property>
             <property name="font">
              <font>
-              <family>.AppleSystemUIFont</family>
+              <family>Menlo</family>
               <pointsize>8</pointsize>
              </font>
             </property>
@@ -735,7 +735,7 @@
            </property>
            <property name="font">
             <font>
-             <family>.AppleSystemUIFont</family>
+             <family>Menlo</family>
              <pointsize>8</pointsize>
             </font>
            </property>
@@ -842,7 +842,7 @@
            </property>
            <property name="font">
             <font>
-             <family>.AppleSystemUIFont</family>
+             <family>Menlo</family>
              <pointsize>8</pointsize>
             </font>
            </property>
@@ -871,7 +871,7 @@
         <widget class="QLabel" name="labelBot_Voltage_2">
          <property name="font">
           <font>
-           <family>.AppleSystemUIFont</family>
+           <family>Menlo</family>
            <pointsize>8</pointsize>
           </font>
          </property>
@@ -895,7 +895,7 @@
            </property>
            <property name="font">
             <font>
-             <family>.AppleSystemUIFont</family>
+             <family>Menlo</family>
              <pointsize>8</pointsize>
             </font>
            </property>
@@ -948,7 +948,7 @@
         <widget class="QLabel" name="labelBot_Voltage_3">
          <property name="font">
           <font>
-           <family>.AppleSystemUIFont</family>
+           <family>Menlo</family>
            <pointsize>8</pointsize>
           </font>
          </property>
@@ -1162,7 +1162,7 @@
            </property>
            <property name="font">
             <font>
-             <family>.AppleSystemUIFont</family>
+             <family>Menlo</family>
              <pointsize>8</pointsize>
             </font>
            </property>
@@ -1490,7 +1490,7 @@
         <widget class="QToolButton" name="buttonKillSiren">
          <property name="font">
           <font>
-           <family>.AppleSystemUIFont</family>
+           <family>Menlo</family>
            <pointsize>8</pointsize>
           </font>
          </property>
@@ -1503,7 +1503,7 @@
         <widget class="QToolButton" name="buttonQuit">
          <property name="font">
           <font>
-           <family>.AppleSystemUIFont</family>
+           <family>Menlo</family>
            <pointsize>8</pointsize>
           </font>
          </property>
