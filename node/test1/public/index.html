@@ -203,25 +203,16 @@
 
       let checkedTEC = -1;
 
-      //      <audio id="houston" src="houstonwehaveaproblem_loud.mp3" preload="auto"></audio>
       const audio = new Audio('houstonwehaveaproblem_loud.mp3');
-      // audio.play();
-
+      // -- this works: 
+      // var mp3_url = 'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3';
+      // (new Audio(mp3_url)).play();
+      
       
       const socket = io();
       const valve0 = document.getElementById('valve0');
       const valve1 = document.getElementById('valve1');
 
-      // if (parseFloat(document.getElementById('Temp_M1').innerHTML) < 15.)  {
-      //     document.getElementById('houston').play();
-      //     alert("Houston?!");
-      // }
-
-      // -- this works: 
-      var mp3_url = 'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3';
-      //      (new Audio(mp3_url)).play();
-      
-      //      valve0.addEventListener('click', (e) => {socket.emit('valve0'); (new Audio(mp3_url)).play(); });
       valve0.addEventListener('click', (e) => {socket.emit('valve0'); audio.play(); });
       valve1.addEventListener('click', (e) => {socket.emit('valve1'); });
 

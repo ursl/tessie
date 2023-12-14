@@ -354,6 +354,23 @@ void driveHardware::doRun() {
 // ----------------------------------------------------------------------
 void driveHardware::ensureSafety() {
 
+  // -- first the trivial warnings
+  if (redCANErrors() > 0) {
+    stringstream a("==WARNING== CAN errors = " +
+                   to_string(fCANErrorCounter));
+    fLOG(WARNING, a.str());
+    emit signalSendToMonitor(QString::fromStdString(a.str()));
+    emit signalSendToServer(QString::fromStdString(a.str()));
+  }
+  if (redI2CErrors() > 0) {
+    stringstream a("==WARNING== I2C errors = " +
+                   to_string(fI2CErrorCounter));
+    fLOG(WARNING, a.str());
+    emit signalSendToMonitor(QString::fromStdString(a.str()));
+    emit signalSendToServer(QString::fromStdString(a.str()));
+  }
+
+  
   int allOK(0);
   // -- air temperatures
   if (fSHT85Temp > SAFETY_MAXSHT85TEMP) {
