@@ -209,8 +209,13 @@
       const socket = io();
       const valve0 = document.getElementById('valve0');
       const valve1 = document.getElementById('valve1');
+
+      // if (parseFloat(document.getElementById('Temp_M1').innerHTML) < 15.)  {
+      //     document.getElementById('houston').play();
+      //     alert("Houston?!");
+      // }
       
-      valve0.addEventListener('click', (e) => {socket.emit('valve0'); });
+      valve0.addEventListener('click', (e) => {socket.emit('valve0'); alert("Houston?!"); });
       valve1.addEventListener('click', (e) => {socket.emit('valve1'); });
 
       socket.on('valve0blue', (msg) => {valve0.style.background='#ADD8E6'; });
@@ -241,11 +246,7 @@
           }
       });
 
-      if (parseFloat(document.getElementById('Temp_M1').innerHTML) < 15.)  {
-          document.getElementById('houston').play();
-          alert("Houston?!");
-      }
-      
+ 
       socket.on('PowerStateString', (msg) => {
           const snumbers = msg.toString().replace('PowerState = ', '');
           const vNumbers = snumbers.split(',');
