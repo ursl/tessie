@@ -331,7 +331,7 @@
       socket.on('AlarmString', (msg) => {
           const salarm = msg.toString().replace('==ALARM== ', '');
           console.log(salarm);
-          alert(salarm);
+          //          alert(salarm);
       });
       
       function chgControlVoltage_Set(itec, val) {
