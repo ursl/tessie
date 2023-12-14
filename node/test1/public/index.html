@@ -215,7 +215,7 @@
       //     alert("Houston?!");
       // }
       
-      valve0.addEventListener('click', (e) => {socket.emit('valve0'); alert("Houston?!"); });
+      valve0.addEventListener('click', (e) => {socket.emit('valve0'); document.getElementById('houston').play(); });
       valve1.addEventListener('click', (e) => {socket.emit('valve1'); });
 
       socket.on('valve0blue', (msg) => {valve0.style.background='#ADD8E6'; });
