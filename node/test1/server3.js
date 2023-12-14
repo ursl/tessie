@@ -49,7 +49,8 @@ let Supply_PString = ''
 let ErrorString = ''
 let Ref_UString = ''
 let ModeString = ''
-
+let WarningString = ''
+let AlarmString = ''
     
     
 // ----------------------------------------------------------------------
@@ -148,6 +149,12 @@ clientMqtt.on('message', (topMon, payload) => {
     if (payload.includes('Mode = ')) {
         ModeString = payload.toString();
     }
+    if (payload.includes('==WARNING== ')) {
+        WarningString = payload.toString();
+    }
+    if (payload.includes('==ALARM== ')) {
+        AlarmString = payload.toString();
+    }
 })
 
 
@@ -184,6 +191,8 @@ io.on('connection', (socket) => {
         socket.emit('ErrorString', ErrorString);
         socket.emit('Ref_UString', Ref_UString);
         socket.emit('ModeString', ModeString);
+        socket.emit('WarningString', WarningString);
+        socket.emit('AlarmString', AlarmString);
     }, 1000);
 
     socket.on('valve0', (msg) => {

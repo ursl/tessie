@@ -328,6 +328,12 @@
           }
       });
 
+      socket.on('AlarmString', (msg) => {
+          const salarm = msg.toString().replace('==ALARM== ', '');
+          console.log(salarm);
+          alert(salarm);
+      });
+      
       function chgControlVoltage_Set(itec, val) {
           let msg = "tec " + itec.toString() + " set ControlVoltage_Set " + val.toString();
           console.log("controlvoltage_set" + msg);
