@@ -1673,7 +1673,7 @@
       <widget class="QLabel" name="labelCANbusError">
        <property name="font">
         <font>
-         <family>American Typewriter</family>
+         <family>Arial</family>
          <pointsize>5</pointsize>
         </font>
        </property>
