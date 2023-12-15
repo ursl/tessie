@@ -23,9 +23,6 @@
       <div style="background-color:DodgerBlue" float="left">
         <button id="valve0" style="background-color:#FCF5E5">Valve0</button> 
         <button id="valve1" style="background-color:#FCF5E5">Valve1</button> 
-        <br>
-        <textarea id="logarea" class="scrollabletextbox" cols="50" style="font-size: 8pt">
-        </textarea>
       </div>
       
       <div style="background-color:MediumSeaGreen" float="center">
@@ -66,6 +63,11 @@
         </table>
       </div>
     </div>
+
+    <div style="background-color:DarkGray">
+    <textarea id="logarea" class="scrollabletextbox" style="font-size: 10pt; width: 100%; max-width: 100%;">  </textarea>
+    </div>
+    
     
     <div class="w3-container w3-cream w3-cell">
       <table class="w3-table">
@@ -345,7 +347,7 @@
           console.log(msg.toString());
           const salarm = msg.toString().replace('==ALARM== ', '');
 
-          logarea.value += formatNow() + salarm +  + "\n";
+          logarea.value += formatNow() + salarm +  "\n";
           logarea.scrollTop = logarea.scrollHeight;
 
           siren.play();
@@ -354,7 +356,7 @@
       socket.on('WarningString', (msg) => {
           console.log(msg.toString());
           const salarm = msg.toString().replace('==WARNING== ', '');
-          logarea.value += formatNow() + salarm +  + "\n";
+          logarea.value += formatNow() + salarm +  "\n";
           logarea.scrollTop = logarea.scrollHeight;
 
           houston.play();
@@ -412,7 +414,7 @@
           var x = new Date();
           var dd = x.getDate();
           var mm = x.getMonth()+1;
-          var yy = x.getFullYear() - 2000;
+          var yy = x.getFullYear();
           var hh = x.getHours();
           if (hh < 10) hh = '0' + hh;
           var mi = x.getMinutes();
