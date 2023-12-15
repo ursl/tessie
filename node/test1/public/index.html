@@ -46,10 +46,10 @@
         </table>
       </div>
 
-      <div style="background-color:Tomato" float="right">
+      <div id="statusDiv" style="background-color:Goldenrod" float="right">
         <table>
           <tr>
-            <td>I2C errors</td>
+            <td>I2C Errors</td>
             <td id="I2CErrors">0 </td>
           </tr>
           <tr>
@@ -210,10 +210,18 @@
       // (new Audio(mp3_url)).play();
       
       
-      const socket = io();
+      const socket = io.connect();
       const valve0 = document.getElementById('valve0');
       const valve1 = document.getElementById('valve1');
 
+      // -- 
+      socket.on('disconnect', () => {
+          document.getElementById('statusDiv').style = "background-color:Tomato";
+      });
+      socket.on('connect', () => {
+          document.getElementById('statusDiv').style = "background-color:Goldenrod";
+      });
+            
       valve0.addEventListener('click', (e) => {socket.emit('valve0'); });
       valve1.addEventListener('click', (e) => {socket.emit('valve1'); });
 
