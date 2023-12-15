@@ -23,6 +23,9 @@
       <div style="background-color:DodgerBlue" float="left">
         <button id="valve0" style="background-color:#FCF5E5">Valve0</button> 
         <button id="valve1" style="background-color:#FCF5E5">Valve1</button> 
+        <br>
+        <textarea id="logarea" class="scrollabletextbox" cols="50" style="font-size: 8pt">
+        </textarea>
       </div>
       
       <div style="background-color:MediumSeaGreen" float="center">
@@ -214,6 +217,8 @@
       const valve0 = document.getElementById('valve0');
       const valve1 = document.getElementById('valve1');
 
+      var logarea = document.getElementById("logarea");
+
       // -- 
       socket.on('disconnect', () => {
           document.getElementById('statusDiv').style = "background-color:Tomato";
@@ -232,7 +237,7 @@
       socket.on('valve1white', (msg) => {valve1.style.background='#FCF5E5'; });
 
       socket.on('envString', (msg) => {
-          //          console.log('envString: ', msg);
+         
           const snumbers = msg.toString().replace('Env = ', '');
           const vNumbers = snumbers.split(', ');
           document.getElementById('TempAir').innerHTML = parseFloat(vNumbers[0]).toFixed(2);
@@ -339,12 +344,19 @@
       socket.on('AlarmString', (msg) => {
           console.log(msg.toString());
           const salarm = msg.toString().replace('==ALARM== ', '');
+
+          logarea.value += formatNow() + salarm +  + "\n";
+          logarea.scrollTop = logarea.scrollHeight;
+
           siren.play();
       });
 
       socket.on('WarningString', (msg) => {
           console.log(msg.toString());
           const salarm = msg.toString().replace('==WARNING== ', '');
+          logarea.value += formatNow() + salarm +  + "\n";
+          logarea.scrollTop = logarea.scrollHeight;
+
           houston.play();
       });
       
@@ -394,6 +406,20 @@
           }
           console.log(ct + " " + msg);
           socket.emit('checktec', msg);
+      }
+
+      function formatNow(){
+          var x = new Date();
+          var dd = x.getDate();
+          var mm = x.getMonth()+1;
+          var yy = x.getFullYear() - 2000;
+          var hh = x.getHours();
+          if (hh < 10) hh = '0' + hh;
+          var mi = x.getMinutes();
+          if (mi < 10) mi = '0' + mi;
+          var ss = x.getSeconds();
+          if (ss < 10) ss = '0' + ss;
+          return yy + "/" + mm + "/" + dd + " " + hh + ":" + mm + ":" + ss + ">";
       }
     </script>
 
