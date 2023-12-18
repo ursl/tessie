@@ -201,6 +201,17 @@ io.on('connection', (socket) => {
         if (AlarmString.length != 0) {
             socket.emit('AlarmString', AlarmString);
         }
+        if (valve0Status == 0) {
+            socket.emit('valve0white');
+        } else {
+            socket.emit('valve0blue');
+        }
+        if (valve1Status == 0) {
+            socket.emit('valve1white');
+        } else {
+            socket.emit('valve1blue');
+        }
+
     }, 1000);
 
     socket.on('valve0', (msg) => {
