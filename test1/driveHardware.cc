@@ -1677,7 +1677,9 @@ void driveHardware::dumpMQTT(int all) {
      << fSHT85DP << ", "
      << fCANErrorCounter << ", "
      << fI2CErrorCounter << ", "
-     << getRunTime()
+     << getRunTime() << ", "
+     << getStatusValve0() << ", "
+     << getStatusValve1() << ", "
     ;
   if (all > -1) emit signalSendToMonitor(QString::fromStdString(ss.str()));
   
