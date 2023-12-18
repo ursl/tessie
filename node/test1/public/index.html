@@ -213,7 +213,13 @@
       // -- this works: 
       // var mp3_url = 'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3';
       // (new Audio(mp3_url)).play();
-      
+
+
+      let mycolors = [];
+      mycolors.push('Blue');
+      mycolors.push('Green');
+      mycolors.push('Yellow');
+      mycolors.push('Red');
       
       const socket = io.connect();
       const valve0 = document.getElementById('valve0');
@@ -256,7 +262,10 @@
           const vNumbers = snumbers.split(',');
           for (let i = 1; i <= 8; i++) {
               let tm = 'Temp_M' + i.toString();
-              document.getElementById(tm).innerHTML = parseFloat(vNumbers[i-1]).toFixed(2);
+              var el = document.getElementById(tm);
+              var tval = parseFloat(vNumbers[i-1]).toFixed(2);
+              el.innerHTML = tval;
+              el.style.backgroundColor = mycolors[colorIndex(tval)];
           }
       });
 
@@ -264,6 +273,7 @@
       socket.on('PowerStateString', (msg) => {
           const snumbers = msg.toString().replace('PowerState = ', '');
           const vNumbers = snumbers.split(',');
+          var checkAll = true;
           for (let i = 1; i <= 8; i++) {
               let ps = 'PowerState' + i.toString();
               let ct = 'CheckTEC' + i.toString();
@@ -278,8 +288,15 @@
                   } else {
                       document.getElementById(ps).innerHTML = parseInt(vNumbers[i-1]).toFixed(0);
                       document.getElementById(ct).checked = false;
+                      checkAll = false;
                   }
               }
+          }
+
+          if (checkAll) {
+              document.getElementById("CheckTEC0").checked = true;
+          } else {
+              document.getElementById("CheckTEC0").checked = false;
           }
       });
 
@@ -423,6 +440,14 @@
           if (ss < 10) ss = '0' + ss;
           return yy + "/" + mm + "/" + dd + " " + hh + ":" + mm + ":" + ss + ">";
       }
+
+      function colorIndex(temp){
+          if (temp < -20.) return 0;
+          if (temp < 0.) return 1;
+          if (temp < 20.) return 2;
+          if (temp > 30.) return 3;
+      }
+
     </script>
 
 
