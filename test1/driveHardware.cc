@@ -479,6 +479,9 @@ void driveHardware::ensureSafety() {
     digitalWrite(GPIORED, LOW);
     
     emit signalKillSiren();
+    emit signalSetBackground("T", "white");
+    emit signalSetBackground("DP", "white");
+    emit signalSetBackground("RH", "white");
 #endif    
   }          
 
