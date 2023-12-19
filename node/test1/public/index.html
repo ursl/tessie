@@ -111,15 +111,15 @@
 
         <tr>
           <td> Temp_Set [C] </td>
-          <td> <input id="Temp_Set0" maxlength="4" size="4" value="all" onchange="chgTemp_Set(0,this.value)"> </td>
-          <td> <input id="Temp_Set1" maxlength="4" size="4" value="wait" onchange="chgTemp_Set(1,this.value)"> </td>
-          <td> <input id="Temp_Set2" maxlength="4" size="4" value="wait" onchange="chgTemp_Set(2,this.value)"> </td>
-          <td> <input id="Temp_Set3" maxlength="4" size="4" value="wait" onchange="chgTemp_Set(3,this.value)"> </td>
-          <td> <input id="Temp_Set4" maxlength="4" size="4" value="wait" onchange="chgTemp_Set(4,this.value)"> </td>
-          <td> <input id="Temp_Set5" maxlength="4" size="4" value="wait" onchange="chgTemp_Set(5,this.value)"> </td>
-          <td> <input id="Temp_Set6" maxlength="4" size="4" value="wait" onchange="chgTemp_Set(6,this.value)"> </td>
-          <td> <input id="Temp_Set7" maxlength="4" size="4" value="wait" onchange="chgTemp_Set(7,this.value)"> </td>
-          <td> <input id="Temp_Set8" maxlength="4" size="4" value="wait" onchange="chgTemp_Set(8,this.value)"> </td>
+          <td> <input id="Temp_Set0" maxlength="4" size="5" value="all" onchange="chgTemp_Set(0,this.value)"> </td>
+          <td> <input id="Temp_Set1" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(1,this.value)"> </td>
+          <td> <input id="Temp_Set2" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(2,this.value)"> </td>
+          <td> <input id="Temp_Set3" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(3,this.value)"> </td>
+          <td> <input id="Temp_Set4" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(4,this.value)"> </td>
+          <td> <input id="Temp_Set5" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(5,this.value)"> </td>
+          <td> <input id="Temp_Set6" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(6,this.value)"> </td>
+          <td> <input id="Temp_Set7" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(7,this.value)"> </td>
+          <td> <input id="Temp_Set8" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(8,this.value)"> </td>
         </tr>
        
         <tr>
@@ -215,12 +215,6 @@
       // (new Audio(mp3_url)).play();
 
 
-      let mycolors = [];
-      mycolors.push('Blue');
-      mycolors.push('Green');
-      mycolors.push('Yellow');
-      mycolors.push('Red');
-      
       const socket = io.connect();
       const valve0 = document.getElementById('valve0');
       const valve1 = document.getElementById('valve1');
@@ -441,11 +435,29 @@
           return yy + "/" + mm + "/" + dd + " " + hh + ":" + mm + ":" + ss + ">";
       }
 
+      let mycolors = [];
+      mycolors.push('rgb(  0,   0, 250)');
+      mycolors.push('rgb( 20,  80, 250)');
+      mycolors.push('rgb( 20, 250, 250)');
+      mycolors.push('rgb( 20, 240, 180)');
+      mycolors.push('rgb( 10, 200,  10)');
+      mycolors.push('rgb( 80, 240,   0)');
+      mycolors.push('rgb(240, 240,   0)');
+      mycolors.push('rgb(240,  80,   0)');
+      mycolors.push('rgb(240,   0,   0)');
+      
+
+      
       function colorIndex(temp){
-          if (temp < -20.) return 0;
-          if (temp < 0.) return 1;
-          if (temp < 20.) return 2;
-          if (temp > 30.) return 3;
+          if (temp < -30.) return 0;
+          if (temp < -20.) return 1;
+          if (temp < -10.) return 2;
+          if (temp < 0.) return 3;
+          if (temp < 10.) return 4;
+          if (temp < 20.) return 5;
+          if (temp < 30.) return 6;
+          if (temp < 40.) return 7;
+          if (temp > 40.) return 8;
       }
 
     </script>
