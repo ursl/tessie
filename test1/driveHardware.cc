@@ -121,8 +121,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   // -- create I2C bus
   cout << "Open I2C bus for SHT85" << endl;
 
-  //  char *bus = "/dev/i2c-0";
-  char *bus = "/dev/i2c-3";
+  //  const char *bus = "/dev/i2c-0";
+  const char *bus = "/dev/i2c-3";
   if ((fSHT85File = open(bus, O_RDWR)) < 0) {
     cout << "Failed to open the bus." << endl;
     exit(1);
@@ -456,7 +456,7 @@ void driveHardware::ensureSafety() {
       stringstream a("==ALARM== module " + to_string(itec) + " temperature = " +
                      to_string(mtemp) +
                      " is too close to dew point = " +
-                     to_string(fSHT85DP)
+                     to_string(fSHT85DP) +
                      ", air temperature = " +
                      to_string(fSHT85Temp)
                      );
