@@ -193,11 +193,11 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   }
 
   //4.Define receive rules
-  struct can_filter rfilter[1];
-  rfilter[0].can_id = 0x000;
-  rfilter[0].can_mask = CAN_SFF_MASK;
+  //  struct can_filter rfilter[1];
+  //  rfilter[0].can_id = 0x000;
+  //  rfilter[0].can_mask = CAN_SFF_MASK;
   // -- this does not work with the new CANBUS protocol?!
-  // setsockopt(fSr, SOL_CAN_RAW, CAN_RAW_FILTER, &rfilter, sizeof(rfilter));
+  //  setsockopt(fSr, SOL_CAN_RAW, CAN_RAW_FILTER, &rfilter, sizeof(rfilter));
 
 
   // -- add timeout?
