@@ -1791,27 +1791,25 @@ void driveHardware::readSHT85() {
     // -- convert the data
     //double cTemp = (((fSHT85Data[0] * 256) + fSHT85Data[1]) * 175.0) / 65535.0  - 45.0;
     //double humidity = (((fSHT85Data[3] * 256) + fSHT85Data[4])) * 100.0 / 65535.0;
-    double norm = 65535.0;
-    double st   = (fSHT85Data[0]<<8) + fSHT85Data[1];
+    double norm     = 65535.0;
+    double st       = (fSHT85Data[0]<<8) + fSHT85Data[1];
     double tmpTemp  = (st * 175.0) / norm  - 45.0;
-    if ((tmpTemp > 100.) || (tmpTemp < -50.)) {
-      stringstream a("Unphysical data read from SHT85. Temperature =  " + to_string(tmpTemp));
+    uint8_t crcRead = crc(fSHT85Data[0], 2);
+    if (crcRead != fSHT85Data[2]) {
+      stringstream a("CRC check failed, ignoring read temperature  " + to_string(tmpTemp));
       fLOG(WARNING, a.str());
     } else {
-      fSHT85Temp   = tmpTemp;
-      st           = (fSHT85Data[3]<<8) + fSHT85Data[4];
-      double tmpRH = (st * 100.0) / norm;
-      if (tmpRH > 99.) {
-        stringstream a("Unphysical data read from SHT85. RH =  " + to_string(tmpRH));
+      fSHT85Temp      = tmpTemp;
+      st              = (fSHT85Data[3]<<8) + fSHT85Data[4];
+      double tmpRH    = (st * 100.0) / norm;
+      uint8_t crcRead = crc(fSHT85Data[3], 2);
+      if (crcRead != fSHT85Data[5]) {
+        stringstream a("CRC check failed, ignoring read RH  " + to_string(tmpRH));
         fLOG(WARNING, a.str());
       } else {
         fSHT85RH  = tmpRH;
       }
       fSHT85DP    = calcDP(1);
-      if ((1. - fSHT85DP/fSHT85Temp) < 0.01) {
-        stringstream a("Unphysical data read from SHT85. RH =  " + to_string(fSHT85RH));
-        fLOG(WARNING, a.str());
-      }
     }
     
     // -- print
@@ -1995,4 +1993,21 @@ float driveHardware::calcDP(int mode) {
   }
 
   return static_cast<float>(dp);
+}
+
+// ----------------------------------------------------------------------
+// https://stackoverflow.com/questions/51752284/how-to-calculate-crc8-in-c
+uint8_t driveHardware::crc(uint8_t *data, size_t len) {
+  uint8_t crc = 0xff;
+  size_t i, j;
+  for (i = 0; i < len; i++) {
+    crc ^= data[i];
+    for (j = 0; j < 8; j++) {
+      if ((crc & 0x80) != 0)
+        crc = (uint8_t)((crc << 1) ^ 0x31);
+      else
+        crc <<= 1;
+    }
+  }
+  return crc;
 }
