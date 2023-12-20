@@ -8,7 +8,7 @@ else
   MQTTLIBDIR = -L/usr/lib/arm-linux-gnueabihf/ -lmosquittopp 
 endif
 
-all: can_send can_receive
+all: can_send can_receive rpi_i2c
 
 can_send:can_send.c 
 	    $(CXX) $(CFLAGS) -o $@ $^ 
