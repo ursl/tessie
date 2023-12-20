@@ -23,7 +23,7 @@ i2ctest2: i2ctest2.c
 	gcc -o $@  $^
 
 rpi_i2c: rpi_i2c.c
-	gcc -o $@  $^
+	gcc -o $@  $^ -lbcm_host
 
 container: container.cc
 	$(CXX) $(CFLAGS) -o $@  $^
