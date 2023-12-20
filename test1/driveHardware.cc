@@ -1794,7 +1794,7 @@ void driveHardware::readSHT85() {
     double norm     = 65535.0;
     double st       = (fSHT85Data[0]<<8) + fSHT85Data[1];
     double tmpTemp  = (st * 175.0) / norm  - 45.0;
-    uint8_t crcRead = crc(fSHT85Data[0], 2);
+    uint8_t crcRead = crc(&fSHT85Data[0], 2);
     if (crcRead != fSHT85Data[2]) {
       stringstream a("CRC check failed, ignoring read temperature  " + to_string(tmpTemp));
       fLOG(WARNING, a.str());
@@ -1802,7 +1802,7 @@ void driveHardware::readSHT85() {
       fSHT85Temp      = tmpTemp;
       st              = (fSHT85Data[3]<<8) + fSHT85Data[4];
       double tmpRH    = (st * 100.0) / norm;
-      uint8_t crcRead = crc(fSHT85Data[3], 2);
+      uint8_t crcRead = crc(&fSHT85Data[3], 2);
       if (crcRead != fSHT85Data[5]) {
         stringstream a("CRC check failed, ignoring read RH  " + to_string(tmpRH));
         fLOG(WARNING, a.str());
