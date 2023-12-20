@@ -22,6 +22,9 @@ i2ctest: i2ctest.c
 i2ctest2: i2ctest2.c
 	gcc -o $@  $^
 
+rpi_i2c: rpi_i2c.c
+	gcc -o $@  $^
+
 container: container.cc
 	$(CXX) $(CFLAGS) -o $@  $^
 
