@@ -1795,8 +1795,7 @@ void driveHardware::readSHT85() {
     double st   = (fSHT85Data[0]<<8) + fSHT85Data[1];
     double tmpTemp  = (st * 175.0) / norm  - 45.0;
     if ((tmpTemp > 100.) || (tmpTemp < -50.)) {
-      stringstream a("Unphysical data read from SHT85. Temperature =  " + to_string(tmpTemp)
-                     );
+      stringstream a("Unphysical data read from SHT85. Temperature =  " + to_string(tmpTemp));
       fLOG(WARNING, a.str());
     } else {
       fSHT85Temp  = tmpTemp;
@@ -1804,8 +1803,7 @@ void driveHardware::readSHT85() {
       fSHT85RH    = (st * 100.0) / norm;
       fSHT85DP    = calcDP(1);
       if ((1. - fSHT85DP/fSHT85Temp) < 0.01) {
-        stringstream a("Unphysical data read from SHT85. RH =  " +
-                       to_string(fSHT85RH));
+        stringstream a("Unphysical data read from SHT85. RH =  " + to_string(fSHT85RH));
         fLOG(WARNING, a.str());
       }
     }
@@ -1859,9 +1857,7 @@ void driveHardware::readVProbe(int pos) {
   double v[16] = {0}; 
   
   int ipos = pos - 1;
-  // cout << "pos = " << pos << " ipos = " << ipos << endl;
   int addresses[] = {((0x3<<4) | (2*ipos)), ((0x3<<4) | (2*ipos+1))};
-  // cout << "reading from addresses 0x" << hex << addresses[0] << " and 0x" << addresses[1] << dec << " ";
 
   for (int iaddr = 0; iaddr < 2; ++iaddr) {
     if (0 == iaddr)
