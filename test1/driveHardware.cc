@@ -1798,9 +1798,15 @@ void driveHardware::readSHT85() {
       stringstream a("Unphysical data read from SHT85. Temperature =  " + to_string(tmpTemp));
       fLOG(WARNING, a.str());
     } else {
-      fSHT85Temp  = tmpTemp;
-      st          = (fSHT85Data[3]<<8) + fSHT85Data[4];
-      fSHT85RH    = (st * 100.0) / norm;
+      fSHT85Temp   = tmpTemp;
+      st           = (fSHT85Data[3]<<8) + fSHT85Data[4];
+      double tmpRH = (st * 100.0) / norm;
+      if (tmpRH > 99.) {
+        stringstream a("Unphysical data read from SHT85. RH =  " + to_string(tmpRH));
+        fLOG(WARNING, a.str());
+      } else {
+        fSHT85RH  = tmpRH;
+      }
       fSHT85DP    = calcDP(1);
       if ((1. - fSHT85DP/fSHT85Temp) < 0.01) {
         stringstream a("Unphysical data read from SHT85. RH =  " + to_string(fSHT85RH));
