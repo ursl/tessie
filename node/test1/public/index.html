@@ -97,6 +97,19 @@
         </tr>
 
         <tr>
+          <td>Mode (0=T, 1=V)</td>
+          <td> <input id="Mode0" maxlength="3" size="3" onchange="chgMode(0,this.value)"></td>
+          <td> <input id="Mode1" maxlength="3" size="3" onchange="chgMode(1,this.value)"></td>
+          <td> <input id="Mode2" maxlength="3" size="3" onchange="chgMode(2,this.value)"></td>
+          <td> <input id="Mode3" maxlength="3" size="3" onchange="chgMode(3,this.value)"></td>
+          <td> <input id="Mode4" maxlength="3" size="3" onchange="chgMode(4,this.value)"></td>
+          <td> <input id="Mode5" maxlength="3" size="3" onchange="chgMode(5,this.value)"></td>
+          <td> <input id="Mode6" maxlength="3" size="3" onchange="chgMode(6,this.value)"></td>
+          <td> <input id="Mode7" maxlength="3" size="3" onchange="chgMode(7,this.value)"></td>
+          <td> <input id="Mode8" maxlength="3" size="3" onchange="chgMode(8,this.value)"></td>
+        </tr>
+
+        <tr>
           <td>ControlVoltage_Set [V]</td>
           <td> <input id="ControlVoltage_Set0" maxlength="4" size="4" value="all" onchange="chgControlVoltage_Set(0,this.value)"></td>
           <td> <input id="ControlVoltage_Set1" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(1,this.value)"></td>
@@ -149,16 +162,81 @@
         </tr>
 
         <tr>
-          <td>Mode (0=T, 1=V)</td>
-          <td> <input id="Mode0" maxlength="3" size="3" onchange="chgMode(0,this.value)"></td>
-          <td> <input id="Mode1" maxlength="3" size="3" onchange="chgMode(1,this.value)"></td>
-          <td> <input id="Mode2" maxlength="3" size="3" onchange="chgMode(2,this.value)"></td>
-          <td> <input id="Mode3" maxlength="3" size="3" onchange="chgMode(3,this.value)"></td>
-          <td> <input id="Mode4" maxlength="3" size="3" onchange="chgMode(4,this.value)"></td>
-          <td> <input id="Mode5" maxlength="3" size="3" onchange="chgMode(5,this.value)"></td>
-          <td> <input id="Mode6" maxlength="3" size="3" onchange="chgMode(6,this.value)"></td>
-          <td> <input id="Mode7" maxlength="3" size="3" onchange="chgMode(7,this.value)"></td>
-          <td> <input id="Mode8" maxlength="3" size="3" onchange="chgMode(8,this.value)"></td>
+          <td>Supply_U</td>
+          <td> </td>
+          <td id="Supply_U1">wait </td>
+          <td id="Supply_U2">wait </td>
+          <td id="Supply_U3">wait </td>
+          <td id="Supply_U4">wait </td>
+          <td id="Supply_U5">wait </td>
+          <td id="Supply_U6">wait </td>
+          <td id="Supply_U7">wait </td>
+          <td id="Supply_U8">wait </td>
+        </tr>
+
+        <tr>
+          <td>Supply_P</td>
+          <td> </td>
+          <td id="Supply_P1">wait </td>
+          <td id="Supply_P2">wait </td>
+          <td id="Supply_P3">wait </td>
+          <td id="Supply_P4">wait </td>
+          <td id="Supply_P5">wait </td>
+          <td id="Supply_P6">wait </td>
+          <td id="Supply_P7">wait </td>
+          <td id="Supply_P8">wait </td>
+        </tr>
+
+        <tr>
+          <td>Peltier_U</td>
+          <td> </td>
+          <td id="Peltier_U1">wait </td>
+          <td id="Peltier_U2">wait </td>
+          <td id="Peltier_U3">wait </td>
+          <td id="Peltier_U4">wait </td>
+          <td id="Peltier_U5">wait </td>
+          <td id="Peltier_U6">wait </td>
+          <td id="Peltier_U7">wait </td>
+          <td id="Peltier_U8">wait </td>
+        </tr>
+
+        <tr>
+          <td>Peltier_P</td>
+          <td> </td>
+          <td id="Peltier_P1">wait </td>
+          <td id="Peltier_P2">wait </td>
+          <td id="Peltier_P3">wait </td>
+          <td id="Peltier_P4">wait </td>
+          <td id="Peltier_P5">wait </td>
+          <td id="Peltier_P6">wait </td>
+          <td id="Peltier_P7">wait </td>
+          <td id="Peltier_P8">wait </td>
+        </tr>
+
+        <tr>
+          <td>Peltier_I</td>
+          <td> </td>
+          <td id="Peltier_I1">wait </td>
+          <td id="Peltier_I2">wait </td>
+          <td id="Peltier_I3">wait </td>
+          <td id="Peltier_I4">wait </td>
+          <td id="Peltier_I5">wait </td>
+          <td id="Peltier_I6">wait </td>
+          <td id="Peltier_I7">wait </td>
+          <td id="Peltier_I8">wait </td>
+        </tr>
+        
+        <tr>
+          <td>Peltier_R</td>
+          <td> </td>
+          <td id="Peltier_R1">wait </td>
+          <td id="Peltier_R2">wait </td>
+          <td id="Peltier_R3">wait </td>
+          <td id="Peltier_R4">wait </td>
+          <td id="Peltier_R5">wait </td>
+          <td id="Peltier_R6">wait </td>
+          <td id="Peltier_R7">wait </td>
+          <td id="Peltier_R8">wait </td>
         </tr>
 
         <tr>
@@ -304,6 +382,73 @@
           }
       });
 
+      socket.on('Supply_UString', (msg) => {
+          const snumbers = msg.toString().replace('Supply_U = ', '');
+          const vNumbers = snumbers.split(',');
+          for (let i = 1; i <= 8; i++) {
+              let tm = 'Supply_U' + i.toString();
+              var el = document.getElementById(tm);
+              var tval = parseFloat(vNumbers[i-1]).toFixed(2);
+              el.innerHTML = tval;
+          }
+      });
+
+      socket.on('Supply_PString', (msg) => {
+          const snumbers = msg.toString().replace('Supply_P = ', '');
+          const vNumbers = snumbers.split(',');
+          for (let i = 1; i <= 8; i++) {
+              let tm = 'Supply_P' + i.toString();
+              var el = document.getElementById(tm);
+              var tval = parseFloat(vNumbers[i-1]).toFixed(2);
+              el.innerHTML = tval;
+          }
+      });
+
+      socket.on('Peltier_PString', (msg) => {
+          const snumbers = msg.toString().replace('Peltier_P = ', '');
+          const vNumbers = snumbers.split(',');
+          for (let i = 1; i <= 8; i++) {
+              let tm = 'Peltier_P' + i.toString();
+              var el = document.getElementById(tm);
+              var tval = parseFloat(vNumbers[i-1]).toFixed(2);
+              el.innerHTML = tval;
+          }
+      });
+      
+      socket.on('Peltier_UString', (msg) => {
+          const snumbers = msg.toString().replace('Peltier_U = ', '');
+          const vNumbers = snumbers.split(',');
+          for (let i = 1; i <= 8; i++) {
+              let tm = 'Peltier_U' + i.toString();
+              var el = document.getElementById(tm);
+              var tval = parseFloat(vNumbers[i-1]).toFixed(2);
+              el.innerHTML = tval;
+          }
+      });
+
+      socket.on('Peltier_IString', (msg) => {
+          const snumbers = msg.toString().replace('Peltier_I = ', '');
+          const vNumbers = snumbers.split(',');
+          for (let i = 1; i <= 8; i++) {
+              let tm = 'Peltier_I' + i.toString();
+              var el = document.getElementById(tm);
+              var tval = parseFloat(vNumbers[i-1]).toFixed(2);
+              el.innerHTML = tval;
+          }
+      });
+
+      socket.on('Peltier_RString', (msg) => {
+          const snumbers = msg.toString().replace('Peltier_R = ', '');
+          const vNumbers = snumbers.split(',');
+          for (let i = 1; i <= 8; i++) {
+              let tm = 'Peltier_R' + i.toString();
+              var el = document.getElementById(tm);
+              var tval = parseFloat(vNumbers[i-1]).toFixed(2);
+              el.innerHTML = tval;
+          }
+      });
+
+      
       socket.on('ModeString', (msg) => {
           const snumbers = msg.toString().replace('Mode = ', '');
           const vNumbers = snumbers.split(',');
