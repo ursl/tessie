@@ -21,7 +21,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   ui->setupUi(this);
 
 
-  ui->labelVersion->setText("2023/12/14-01");
+  ui->labelVersion->setText("2023/12/20-01");
   //ui->labelStatus->setText("OK");
 
   ui->lineEditRunTime->setAlignment(Qt::AlignRight);
@@ -415,7 +415,6 @@ void MainWindow::updateHardwareDisplay() {
   if (fTECExpert) {
     fTECExpert->updateHardwareDisplay();
   }
-
 
   ui->lineEditTemp->setText(QString::number(fpHw->getTemperature(), 'f', 2));
   ui->lineEditTempWater->setText(QString::number(fpHw->getTECRegister(8, "Temp_W"), 'f', 2));

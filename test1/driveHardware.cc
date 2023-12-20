@@ -134,15 +134,6 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   cout << "initial readout SHT85" << endl;
   readSHT85();
 
-#endif
-
-
-  //  cout << "test hex printout: " << hex << 0xBA << dec << endl;
-  // -- eventually read the VProbe card(s)
-  //  for (int i = 1; i <= 8; ++i) readVProbe(i);
-  readVProbe(8);
-  
-#ifdef PI
   // -- write CAN socket
   memset(&fFrameW, 0, sizeof(struct can_frame));
   fSw = socket(PF_CAN, SOCK_RAW, CAN_RAW);
@@ -1787,7 +1778,7 @@ void driveHardware::readSHT85() {
   // -- send high repeatability measurement command
   //    command msb, command lsb(0x2C, 0x06)
   write(fSHT85File, fSHT85Config, 2);
-  std::this_thread::sleep_for(fMilli100);
+  std::this_thread::sleep_for(fMilli10);
 
   // -- read 6 bytes of data
   //    temp msb, temp lsb, temp CRC, humidity msb, humidity lsb, humidity CRC
