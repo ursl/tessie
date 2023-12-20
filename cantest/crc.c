@@ -68,8 +68,8 @@ u8t SMF3000_Crc (u8t data[], u8t nbrOfBytes)
 
 // ----------------------------------------------------------------------
 // https://stackoverflow.com/questions/51752284/how-to-calculate-crc8-in-c
-uint8_t crc(uint8_t *data, size_t len) {
-  uint8_t crc = 0xff;
+char crc(char *data, size_t len) {
+  char crc = 0xff;
   size_t i, j;
   for (i = 0; i < len; i++) {
     crc ^= data[i];
@@ -105,14 +105,14 @@ int main(int argc, char *argv[]) {
   ss << std::hex << sid;
   ss >> id; 
 
-  u8t data[2] = {0};
+  char data[2] = {0};
   data[0] = 0xff & (id>>8);
   data[1] = 0xff&id;
 
   
   cout << "number: " << id << hex << " 0x" << id << dec << endl;
   cout << "bytes: " << hex << static_cast<int>(data[0]) << static_cast<int>(data[1]) << dec << endl;
-  cout << "crc(" << sid << ") = " << hex << static_cast<int>(SMF3000_Crc(data, 2)) << endl;
+  //  cout << "crc(" << sid << ") = " << hex << static_cast<int>(SMF3000_Crc(data, 2)) << endl;
   cout << "crc(" << sid << ") = " << hex << static_cast<int>(crc(data, 2)) << endl;
   return 0;
 }

@@ -1997,8 +1997,8 @@ float driveHardware::calcDP(int mode) {
 
 // ----------------------------------------------------------------------
 // https://stackoverflow.com/questions/51752284/how-to-calculate-crc8-in-c
-uint8_t driveHardware::crc(uint8_t *data, size_t len) {
-  uint8_t crc = 0xff;
+char driveHardware::crc(char *data, size_t len) {
+  char crc = 0xff;
   size_t i, j;
   for (i = 0; i < len; i++) {
     crc ^= data[i];

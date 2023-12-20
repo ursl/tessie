@@ -84,14 +84,14 @@ public:
   void  setTECParameter(float par); // ???
   void  entertainTECs();
 
-  void    setId(int x);
-  void    setRegister(int x);
-  void    setValue(float x);
-  int     getId();
-  int     getRegister();
-  float   getValue();
-  int     getSWVersion(int itec = 0);
-  uint8_t crc(uint8_t *data, size_t len);
+  void   setId(int x);
+  void   setRegister(int x);
+  void   setValue(float x);
+  int    getId();
+  int    getRegister();
+  float  getValue();
+  int    getSWVersion(int itec = 0);
+  char   crc(char *data, size_t len);
 
   // -- environmental data
   void    readSHT85();
