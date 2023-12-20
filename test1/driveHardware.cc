@@ -1800,13 +1800,18 @@ void driveHardware::readSHT85() {
     //double humidity = (((fSHT85Data[3] * 256) + fSHT85Data[4])) * 100.0 / 65535.0;
     double norm = 65535.0;
     double st   = (fSHT85Data[0]<<8) + fSHT85Data[1];
-    fSHT85Temp  = (st * 175.0) / norm  - 45.0;
-
-    st          = (fSHT85Data[3]<<8) + fSHT85Data[4];
-    fSHT85RH    = (st * 100.0) / norm;
-
-    fSHT85DP = calcDP(1);
-
+    double tmpTemp  = (st * 175.0) / norm  - 45.0;
+    if ((tmpTemp > 100.) || (tmpTemp < -50.)) {
+      stringstream a("Unphysical data read from SHT85: " +
+                     to_string(tmpTemp));
+      fLOG(WARNING, a.str());
+    } else {
+      fSHT85Temp  = tmpTemp;
+      st          = (fSHT85Data[3]<<8) + fSHT85Data[4];
+      fSHT85RH    = (st * 100.0) / norm;
+      fSHT85DP    = calcDP(1);
+    }
+    
     // -- print
     if (0) {
       cout << "Temperature in Celsius: " << fSHT85Temp << endl;
