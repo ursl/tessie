@@ -8,7 +8,7 @@ else
   MQTTLIBDIR = -L/usr/lib/arm-linux-gnueabihf/ -lmosquittopp 
 endif
 
-all: can_send can_receive rpi_i2c
+all: can_send can_receive rpi_i2c crc 
 
 can_send:can_send.c 
 	    $(CXX) $(CFLAGS) -o $@ $^ 
@@ -29,6 +29,9 @@ container: container.cc
 	$(CXX) $(CFLAGS) -o $@  $^
 
 prt: prt.cc
+	$(CXX) $(CFLAGS) -o $@  $^
+
+crc: crc.c
 	$(CXX) $(CFLAGS) -o $@  $^
 
 mqtt: mqtt.o

@@ -1,6 +1,10 @@
 #include <sstream>
 #include <iostream>
 
+
+// ----------------------------------------------------------------------
+// -- first part is from Sensirion
+
 //CRC
 #define POLYNOMIAL 0x131 //P(x)=x^8+x^5+x^4+1 = 100110001
 
@@ -59,7 +63,10 @@ u8t SMF3000_Crc (u8t data[], u8t nbrOfBytes)
   }
   return crc;
 }
+// ----------------------------------------------------------------------
 
+
+// ----------------------------------------------------------------------
 // https://stackoverflow.com/questions/51752284/how-to-calculate-crc8-in-c
 uint8_t crc(uint8_t *data, size_t len) {
   uint8_t crc = 0xff;
@@ -75,6 +82,14 @@ uint8_t crc(uint8_t *data, size_t len) {
   }
   return crc;
 }
+
+
+// ----------------------------------------------------------------------
+// ./crc -i 0xbeef
+// number: 48879 0xbeef
+// bytes: beef
+// crc(0xbeef) = 92
+// crc(0xbeef) = 92
 
 int main(int argc, char *argv[]) {
 
@@ -98,7 +113,7 @@ int main(int argc, char *argv[]) {
   cout << "number: " << id << hex << " 0x" << id << dec << endl;
   cout << "bytes: " << hex << static_cast<int>(data[0]) << static_cast<int>(data[1]) << dec << endl;
   cout << "crc(" << sid << ") = " << hex << static_cast<int>(SMF3000_Crc(data, 2)) << endl;
-  cout << "crc(" << sid << ") = " << hex << static_cast<int>(gencrc(data, 2)) << endl;
+  cout << "crc(" << sid << ") = " << hex << static_cast<int>(crc(data, 2)) << endl;
   return 0;
 }
  
