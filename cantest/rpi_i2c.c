@@ -8,6 +8,8 @@
 #define max(a,b)   (((a) > (b)) ? (a) : (b))
 #endif
 
+// from https://github.com/RequestForCoffee/rpi-i2c-timings
+
 // Register layoout is defined in the BCM2711 ARM Peripherals Manual, section 3.2.
 //
 // The manual lists 0x7E804000 as the address for the BSC1 bus (I2C1). This is
