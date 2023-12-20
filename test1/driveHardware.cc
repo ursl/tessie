@@ -398,7 +398,8 @@ void driveHardware::ensureSafety() {
     stringstream a("==ALARM== Box air temperature = " +
                    to_string(fSHT85Temp) +
                    " is too close to dew point = " +
-                   to_string(fSHT85DP));
+                   to_string(fSHT85DP)
+                   );
     fLOG(ERROR, a.str());
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
@@ -456,12 +457,13 @@ void driveHardware::ensureSafety() {
                      to_string(mtemp) +
                      " is too close to dew point = " +
                      to_string(fSHT85DP)
+                     ", air temperature = " +
+                     to_string(fSHT85Temp)
                      );
       fLOG(ERROR, a.str());
       emit signalSendToMonitor(QString::fromStdString(a.str()));
       emit signalSendToServer(QString::fromStdString(a.str()));
       emit signalAlarm();
-      if (0) shutDown();
       QString qtec = QString::fromStdString("tec"+to_string(itec));
       cout << "signalSetBackground(" << qtec.toStdString() << ", red)" << endl;
       emit signalSetBackground(qtec, "red");
