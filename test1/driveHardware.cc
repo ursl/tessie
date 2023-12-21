@@ -58,6 +58,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   gettimeofday(&ftvStart, 0);
   fMilli5   = std::chrono::milliseconds(5);
   fMilli10  = std::chrono::milliseconds(10);
+  fMilli20  = std::chrono::milliseconds(20);
   fMilli100 = std::chrono::milliseconds(100);
 
   fCsvFileName = "tessie.csv";
