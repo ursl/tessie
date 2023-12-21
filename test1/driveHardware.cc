@@ -1778,11 +1778,20 @@ void driveHardware::readSHT85() {
   // -- send high repeatability measurement command
   //    command msb, command lsb(0x2C, 0x06)
   write(fSHT85File, fSHT85Config, 2);
-  std::this_thread::sleep_for(fMilli10);
 
-  // -- read 6 bytes of data
+  // -- try to read 6 bytes of data
   //    temp msb, temp lsb, temp CRC, humidity msb, humidity lsb, humidity CRC
-  if (read(fSHT85File, fSHT85Data, 6) != 6) {
+  int cnt(0);
+  std::this_thread::sleep_for(fMilli20);
+  int length = read(fSHT85File, fSHT85Data, 6);
+  while (cnt < 5) {
+    if (6 == length) break;
+    std::this_thread::sleep_for(fMilli20);
+    length = read(fSHT85File, fSHT85Data, 6);
+    ++cnt;
+  }
+  
+  if (length != 6) {
     fLOG(WARNING, "I2C Error: Input/output Error with SHT85");
     fI2CErrorOld = fI2CErrorCounter;
     ++fI2CErrorCounter;

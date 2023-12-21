@@ -183,7 +183,7 @@ private:
   int fI2CErrorCounter{0}, fI2CErrorOld{0};
 
   // -- timing and wall-clock ticks (or so)
-  std::chrono::milliseconds fMilli5, fMilli10, fMilli100;
+  std::chrono::milliseconds fMilli5, fMilli10, fMilli20, fMilli100;
   struct timeval ftvStart;
   int    fRunCnt;
 
