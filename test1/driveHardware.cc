@@ -1793,7 +1793,8 @@ void driveHardware::readSHT85() {
   }
   
   if (length != 6) {
-    fLOG(WARNING, "I2C Error: Input/output Error with SHT85");
+    fLOG(WARNING, "I2C Error: Input/output Error with SHT85, length = " + to_string(length)
+         + " after " + to_string(cnt) + " read attempts");
     fI2CErrorOld = fI2CErrorCounter;
     ++fI2CErrorCounter;
   } else {
