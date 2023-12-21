@@ -1785,7 +1785,7 @@ void driveHardware::readSHT85() {
   int cnt(0);
   std::this_thread::sleep_for(fMilli20);
   int length = read(fSHT85File, fSHT85Data, 6);
-  while (cnt < 5) {
+  while (cnt < 20) {
     if (6 == length) break;
     std::this_thread::sleep_for(fMilli20);
     length = read(fSHT85File, fSHT85Data, 6);
