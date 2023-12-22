@@ -290,7 +290,8 @@ void driveHardware::doRun() {
     if (tdiff > 1000.) {
       tvOld = tvNew;
       if (0) cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
-      readSHT85();
+      // -- read SHT85 only every 2 seconds!
+      if (tdiff2 > 2000) readSHT85();
 
       // -- read all parameters from CAN
       readAllParamsFromCANPublic();
@@ -1780,10 +1781,11 @@ void driveHardware::readSHT85() {
   //    command msb, command lsb(0x2C, 0x06)
   write(fSHT85File, fSHT85Config, 2);
 
+  std::this_thread::sleep_for(fMilli100);
+
   // -- try to read 6 bytes of data
   //    temp msb, temp lsb, temp CRC, humidity msb, humidity lsb, humidity CRC
   int cnt(0);
-  std::this_thread::sleep_for(fMilli20);
   int length = read(fSHT85File, fSHT85Data, 6);
   while (cnt < 5) {
     if (6 == length) break;
