@@ -122,8 +122,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   // -- create I2C bus
   cout << "Open I2C bus for SHT85" << endl;
 
-  //  const char *bus = "/dev/i2c-0";
-  const char *bus = "/dev/i2c-3";
+  const char *bus = "/dev/i2c-0";
+  //  const char *bus = "/dev/i2c-3";
   if ((fSHT85File = open(bus, O_RDWR)) < 0) {
     cout << "Failed to open the bus." << endl;
     exit(1);
