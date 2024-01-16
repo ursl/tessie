@@ -15,19 +15,19 @@
 #include <fcntl.h>
 
 #ifdef PI
-#include <wiringPi.h>
+//#include <wiringPi.h>
 #include <linux/i2c-dev.h>
 #endif
 
 // -- i2c address of SHT85 sensor
 #define I2C_SHT85_ADDR 0x44
 
-// -- define GPIO pins of side light (BCM addresses!)
-#define GPIORED 0  
-#define GPIOYELLO 2  
-#define GPIOGREEN 3
-#define GPIOPSUEN 5
-#define GPIOINT 4
+// -- define GPIO pins of side light
+#define GPIORED   27 
+#define GPIOYELLO 22 
+#define GPIOGREEN 17
+#define GPIOPSUEN 24
+#define GPIOINT   23
 
 #include <chrono>
 
@@ -95,29 +95,40 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   
 #ifdef PI
 
-  cout << "wiringPiSetup() " << endl;
-  wiringPiSetup();
+  // cout << "wiringPiSetup() " << endl;
+  // wiringPiSetup();
 
   // -- traffic light:
   // green  = tessie running
   // yellow = >0 TEC turned on => think before you open the lid
   // red    = alarm condition active => do something
   
-  pinMode(GPIOGREEN, OUTPUT);
-  pinMode(GPIORED,   OUTPUT);
-  pinMode(GPIOYELLO, OUTPUT);
+  // pinMode(GPIOGREEN, OUTPUT);
+  // pinMode(GPIORED,   OUTPUT);
+  // pinMode(GPIOYELLO, OUTPUT);
   
-  digitalWrite(GPIOGREEN, HIGH);
-  digitalWrite(GPIORED, LOW);
-  digitalWrite(GPIOYELLO, LOW);
+  // digitalWrite(GPIOGREEN, HIGH);
+  // digitalWrite(GPIORED, LOW);
+  // digitalWrite(GPIOYELLO, LOW);
 
-  // -- interlock pin
-  pinMode(GPIOINT,   OUTPUT);
-  digitalWrite(GPIOINT, HIGH);
+  fChip = gpiod_chip_open_by_name("gpiochip0");
 
-  // -- ensure that i2c bus has power!
-  pinMode(GPIOPSUEN, OUTPUT);
-  digitalWrite(GPIOPSUEN, HIGH);
+  fLineRed = gpiod_chip_get_line(fChip, GPIORED);
+  fLineGreen = gpiod_chip_get_line(fChip, GPIOGREEN);
+  fLineYellow = gpiod_chip_get_line(fChip, GPIOYELLO);
+  
+  gpiod_line_set_value(fLineGreen, 0);
+  gpiod_line_set_value(fLineRed, 1);
+  gpiod_line_set_value(fLineYellow, 0);
+ 
+ 
+  // // -- interlock pin
+  // pinMode(GPIOINT,   OUTPUT);
+  // digitalWrite(GPIOINT, HIGH);
+
+  // // -- ensure that i2c bus has power!
+  // pinMode(GPIOPSUEN, OUTPUT);
+  // digitalWrite(GPIOPSUEN, HIGH);
   
   // -- create I2C bus
   cout << "Open I2C bus for SHT85" << endl;
@@ -380,8 +391,8 @@ void driveHardware::ensureSafety() {
     cout << "signalSetBackground(\"T\", red)" << endl;
     emit signalSetBackground("T", "red");
 #ifdef PI
-    digitalWrite(GPIOINT, LOW);
-    digitalWrite(GPIORED, HIGH);
+    // digitalWrite(GPIOINT, LOW);
+    // digitalWrite(GPIORED, HIGH);
 #endif    
   }
 
@@ -400,8 +411,8 @@ void driveHardware::ensureSafety() {
     cout << "signalSetBackground(\"DP\", red)" << endl;
     emit signalSetBackground("DP", "red");
 #ifdef PI
-    digitalWrite(GPIOINT, LOW);
-    digitalWrite(GPIORED, HIGH);
+    // digitalWrite(GPIOINT, LOW);
+    // digitalWrite(GPIORED, HIGH);
 #endif    
   }
 
@@ -417,8 +428,8 @@ void driveHardware::ensureSafety() {
     emit signalSendToServer(QString::fromStdString(a.str()));
     emit signalAlarm();
 #ifdef PI
-    digitalWrite(GPIOINT, LOW);
-    digitalWrite(GPIORED, HIGH);
+    // digitalWrite(GPIOINT, LOW);
+    // digitalWrite(GPIORED, HIGH);
 #endif    
   }
 
@@ -439,8 +450,8 @@ void driveHardware::ensureSafety() {
       cout << "signalSetBackground(" << qtec.toStdString() << ", red)" << endl;
       emit signalSetBackground(qtec, "red");
 #ifdef PI
-      digitalWrite(GPIOINT, LOW);
-      digitalWrite(GPIORED, HIGH);
+      // digitalWrite(GPIOINT, LOW);
+      // digitalWrite(GPIORED, HIGH);
 #endif    
     }
 
@@ -461,8 +472,8 @@ void driveHardware::ensureSafety() {
       cout << "signalSetBackground(" << qtec.toStdString() << ", red)" << endl;
       emit signalSetBackground(qtec, "red");
 #ifdef PI
-    digitalWrite(GPIOINT, LOW);
-    digitalWrite(GPIORED, HIGH);
+    // digitalWrite(GPIOINT, LOW);
+    // digitalWrite(GPIORED, HIGH);
 #endif    
     }
   }
@@ -471,7 +482,7 @@ void driveHardware::ensureSafety() {
     cout << "allOK = " << allOK << ", alarm condition gone, reset siren and red lamp" << endl;
 #ifdef PI
     cout << "set GPIORED = LOW" << endl; 
-    digitalWrite(GPIORED, LOW);
+    // digitalWrite(GPIORED, LOW);
     
     emit signalKillSiren();
     emit signalSetBackground("T", "white");
@@ -567,9 +578,9 @@ void driveHardware::shutDown() {
   // -- don't call this while things are warming up (from a previous shutDown call)
 #ifdef PI
   cout << "driveHardware::shutDown()" << endl;
-  digitalWrite(GPIOGREEN, LOW);
-  digitalWrite(GPIORED, LOW);
-  digitalWrite(GPIOYELLO, LOW);
+  // digitalWrite(GPIOGREEN, LOW);
+  // digitalWrite(GPIORED, LOW);
+  // digitalWrite(GPIOYELLO, LOW);
 
  
   for (int itec = 1; itec <= 8; ++itec) {
@@ -1388,7 +1399,7 @@ void  driveHardware::turnOnTEC(int itec) {
   fTECData[itec].reg["PowerState"].value = 1.;
 
 #ifdef PI
-  digitalWrite(GPIOYELLO, HIGH);
+  // digitalWrite(GPIOYELLO, HIGH);
 #endif    
 
   if (!getStatusFan()) {
@@ -1440,7 +1451,7 @@ void driveHardware::checkFan() {
     // do nothing
   } else {
 #ifdef PI
-    digitalWrite(GPIOYELLO, LOW);
+    // digitalWrite(GPIOYELLO, LOW);
 #endif    
     turnOffFan();
   }
