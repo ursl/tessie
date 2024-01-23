@@ -20,7 +20,6 @@
 #include <sys/socket.h>
 #include <linux/can.h>
 #include <linux/can/raw.h>
-#include <gpiod.h>
 #endif
 
 const unsigned int CANBUS_SHIFT   = 0x200;
@@ -208,12 +207,13 @@ private:
   struct ifreq fIfrR;
   struct can_frame fFrameR;
 
-  struct gpiod_chip *fChip;
-  struct gpiod_line *fLineRed;     // Red LED
-  struct gpiod_line *fLineGreen;   // Green LED
-  struct gpiod_line *fLineYellow;  // Yellow LED
-  struct gpiod_line *fLinePSU;     // power supply unit
-  struct gpiod_line *fLineINT;     // interlock pin
+  int    fPiGPIO;
+  // struct gpiod_chip *fChip;
+  // struct gpiod_line *fLineRed;     // Red LED
+  // struct gpiod_line *fLineGreen;   // Green LED
+  // struct gpiod_line *fLineYellow;  // Yellow LED
+  // struct gpiod_line *fLinePSU;     // power supply unit
+  // struct gpiod_line *fLineINT;     // interlock pin
   
 #endif
 

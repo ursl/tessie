@@ -15,7 +15,7 @@ QMAKE_CXXFLAGS += -std=c++17
 
 CONFIG(PI) {
    DEFINES += PI
-   LIBS += -lgpiod
+   LIBS += -lpigpiod_if2 # -lpigpio
    LIBS += -L/usr/lib/arm-linux-gnueabihf/ -lmosquittopp
 } else {
    LIBS += -L/opt/homebrew/lib -lmosquittopp

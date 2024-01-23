@@ -16,6 +16,8 @@
 
 #ifdef PI
 #include <linux/i2c-dev.h>
+//#include <pigpio.h>
+#include <pigpiod_if2.h>
 #endif
 
 // -- i2c address of SHT85 sensor
@@ -31,6 +33,8 @@
 #define GPIOGREEN 22
 #define GPIOPSUEN 24
 #define GPIOINT   23
+
+#define I2CBUS    0
 
 #include <chrono>
 
@@ -97,43 +101,40 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fAlarmState = 0; 
   
 #ifdef PI
-  fChip = gpiod_chip_open_by_name("gpiochip0");
+  //  int version  = gpioInitialise();
+  fPiGPIO = pigpio_start(NULL, NULL);
+    
+  cout << "pigpio_start() = " << fPiGPIO << endl;
+
+  set_mode(fPiGPIO, GPIORED,  PI_OUTPUT);
+  set_mode(fPiGPIO, GPIOGREEN, PI_OUTPUT);
+  set_mode(fPiGPIO, GPIOYELLO, PI_OUTPUT);
+
+  gpio_write(fPiGPIO, GPIORED,   1);
+  gpio_write(fPiGPIO, GPIOGREEN, 1);
+  gpio_write(fPiGPIO, GPIOYELLO, 1);
   
- 
-  fLineRed    = gpiod_chip_get_line(fChip, GPIORED);
-  fLineGreen  = gpiod_chip_get_line(fChip, GPIOGREEN);
-  fLineYellow = gpiod_chip_get_line(fChip, GPIOYELLO);
+  set_mode(fPiGPIO, GPIOPSUEN, PI_OUTPUT);
+  gpio_write(fPiGPIO, GPIOPSUEN, 1);
 
-  fLinePSU    = gpiod_chip_get_line(fChip, GPIOPSUEN);
-  fLineINT    = gpiod_chip_get_line(fChip, GPIOINT);
-
-  gpiod_line_request_output(fLineRed, "tessie", 0);
-  gpiod_line_request_output(fLineGreen, "tessie", 0);
-  gpiod_line_request_output(fLineYellow, "tessie", 0);
-  gpiod_line_request_output(fLinePSU, "tessie", 0);
-  gpiod_line_request_output(fLineINT, "tessie", 0);
+  set_mode(fPiGPIO, GPIOINT, PI_OUTPUT);
+  gpio_write(fPiGPIO, GPIOINT, 1);
 
   lighting(1);
 
-  gpiod_line_set_value(fLineGreen, 1);
-  gpiod_line_set_value(fLineRed, 0);
-  gpiod_line_set_value(fLineYellow, 0);
+  gpio_write(fPiGPIO, GPIOGREEN,  1);
 
-  gpiod_line_set_value(fLinePSU, 1);
-  gpiod_line_set_value(fLineINT, 1);
- 
-  
   // -- create I2C bus
-  cout << "Open I2C bus for SHT85" << endl;
+  //  cout << "Open I2C bus for SHT85" << endl;
 
-  const char *bus = "/dev/i2c-0";
+  //  const char *bus = "/dev/i2c-0";
   //  const char *bus = "/dev/i2c-3";
-  if ((fSHT85File = open(bus, O_RDWR)) < 0) {
-    cout << "Failed to open the bus." << endl;
-    exit(1);
-  } else {
-    cout << "I2C bus opened with fSHT85File = " << fSHT85File << endl;
-  }
+  //  if ((fSHT85File = open(bus, O_RDWR)) < 0) {
+  //    cout << "Failed to open the bus." << endl;
+  //    exit(1);
+  //  } else {
+  //    cout << "I2C bus opened with fSHT85File = " << fSHT85File << endl;
+  //  }
 
   // -- read Sensirion SHT85 humidity/temperature sensor
   cout << "initial readout SHT85" << endl;
@@ -384,9 +385,9 @@ void driveHardware::ensureSafety() {
     cout << "signalSetBackground(\"T\", red)" << endl;
     emit signalSetBackground("T", "red");
 #ifdef PI
-    gpiod_line_set_value(fLineRed, 1);
-    gpiod_line_set_value(fLineGreen, 0);
-    gpiod_line_set_value(fLineINT, 0);
+    // gpioWrite(GPIORED, 1);
+    // gpioWrite(GPIOGREEN, 0);
+    // gpioWrite(GPIOINT, 0);
 #endif    
   }
 
@@ -405,9 +406,9 @@ void driveHardware::ensureSafety() {
     cout << "signalSetBackground(\"DP\", red)" << endl;
     emit signalSetBackground("DP", "red");
 #ifdef PI
-    gpiod_line_set_value(fLineINT, 0);
-    gpiod_line_set_value(fLineRed, 1);
-    gpiod_line_set_value(fLineGreen, 0);
+    // gpioWrite(GPIORED, 1);
+    // gpioWrite(GPIOGREEN, 0);
+    // gpioWrite(GPIOINT, 0);
 #endif    
   }
 
@@ -423,9 +424,9 @@ void driveHardware::ensureSafety() {
     emit signalSendToServer(QString::fromStdString(a.str()));
     emit signalAlarm();
 #ifdef PI
-  gpiod_line_set_value(fLineINT, 0);
-  gpiod_line_set_value(fLineRed, 1);
-  gpiod_line_set_value(fLineGreen, 0);
+    // gpioWrite(GPIORED, 1);
+    // gpioWrite(GPIOGREEN, 0);
+    // gpioWrite(GPIOINT, 0);
 #endif    
   }
 
@@ -446,9 +447,9 @@ void driveHardware::ensureSafety() {
       cout << "signalSetBackground(" << qtec.toStdString() << ", red)" << endl;
       emit signalSetBackground(qtec, "red");
 #ifdef PI
-      gpiod_line_set_value(fLineINT, 0);
-      gpiod_line_set_value(fLineRed, 1);
-      gpiod_line_set_value(fLineGreen, 0);
+      // gpioWrite(GPIORED, 1);
+      // gpioWrite(GPIOGREEN, 0);
+      // gpioWrite(GPIOINT, 0);
 #endif    
     }
 
@@ -469,9 +470,9 @@ void driveHardware::ensureSafety() {
       cout << "signalSetBackground(" << qtec.toStdString() << ", red)" << endl;
       emit signalSetBackground(qtec, "red");
 #ifdef PI
-      gpiod_line_set_value(fLineINT, 0);
-      gpiod_line_set_value(fLineRed, 1);
-      gpiod_line_set_value(fLineGreen, 0);
+      // gpioWrite(GPIORED, 1);
+      // gpioWrite(GPIOGREEN, 0);
+      // gpioWrite(GPIOINT, 0);
 #endif    
     }
   }
@@ -480,9 +481,9 @@ void driveHardware::ensureSafety() {
     cout << "allOK = " << allOK << ", alarm condition gone, reset siren and red lamp" << endl;
 #ifdef PI
     cout << "set GPIORED = LOW" << endl; 
-    // digitalWrite(GPIORED, LOW);
-    gpiod_line_set_value(fLineRed, 0);
-    gpiod_line_set_value(fLineGreen, 1);
+    // gpioWrite(GPIORED, 0);
+    // gpioWrite(GPIOGREEN, 1);
+    // gpioWrite(GPIOINT, 1);
     
     emit signalKillSiren();
     emit signalSetBackground("T", "white");
@@ -578,10 +579,16 @@ void driveHardware::shutDown() {
   // -- don't call this while things are warming up (from a previous shutDown call)
 #ifdef PI
   cout << "driveHardware::shutDown()" << endl;
-  gpiod_line_set_value(fLineGreen, 0);
-  gpiod_line_set_value(fLineRed, 0);
-  gpiod_line_set_value(fLineYellow, 0);
- 
+  // gpioWrite(GPIORED, 0);
+  // gpioWrite(GPIOGREEN, 0);
+  // gpioWrite(GPIOYELLO, 0);
+  // gpioWrite(GPIOINT, 0);
+
+  gpio_write(fPiGPIO, GPIORED,   0);
+  gpio_write(fPiGPIO, GPIOGREEN, 0);
+  gpio_write(fPiGPIO, GPIOYELLO, 0);
+
+  
   for (int itec = 1; itec <= 8; ++itec) {
     turnOffTEC(itec);
     std::this_thread::sleep_for(fMilli5);
@@ -1398,7 +1405,7 @@ void  driveHardware::turnOnTEC(int itec) {
   fTECData[itec].reg["PowerState"].value = 1.;
 
 #ifdef PI
-  gpiod_line_set_value(fLineYellow, 1);
+  // gpioWrite(GPIOYELLO, 1);
 #endif    
 
   if (!getStatusFan()) {
@@ -1450,7 +1457,7 @@ void driveHardware::checkFan() {
     // do nothing
   } else {
 #ifdef PI
-    gpiod_line_set_value(fLineYellow, 0);
+    // gpioWrite(GPIOYELLO, 0);
 #endif    
     turnOffFan();
   }
@@ -1784,6 +1791,15 @@ string driveHardware::timeStamp(bool filestamp) {
 // ----------------------------------------------------------------------
 void driveHardware::readSHT85() {
 #ifdef PI
+
+  // int handle = i2cOpen(I2CBUS, I2C_SHT85_ADDR, 0);
+  // i2cWriteDevice(handle, fSHT85Config, 2);
+ 
+  // i2cReadDevice(handle, fSHT85Data, 6);
+  
+  // i2cClose(handle);
+  return;
+  
   // -- set SHT85 I2C address
   ioctl(fSHT85File, I2C_SLAVE, I2C_SHT85_ADDR);
 
@@ -1791,6 +1807,7 @@ void driveHardware::readSHT85() {
   //    command msb, command lsb(0x2C, 0x06)
   write(fSHT85File, fSHT85Config, 2);
 
+  
   std::this_thread::sleep_for(fMilli100);
 
   // -- try to read 6 bytes of data
@@ -2039,21 +2056,24 @@ char driveHardware::crc(char *data, size_t len) {
 // ----------------------------------------------------------------------
 void driveHardware::lighting(int imode) {
   if (1 == imode) {
-    gpiod_line_set_value(fLineGreen, 0);
-    gpiod_line_set_value(fLineYellow, 0);
-    gpiod_line_set_value(fLineRed, 0);
+    std::this_thread::sleep_for(2*fMilli100);
+    gpio_write(fPiGPIO, GPIOGREEN, 0);
+    gpio_write(fPiGPIO, GPIOYELLO, 0);
+    gpio_write(fPiGPIO, GPIORED,   0);
 
-    gpiod_line_set_value(fLineGreen, 1);
-    std::this_thread::sleep_for(2*fMilli100);
-    gpiod_line_set_value(fLineYellow, 1);
-    std::this_thread::sleep_for(2*fMilli100);
-    gpiod_line_set_value(fLineRed, 1);
-    std::this_thread::sleep_for(2*fMilli100);
-    gpiod_line_set_value(fLineRed, 0);
-    std::this_thread::sleep_for(2*fMilli100);
-    gpiod_line_set_value(fLineYellow, 0);
-    std::this_thread::sleep_for(2*fMilli100);
-    gpiod_line_set_value(fLineGreen, 0);
-    std::this_thread::sleep_for(5*fMilli100);
+    for (int i = 0; i < 2; ++i) {
+      gpio_write(fPiGPIO, GPIOGREEN, 1);
+      std::this_thread::sleep_for(2*fMilli100);
+      gpio_write(fPiGPIO, GPIOYELLO, 1);
+      std::this_thread::sleep_for(2*fMilli100);
+      gpio_write(fPiGPIO, GPIORED, 1);
+      std::this_thread::sleep_for(2*fMilli100);
+      gpio_write(fPiGPIO, GPIORED, 0);
+      std::this_thread::sleep_for(2*fMilli100);
+      gpio_write(fPiGPIO, GPIOYELLO, 0);
+      std::this_thread::sleep_for(2*fMilli100);
+      gpio_write(fPiGPIO, GPIOGREEN, 0);
+      std::this_thread::sleep_for(2*fMilli100);
+    }
   }
 }
