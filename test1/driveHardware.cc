@@ -15,8 +15,6 @@
 #include <fcntl.h>
 
 #ifdef PI
-#include <linux/i2c-dev.h>
-//#include <pigpio.h>
 #include <pigpiod_if2.h>
 #endif
 
@@ -101,7 +99,6 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fAlarmState = 0; 
   
 #ifdef PI
-  //  int version  = gpioInitialise();
   fPiGPIO = pigpio_start(NULL, NULL);
     
   cout << "pigpio_start() = " << fPiGPIO << endl;
@@ -110,10 +107,6 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   set_mode(fPiGPIO, GPIOGREEN, PI_OUTPUT);
   set_mode(fPiGPIO, GPIOYELLO, PI_OUTPUT);
 
-  gpio_write(fPiGPIO, GPIORED,   1);
-  gpio_write(fPiGPIO, GPIOGREEN, 1);
-  gpio_write(fPiGPIO, GPIOYELLO, 1);
-  
   set_mode(fPiGPIO, GPIOPSUEN, PI_OUTPUT);
   gpio_write(fPiGPIO, GPIOPSUEN, 1);
 
@@ -123,18 +116,6 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   lighting(1);
 
   gpio_write(fPiGPIO, GPIOGREEN,  1);
-
-  // -- create I2C bus
-  //  cout << "Open I2C bus for SHT85" << endl;
-
-  //  const char *bus = "/dev/i2c-0";
-  //  const char *bus = "/dev/i2c-3";
-  //  if ((fSHT85File = open(bus, O_RDWR)) < 0) {
-  //    cout << "Failed to open the bus." << endl;
-  //    exit(1);
-  //  } else {
-  //    cout << "I2C bus opened with fSHT85File = " << fSHT85File << endl;
-  //  }
 
   // -- read Sensirion SHT85 humidity/temperature sensor
   cout << "initial readout SHT85" << endl;
@@ -385,9 +366,9 @@ void driveHardware::ensureSafety() {
     cout << "signalSetBackground(\"T\", red)" << endl;
     emit signalSetBackground("T", "red");
 #ifdef PI
-    // gpioWrite(GPIORED, 1);
-    // gpioWrite(GPIOGREEN, 0);
-    // gpioWrite(GPIOINT, 0);
+    gpio_write(fPiGPIO, GPIORED, 1);
+    gpio_write(fPiGPIO, GPIOGREEN, 0);
+    gpio_write(fPiGPIO, GPIOINT, 0);
 #endif    
   }
 
@@ -406,9 +387,9 @@ void driveHardware::ensureSafety() {
     cout << "signalSetBackground(\"DP\", red)" << endl;
     emit signalSetBackground("DP", "red");
 #ifdef PI
-    // gpioWrite(GPIORED, 1);
-    // gpioWrite(GPIOGREEN, 0);
-    // gpioWrite(GPIOINT, 0);
+    gpio_write(fPiGPIO, GPIORED, 1);
+    gpio_write(fPiGPIO, GPIOGREEN, 0);
+    gpio_write(fPiGPIO, GPIOINT, 0);
 #endif    
   }
 
@@ -424,9 +405,9 @@ void driveHardware::ensureSafety() {
     emit signalSendToServer(QString::fromStdString(a.str()));
     emit signalAlarm();
 #ifdef PI
-    // gpioWrite(GPIORED, 1);
-    // gpioWrite(GPIOGREEN, 0);
-    // gpioWrite(GPIOINT, 0);
+    gpio_write(fPiGPIO, GPIORED, 1);
+    gpio_write(fPiGPIO, GPIOGREEN, 0);
+    gpio_write(fPiGPIO, GPIOINT, 0);
 #endif    
   }
 
@@ -447,9 +428,9 @@ void driveHardware::ensureSafety() {
       cout << "signalSetBackground(" << qtec.toStdString() << ", red)" << endl;
       emit signalSetBackground(qtec, "red");
 #ifdef PI
-      // gpioWrite(GPIORED, 1);
-      // gpioWrite(GPIOGREEN, 0);
-      // gpioWrite(GPIOINT, 0);
+      gpio_write(fPiGPIO, GPIORED, 1);
+      gpio_write(fPiGPIO, GPIOGREEN, 0);
+      gpio_write(fPiGPIO, GPIOINT, 0);
 #endif    
     }
 
@@ -470,9 +451,9 @@ void driveHardware::ensureSafety() {
       cout << "signalSetBackground(" << qtec.toStdString() << ", red)" << endl;
       emit signalSetBackground(qtec, "red");
 #ifdef PI
-      // gpioWrite(GPIORED, 1);
-      // gpioWrite(GPIOGREEN, 0);
-      // gpioWrite(GPIOINT, 0);
+      gpio_write(fPiGPIO, GPIORED, 1);
+      gpio_write(fPiGPIO, GPIOGREEN, 0);
+      gpio_write(fPiGPIO, GPIOINT, 0);
 #endif    
     }
   }
@@ -481,9 +462,9 @@ void driveHardware::ensureSafety() {
     cout << "allOK = " << allOK << ", alarm condition gone, reset siren and red lamp" << endl;
 #ifdef PI
     cout << "set GPIORED = LOW" << endl; 
-    // gpioWrite(GPIORED, 0);
-    // gpioWrite(GPIOGREEN, 1);
-    // gpioWrite(GPIOINT, 1);
+    gpio_write(fPiGPIO, GPIORED, 0);
+    gpio_write(fPiGPIO, GPIOGREEN, 1);
+    gpio_write(fPiGPIO, GPIOINT, 1);
     
     emit signalKillSiren();
     emit signalSetBackground("T", "white");
@@ -579,10 +560,7 @@ void driveHardware::shutDown() {
   // -- don't call this while things are warming up (from a previous shutDown call)
 #ifdef PI
   cout << "driveHardware::shutDown()" << endl;
-  // gpioWrite(GPIORED, 0);
-  // gpioWrite(GPIOGREEN, 0);
-  // gpioWrite(GPIOYELLO, 0);
-  // gpioWrite(GPIOINT, 0);
+  gpio_write(fPiGPIO, GPIOINT, 0);
 
   gpio_write(fPiGPIO, GPIORED,   0);
   gpio_write(fPiGPIO, GPIOGREEN, 0);
@@ -594,6 +572,8 @@ void driveHardware::shutDown() {
     std::this_thread::sleep_for(fMilli5);
   }
 
+  pigpio_stop(fPiGPIO);
+  
   return;
   
 #endif
@@ -606,12 +586,6 @@ void driveHardware::readCAN(int nreads, bool setMutex) {
   int nbytes(0);
 
   bool DBX(false);
-  // if (nreads > 1) DBX = true;
-
-  // static int cntCAN(0);
-  // char data[4] = {0, 0, 0, 0};
-  // unsigned int idata(0);
-  // float fdata(0.0);
 
   ++nreads;
 
@@ -1405,7 +1379,7 @@ void  driveHardware::turnOnTEC(int itec) {
   fTECData[itec].reg["PowerState"].value = 1.;
 
 #ifdef PI
-  // gpioWrite(GPIOYELLO, 1);
+  gpio_write(fPiGPIO, GPIOYELLO, 1);
 #endif    
 
   if (!getStatusFan()) {
@@ -1457,7 +1431,7 @@ void driveHardware::checkFan() {
     // do nothing
   } else {
 #ifdef PI
-    // gpioWrite(GPIOYELLO, 0);
+    gpio_write(fPiGPIO, GPIOYELLO, 0);
 #endif    
     turnOffFan();
   }
@@ -1791,36 +1765,22 @@ string driveHardware::timeStamp(bool filestamp) {
 // ----------------------------------------------------------------------
 void driveHardware::readSHT85() {
 #ifdef PI
+  int length(0), cnt(0);
 
-  // int handle = i2cOpen(I2CBUS, I2C_SHT85_ADDR, 0);
-  // i2cWriteDevice(handle, fSHT85Config, 2);
- 
-  // i2cReadDevice(handle, fSHT85Data, 6);
-  
-  // i2cClose(handle);
-  return;
-  
-  // -- set SHT85 I2C address
-  ioctl(fSHT85File, I2C_SLAVE, I2C_SHT85_ADDR);
-
-  // -- send high repeatability measurement command
-  //    command msb, command lsb(0x2C, 0x06)
-  write(fSHT85File, fSHT85Config, 2);
-
+  int handle = i2c_open(fPiGPIO, I2CBUS, I2C_SHT85_ADDR, 0);
+  int result = i2c_write_device(fPiGPIO, handle, fSHT85Config, 2);
   
   std::this_thread::sleep_for(fMilli100);
-
-  // -- try to read 6 bytes of data
-  //    temp msb, temp lsb, temp CRC, humidity msb, humidity lsb, humidity CRC
-  int cnt(0);
-  int length = read(fSHT85File, fSHT85Data, 6);
+  length = i2c_read_device(fPiGPIO, handle, fSHT85Data, 6);
   while (cnt < 5) {
     if (6 == length) break;
     std::this_thread::sleep_for(fMilli20);
-    length = read(fSHT85File, fSHT85Data, 6);
+    length = i2c_read_device(fPiGPIO, handle, fSHT85Data, 6);
     ++cnt;
   }
-  
+
+  i2c_close(fPiGPIO, handle);
+
   if (length != 6) {
     fLOG(WARNING, "I2C Error: Input/output Error with SHT85, length = " + to_string(length)
          + " after " + to_string(cnt) + " read attempts");
@@ -1872,12 +1832,12 @@ void driveHardware::readVProbe(int pos) {
   // int order[]  =   {6, 5, 9, 10, 11, 7, 8, 12, 4, 3, 2, 13, 14, 26, 8, 1};  
   map<int, int> ord = {{6, 0}, {5, 1}, {9, 2},  {10, 3},  {11, 4},  {7, 5},   {8, 6},  {12, 7},
                        {4, 8}, {3, 9}, {2, 10}, {13, 11}, {14, 12}, {26, 13}, {1, 15}};
-  unsigned char bufferC0[18] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xde, 0xad};
-  unsigned char bufferC1[18] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xde, 0xad};
+  char bufferC0[18] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xde, 0xad};
+  char bufferC1[18] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xde, 0xad};
 
-  unsigned char *buffer(0);
+  char *buffer(0);
   
   if (0) {
     cout << "bufferC0: ";
@@ -1910,9 +1870,12 @@ void driveHardware::readVProbe(int pos) {
       buffer = bufferC1;
     
 #ifdef PI
-    int length(18); // A = 10, B = 11, C = 12, D = 13, E = 14, F = 15
-    ioctl(fSHT85File, I2C_SLAVE, addresses[iaddr]);
-    if (read(fSHT85File, (iaddr == 0? bufferC0 : bufferC1), length) != length) {
+    int lengthExp(18); // A = 10, B = 11, C = 12, D = 13, E = 14, F = 15
+    int handle = i2c_open(fPiGPIO, I2CBUS, addresses[iaddr], 0);
+    int length = i2c_read_device(fPiGPIO, handle, (iaddr == 0? bufferC0 : bufferC1), lengthExp);
+    i2c_close(fPiGPIO, handle);
+
+    if (length != lengthExp) {
       printf("- Failed to read from the VProbe at i2c bus address 0x%x.", addresses[iaddr]);
       cout << endl;
       fVprobeVoltages = "error reading from VPROBE";
@@ -2056,7 +2019,6 @@ char driveHardware::crc(char *data, size_t len) {
 // ----------------------------------------------------------------------
 void driveHardware::lighting(int imode) {
   if (1 == imode) {
-    std::this_thread::sleep_for(2*fMilli100);
     gpio_write(fPiGPIO, GPIOGREEN, 0);
     gpio_write(fPiGPIO, GPIOYELLO, 0);
     gpio_write(fPiGPIO, GPIORED,   0);

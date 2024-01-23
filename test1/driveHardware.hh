@@ -190,7 +190,6 @@ private:
 
   // -- access and data from SHT85
   char fSHT85Data[6], fSHT85Config[2];
-  int  fSHT85File;
   float fSHT85Temp, fSHT85RH, fSHT85DP;
 
   // -- data from VProbe
@@ -208,13 +207,6 @@ private:
   struct can_frame fFrameR;
 
   int    fPiGPIO;
-  // struct gpiod_chip *fChip;
-  // struct gpiod_line *fLineRed;     // Red LED
-  // struct gpiod_line *fLineGreen;   // Green LED
-  // struct gpiod_line *fLineYellow;  // Yellow LED
-  // struct gpiod_line *fLinePSU;     // power supply unit
-  // struct gpiod_line *fLineINT;     // interlock pin
-  
 #endif
 
   // -- all the registers, one element per TEC
