@@ -54,6 +54,7 @@ public:
   void ensureSafety();
   void doWarning(std::string errmsg, bool nothing = false);
   void doAlarm(std::string s); 
+  void lighting(int imode = 0);
   
   std::string timeStamp(bool filestamp = true);
   std::string tStamp() {return timeStamp(false);}

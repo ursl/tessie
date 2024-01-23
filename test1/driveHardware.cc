@@ -23,9 +23,9 @@
 #define I2C_SHT85_ADDR 0x44
 
 // -- define GPIO pins of side light
-#define GPIORED   27 
-#define GPIOYELLO 22 
-#define GPIOGREEN 17
+#define GPIORED   17 
+#define GPIOYELLO 27 
+#define GPIOGREEN 22
 #define GPIOPSUEN 24
 #define GPIOINT   23
 
@@ -94,41 +94,31 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fAlarmState = 0; 
   
 #ifdef PI
-
-  // cout << "wiringPiSetup() " << endl;
-  // wiringPiSetup();
-
-  // -- traffic light:
-  // green  = tessie running
-  // yellow = >0 TEC turned on => think before you open the lid
-  // red    = alarm condition active => do something
-  
-  // pinMode(GPIOGREEN, OUTPUT);
-  // pinMode(GPIORED,   OUTPUT);
-  // pinMode(GPIOYELLO, OUTPUT);
-  
-  // digitalWrite(GPIOGREEN, HIGH);
-  // digitalWrite(GPIORED, LOW);
-  // digitalWrite(GPIOYELLO, LOW);
-
   fChip = gpiod_chip_open_by_name("gpiochip0");
-
-  fLineRed = gpiod_chip_get_line(fChip, GPIORED);
-  fLineGreen = gpiod_chip_get_line(fChip, GPIOGREEN);
-  fLineYellow = gpiod_chip_get_line(fChip, GPIOYELLO);
   
-  gpiod_line_set_value(fLineGreen, 0);
-  gpiod_line_set_value(fLineRed, 1);
-  gpiod_line_set_value(fLineYellow, 0);
  
- 
-  // // -- interlock pin
-  // pinMode(GPIOINT,   OUTPUT);
-  // digitalWrite(GPIOINT, HIGH);
+  fLineRed    = gpiod_chip_get_line(fChip, GPIORED);
+  fLineGreen  = gpiod_chip_get_line(fChip, GPIOGREEN);
+  fLineYellow = gpiod_chip_get_line(fChip, GPIOYELLO);
 
-  // // -- ensure that i2c bus has power!
-  // pinMode(GPIOPSUEN, OUTPUT);
-  // digitalWrite(GPIOPSUEN, HIGH);
+  fLinePSU    = gpiod_chip_get_line(fChip, GPIOPSUEN);
+  fLineINT    = gpiod_chip_get_line(fChip, GPIOINT);
+
+  gpiod_line_request_output(fLineRed, "tessie", 0);
+  gpiod_line_request_output(fLineGreen, "tessie", 0);
+  gpiod_line_request_output(fLineYellow, "tessie", 0);
+  gpiod_line_request_output(fLinePSU, "tessie", 0);
+  gpiod_line_request_output(fLineINT, "tessie", 0);
+
+  lighting(1);
+
+  gpiod_line_set_value(fLineGreen, 1);
+  gpiod_line_set_value(fLineRed, 0);
+  gpiod_line_set_value(fLineYellow, 0);
+
+  gpiod_line_set_value(fLinePSU, 1);
+  gpiod_line_set_value(fLineINT, 1);
+ 
   
   // -- create I2C bus
   cout << "Open I2C bus for SHT85" << endl;
@@ -582,6 +572,9 @@ void driveHardware::shutDown() {
   // digitalWrite(GPIORED, LOW);
   // digitalWrite(GPIOYELLO, LOW);
 
+  gpiod_line_set_value(fLineGreen, 0);
+  gpiod_line_set_value(fLineRed, 0);
+  gpiod_line_set_value(fLineYellow, 0);
  
   for (int itec = 1; itec <= 8; ++itec) {
     turnOffTEC(itec);
@@ -2034,4 +2027,27 @@ char driveHardware::crc(char *data, size_t len) {
     }
   }
   return crc;
+}
+
+
+// ----------------------------------------------------------------------
+void driveHardware::lighting(int imode) {
+  if (1 == imode) {
+    gpiod_line_set_value(fLineGreen, 0);
+    gpiod_line_set_value(fLineYellow, 0);
+    gpiod_line_set_value(fLineRed, 0);
+
+    gpiod_line_set_value(fLineGreen, 1);
+    std::this_thread::sleep_for(2*fMilli100);
+    gpiod_line_set_value(fLineYellow, 1);
+    std::this_thread::sleep_for(2*fMilli100);
+    gpiod_line_set_value(fLineRed, 1);
+    std::this_thread::sleep_for(2*fMilli100);
+    gpiod_line_set_value(fLineRed, 0);
+    std::this_thread::sleep_for(2*fMilli100);
+    gpiod_line_set_value(fLineYellow, 0);
+    std::this_thread::sleep_for(2*fMilli100);
+    gpiod_line_set_value(fLineGreen, 0);
+    std::this_thread::sleep_for(5*fMilli100);
+  }
 }
