@@ -1,6 +1,6 @@
 # How to run the server
 
-- stop apache
+- stop apache (if running)
 - install dependencies
   ```
   sudo apt install npm
