@@ -307,8 +307,8 @@ void driveHardware::doRun() {
       if (nerrs > 0) {
         fCANErrorOld = fCANErrorCounter;
         fCANErrorCounter = nerrs;
-        stringstream a("==CANERROR== CAN frame = " + fCanMsg.getErrorFrame().getString());
-        fLOG(ERROR, a.str());
+        // stringstream a("==CANERROR== CAN frame = " + fCanMsg.getErrorFrame().getString());
+        // fLOG(ERROR, a.str());
 
         deque<string> errs = fCanMsg.getErrors();
         int errRepeat(0);
