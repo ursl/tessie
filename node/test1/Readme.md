@@ -5,7 +5,10 @@
   ```
   sudo apt install npm
   sudo apt install nodejs
-  sudo apt install express
+  ```
+- install pacakges
+  ```
+  npm install --save express socket.io mqtt
   ```
 - run the server
   ```
