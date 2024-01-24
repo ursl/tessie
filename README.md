@@ -151,7 +151,7 @@ mosquitto_sub -h coldbox01 -t "monTessie"
 Only values (changes) outside of a window a published
 
 ## How to setup the automatic startup of tessie and the webserver
-Using `systemctl` create the following two files:
+Using `systemctl` create the following two files (`sudo`!):
 
 ```
 pi@coldbox01:~ $ cat /lib/systemd/system/tessie.service
