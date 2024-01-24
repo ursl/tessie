@@ -2,6 +2,19 @@
 
 Etymology: tessie sounds better than TC (box), for temperature cycling (box)
 
+## Hints on required software
+```shell
+sudo apt install nodejs
+sudo apt install npm
+
+sudo apt-get install pigpio
+
+sudo apt-get install libmosquitto-dev libmosquittopp-dev
+sudo apt install -y mosquitto mosquitto-clients
+
+sudo apt install libqt5charts5 libqt5charts5-dev
+```
+
 ## Hints for compilation and running locally on a coldbox
 
 ```shell
