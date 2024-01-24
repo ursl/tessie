@@ -23,6 +23,7 @@
   Name=TessieWeb
   Exec="cd /home/pi/tessie/node/test1 && node server3.js"
   ```
+  or with `systemctl` (as described in the main tessie README)
 - Connect to this server with  http://coldbox01:3000
   NOTE: http, not https!
   
