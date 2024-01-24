@@ -202,4 +202,4 @@ systemctl status tessie
 systemctl status tessieWeb
 ```
 
-With this setup, you can connect to http://coldbox01:3000 (Note: http, not https!)
+With this setup, you can connect to http://coldbox01:3000 (Note: http, not https!) For more information on the webserver, see https://github.com/ursl/tessie/tree/master/node/test1#readme
