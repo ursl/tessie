@@ -8,6 +8,7 @@
   ```
 - install pacakges
   ```
+  cd tessie/node/test1
   npm install --save express socket.io mqtt
   ```
 - run the server
