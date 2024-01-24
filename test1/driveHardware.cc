@@ -307,6 +307,9 @@ void driveHardware::doRun() {
       if (nerrs > 0) {
         fCANErrorOld = fCANErrorCounter;
         fCANErrorCounter = nerrs;
+        stringstream a("==CANERROR== CAN frame = " + fCanMsg.getErrorFrame().getString());
+        fLOG(ERROR, a.str());
+
         deque<string> errs = fCanMsg.getErrors();
         int errRepeat(0);
         while (errs.size() > 0) {
@@ -1833,9 +1836,9 @@ void driveHardware::readVProbe(int pos) {
   map<int, int> ord = {{6, 0}, {5, 1}, {9, 2},  {10, 3},  {11, 4},  {7, 5},   {8, 6},  {12, 7},
                        {4, 8}, {3, 9}, {2, 10}, {13, 11}, {14, 12}, {26, 13}, {1, 15}};
   char bufferC0[18] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xde, 0xad};
+                       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x65, 0x65};
   char bufferC1[18] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-                       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xde, 0xad};
+                       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x65, 0x65};
 
   char *buffer(0);
   
@@ -2018,6 +2021,7 @@ char driveHardware::crc(char *data, size_t len) {
 
 // ----------------------------------------------------------------------
 void driveHardware::lighting(int imode) {
+#ifdef PI
   if (1 == imode) {
     gpio_write(fPiGPIO, GPIOGREEN, 0);
     gpio_write(fPiGPIO, GPIOYELLO, 0);
@@ -2038,4 +2042,5 @@ void driveHardware::lighting(int imode) {
       std::this_thread::sleep_for(2*fMilli100);
     }
   }
+#endif
 }
