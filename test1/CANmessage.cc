@@ -179,6 +179,7 @@ float CANmessage::getFloat(unsigned int itec, unsigned int ireg) {
     if (0) {
       cout << " pop_front "; fMapFrames[itec][ireg].front().dump(false); cout << endl;
     }
+    fErrorFrame = fMapFrames[itec][ireg].front();
     fMapFrames[itec][ireg].pop_front();
   }
 
@@ -202,6 +203,7 @@ int CANmessage::getInt(unsigned int itec, unsigned int ireg) {
     if (0) {
       cout << " pop_front "; fMapFrames[itec][ireg].front().dump(false); cout << endl;
     }
+    fErrorFrame = fMapFrames[itec][ireg].front();
     fMapFrames[itec][ireg].pop_front();
   }
 
@@ -220,6 +222,7 @@ int CANmessage::getInt(unsigned int itec, unsigned int ireg) {
 int CANmessage::getFRASMessage() {
   int result = fqFRASFrames.size();
   // -- clear it
+  fErrorFrame = fqFRASFrames.front();
   if (result > 0) fqFRASFrames.pop_front();
   return result;
 }
@@ -230,6 +233,7 @@ canFrame CANmessage::getFrame() {
   canFrame result;
   if (fqFrames.size() > 0) {
     result = fqFrames.front();
+    fErrorFrame = result;
     fqFrames.pop_front();
   }
   return result;
@@ -240,6 +244,7 @@ int CANmessage::getAlarm() {
   int result(0);
   if (fqAlarmFrames.size() > 0) {
     result = fqAlarmFrames.front().fAlarm;
+    fErrorFrame = fqAlarmFrames.front();
     fqAlarmFrames.pop_front();
   }
   return result;

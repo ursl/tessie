@@ -41,6 +41,8 @@ public:
   int getAlarm();
   // -- get a raw frame
   canFrame getFrame();
+  // -- get the erroneous frame
+  canFrame getErrorFrame() {return fErrorFrame;}
 
 private:
   std::map<int, std::map<int, std::deque<canFrame>>> fMapFrames;
@@ -51,6 +53,7 @@ private:
 
   int                      fErrorCounter;
   std::deque<std::string>  fqErrors;
+  canFrame                 fErrorFrame;
 };
 
 #endif // CANMESSAGE_HH
