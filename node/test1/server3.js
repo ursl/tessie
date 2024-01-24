@@ -3,6 +3,7 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const mqtt = require('mqtt')
+const os = require("os");
 
 var valve0Status = 0;
 var valve1Status = 0;
@@ -22,7 +23,7 @@ app.use(express.static('public'));
 // mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "tec 6 cmd Power_Off "
 
 const protocol = 'mqtt'
-const host = 'coldbox01.psi.ch'
+const host = os.hostname();
 const port = '1883'
 const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
 
