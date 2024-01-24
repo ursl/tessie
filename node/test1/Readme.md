@@ -1,11 +1,15 @@
 # How to run the server
 
-- stop apache
+- stop apache (if running)
 - install dependencies
   ```
   sudo apt install npm
   sudo apt install nodejs
-  sudo apt install express
+  ```
+- install pacakges
+  ```
+  cd tessie/node/test1
+  npm install --save express socket.io mqtt
   ```
 - run the server
   ```
@@ -19,6 +23,7 @@
   Name=TessieWeb
   Exec="cd /home/pi/tessie/node/test1 && node server3.js"
   ```
+  or with `systemctl` (as described in the main tessie README)
 - Connect to this server with  http://coldbox01:3000
   NOTE: http, not https!
   

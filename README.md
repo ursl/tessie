@@ -2,6 +2,19 @@
 
 Etymology: tessie sounds better than TC (box), for temperature cycling (box)
 
+## Hints on required software
+```shell
+sudo apt install nodejs
+sudo apt install npm
+
+sudo apt-get install pigpio
+
+sudo apt-get install libmosquitto-dev libmosquittopp-dev
+sudo apt install -y mosquitto mosquitto-clients
+
+sudo apt install libqt5charts5 libqt5charts5-dev
+```
+
 ## Hints for compilation and running locally on a coldbox
 
 ```shell
@@ -134,7 +147,7 @@ get [tec {0|x}] Ref_U
 
 Tutorial for getting started:
 -----------------------------
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m " set valve0 on" 
+mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 on" 
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 on" 
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 4.5" 
 mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On" 
@@ -149,3 +162,57 @@ mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off"
 mosquitto_sub -h coldbox01 -t "monTessie"
 ```
 Only values (changes) outside of a window a published
+
+## How to setup the automatic startup of tessie and the webserver
+Using `systemctl` create the following two files (`sudo`!):
+
+```
+pi@coldbox01:~ $ cat /lib/systemd/system/tessie.service
+[Unit]
+Description=tessie
+#After=multi-user.target
+After=network.target
+
+[Service]
+Type=idle
+Environment="XAUTHORITY=/home/pi/.Xauthority"
+Environment="DISPLAY=:0"
+WorkingDirectory=/home/pi/tessie/test1
+ExecStartPre=/home/pi/tessie/resetCAN.sh
+ExecStart=/home/pi/tessie/test1/tessie 
+StandardOutput=inherit
+StandardError=inherit
+
+[Install]
+#WantedBy=multi-user.target
+WantedBy=graphical.target
+```
+
+```
+pi@coldbox01:~ $ cat /lib/systemd/system/tessieWeb.service
+[Unit]
+Description=tessie
+After=multi-user.target
+
+[Service]
+Type=idle
+WorkingDirectory=/home/pi/tessie/node/test1
+ExecStart=/usr/bin/node /home/pi/tessie/node/test1/server3.js 
+ 
+[Install]
+WantedBy=multi-user.target
+```
+
+Turn these two services on with 
+```
+sudo systemctl enable tessie.service
+sudo systemctl enable tessieWeb.service
+```
+
+Reboot. Control their status with 
+```
+systemctl status tessie
+systemctl status tessieWeb
+```
+
+With this setup, you can connect to http://coldbox01:3000 (Note: http, not https!) For more information on the webserver, see https://github.com/ursl/tessie/tree/master/node/test1#readme
