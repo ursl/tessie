@@ -13,6 +13,8 @@ sudo apt-get install libmosquitto-dev libmosquittopp-dev
 sudo apt install -y mosquitto mosquitto-clients
 
 sudo apt install libqt5charts5 libqt5charts5-dev
+
+sudo systemctl enable mosquitto.service
 ```
 
 ## Hints for compilation and running locally on a coldbox
@@ -216,3 +218,6 @@ systemctl status tessieWeb
 ```
 
 With this setup, you can connect to http://coldbox01:3000 (Note: http, not https!) For more information on the webserver, see https://github.com/ursl/tessie/tree/master/node/test1#readme
+
+<img width="1250" alt="240201-tessie-web" src="https://github.com/ursl/tessie/assets/5073648/931cdd31-1165-4ca0-88da-b44ae3c5af6e">
+
