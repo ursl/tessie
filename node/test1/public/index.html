@@ -547,7 +547,7 @@
           console.log("pid_ki: " + msg);
           socket.emit('pid_ki', msg);
       }
-      function chgPID_kp(itec, val) {
+      function chgPID_kd(itec, val) {
           let msg = "tec " + itec.toString() + " set PID_kd " + val.toString();
           console.log("pid_kd: " + msg);
           socket.emit('pid_kd', msg);
