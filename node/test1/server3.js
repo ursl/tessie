@@ -299,6 +299,24 @@ io.on('connection', (socket) => {
         })
     });
 
+    socket.on('pid_ki', (msg) => {
+        console.log('pid_ki input received ->' + msg + '<-');
+        clientMqtt.publish(topCtrl, msg, {qos: 0, retain: false }, (error) => {
+            if (error) {
+                console.error(error)
+            }
+        })
+    });
+
+    socket.on('pid_kd', (msg) => {
+        console.log('pid_kd input received ->' + msg + '<-');
+        clientMqtt.publish(topCtrl, msg, {qos: 0, retain: false }, (error) => {
+            if (error) {
+                console.error(error)
+            }
+        })
+    });
+
     socket.on('checktec', (msg) => {
         console.log('checktec input received ->' + msg + '<-');
         clientMqtt.publish(topCtrl, msg, {qos: 0, retain: false }, (error) => {
