@@ -183,8 +183,6 @@ float CANmessage::getFloat(unsigned int itec, unsigned int ireg) {
     fMapFrames[itec][ireg].pop_front();
   }
 
-  cout << fErrorFrame.getString() << endl;
-  
   if (result < -90.) {
     string errstring = "parse issue: reg " + to_string(ireg)
       + " itec " + to_string(itec)
