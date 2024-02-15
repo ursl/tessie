@@ -651,7 +651,7 @@ bool driveHardware::findInIoMessage(string &s1, string &s2, string &s3) {
 void driveHardware::answerIoGet(string &) {
   string what = fIoMessage;
 
-  cout << "answerIoSet what ->" << what << "<-" << endl;
+  cout << "answerIoGet what ->" << what << "<-" << endl;
   string delimiter(" ");
 
   string regname("nada");
