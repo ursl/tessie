@@ -183,12 +183,13 @@ float CANmessage::getFloat(unsigned int itec, unsigned int ireg) {
     fMapFrames[itec][ireg].pop_front();
   }
 
-  fErrorFrame.dump(false);
+  cout << fErrorFrame.getString() << endl;
   
   if (result < -90.) {
     string errstring = "parse issue: reg " + to_string(ireg)
-        + " itec " + to_string(itec)
-        + " getFloat " + to_string(result);
+      + " itec " + to_string(itec)
+      + " getFloat " + to_string(result)
+      + " canFrame: ->" + fErrorFrame.getString() + "<-";
     fqErrors.push_front(errstring);
     ++fErrorCounter;
   }
