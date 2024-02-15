@@ -204,7 +204,7 @@ int CANmessage::getInt(unsigned int itec, unsigned int ireg) {
     if (0) {
       cout << " pop_front "; fMapFrames[itec][ireg].front().dump(false); cout << endl;
     }
-    //    fErrorFrame = fMapFrames[itec][ireg].front();
+    fErrorFrame = fMapFrames[itec][ireg].front();
     fMapFrames[itec][ireg].pop_front();
   }
 

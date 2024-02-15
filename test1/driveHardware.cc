@@ -307,8 +307,8 @@ void driveHardware::doRun() {
       if (nerrs > 0) {
         fCANErrorOld = fCANErrorCounter;
         fCANErrorCounter = nerrs;
-        // stringstream a("==CANERROR== CAN frame = " + fCanMsg.getErrorFrame().getString());
-        // fLOG(ERROR, a.str());
+        stringstream a("==CANERROR== CAN frame = " + fCanMsg.getErrorFrame().getString());
+        fLOG(ERROR, a.str());
 
         deque<string> errs = fCanMsg.getErrors();
         int errRepeat(0);
@@ -339,15 +339,18 @@ void driveHardware::ensureSafety() {
 
   // -- first the trivial warnings
   if (redCANErrors() > 0) {
-    stringstream a("==WARNING== CAN errors = " +
-                   to_string(fCANErrorCounter));
+    stringstream a("==WARNING== CAN errors = " 
+                   + to_string(fCANErrorCounter)
+                   + fCanMsg.getErrorFrame().getString()
+                   );
     fLOG(WARNING, a.str());
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
   }
   if (redI2CErrors() > 0) {
-    stringstream a("==WARNING== I2C errors = " +
-                   to_string(fI2CErrorCounter));
+    stringstream a("==WARNING== I2C errors = "
+                   + to_string(fI2CErrorCounter)
+                   );
     fLOG(WARNING, a.str());
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
@@ -1471,7 +1474,6 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
     readCAN(1, false);
     fMutex.unlock();
     fCANReadFloatVal = fCanMsg.getFloat(itec, fCANReg);
-    cout << "Hallo: " << fCanMsg.getErrorFrame().getString() << endl;
     return fCANReadFloatVal;
   } else {
     readCAN(fNActiveTEC, false);
