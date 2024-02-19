@@ -4,6 +4,7 @@ const server = require('http').createServer(app);
 const io = require('socket.io')(server);
 const mqtt = require('mqtt')
 const os = require("os");
+const fs = require('fs');
 
 var valve0Status = 0;
 var valve1Status = 0;
@@ -29,6 +30,7 @@ const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
 
 const connectUrl = `${protocol}://${host}:${port}`
 
+let versionString = ''
 let envString = ''
 let PowerStateString = ''
 let ControlVoltage_SetString = ''
@@ -175,6 +177,7 @@ io.on('connection', (socket) => {
 
 
     setInterval(() => {
+        socket.emit('versionString', versionString);
         socket.emit('envString', envString);
         socket.emit('PowerStateString', PowerStateString);
         socket.emit('ControlVoltage_SetString', ControlVoltage_SetString);
@@ -334,3 +337,17 @@ const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
+// ----------------------------------------------------------------------
+function readVersion() {
+    let filePath = "../../test1/MainWindow.cpp";
+    const readableStream = fs.createReadStream(filePath);
+
+    readableStream.on('error', function (error) {
+        console.log(`error: ${error.message}`);
+    })
+
+    readableStream.on('data', (chunk) => {
+        console.log(chunk);
+    })
+}
