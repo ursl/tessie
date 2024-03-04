@@ -54,10 +54,10 @@ let Ref_UString = ''
 let ModeString = ''
 let WarningString = ''
 let AlarmString = ''
-    
-    
+
+
 // ----------------------------------------------------------------------
-// -- MQTT 
+// -- MQTT
 // ----------------------------------------------------------------------
 const clientMqtt = mqtt.connect(connectUrl, {
     clientId,
@@ -170,7 +170,7 @@ clientMqtt.on('message', (topMon, payload) => {
 // ----------------------------------------------------------------------
 io.on('connection', (socket) => {
     console.log('User connected');
-    
+
     socket.on('disconnect', () => {
         console.log('User disconnected');
     });
@@ -264,6 +264,10 @@ io.on('connection', (socket) => {
         } else {
             socket.emit('valve1blue');
         }
+    });
+
+    socket.on('getcsv', (msg) => {
+        console.log('getcsv input received ->' + msg + '<-');
     });
 
     socket.on('controlvoltage_set', (msg) => {

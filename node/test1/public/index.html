@@ -304,6 +304,7 @@
       const socket = io.connect();
       const valve0 = document.getElementById('valve0');
       const valve1 = document.getElementById('valve1');
+      const getcsv = document.getElementById('getcsv');
 
       var logarea = document.getElementById("logarea");
 
@@ -317,6 +318,9 @@
 
       valve0.addEventListener('click', (e) => {socket.emit('valve0'); });
       valve1.addEventListener('click', (e) => {socket.emit('valve1'); });
+      .addEventListener('click', (e) => {socket.emit('valve1'); });
+
+      getcsv.addEventListener('click', (e) => {socket.emit('getcsv'); });
 
       socket.on('valve0blue', (msg) => {valve0.style.background='#ADD8E6'; });
       socket.on('valve0white', (msg) => {valve0.style.background='#FCF5E5'; });
