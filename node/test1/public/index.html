@@ -19,13 +19,14 @@
   </head>
   <body>
     <div class="mycontainer">
-  
+
       <div style="background-color:DodgerBlue" float="left">
-        <b>Nitrogen control: </b>
-        <button id="valve0" style="background-color:#FCF5E5">Flush</button> 
-        <button id="valve1" style="background-color:#FCF5E5">Rinse</button> 
+        <b>Nitrogen control: </b> <br>
+        <button id="valve0" style="background-color:#FCF5E5">Flush</button>
+        <button id="valve1" style="background-color:#FCF5E5">Rinse</button> <br>
+        <button id="getcsv" style="background-color:#FCF5E5">Get CSV data</button>
       </div>
-      
+
       <div style="background-color:MediumSeaGreen" float="center">
         <table>
           <tr>
@@ -68,8 +69,8 @@
     <div style="background-color:DarkGray">
     <textarea id="logarea" class="scrollabletextbox" style="font-size: 10pt; width: 100%; max-width: 100%;"></textarea>
     </div>
-    
-    
+
+
     <div class="w3-container w3-cream w3-cell">
       <table class="w3-table">
         <tr>
@@ -135,7 +136,7 @@
           <td> <input id="Temp_Set7" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(7,this.value)"> </td>
           <td> <input id="Temp_Set8" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(8,this.value)"> </td>
         </tr>
-       
+
         <tr>
           <td>Temp_M [deg C]</td>
           <td> </td>
@@ -226,7 +227,7 @@
           <td id="Peltier_I7">wait </td>
           <td id="Peltier_I8">wait </td>
         </tr>
-        
+
         <tr>
           <td>Peltier_R</td>
           <td> </td>
@@ -280,7 +281,7 @@
         </tr>
 
       </table>
-    </div>      
+    </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
@@ -289,7 +290,7 @@
 
       const houston = new Audio('houstonwehaveaproblem_loud.mp3');
       const siren = new Audio('siren.mp3');
-      // -- this works: 
+      // -- this works:
       // var mp3_url = 'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3';
       // (new Audio(mp3_url)).play();
 
@@ -300,14 +301,14 @@
 
       var logarea = document.getElementById("logarea");
 
-      // -- 
+      // --
       socket.on('disconnect', () => {
           document.getElementById('statusDiv').style = "background-color:Tomato";
       });
       socket.on('connect', () => {
           document.getElementById('statusDiv').style = "background-color:Goldenrod";
       });
-            
+
       valve0.addEventListener('click', (e) => {socket.emit('valve0'); });
       valve1.addEventListener('click', (e) => {socket.emit('valve1'); });
 
@@ -318,7 +319,7 @@
       socket.on('valve1white', (msg) => {valve1.style.background='#FCF5E5'; });
 
       socket.on('envString', (msg) => {
-         
+
           const snumbers = msg.toString().replace('Env = ', '');
           const vNumbers = snumbers.split(', ');
           document.getElementById('TempAir').innerHTML = parseFloat(vNumbers[0]).toFixed(2);
@@ -342,7 +343,7 @@
           }
       });
 
- 
+
       socket.on('PowerStateString', (msg) => {
           const snumbers = msg.toString().replace('PowerState = ', '');
           const vNumbers = snumbers.split(',');
@@ -354,7 +355,7 @@
                   // -- do nothing if this instance clicked on CheckTECx
                   //    This is to avoid the flicker on the checkbox
                   checkedTEC = -1;
-              } else {          
+              } else {
                   if (parseInt(vNumbers[i-1]).toFixed(0) == 1) {
                       document.getElementById(ps).innerHTML = parseInt(vNumbers[i-1]).toFixed(0);
                       document.getElementById(ct).checked = true;
@@ -415,7 +416,7 @@
               el.innerHTML = tval;
           }
       });
-      
+
       socket.on('Peltier_UString', (msg) => {
           const snumbers = msg.toString().replace('Peltier_U = ', '');
           const vNumbers = snumbers.split(',');
@@ -449,7 +450,7 @@
           }
       });
 
-      
+
       socket.on('ModeString', (msg) => {
           const snumbers = msg.toString().replace('Mode = ', '');
           const vNumbers = snumbers.split(',');
@@ -518,7 +519,7 @@
 
           houston.play();
       });
-      
+
       function chgControlVoltage_Set(itec, val) {
           let msg = "tec " + itec.toString() + " set ControlVoltage_Set " + val.toString();
           console.log("controlvoltage_set: " + msg);
@@ -555,7 +556,7 @@
 
       function clkCheckTec(itec) {
           checkedTEC = itec;
-          
+
           let ct = 'CheckTEC' + itec.toString();
           let msg = "tec " + itec.toString();
           if (document.getElementById(ct).checked) {
@@ -591,9 +592,9 @@
       mycolors.push('rgb(240, 240,   0)');
       mycolors.push('rgb(240,  80,   0)');
       mycolors.push('rgb(240,   0,   0)');
-      
 
-      
+
+
       function colorIndex(temp){
           if (temp < -30.) return 0;
           if (temp < -20.) return 1;
