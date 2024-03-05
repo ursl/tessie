@@ -5,6 +5,7 @@ const io = require('socket.io')(server);
 const mqtt = require('mqtt')
 const os = require("os");
 const fs = require('fs');
+const path = require('path');
 
 var valve0Status = 0;
 var valve1Status = 0;
@@ -268,6 +269,15 @@ io.on('connection', (socket) => {
 
     socket.on('getcsv', (msg) => {
         console.log('getcsv input received ->' + msg + '<-');
+        var filePath = path.join('/home/pi/tessie/test1', 'shorttessie.csv');
+        var stat = fs.statSync(filePath);
+        response.writeHead(200, {
+            'Content-type': 'text/plain',
+            'Content-Length': stat.size
+        });
+        var readStream = fs.createReadStream(filePath);
+        // We replaced all the event handlers with a simple call to readStream.pipe()
+        readStream.pipe(response);
     });
 
     socket.on('controlvoltage_set', (msg) => {
