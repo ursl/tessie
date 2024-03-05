@@ -271,13 +271,9 @@ io.on('connection', (socket) => {
         console.log('getcsv input received ->' + msg + '<-');
         var filePath = path.join('/home/pi/tessie/test1', 'shorttessie.csv');
         var stat = fs.statSync(filePath);
-        response.writeHead(200, {
-            'Content-type': 'text/plain',
-            'Content-Length': stat.size
+        socket.emit('putcsv', filePath, (status) => {
+            console.log(status);
         });
-        var readStream = fs.createReadStream(filePath);
-        // We replaced all the event handlers with a simple call to readStream.pipe()
-        readStream.pipe(response);
     });
 
     socket.on('controlvoltage_set', (msg) => {
