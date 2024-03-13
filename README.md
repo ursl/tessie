@@ -21,7 +21,7 @@ sudo systemctl enable mosquitto.service
 
 ```shell
 git clone git@github.com:ursl/tessie
-(git clone https://github.com/ursl/tessie.git)
+(if you have issues with keys, use: git clone https://github.com/ursl/tessie.git)
 cd tessie/test1
 qmake -o Makefile test1.pro
 make
