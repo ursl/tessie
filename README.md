@@ -51,6 +51,8 @@ dtparam=i2c_vc=on
 ```
 Afterwards, reboot for this to take effect.
 
+The "script" [resetCAN.sh](https://github.com/ursl/tessie/tree/master/resetCAN.sh) must be run to configure the CAN bus to the proper bitrate (125kHz). If you enable the automatic startup of tessie (see below), this is done automatically before starting tessie. If you encounter many CAN bus errors, it might help to execute this script manually. 
+
 ### Adaption of the splash screen
 (sudo) Edit `/boot/cmdline.txt` to contain
 ```
@@ -66,6 +68,7 @@ cd /usr/share/plymouth/themes/pix/
 sudo mv splash.png splash.png.bk
 sudo cp /home/pi/tessie/splash.png ./
 ```
+
 
 ## Hints for operating tessie from a remote computer
 In a shell on your computer `laptop`, do
