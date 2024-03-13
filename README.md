@@ -32,10 +32,11 @@ make
 ## Hints for installing/running hardware components
 
 ### Installation of the power button: 
-Based on[how-to-add-a-power-button-to-your-raspberry-pi](https://howchoo.com/pi/how-to-add-a-power-button-to-your-raspberry-pi/)
+Based on [how-to-add-a-power-button-to-your-raspberry-pi](https://howchoo.com/pi/how-to-add-a-power-button-to-your-raspberry-pi/)
 
-The most important 2 lines for auto installation:  `git clone https://github.com/Howchoo/pi-power-button.git`
+The most important 2 lines for auto installation:
 ```
+git clone https://github.com/Howchoo/pi-power-button.git
 ./pi-power-button/script/install
 ```
 There is a backup ([powerbutton](https://github.com/ursl/tessie/tree/master/powerbutton)) of this contents within the tessie repository.
