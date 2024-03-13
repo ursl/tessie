@@ -32,7 +32,7 @@ make
 ## Hints for installing/running hardware components
 
 ### Installation of the power button: 
-Based on https://howchoo.com/pi/how-to-add-a-power-button-to-your-raspberry-pi/
+Based on[how-to-add-a-power-button-to-your-raspberry-pi](https://howchoo.com/pi/how-to-add-a-power-button-to-your-raspberry-pi/)
 
 The most important 2 lines for auto installation:  `git clone https://github.com/Howchoo/pi-power-button.git`
 ```
