@@ -49,11 +49,7 @@ dtoverlay=mcp2515-can0,oscillator=12000000,interrupt=25
 dtoverlay=spi-bcm2835-overlay
 dtparam=i2c_vc=on
 ```
-
-(sudo) Add to `/boot/config.txt` 
-```
-reboot
-```
+Afterwards, reboot for this to take effect.
 
 ### Adaption of the splash screen
 (sudo) Edit `/boot/cmdline.txt` to contain
