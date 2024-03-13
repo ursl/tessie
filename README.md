@@ -31,13 +31,14 @@ make
 
 ## Hints for installing/running hardware components
 
-### Installation of the power button: https://howchoo.com/pi/how-to-add-a-power-button-to-your-raspberry-pi/
+### Installation of the power button: 
+Based on https://howchoo.com/pi/how-to-add-a-power-button-to-your-raspberry-pi/
 
 The most important 2 lines for auto installation:  `git clone https://github.com/Howchoo/pi-power-button.git`
 ```
 ./pi-power-button/script/install
 ```
-There is a backup of this contents in the tessie repository.
+There is a backup (github.com/ursl/tessie/powerbutton) of this contents within the tessie repository.
 
 ### Enable CAN bus and I2C
 (sudo) Edit `/boot/config.txt` and add 
