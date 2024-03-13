@@ -38,7 +38,7 @@ The most important 2 lines for auto installation:  `git clone https://github.com
 ```
 ./pi-power-button/script/install
 ```
-There is a backup (github.com/ursl/tessie/powerbutton) of this contents within the tessie repository.
+There is a backup (https://github.com/ursl/tessie/powerbutton) of this contents within the tessie repository.
 
 ### Enable CAN bus and I2C
 (sudo) Edit `/boot/config.txt` and add 
