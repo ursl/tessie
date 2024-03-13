@@ -29,6 +29,46 @@ make
 ./tessie
 ```
 
+## Hints for installing/running hardware components
+
+### Installation of the power button: https://howchoo.com/pi/how-to-add-a-power-button-to-your-raspberry-pi/
+
+The most important 2 lines for auto installation:  `git clone https://github.com/Howchoo/pi-power-button.git`
+```
+./pi-power-button/script/install
+```
+There is a backup of this contents in the tessie repository.
+
+### Enable CAN bus and I2C
+(sudo) Edit `/boot/config.txt` and add 
+```
+dtparam=spi=on
+dtoverlay=mcp2515-can0,oscillator=12000000,interrupt=25
+dtoverlay=spi-bcm2835-overlay
+dtparam=i2c_vc=on
+```
+
+(sudo) Add to `/boot/config.txt` 
+```
+reboot
+```
+
+### Adaption of the splash screen
+(sudo) Edit `/boot/cmdline.txt` to contain
+```
+console=serial0,115200 console=tty1 root=PARTUUID=9cd7f13f-02 rootfstype=ext4 fsck.repair=yes rootwait quiet splash plymouth.ignore-serial-consoles logo.nologo vt.global_cursor_default=0
+```
+(sudo) Edit `/boot/config.txt` and add 
+```
+disable_splash=1
+```
+In a terminal do
+```
+cd /usr/share/plymouth/themes/pix/
+sudo mv splash.png splash.png.bk
+sudo cp /home/pi/tessie/splash.png ./
+```
+
 ## Hints for operating tessie from a remote computer
 In a shell on your computer `laptop`, do
 ```shell
