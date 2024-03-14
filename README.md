@@ -21,7 +21,7 @@ sudo systemctl enable mosquitto.service
 
 ```shell
 git clone git@github.com:ursl/tessie
-(git clone https://github.com/ursl/tessie.git)
+(if you have issues with keys, use: git clone https://github.com/ursl/tessie.git)
 cd tessie/test1
 qmake -o Makefile test1.pro
 make
@@ -31,13 +31,15 @@ make
 
 ## Hints for installing/running hardware components
 
-### Installation of the power button: https://howchoo.com/pi/how-to-add-a-power-button-to-your-raspberry-pi/
+### Installation of the power button: 
+Based on [how-to-add-a-power-button-to-your-raspberry-pi](https://howchoo.com/pi/how-to-add-a-power-button-to-your-raspberry-pi/)
 
-The most important 2 lines for auto installation:  `git clone https://github.com/Howchoo/pi-power-button.git`
+The most important 2 lines for auto installation:
 ```
+git clone https://github.com/Howchoo/pi-power-button.git
 ./pi-power-button/script/install
 ```
-There is a backup of this contents in the tessie repository.
+There is a backup ([powerbutton](https://github.com/ursl/tessie/tree/master/powerbutton)) of this contents within the tessie repository.
 
 ### Enable CAN bus and I2C
 (sudo) Edit `/boot/config.txt` and add 
@@ -47,11 +49,9 @@ dtoverlay=mcp2515-can0,oscillator=12000000,interrupt=25
 dtoverlay=spi-bcm2835-overlay
 dtparam=i2c_vc=on
 ```
+Afterwards, reboot for this to take effect.
 
-(sudo) Add to `/boot/config.txt` 
-```
-reboot
-```
+The "script" [resetCAN.sh](https://github.com/ursl/tessie/tree/master/resetCAN.sh) must be run to configure the CAN bus to the proper bitrate (125kHz). If you enable the automatic startup of tessie (see below), this is done automatically before starting tessie. If you encounter many CAN bus errors, it might help to execute this script manually. 
 
 ### Adaption of the splash screen
 (sudo) Edit `/boot/cmdline.txt` to contain
@@ -68,6 +68,7 @@ cd /usr/share/plymouth/themes/pix/
 sudo mv splash.png splash.png.bk
 sudo cp /home/pi/tessie/splash.png ./
 ```
+
 
 ## Hints for operating tessie from a remote computer
 In a shell on your computer `laptop`, do
