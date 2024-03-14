@@ -26,8 +26,8 @@
 //     physical 16       INTL      GPIO 23
 //     physical 18       PSEN      GPIO 24
 
-#define GPIORED   17 
-#define GPIOYELLO 27 
+#define GPIORED   17
+#define GPIOYELLO 27
 #define GPIOGREEN 22
 #define GPIOPSUEN 24
 #define GPIOINT   23
@@ -96,11 +96,11 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fSHT85Config[0] = 0x24;   // MSB
   fSHT85Config[1] = 0x00;   // LSB
 
-  fAlarmState = 0; 
-  
+  fAlarmState = 0;
+
 #ifdef PI
   fPiGPIO = pigpio_start(NULL, NULL);
-    
+
   cout << "pigpio_start() = " << fPiGPIO << endl;
 
   set_mode(fPiGPIO, GPIORED,  PI_OUTPUT);
@@ -135,7 +135,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
     perror("ioctl failed");
     return;
   }
-  
+
   fAddrW.can_family = AF_CAN;
   fAddrW.can_ifindex = fIfrW.ifr_ifindex;
   ret = bind(fSw, (struct sockaddr *)&fAddrW, sizeof(fAddrW));
@@ -146,7 +146,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
 
   setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
 
-  
+
   // -- read CAN socket
   memset(&fFrameR, 0, sizeof(struct can_frame));
   fSr = socket(PF_CAN, SOCK_RAW, CAN_RAW);
@@ -161,7 +161,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
     perror("ioctl failed");
     return;
   }
-  
+
   fAddrR.can_family = AF_CAN;
   fAddrR.can_ifindex = fIfrR.ifr_ifindex;
   ret = bind(fSr, (struct sockaddr *)&fAddrR, sizeof(fAddrR));
@@ -219,9 +219,9 @@ void driveHardware::doWarning(string errmsg, bool nothing) {
 
   // -- keep code around in case we want to do something with lights
   static struct timeval tvWarningSet;
-  
+
   if (nothing) {
-    struct timeval tvNow; 
+    struct timeval tvNow;
     gettimeofday(&tvNow, 0);
     int tdiff = diff_ms(tvNow, tvWarningSet);
     if (tdiff > 10000) {
@@ -299,7 +299,7 @@ void driveHardware::doRun() {
       entertainTECs();
 
       checkFan();
-      
+
       ensureSafety();
 
       // -- print errors (if present) accumulated in CANmessage
@@ -339,7 +339,7 @@ void driveHardware::ensureSafety() {
 
   // -- first the trivial warnings
   if (redCANErrors() > 0) {
-    stringstream a("==WARNING== CAN errors = " 
+    stringstream a("==WARNING== CAN errors = "
                    + to_string(fCANErrorCounter)
                    + fCanMsg.getErrorFrame().getString()
                    );
@@ -356,7 +356,7 @@ void driveHardware::ensureSafety() {
     emit signalSendToServer(QString::fromStdString(a.str()));
   }
 
-  
+
   int allOK(0);
   // -- air temperatures
   if (fSHT85Temp > SAFETY_MAXSHT85TEMP) {
@@ -375,7 +375,7 @@ void driveHardware::ensureSafety() {
     gpio_write(fPiGPIO, GPIORED, 1);
     gpio_write(fPiGPIO, GPIOGREEN, 0);
     gpio_write(fPiGPIO, GPIOINT, 0);
-#endif    
+#endif
   }
 
   // -- dew point vs air temperature
@@ -396,7 +396,7 @@ void driveHardware::ensureSafety() {
     gpio_write(fPiGPIO, GPIORED, 1);
     gpio_write(fPiGPIO, GPIOGREEN, 0);
     gpio_write(fPiGPIO, GPIOINT, 0);
-#endif    
+#endif
   }
 
   // -- check water temperature
@@ -414,7 +414,7 @@ void driveHardware::ensureSafety() {
     gpio_write(fPiGPIO, GPIORED, 1);
     gpio_write(fPiGPIO, GPIOGREEN, 0);
     gpio_write(fPiGPIO, GPIOINT, 0);
-#endif    
+#endif
   }
 
   // -- check module temperatures (1) value and (2) against dew point
@@ -437,7 +437,7 @@ void driveHardware::ensureSafety() {
       gpio_write(fPiGPIO, GPIORED, 1);
       gpio_write(fPiGPIO, GPIOGREEN, 0);
       gpio_write(fPiGPIO, GPIOINT, 0);
-#endif    
+#endif
     }
 
     if ((mtemp > -90.) && (mtemp < fSHT85DP + SAFETY_DPMARGIN)) {
@@ -460,24 +460,24 @@ void driveHardware::ensureSafety() {
       gpio_write(fPiGPIO, GPIORED, 1);
       gpio_write(fPiGPIO, GPIOGREEN, 0);
       gpio_write(fPiGPIO, GPIOINT, 0);
-#endif    
+#endif
     }
   }
 
   if ((fAlarmState > 0) && (0 == allOK)) {
     cout << "allOK = " << allOK << ", alarm condition gone, reset siren and red lamp" << endl;
 #ifdef PI
-    cout << "set GPIORED = LOW" << endl; 
+    cout << "set GPIORED = LOW" << endl;
     gpio_write(fPiGPIO, GPIORED, 0);
     gpio_write(fPiGPIO, GPIOGREEN, 1);
     gpio_write(fPiGPIO, GPIOINT, 1);
-    
+
     emit signalKillSiren();
     emit signalSetBackground("T", "white");
     emit signalSetBackground("DP", "white");
     emit signalSetBackground("RH", "white");
-#endif    
-  }          
+#endif
+  }
 
   // -- keep a record for the next time
   fAlarmState = allOK;
@@ -530,7 +530,7 @@ int driveHardware::getSWVersion(int itec) {
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_CMD);
   fCANReg = 6; // GetSWVersion
   fCANVal = 0; // nothing required
-  
+
   fMutex.lock();
   sendCANmessage(false);
   std::this_thread::sleep_for(fMilli10);
@@ -572,16 +572,16 @@ void driveHardware::shutDown() {
   gpio_write(fPiGPIO, GPIOGREEN, 0);
   gpio_write(fPiGPIO, GPIOYELLO, 0);
 
-  
+
   for (int itec = 1; itec <= 8; ++itec) {
     turnOffTEC(itec);
     std::this_thread::sleep_for(fMilli5);
   }
 
   pigpio_stop(fPiGPIO);
-  
+
   return;
-  
+
 #endif
 }
 
@@ -823,7 +823,7 @@ void driveHardware::answerIoCmd() {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::parseIoMessage() { 
+void driveHardware::parseIoMessage() {
   string s1("Temp"), s2("Temperature"), s3("get"), s0("Temp_");
   // -- GET answers
   if (string::npos != fIoMessage.find("> ")) {
@@ -875,17 +875,17 @@ void driveHardware::parseIoMessage() {
 
     for (int i = 1; i < 9; ++i) {
       stringstream str1;
-      str1 << "vprobe" << i; 
+      str1 << "vprobe" << i;
       s1 = str1.str(); s2 = str1.str();
       if (findInIoMessage(s1, s2, s3)) {
         stringstream str;
         readVProbe(i);
-        str << fVprobeVoltages; 
+        str << fVprobeVoltages;
         QString qmsg = QString::fromStdString(str.str());
         emit signalSendToServer(qmsg);
       }
     }
-    
+
     s1 = "Mode";  s2 = "Mode";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
     s1 = "Voltage";  s2 = "ControlVoltage_Set";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
 
@@ -1218,7 +1218,7 @@ void driveHardware::entertainFras() {
     return;
   }
   //  fMutex.lock();
-  if (0 == fValveMask) {
+  if (0 == fRelaisMask) {
     fFrameW.can_id = CAN_RTR_FLAG | 0x41;
     int dlength(0);
     fFrameW.can_dlc = dlength;
@@ -1236,7 +1236,7 @@ void driveHardware::entertainFras() {
     fFrameW.can_id = 0x40;
     int dlength(1);
     fFrameW.can_dlc = dlength;
-    fFrameW.data[0] = fValveMask;
+    fFrameW.data[0] = fRelaisMask;
 
     // -- Send message
     setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
@@ -1289,8 +1289,8 @@ void driveHardware::turnOffValve(int i) {
 // ----------------------------------------------------------------------
 void driveHardware::toggleFras(int imask) {
   fMutex.lock();
-  int old = fValveMask;
-  fValveMask = old xor imask;
+  int old = fRelaisMask;
+  fRelaisMask = old xor imask;
 
   //            TEC:   ssP'..tt'aaaa
   //           FRAS:   0aa'aaaa'akkk
@@ -1303,7 +1303,7 @@ void driveHardware::toggleFras(int imask) {
   fFrameW.can_id = canid;
   int dlength(1);
   fFrameW.can_dlc = dlength;
-  fFrameW.data[0] = fValveMask;
+  fFrameW.data[0] = fRelaisMask;
 #endif
 
   string sstatus("");
@@ -1386,7 +1386,7 @@ void  driveHardware::turnOnTEC(int itec) {
 
 #ifdef PI
   gpio_write(fPiGPIO, GPIOYELLO, 1);
-#endif    
+#endif
 
   if (!getStatusFan()) {
     turnOnFan();
@@ -1416,7 +1416,7 @@ void  driveHardware::turnOffTEC(int itec) {
 
 // ----------------------------------------------------------------------
 // -- check whether any TEC is still turned on. If not, turn off fan.
-void driveHardware::checkFan() {  
+void driveHardware::checkFan() {
   bool oneRunning(false);
   int idx(-1);
   for (int itec = 1; itec <= 8; ++itec) {
@@ -1432,13 +1432,13 @@ void driveHardware::checkFan() {
          << static_cast<int>(fTECData[idx].reg["PowerState"].value)
          << endl;
   }
-  
+
   if (oneRunning) {
     // do nothing
   } else {
 #ifdef PI
     gpio_write(fPiGPIO, GPIOYELLO, 0);
-#endif    
+#endif
     turnOffFan();
   }
 }
@@ -1512,10 +1512,10 @@ void driveHardware::loadFromFlash() {
   fCANId = (CANBUS_SHIFT | CANBUS_PUBLIC | CANBUS_TECREC | CANBUS_CMD);
   fCANReg = 8; // Load Variables
   fCANVal = fTECParameter;
-  
+
   QString aline = QString("load settings from FLASH");
   fLOG(INFO, aline.toStdString().c_str());
-  
+
   sendCANmessage();
 }
 
@@ -1612,7 +1612,7 @@ void driveHardware::readAllParamsFromCANPublic() {
                              , "Ref_U"
 
   };
-  
+
   for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
     if (0 == ireg%2) evtHandler();
     // -- NOTE: ireg != regnumber
@@ -1678,7 +1678,7 @@ void driveHardware::dumpMQTT(int all) {
      << getStatusValve1() << ", "
     ;
   if (all > -1) emit signalSendToMonitor(QString::fromStdString(ss.str()));
-  
+
   // -- what to read: float
   map<string, double> tolerances = {
     {"ControlVoltage_Set", 0.1}
@@ -1723,7 +1723,7 @@ void driveHardware::dumpMQTT(int all) {
   }
 
   oldTECData = fTECData;
-    
+
 }
 
 
@@ -1775,7 +1775,7 @@ void driveHardware::readSHT85() {
 
   int handle = i2c_open(fPiGPIO, I2CBUS, I2C_SHT85_ADDR, 0);
   int result = i2c_write_device(fPiGPIO, handle, fSHT85Config, 2);
-  
+
   std::this_thread::sleep_for(fMilli100);
   length = i2c_read_device(fPiGPIO, handle, fSHT85Data, 6);
   while (cnt < 5) {
@@ -1817,7 +1817,7 @@ void driveHardware::readSHT85() {
       }
       fSHT85DP    = calcDP(1);
     }
-    
+
     // -- print
     if (0) {
       cout << "Temperature in Celsius: " << fSHT85Temp << endl;
@@ -1832,10 +1832,10 @@ void driveHardware::readSHT85() {
 void driveHardware::readVProbe(int pos) {
 
   double VDD(3.3114);
-  // -- TP corr. Doc:  6  5  9  10  11  7  8  12  4  3  2  13  14  26  8  1 
-  // -- TP wrong Doc: 12  8  7  11  10  9  5   6  1  8 26  14  13   2  3  4                     
+  // -- TP corr. Doc:  6  5  9  10  11  7  8  12  4  3  2  13  14  26  8  1
+  // -- TP wrong Doc: 12  8  7  11  10  9  5   6  1  8 26  14  13   2  3  4
   // -- Cnt:           0  1  2   3   4  5  6   7  8  9 10  11  12  13 14 15
-  // int order[]  =   {6, 5, 9, 10, 11, 7, 8, 12, 4, 3, 2, 13, 14, 26, 8, 1};  
+  // int order[]  =   {6, 5, 9, 10, 11, 7, 8, 12, 4, 3, 2, 13, 14, 26, 8, 1};
   map<int, int> ord = {{6, 0}, {5, 1}, {9, 2},  {10, 3},  {11, 4},  {7, 5},   {8, 6},  {12, 7},
                        {4, 8}, {3, 9}, {2, 10}, {13, 11}, {14, 12}, {26, 13}, {1, 15}};
   char bufferC0[18] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -1844,7 +1844,7 @@ void driveHardware::readVProbe(int pos) {
                        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x65, 0x65};
 
   char *buffer(0);
-  
+
   if (0) {
     cout << "bufferC0: ";
     for (int i = 0; i < 18; i +=2) {
@@ -1863,9 +1863,9 @@ void driveHardware::readVProbe(int pos) {
     }
     cout << endl;
   }
-  
-  double v[16] = {0}; 
-  
+
+  double v[16] = {0};
+
   int ipos = pos - 1;
   int addresses[] = {((0x3<<4) | (2*ipos)), ((0x3<<4) | (2*ipos+1))};
 
@@ -1874,7 +1874,7 @@ void driveHardware::readVProbe(int pos) {
       buffer = bufferC0;
     else
       buffer = bufferC1;
-    
+
 #ifdef PI
     int lengthExp(18); // A = 10, B = 11, C = 12, D = 13, E = 14, F = 15
     int handle = i2c_open(fPiGPIO, I2CBUS, addresses[iaddr], 0);
@@ -1908,7 +1908,7 @@ void driveHardware::readVProbe(int pos) {
       cout << endl;
       cout.flags(f);
     }
-    
+
     for (int i = 0; i < 8; ++i) {
       v[iaddr*8+i] = static_cast<unsigned int>(buffer[2*i] + (buffer[2*i+1]<<8))*VDD/65536;
       if (0) {
@@ -1921,7 +1921,7 @@ void driveHardware::readVProbe(int pos) {
              << endl;
 
         cout.flags( f );
-        
+
         cout << "v[] printout:" << endl;
         for (int i = 0; i < 16; ++i) {
           cout << std::setw(5) << v[i] << " ";
@@ -1931,7 +1931,7 @@ void driveHardware::readVProbe(int pos) {
       }
     }
   }
-  
+
   double vin   = v[ord[7]]  - v[ord[26]];
   double voffs = v[ord[8]]  - 0.25*(v[ord[14]] + v[ord[11]] + v[ord[6]] + v[ord[3]]);
   double vdda0 = v[ord[13]] - v[ord[14]];
@@ -1945,13 +1945,13 @@ void driveHardware::readVProbe(int pos) {
 
   stringstream output;
   output << fLOG.shortTimeStamp() << " " <<  std::setprecision(5)
-         << vin << "   " 
+         << vin << "   "
          << voffs << "   "
          << vdda0 << "   " << vddd0 << "   "
          << vdda1 << "   " << vddd1 << "   "
          << vdda2 << "   " << vddd2 << "   "
          << vdda3 << "   " << vddd3 << "   ";
-  
+
   fVprobeVoltages = output.str();
   cout << fVprobeVoltages << endl;
 }

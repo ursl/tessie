@@ -52,9 +52,9 @@ public:
   void evtHandler();
   void ensureSafety();
   void doWarning(std::string errmsg, bool nothing = false);
-  void doAlarm(std::string s); 
+  void doAlarm(std::string s);
   void lighting(int imode = 0);
-  
+
   std::string timeStamp(bool filestamp = true);
   std::string tStamp() {return timeStamp(false);}
 
@@ -71,16 +71,16 @@ public:
 
   // -- controlling the FRAS/valve(s)
   void  entertainFras();
-  bool  getStatusValve0() {return ((fValveMask & 1) == 1);}
-  bool  getStatusValve1() {return ((fValveMask & 2) == 2);}
+  bool  getStatusValve0() {return ((fRelaisMask & 1) == 1);}
+  bool  getStatusValve1() {return ((fRelaisMask & 2) == 2);}
   bool  getStatusValve()  {return (getStatusValve0() && getStatusValve1());}
-  bool  getStatusFan() {return ((fValveMask & 4) == 4);}
+  bool  getStatusFan() {return ((fRelaisMask & 4) == 4);}
   void  turnOnValve(int i); // i = 0 or 1
   void  turnOffValve(int i); // i = 0 or 1
   void  turnOnFan();
   void  turnOffFan();
   void  checkFan();
-  
+
   // -- controlling the TEC
   void  setTECParameter(float par); // ???
   void  entertainTECs();
@@ -146,7 +146,7 @@ signals:
   void  signalAlarm();
   void  signalKillSiren();
 
-  
+
 protected:
   void        initTECData();
   TECData     initAllTECRegister();
@@ -168,7 +168,7 @@ private:
   int     fCANReg;
   float   fCANVal;
   float   fTECParameter;
-  int     fValveMask; 
+  int     fRelaisMask;
   QString fDateAndTime;
 
   std::map<int, int> fActiveTEC;
@@ -194,14 +194,14 @@ private:
 
   // -- data from VProbe
   std::string fVprobeVoltages;
-  
+
 #ifdef PI
-  int    fSw; 
+  int    fSw;
   struct sockaddr_can fAddrW;
   struct ifreq fIfrW;
   struct can_frame fFrameW;
 
-  int    fSr; 
+  int    fSr;
   struct sockaddr_can fAddrR;
   struct ifreq fIfrR;
   struct can_frame fFrameR;
