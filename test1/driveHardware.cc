@@ -478,7 +478,6 @@ void driveHardware::ensureSafety() {
 #ifdef PI
     cout << "set GPIORED = LOW" << endl;
     gpio_write(fPiGPIO, GPIORED, 0);
-    gpio_write(fPiGPIO, GPIOGREEN, 1);
     gpio_write(fPiGPIO, GPIOINT, 1);
 
     emit signalKillSiren();
