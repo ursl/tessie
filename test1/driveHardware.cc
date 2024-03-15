@@ -115,7 +115,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
 
   lighting(1);
 
-  gpio_write(fPiGPIO, GPIOGREEN,  1);
+  //no more  gpio_write(fPiGPIO, GPIOGREEN,  1);
 
   // -- read Sensirion SHT85 humidity/temperature sensor
   cout << "initial readout SHT85" << endl;
@@ -337,6 +337,8 @@ void driveHardware::doRun() {
 // ----------------------------------------------------------------------
 void driveHardware::ensureSafety() {
 
+  bool greenLight(true);
+
   // -- first the trivial warnings
   if (redCANErrors() > 0) {
     stringstream a("==WARNING== CAN errors = "
@@ -356,6 +358,10 @@ void driveHardware::ensureSafety() {
     emit signalSendToServer(QString::fromStdString(a.str()));
   }
 
+  // -- Check for GL condition
+  if (fSHT85Temp < 15.0)  {
+    greenLight = false;
+  }
 
   int allOK(0);
   // -- air temperatures
@@ -420,6 +426,9 @@ void driveHardware::ensureSafety() {
   // -- check module temperatures (1) value and (2) against dew point
   for (int itec = 1; itec <= 8; ++itec) {
     double mtemp = fTECData[itec].reg["Temp_M"].value;
+    if (mtemp < 15) {
+      greenLight = false;
+    }
     if (mtemp > SAFETY_MAXTEMPM) {
       allOK = 4;
       stringstream a("==ALARM== module temperature = " +
@@ -478,6 +487,14 @@ void driveHardware::ensureSafety() {
     emit signalSetBackground("RH", "white");
 #endif
   }
+
+#ifdef PI
+  if (greenLight) {
+    gpio_write(fPiGPIO, GPIOGREEN, 1);
+  } else {
+    gpio_write(fPiGPIO, GPIOGREEN, 0);
+  }
+#endif
 
   // -- keep a record for the next time
   fAlarmState = allOK;
