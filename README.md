@@ -262,3 +262,65 @@ With this setup, you can connect to http://coldbox01:3000 (Note: http, not https
 
 <img width="1250" alt="240201-tessie-web" src="https://github.com/ursl/tessie/assets/5073648/931cdd31-1165-4ca0-88da-b44ae3c5af6e">
 
+## Configure tessie to serve port 80 instead of 3000
+The purpose of this section is to provide hints how to setup `nginx` such that you can connect to `http://coldbox01` instead of `http://coldbox01:3000`. 
+Follow the instructions [here](https://medium.com/@adarsh-d/node-js-on-port-80-or-443-7083336af3b0). 
+
+The following nginx config file works at PSI
+```
+server {
+    listen 80;
+    server_name coldbox01.psi.ch;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+```
+
+Start/test/restart with `service`:
+```
+sudo service nginx start
+sudo service nginx status
+sudo service nginx restart
+```
+
+Depending on your system setup, you might need 
+```
+pi@coldbox01:~ $ cat /lib/systemd/system/nginx.service 
+# Stop dance for nginx
+# =======================
+#
+# ExecStop sends SIGQUIT (graceful stop) to the nginx process.
+# If, after 5s (--retry QUIT/5) nginx is still running, systemd takes control
+# and sends SIGTERM (fast shutdown) to the main process.
+# After another 5s (TimeoutStopSec=5), and if nginx is alive, systemd sends
+# SIGKILL to all the remaining processes in the process group (KillMode=mixed).
+#
+# nginx signals reference doc:
+# http://nginx.org/en/docs/control.html
+#
+[Unit]
+Description=A high performance web server and a reverse proxy server
+Documentation=man:nginx(8)
+After=network-online.target remote-fs.target nss-lookup.target
+Wants=network-online.target
+
+[Service]
+Type=forking
+PIDFile=/run/nginx.pid
+ExecStartPre=/usr/sbin/nginx -t -q -g 'daemon on; master_process on;'
+ExecStart=/usr/sbin/nginx -g 'daemon on; master_process on;'
+ExecReload=/usr/sbin/nginx -g 'daemon on; master_process on;' -s reload
+ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/nginx.pid
+TimeoutStopSec=5
+KillMode=mixed
+
+[Install]
+WantedBy=multi-user.target
+``
