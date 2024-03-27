@@ -207,7 +207,7 @@ mosquitto_sub -h coldbox01 -t "monTessie"
 ```
 Only values (changes) outside of a window a published
 
-## Configure nore for the webserver
+## Configure node for the webserver
 ```
 cd tessie/node/test1
 npm install
