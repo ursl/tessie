@@ -29,6 +29,7 @@ make
 ./tessie
 ```
 
+
 ## Hints for installing/running hardware components
 
 ### Installation of the power button: 
@@ -205,6 +206,12 @@ mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off"
 mosquitto_sub -h coldbox01 -t "monTessie"
 ```
 Only values (changes) outside of a window a published
+
+## Configure nore for the webserver
+```
+cd tessie/node/test1
+npm install
+```
 
 ## How to setup the automatic startup of tessie and the webserver
 Using `systemctl` create the following two files (`sudo`!):
