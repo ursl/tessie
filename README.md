@@ -3,26 +3,30 @@
 Etymology: tessie sounds better than TC (box), for temperature cycling (box)
 
 ## Hints on required software
+Installatation of various components
 ```shell
 sudo apt install nodejs
 sudo apt install npm
 
 sudo apt-get install pigpio
-sudo systemctl enable pigpiod
-
 
 sudo apt-get install libmosquitto-dev libmosquittopp-dev
 sudo apt install -y mosquitto mosquitto-clients
 
 sudo apt install libqt5charts5 libqt5charts5-dev
 
-sudo systemctl enable mosquitto.service
 ```
 
 Add the following two lines to `/etc/mosquito/mosquito.conf`
 ```
 listener 1883
 allow_anonymous true
+```
+
+Enable various components at startup
+```shell
+sudo systemctl enable pigpiod
+sudo systemctl enable mosquitto.service
 ```
 
 
