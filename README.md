@@ -23,7 +23,7 @@ sudo systemctl enable mosquitto.service
 git clone git@github.com:ursl/tessie
 (if you have issues with keys, use: git clone https://github.com/ursl/tessie.git)
 cd tessie/test1
-qmake -o Makefile test1.pro
+qmake -o Makefile  "CONFIG+=PI" test1.pro
 make
 
 ./tessie
