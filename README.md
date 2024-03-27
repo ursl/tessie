@@ -211,7 +211,7 @@ Only values (changes) outside of a window a published
 ## Configure node for the webserver
 ```
 cd tessie/node/test1
-npm install
+npm install --save express socket.io mqtt
 ```
 
 ## How to setup the automatic startup of tessie and the webserver
