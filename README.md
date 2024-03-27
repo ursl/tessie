@@ -19,6 +19,13 @@ sudo apt install libqt5charts5 libqt5charts5-dev
 sudo systemctl enable mosquitto.service
 ```
 
+Add the following two lines to `/etc/mosquito/mosquito.conf`
+```
+listener 1883
+allow_anonymous true
+```
+
+
 ## Hints for compilation and running locally on a coldbox
 
 ```shell
