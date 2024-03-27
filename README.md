@@ -8,6 +8,7 @@ sudo apt install nodejs
 sudo apt install npm
 
 sudo apt-get install pigpio
+sudo pigpiod
 
 sudo apt-get install libmosquitto-dev libmosquittopp-dev
 sudo apt install -y mosquitto mosquitto-clients
