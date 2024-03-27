@@ -25,7 +25,8 @@ app.use(express.static('public'));
 // mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "tec 6 cmd Power_Off "
 
 const protocol = 'mqtt'
-const host = os.hostname();
+//const host = os.hostname();
+const host = 'localhost';
 const port = '1883'
 const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
 
