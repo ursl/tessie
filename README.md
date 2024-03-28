@@ -92,6 +92,7 @@ laptop>ssh -Y "coldbox01" (or whatever hostname your Raspberry Pi has; assuming 
 coldbox01>cd tessie/test1
 coldbox01>./tessie
 ```
+NOTE (again): This is not the normal operation mode! If you have `tessie` started by `systemd`, the two instances of tessie will interfere with their access to the i2c and CAN buses. Also note that the fonts on your remote computer might be bad (especially on macos). Instead of such a setup, you should be using the normal operation mode, where `systemd` starts `tessie` at startup and you connect via a browser to it. Therefore, this font issue is not going to be fixed. 
 
 
 In another window on your computer `laptop` run the mosquittto_pub commands, e.g.,
