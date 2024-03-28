@@ -3,20 +3,32 @@
 Etymology: tessie sounds better than TC (box), for temperature cycling (box)
 
 ## Hints on required software
+Installatation of various components
 ```shell
 sudo apt install nodejs
 sudo apt install npm
 
 sudo apt-get install pigpio
-sudo pigpiod
 
 sudo apt-get install libmosquitto-dev libmosquittopp-dev
 sudo apt install -y mosquitto mosquitto-clients
 
 sudo apt install libqt5charts5 libqt5charts5-dev
 
+```
+
+Add the following two lines to `/etc/mosquito/mosquito.conf`
+```
+listener 1883
+allow_anonymous true
+```
+
+Enable various components at startup
+```shell
+sudo systemctl enable pigpiod
 sudo systemctl enable mosquitto.service
 ```
+
 
 ## Hints for compilation and running locally on a coldbox
 
@@ -29,6 +41,7 @@ make
 
 ./tessie
 ```
+NOTE: In normal operation, you do not run `tessie` locally. Rather it is started by `systemd` at boot time (see below).
 
 
 ## Hints for installing/running hardware components
@@ -79,6 +92,7 @@ laptop>ssh -Y "coldbox01" (or whatever hostname your Raspberry Pi has; assuming 
 coldbox01>cd tessie/test1
 coldbox01>./tessie
 ```
+NOTE (again): This is not the normal operation mode! If you have `tessie` started by `systemd`, the two instances of tessie will interfere with their access to the i2c and CAN buses. Also note that the fonts on your remote computer might be bad (especially on macos). Instead of such a setup, you should be using the normal operation mode, where `systemd` starts `tessie` at startup and you connect via a browser to it. Therefore, this font issue is not going to be fixed. 
 
 
 In another window on your computer `laptop` run the mosquittto_pub commands, e.g.,
