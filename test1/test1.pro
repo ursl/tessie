@@ -13,15 +13,14 @@ QMAKE_CXXFLAGS += -std=c++17
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-CONFIG(PI) {
-   DEFINES += PI
-   LIBS += -lpigpiod_if2 # -lpigpio
-   LIBS += -L/usr/lib/arm-linux-gnueabihf/ -lmosquittopp
+# -- by default, this is compiled on a Raspberry Pi
+CONFIG(NOPI) {
+ LIBS += -L/opt/homebrew/lib -lmosquittopp
+ INCLUDEPATH += /opt/homebrew/include
 } else {
-   LIBS += -L/opt/homebrew/lib -lmosquittopp
-   INCLUDEPATH += /opt/homebrew/include
-
-  # QMAKE_MACOSX_DEPLOYMENT_TARGET = 12.0
+ DEFINES += PI
+ LIBS += -lpigpiod_if2
+ LIBS += -L/usr/lib/arm-linux-gnueabihf -lmosquittopp
 }
 
 SOURCES += \
