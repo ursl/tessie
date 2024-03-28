@@ -41,6 +41,7 @@ make
 
 ./tessie
 ```
+NOTE: In normal operation, you do not run `tessie` locally. Rather it is started by `systemd` at boot time (see below).
 
 
 ## Hints for installing/running hardware components
