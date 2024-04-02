@@ -1,0 +1,34 @@
+[Unit]
+Description=tessie
+After=network.target
+
+[Service]
+User=%USER%
+Type=simple
+
+PAMName=login
+Environment=XDG_SESSION_TYPE=x11
+TTYPath=/dev/tty8
+StandardInput=tty
+UnsetEnvironment=TERM
+
+UtmpIdentifier=tty8
+UtmpMode=user
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=tessie
+ExecStartPre=/usr/bin/chvt 8
+Environment=PIDFile=%TESSIEDIR%/.current.pid
+
+WorkingDirectory=%TESSIEDIR%
+ExecStart=/usr/bin/xinit %TESSIEDIR%/runTessie.sh service -- :1
+ExecStop=/usr/bin/pkill -F ${PIDFile} -TERM
+ExecStop=/usr/bin/sleep 5
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+
+

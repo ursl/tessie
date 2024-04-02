@@ -1,0 +1,20 @@
+[Unit]
+Description=tessie
+After=multi-user.target
+After=tessie-server.service
+Requires=tessie-server.service
+Requires=mosquitto.service
+
+[Service]
+Type=exec
+User=%USER%
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=tessie-web
+
+WorkingDirectory=%TESSIEDIR%
+ExecStart=%TESSIEDIR%/runTessie.sh node
+ 
+[Install]
+WantedBy=multi-user.target
