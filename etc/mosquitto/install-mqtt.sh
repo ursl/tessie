@@ -4,7 +4,7 @@ cd "$(dirname "$0")"
 
 if [ $UID -ne 0 ]; then
    echo "Rerunning as root"
-   exec sudo $0 $@
+   exec sudo ./$(basename $0) $@
 fi
 
 apt -y install mosquitto
