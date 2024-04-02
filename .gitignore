@@ -1,7 +1,19 @@
-*.o
 tessie.txt*
 *.pdf
 moc_*
+ui_*.h
+
+test*/Makefile
+tessie
+
 .DS_Store
 *~
 .vscode/settings.json
+.*
+!/.gitignore
+
+# CPP
+*.d
+*.o
+*.la
+*.a
