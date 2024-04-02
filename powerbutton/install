@@ -2,7 +2,7 @@
 
 set -e
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")"
 
 echo "=> Installing shutdown listener...\n"
 sudo cp listen-for-shutdown.py /usr/local/bin/
