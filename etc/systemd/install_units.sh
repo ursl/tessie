@@ -11,5 +11,5 @@ for svcstub in *.stub; do
 	sudo mv ${svcstub%.stub} $UNITDIR
 done
 sudo systemctl daemon-reload
-sudo systemctl enable --now tessie-server
-sudo systemctl enable --now tessie-web
+sudo systemctl enable ${1:+--now} tessie-server
+sudo systemctl enable ${1:+--now} tessie-web
