@@ -8,7 +8,8 @@ banner(){
 	echo  "$*"
 	echo -e "\n##########################################"
 }
- 
+
+[[ $UID -eq 0 ]] && echo "Don't run this script as sudo. ABORT" && exit 2 
 
 echo -e "!!!!WARNING!!!!\nRun this on a fresh system only. You have 10s to stop by pressing CTRL+C"
 sleep 10
@@ -16,6 +17,7 @@ sleep 10
 
 banner "Installing packages"
 sudo sh -c "apt-get update && xargs -a packages.list apt-get -y install"
+cd ../node/test1; npm install --save express socket.io mqtt; cd -
 
 banner "Setting up boot parameters"
 boot/install-configtxt.sh
