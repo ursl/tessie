@@ -2,6 +2,37 @@
 
 Etymology: tessie sounds better than TC (box), for temperature cycling (box)
 
+## (Mostly automatic) Installation on the coldbox
+This procedure is meant to be run on a fresh system. It might also work on a already active system but this is untested.
+
+
+1. Start with a fresh Raspberry Pi OS (recommended: bullseye lite) with a finished initial system configuration (this runs automatically when you start it up for the first time).
+2. Clone this repo as your standard user and run  
+   ```
+   cd tessie; etc/prepareSystem.sh
+   ```
+   This will install all necessary packages and configure the system (I2C, CANBUS, systemd) to run tessie.
+3. Compile the C++ code following [the instructions in the next section](#hints-for-compilation-and-running-locally-on-a-coldbox), but skip starting tessie manually.
+4. Reboot the system. 
+Both tessie (interface on the LCD) and the web service (reachable via `http://YOURCOLDBOX_NAME_OR_IP:3000`) should be running.
+
+A manual configuration procedure is described in the Hints sections below 
+
+## Compiling and running locally on a coldbox
+
+```shell
+git clone git@github.com:ursl/tessie
+(if you have issues with keys, use: git clone https://github.com/ursl/tessie.git)
+cd tessie/test1
+qmake -o Makefile  test1.pro
+make
+
+./tessie
+```
+NOTE 1: In normal operation, you do not run `tessie` locally, i.e. skip the final command. Rather it is started by `systemd` at boot time (see below).<br>
+NOTE 2: If you want to compile on a non-Raspi host, use `qmake "CONFIG+=NOPI" -o Makefile test1.pro`
+
+
 ## Hints on required software
 Installatation of various components
 ```shell
@@ -28,21 +59,6 @@ Enable various components at startup
 sudo systemctl enable pigpiod
 sudo systemctl enable mosquitto.service
 ```
-
-
-## Hints for compilation and running locally on a coldbox
-
-```shell
-git clone git@github.com:ursl/tessie
-(if you have issues with keys, use: git clone https://github.com/ursl/tessie.git)
-cd tessie/test1
-qmake -o Makefile  test1.pro
-make
-
-./tessie
-```
-NOTE 1: In normal operation, you do not run `tessie` locally, i.e. skip the final command. Rather it is started by `systemd` at boot time (see below).<br>
-NOTE 2: If you want to compile on a non-Raspi host, use `qmake "CONFIG+=NOPI" -o Makefile test1.pro`
 
 ## Hints for installing/running hardware components
 
