@@ -21,7 +21,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   ui->setupUi(this);
 
 
-  ui->labelVersion->setText("2024/03/15-01");
+  ui->labelVersion->setText("2024/04/05-01");
   //ui->labelStatus->setText("OK");
 
   ui->lineEditRunTime->setAlignment(Qt::AlignRight);
