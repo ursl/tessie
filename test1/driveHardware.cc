@@ -337,11 +337,14 @@ void driveHardware::doRun() {
 // ----------------------------------------------------------------------
 void driveHardware::ensureSafety() {
 
-  static struct timeval yTime;
-  struct timeval nowTime;
-  gettimeofday(&nowTime, 0);
+  static bool first(true);
+  struct timeval yelloTime;
+  if (first) {
+    gettimeofday(&yelloTime, 0);
+    first = false;
+  }
 
-  bool greenLight(true);
+  bool greenLight(true), yellowLight(getStatusFan());
 
   // -- first the trivial warnings
   if (redCANErrors() > 0) {
@@ -496,6 +499,27 @@ void driveHardware::ensureSafety() {
     gpio_write(fPiGPIO, GPIOGREEN, 1);
   } else {
     gpio_write(fPiGPIO, GPIOGREEN, 0);
+  }
+
+  // -- add yellow blinking light in case fan is off but conditions are not safe
+  if (!getStatusFan()) {
+    if (!greenLight) {
+      struct timeval nowTime;
+      gettimeofday(&nowTime, 0);
+      if (diff_ms(nowTime, yelloTime) > 1000) {
+        yelloTime = nowTime;
+        if (yellowLight) {
+          gpio_write(fPiGPIO, GPIOYELLO, 0);
+          yellowLight = false;
+        } else {
+          gpio_write(fPiGPIO, GPIOYELLO, 1);
+          yellowLight = true;
+        }
+      }
+    } else {
+      yellowLight = false;
+      gpio_write(fPiGPIO, GPIOYELLO, 0);
+    }
   }
 #endif
 
