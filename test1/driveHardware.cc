@@ -344,7 +344,8 @@ void driveHardware::ensureSafety() {
     first = false;
   }
 
-  bool greenLight(true), yellowLight(getStatusFan());
+  bool greenLight(true);
+  static bool yellowLight(getStatusFan());
 
   // -- first the trivial warnings
   if (redCANErrors() > 0) {
