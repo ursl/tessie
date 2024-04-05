@@ -337,6 +337,10 @@ void driveHardware::doRun() {
 // ----------------------------------------------------------------------
 void driveHardware::ensureSafety() {
 
+  static struct timeval yTime;
+  struct timeval nowTime;
+  gettimeofday(&nowTime, 0);
+
   bool greenLight(true);
 
   // -- first the trivial warnings
