@@ -1443,9 +1443,9 @@
     <property name="geometry">
      <rect>
       <x>230</x>
-      <y>10</y>
+      <y>20</y>
       <width>561</width>
-      <height>51</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
@@ -1459,7 +1459,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>10</y>
+      <y>20</y>
       <width>91</width>
       <height>16</height>
      </rect>
@@ -1478,9 +1478,9 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>30</y>
+      <y>40</y>
       <width>149</width>
-      <height>461</height>
+      <height>451</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
