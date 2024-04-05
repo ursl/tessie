@@ -36,13 +36,13 @@ sudo systemctl enable mosquitto.service
 git clone git@github.com:ursl/tessie
 (if you have issues with keys, use: git clone https://github.com/ursl/tessie.git)
 cd tessie/test1
-qmake -o Makefile  "CONFIG+=PI" test1.pro
+qmake -o Makefile  test1.pro
 make
 
 ./tessie
 ```
-NOTE: In normal operation, you do not run `tessie` locally. Rather it is started by `systemd` at boot time (see below).
-
+NOTE 1: In normal operation, you do not run `tessie` locally, i.e. skip the final command. Rather it is started by `systemd` at boot time (see below).<br>
+NOTE 2: If you want to compile on a non-Raspi host, use `qmake "CONFIG+=NOPI" -o Makefile test1.pro`
 
 ## Hints for installing/running hardware components
 
