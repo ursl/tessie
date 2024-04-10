@@ -21,7 +21,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   ui->setupUi(this);
 
 
-  ui->labelVersion->setText("2024/04/08-01");
+  ui->labelVersion->setText("2024/04/10-01");
 
   char hostname[1024];
   gethostname(hostname, 1024);
