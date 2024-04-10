@@ -307,25 +307,27 @@ void driveHardware::doRun() {
       if (nerrs > 0) {
         fCANErrorOld = fCANErrorCounter;
         fCANErrorCounter = nerrs;
-        stringstream a("==CANERROR== " + to_string(fCANErrorCounter) + " CAN frame = " + fCanMsg.getErrorFrame().getString());
-        fLOG(ERROR, a.str());
+        if (redCANErrors()) {
+          stringstream a("==CANERROR== n=" + to_string(fCANErrorCounter) + " CAN frame = " + fCanMsg.getErrorFrame().getString());
+          fLOG(ERROR, a.str());
 
-        deque<string> errs = fCanMsg.getErrors();
-        int errRepeat(0);
-        while (errs.size() > 0) {
-          string errmsg = errs.front();
-          if (string::npos != errmsg.find("parse issue")) {
-            ++errRepeat;
+          deque<string> errs = fCanMsg.getErrors();
+          int errRepeat(0);
+          while (errs.size() > 0) {
+            string errmsg = errs.front();
+            if (string::npos != errmsg.find("parse issue")) {
+              ++errRepeat;
+            }
+            if (errRepeat < 2) {
+              //            doWarning(errmsg);
+            }
+            errs.pop_front();
           }
-          if (errRepeat < 2) {
-            //            doWarning(errmsg);
+          if (errRepeat > 2) {
+            //          doWarning("truncated warning message " + to_string(errRepeat-2) + " times");
           }
-          errs.pop_front();
+          fCanMsg.clearAllFrames();
         }
-        if (errRepeat > 2) {
-          //          doWarning("truncated warning message " + to_string(errRepeat-2) + " times");
-        }
-        fCanMsg.clearAllFrames();
       }
       //      doWarning("nothing", true);
     }
