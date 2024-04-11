@@ -3,6 +3,7 @@
 #include <sstream>
 #include <string.h>
 #include <stdio.h>
+#include <fstream>
 
 #include <qpushbutton.h>
 #include <unistd.h>
@@ -21,7 +22,13 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   ui->setupUi(this);
 
 
-  ui->labelVersion->setText("2024/04/10-01");
+
+  ifstream INS;
+  string sline;
+  INS.open("version.txt");
+  getline(INS, sline);
+  ui->labelVersion->setText(sline.c_str());
+  INS.close();
 
   char hostname[1024];
   gethostname(hostname, 1024);
