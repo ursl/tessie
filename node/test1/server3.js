@@ -360,5 +360,5 @@ server.listen(PORT, () => {
 // ----------------------------------------------------------------------
 function readVersion() {
     let filePath = "../../test1/version.txt";
-    versionString = fs.readFileSync(filePath).toString()
+    versionString = fs.readFileSync(filePath).toString().replace('\n', '');
 }
