@@ -342,9 +342,7 @@ io.on('connection', (socket) => {
 
     socket.on('getversionstring', (msg) => {
         console.log('getversionstring input received ->' + msg + '<-');
-        socket.emit('versionString', versionString, (status) => {
-            console.log(status);
-        });
+        socket.emit(versionString);
     });
 
 });
