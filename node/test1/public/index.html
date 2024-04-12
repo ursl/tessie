@@ -88,7 +88,7 @@
           </tr>
           <tr>
             <td>tessie version</td>
-            <td id="versionField" style="text-align:right;">0 </td>
+            <td id="versionField" style="text-align:right;">n/a </td>
           </tr>
         </table>
       </div>
@@ -556,7 +556,7 @@
       socket.on('versionString', (msg) => {
           let versionString = msg.toString();
           console.log(msg.toString() + ' => versionString ->' + versionString + '<-');
-          document.getElementById('VersionField').innerHTML = versionString;
+          document.getElementById('versionField').innerHTML = versionString;
       });
 
 
