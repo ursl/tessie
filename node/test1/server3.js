@@ -358,5 +358,5 @@ server.listen(PORT, () => {
 // ----------------------------------------------------------------------
 function readVersion() {
     let filePath = "../../test1/version.txt";
-    versionString = await readFile(filePath, 'utf8');
+    versionString = fs.readFileSync(filePath).toString()
 }
