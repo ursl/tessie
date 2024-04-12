@@ -32,7 +32,7 @@ const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
 
 const connectUrl = `${protocol}://${host}:${port}`
 
-let versionString = ''
+let versionString = readVersion();
 let envString = ''
 let PowerStateString = ''
 let ControlVoltage_SetString = ''
@@ -172,8 +172,7 @@ clientMqtt.on('message', (topMon, payload) => {
 // ----------------------------------------------------------------------
 io.on('connection', (socket) => {
     console.log('User connected');
-
-    readVersion();
+    console.log('versionString ->' + versionString + '<-');
 
     socket.on('disconnect', () => {
         console.log('User disconnected');
