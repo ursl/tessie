@@ -330,8 +330,8 @@
 
       var logarea = document.getElementById("logarea");
 
-      let msg = "getVersionString";
-      socket.emit('getVersionString', msg);
+      let msg = "getversionstring";
+      socket.emit('getversionstring', msg);
 
       // --
       socket.on('disconnect', () => {
