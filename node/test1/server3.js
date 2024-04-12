@@ -32,7 +32,7 @@ const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
 
 const connectUrl = `${protocol}://${host}:${port}`
 
-let versionString = readVersion();
+let versionString = ''
 let envString = ''
 let PowerStateString = ''
 let ControlVoltage_SetString = ''
@@ -56,6 +56,9 @@ let Ref_UString = ''
 let ModeString = ''
 let WarningString = ''
 let AlarmString = ''
+
+// -- read version string
+readVersion();
 
 
 // ----------------------------------------------------------------------
