@@ -340,6 +340,13 @@ io.on('connection', (socket) => {
         })
     });
 
+    socket.on('getversionstring', (msg) => {
+        console.log('getversionstring input received ->' + msg + '<-');
+        socket.emit('versionstring', versionString, (status) => {
+            console.log(status);
+        });
+    });
+
 });
 
 
@@ -351,14 +358,6 @@ server.listen(PORT, () => {
 
 // ----------------------------------------------------------------------
 function readVersion() {
-    let filePath = "../../test1/MainWindow.cpp";
-    const readableStream = fs.createReadStream(filePath);
-
-    readableStream.on('error', function (error) {
-        console.log(`error: ${error.message}`);
-    })
-
-    readableStream.on('data', (chunk) => {
-        console.log(chunk);
-    })
+    let filePath = "../../test1/version.txt";
+    versionString = await readFile(filePath, 'utf8');
 }

@@ -86,6 +86,10 @@
             <td>Run time</td>
             <td id="RunTime" style="text-align:right;">0 </td>
           </tr>
+          <tr>
+            <td>tessie version</td>
+            <td id="versionField" style="text-align:right;">0 </td>
+          </tr>
         </table>
       </div>
     </div>
@@ -326,6 +330,9 @@
 
       var logarea = document.getElementById("logarea");
 
+      let msg = "getVersionString";
+      socket.emit('getVersionString', msg);
+
       // --
       socket.on('disconnect', () => {
           document.getElementById('statusDiv').style = "background-color:Tomato";
@@ -545,6 +552,14 @@
 
           houston.play();
       });
+
+      socket.on('versionString', (msg) => {
+          versionString = msg.toString();
+          console.log(msg.toString() + ' => versionString ->' + versionString + '<-');
+          document.getElementById('VersionField').innerHTML = versionString;
+      });
+
+
 
       socket.on('putcsv', (msg) => {
           console.log('hallo got putcsv');
