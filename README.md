@@ -2,109 +2,31 @@
 
 Etymology: tessie sounds better than TC (box), for temperature cycling (box)
 
-## Hints on required software
-Installatation of various components
-```shell
-sudo apt install nodejs
-sudo apt install npm
-
-sudo apt-get install pigpio
-
-sudo apt-get install libmosquitto-dev libmosquittopp-dev
-sudo apt install -y mosquitto mosquitto-clients
-
-sudo apt install libqt5charts5 libqt5charts5-dev
-
-```
-
-Add the following two lines to `/etc/mosquito/mosquito.conf`
-```
-listener 1883
-allow_anonymous true
-```
-
-Enable various components at startup
-```shell
-sudo systemctl enable pigpiod
-sudo systemctl enable mosquitto.service
-```
+## Documentation and installation
+Please start with the [user guide](https://github.com/ursl/tessie/blob/master/main.pdf). The installation procedure for `tessie` is described in (gory) detail. You could also look at [Bane's scripts](https://github.com/BranislavRistic/tessie/tree/dev) for quasi-automatic installation (it may or may not work out of the box).
 
 
-## Hints for compilation and running locally on a coldbox
 
-```shell
-git clone git@github.com:ursl/tessie
-(if you have issues with keys, use: git clone https://github.com/ursl/tessie.git)
-cd tessie/test1
-qmake -o Makefile  test1.pro
-make
+## Hints for operating tessie (and the coldbox) from a remote computer
+Remote operation of `tessie` (and hence the coldbox) is done exclusively through MQTT. 
 
-./tessie
-```
-NOTE 1: In normal operation, you do not run `tessie` locally, i.e. skip the final command. Rather it is started by `systemd` at boot time (see below).<br>
-NOTE 2: If you want to compile on a non-Raspi host, use `qmake "CONFIG+=NOPI" -o Makefile test1.pro`
+The following assumes that your `coldbox01` has `tessie` up and running, and that your computer `laptop` has mosquitto installed.
 
-## Hints for installing/running hardware components
-
-### Installation of the power button: 
-Based on [how-to-add-a-power-button-to-your-raspberry-pi](https://howchoo.com/pi/how-to-add-a-power-button-to-your-raspberry-pi/)
-
-The most important 2 lines for auto installation:
-```
-git clone https://github.com/Howchoo/pi-power-button.git
-./pi-power-button/script/install
-```
-There is a backup ([powerbutton](https://github.com/ursl/tessie/tree/master/powerbutton)) of this contents within the tessie repository.
-
-### Enable CAN bus and I2C
-(sudo) Edit `/boot/config.txt` and add 
-```
-dtparam=spi=on
-dtoverlay=mcp2515-can0,oscillator=12000000,interrupt=25
-dtoverlay=spi-bcm2835-overlay
-dtparam=i2c_vc=on
-```
-Afterwards, reboot for this to take effect.
-
-The "script" [resetCAN.sh](https://github.com/ursl/tessie/tree/master/resetCAN.sh) must be run to configure the CAN bus to the proper bitrate (125kHz). If you enable the automatic startup of tessie (see below), this is done automatically before starting tessie. If you encounter many CAN bus errors, it might help to execute this script manually. 
-
-### Adaption of the splash screen
-(sudo) Edit `/boot/cmdline.txt` to contain
-```
-console=serial0,115200 console=tty1 root=PARTUUID=9cd7f13f-02 rootfstype=ext4 fsck.repair=yes rootwait quiet splash plymouth.ignore-serial-consoles logo.nologo vt.global_cursor_default=0
-```
-(sudo) Edit `/boot/config.txt` and add 
-```
-disable_splash=1
-```
-In a terminal do
-```
-cd /usr/share/plymouth/themes/pix/
-sudo mv splash.png splash.png.bk
-sudo cp /home/pi/tessie/splash.png ./
-```
-
-
-## Hints for operating tessie from a remote computer
-In a shell on your computer `laptop`, do
-```shell
-laptop>ssh -Y "coldbox01" (or whatever hostname your Raspberry Pi has; assuming you have a login there)
-coldbox01>cd tessie/test1
-coldbox01>./tessie
-```
-NOTE (again): This is not the normal operation mode! If you have `tessie` started by `systemd`, the two instances of tessie will interfere with their access to the i2c and CAN buses. Also note that the fonts on your remote computer might be bad (especially on macos). Instead of such a setup, you should be using the normal operation mode, where `systemd` starts `tessie` at startup and you connect via a browser to it. Therefore, this font issue is not going to be fixed. 
-
-
-In another window on your computer `laptop` run the mosquittto_pub commands, e.g.,
+In a window on your computer `laptop` run the mosquittto_pub commands, e.g.,
 ```shell
 laptop>mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 on"
 laptop>mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 on"
 laptop>mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 4.5"
 laptop>mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On"
+
+mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_Off"
+mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 0.0"
+
+mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 off"
+mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off"
 ```
 
 See below for a help text on the MQTT/ctrlTessie commands.
-
 
 If you want to see the response, you have to subscribe in another window, e.g., 
 ```shell
@@ -116,22 +38,6 @@ In another window on your computer `laptop` run the monitor, if desired
 laptop>mosquitto_sub -h coldbox01 -t "monTessie"
 ```
 
-
-
-## Hints for operating tessie with mosquitto
-The following assumes that your `coldbox01` has `tessie` up and running, and that on your computer `laptop` has mosquitto installed
-```shell
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 on"
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 on"
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 4.5"
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On"
-
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_Off"
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 0.0"
-
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 off"
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off"
-```
 
 ## Help on MQTT/ctrlTessie commands
 Issue `mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "help"` and then you will get the following printout in the window where you subscribed to "ctrlTessie" (see above).
@@ -221,128 +127,3 @@ mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off"
 mosquitto_sub -h coldbox01 -t "monTessie"
 ```
 Only values (changes) outside of a window a published
-
-## Configure node for the webserver
-```
-cd tessie/node/test1
-npm install --save express socket.io mqtt
-```
-
-## How to setup the automatic startup of tessie and the webserver
-Using `systemctl` create the following two files (`sudo`!):
-
-```
-pi@coldbox01:~ $ cat /lib/systemd/system/tessie.service
-[Unit]
-Description=tessie
-#After=multi-user.target
-After=network.target
-
-[Service]
-Type=idle
-Environment="XAUTHORITY=/home/pi/.Xauthority"
-Environment="DISPLAY=:0"
-WorkingDirectory=/home/pi/tessie/test1
-ExecStartPre=/home/pi/tessie/resetCAN.sh
-ExecStart=/home/pi/tessie/test1/tessie 
-StandardOutput=inherit
-StandardError=inherit
-
-[Install]
-#WantedBy=multi-user.target
-WantedBy=graphical.target
-```
-
-```
-pi@coldbox01:~ $ cat /lib/systemd/system/tessieWeb.service
-[Unit]
-Description=tessie
-After=multi-user.target
-
-[Service]
-Type=idle
-WorkingDirectory=/home/pi/tessie/node/test1
-ExecStart=/usr/bin/node /home/pi/tessie/node/test1/server3.js 
- 
-[Install]
-WantedBy=multi-user.target
-```
-
-Turn these two services on with 
-```
-sudo systemctl enable tessie.service
-sudo systemctl enable tessieWeb.service
-```
-
-Reboot. Control their status with 
-```
-systemctl status tessie
-systemctl status tessieWeb
-```
-
-With this setup, you can connect to http://coldbox01:3000 (Note: http, not https!) For more information on the webserver, see https://github.com/ursl/tessie/tree/master/node/test1#readme
-
-<img width="1250" alt="240201-tessie-web" src="https://github.com/ursl/tessie/assets/5073648/931cdd31-1165-4ca0-88da-b44ae3c5af6e">
-
-## Configure tessie to serve port 80 instead of 3000
-The purpose of this section is to provide hints how to setup `nginx` such that you can connect to `http://coldbox01` instead of `http://coldbox01:3000`. 
-Follow the instructions [here](https://medium.com/@adarsh-d/node-js-on-port-80-or-443-7083336af3b0). 
-
-The following nginx config file works at PSI
-```
-server {
-    listen 80;
-    server_name coldbox01.psi.ch;
-
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
-}
-```
-
-Start/test/restart with `service`:
-```
-sudo service nginx start
-sudo service nginx status
-sudo service nginx restart
-```
-
-Depending on your system setup, you might need 
-```
-pi@coldbox01:~ $ cat /lib/systemd/system/nginx.service 
-# Stop dance for nginx
-# =======================
-#
-# ExecStop sends SIGQUIT (graceful stop) to the nginx process.
-# If, after 5s (--retry QUIT/5) nginx is still running, systemd takes control
-# and sends SIGTERM (fast shutdown) to the main process.
-# After another 5s (TimeoutStopSec=5), and if nginx is alive, systemd sends
-# SIGKILL to all the remaining processes in the process group (KillMode=mixed).
-#
-# nginx signals reference doc:
-# http://nginx.org/en/docs/control.html
-#
-[Unit]
-Description=A high performance web server and a reverse proxy server
-Documentation=man:nginx(8)
-After=network-online.target remote-fs.target nss-lookup.target
-Wants=network-online.target
-
-[Service]
-Type=forking
-PIDFile=/run/nginx.pid
-ExecStartPre=/usr/sbin/nginx -t -q -g 'daemon on; master_process on;'
-ExecStart=/usr/sbin/nginx -g 'daemon on; master_process on;'
-ExecReload=/usr/sbin/nginx -g 'daemon on; master_process on;' -s reload
-ExecStop=-/sbin/start-stop-daemon --quiet --stop --retry QUIT/5 --pidfile /run/nginx.pid
-TimeoutStopSec=5
-KillMode=mixed
-
-[Install]
-WantedBy=multi-user.target
-``
