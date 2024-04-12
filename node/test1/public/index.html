@@ -554,7 +554,7 @@
       });
 
       socket.on('versionString', (msg) => {
-          versionString = msg.toString();
+          let versionString = msg.toString();
           console.log(msg.toString() + ' => versionString ->' + versionString + '<-');
           document.getElementById('VersionField').innerHTML = versionString;
       });
