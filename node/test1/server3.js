@@ -173,13 +173,14 @@ clientMqtt.on('message', (topMon, payload) => {
 io.on('connection', (socket) => {
     console.log('User connected');
 
+    readVersion();
+
     socket.on('disconnect', () => {
         console.log('User disconnected');
     });
 
 
     setInterval(() => {
-        socket.emit('versionString', versionString);
         socket.emit('envString', envString);
         socket.emit('PowerStateString', PowerStateString);
         socket.emit('ControlVoltage_SetString', ControlVoltage_SetString);
