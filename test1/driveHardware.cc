@@ -96,7 +96,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fSHT85Config[0] = 0x24;   // MSB
   fSHT85Config[1] = 0x00;   // LSB
 
-  fLidStatus = fOldLidStatus = -1;
+  fLidStatus = 1;
+  fOldLidStatus = -1;
 
   fAlarmState = 0;
 
@@ -355,7 +356,7 @@ void driveHardware::ensureSafety() {
     gpio_write(fPiGPIO, GPIOINT, 0);
 #endif
     if (fOldLidStatus != fLidStatus) {
-      cout << "Changing Interlock to LOW " << endl;
+      cout << "Changed Interlock to LOW " << endl;
       fOldLidStatus = fLidStatus;
 
       stringstream a;
