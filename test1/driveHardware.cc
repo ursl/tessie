@@ -357,6 +357,19 @@ void driveHardware::ensureSafety() {
     if (fOldLidStatus != fLidStatus) {
       cout << "Changing Interlock to LOW " << endl;
       fOldLidStatus = fLidStatus;
+
+      stringstream a;
+      if (1 == fLidStatus) {
+        a << "lid locked";
+      } else if (0 == fLidStatus) {
+        a << "lid unlocked";
+      } else if (-1 == fLidStatus) {
+        a << "lid open";
+      } else {
+        a << "lid status unclear";
+      }
+      fLOG(INFO, a.str());
+      emit signalSendToServer(QString::fromStdString(a.str()));
     }
   }
 
@@ -510,7 +523,19 @@ void driveHardware::ensureSafety() {
       gpio_write(fPiGPIO, GPIOINT, 1);
 #endif
       if (fOldLidStatus != fLidStatus) {
-        cout << "Changing Interlock to LOW " << endl;
+        stringstream a;
+        if (1 == fLidStatus) {
+          a << "lid locked";
+        } else if (0 == fLidStatus) {
+          a << "lid unlocked";
+        } else if (-1 == fLidStatus) {
+          a << "lid open";
+        } else {
+          a << "lid status unclear";
+        }
+        fLOG(INFO, a.str());
+        emit signalSendToServer(QString::fromStdString(a.str()));
+
         fOldLidStatus = fLidStatus;
       }
 
