@@ -195,6 +195,12 @@ private:
   // -- data from VProbe
   std::string fVprobeVoltages;
 
+  // -- lid status (read out from TEC7 (of 8)
+  //    1 closed and locked (TEC7 Temp_W > 4000)
+  //    0 closed            (TEC7 0 < Temp_W < 4000)
+  //    -1 open             (TEC7 Temp_W < 0)
+  int fLidStatus, fOldLidStatus;
+
 #ifdef PI
   int    fSw;
   struct sockaddr_can fAddrW;

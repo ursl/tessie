@@ -96,6 +96,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fSHT85Config[0] = 0x24;   // MSB
   fSHT85Config[1] = 0x00;   // LSB
 
+  fLidStatus = fOldLidStatus = -1;
+
   fAlarmState = 0;
 
 #ifdef PI
@@ -111,6 +113,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   gpio_write(fPiGPIO, GPIOPSUEN, 1);
 
   set_mode(fPiGPIO, GPIOINT, PI_OUTPUT);
+  // -- start with interlock high (will to low in first call to ensureSafety)
   gpio_write(fPiGPIO, GPIOINT, 1);
 
   lighting(1);
@@ -346,6 +349,19 @@ void driveHardware::ensureSafety() {
     first = false;
   }
 
+  // -- check lid status (only 1 is good enough) and set interlock accordingly
+  if (fLidStatus < 1) {
+#ifdef PI
+    gpio_write(fPiGPIO, GPIOINT, 0);
+#endif PI
+    if (fOldLidStatus != fLidStatus) {
+      cout << "Changing Interlock to LOW " << endl;
+      fOldLidStatus = fLidStatus;
+    }
+  }
+
+
+
   bool greenLight(true);
   static bool yellowLight(getStatusFan());
 
@@ -485,16 +501,25 @@ void driveHardware::ensureSafety() {
 
   if ((fAlarmState > 0) && (0 == allOK)) {
     cout << "allOK = " << allOK << ", alarm condition gone, reset siren and red lamp" << endl;
-#ifdef PI
     cout << "set GPIORED = LOW" << endl;
+#ifdef PI
     gpio_write(fPiGPIO, GPIORED, 0);
-    gpio_write(fPiGPIO, GPIOINT, 1);
+#endif
+    if (1 == fLidStatus) {
+#ifdef PI
+      gpio_write(fPiGPIO, GPIOINT, 1);
+#endif
+      if (fOldLidStatus != fLidStatus) {
+        cout << "Changing Interlock to LOW " << endl;
+        fOldLidStatus = fLidStatus;
+      }
+
+    }
 
     emit signalKillSiren();
     emit signalSetBackground("T", "white");
     emit signalSetBackground("DP", "white");
     emit signalSetBackground("RH", "white");
-#endif
   }
 
 #ifdef PI
@@ -1664,7 +1689,17 @@ void driveHardware::readAllParamsFromCANPublic() {
     if (0 == ireg%2) evtHandler();
     // -- NOTE: ireg != regnumber
     if (7 == ireg) {
+      // -- read water temperature from special TEC 8
       fTECData[8].reg["Temp_W"].value = getTECRegisterFromCAN(8, regnames[ireg]);
+      // -- read pressure sensor from special TEC 7
+      fTECData[7].reg["Temp_W"].value = getTECRegisterFromCAN(7, regnames[ireg]);
+      if (fTECData[7].reg["Temp_W"].value < 0.) {
+        fLidStatus = 1;
+      } else if (fTECData[7].reg["Temp_W"].value > 4000.) {
+        fLidStatus = -1;
+      } else {
+        fLidStatus = 0;
+      }
     } else if (9 == ireg) {
       fTECData[8].reg["Temp_Diff"].value = getTECRegisterFromCAN(8, regnames[ireg]);
     } else {
