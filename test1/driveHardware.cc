@@ -353,7 +353,7 @@ void driveHardware::ensureSafety() {
   if (fLidStatus < 1) {
 #ifdef PI
     gpio_write(fPiGPIO, GPIOINT, 0);
-#endif PI
+#endif
     if (fOldLidStatus != fLidStatus) {
       cout << "Changing Interlock to LOW " << endl;
       fOldLidStatus = fLidStatus;
