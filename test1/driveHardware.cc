@@ -1163,31 +1163,31 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> get vprobe[1-8]");
     vhelp.push_back("> ");
 
-    vhelp.push_back("> get [tec {0|x}] Mode");
-    vhelp.push_back("> get [tec {0|x}] ControlVoltage_Set");
-    vhelp.push_back("> get [tec {0|x}] PID_kp");
-    vhelp.push_back("> get [tec {0|x}] PID_ki");
-    vhelp.push_back("> get [tec {0|x}] PID_kd");
-    vhelp.push_back("> get [tec {0|x}] Temp_Set");
-    vhelp.push_back("> get [tec {0|x}] PID_Max");
-    vhelp.push_back("> get [tec {0|x}] PID_Min");
+    vhelp.push_back("> [tec {0|x}] get Mode");
+    vhelp.push_back("> [tec {0|x}] get ControlVoltage_Set");
+    vhelp.push_back("> [tec {0|x}] get PID_kp");
+    vhelp.push_back("> [tec {0|x}] get PID_ki");
+    vhelp.push_back("> [tec {0|x}] get PID_kd");
+    vhelp.push_back("> [tec {0|x}] get Temp_Set");
+    vhelp.push_back("> [tec {0|x}] get PID_Max");
+    vhelp.push_back("> [tec {0|x}] get PID_Min");
 
-    vhelp.push_back("> get [tec {0|x}] Temp_W");
-    vhelp.push_back("> get [tec {0|x}] Temp_M");
-    vhelp.push_back("> get [tec {0|x}] Temp_Diff");
+    vhelp.push_back("> [tec {0|x}] get Temp_W");
+    vhelp.push_back("> [tec {0|x}] get Temp_M");
+    vhelp.push_back("> [tec {0|x}] get Temp_Diff");
 
-    vhelp.push_back("> get [tec {0|x}] Peltier_U");
-    vhelp.push_back("> get [tec {0|x}] Peltier_I");
-    vhelp.push_back("> get [tec {0|x}] Peltier_R");
-    vhelp.push_back("> get [tec {0|x}] Peltier_P");
+    vhelp.push_back("> [tec {0|x}] get Peltier_U");
+    vhelp.push_back("> [tec {0|x}] get Peltier_I");
+    vhelp.push_back("> [tec {0|x}] get Peltier_R");
+    vhelp.push_back("> [tec {0|x}] get Peltier_P");
 
-    vhelp.push_back("> get [tec {0|x}] Supply_U");
-    vhelp.push_back("> get [tec {0|x}] Supply_I");
-    vhelp.push_back("> get [tec {0|x}] Supply_P");
+    vhelp.push_back("> [tec {0|x}] get Supply_U");
+    vhelp.push_back("> [tec {0|x}] get Supply_I");
+    vhelp.push_back("> [tec {0|x}] get Supply_P");
 
-    vhelp.push_back("> get [tec {0|x}] PowerState");
-    vhelp.push_back("> get [tec {0|x}] Error");
-    vhelp.push_back("> get [tec {0|x}] Ref_U");
+    vhelp.push_back("> [tec {0|x}] get PowerState");
+    vhelp.push_back("> [tec {0|x}] get Error");
+    vhelp.push_back("> [tec {0|x}] get Ref_U");
 
     vhelp.push_back("> Tutorial for getting started:");
     vhelp.push_back("> mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \" set valve0 on\" ");
