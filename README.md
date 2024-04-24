@@ -47,83 +47,81 @@ laptop>mosquitto_sub -h coldbox01 -t "monTessie"
 Issue `mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "help"` and then you will get the following printout in the window where you subscribed to "ctrlTessie" (see above).
 
 ```shell
-===================
-hostname: coldbox01
-thread:  ctrlTessie
-===================
-
-Note: [tec {0|x}] can be before or after {get|set|cmd XXX}, e.g.
-      cmd Power_On tec 7
-      tec 7 cmd Power_Off
-
-Note: tec numbering is from 1 .. 8. tec 0 refers to all TECs.
-
-cmd messages:
--------------
-cmd valve0
-cmd valve1
-cmd [tec {0|x}] Power_On
-cmd [tec {0|x}] Power_Off
-cmd [tec {0|x}] ClearError
-cmd [tec {0|x}] GetSWVersion
-cmd [tec {0|x}] SaveVariables
-cmd [tec {0|x}] LoadVariables
-cmd [tec {0|x}] Reboot
-
-messages to write information:
-------------------------------
-[tec {0|x}] set Mode {0,1}
-[tec {0|x}] set ControlVoltage_Set 1.1
-[tec {0|x}] set PID_kp 1.1
-[tec {0|x}] set PID_ki 1.1
-[tec {0|x}] set PID_kd 1.1
-[tec {0|x}] set Temp_Set 1.1
-[tec {0|x}] set PID_Max 1.1
-[tec {0|x}] set PID_Min 1.1
-set valve0 {on|off}
-set valve1 {on|off}
-
-messages to obtain information:
--------------------------------
-get Temp
-get RH
-get DP
-get valve0
-get valve1
-get vprobe[1-8]
-
-get [tec {0|x}] Mode
-get [tec {0|x}] ControlVoltage_Set
-get [tec {0|x}] PID_kp
-get [tec {0|x}] PID_ki
-get [tec {0|x}] PID_kd
-get [tec {0|x}] Temp_Set
-get [tec {0|x}] PID_Max
-get [tec {0|x}] PID_Min
-get [tec {0|x}] Temp_W
-get [tec {0|x}] Temp_M
-get [tec {0|x}] Temp_Diff
-get [tec {0|x}] Peltier_U
-get [tec {0|x}] Peltier_I
-get [tec {0|x}] Peltier_R
-get [tec {0|x}] Peltier_P
-get [tec {0|x}] Supply_U
-get [tec {0|x}] Supply_I
-get [tec {0|x}] Supply_P
-get [tec {0|x}] PowerState
-get [tec {0|x}] Error
-get [tec {0|x}] Ref_U
-
-Tutorial for getting started:
------------------------------
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 on" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 on" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 4.5" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_Off" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 0.0" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 off" 
-mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off"
+> ===================
+> hostname: coldbox01
+> thread:  ctrlTessie
+> ===================
+> 
+> Note: [tec {0|x}] can be before or after {get|set|cmd XXX}, e.g.
+>       cmd Power_On tec 7
+>       tec 7 cmd Power_Off
+> 
+> Note: tec numbering is from 1 .. 8. tec 0 refers to all TECs.
+> 
+> cmd messages:
+> -------------
+> cmd valve0
+> cmd valve1
+> cmd [tec {0|x}] Power_On
+> cmd [tec {0|x}] Power_Off
+> cmd [tec {0|x}] ClearError
+> cmd [tec {0|x}] GetSWVersion
+> cmd [tec {0|x}] SaveVariables
+> cmd [tec {0|x}] LoadVariables
+> cmd [tec {0|x}] Reboot
+> 
+> messages to write information:
+> ------------------------------
+> [tec {0|x}] set Mode {0,1}
+> [tec {0|x}] set ControlVoltage_Set 1.1
+> [tec {0|x}] set PID_kp 1.1
+> [tec {0|x}] set PID_ki 1.1
+> [tec {0|x}] set PID_kd 1.1
+> [tec {0|x}] set Temp_Set 1.1
+> [tec {0|x}] set PID_Max 1.1
+> [tec {0|x}] set PID_Min 1.1
+> set valve0 {on|off}
+> set valve1 {on|off}
+> 
+> messages to obtain information:
+> -------------------------------
+> get Temp
+> get RH
+> get DP
+> get valve0
+> get valve1
+> get vprobe[1-8]
+> 
+> [tec {0|x}] get Mode
+> [tec {0|x}] get ControlVoltage_Set
+> [tec {0|x}] get PID_kp
+> [tec {0|x}] get PID_ki
+> [tec {0|x}] get PID_kd
+> [tec {0|x}] get Temp_Set
+> [tec {0|x}] get PID_Max
+> [tec {0|x}] get PID_Min
+> [tec {0|x}] get Temp_W
+> [tec {0|x}] get Temp_M
+> [tec {0|x}] get Temp_Diff
+> [tec {0|x}] get Peltier_U
+> [tec {0|x}] get Peltier_I
+> [tec {0|x}] get Peltier_R
+> [tec {0|x}] get Peltier_P
+> [tec {0|x}] get Supply_U
+> [tec {0|x}] get Supply_I
+> [tec {0|x}] get Supply_P
+> [tec {0|x}] get PowerState
+> [tec {0|x}] get Error
+> [tec {0|x}] get Ref_U
+> Tutorial for getting started:
+> mosquitto_pub -h coldbox01 -t "ctrlTessie" -m " set valve0 on" 
+> mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 on" 
+> mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 4.5" 
+> mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_On" 
+> mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "cmd Power_Off" 
+> mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set ControlVoltage_Set 0.0" 
+> mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve0 off" 
+> mosquitto_pub -h coldbox01 -t "ctrlTessie" -m "set valve1 off" 
 ```
 
 ## Subscribing to monitoring information
