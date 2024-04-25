@@ -352,33 +352,34 @@ void driveHardware::ensureSafety() {
 
   // -- check lid status (only 1 is good enough) and set interlock accordingly
   checkLid();
-  if (fLidStatus < 1) {
+  if (fOldLidStatus != fLidStatus) {
+    fOldLidStatus = fLidStatus;
+    stringstream b;
 #ifdef PI
-    gpio_write(fPiGPIO, GPIOINT, 0);
-#endif
-    if (fOldLidStatus != fLidStatus) {
-      stringstream b;
+    if (fLidStatus < 1) {
+      gpio_write(fPiGPIO, GPIOINT, 0);
       b << "Changed Interlock to LOW";
-      fLOG(INFO, b.str());
-      fOldLidStatus = fLidStatus;
-      emit signalSendToServer(QString::fromStdString(b.str()));
-
-      stringstream a;
-      if (1 == fLidStatus) {
-        a << "lid locked";
-      } else if (0 == fLidStatus) {
-        a << "lid unlocked";
-      } else if (-1 == fLidStatus) {
-        a << "lid open";
-      } else {
-        a << "lid status unclear";
-      }
-      fLOG(INFO, a.str());
-      emit signalSendToServer(QString::fromStdString(a.str()));
+    } else {
+      gpio_write(fPiGPIO, GPIOINT, 1);
+      b << "Changed Interlock to HIGH";
     }
+#endif
+    fLOG(INFO, b.str());
+    emit signalSendToServer(QString::fromStdString(b.str()));
+
+    stringstream a;
+    if (1 == fLidStatus) {
+      a << "lid locked";
+    } else if (0 == fLidStatus) {
+      a << "lid unlocked";
+    } else if (-1 == fLidStatus) {
+      a << "lid open";
+    } else {
+      a << "lid status unclear";
+    }
+    fLOG(INFO, a.str());
+    emit signalSendToServer(QString::fromStdString(a.str()));
   }
-
-
 
   bool greenLight(true);
   static bool yellowLight(getStatusFan());
@@ -525,6 +526,7 @@ void driveHardware::ensureSafety() {
 #endif
     if (1 == fLidStatus) {
       if (fOldLidStatus != fLidStatus) {
+        fOldLidStatus = fLidStatus;
         stringstream a;
         if (1 == fLidStatus) {
           a << "lid locked";
@@ -537,7 +539,6 @@ void driveHardware::ensureSafety() {
         }
         fLOG(INFO, a.str());
         emit signalSendToServer(QString::fromStdString(a.str()));
-        fOldLidStatus = fLidStatus;
 #ifdef PI
       stringstream b;
       b << "Changed Interlock to HIGH";
@@ -1724,6 +1725,8 @@ void driveHardware::readAllParamsFromCANPublic() {
     if (7 == ireg) {
       // -- read water temperature from special TEC 8
       fTECData[8].reg["Temp_W"].value = getTECRegisterFromCAN(8, regnames[ireg]);
+      // -- read pressure sensor from special TEC 1
+      fTECData[1].reg["Temp_W"].value = getTECRegisterFromCAN(1, "Temp_W");
     } else if (9 == ireg) {
       fTECData[8].reg["Temp_Diff"].value = getTECRegisterFromCAN(8, regnames[ireg]);
     } else {
@@ -2157,13 +2160,12 @@ void driveHardware::lighting(int imode) {
 
 // ----------------------------------------------------------------------
 void  driveHardware::checkLid() {
-  // -- read pressure sensor from special TEC 1
-  fTECData[1].reg["Temp_W"].value = getTECRegisterFromCAN(1, "Temp_W");
+  // -- keep reading from CAN bus in readAllParamsFromCANPublic() to minimize CAN errors
   double reading = fTECData[1].reg["Temp_W"].value;
-  if (reading < -15.) {
+  if (reading < -11.) {
     // -- lid is locked
     fLidStatus = 1;
-  } else if ((-15. < reading) && (reading < -5.)) {
+  } else if ((-11. < reading) && (reading < -9.)) {
     // -- lid is open
     fLidStatus = -1;
   } else {
