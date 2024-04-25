@@ -1718,10 +1718,10 @@ void driveHardware::readAllParamsFromCANPublic() {
       // -- read water temperature from special TEC 8
       fTECData[8].reg["Temp_W"].value = getTECRegisterFromCAN(8, regnames[ireg]);
       // -- read pressure sensor from special TEC 7
-      fTECData[7].reg["Temp_W"].value = getTECRegisterFromCAN(7, regnames[ireg]);
-      if (fTECData[7].reg["Temp_W"].value < 0.) {
+      fTECData[1].reg["Temp_W"].value = getTECRegisterFromCAN(1, regnames[ireg]);
+      if (fTECData[1].reg["Temp_W"].value < -30.) {
         fLidStatus = 1;
-      } else if (fTECData[7].reg["Temp_W"].value > 4000.) {
+      } else if (fTECData[1].reg["Temp_W"].value > 2000.) {
         fLidStatus = -1;
       } else {
         fLidStatus = 0;
