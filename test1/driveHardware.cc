@@ -1717,13 +1717,16 @@ void driveHardware::readAllParamsFromCANPublic() {
     if (7 == ireg) {
       // -- read water temperature from special TEC 8
       fTECData[8].reg["Temp_W"].value = getTECRegisterFromCAN(8, regnames[ireg]);
-      // -- read pressure sensor from special TEC 7
+      // -- read pressure sensor from special TEC 1
       fTECData[1].reg["Temp_W"].value = getTECRegisterFromCAN(1, regnames[ireg]);
-      if (fTECData[1].reg["Temp_W"].value < -30.) {
+      if (fTECData[1].reg["Temp_W"].value < -11.) {
+        // -- lid is locked
         fLidStatus = 1;
-      } else if (fTECData[1].reg["Temp_W"].value > 2000.) {
+      } else if ((-15. < fTECData[1].reg["Temp_W"].value) && (fTECData[1].reg["Temp_W"].value < -5.)) {
+        // -- lid is open
         fLidStatus = -1;
       } else {
+        // -- lid is closed, but not locked
         fLidStatus = 0;
       }
     } else if (9 == ireg) {
