@@ -35,7 +35,10 @@ See below for a help text on the MQTT/ctrlTessie commands.
 If you want to see the response, you have to subscribe in another window, e.g., 
 ```shell
 laptop>mosquitto_sub -h coldbox01 -t "ctrlTessie"
+laptop>mosquitto_sub -F  "%I %t %p" -h coldbox01 -t "ctrlTessie"
 ```
+The second line will prefix the line with a timestamp. 
+
 
 In another window on your computer `laptop` run the monitor, if desired
 ```shell
