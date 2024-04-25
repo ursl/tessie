@@ -96,9 +96,6 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fSHT85Config[0] = 0x24;   // MSB
   fSHT85Config[1] = 0x00;   // LSB
 
-  fOldLidStatus = 2; // initial value
-  checkLid();
-
   fAlarmState = 0;
 
 #ifdef PI
@@ -198,6 +195,9 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
       perror("Error in setting up time out");
     }
   }
+
+  fOldLidStatus = 2; // initial value
+  checkLid();
 
   // -- Load TEC parameters from FLASH
   loadFromFlash();
