@@ -96,8 +96,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fSHT85Config[0] = 0x24;   // MSB
   fSHT85Config[1] = 0x00;   // LSB
 
-  fLidStatus = 1;
-  fOldLidStatus = -1;
+  fOldLidStatus = 2; // initial value
+  checkLid();
 
   fAlarmState = 0;
 
@@ -351,13 +351,17 @@ void driveHardware::ensureSafety() {
   }
 
   // -- check lid status (only 1 is good enough) and set interlock accordingly
+  checkLid();
   if (fLidStatus < 1) {
 #ifdef PI
     gpio_write(fPiGPIO, GPIOINT, 0);
 #endif
     if (fOldLidStatus != fLidStatus) {
-      cout << "Changed Interlock to LOW " << endl;
+      stringstream b;
+      b << "Changed Interlock to LOW";
+      fLOG(INFO, b.str());
       fOldLidStatus = fLidStatus;
+      emit signalSendToServer(QString::fromStdString(b.str()));
 
       stringstream a;
       if (1 == fLidStatus) {
@@ -520,9 +524,6 @@ void driveHardware::ensureSafety() {
     gpio_write(fPiGPIO, GPIORED, 0);
 #endif
     if (1 == fLidStatus) {
-#ifdef PI
-      gpio_write(fPiGPIO, GPIOINT, 1);
-#endif
       if (fOldLidStatus != fLidStatus) {
         stringstream a;
         if (1 == fLidStatus) {
@@ -536,10 +537,16 @@ void driveHardware::ensureSafety() {
         }
         fLOG(INFO, a.str());
         emit signalSendToServer(QString::fromStdString(a.str()));
-
         fOldLidStatus = fLidStatus;
+#ifdef PI
+      stringstream b;
+      b << "Changed Interlock to HIGH";
+      fLOG(INFO, b.str());
+      fOldLidStatus = fLidStatus;
+      emit signalSendToServer(QString::fromStdString(b.str()));
+      gpio_write(fPiGPIO, GPIOINT, 1);
+#endif
       }
-
     }
 
     emit signalKillSiren();
@@ -1717,18 +1724,6 @@ void driveHardware::readAllParamsFromCANPublic() {
     if (7 == ireg) {
       // -- read water temperature from special TEC 8
       fTECData[8].reg["Temp_W"].value = getTECRegisterFromCAN(8, regnames[ireg]);
-      // -- read pressure sensor from special TEC 1
-      fTECData[1].reg["Temp_W"].value = getTECRegisterFromCAN(1, regnames[ireg]);
-      if (fTECData[1].reg["Temp_W"].value < -11.) {
-        // -- lid is locked
-        fLidStatus = 1;
-      } else if ((-15. < fTECData[1].reg["Temp_W"].value) && (fTECData[1].reg["Temp_W"].value < -5.)) {
-        // -- lid is open
-        fLidStatus = -1;
-      } else {
-        // -- lid is closed, but not locked
-        fLidStatus = 0;
-      }
     } else if (9 == ireg) {
       fTECData[8].reg["Temp_Diff"].value = getTECRegisterFromCAN(8, regnames[ireg]);
     } else {
@@ -2157,4 +2152,22 @@ void driveHardware::lighting(int imode) {
     }
   }
 #endif
+}
+
+
+// ----------------------------------------------------------------------
+void  driveHardware::checkLid() {
+  // -- read pressure sensor from special TEC 1
+  fTECData[1].reg["Temp_W"].value = getTECRegisterFromCAN(1, "Temp_W");
+  double reading = fTECData[1].reg["Temp_W"].value;
+  if (reading < -15.) {
+    // -- lid is locked
+    fLidStatus = 1;
+  } else if ((-15. < reading) && (reading < -5.)) {
+    // -- lid is open
+    fLidStatus = -1;
+  } else {
+    // -- lid is closed, but not locked
+    fLidStatus = 0;
+  }
 }

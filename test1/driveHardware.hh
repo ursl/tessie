@@ -80,6 +80,7 @@ public:
   void  turnOnFan();
   void  turnOffFan();
   void  checkFan();
+  void  checkLid();
 
   // -- controlling the TEC
   void  setTECParameter(float par); // ???
