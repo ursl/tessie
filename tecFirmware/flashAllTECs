@@ -1,5 +1,13 @@
 #! /bin/bash -f
 
+# ----------------------------------------------------------------------
+# flashAllTECs
+# ------------
+# very simple-minded script to run the BootCommander for all TECs
+#
+# Usage:  ./flashAllTECs srec/tecware.srec
+# ----------------------------------------------------------------------
+
 if [ "$#" -eq 1 ]; then
    echo ***** Uploading $1 to TEC 1
    ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x301 -rid=0x341 $1
