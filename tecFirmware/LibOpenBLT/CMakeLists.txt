@@ -68,7 +68,7 @@ elseif(UNIX)
 endif(WIN32)
 
 # Set the output directory
-set (PROJECT_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../../..)
+set (PROJECT_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../..)
 
 # Set the output directory for the generic no-config case (e.g. with mingw)
 set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_OUTPUT_DIRECTORY} )
