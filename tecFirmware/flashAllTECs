@@ -1,16 +1,22 @@
 #! /bin/bash -f
 
-if [ "$#" -eq 1 ]
-then
-   echo Uploading $argv[1]
-   ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x301 -rid=0x341 $argv[1]
-   ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x302 -rid=0x342 $argv[1]
-   ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x303 -rid=0x343 $argv[1]
-   ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x304 -rid=0x344 $argv[1]
-   ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x305 -rid=0x345 $argv[1]
-   ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x306 -rid=0x346 $argv[1]
-   ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x307 -rid=0x347 $argv[1]
-   ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x308 -rid=0x348 $argv[1]
+if [ "$#" -eq 1 ]; then
+   echo ***** Uploading $1 to TEC 1
+   ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x301 -rid=0x341 $1
+   echo ***** Uploading $1 to TEC 2
+   ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x302 -rid=0x342 $1
+   echo ***** Uploading $1 to TEC 3
+   ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x303 -rid=0x343 $1
+   echo ***** Uploading $1 to TEC 4
+   ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x304 -rid=0x344 $1
+   echo ***** Uploading $1 to TEC 5
+   ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x305 -rid=0x345 $1
+   echo ***** Uploading $1 to TEC 6
+   ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x306 -rid=0x346 $1
+   echo ***** Uploading $1 to TEC 7
+   ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x307 -rid=0x347 $1
+   echo ***** Uploading $1 to TEC 8
+   ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x308 -rid=0x348 $1
 else
-   echo "No srec file specified"
+   echo 'No srec file specified'
 fi
