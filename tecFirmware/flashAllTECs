@@ -1,6 +1,7 @@
 #! /bin/bash -f
 
-if [ "$#" -eq 1 ] then
+if [ "$#" -eq 1 ]
+then
    echo Uploading $argv[1]
    ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x301 -rid=0x341 $argv[1]
    ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x302 -rid=0x342 $argv[1]
@@ -10,6 +11,6 @@ if [ "$#" -eq 1 ] then
    ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x306 -rid=0x346 $argv[1]
    ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x307 -rid=0x347 $argv[1]
    ./BootCommander -s=xcp -t=xcp_can -d=can0 -b=125000 -tid=0x308 -rid=0x348 $argv[1]
-   else
+else
    echo "No srec file specified"
-endif
+fi
