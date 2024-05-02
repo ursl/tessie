@@ -1139,13 +1139,13 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> -------------");
     vhelp.push_back("> cmd valve0");
     vhelp.push_back("> cmd valve1");
-    vhelp.push_back("> cmd [tec {0|x}] Power_On");
-    vhelp.push_back("> cmd [tec {0|x}] Power_Off");
-    vhelp.push_back("> cmd [tec {0|x}] ClearError");
-    vhelp.push_back("> cmd [tec {0|x}] GetSWVersion");
-    vhelp.push_back("> cmd [tec {0|x}] SaveVariables");
-    vhelp.push_back("> cmd [tec {0|x}] LoadVariables");
-    vhelp.push_back("> cmd [tec {0|x}] Reboot");
+    vhelp.push_back("> [tec {0|x}] cmd Power_On");
+    vhelp.push_back("> [tec {0|x}] cmd Power_Off");
+    vhelp.push_back("> [tec {0|x}] cmd ClearError");
+    vhelp.push_back("> [tec {0|x}] cmd GetSWVersion");
+    vhelp.push_back("> [tec {0|x}] cmd SaveVariables");
+    vhelp.push_back("> [tec {0|x}] cmd LoadVariables");
+    vhelp.push_back("> [tec {0|x}] cmd Reboot");
 
     vhelp.push_back("> ");
     vhelp.push_back("> messages to write information:");
