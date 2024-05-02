@@ -39,7 +39,6 @@
 #include "session.h"                        /* Communication session module            */
 #include "xcploader.h"                      /* XCP loader module                       */
 #include "xcptpuart.h"                      /* XCP UART transport layer                */
-#include "xcptpmbrtu.h"                     /* XCP Modbus RTU transport layer          */
 #include "xcptpcan.h"                       /* XCP CAN transport layer                 */
 #include "xcptpusb.h"                       /* XCP USB transport layer                 */
 #include "xcptpnet.h"                       /* XCP TCP/IP transport layer              */
@@ -52,10 +51,10 @@
  *         for major-, minor-, and patch-version. Version 1.05.12 would for example be
  *         10512.
  */
-#define BLT_VERSION_NUMBER   (10310u)
+#define BLT_VERSION_NUMBER   (10307u)
 
 /** \brief The version number of the library as a null-terminated string. */
-#define BLT_VERSION_STRING   "1.03.10"
+#define BLT_VERSION_STRING   "1.03.07"
 
 
 /****************************************************************************************
@@ -120,7 +119,6 @@ LIBOPENBLT_EXPORT void BltSessionInit(uint32_t sessionType,
    */
   assert(sessionType == BLT_SESSION_XCP_V10);
   assert( (transportType == BLT_TRANSPORT_XCP_V10_RS232) || \
-          (transportType == BLT_TRANSPORT_XCP_V10_MBRTU) || \
           (transportType == BLT_TRANSPORT_XCP_V10_CAN) || \
           (transportType == BLT_TRANSPORT_XCP_V10_USB) || \
           (transportType == BLT_TRANSPORT_XCP_V10_NET) );
@@ -236,35 +234,6 @@ LIBOPENBLT_EXPORT void BltSessionInit(uint32_t sessionType,
           xcpLoaderSettings.transportSettings = &xcpTpNetSettings;
           /* Link the transport layer to the XCP loader settings. */
           xcpLoaderSettings.transport = XcpTpNetGetTransport();
-        }
-      }
-      else if (transportType == BLT_TRANSPORT_XCP_V10_MBRTU)
-      {
-        /* Verify transportSettings parameters because the XCP Modbus RTU transport layer 
-         * requires them.
-         */
-        assert(transportSettings != NULL);
-        /* Only continue if the transportSettings parameter is valid. */
-        if (transportSettings != NULL) /*lint !e774 */
-        {
-          /* Cast transport settings to the correct type. */
-          tBltTransportSettingsXcpV10MbRtu * bltTransportSettingsXcpV10MbRtuPtr;
-          bltTransportSettingsXcpV10MbRtuPtr = 
-            (tBltTransportSettingsXcpV10MbRtu * )transportSettings;
-          /* Convert transport settings to the format supported by the XCP Modbus RTU
-           * transport layer. It was made static to make sure it doesn't get out of scope
-           * when used in xcpLoaderSettings.
-           */
-          static tXcpTpMbRtuSettings xcpTpMbRtuSettings;
-          xcpTpMbRtuSettings.baudrate = bltTransportSettingsXcpV10MbRtuPtr->baudrate;
-          xcpTpMbRtuSettings.portname = bltTransportSettingsXcpV10MbRtuPtr->portName;
-          xcpTpMbRtuSettings.parity = bltTransportSettingsXcpV10MbRtuPtr->parity;
-          xcpTpMbRtuSettings.stopbits = bltTransportSettingsXcpV10MbRtuPtr->stopbits;
-          xcpTpMbRtuSettings.destinationAddr = bltTransportSettingsXcpV10MbRtuPtr->destinationAddr;
-          /* Store transport layer settings in the XCP loader settings. */
-          xcpLoaderSettings.transportSettings = &xcpTpMbRtuSettings;
-          /* Link the transport layer to the XCP loader settings. */
-          xcpLoaderSettings.transport = XcpTpMbRtuGetTransport();
         }
       }
       /* Perform actual session initialization. */
