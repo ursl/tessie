@@ -410,6 +410,9 @@ void MainWindow::showAlarm() {
       system("/usr/bin/cvlc -R siren.mp3 &");
       fAlarmSoundPlaying = true;
     }
+  } else {
+      fLOG(WARNING, "not sounding siren because fDisableSiren = true");
+      cout << "not sounding siren because fDisableSiren = true" << endl;
   }
 }
 
