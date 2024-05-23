@@ -407,7 +407,7 @@ void MainWindow::showAlarm() {
   if (!fDisableSiren) {
     if (!fAlarmSoundPlaying) {
       cout << "showAlarm! Running vlc!!" << endl;
-      system("/usr/bin/cvlc -R siren.mp3 &");
+      system("/usr/bin/vlc-wrapper -R siren.mp3 &");
       fAlarmSoundPlaying = true;
     }
   } else {
