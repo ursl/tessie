@@ -2162,14 +2162,15 @@ void driveHardware::lighting(int imode) {
 void  driveHardware::checkLid() {
   // -- keep reading from CAN bus in readAllParamsFromCANPublic() to minimize CAN errors
   double reading = fTECData[1].reg["Temp_W"].value;
-  if (reading < -11.) {
+  if (reading < 4100.) {
     // -- lid is locked
     fLidStatus = 1;
-  } else if ((-11. < reading) && (reading < -9.)) {
+  } else if (reading > 4100.) {
     // -- lid is open
     fLidStatus = -1;
   } else {
     // -- lid is closed, but not locked
+    // -- unreachable, should not impact program logic above
     fLidStatus = 0;
   }
 }
