@@ -11,6 +11,9 @@ using namespace std;
 canFrame::canFrame(int canid, int len, unsigned char *data) {
   fCanId = canid;
   fdlen  = len;
+  cout << "canFrame: canid = " << std::hex << canid << std::dec << " len = " << len << endl;
+
+  fData.clear();
   for (int i = 0; i < len; ++i) fData.push_back(data[i]);
 
   fPrivate = (fCanId & 0x100)>>8;
@@ -66,12 +69,17 @@ canFrame::canFrame(int canid, int len, unsigned char *data) {
 // ----------------------------------------------------------------------
 string canFrame::getString() {
    stringstream sbla;
-   sbla << std::hex << fCanId << " [" << fdlen << "]";
+   sbla << std::hex << fCanId << " ["  << std::dec << fdlen << std::hex << "]";
+   //   cout << "sbla ->" << sbla.str() << "<-"  << endl;
    char sbuffer[5];
-   for (unsigned int i = 0; i < fdlen; ++i) {
+   if (fdlen > 1 && fdlen < (0x1<<10)) {
+     for (unsigned int i = 0; i < fdlen; ++i) {
        sprintf(sbuffer, " %02X", static_cast<int>(fData[i]));
        sbla << sbuffer;
      }
+   } else {
+     sbla << " bad format (len = " << fdlen << ")";
+   }
    sbla << std::dec
         << ". tec = " << fTec
         << " reg = " << fReg
@@ -82,8 +90,8 @@ string canFrame::getString() {
 
 // ----------------------------------------------------------------------
 void canFrame::dump(bool eol){
+  cout << "canFrame::dump" << endl;
   string sbla = getString();
   cout << sbla;
   if (eol) std::cout << std::endl;
 }
-
