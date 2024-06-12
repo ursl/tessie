@@ -1,5 +1,5 @@
 #include <QApplication>
-#include <QtCore/QObject>
+#include <QtCore>
 
 #include "MainWindow.hh"
 #include "tLog.hh"
@@ -8,6 +8,9 @@
 
 
 using namespace std;
+
+void quitProgram();
+
 
 // -------------------------------------------------------------------------------
 int main(int argc, char *argv[]) {
@@ -42,6 +45,23 @@ int main(int argc, char *argv[]) {
   std::cout << "MainWindow w() call" << std::endl;
   MainWindow w(LOG, hw, nullptr);
 
+
+  // -- ioServer signals
+  QObject::connect(ioThread, SIGNAL(started()), io, SLOT(doRun()));
+  bool success = QObject::connect(io, SIGNAL(signalSendFromServer(QString)), hw, SLOT(sentFromServer(QString)));
+  Q_ASSERT(success);
+  success = QObject::connect(hw, SIGNAL(signalSendToServer(QString)), io, SLOT(sentToServer(QString)));
+  Q_ASSERT(success);
+  success = QObject::connect(hw, SIGNAL(signalSendToMonitor(QString)), io, SLOT(sentToMonitor(QString)));
+  Q_ASSERT(success);
+
+  // -- driveHardware signals
+  QObject::connect(hwThread, SIGNAL(started()), hw, SLOT(doRun()));
+
+  // -- MainWindow slots and signals
+  QObject::connect(hw, SIGNAL(signalUpdateHwDisplay()), &w, SLOT(updateHardwareDisplay()));
+  QObject::connect(&w, &MainWindow::signalQuitProgram, quitProgram);
+
   ioThread->start();
   hwThread->start();
 
@@ -58,4 +78,11 @@ int main(int argc, char *argv[]) {
 
   std::cout << "MainWindow w.show() done" << std::endl;
   return a.exec();
+}
+
+
+// ----------------------------------------------------------------------
+void quitProgram() {
+  cout << "tessie> quitProgram()" << endl;
+  exit(0);
 }

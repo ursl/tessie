@@ -13,7 +13,15 @@ public:
     MainWindow(tLog &x, driveHardware *h, QWidget *parent = nullptr);
     ~MainWindow();
 
+
+signals:
+  void signalQuitProgram();
+
+public slots:
+  void updateHardwareDisplay();
+
 private:
+  void btnQuit();
 
 };
 #endif // MAINWINDOW_H
