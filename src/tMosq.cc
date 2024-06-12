@@ -42,12 +42,13 @@ bool tMosq::sendMessage(const char *message) {
 // ----------------------------------------------------------------------
 void tMosq::on_message(const struct mosquitto_message *message) {
   string smsg("");
-  if (0) cout << "tMosq::on_message received a message, fNMessages = " << fNMessages << endl;
-  if (!strcmp(message->topic, fTopic)){
+  if (0) cout << "tMosq::on_message received a message, fNMessages = " << fNMessages << " message = " << message << endl;
+  if (message && !strcmp(message->topic, fTopic)){
     char *buffer = new char[message->payloadlen+1];
     memcpy(buffer, message->payload, message->payloadlen*sizeof(char));
     smsg = string(buffer);
-    smsg = string((char*)message->payload);
+    // -- don't remember why I had the following line:
+    //    smsg = string((char*)message->payload);
   }
   fMessageId = message->mid;
   fMessages.push(smsg);
@@ -92,4 +93,3 @@ void tMosq::on_publish(int mid) {
   if (0) cout << ">> tMosq - Message (" << mid << ") succeeded to be published " << endl;
   fMessageId = mid;
 }
-
