@@ -98,15 +98,21 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   const QSize btnSize = QSize(100, 50);
   QVBoxLayout *vlay00 = new QVBoxLayout(wdg);
 
-  QPushButton *btn4 = new QPushButton("Flush"); btn4->setFocusPolicy(Qt::NoFocus);
-  btn4->setFont(fFont1);
-  btn4->setFixedSize(btnSize);
-  vlay00->addWidget(btn4);
+  fbtnValve0 = new QPushButton("Flush");
+  fbtnValve0->setFocusPolicy(Qt::NoFocus);
+  fbtnValve0->setFont(fFont1);
+  fbtnValve0->setFixedSize(btnSize);
+  fbtnValve0->setStyleSheet("QPushButton {background-color: gray; color: black;}");
+  connect(fbtnValve0, &QPushButton::clicked, this, &MainWindow::btnValve0);
+  vlay00->addWidget(fbtnValve0);
 
-  QPushButton *btn5 = new QPushButton("Rinse"); btn5->setFocusPolicy(Qt::NoFocus);
-  btn5->setFont(fFont1);
-  btn5->setFixedSize(btnSize);
-  vlay00->addWidget(btn5);
+  fbtnValve1 = new QPushButton("Rinse");
+  fbtnValve1->setFocusPolicy(Qt::NoFocus);
+  fbtnValve1->setFont(fFont1);
+  fbtnValve1->setFixedSize(btnSize);
+  fbtnValve1->setStyleSheet("QPushButton {background-color: gray; color: black;}");
+  connect(fbtnValve1, &QPushButton::clicked, this, &MainWindow::btnValve1);
+  vlay00->addWidget(fbtnValve1);
 
   QPushButton *btn3 = new QPushButton("Quit"); btn3->setFocusPolicy(Qt::NoFocus);
   btn3->setFont(fFont1);
@@ -121,24 +127,24 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   QGridLayout *glay02 = new QGridLayout();
   wdg->setLayout(glay02);
 
-  QLabel *lbl0 = new QLabel("0"); setupLBL(lbl0);
-  QLabel *lbl1 = new QLabel("1"); setupLBL(lbl1);
-  QLabel *lbl2 = new QLabel("2"); setupLBL(lbl2);
-  QLabel *lbl3 = new QLabel("3"); setupLBL(lbl3);
-  QLabel *lbl4 = new QLabel("4"); setupLBL(lbl4);
-  QLabel *lbl5 = new QLabel("5"); setupLBL(lbl5);
-  QLabel *lbl6 = new QLabel("6"); setupLBL(lbl6);
-  QLabel *lbl7 = new QLabel("7"); setupLBL(lbl7);
+  QLabel *lbl1 = new QLabel("1"); setupLBL(lbl1);  lbl1->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
+  QLabel *lbl2 = new QLabel("2"); setupLBL(lbl2);  lbl2->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
+  QLabel *lbl3 = new QLabel("3"); setupLBL(lbl3);  lbl3->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
+  QLabel *lbl4 = new QLabel("4"); setupLBL(lbl4);  lbl4->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
+  QLabel *lbl5 = new QLabel("5"); setupLBL(lbl5);  lbl5->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
+  QLabel *lbl6 = new QLabel("6"); setupLBL(lbl6);  lbl6->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
+  QLabel *lbl7 = new QLabel("7"); setupLBL(lbl7);  lbl7->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
+  QLabel *lbl8 = new QLabel("8"); setupLBL(lbl8);  lbl8->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
 
-  glay02->addWidget(lbl0,  0, 0, 1, 1);
-  glay02->addWidget(lbl1,  0, 1, 1, 1);
-  glay02->addWidget(lbl2,  0, 2, 1, 1);
-  glay02->addWidget(lbl3,  0, 3, 1, 1);
+  glay02->addWidget(lbl1,  0, 0, 1, 1);
+  glay02->addWidget(lbl2,  0, 1, 1, 1);
+  glay02->addWidget(lbl3,  0, 2, 1, 1);
+  glay02->addWidget(lbl4,  0, 3, 1, 1);
 
-  glay02->addWidget(lbl4,  1, 0, 1, 1);
-  glay02->addWidget(lbl5,  1, 1, 1, 1);
-  glay02->addWidget(lbl6,  1, 2, 1, 1);
-  glay02->addWidget(lbl7,  1, 3, 1, 1);
+  glay02->addWidget(lbl5,  1, 0, 1, 1);
+  glay02->addWidget(lbl6,  1, 1, 1, 1);
+  glay02->addWidget(lbl7,  1, 2, 1, 1);
+  glay02->addWidget(lbl8,  1, 3, 1, 1);
 
   hlay1->addLayout(glay02);
 
@@ -167,6 +173,24 @@ void MainWindow::updateHardwareDisplay() {
 }
 
 // ----------------------------------------------------------------------
+void MainWindow::setupQLE(QLineEdit *qle) {
+  qle->setFocusPolicy(Qt::NoFocus);
+  qle->setAlignment(Qt::AlignRight);
+  qle->setAlignment(Qt::AlignRight);
+  qle->setFont(fFont1);
+  qle->setFixedSize(QSize(140, 50));
+}
+
+
+// ----------------------------------------------------------------------
+void MainWindow::setupLBL(QLabel *q) {
+  q->setFocusPolicy(Qt::NoFocus);
+  q->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
+  q->setFont(fFont1);
+}
+
+
+// ----------------------------------------------------------------------
 void MainWindow::btnQuit() {
   static int cnt(0);
   cout << "MainWindow::signalQuitProgram(), cnt = " << cnt << endl;
@@ -176,16 +200,25 @@ void MainWindow::btnQuit() {
 
 
 // ----------------------------------------------------------------------
-void MainWindow::setupQLE(QLineEdit *qle) {
-  qle->setFocusPolicy(Qt::NoFocus);
-  qle->setAlignment(Qt::AlignRight);
-  qle->setFont(fFont1);
+void MainWindow::btnValve0() {
+  // -- negate!
+  if (!fpHw->getStatusValve0()) {
+    fbtnValve0->setStyleSheet("QPushButton {background-color: #A3C1DA; color: black;}");
+  } else {
+    fbtnValve0->setStyleSheet("QPushButton {background-color: gray; color: black;}");
+  }
+
+  emit signalValve(1);
 }
 
 
 // ----------------------------------------------------------------------
-void MainWindow::setupLBL(QLabel *q) {
-  q->setFocusPolicy(Qt::NoFocus);
-  q->setAlignment(Qt::AlignLeft);
-  q->setFont(fFont1);
+void MainWindow::btnValve1() {
+  // -- negate!
+  if (!fpHw->getStatusValve1()) {
+    fbtnValve1->setStyleSheet("QPushButton {background-color: #A3C1DA; color: black;}");
+  } else {
+    fbtnValve1->setStyleSheet("QPushButton {background-color: gray; color: black;}");
+  }
+  emit signalValve(2);
 }

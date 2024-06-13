@@ -62,6 +62,8 @@ int main(int argc, char *argv[]) {
   QObject::connect(hw, SIGNAL(signalUpdateHwDisplay()), &w, SLOT(updateHardwareDisplay()));
   QObject::connect(&w, &MainWindow::signalQuitProgram, quitProgram);
 
+  QObject::connect(&w, SIGNAL(signalValve(int)), hw, SLOT(toggleFras(int)));
+
   ioThread->start();
   hwThread->start();
 
