@@ -24,28 +24,32 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fFont1.setFamilies({QString::fromUtf8("Menlo")});
   fFont1.setPointSize(16);
 
-  QWidget *wdg = new QWidget(this);
-  wdg->setFocusPolicy(Qt::NoFocus);
+  fFont2.setFamilies({QString::fromUtf8("Menlo")});
+  fFont2.setPointSize(14);
+
+  QWidget *fWdg = new QWidget(this);
+  fWdg->setFocusPolicy(Qt::NoFocus);
   // -- Top vertical stack of layouts
-  QVBoxLayout *vlayTop = new QVBoxLayout(wdg);
+  QVBoxLayout *vlayTop = new QVBoxLayout(fWdg);
 
   // -- top row, containing (left) info block and (right) env block
-  QHBoxLayout *hlay0 = new QHBoxLayout(wdg);
+  QHBoxLayout *hlay0 = new QHBoxLayout(fWdg);
   vlayTop->addLayout(hlay0);
 
   // -- Info block
   QGridLayout *glay00 = new QGridLayout();
-  wdg->setLayout(glay00);
+  fWdg->setLayout(glay00);
 
   QLabel *lblA = new QLabel("CANbus errors"); setupLBL(lblA);
   QLabel *lblB = new QLabel("I2C errors"); setupLBL(lblB);
   QLabel *lblC = new QLabel("Runtime"); setupLBL(lblC);
   QLabel *lblD = new QLabel("Version"); setupLBL(lblD);
 
-  fqleCANbusErrors = new QLineEdit(wdg); setupQLE(fqleCANbusErrors);
-  fqleI2CErrors    = new QLineEdit(wdg); setupQLE(fqleI2CErrors);
-  fqleRunTime      = new QLineEdit(wdg); setupQLE(fqleRunTime);
-  fqleVersion      = new QLineEdit(wdg); setupQLE(fqleVersion);
+  fqleCANbusErrors = new QLineEdit(fWdg); setupQLE(fqleCANbusErrors);
+  fqleI2CErrors    = new QLineEdit(fWdg); setupQLE(fqleI2CErrors);
+  fqleRunTime      = new QLineEdit(fWdg); setupQLE(fqleRunTime);
+  fqleVersion      = new QLineEdit(fWdg); setupQLE(fqleVersion); fqleVersion->setFont(fFont2);
+
   ifstream INS;
   string sline;
   INS.open("version.txt");
@@ -66,17 +70,17 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   // -- Environmental block
   QGridLayout *glay01 = new QGridLayout();
-  wdg->setLayout(glay01);
+  fWdg->setLayout(glay01);
 
   QLabel *lblA1 = new QLabel("Air Temp."); setupLBL(lblA1);
   QLabel *lblB1 = new QLabel("Water Temp."); setupLBL(lblB1);
   QLabel *lblC1 = new QLabel("Rel. Hum.");  setupLBL(lblC1);
   QLabel *lblD1 = new QLabel("Dew Point");  setupLBL(lblD1);
 
-  fqleAT = new QLineEdit(wdg); setupQLE(fqleAT);
-  fqleWT = new QLineEdit(wdg); setupQLE(fqleWT);
-  fqleRH = new QLineEdit(wdg); setupQLE(fqleRH);
-  fqleDP = new QLineEdit(wdg); setupQLE(fqleDP);
+  fqleAT = new QLineEdit(fWdg); setupQLE(fqleAT); fqleAT->setFixedSize(QSize(80, 50));
+  fqleWT = new QLineEdit(fWdg); setupQLE(fqleWT); fqleWT->setFixedSize(QSize(80, 50));
+  fqleRH = new QLineEdit(fWdg); setupQLE(fqleRH); fqleRH->setFixedSize(QSize(80, 50));
+  fqleDP = new QLineEdit(fWdg); setupQLE(fqleDP); fqleDP->setFixedSize(QSize(80, 50));
 
   glay01->addWidget(lblA1,  0, 0, 1, 1);
   glay01->addWidget(fqleAT, 0, 1, 1, 1);
@@ -91,12 +95,12 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
 
   // -- bottom row, containing (left) buttons and (right) TEC array
-  QHBoxLayout *hlay1 = new QHBoxLayout(wdg);
+  QHBoxLayout *hlay1 = new QHBoxLayout(fWdg);
   vlayTop->addLayout(hlay1);
 
   // -- buttons
   const QSize btnSize = QSize(100, 50);
-  QVBoxLayout *vlay00 = new QVBoxLayout(wdg);
+  QVBoxLayout *vlay00 = new QVBoxLayout(fWdg);
 
   fbtnValve0 = new QPushButton("Flush");
   fbtnValve0->setFocusPolicy(Qt::NoFocus);
@@ -125,30 +129,20 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   // -- TEC block
   QGridLayout *glay02 = new QGridLayout();
-  wdg->setLayout(glay02);
+  fWdg->setLayout(glay02);
 
-  QLabel *lbl1 = new QLabel("1"); setupLBL(lbl1);  lbl1->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
-  QLabel *lbl2 = new QLabel("2"); setupLBL(lbl2);  lbl2->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
-  QLabel *lbl3 = new QLabel("3"); setupLBL(lbl3);  lbl3->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
-  QLabel *lbl4 = new QLabel("4"); setupLBL(lbl4);  lbl4->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
-  QLabel *lbl5 = new QLabel("5"); setupLBL(lbl5);  lbl5->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
-  QLabel *lbl6 = new QLabel("6"); setupLBL(lbl6);  lbl6->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
-  QLabel *lbl7 = new QLabel("7"); setupLBL(lbl7);  lbl7->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
-  QLabel *lbl8 = new QLabel("8"); setupLBL(lbl8);  lbl8->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
+  for (unsigned int i = 0; i < 8; ++i) mkTEC(i);
 
-  glay02->addWidget(lbl1,  0, 0, 1, 1);
-  glay02->addWidget(lbl2,  0, 1, 1, 1);
-  glay02->addWidget(lbl3,  0, 2, 1, 1);
-  glay02->addWidget(lbl4,  0, 3, 1, 1);
-
-  glay02->addWidget(lbl5,  1, 0, 1, 1);
-  glay02->addWidget(lbl6,  1, 1, 1, 1);
-  glay02->addWidget(lbl7,  1, 2, 1, 1);
-  glay02->addWidget(lbl8,  1, 3, 1, 1);
+  for (unsigned int i = 0; i < 8; ++i) {
+    int iy = (i < 4 ?0 :1);
+    int ix = 2 * (i%4);
+    glay02->addWidget(flblTEC[i], iy, ix,   1, 1);
+    glay02->addWidget(fqleTEC[i], iy, ix+1, 1, 1);
+  }
 
   hlay1->addLayout(glay02);
 
-  setCentralWidget(wdg);
+  setCentralWidget(fWdg);
 
   fqleCANbusErrors->clearFocus();
 
@@ -221,4 +215,20 @@ void MainWindow::btnValve1() {
     fbtnValve1->setStyleSheet("QPushButton {background-color: gray; color: black;}");
   }
   emit signalValve(2);
+}
+
+
+// ----------------------------------------------------------------------
+void MainWindow::mkTEC(int i) {
+  QString slbl = "TEC " + QString::number(i);
+  cout << "slbl = " << slbl.toStdString() << endl;
+  QLabel *lbl = new QLabel(slbl);
+  setupLBL(lbl);
+  lbl->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
+  flblTEC.push_back(lbl);
+
+  QLineEdit *qle = new QLineEdit(fWdg);
+  setupQLE(qle);
+  qle->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
+  fqleTEC.push_back(qle);
 }

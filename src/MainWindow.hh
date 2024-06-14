@@ -7,9 +7,12 @@
 #include "tLog.hh"
 #include "driveHardware.hh"
 
+#include <vector>
+
 class QLineEdit;
 class QLabel;
 class QPushButton;
+class QWidget;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -33,6 +36,9 @@ private:
 
   void setupQLE(QLineEdit *);
   void setupLBL(QLabel *);
+  void mkTEC(int i);
+
+  QWidget *fWdg;
 
   QLineEdit *fqleCANbusErrors, *fqleI2CErrors, *fqleRunTime, *fqleVersion;
   QLineEdit *fqleWT, *fqleAT, *fqleRH, *fqleDP;
@@ -42,7 +48,10 @@ private:
   tLog&         fLOG;
   driveHardware *fpHw;
 
-  QFont fFont1;
+  QFont fFont1, fFont2;
+
+  std::vector<QLineEdit* > fqleTEC;
+  std::vector<QLabel* >    flblTEC;
 
 };
 #endif // MAINWINDOW_H
