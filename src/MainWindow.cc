@@ -182,13 +182,21 @@ void MainWindow::updateHardwareDisplay() {
   fqleWT->setText(QString::number(temp, 'f', 2));
   fqleWT->setPalette(fPalettes[colorReducedIndex(temp)]);
 
-  fqleRH->setText(QString::number(fpHw->getRH(), 'f', 2));
+  double rh = fpHw->getRH();
+  fqleRH->setText(QString::number(rh, 'f', 2));
+  if (rh < 0.05) {
+    fqleDP->setPalette(fPalettes[4]);
+  } else  {
+    fqleDP->setPalette(fPalettes[6]);
+  }
 
+  double dp = fpHw->getDP();
   fqleDP->setText(QString::number(fpHw->getDP(), 'f', 2));
   if (fabs(fpHw->getDP() - fpHw->getTemperature()) < 2.)  {
     fqleDP->setPalette(fPalettes[8]);
+  } else {
+    fqleDP->setPalette(fPalettes[6]);
   }
-
 
   fqleCANbusErrors->setText(QString::number(fpHw->getNCANbusErrors()));
   if (fpHw->redCANErrors() > 0) {
