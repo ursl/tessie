@@ -273,7 +273,7 @@ void MainWindow::mkTEC(int i) {
   lbl->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
   flblTEC.push_back(lbl);
 
-  QLineEdit *qle = new QLineEdit(fWdg);
+  QLineEdit *qle = new QLineEdit();
   setupQLE(qle);
   qle->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
   fqleTEC.push_back(qle);
