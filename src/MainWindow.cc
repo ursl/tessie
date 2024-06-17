@@ -207,10 +207,10 @@ void MainWindow::updateHardwareDisplay() {
     fbtnValve1->setStyleSheet("QPushButton {background-color: gray; color: black;}");
   }
 
-  for (auto it: fqleTEC) {
-    double temp = fpHw->getTECRegister(8, "Temp_M");
-    it->setText(QString::number(temp, 'f', 2));
-    it->setPalette(fPalettes[colorIndex(temp)]);
+  for (unsigned int i = 0; i < fqleTEC.size(); ++i) {
+    double temp = fpHw->getTECRegister(i+1, "Temp_M");
+    fqleTEC[i]->setText(QString::number(temp, 'f', 2));
+    fqleTEC[i]->setPalette(fPalettes[colorIndex(temp)]);
   }
 
 }
@@ -269,7 +269,7 @@ void MainWindow::btnValve1() {
 
 // ----------------------------------------------------------------------
 void MainWindow::mkTEC(int i) {
-  QString slbl = "TEC " + QString::number(i);
+  QString slbl = "TEC " + QString::number(i+1);
   cout << "slbl = " << slbl.toStdString() << endl;
   QLabel *lbl = new QLabel(slbl);
   setupLBL(lbl);
