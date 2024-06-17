@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QFont>
+#include <QPalette>
 
 #include "tLog.hh"
 #include "driveHardware.hh"
@@ -37,6 +38,7 @@ private:
   void setupQLE(QLineEdit *);
   void setupLBL(QLabel *);
   void mkTEC(int i);
+  int  colorIndex(double t);
 
   QWidget *fWdg;
 
@@ -52,6 +54,8 @@ private:
 
   std::vector<QLineEdit* > fqleTEC;
   std::vector<QLabel* >    flblTEC;
+
+  std::vector<QPalette>    fPalettes;
 
 };
 #endif // MAINWINDOW_H
