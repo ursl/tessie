@@ -27,6 +27,8 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fFont2.setFamilies({QString::fromUtf8("Menlo")});
   fFont2.setPointSize(14);
 
+  const QSize btnSize = QSize(100, 50);
+
   QWidget *fWdg = new QWidget(this);
   fWdg->setFocusPolicy(Qt::NoFocus);
   // -- Top vertical stack of layouts
@@ -72,15 +74,19 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   QGridLayout *glay01 = new QGridLayout();
   fWdg->setLayout(glay01);
 
-  QLabel *lblA1 = new QLabel("Air Temp."); setupLBL(lblA1);
-  QLabel *lblB1 = new QLabel("Water Temp."); setupLBL(lblB1);
+  QLabel *lblA1 = new QLabel("Air [deg C]"); setupLBL(lblA1);
+  QLabel *lblB1 = new QLabel("Water  [deg C]"); setupLBL(lblB1);
   QLabel *lblC1 = new QLabel("Rel. Hum.");  setupLBL(lblC1);
   QLabel *lblD1 = new QLabel("Dew Point");  setupLBL(lblD1);
+
+  QLabel *lblE1 = new QLabel("Lid status");  setupLBL(lblE1);
 
   fqleAT = new QLineEdit(fWdg); setupQLE(fqleAT); fqleAT->setFixedSize(QSize(80, 50));
   fqleWT = new QLineEdit(fWdg); setupQLE(fqleWT); fqleWT->setFixedSize(QSize(80, 50));
   fqleRH = new QLineEdit(fWdg); setupQLE(fqleRH); fqleRH->setFixedSize(QSize(80, 50));
   fqleDP = new QLineEdit(fWdg); setupQLE(fqleDP); fqleDP->setFixedSize(QSize(80, 50));
+
+  fqleLS = new QLineEdit(fWdg); setupQLE(fqleLS); fqleLS->setFixedSize(QSize(80, 50));
 
   glay01->addWidget(lblA1,  0, 0, 1, 1);
   glay01->addWidget(fqleAT, 0, 1, 1, 1);
@@ -90,6 +96,14 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   glay01->addWidget(fqleRH, 0, 3, 1, 1);
   glay01->addWidget(lblD1,  1, 2, 1, 1);
   glay01->addWidget(fqleDP, 1, 3, 1, 1);
+  glay01->addWidget(lblE1,  2, 0, 1, 1);
+  glay01->addWidget(fqleLS, 2, 1, 1, 1);
+
+  QPushButton *btn3 = new QPushButton("Quit"); btn3->setFocusPolicy(Qt::NoFocus);
+  btn3->setFont(fFont1);
+  btn3->setFixedSize(QSize(80, 50));
+  connect(btn3, &QPushButton::clicked, this, &MainWindow::btnQuit);
+  glay01->addWidget(btn3, 2, 3, 1, 1);
 
   hlay0->addLayout(glay01);
 
@@ -99,7 +113,6 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   vlayTop->addLayout(hlay1);
 
   // -- buttons
-  const QSize btnSize = QSize(100, 50);
   QVBoxLayout *vlay00 = new QVBoxLayout(fWdg);
 
   fbtnValve0 = new QPushButton("Flush");
@@ -117,12 +130,6 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fbtnValve1->setStyleSheet("QPushButton {background-color: gray; color: black;}");
   connect(fbtnValve1, &QPushButton::clicked, this, &MainWindow::btnValve1);
   vlay00->addWidget(fbtnValve1);
-
-  QPushButton *btn3 = new QPushButton("Quit"); btn3->setFocusPolicy(Qt::NoFocus);
-  btn3->setFont(fFont1);
-  btn3->setFixedSize(btnSize);
-  connect(btn3, &QPushButton::clicked, this, &MainWindow::btnQuit);
-  vlay00->addWidget(btn3);
 
   hlay1->addLayout(vlay00);
 
@@ -228,6 +235,26 @@ void MainWindow::updateHardwareDisplay() {
   } else {
     fbtnValve1->setStyleSheet("QPushButton {background-color: gray; color: black;}");
   }
+
+  int ls = fpHw->getLidStatus();
+  if (ls == 1) {
+    fqleLS->setText("locked");
+    fqleLS->setPalette(fPalettes[4]);
+  } else if (ls == 0)  {
+    fqleLS->setText("open");
+    fqleLS->setPalette(fPalettes[6]);
+  } else  {
+    fqleLS->setText("not closed!");
+    fqleLS->setPalette(fPalettes[8]);
+  }
+
+
+  if ((temp - dp) < 2.)  {
+    fqleDP->setPalette(fPalettes[8]);
+  } else {
+    fqleDP->setPalette(fPalettes[4]);
+  }
+
 
   for (unsigned int i = 0; i < fqleTEC.size(); ++i) {
     double temp = fpHw->getTECRegister(i+1, "Temp_M");

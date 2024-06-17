@@ -75,6 +75,7 @@ public:
   bool  getStatusValve1() {return ((fRelaisMask & 2) == 2);}
   bool  getStatusValve()  {return (getStatusValve0() && getStatusValve1());}
   bool  getStatusFan() {return ((fRelaisMask & 4) == 4);}
+  int   getLidStatus() {return fLidStatus;}
   void  turnOnValve(int i); // i = 0 or 1
   void  turnOffValve(int i); // i = 0 or 1
   void  turnOnFan();
