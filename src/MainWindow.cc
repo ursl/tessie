@@ -184,10 +184,10 @@ void MainWindow::updateHardwareDisplay() {
 
   double rh = fpHw->getRH();
   fqleRH->setText(QString::number(rh, 'f', 2));
-  if (rh < 0.05) {
-    fqleDP->setPalette(fPalettes[4]);
+  if (rh < 5.) {
+    fqleRH->setPalette(fPalettes[4]);
   } else  {
-    fqleDP->setPalette(fPalettes[6]);
+    fqleRH->setPalette(fPalettes[6]);
   }
 
   double dp = fpHw->getDP();
@@ -195,7 +195,7 @@ void MainWindow::updateHardwareDisplay() {
   if (fabs(fpHw->getDP() - fpHw->getTemperature()) < 2.)  {
     fqleDP->setPalette(fPalettes[8]);
   } else {
-    fqleDP->setPalette(fPalettes[6]);
+    fqleDP->setPalette(fPalettes[4]);
   }
 
   fqleCANbusErrors->setText(QString::number(fpHw->getNCANbusErrors()));
@@ -305,23 +305,23 @@ void MainWindow::mkTEC(int i) {
 
 // ----------------------------------------------------------------------
 int MainWindow::colorIndex(double temp)  {
-  if (temp < -30.) return 0;
-  if (temp < -20.) return 1;
-  if (temp < -10.) return 2;
-  if (temp < 0.)   return 3;
-  if (temp < 10.)  return 4;
-  if (temp < 20.)  return 5;
-  if (temp < 30.)  return 6;
-  if (temp < 40.)  return 7;
-  if (temp > 40.)  return 8;
+  if (temp < -30.) return 0; // dark blue
+  if (temp < -20.) return 1; // blue
+  if (temp < -10.) return 2; // cyan
+  if (temp < 0.)   return 3; // green-blue
+  if (temp < 10.)  return 4; // darker green
+  if (temp < 20.)  return 5; // light green
+  if (temp < 30.)  return 6; // yellow
+  if (temp < 40.)  return 7; // orange
+  if (temp > 40.)  return 8; // red
   return 0;
 
 }
 
 // ----------------------------------------------------------------------
 int MainWindow::colorReducedIndex(double temp)  {
-  if (temp < 10.)  return 0;
-  if (temp < 20.)  return 1;
+  if (temp < 10.)  return 1;
+  if (temp < 20.)  return 2;
   if (temp < 30.)  return 4;
   if (temp > 40.)  return 8;
   return 0;
