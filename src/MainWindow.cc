@@ -131,7 +131,11 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   QGridLayout *glay02 = new QGridLayout();
   fWdg->setLayout(glay02);
 
-  for (unsigned int i = 0; i < 8; ++i) mkTEC(i);
+  for (unsigned int i = 0; i < 8; ++i) {
+    mkTEC(i);
+    fqleTEC[i]->setFixedSize(QSize(80, 50));
+  }
+
 
   for (unsigned int i = 0; i < 8; ++i) {
     int iy = (i < 4 ?0 :1);
@@ -166,7 +170,6 @@ MainWindow::~MainWindow() {
 
 // ----------------------------------------------------------------------
 void MainWindow::updateHardwareDisplay() {
-  cout << "MainWindow::updateHardwareDisplay()" << endl;
   fqleRunTime->setText(QString::number(fpHw->getRunTime()));
 
   fqleAT->setText(QString::number(fpHw->getTemperature(), 'f', 2));
