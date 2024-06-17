@@ -11,7 +11,7 @@ using namespace std;
 canFrame::canFrame(int canid, int len, unsigned char *data) {
   fCanId = canid;
   fdlen  = len;
-  cout << "canFrame: canid = " << std::hex << canid << std::dec << " len = " << len << endl;
+  //  cout << "canFrame: canid = " << std::hex << canid << std::dec << " len = " << len << endl;
 
   fData.clear();
   for (int i = 0; i < len; ++i) fData.push_back(data[i]);
