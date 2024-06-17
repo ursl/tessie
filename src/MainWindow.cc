@@ -136,10 +136,11 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
     fqleTEC[i]->setFixedSize(QSize(80, 50));
   }
 
-
   for (unsigned int i = 0; i < 8; ++i) {
-    int iy = (i < 4 ?0 :1);
-    int ix = 2 * (i%4);
+    // int iy = (i < 4 ?0 :1);
+    // int ix = 2 * (i%4);
+    int iy = (i < 4 ?1 :0);
+    int ix = (i < 4 ?2*(i%4) : 2*((7-i)%4));
     glay02->addWidget(flblTEC[i], iy, ix,   1, 1);
     glay02->addWidget(fqleTEC[i], iy, ix+1, 1, 1);
   }
