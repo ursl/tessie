@@ -146,6 +146,17 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   fqleCANbusErrors->clearFocus();
 
+  int trsp(200);
+  QPalette p0; p0.setColor(QPalette::Base, QColor(  0,   0, 250, trsp)); fPalettes.push_back(p0);
+  QPalette p1; p1.setColor(QPalette::Base, QColor( 20,  80, 250, trsp)); fPalettes.push_back(p1);
+  QPalette p2; p2.setColor(QPalette::Base, QColor( 20, 250, 250, trsp)); fPalettes.push_back(p2);
+  QPalette p3; p3.setColor(QPalette::Base, QColor( 20, 240, 180, trsp)); fPalettes.push_back(p3);
+  QPalette p4; p4.setColor(QPalette::Base, QColor( 10, 200,  10, trsp)); fPalettes.push_back(p4);
+  QPalette p5; p5.setColor(QPalette::Base, QColor( 80, 240,   0, trsp)); fPalettes.push_back(p5);
+  QPalette p6; p6.setColor(QPalette::Base, QColor(240, 240,   0, trsp)); fPalettes.push_back(p6);
+  QPalette p7; p7.setColor(QPalette::Base, QColor(240,  80,   0, trsp)); fPalettes.push_back(p7);
+  QPalette p8; p8.setColor(QPalette::Base, QColor(240,   0,   0, trsp)); fPalettes.push_back(p8);
+
 }
 
 
@@ -182,8 +193,6 @@ void MainWindow::updateHardwareDisplay() {
     fqleI2CErrors->setStyleSheet("QLineEdit {background-color : white; }");
   }
 
-
-
   if (fpHw->getStatusValve0()) {
     fbtnValve0->setStyleSheet("QPushButton {background-color: #A3C1DA; color: black;}");
   } else {
@@ -195,7 +204,11 @@ void MainWindow::updateHardwareDisplay() {
     fbtnValve1->setStyleSheet("QPushButton {background-color: gray; color: black;}");
   }
 
-
+  for (auto it: fqleTEC) {
+    double temp = fpHw->getTECRegister(8, "Temp_M");
+    it->setText(QString::number(temp, 'f', 2));
+    it->setPalette(fPalettes[colorIndex(temp)]);
+  }
 
 }
 
@@ -264,4 +277,20 @@ void MainWindow::mkTEC(int i) {
   setupQLE(qle);
   qle->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
   fqleTEC.push_back(qle);
+}
+
+
+// ----------------------------------------------------------------------
+int MainWindow::colorIndex(double temp)  {
+  if (temp < -30.) return 0;
+  if (temp < -20.) return 1;
+  if (temp < -10.) return 2;
+  if (temp < 0.)   return 3;
+  if (temp < 10.)  return 4;
+  if (temp < 20.)  return 5;
+  if (temp < 30.)  return 6;
+  if (temp < 40.)  return 7;
+  if (temp > 40.)  return 8;
+  return 0;
+
 }
