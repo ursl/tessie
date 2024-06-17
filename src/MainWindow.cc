@@ -221,7 +221,7 @@ void MainWindow::setupQLE(QLineEdit *qle) {
   qle->setAlignment(Qt::AlignRight);
   qle->setAlignment(Qt::AlignRight);
   qle->setFont(fFont1);
-  qle->setFixedSize(QSize(140, 50));
+  qle->setFixedSize(QSize(150, 50));
 }
 
 
