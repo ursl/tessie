@@ -141,6 +141,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
     // int ix = 2 * (i%4);
     int iy = (i < 4 ?1 :0);
     int ix = (i < 4 ?2*(i%4) : 2*((7-i)%4));
+    cout << "TEC idx=" << i << " ix = " << ix << " iy = " << iy << endl;
     glay02->addWidget(flblTEC[i], iy, ix,   1, 1);
     glay02->addWidget(fqleTEC[i], iy, ix+1, 1, 1);
   }
@@ -173,10 +174,20 @@ MainWindow::~MainWindow() {
 void MainWindow::updateHardwareDisplay() {
   fqleRunTime->setText(QString::number(fpHw->getRunTime()));
 
-  fqleAT->setText(QString::number(fpHw->getTemperature(), 'f', 2));
-  fqleWT->setText(QString::number(fpHw->getTECRegister(8, "Temp_W"), 'f', 2));
+  double temp = fpHw->getTemperature();
+  fqleAT->setText(QString::number(temp, 'f', 2));
+  fqleAT->setPalette(fPalettes[colorReducedIndex(temp)]);
+
+  temp = fpHw->getTECRegister(8, "Temp_W");
+  fqleWT->setText(QString::number(temp, 'f', 2));
+  fqleWT->setPalette(fPalettes[colorReducedIndex(temp)]);
+
   fqleRH->setText(QString::number(fpHw->getRH(), 'f', 2));
+
   fqleDP->setText(QString::number(fpHw->getDP(), 'f', 2));
+  if (fabs(fpHw->getDP() - fpHw->getTemperature()) < 2.)  {
+    fqleDP->setPalette(fPalettes[8]);
+  }
 
 
   fqleCANbusErrors->setText(QString::number(fpHw->getNCANbusErrors()));
@@ -294,6 +305,16 @@ int MainWindow::colorIndex(double temp)  {
   if (temp < 20.)  return 5;
   if (temp < 30.)  return 6;
   if (temp < 40.)  return 7;
+  if (temp > 40.)  return 8;
+  return 0;
+
+}
+
+// ----------------------------------------------------------------------
+int MainWindow::colorReducedIndex(double temp)  {
+  if (temp < 10.)  return 0;
+  if (temp < 20.)  return 1;
+  if (temp < 30.)  return 4;
   if (temp > 40.)  return 8;
   return 0;
 

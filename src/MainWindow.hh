@@ -39,6 +39,7 @@ private:
   void setupLBL(QLabel *);
   void mkTEC(int i);
   int  colorIndex(double t);
+  int  colorReducedIndex(double t);
 
   QWidget *fWdg;
 
