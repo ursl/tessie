@@ -172,6 +172,8 @@ MainWindow::~MainWindow() {
 
 // ----------------------------------------------------------------------
 void MainWindow::updateHardwareDisplay() {
+  static bool isred(false);
+
   fqleRunTime->setText(QString::number(fpHw->getRunTime()));
 
   double temp = fpHw->getTemperature();
@@ -192,7 +194,7 @@ void MainWindow::updateHardwareDisplay() {
 
   double dp = fpHw->getDP();
   fqleDP->setText(QString::number(fpHw->getDP(), 'f', 2));
-  if (fabs(fpHw->getDP() - fpHw->getTemperature()) < 2.)  {
+  if ((temp - dp) < 2.)  {
     fqleDP->setPalette(fPalettes[8]);
   } else {
     fqleDP->setPalette(fPalettes[4]);
@@ -231,7 +233,12 @@ void MainWindow::updateHardwareDisplay() {
     double temp = fpHw->getTECRegister(i+1, "Temp_M");
     fqleTEC[i]->setText(QString::number(temp, 'f', 2));
     fqleTEC[i]->setPalette(fPalettes[colorIndex(temp)]);
+    if ((temp - dp) < 2) {
+      if (!isred) fqleTEC[i]->setPalette(fPalettes[8]);
+    }
   }
+
+  isred = !isred;
 
 }
 
