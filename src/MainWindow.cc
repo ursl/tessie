@@ -156,14 +156,47 @@ MainWindow::~MainWindow() {
 // ----------------------------------------------------------------------
 void MainWindow::updateHardwareDisplay() {
   cout << "MainWindow::updateHardwareDisplay()" << endl;
-  fqleCANbusErrors->setText(QString::number(fpHw->getNCANbusErrors()));
-  fqleI2CErrors->setText(QString::number(fpHw->getNI2CErrors()));
   fqleRunTime->setText(QString::number(fpHw->getRunTime()));
 
   fqleAT->setText(QString::number(fpHw->getTemperature(), 'f', 2));
   fqleWT->setText(QString::number(fpHw->getTECRegister(8, "Temp_W"), 'f', 2));
   fqleRH->setText(QString::number(fpHw->getRH(), 'f', 2));
   fqleDP->setText(QString::number(fpHw->getDP(), 'f', 2));
+
+
+  fqleCANbusErrors->setText(QString::number(fpHw->getNCANbusErrors()));
+  if (fpHw->redCANErrors() > 0) {
+    cout << "Setting CANbus error counter line edit to red" << endl;
+    fqleCANbusErrors->setStyleSheet("QLineEdit {background-color : red; }");
+    //    system("/usr/bin/cvlc --play-and-exit houstonwehaveaproblem_loud.mp3 &");
+  } else {
+    fqleCANbusErrors->setStyleSheet("QLineEdit {background-color : white; }");
+  }
+
+  fqleI2CErrors->setText(QString::number(fpHw->getNI2CErrors()));
+  if (fpHw->redI2CErrors() > 0) {
+    cout << "Setting I2C error counter line edit to red" << endl;
+    fqleI2CErrors->setStyleSheet("QLineEdit {background-color : red; }");
+    //    system("/usr/bin/cvlc --play-and-exit houstonwehaveaproblem_loud.mp3  &");
+  } else {
+    fqleI2CErrors->setStyleSheet("QLineEdit {background-color : white; }");
+  }
+
+
+
+  if (fpHw->getStatusValve0()) {
+    fbtnValve0->setStyleSheet("QPushButton {background-color: #A3C1DA; color: black;}");
+  } else {
+    fbtnValve0->setStyleSheet("QPushButton {background-color: gray; color: black;}");
+  }
+  if (fpHw->getStatusValve1()) {
+    fbtnValve1->setStyleSheet("QPushButton {background-color: #A3C1DA; color: black;}");
+  } else {
+    fbtnValve1->setStyleSheet("QPushButton {background-color: gray; color: black;}");
+  }
+
+
+
 }
 
 // ----------------------------------------------------------------------
