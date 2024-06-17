@@ -241,10 +241,13 @@ void MainWindow::updateHardwareDisplay() {
     fqleLS->setText("locked");
     fqleLS->setPalette(fPalettes[4]);
   } else if (ls == 0)  {
+    fqleLS->setText("unlocked");
+    fqleLS->setPalette(fPalettes[6]);
+  } else if (ls == -1)  {
     fqleLS->setText("open");
     fqleLS->setPalette(fPalettes[6]);
   } else  {
-    fqleLS->setText("not closed!");
+    fqleLS->setText("????");
     fqleLS->setPalette(fPalettes[8]);
   }
 
