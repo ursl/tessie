@@ -580,7 +580,7 @@ void driveHardware::ensureSafety() {
     if (!greenLight) {
       struct timeval nowTime;
       gettimeofday(&nowTime, 0);
-      fStatusString = "Do not open lid yet";
+      fStatusString = "Keep lid closed";
       if (diff_ms(nowTime, yelloTime) > 1000) {
         yelloTime = nowTime;
         if (yellowLight) {
