@@ -30,6 +30,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   const QSize btnSize = QSize(100, 50);
 
   this->resize(800, 480);
+  this->setStyleSheet("background-color: rgba(211, 211, 211, 60%);");
 
   // -- FIXME: Test whether fWdg can be replaced by this
   QWidget *fWdg = new QWidget(this);
@@ -120,7 +121,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   QPushButton *btn4 = new QPushButton("STOP"); btn4->setFocusPolicy(Qt::NoFocus);
   btn4->setFont(fFont1);
   btn4->setFixedSize(QSize(190, 50));
-  btn4->setStyleSheet("QPushButton {background-color: rgba(204, 50, 50, 0.4); color: black;}");
+  btn4->setStyleSheet("QPushButton {background-color: rgba(204, 50, 50, 0.4); color: black; font-weight: bold;}");
   btn4->update();
   connect(btn4, &QPushButton::clicked, this, &MainWindow::btnStop);
   glay01->addWidget(btn4, 2, 2, 1, 2, Qt::AlignLeft);
@@ -290,6 +291,13 @@ void MainWindow::updateHardwareDisplay() {
     if ((temp - dp) < 2) {
       if (!isred) fqleTEC[i]->setPalette(fPalettes[8]);
     }
+
+    if (fpHw->getTECRegister(i+1, "PowerState")) {
+      flblTEC[i]->setStyleSheet("font-weight: bold; background-color: #A3C1DA");
+    } else {
+      flblTEC[i]->setStyleSheet("font-weight: normal; background-color: rgba(211, 211, 211, 60%)");
+    }
+
   }
 
   isred = !isred;
