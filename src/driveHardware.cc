@@ -202,6 +202,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   // -- Load TEC parameters from FLASH
   loadFromFlash();
 #endif
+
+  fStatusString = "no problem";
 }
 
 
@@ -343,6 +345,8 @@ void driveHardware::doRun() {
 // ----------------------------------------------------------------------
 void driveHardware::ensureSafety() {
 
+  fStatusString = "no problem";
+
   static bool first(true);
   struct timeval yelloTime;
   if (first) {
@@ -391,6 +395,7 @@ void driveHardware::ensureSafety() {
                    + fCanMsg.getErrorFrame().getString()
                    );
     fLOG(WARNING, a.str());
+    fStatusString = "CANbus error";
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
   }
@@ -399,12 +404,14 @@ void driveHardware::ensureSafety() {
                    + to_string(fI2CErrorCounter)
                    );
     fLOG(WARNING, a.str());
+    fStatusString = "I2C error";
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
   }
 
   // -- Check for GL condition
   if (fSHT85Temp < 15.0)  {
+    fStatusString = "Air temp < 15";
     greenLight = false;
   }
 
@@ -412,6 +419,7 @@ void driveHardware::ensureSafety() {
   // -- air temperatures
   if (fSHT85Temp > SAFETY_MAXSHT85TEMP) {
     allOK = 1;
+    fStatusString = "Air temp > " + std::to_string(SAFETY_MAXSHT85TEMP);
     stringstream a("==ALARM== Box air temperature = " +
                    to_string(fSHT85Temp) +
                    " exceeds SAFETY_MAXSHT85TEMP = " +
@@ -432,6 +440,7 @@ void driveHardware::ensureSafety() {
   // -- dew point vs air temperature
   if ((fSHT85Temp - SAFETY_DPMARGIN) < fSHT85DP) {
     allOK = 2;
+    fStatusString = "Air temp too close to DP";
     stringstream a("==ALARM== Box air temperature = " +
                    to_string(fSHT85Temp) +
                    " is too close to dew point = " +
@@ -453,6 +462,7 @@ void driveHardware::ensureSafety() {
   // -- check water temperature
   if (fTECData[8].reg["Temp_W"].value > SAFETY_MAXTEMPW) {
     allOK = 3;
+    fStatusString = "Water temp > "  + std::to_string(SAFETY_MAXTEMPW);
     stringstream a("==ALARM== Water temperature = " +
                    to_string(fTECData[8].reg["Temp_W"].value) +
                    " exceeds SAFETY_MAXTEMPW = " +
@@ -476,6 +486,7 @@ void driveHardware::ensureSafety() {
     }
     if (mtemp > SAFETY_MAXTEMPM) {
       allOK = 4;
+      fStatusString = "Module " + std::to_string(itec) + " temp > "  + std::to_string(SAFETY_MAXTEMPW);
       stringstream a("==ALARM== module temperature = " +
                      to_string(mtemp) +
                      " exceeds SAFETY_MAXTEMPM = " +
@@ -504,6 +515,7 @@ void driveHardware::ensureSafety() {
                      to_string(fSHT85Temp)
                      );
       fLOG(ERROR, a.str());
+      fStatusString = "Module " + std::to_string(itec) + " temp too close to DP";
       emit signalSendToMonitor(QString::fromStdString(a.str()));
       emit signalSendToServer(QString::fromStdString(a.str()));
       emit signalAlarm();
@@ -568,6 +580,7 @@ void driveHardware::ensureSafety() {
     if (!greenLight) {
       struct timeval nowTime;
       gettimeofday(&nowTime, 0);
+      fStatusString = "Do not open lid yet";
       if (diff_ms(nowTime, yelloTime) > 1000) {
         yelloTime = nowTime;
         if (yellowLight) {

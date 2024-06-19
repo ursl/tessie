@@ -41,7 +41,13 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   // -- header row
   QHBoxLayout *hlay = new QHBoxLayout(fWdg);
   vlayTop->addLayout(hlay);
-  QLabel *lbl = new QLabel("TESSIE"); setupLBL(lbl);
+  ifstream INS;
+  string sline;
+  INS.open("version.txt");
+  getline(INS, sline);
+  INS.close();
+  QLabel *lbl = new QLabel(string("TESSIE  (" + sline + ") ").c_str()); setupLBL(lbl);
+  lbl->setStyleSheet("font-weight: bold;");
   hlay->addWidget(lbl);
 
   QPushButton *btn3 = new QPushButton("Quit"); btn3->setFocusPolicy(Qt::NoFocus);
@@ -61,19 +67,12 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   QLabel *lblA = new QLabel("CANbus errors"); setupLBL(lblA);
   QLabel *lblB = new QLabel("I2C errors"); setupLBL(lblB);
   QLabel *lblC = new QLabel("Runtime"); setupLBL(lblC);
-  QLabel *lblD = new QLabel("Version"); setupLBL(lblD);
+  QLabel *lblD = new QLabel("Status"); setupLBL(lblD);
 
   fqleCANbusErrors = new QLineEdit(fWdg); setupQLE(fqleCANbusErrors);
   fqleI2CErrors    = new QLineEdit(fWdg); setupQLE(fqleI2CErrors);
   fqleRunTime      = new QLineEdit(fWdg); setupQLE(fqleRunTime);
-  fqleVersion      = new QLineEdit(fWdg); setupQLE(fqleVersion); fqleVersion->setFont(fFont2);
-
-  ifstream INS;
-  string sline;
-  INS.open("version.txt");
-  getline(INS, sline);
-  fqleVersion->setText(sline.c_str());
-  INS.close();
+  fqleStatus       = new QLineEdit(fWdg); setupQLE(fqleStatus); fqleStatus->setFont(fFont2);
 
   glay00->addWidget(lblA,  0, 0, 1, 1);
   glay00->addWidget(fqleCANbusErrors, 0, 1, 1, 1);
@@ -82,7 +81,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   glay00->addWidget(lblC,  2, 0, 1, 1);
   glay00->addWidget(fqleRunTime, 2, 1, 1, 1);
   glay00->addWidget(lblD,  3, 0, 1, 1);
-  glay00->addWidget(fqleVersion, 3, 1, 1, 1);
+  glay00->addWidget(fqleStatus, 3, 1, 1, 1);
 
   hlay0->addLayout(glay00);
 
@@ -200,6 +199,8 @@ void MainWindow::updateHardwareDisplay() {
   static bool isred(false);
 
   fqleRunTime->setText(QString::number(fpHw->getRunTime()));
+
+  fqleStatus->setText(fpHw->getStatusString().c_str());
 
   double temp = fpHw->getTemperature();
   fqleAT->setText(QString::number(temp, 'f', 2));
