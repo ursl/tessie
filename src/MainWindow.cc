@@ -90,6 +90,9 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   hlay0->addLayout(glay00);
 
+  QSpacerItem *spacerx = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+  hlay0->addSpacerItem(spacerx);
+
   // -- Environmental block
   QGridLayout *glay01 = new QGridLayout();
   fWdg->setLayout(glay01);
