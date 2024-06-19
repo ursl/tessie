@@ -67,6 +67,8 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   // -- Info block
   QGridLayout *glay00 = new QGridLayout();
+  glay00->setAlignment(Qt::AlignTop);
+
   fWdg->setLayout(glay00);
 
   QLabel *lblA = new QLabel("CANbus errors"); setupLBL(lblA);
@@ -95,6 +97,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   // -- Environmental block
   QGridLayout *glay01 = new QGridLayout();
+  glay01->setAlignment(Qt::AlignTop);
   fWdg->setLayout(glay01);
 
   QLabel *lblA1 = new QLabel("Air [\xC2\xB0 C]"); setupLBL(lblA1);
