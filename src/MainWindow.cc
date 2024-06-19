@@ -131,7 +131,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   btn4->setStyleSheet("QPushButton {background-color: rgba(204, 50, 50, 0.4); color: black; font-weight: bold;}");
   btn4->update();
   connect(btn4, &QPushButton::clicked, this, &MainWindow::btnStop);
-  glay01->addWidget(btn4, 2, 2, 1, 2, Qt::AlignLeft);
+  glay01->addWidget(btn4, 3, 2, 1, 2, Qt::AlignLeft);
 
   hlay0->addLayout(glay01);
 
