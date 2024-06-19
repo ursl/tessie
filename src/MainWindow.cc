@@ -29,6 +29,8 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   const QSize btnSize = QSize(100, 50);
 
+  this->resize(800, 480);
+
   QWidget *fWdg = new QWidget(this);
   fWdg->setFocusPolicy(Qt::NoFocus);
   // -- Top vertical stack of layouts
