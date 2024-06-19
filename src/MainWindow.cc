@@ -30,7 +30,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   const QSize btnSize = QSize(100, 50);
 
   this->resize(800, 480);
-  this->setStyleSheet("background-color: rgba(211, 211, 211, 60%);");
+  //  this->setStyleSheet("background-color: rgba(211, 211, 211, 60%);");
 
   // -- FIXME: Test whether fWdg can be replaced by this
   QWidget *fWdg = new QWidget(this);
