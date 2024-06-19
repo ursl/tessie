@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
   QObject::connect(&w, &MainWindow::signalQuitProgram, quitProgram);
 
   QObject::connect(&w, SIGNAL(signalValve(int)), hw, SLOT(toggleFras(int)));
-  QObject::connect(&w, SIGNAL(signalStop()), hw, SLOT(stopOperations()));
+  QObject::connect(&w, SIGNAL(signalStopOperations()), hw, SLOT(stopOperations()));
 
   ioThread->start();
   hwThread->start();

@@ -90,8 +90,8 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   QGridLayout *glay01 = new QGridLayout();
   fWdg->setLayout(glay01);
 
-  QLabel *lblA1 = new QLabel("Air [deg C]"); setupLBL(lblA1);
-  QLabel *lblB1 = new QLabel("Water  [deg C]"); setupLBL(lblB1);
+  QLabel *lblA1 = new QLabel("Air [\xC2\xB0 C]"); setupLBL(lblA1);
+  QLabel *lblB1 = new QLabel("Water  [\xC2\xB0 C]"); setupLBL(lblB1);
   QLabel *lblC1 = new QLabel("Rel. Hum.");  setupLBL(lblC1);
   QLabel *lblD1 = new QLabel("Dew Point");  setupLBL(lblD1);
 
@@ -117,7 +117,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   QPushButton *btn4 = new QPushButton("STOP"); btn4->setFocusPolicy(Qt::NoFocus);
   btn4->setFont(fFont1);
-  btn4->setFixedSize(QSize(180, 50));
+  btn4->setFixedSize(QSize(190, 50));
   btn4->setStyleSheet("QPushButton {background-color: rgba(204, 50, 50, 0.4); color: black;}");
   btn4->update();
   connect(btn4, &QPushButton::clicked, this, &MainWindow::btnStop);
@@ -322,7 +322,7 @@ void MainWindow::btnStop() {
   static int cnt(0);
   cout << "MainWindow::signalStopProgram(), cnt = " << cnt << endl;
   ++cnt;
-  emit signalStopProgram();
+  emit signalStopOperations();
 }
 
 

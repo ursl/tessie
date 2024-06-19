@@ -1461,6 +1461,7 @@ void driveHardware::toggleFras(int imask) {
 
 // ----------------------------------------------------------------------
 void driveHardware::stopOperations() {
+  cout << "stopOperations() invoked" << endl;
   for (int itec = 1; itec <= 8; ++itec) {
     turnOffTEC(itec);
     std::this_thread::sleep_for(fMilli5);
