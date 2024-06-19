@@ -127,11 +127,11 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   QPushButton *btn4 = new QPushButton("STOP ALL"); btn4->setFocusPolicy(Qt::NoFocus);
   btn4->setFont(fFont1);
-  btn4->setFixedSize(QSize(190, 50));
-  btn4->setStyleSheet("QPushButton {background-color: rgba(204, 50, 50, 0.4); color: black; font-weight: bold;}");
+  btn4->setFixedSize(QSize(380, 50));
+  btn4->setStyleSheet("QPushButton {background-color: rgba(204, 50, 50, 0.4); color: black; font-weight: bold; border: 5px solid}");
   btn4->update();
   connect(btn4, &QPushButton::clicked, this, &MainWindow::btnStop);
-  glay01->addWidget(btn4, 3, 2, 1, 2, Qt::AlignLeft);
+  glay01->addWidget(btn4, 3, 0, 1, 4, Qt::AlignLeft);
 
   hlay0->addLayout(glay01);
 
