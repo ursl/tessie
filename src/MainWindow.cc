@@ -53,6 +53,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   QPushButton *btn3 = new QPushButton("Quit"); btn3->setFocusPolicy(Qt::NoFocus);
   btn3->setFont(fFont1);
+  btn3->setStyleSheet("QPushButton {color: black; font-weight: bold;}");
   btn3->setFixedSize(QSize(80, 50));
   connect(btn3, &QPushButton::clicked, this, &MainWindow::btnQuit);
   hlay->addWidget(btn3);
@@ -118,7 +119,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   glay01->addWidget(lblE1,  2, 0, 1, 1);
   glay01->addWidget(fqleLS, 2, 1, 1, 1);
 
-  QPushButton *btn4 = new QPushButton("STOP"); btn4->setFocusPolicy(Qt::NoFocus);
+  QPushButton *btn4 = new QPushButton("STOP ALL"); btn4->setFocusPolicy(Qt::NoFocus);
   btn4->setFont(fFont1);
   btn4->setFixedSize(QSize(190, 50));
   btn4->setStyleSheet("QPushButton {background-color: rgba(204, 50, 50, 0.4); color: black; font-weight: bold;}");
@@ -142,7 +143,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fbtnValve0->setFocusPolicy(Qt::NoFocus);
   fbtnValve0->setFont(fFont1);
   fbtnValve0->setFixedSize(btnSize);
-  fbtnValve0->setStyleSheet("QPushButton {background-color: gray; color: black;}");
+  fbtnValve0->setStyleSheet("QPushButton {background-color: gray; color: black; font-weight: bold;}");
   connect(fbtnValve0, &QPushButton::clicked, this, &MainWindow::btnValve0);
   vlay00->addWidget(fbtnValve0);
 
@@ -150,7 +151,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fbtnValve1->setFocusPolicy(Qt::NoFocus);
   fbtnValve1->setFont(fFont1);
   fbtnValve1->setFixedSize(btnSize);
-  fbtnValve1->setStyleSheet("QPushButton {background-color: gray; color: black;}");
+  fbtnValve1->setStyleSheet("QPushButton {background-color: gray; color: black; font-weight: bold;}");
   connect(fbtnValve1, &QPushButton::clicked, this, &MainWindow::btnValve1);
   vlay00->addWidget(fbtnValve1);
 
@@ -251,14 +252,14 @@ void MainWindow::updateHardwareDisplay() {
   }
 
   if (fpHw->getStatusValve0()) {
-    fbtnValve0->setStyleSheet("QPushButton {background-color: #A3C1DA; color: black;}");
+    fbtnValve0->setStyleSheet("QPushButton {background-color: #A3C1DA; color: black; font-weight: bold;}");
   } else {
-    fbtnValve0->setStyleSheet("QPushButton {background-color: gray; color: black;}");
+    fbtnValve0->setStyleSheet("QPushButton {background-color: gray; color: black; font-weight: bold;}");
   }
   if (fpHw->getStatusValve1()) {
-    fbtnValve1->setStyleSheet("QPushButton {background-color: #A3C1DA; color: black;}");
+    fbtnValve1->setStyleSheet("QPushButton {background-color: #A3C1DA; color: black; font-weight: bold;}");
   } else {
-    fbtnValve1->setStyleSheet("QPushButton {background-color: gray; color: black;}");
+    fbtnValve1->setStyleSheet("QPushButton {background-color: gray; color: black; font-weight: bold;}");
   }
 
   int ls = fpHw->getLidStatus();
@@ -344,9 +345,9 @@ void MainWindow::btnStop() {
 void MainWindow::btnValve0() {
   // -- negate!
   if (!fpHw->getStatusValve0()) {
-    fbtnValve0->setStyleSheet("QPushButton {background-color: #A3C1DA; color: black;}");
+    fbtnValve0->setStyleSheet("QPushButton {background-color: #A3C1DA; color: black; font-weight: bold;}");
   } else {
-    fbtnValve0->setStyleSheet("QPushButton {background-color: gray; color: black;}");
+    fbtnValve0->setStyleSheet("QPushButton {background-color: gray; color: black; font-weight: bold;}");
   }
 
   emit signalValve(1);
@@ -357,9 +358,9 @@ void MainWindow::btnValve0() {
 void MainWindow::btnValve1() {
   // -- negate!
   if (!fpHw->getStatusValve1()) {
-    fbtnValve1->setStyleSheet("QPushButton {background-color: #A3C1DA; color: black;}");
+    fbtnValve1->setStyleSheet("QPushButton {background-color: #A3C1DA; color: black; font-weight: bold;}");
   } else {
-    fbtnValve1->setStyleSheet("QPushButton {background-color: gray; color: black;}");
+    fbtnValve1->setStyleSheet("QPushButton {background-color: gray; color: black; font-weight: bold;}");
   }
   emit signalValve(2);
 }
