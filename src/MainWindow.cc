@@ -56,6 +56,9 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   connect(btn3, &QPushButton::clicked, this, &MainWindow::btnQuit);
   hlay->addWidget(btn3);
 
+  QSpacerItem *spacer0 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+  vlayTop->addSpacerItem(spacer0);
+
   // -- top row, containing (left) info block and (right) env block
   QHBoxLayout *hlay0 = new QHBoxLayout(fWdg);
   vlayTop->addLayout(hlay0);
@@ -124,6 +127,8 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   hlay0->addLayout(glay01);
 
+  QSpacerItem *spacer1 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+  vlayTop->addSpacerItem(spacer1);
 
   // -- bottom row, containing (left) buttons and (right) TEC array
   QHBoxLayout *hlay1 = new QHBoxLayout(fWdg);
