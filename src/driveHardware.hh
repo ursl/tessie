@@ -133,6 +133,7 @@ public:
 public slots:
   void  sentFromServer(QString msg);
   void  toggleFras(int imask);
+  void  stopOperations();
   void  turnOnTEC(int itec);
   void  turnOffTEC(int itec);
   void  doRun();

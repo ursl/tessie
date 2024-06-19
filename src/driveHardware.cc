@@ -1460,6 +1460,18 @@ void driveHardware::toggleFras(int imask) {
 
 
 // ----------------------------------------------------------------------
+void driveHardware::stopOperations() {
+  for (int itec = 1; itec <= 8; ++itec) {
+    turnOffTEC(itec);
+    std::this_thread::sleep_for(fMilli5);
+  }
+
+  turnOnValve(0);
+  turnOnValve(1);
+}
+
+
+// ----------------------------------------------------------------------
 float driveHardware::getTECRegister(int itec, std::string regname) {
   if (fTECData.find(itec) == fTECData.end()) {
     return -1.;

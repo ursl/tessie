@@ -31,10 +31,24 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   this->resize(800, 480);
 
+  // -- FIXME: Test whether fWdg can be replaced by this
   QWidget *fWdg = new QWidget(this);
   fWdg->setFocusPolicy(Qt::NoFocus);
+
   // -- Top vertical stack of layouts
   QVBoxLayout *vlayTop = new QVBoxLayout(fWdg);
+
+  // -- header row
+  QHBoxLayout *hlay = new QHBoxLayout(fWdg);
+  vlayTop->addLayout(hlay);
+  QLabel *lbl = new QLabel("TESSIE"); setupLBL(lbl);
+  hlay->addWidget(lbl);
+
+  QPushButton *btn3 = new QPushButton("Quit"); btn3->setFocusPolicy(Qt::NoFocus);
+  btn3->setFont(fFont1);
+  btn3->setFixedSize(QSize(80, 50));
+  connect(btn3, &QPushButton::clicked, this, &MainWindow::btnQuit);
+  hlay->addWidget(btn3);
 
   // -- top row, containing (left) info block and (right) env block
   QHBoxLayout *hlay0 = new QHBoxLayout(fWdg);
@@ -101,11 +115,13 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   glay01->addWidget(lblE1,  2, 0, 1, 1);
   glay01->addWidget(fqleLS, 2, 1, 1, 1);
 
-  QPushButton *btn3 = new QPushButton("Quit"); btn3->setFocusPolicy(Qt::NoFocus);
-  btn3->setFont(fFont1);
-  btn3->setFixedSize(QSize(80, 50));
-  connect(btn3, &QPushButton::clicked, this, &MainWindow::btnQuit);
-  glay01->addWidget(btn3, 2, 3, 1, 1);
+  QPushButton *btn4 = new QPushButton("STOP"); btn4->setFocusPolicy(Qt::NoFocus);
+  btn4->setFont(fFont1);
+  btn4->setFixedSize(QSize(180, 50));
+  btn4->setStyleSheet("QPushButton {background-color: rgba(204, 50, 50, 0.4); color: black;}");
+  btn4->update();
+  connect(btn4, &QPushButton::clicked, this, &MainWindow::btnStop);
+  glay01->addWidget(btn4, 2, 2, 1, 2, Qt::AlignLeft);
 
   hlay0->addLayout(glay01);
 
@@ -298,6 +314,15 @@ void MainWindow::btnQuit() {
   cout << "MainWindow::signalQuitProgram(), cnt = " << cnt << endl;
   ++cnt;
   emit signalQuitProgram();
+}
+
+
+// ----------------------------------------------------------------------
+void MainWindow::btnStop() {
+  static int cnt(0);
+  cout << "MainWindow::signalStopProgram(), cnt = " << cnt << endl;
+  ++cnt;
+  emit signalStopProgram();
 }
 
 
