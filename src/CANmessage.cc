@@ -184,7 +184,7 @@ float CANmessage::getFloat(unsigned int itec, unsigned int ireg) {
   }
 
   if (result < -90.) {
-    string errstring = "parse issue: reg " + to_string(ireg)
+    string errstring = "parse issue float: reg " + to_string(ireg)
       + " itec " + to_string(itec)
       + " getFloat " + to_string(result)
       + " canFrame: ->" + fErrorFrame.getString() + "<-";
@@ -210,7 +210,7 @@ int CANmessage::getInt(unsigned int itec, unsigned int ireg) {
 
   if (result < -90.) {
     ++fErrorCounter;
-    string errstring = "parse issue: reg " + to_string(ireg)
+    string errstring = "parse issue int: reg " + to_string(ireg)
        + " itec " + to_string(itec)
        + " getInt " + to_string(result);
     fqErrors.push_front(errstring);
