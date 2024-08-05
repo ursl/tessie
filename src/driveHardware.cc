@@ -314,13 +314,23 @@ void driveHardware::doRun() {
         fCANErrorOld = fCANErrorCounter;
         fCANErrorCounter = nerrs;
         if (redCANErrors()) {
-          stringstream a("==CANERROR== n=" + to_string(fCANErrorCounter) + " CAN frame = " + fCanMsg.getErrorFrame().getString());
+          deque<string> errs = fCanMsg.getErrors();
+
+          stringstream a("==CANERROR== n=" + to_string(fCANErrorCounter)
+                         + " CAN frame = " + fCanMsg.getErrorFrame().getString()
+                         + " errs.size() = " + std::to_string(errs.size())
+                         )
+            ;
           fLOG(ERROR, a.str());
 
-          deque<string> errs = fCanMsg.getErrors();
           int errRepeat(0);
+          int cnt(0);
           while (errs.size() > 0) {
             string errmsg = errs.front();
+            if (cnt < 2) {
+              fLOG(ERROR, "errmsg: " + errmsg); // FIXME TEMPORARY
+              ++cnt;
+            }
             if (string::npos != errmsg.find("parse issue")) {
               ++errRepeat;
             }
