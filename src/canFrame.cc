@@ -83,6 +83,7 @@ string canFrame::getString() {
    sbla << std::dec
         << ". tec = " << fTec
         << " reg = " << fReg
+        << " type = " << fType
         << " val = " << fFloatVal << "/" << fIntVal;
    return sbla.str();
 }

@@ -7,6 +7,12 @@
 #define NREG 21
 #define ADDRESS_FRAS 0x42
 
+// canFrame holds the raw CAN frame from the CAN bus and decodes it into
+// fTec, fReg, and other variables
+// 
+// CANmessage holds various deques (double-ended queue) for various types of canFrames
+// (from FRAS, per TEC/register, errors). Provides access to TEC register values.
+
 class canFrame {
 public:
   canFrame() { };

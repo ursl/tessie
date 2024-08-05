@@ -8,6 +8,12 @@
 
 #include "canFrame.hh"
 
+// CANmessage holds various deques (double-ended queue) for various types of canFrames
+// (from FRAS, per TEC/register, errors)
+//
+// canFrame holds the raw CAN frame from the CAN bus
+ 
+
 class CANmessage {
 public:
   CANmessage();

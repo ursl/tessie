@@ -391,7 +391,7 @@ void driveHardware::ensureSafety() {
   // -- first the trivial warnings
   if (redCANErrors() > 0) {
     stringstream a("==WARNING== CAN errors = "
-                   + to_string(fCANErrorCounter)
+                   + to_string(fCANErrorCounter) + " "
                    + fCanMsg.getErrorFrame().getString()
                    );
     fLOG(WARNING, a.str());
