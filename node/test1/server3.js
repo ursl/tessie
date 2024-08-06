@@ -57,9 +57,6 @@ let ModeString = ''
 let WarningString = ''
 let AlarmString = ''
 
-// -- read version string
-readVersion();
-
 
 // ----------------------------------------------------------------------
 // -- MQTT
@@ -174,6 +171,9 @@ clientMqtt.on('message', (topMon, payload) => {
 // -- socket.io
 // ----------------------------------------------------------------------
 io.on('connection', (socket) => {
+    // -- read version string
+    readVersion();
+
     console.log('User connected');
     console.log('versionString ->' + versionString + '<-');
 
@@ -359,6 +359,6 @@ server.listen(PORT, () => {
 
 // ----------------------------------------------------------------------
 function readVersion() {
-    let filePath = "../../test1/version.txt";
+    let filePath = "../../src/version.txt";
     versionString = fs.readFileSync(filePath).toString().replace('\n', '');
 }
