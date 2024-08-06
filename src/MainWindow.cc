@@ -181,7 +181,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
     // int ix = 2 * (i%4);
     int iy = (i < 4 ?1 :0);
     int ix = (i < 4 ?2*(i%4) : 2*((7-i)%4));
-    cout << "TEC idx=" << i << " ix = " << ix << " iy = " << iy << endl;
+    //    cout << "TEC idx=" << i << " ix = " << ix << " iy = " << iy << endl;
     glay02->addWidget(flblTEC[i], iy, ix,   1, 1);
     glay02->addWidget(fqleTEC[i], iy, ix+1, 1, 1);
   }
@@ -378,7 +378,7 @@ void MainWindow::btnValve1() {
 // ----------------------------------------------------------------------
 void MainWindow::mkTEC(int i) {
   QString slbl = "TEC " + QString::number(i+1);
-  cout << "slbl = " << slbl.toStdString() << endl;
+  //  cout << "slbl = " << slbl.toStdString() << endl;
   QLabel *lbl = new QLabel(slbl);
   setupLBL(lbl);
   lbl->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
