@@ -51,6 +51,9 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   lbl->setStyleSheet("font-weight: bold;");
   hlay->addWidget(lbl);
 
+  fLOG(INFO, "tessie version " + sline);
+
+
   QPushButton *btn3 = new QPushButton("Quit"); btn3->setFocusPolicy(Qt::NoFocus);
   btn3->setFont(fFont1);
   btn3->setStyleSheet("QPushButton {color: black; font-weight: bold;}");
