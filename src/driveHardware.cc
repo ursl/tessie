@@ -375,7 +375,7 @@ void driveHardware::ensureSafety() {
       b << "Changed Interlock to LOW";
     } else {
       gpio_write(fPiGPIO, GPIOINT, 1);
-      b << "Changed h/w Interlock to HIGH";
+      b << "Changed Interlock to HIGH";
     }
 #endif
     fLOG(INFO, b.str());
