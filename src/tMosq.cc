@@ -48,8 +48,9 @@ void tMosq::on_message(const struct mosquitto_message *message) {
     memcpy(buffer, message->payload, message->payloadlen*sizeof(char));
     buffer[message->payloadlen] = '\0';
     smsg = string(buffer);
-    cout << "buffer ->" << buffer << "<-" << endl;
-    cout << "smsg   ->" << smsg   << "<-" << endl;
+    //    cout << "buffer ->" << buffer << "<-" << endl;
+    //    cout << "smsg   ->" << smsg   << "<-" << endl;
+    delete[] buffer;
     // -- don't remember why I had the following line:
     //    smsg = string((char*)message->payload);
   }
