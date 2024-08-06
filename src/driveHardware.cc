@@ -365,11 +365,11 @@ void driveHardware::ensureSafety() {
   }
 
   // -- check lid status (only 1 is good enough) and set interlock accordingly
+#ifdef PI
   checkLid();
   if (fOldLidStatus != fLidStatus) {
     fOldLidStatus = fLidStatus;
     stringstream b;
-#ifdef PI
     if (fLidStatus < 1) {
       gpio_write(fPiGPIO, GPIOINT, 0);
       b << "Changed Interlock to LOW";
@@ -377,7 +377,6 @@ void driveHardware::ensureSafety() {
       gpio_write(fPiGPIO, GPIOINT, 1);
       b << "Changed Interlock to HIGH";
     }
-#endif
     fLOG(INFO, b.str());
     emit signalSendToServer(QString::fromStdString(b.str()));
 
@@ -394,6 +393,7 @@ void driveHardware::ensureSafety() {
     fLOG(INFO, a.str());
     emit signalSendToServer(QString::fromStdString(a.str()));
   }
+#endif
 
   bool greenLight(true);
   static bool yellowLight(getStatusFan());
