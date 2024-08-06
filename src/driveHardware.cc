@@ -1949,14 +1949,16 @@ void driveHardware::readSHT85() {
     if (crcRead != fSHT85Data[2]) {
       stringstream a("CRC check failed, ignoring read temperature  " + to_string(tmpTemp));
       fLOG(WARNING, a.str());
+    } else if ((fSHT85Data[0] == 0) && (fSHT85Data[1] == 0)) {
+      stringstream a("(fSHT85Data[0] == 0) && (fSHT85Data[1] == 0), ignoring temperature reading ");
+      fLOG(WARNING, a.str());
     } else {
       fSHT85Temp      = tmpTemp;
       st              = (fSHT85Data[3]<<8) + fSHT85Data[4];
       double tmpRH    = (st * 100.0) / norm;
       uint8_t crcRead = crc(&fSHT85Data[3], 2);
       if (crcRead != fSHT85Data[5]) {
-        stringstream a("CRC check failed, ignoring read RH  " + to_string(tmpRH)
-                       + " data[0,1] = " + to_string(fSHT85Data[0]) + ", " + to_string(fSHT85Data[1]));
+        stringstream a("CRC check failed, ignoring read RH  " + to_string(tmpRH));
         fLOG(WARNING, a.str());
       } else {
         fSHT85RH  = tmpRH;
