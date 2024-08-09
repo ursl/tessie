@@ -367,7 +367,7 @@ void MainWindow::btnStop() {
 void MainWindow::btnValve0() {
   // -- negate!
   if (!fpHw->getStatusValve0()) {
-    fbtnValve0->setStyleSheet("QPushButton {background-color: #A3C1DA; color: black; font-weight: bold;}");
+    fbtnValve0->setStyleSheet("QPushButton {background-color: #46923c; color: black; font-weight: bold;}");
   } else {
     fbtnValve0->setStyleSheet("QPushButton {background-color: gray; color: black; font-weight: bold;}");
   }
@@ -380,7 +380,7 @@ void MainWindow::btnValve0() {
 void MainWindow::btnValve1() {
   // -- negate!
   if (!fpHw->getStatusValve1()) {
-    fbtnValve1->setStyleSheet("QPushButton {background-color: #A3C1DA; color: black; font-weight: bold;}");
+    fbtnValve1->setStyleSheet("QPushButton {background-color: #46923c; color: black; font-weight: bold;}");
   } else {
     fbtnValve1->setStyleSheet("QPushButton {background-color: gray; color: black; font-weight: bold;}");
   }
