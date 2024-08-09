@@ -293,8 +293,10 @@ void MainWindow::updateHardwareDisplay() {
   }
 
   if (fpHw->getInterlockStatus()) {
+    fqleIL->setText("good");
     fqleIL->setPalette(fPalettes[4]);
   } else {
+    fqleIL->setText("bad");
     fqleIL->setPalette(fPalettes[8]);
   }
 
