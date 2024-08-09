@@ -40,7 +40,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   QVBoxLayout *vlayTop = new QVBoxLayout(fWdg);
 
   // -- header row
-  QHBoxLayout *hlay = new QHBoxLayout(fWdg);
+  QHBoxLayout *hlay = new QHBoxLayout(/*fWdg*/);
   vlayTop->addLayout(hlay);
   ifstream INS;
   string sline;
@@ -65,24 +65,24 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   vlayTop->addSpacerItem(spacer0);
 
   // -- top row, containing (left) info block and (right) env block
-  QHBoxLayout *hlay0 = new QHBoxLayout(fWdg);
+  QHBoxLayout *hlay0 = new QHBoxLayout(/*fWdg*/);
   vlayTop->addLayout(hlay0);
 
   // -- Info block
   QGridLayout *glay00 = new QGridLayout();
   glay00->setAlignment(Qt::AlignTop);
 
-  fWdg->setLayout(glay00);
+  //  fWdg->setLayout(glay00);
 
   QLabel *lblA = new QLabel("CANbus errors"); setupLBL(lblA);
   QLabel *lblB = new QLabel("I2C errors"); setupLBL(lblB);
   QLabel *lblC = new QLabel("Runtime"); setupLBL(lblC);
   QLabel *lblD = new QLabel("Status"); setupLBL(lblD);
 
-  fqleCANbusErrors = new QLineEdit(fWdg); setupQLE(fqleCANbusErrors);
-  fqleI2CErrors    = new QLineEdit(fWdg); setupQLE(fqleI2CErrors);
-  fqleRunTime      = new QLineEdit(fWdg); setupQLE(fqleRunTime);
-  fqleStatus       = new QLineEdit(fWdg); setupQLE(fqleStatus); fqleStatus->setFont(fFont2);
+  fqleCANbusErrors = new QLineEdit(/*fWdg*/); setupQLE(fqleCANbusErrors);
+  fqleI2CErrors    = new QLineEdit(/*fWdg*/); setupQLE(fqleI2CErrors);
+  fqleRunTime      = new QLineEdit(/*fWdg*/); setupQLE(fqleRunTime);
+  fqleStatus       = new QLineEdit(/*fWdg*/); setupQLE(fqleStatus); fqleStatus->setFont(fFont2);
 
   glay00->addWidget(lblA,  0, 0, 1, 1);
   glay00->addWidget(fqleCANbusErrors, 0, 1, 1, 1);
@@ -101,7 +101,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   // -- Environmental block
   QGridLayout *glay01 = new QGridLayout();
   glay01->setAlignment(Qt::AlignTop);
-  fWdg->setLayout(glay01);
+  //  fWdg->setLayout(glay01);
 
   QLabel *lblA1 = new QLabel("Air [\xC2\xB0 C]"); setupLBL(lblA1);
   QLabel *lblB1 = new QLabel("Water  [\xC2\xB0 C]"); setupLBL(lblB1);
@@ -142,11 +142,11 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   vlayTop->addSpacerItem(spacer1);
 
   // -- bottom row, containing (left) buttons and (right) TEC array
-  QHBoxLayout *hlay1 = new QHBoxLayout(fWdg);
+  QHBoxLayout *hlay1 = new QHBoxLayout(/*fWdg*/);
   vlayTop->addLayout(hlay1);
 
   // -- buttons
-  QVBoxLayout *vlay00 = new QVBoxLayout(fWdg);
+  QVBoxLayout *vlay00 = new QVBoxLayout(/*fWdg*/);
 
   fbtnValve0 = new QPushButton("Flush");
   fbtnValve0->setFocusPolicy(Qt::NoFocus);
@@ -169,7 +169,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   // -- TEC block
   QGridLayout *glay02 = new QGridLayout();
-  fWdg->setLayout(glay02);
+  //  fWdg->setLayout(glay02);
 
   for (unsigned int i = 0; i < 8; ++i) {
     mkTEC(i);
