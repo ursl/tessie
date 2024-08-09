@@ -96,7 +96,10 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fSHT85Config[0] = 0x24;   // MSB
   fSHT85Config[1] = 0x00;   // LSB
 
-  fAlarmState = 0;
+  fRelaisMask      = 0;
+  fAlarmState      = 0;
+  fLidStatus       = 0;
+  fInterlockStatus = 0;
 
 #ifdef PI
   fPiGPIO = pigpio_start(NULL, NULL);
@@ -111,9 +114,10 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   gpio_write(fPiGPIO, GPIOPSUEN, 1);
 
   set_mode(fPiGPIO, GPIOINT, PI_OUTPUT);
-  // -- start with interlock high (will to low in first call to ensureSafety)
+  // -- start with interlock high (will go to low in first call to ensureSafety)
   gpio_write(fPiGPIO, GPIOINT, 1);
-
+  fInterlockStatus = 1;
+  
   lighting(1);
 
   //no more  gpio_write(fPiGPIO, GPIOGREEN,  1);
@@ -372,9 +376,11 @@ void driveHardware::ensureSafety() {
     stringstream b;
     if (fLidStatus < 1) {
       gpio_write(fPiGPIO, GPIOINT, 0);
+      fInterlockStatus = 0;
       b << "Changed Interlock to LOW";
     } else {
       gpio_write(fPiGPIO, GPIOINT, 1);
+      fInterlockStatus = 1;
       b << "Changed Interlock to HIGH";
     }
     fLOG(INFO, b.str());
@@ -444,6 +450,7 @@ void driveHardware::ensureSafety() {
     gpio_write(fPiGPIO, GPIORED, 1);
     gpio_write(fPiGPIO, GPIOGREEN, 0);
     gpio_write(fPiGPIO, GPIOINT, 0);
+    fInterlockStatus = 0;
 #endif
   }
 
@@ -466,6 +473,7 @@ void driveHardware::ensureSafety() {
     gpio_write(fPiGPIO, GPIORED, 1);
     gpio_write(fPiGPIO, GPIOGREEN, 0);
     gpio_write(fPiGPIO, GPIOINT, 0);
+    fInterlockStatus = 0;
 #endif
   }
 
@@ -485,6 +493,7 @@ void driveHardware::ensureSafety() {
     gpio_write(fPiGPIO, GPIORED, 1);
     gpio_write(fPiGPIO, GPIOGREEN, 0);
     gpio_write(fPiGPIO, GPIOINT, 0);
+    fInterlockStatus = 0;
 #endif
   }
 
@@ -512,6 +521,7 @@ void driveHardware::ensureSafety() {
       gpio_write(fPiGPIO, GPIORED, 1);
       gpio_write(fPiGPIO, GPIOGREEN, 0);
       gpio_write(fPiGPIO, GPIOINT, 0);
+      fInterlockStatus = 0;
 #endif
     }
 
@@ -536,6 +546,7 @@ void driveHardware::ensureSafety() {
       gpio_write(fPiGPIO, GPIORED, 1);
       gpio_write(fPiGPIO, GPIOGREEN, 0);
       gpio_write(fPiGPIO, GPIOINT, 0);
+      fInterlockStatus = 0;
 #endif
     }
   }
@@ -568,6 +579,7 @@ void driveHardware::ensureSafety() {
       fOldLidStatus = fLidStatus;
       emit signalSendToServer(QString::fromStdString(b.str()));
       gpio_write(fPiGPIO, GPIOINT, 1);
+      fInterlockStatus = 1;
 #endif
       }
     }
@@ -696,6 +708,7 @@ void driveHardware::shutDown() {
 #ifdef PI
   cout << "driveHardware::shutDown()" << endl;
   gpio_write(fPiGPIO, GPIOINT, 0);
+  fInterlockStatus = 0;
 
   gpio_write(fPiGPIO, GPIORED,   0);
   gpio_write(fPiGPIO, GPIOGREEN, 0);

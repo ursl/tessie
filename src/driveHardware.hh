@@ -76,6 +76,7 @@ public:
   bool  getStatusValve()  {return (getStatusValve0() && getStatusValve1());}
   bool  getStatusFan() {return ((fRelaisMask & 4) == 4);}
   int   getLidStatus() {return fLidStatus;}
+  int   getInterlockStatus() {return fInterlockStatus;}
   void  turnOnValve(int i); // i = 0 or 1
   void  turnOffValve(int i); // i = 0 or 1
   void  turnOnFan();
@@ -204,7 +205,8 @@ private:
   //    0 closed            (TEC7 0 < Temp_W < 4000)
   //    -1 open             (TEC7 Temp_W < 0)
   int fLidStatus, fOldLidStatus;
-
+  int fInterlockStatus;
+  
 #ifdef PI
   int    fSw;
   struct sockaddr_can fAddrW;

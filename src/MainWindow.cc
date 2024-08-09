@@ -109,24 +109,30 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   QLabel *lblD1 = new QLabel("Dew Point");  setupLBL(lblD1);
 
   QLabel *lblE1 = new QLabel("Lid status");  setupLBL(lblE1);
+  QLabel *lblF1 = new QLabel("Interlock");   setupLBL(lblF1);
 
   fqleAT = new QLineEdit(fWdg); setupQLE(fqleAT); fqleAT->setFixedSize(QSize(80, 50));
   fqleWT = new QLineEdit(fWdg); setupQLE(fqleWT); fqleWT->setFixedSize(QSize(80, 50));
   fqleRH = new QLineEdit(fWdg); setupQLE(fqleRH); fqleRH->setFixedSize(QSize(80, 50));
   fqleDP = new QLineEdit(fWdg); setupQLE(fqleDP); fqleDP->setFixedSize(QSize(80, 50));
-
+    
   fqleLS = new QLineEdit(fWdg); setupQLE(fqleLS); fqleLS->setFixedSize(QSize(80, 50));
+  fqleIL = new QLineEdit(fWdg); setupQLE(fqleIL); fqleIL->setFixedSize(QSize(80, 50));
 
   glay01->addWidget(lblA1,  0, 0, 1, 1);
   glay01->addWidget(fqleAT, 0, 1, 1, 1);
   glay01->addWidget(lblB1,  1, 0, 1, 1);
   glay01->addWidget(fqleWT, 1, 1, 1, 1);
+  glay01->addWidget(lblE1,  2, 0, 1, 1);
+  glay01->addWidget(fqleLS, 2, 1, 1, 1);
+
   glay01->addWidget(lblC1,  0, 2, 1, 1);
   glay01->addWidget(fqleRH, 0, 3, 1, 1);
   glay01->addWidget(lblD1,  1, 2, 1, 1);
   glay01->addWidget(fqleDP, 1, 3, 1, 1);
-  glay01->addWidget(lblE1,  2, 0, 1, 1);
-  glay01->addWidget(fqleLS, 2, 1, 1, 1);
+  glay01->addWidget(lblF1,  2, 2, 1, 1);
+  glay01->addWidget(fqleIL, 2, 3, 1, 1);
+
 
   QPushButton *btn4 = new QPushButton("STOP ALL"); btn4->setFocusPolicy(Qt::NoFocus);
   btn4->setFont(fFont1);
@@ -286,6 +292,11 @@ void MainWindow::updateHardwareDisplay() {
     fqleLS->setPalette(fPalettes[8]);
   }
 
+  if (fpHw->getInterlockStatus()) {
+    fqleIL->setPalette(fPalettes[4]);
+  } else {
+    fqleIL->setPalette(fPalettes[8]);
+  }
 
   if ((temp - dp) < 2.)  {
     fqleDP->setPalette(fPalettes[8]);
