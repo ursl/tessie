@@ -30,7 +30,7 @@ signals:
 
 public slots:
   void updateHardwareDisplay();
-  void showAlarm();
+  void showAlarm(int);
 
 private:
   void btnQuit();

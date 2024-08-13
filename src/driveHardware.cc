@@ -443,7 +443,7 @@ void driveHardware::ensureSafety() {
     fLOG(ERROR, a.str());
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
-    emit signalAlarm();
+    emit signalAlarm(1);
     cout << "signalSetBackground(\"T\", red)" << endl;
     emit signalSetBackground("T", "red");
 #ifdef PI
@@ -469,7 +469,7 @@ void driveHardware::ensureSafety() {
     fLOG(ERROR, a.str());
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
-    emit signalAlarm();
+    emit signalAlarm(1);
     cout << "signalSetBackground(\"DP\", red)" << endl;
     emit signalSetBackground("DP", "red");
 #ifdef PI
@@ -491,7 +491,7 @@ void driveHardware::ensureSafety() {
     fLOG(ERROR, a.str());
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
-    emit signalAlarm();
+    emit signalAlarm(1);
 #ifdef PI
     gpio_write(fPiGPIO, GPIORED, 1);
     gpio_write(fPiGPIO, GPIOGREEN, 0);
@@ -519,7 +519,7 @@ void driveHardware::ensureSafety() {
       fLOG(ERROR, a.str());
       emit signalSendToMonitor(QString::fromStdString(a.str()));
       emit signalSendToServer(QString::fromStdString(a.str()));
-      emit signalAlarm();
+      emit signalAlarm(1);
       QString qtec = QString::fromStdString("tec"+to_string(itec));
       cout << "signalSetBackground(" << qtec.toStdString() << ", red)" << endl;
       emit signalSetBackground(qtec, "red");
@@ -551,7 +551,7 @@ void driveHardware::ensureSafety() {
       fStatusString = "Module " + std::to_string(itec) + " temp too close to DP";
       emit signalSendToMonitor(QString::fromStdString(a.str()));
       emit signalSendToServer(QString::fromStdString(a.str()));
-      emit signalAlarm();
+      emit signalAlarm(1);
       QString qtec = QString::fromStdString("tec"+to_string(itec));
       cout << "signalSetBackground(" << qtec.toStdString() << ", red)" << endl;
       emit signalSetBackground(qtec, "red");
@@ -601,6 +601,7 @@ void driveHardware::ensureSafety() {
     emit signalSetBackground("T", "white");
     emit signalSetBackground("DP", "white");
     emit signalSetBackground("RH", "white");
+    emit signalAlarm(0);
   }
 
 #ifdef PI

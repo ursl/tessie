@@ -150,7 +150,7 @@ signals:
   void  signalSendToMonitor(QString msg);
   //REMOVE  void  startServer();
   void  signalUpdateHwDisplay();
-  void  signalAlarm();
+  void  signalAlarm(int);
   void  signalKillSiren();
 
 

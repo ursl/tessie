@@ -430,19 +430,28 @@ int MainWindow::colorReducedIndex(double temp)  {
 }
 
 // ----------------------------------------------------------------------
-void MainWindow::showAlarm() {
+void MainWindow::showAlarm(int state) {
   static int cnt(50);
-  fLOG(INFO, "showAlarm! cnt = " + std::to_string(cnt));
-  if (!fAlarmSoundPlaying) {
-    system("/usr/bin/cvlc -R ../siren.mp3 &");
-    fAlarmSoundPlaying = true;
-  }
-  --cnt;
-  // -- after 50 invocations, reset counter and allow a fresh start of siren playing
-  if (cnt < 1) {
+  if (0 == state) {
+    // -- reset everything when alarm condition is gone
     killSiren();
     fAlarmSoundPlaying = false;
     cnt = 50;
+    return;
+  } else if (1 == state) {
+    // -- this is the normal alarm setup
+    fLOG(INFO, "showAlarm! cnt = " + std::to_string(cnt));
+    if (!fAlarmSoundPlaying) {
+      system("/usr/bin/cvlc -R ../siren.mp3 &");
+      fAlarmSoundPlaying = true;
+    }
+    --cnt;
+    // -- after 50 invocations, reset counter and allow a fresh start of siren playing
+    if (cnt < 1) {
+      killSiren();
+      fAlarmSoundPlaying = false;
+      cnt = 50;
+    }
   }
 }
 
