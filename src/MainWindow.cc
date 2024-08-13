@@ -428,3 +428,15 @@ int MainWindow::colorReducedIndex(double temp)  {
   return 0;
 
 }
+
+// ----------------------------------------------------------------------
+void MainWindow::showAlarm() {
+  static int cnt(10);
+  if (!fAlarmSoundPlaying) {
+    cout << "showAlarm! Running vlc!!" << endl;
+    system("/usr/bin/cvlc -R ../siren.mp3 &");
+    fAlarmSoundPlaying = true;
+  }
+  --cnt;
+  if (cnt < 1) fAlarmSoundPlaying = false; 
+}

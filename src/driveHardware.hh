@@ -37,6 +37,8 @@ const double SAFETY_MAXSHT85TEMP  = 40.;
 const double SAFETY_MAXTEMPW  = 30.;
 const double SAFETY_MAXTEMPM  = 30.;
 const double SAFETY_DPMARGIN = 2.;
+
+const double SHUTDOWN_TEMP  = 50.;
 // ----------------------------------------------------------------------
 class driveHardware: public QObject {
   Q_OBJECT

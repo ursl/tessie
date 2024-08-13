@@ -30,6 +30,7 @@ signals:
 
 public slots:
   void updateHardwareDisplay();
+  void showAlarm();
 
 private:
   void btnQuit();
@@ -60,5 +61,7 @@ private:
 
   std::vector<QPalette>    fPalettes;
 
+  bool fAlarmSoundPlaying{false};
+  
 };
 #endif // MAINWINDOW_H

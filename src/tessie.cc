@@ -60,11 +60,12 @@ int main(int argc, char *argv[]) {
 
   // -- MainWindow slots and signals
   QObject::connect(hw, SIGNAL(signalUpdateHwDisplay()), &w, SLOT(updateHardwareDisplay()));
-  QObject::connect(&w, &MainWindow::signalQuitProgram, quitProgram);
+  QObject::connect(hw, SIGNAL(signalAlarm()), &w, SLOT(showAlarm()));
 
+  QObject::connect(&w, &MainWindow::signalQuitProgram, quitProgram);
   QObject::connect(&w, SIGNAL(signalValve(int)), hw, SLOT(toggleFras(int)));
   QObject::connect(&w, SIGNAL(signalStopOperations()), hw, SLOT(stopOperations()));
-
+  
   ioThread->start();
   hwThread->start();
 
