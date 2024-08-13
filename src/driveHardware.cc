@@ -557,6 +557,10 @@ void driveHardware::ensureSafety() {
       gpio_write(fPiGPIO, GPIOINT, 0);
       fInterlockStatus = 0;
 #endif
+      // FIXME TEST REMOVE
+      if (mtemp < 0.) {
+        stopOperations();
+      }      
     }
   }
 

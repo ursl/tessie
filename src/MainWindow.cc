@@ -433,7 +433,7 @@ int MainWindow::colorReducedIndex(double temp)  {
 void MainWindow::showAlarm() {
   static int cnt(10);
   if (!fAlarmSoundPlaying) {
-    fLOG(INFO, "showAlarm! Running vlc!!");
+    fLOG(INFO, "showAlarm! Running vlc!!" + std::to_string(cnt));
     system("/usr/bin/cvlc -R ../siren.mp3 &");
     fAlarmSoundPlaying = true;
   }
