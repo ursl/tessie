@@ -431,16 +431,41 @@ int MainWindow::colorReducedIndex(double temp)  {
 
 // ----------------------------------------------------------------------
 void MainWindow::showAlarm() {
-  static int cnt(10);
+  static int cnt(50);
+  fLOG(INFO, "showAlarm! cnt = " + std::to_string(cnt));
   if (!fAlarmSoundPlaying) {
-    fLOG(INFO, "showAlarm! Running vlc!!" + std::to_string(cnt));
     system("/usr/bin/cvlc -R ../siren.mp3 &");
     fAlarmSoundPlaying = true;
   }
   --cnt;
-  // -- after 10 invocations, reset counter and allow a fresh start of siren playing
+  // -- after 50 invocations, reset counter and allow a fresh start of siren playing
   if (cnt < 1) {
     fAlarmSoundPlaying = false;
-    cnt = 10;
+    cnt = 50;
   }
+}
+
+// ----------------------------------------------------------------------
+void MainWindow::clkKillSiren() {
+  cout << "MainWindow::clkKillSiren() entered" << endl;
+  char bfr[1023] ;
+  FILE *fp;
+  if ((fp = popen("ps -ef | grep vlc","r")) == NULL) {
+    cout << "something bad happened" << endl;
+    // error processing and return
+  }
+ 
+  while(fgets(bfr, BUFSIZ, fp) != NULL){
+    string sbfr(bfr);
+    sbfr.pop_back();
+    cleanupString(sbfr);
+    vector<string> tokens = split(sbfr, ' ');
+    cout << "->" << sbfr << "<-" << " PID = " << tokens[1] << endl;
+    string scommand = "/usr/bin/kill -9 " + tokens[1];
+    fLOG(INFO, scommand);
+    system(scommand.c_str());
+    fAlarmSoundPlaying = false;
+  }
+  pclose(fp);
+ 
 }
