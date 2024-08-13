@@ -53,6 +53,12 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   fLOG(INFO, "tessie version " + sline);
 
+  QPushButton *btn2 = new QPushButton("Interlock reset"); btn2->setFocusPolicy(Qt::NoFocus);
+  btn2->setFont(fFont1);
+  btn2->setStyleSheet("QPushButton {background-color: rgba(154, 100, 100, 0.4);color: black; font-weight: bold;}");
+  btn2->setFixedSize(QSize(200, 50));
+  connect(btn2, &QPushButton::clicked, this, &MainWindow::btnINTL);
+  hlay->addWidget(btn2);
 
   QPushButton *btn3 = new QPushButton("Quit"); btn3->setFocusPolicy(Qt::NoFocus);
   btn3->setFont(fFont1);
@@ -351,6 +357,12 @@ void MainWindow::btnQuit() {
   cout << "MainWindow::signalQuitProgram(), cnt = " << cnt << endl;
   ++cnt;
   emit signalQuitProgram();
+}
+
+// ----------------------------------------------------------------------
+void MainWindow::btnINTL() {
+  fLOG(INFO, "MainWindow::btnINTL() clicked");
+  fpHw->resetInterlock();
 }
 
 
