@@ -1488,7 +1488,6 @@ void driveHardware::toggleFras(int imask) {
 
   // -- this is required to absorb the write request from fSr
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
-
 #endif
   fMutex.unlock();
 
@@ -1497,7 +1496,14 @@ void driveHardware::toggleFras(int imask) {
 
 // ----------------------------------------------------------------------
 void driveHardware::stopOperations() {
-  cout << "stopOperations() invoked" << endl;
+  fLOG(INFO, "stopOperations() invoked");
+#ifdef PI
+  gpio_write(fPiGPIO, GPIOINT, 0);
+  fInterlockStatus = 0;
+  fLOG(INFO, "Changed Interlock to LOW");
+#endif
+
+
   for (int itec = 1; itec <= 8; ++itec) {
     turnOffTEC(itec);
     std::this_thread::sleep_for(fMilli5);
