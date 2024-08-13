@@ -438,5 +438,9 @@ void MainWindow::showAlarm() {
     fAlarmSoundPlaying = true;
   }
   --cnt;
-  if (cnt < 1) fAlarmSoundPlaying = false; 
+  // -- after 10 invocations, reset counter and allow a fresh start of siren playing
+  if (cnt < 1) {
+    fAlarmSoundPlaying = false;
+    cnt = 10;
+  }
 }
