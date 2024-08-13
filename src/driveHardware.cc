@@ -532,10 +532,6 @@ void driveHardware::ensureSafety() {
       if (mtemp > SHUTDOWN_TEMP) {
         stopOperations();
       }      
-      // FIXME TEST REMOVE
-      if (mtemp < 0.) {
-        stopOperations();
-      }      
     }
 
     if ((mtemp > -90.) && (mtemp < fSHT85DP + SAFETY_DPMARGIN)) {
