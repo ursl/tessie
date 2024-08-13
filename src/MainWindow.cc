@@ -440,14 +440,15 @@ void MainWindow::showAlarm() {
   --cnt;
   // -- after 50 invocations, reset counter and allow a fresh start of siren playing
   if (cnt < 1) {
+    killSiren();
     fAlarmSoundPlaying = false;
     cnt = 50;
   }
 }
 
 // ----------------------------------------------------------------------
-void MainWindow::clkKillSiren() {
-  cout << "MainWindow::clkKillSiren() entered" << endl;
+void MainWindow::killSiren() {
+  cout << "MainWindow::killSiren() entered" << endl;
   char bfr[1023] ;
   FILE *fp;
   if ((fp = popen("ps -ef | grep vlc","r")) == NULL) {

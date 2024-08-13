@@ -43,6 +43,7 @@ private:
   void mkTEC(int i);
   int  colorIndex(double t);
   int  colorReducedIndex(double t);
+  void killSiren();
 
   QWidget *fWdg;
 
