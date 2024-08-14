@@ -228,8 +228,14 @@ void MainWindow::updateHardwareDisplay() {
 
   fqleRunTime->setText(QString::number(fpHw->getRunTime()));
 
-  fqleStatus->setText(fpHw->getStatusString().c_str());
-
+  string ss = fpHw->getStatusString();
+  fqleStatus->setText(ss.c_str());
+  if (string::npos != ss.find("chiller")) {
+    fqleStatus->setPalette(fPalettes[8]);
+  } else {
+    fqleStatus->setPalette(fPalettes[6]);
+  }
+  
   double temp = fpHw->getTemperature();
   fqleAT->setText(QString::number(temp, 'f', 2));
   fqleAT->setPalette(fPalettes[colorReducedIndex(temp)]);

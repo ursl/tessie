@@ -368,6 +368,11 @@ void driveHardware::ensureSafety() {
     first = false;
   }
 
+  // -- check with water temperature whether chiller is running
+  if (fTECData[8].reg["Temp_W"].value > 20.) {
+    fStatusString = "turn on chiller!";
+  }
+  
   // -- check lid status (only 1 is good enough) and set interlock accordingly
 #ifdef PI
   checkLid();
@@ -427,7 +432,7 @@ void driveHardware::ensureSafety() {
 
   // -- Check for GL condition
   if (fSHT85Temp < 15.0)  {
-    fStatusString = "Air temp < 15";
+    fStatusString = "Air temp < 15.00";
     greenLight = false;
   }
 
@@ -435,7 +440,10 @@ void driveHardware::ensureSafety() {
   // -- air temperatures
   if (fSHT85Temp > SAFETY_MAXSHT85TEMP) {
     allOK = 1;
-    fStatusString = "Air temp > " + std::to_string(SAFETY_MAXSHT85TEMP);
+    // FIXME: snprintf
+    char cs[100];
+    snprintf(cs, sizeof(cs), "Air temp > %+5.2f", fSHT85Temp);
+    fStatusString = cs;
     stringstream a("==ALARM== Box air temperature = " +
                    to_string(fSHT85Temp) +
                    " exceeds SAFETY_MAXSHT85TEMP = " +
@@ -483,7 +491,9 @@ void driveHardware::ensureSafety() {
   // -- check water temperature
   if (fTECData[8].reg["Temp_W"].value > SAFETY_MAXTEMPW) {
     allOK = 3;
-    fStatusString = "Water temp > "  + std::to_string(SAFETY_MAXTEMPW);
+    char cs[100];
+    snprintf(cs, sizeof(cs), "Water temp > %+5.2f", fTECData[8].reg["Temp_W"].value);
+    fStatusString = cs;
     stringstream a("==ALARM== Water temperature = " +
                    to_string(fTECData[8].reg["Temp_W"].value) +
                    " exceeds SAFETY_MAXTEMPW = " +
@@ -511,7 +521,9 @@ void driveHardware::ensureSafety() {
     }
     if (mtemp > SAFETY_MAXTEMPM) {
       allOK = 4;
-      fStatusString = "Module " + std::to_string(itec) + " temp > "  + std::to_string(SAFETY_MAXTEMPW);
+      char cs[100];
+      snprintf(cs, sizeof(cs), "Module %d temp %+5.2f too high", itec, mtemp);
+      fStatusString = cs;
       stringstream a("==ALARM== module temperature = " +
                      to_string(mtemp) +
                      " exceeds SAFETY_MAXTEMPM = " +
