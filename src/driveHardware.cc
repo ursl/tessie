@@ -1558,6 +1558,7 @@ void  driveHardware::turnOnTEC(int itec) {
     string a(cs); 
     fLOG(INFO, a);
     emit signalSendToServer(QString::fromStdString(a));
+    emit signalSendToMonitor(QString::fromStdString(a));
     return;
   }
 
