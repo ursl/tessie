@@ -161,6 +161,9 @@ clientMqtt.on('message', (topMon, payload) => {
     if (payload.includes('==WARNING== ')) {
         WarningString = payload.toString();
     }
+    if (payload.includes('==HINT== ')) {
+        WarningString = payload.toString();
+    }
     if (payload.includes('==ALARM== ')) {
         AlarmString = payload.toString();
     }
