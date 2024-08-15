@@ -56,6 +56,7 @@ let Ref_UString = ''
 let ModeString = ''
 let WarningString = ''
 let AlarmString = ''
+let HintString = ''
 
 
 // ----------------------------------------------------------------------
@@ -94,6 +95,7 @@ clientMqtt.on('message', (topMon, payload) => {
     // -- reset strings
     AlarmString = '';
     WarningString = '';
+    HintString = '';
 
     if (payload.includes('Env = ')) {
         envString = payload.toString();
@@ -162,7 +164,7 @@ clientMqtt.on('message', (topMon, payload) => {
         WarningString = payload.toString();
     }
     if (payload.includes('==HINT== ')) {
-        WarningString = payload.toString();
+        HintString = payload.toString();
     }
     if (payload.includes('==ALARM== ')) {
         AlarmString = payload.toString();
@@ -212,6 +214,9 @@ io.on('connection', (socket) => {
         }
         if (AlarmString.length != 0) {
             socket.emit('AlarmString', AlarmString);
+        }
+        if (HintString.length != 0) {
+            socket.emit('HintString', HintString);
         }
         if (valve0Status == 0) {
             socket.emit('valve0white');

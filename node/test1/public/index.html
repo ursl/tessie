@@ -553,6 +553,14 @@
           houston.play();
       });
 
+      socket.on('HintString', (msg) => {
+        console.log(msg.toString());
+        const salarm = msg.toString().replace('==HINT== ', '');
+        logarea.value += formatNow() + salarm +  "\n";
+        logarea.scrollTop = logarea.scrollHeight;
+        
+      });
+
       socket.on('versionString', (msg) => {
           let versionString = msg.toString();
           console.log(msg.toString() + ' => versionString ->' + versionString + '<-');
