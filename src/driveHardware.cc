@@ -1551,6 +1551,16 @@ float driveHardware::getTECRegister(int itec, std::string regname) {
 
 // ----------------------------------------------------------------------
 void  driveHardware::turnOnTEC(int itec) {
+  float mtemp = fTECData[8].reg["Temp_W"].value;
+  if (mtemp > 20.) {
+    char cs[200];
+    snprintf(cs, sizeof(cs), "==HINT== water temperature = %+5.2f indicates chiller off. Turn it on!", mtemp);
+    string a(cs); 
+    fLOG(INFO, a);
+    emit signalSendToServer(QString::fromStdString(a));
+    return;
+  }
+
   if (0 == fActiveTEC[itec]) {
     cout << "TEC " << itec <<  " not active, skipping" << endl;
     return;
