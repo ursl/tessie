@@ -518,6 +518,7 @@ void driveHardware::ensureSafety() {
     double mtemp = fTECData[itec].reg["Temp_M"].value;
     if (mtemp < 15) {
       greenLight = false;
+      fStatusString = "Keep lid closed";
     }
     if (mtemp > SAFETY_MAXTEMPM) {
       allOK = 4;
