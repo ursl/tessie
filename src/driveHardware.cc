@@ -626,7 +626,10 @@ void driveHardware::ensureSafety() {
       struct timeval nowTime;
       gettimeofday(&nowTime, 0);
       fStatusString = "Keep lid closed";
-      cout << "dbx: nowTime = " << nowTime << " yelloTime = " << yelloTime << endl;
+      stringstream nt, yt;
+      nt << nowTime->tm_hour << ":" <<  nowTime->tm_min << ":" << nowTime->tm_sec << ":" << nowTime->tv_usec;
+      yt << yelloTime->tm_hour << ":" <<  yelloTime->tm_min << ":" << yelloTime->tm_sec << ":" << yelloTime->tv_usec;
+      cout << "dbx: nowTime = " << nt.str() << " yelloTime = " << yt.str() << endl;         
       if (diff_ms(nowTime, yelloTime) > 1000) {
         yelloTime = nowTime;
         if (yellowLight) {
