@@ -6,6 +6,7 @@
     <title>tessie</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="tessieEllipse.png">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <style>
       html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
@@ -316,6 +317,9 @@
 
       let checkedTEC = -1;
 
+      let hostname = location.hostname;
+      document.title = hostname;
+      
       const houston = new Audio('houstonwehaveaproblem_loud.mp3');
       const siren = new Audio('siren.mp3');
       // -- this works:
