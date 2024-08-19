@@ -88,6 +88,7 @@ public:
   void  checkLid();
   std::string getStatusString() {return fStatusString;}
   std::string getHostname() {return fHostName;}
+  void  checkDiskspace();
   
   // -- controlling the TEC
   void  setTECParameter(float par); // ???
@@ -116,7 +117,8 @@ public:
   int   getNI2CErrors() {return fI2CErrorCounter;}
   int   redI2CErrors() {return fI2CErrorCounter - fI2CErrorOld;}
   int   getRunCnt() {return fRunCnt;}
-
+  int   getFreeDisk() {checkDiskspace(); return fFreeDiskspace;}
+  
   // -- simply returns the value stored in fTECData
   float getTECRegister(int itec, std::string regname);
   int   getTECRegisterIdx(std::string rname);
@@ -233,6 +235,7 @@ private:
   int fAlarmState;
 
   std::string fStatusString, fHostName;
+  int fFreeDiskspace;
 };
 
 #endif // DRIVEHARDWARE_H

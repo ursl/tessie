@@ -11,6 +11,9 @@
 
 #include <net/if.h>
 #include <sys/ioctl.h>
+#include <sys/statvfs.h>
+
+#include "rsstools.hh"
 
 #include <fcntl.h>
 
@@ -212,6 +215,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   char hostname[1024];
   gethostname(hostname, 1024);
   fHostName = hostname;
+
 }
 
 
@@ -266,7 +270,7 @@ void driveHardware::sentFromServer(QString msg) {
 // ----------------------------------------------------------------------
 void driveHardware::doRun() {
   cout << "driveHardware::doRun() entered" << endl;
-  int cnt(0);
+  int cnt(-1);
   struct timeval tvVeryOld, tvOld, tvNew;
   gettimeofday(&tvVeryOld, 0);
   gettimeofday(&tvOld, 0);
@@ -275,7 +279,6 @@ void driveHardware::doRun() {
   while (1) {
     evtHandler();
 
-    ++cnt;
     std::this_thread::sleep_for(fMilli5);
     evtHandler();
     readCAN();
@@ -316,6 +319,12 @@ void driveHardware::doRun() {
 
       ensureSafety();
 
+      ++cnt;
+      // -- about once per hour?
+      if (0 == cnt%3600) {
+        checkDiskspace();      
+      }
+  
       // -- print errors (if present) accumulated in CANmessage
       int nerrs = fCanMsg.nErrors();
       if (nerrs > 0) {
@@ -332,12 +341,12 @@ void driveHardware::doRun() {
           fLOG(ERROR, a.str());
 
           int errRepeat(0);
-          int cnt(0);
+          int lcnt(0);
           while (errs.size() > 0) {
             string errmsg = errs.front();
-            if (cnt < 2) {
+            if (lcnt < 2) {
               fLOG(ERROR, "errmsg: " + errmsg); // FIXME TEMPORARY
-              ++cnt;
+              ++lcnt;
             }
             if (string::npos != errmsg.find("parse issue")) {
               ++errRepeat;
@@ -2272,4 +2281,23 @@ void  driveHardware::checkLid() {
     // -- unreachable, should not impact program logic above
     fLidStatus = 0;
   }
+}
+
+
+unsigned long rounddiv(unsigned long num, unsigned long divisor) {
+    return (num + (divisor/2)) / divisor;
+}
+
+// ----------------------------------------------------------------------
+void driveHardware::checkDiskspace() {
+  struct statvfs diskData;
+  statvfs(".", &diskData);
+  double available = diskData.f_bavail * diskData.f_frsize;
+  fFreeDiskspace = static_cast<int>(available/(1000.*1000.*1000.));
+  fLOG(INFO, "Free Space : " + to_string(fFreeDiskspace));
+
+  rsstools rss;
+  stringstream a;
+  a << "getCurrentRSS() = " << rss.getCurrentRSS();
+  fLOG(INFO, a.str());
 }

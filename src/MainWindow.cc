@@ -84,11 +84,13 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   QLabel *lblA = new QLabel("CANbus errors"); setupLBL(lblA);
   QLabel *lblB = new QLabel("I2C errors"); setupLBL(lblB);
+  QLabel *lblE = new QLabel("Free diskspace"); setupLBL(lblE);
   QLabel *lblC = new QLabel("Runtime"); setupLBL(lblC);
   QLabel *lblD = new QLabel("Status"); setupLBL(lblD);
 
   fqleCANbusErrors = new QLineEdit(/*fWdg*/); setupQLE(fqleCANbusErrors);
   fqleI2CErrors    = new QLineEdit(/*fWdg*/); setupQLE(fqleI2CErrors);
+  fqleFreeDisk     = new QLineEdit(/*fWdg*/); setupQLE(fqleFreeDisk);
   fqleRunTime      = new QLineEdit(/*fWdg*/); setupQLE(fqleRunTime);
   fqleStatus       = new QLineEdit(/*fWdg*/); setupQLE(fqleStatus); fqleStatus->setFont(fFont2);
 
@@ -96,10 +98,12 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   glay00->addWidget(fqleCANbusErrors, 0, 1, 1, 1);
   glay00->addWidget(lblB,  1, 0, 1, 1);
   glay00->addWidget(fqleI2CErrors, 1, 1, 1, 1);
-  glay00->addWidget(lblC,  2, 0, 1, 1);
-  glay00->addWidget(fqleRunTime, 2, 1, 1, 1);
-  glay00->addWidget(lblD,  3, 0, 1, 1);
-  glay00->addWidget(fqleStatus, 3, 1, 1, 1);
+  glay00->addWidget(lblE,  2, 0, 1, 1);
+  glay00->addWidget(fqleFreeDisk, 2, 1, 1, 1);
+  glay00->addWidget(lblC,  3, 0, 1, 1);
+  glay00->addWidget(fqleRunTime, 3, 1, 1, 1);
+  glay00->addWidget(lblD,  4, 0, 1, 1);
+  glay00->addWidget(fqleStatus, 4, 1, 1, 1);
 
   hlay0->addLayout(glay00);
 
@@ -227,7 +231,8 @@ MainWindow::~MainWindow() {
 // ----------------------------------------------------------------------
 void MainWindow::updateHardwareDisplay() {
   static bool isred(false);
-
+  static int cnt(0);
+  
   fqleRunTime->setText(QString::number(fpHw->getRunTime()));
 
   string ss = fpHw->getStatusString();
@@ -281,6 +286,23 @@ void MainWindow::updateHardwareDisplay() {
   } else {
     fqleI2CErrors->setStyleSheet("QLineEdit {background-color : white; }");
   }
+
+  if (0 == cnt) {
+    int freedisk = fpHw->getFreeDisk(); 
+    fqleFreeDisk->setText(QString::number(freedisk));
+    if (freedisk > 2) {
+      fqleFreeDisk->setPalette(fPalettes[4]);
+    } else if ((freedisk > 1) && (freedisk < 2)) {
+      fqleFreeDisk->setPalette(fPalettes[6]);
+    } else {
+      fqleFreeDisk->setPalette(fPalettes[8]);
+    }
+
+  } else {
+    // -- reset once per hour
+    if (3600 == cnt) cnt = -1;
+  }
+  ++cnt;
 
   if (fpHw->getStatusValve0()) {
     fbtnValve0->setStyleSheet("QPushButton {background-color: #46923c; color: black; font-weight: bold;}");
