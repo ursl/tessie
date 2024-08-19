@@ -28,8 +28,8 @@
 
       <div style="background-color:DodgerBlue" float="left">
         <b>Nitrogen control: </b> <br>
-        <button id="valve0" style="background-color:#FCF5E5">Flush</button>
-        <button id="valve1" style="background-color:#FCF5E5">Rinse</button> <br>
+        <button id="valve0" style="background-color:gray">Flush</button>
+        <button id="valve1" style="background-color:gray">Rinse</button> <br>
         <hr>
         <button id="getcsv" style="background-color:#FCF5E5">Get CSV data</button>
       </div>
@@ -350,11 +350,11 @@
 
       getcsv.addEventListener('click', (e) => {socket.emit('getcsv'); });
 
-      socket.on('valve0blue', (msg) => {valve0.style.background='#ADD8E6'; });
-      socket.on('valve0white', (msg) => {valve0.style.background='#FCF5E5'; });
+      socket.on('valve0blue', (msg) => {valve0.style.background='#46923c'; });
+      socket.on('valve0white', (msg) => {valve0.style.background='gray'; });
 
-      socket.on('valve1blue', (msg) => {valve1.style.background='#ADD8E6'; });
-      socket.on('valve1white', (msg) => {valve1.style.background='#FCF5E5'; });
+      socket.on('valve1blue', (msg) => {valve1.style.background='#46923c'; });
+      socket.on('valve1white', (msg) => {valve1.style.background='gray'; });
 
       socket.on('envString', (msg) => {
           const snumbers = msg.toString().replace('Env = ', '');
@@ -366,6 +366,17 @@
           document.getElementById('CANbusErrors').innerHTML = vNumbers[4];
           document.getElementById('I2CErrors').innerHTML = vNumbers[5];
           document.getElementById('RunTime').innerHTML = vNumbers[6];
+          if (0 == vNumbers[7]) {
+              valve0.style.background='#gray';
+          } else {
+              valve0.style.background='#46923c';
+          }
+          if (0 == vNumbers[8]) {
+              valve1.style.background='#gray';
+          } else {
+              valve1.style.background='#46923c';
+          }
+
       });
 
       socket.on('Temp_MString', (msg) => {

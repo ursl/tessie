@@ -34,6 +34,7 @@ const connectUrl = `${protocol}://${host}:${port}`
 
 let versionString = ''
 let envString = ''
+let varString = ''
 let PowerStateString = ''
 let ControlVoltage_SetString = ''
 let Temp_MString = ''
@@ -99,6 +100,9 @@ clientMqtt.on('message', (topMon, payload) => {
 
     if (payload.includes('Env = ')) {
         envString = payload.toString();
+    }
+    if (payload.includes('VAR = ')) {
+        varString = payload.toString();
     }
     if (payload.includes('PowerState = ')) {
         PowerStateString = payload.toString();
@@ -189,6 +193,7 @@ io.on('connection', (socket) => {
 
     setInterval(() => {
         socket.emit('envString', envString);
+        socket.emit('varString', varString);
         socket.emit('PowerStateString', PowerStateString);
         socket.emit('ControlVoltage_SetString', ControlVoltage_SetString);
         socket.emit('Temp_MString', Temp_MString);
