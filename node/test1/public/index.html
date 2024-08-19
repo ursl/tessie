@@ -52,7 +52,7 @@
         </table>
       </div>
 
-      <div style="background-color:MediumSeaGreen" float="center">
+      <div id="envDiv" style="background-color:MediumSeaGreen" float="center">
         <table>
           <tr>
             <td>Air</td>
@@ -69,6 +69,27 @@
           <tr>
             <td>Dew point</td>
             <td id="DP" style="text-align:right;">0 </td>
+          </tr>
+        </table>
+      </div>
+
+      <div id="varDiv" style="background-color:#99cf30" float="center">
+        <table>
+          <tr>
+            <td>Lid status</td>
+            <td id="LidStatus" style="text-align:right;">0 </td>
+          </tr>
+          <tr>
+            <td>Interlock</td>
+            <td id="Interlock" style="text-align:right;">0 </td>
+          </tr>
+          <tr>
+            <td>Free diskspace</td>
+            <td id="FreeDiskspace" style="text-align:right;">0 </td>
+          </tr>
+          <tr>
+            <td>Traffic light</td>
+            <td id="TrafficLight" style="text-align:right;">n/a </td>
           </tr>
         </table>
       </div>
@@ -94,7 +115,7 @@
         </table>
       </div>
     </div>
-
+    
     <div style="background-color:DarkGray">
     <textarea id="logarea" class="scrollabletextbox" style="font-size: 10pt; width: 100%; max-width: 100%;"></textarea>
     </div>
@@ -379,6 +400,21 @@
 
       });
 
+      socket.on('varString', (msg) => {
+          const snumbers = msg.toString().replace('VAR = ', '');
+          const vNumbers = snumbers.split(', ');
+          let greenLight    = vNumbers[0].replace("G", "");
+          let yellowLight   = vNumbers[1].replace("G", "");
+          let redLight      = vNumbers[2].replace("G", "");
+          let lidStatus     = vNumbers[3].replace("L", "");
+          let interLock     = vNumbers[4].replace("I", "");
+          let freeDiskspace = vNumbers[5];
+
+          document.getElementById('LidStatus').innerHTML = lidStatus;
+          document.getElementById('Interlock').innerHTML = interLock;
+          document.getElementById('FreeDiskspace').innerHTML = freeDiskspace;
+      });
+      
       socket.on('Temp_MString', (msg) => {
           const snumbers = msg.toString().replace('Temp_M = ', '');
           const vNumbers = snumbers.split(',');
