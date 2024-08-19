@@ -1920,9 +1920,9 @@ void driveHardware::dumpMQTT(int all) {
   ss << "VAR = G"
      << fTrafficGreen << ", Y"
      << fTrafficYellow << ", R"
-     << fTrafficRed << ", "
-     << fLidStatus << ", L"
-     << fInterlockStatus << ", I"
+     << fTrafficRed << ", L"
+     << fLidStatus << ", I"
+     << fInterlockStatus << ", "
      << fFreeDiskspace << ", "
     ;
   emit signalSendToMonitor(QString::fromStdString(ss.str()));
