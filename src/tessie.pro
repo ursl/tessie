@@ -33,7 +33,8 @@ SOURCES += \
     tMosq.cc \
     tessie.cc \
     util.cc \
-    sha256.cc
+    sha256.cc \
+    rsstools.cc
 
 HEADERS += \
     CANmessage.hh \
@@ -44,7 +45,8 @@ HEADERS += \
     ioServer.hh \
     tMosq.hh \
     util.hh \
-    sha256.hh
+    sha256.hh \
+    rsstools.hh
 
 # Default rules for deployment.
 #qnx: target.path = /tmp/$${TARGET}/bin
