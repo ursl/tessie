@@ -235,7 +235,7 @@ private:
   int fAlarmState;
 
   std::string fStatusString, fHostName;
-  int fFreeDiskspace;
+  int fFreeDiskspace, fTrafficRed, fTrafficYellow, fTrafficGreen;
 };
 
 #endif // DRIVEHARDWARE_H

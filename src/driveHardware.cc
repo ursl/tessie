@@ -63,6 +63,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fI2CErrorCounter = 0;
   fI2CErrorOld = 0;
 
+  fTrafficRed = fTrafficYellow = fTrafficGreen = 0; 
+  
   gettimeofday(&ftvStart, 0);
   fMilli5   = std::chrono::milliseconds(5);
   fMilli10  = std::chrono::milliseconds(10);
@@ -469,7 +471,9 @@ void driveHardware::ensureSafety() {
     emit signalSetBackground("T", "red");
 #ifdef PI
     gpio_write(fPiGPIO, GPIORED, 1);
+    fTrafficRed = 1;
     gpio_write(fPiGPIO, GPIOGREEN, 0);
+    fTrafficGreen = 0;
     gpio_write(fPiGPIO, GPIOINT, 0);
     fInterlockStatus = 0;
 #endif
@@ -495,7 +499,9 @@ void driveHardware::ensureSafety() {
     emit signalSetBackground("DP", "red");
 #ifdef PI
     gpio_write(fPiGPIO, GPIORED, 1);
+    fTrafficRed = 1;
     gpio_write(fPiGPIO, GPIOGREEN, 0);
+    fTrafficGreen = 0; 
     gpio_write(fPiGPIO, GPIOINT, 0);
     fInterlockStatus = 0;
 #endif
@@ -517,7 +523,9 @@ void driveHardware::ensureSafety() {
     emit signalAlarm(1);
 #ifdef PI
     gpio_write(fPiGPIO, GPIORED, 1);
+    fTrafficRed = 1;
     gpio_write(fPiGPIO, GPIOGREEN, 0);
+    fTrafficGreen = 0; 
     gpio_write(fPiGPIO, GPIOINT, 0);
     fInterlockStatus = 0;
 #endif
@@ -551,7 +559,9 @@ void driveHardware::ensureSafety() {
       emit signalSetBackground(qtec, "red");
 #ifdef PI
       gpio_write(fPiGPIO, GPIORED, 1);
+      fTrafficRed = 1;
       gpio_write(fPiGPIO, GPIOGREEN, 0);
+      fTrafficGreen = 0;
       gpio_write(fPiGPIO, GPIOINT, 0);
       fInterlockStatus = 0;
 #endif
@@ -579,7 +589,9 @@ void driveHardware::ensureSafety() {
       emit signalSetBackground(qtec, "red");
 #ifdef PI
       gpio_write(fPiGPIO, GPIORED, 1);
+      fTrafficRed = 1;
       gpio_write(fPiGPIO, GPIOGREEN, 0);
+      fTrafficGreen = 0;
       gpio_write(fPiGPIO, GPIOINT, 0);
       fInterlockStatus = 0;
 #endif
@@ -591,6 +603,7 @@ void driveHardware::ensureSafety() {
     cout << "set GPIORED = LOW" << endl;
 #ifdef PI
     gpio_write(fPiGPIO, GPIORED, 0);
+    fTrafficRed = 0;
 #endif
     if (1 == fLidStatus) {
       if (fOldLidStatus != fLidStatus) {
@@ -629,8 +642,10 @@ void driveHardware::ensureSafety() {
 #ifdef PI
   if (greenLight) {
     gpio_write(fPiGPIO, GPIOGREEN, 1);
+    fTrafficGreen = 1;
   } else {
     gpio_write(fPiGPIO, GPIOGREEN, 0);
+    fTrafficGreen = 0; 
   }
 
   // -- add yellow blinking light in case fan is off but conditions are not safe
@@ -647,15 +662,18 @@ void driveHardware::ensureSafety() {
         yelloTime = nowTime;
         if (yellowLight) {
           gpio_write(fPiGPIO, GPIOYELLO, 0);
+          fTrafficYellow = 0; 
           yellowLight = false;
         } else {
           gpio_write(fPiGPIO, GPIOYELLO, 1);
+          fTrafficYellow = 1;
           yellowLight = true;
         }
       }
     } else {
       yellowLight = false;
       gpio_write(fPiGPIO, GPIOYELLO, 0);
+      fTrafficYellow = 0;
     }
   }
 #endif
@@ -751,9 +769,11 @@ void driveHardware::shutDown() {
   fInterlockStatus = 0;
 
   gpio_write(fPiGPIO, GPIORED,   0);
+  fTrafficRed = 0;
   gpio_write(fPiGPIO, GPIOGREEN, 0);
+  fTrafficGreen = 0; 
   gpio_write(fPiGPIO, GPIOYELLO, 0);
-
+  fTrafficYellow = 0; 
 
   for (int itec = 1; itec <= 8; ++itec) {
     turnOffTEC(itec);
@@ -1597,6 +1617,7 @@ void  driveHardware::turnOnTEC(int itec) {
 
 #ifdef PI
   gpio_write(fPiGPIO, GPIOYELLO, 1);
+  fTrafficYellow = 1;
 #endif
 
   if (!getStatusFan()) {
@@ -1649,6 +1670,7 @@ void driveHardware::checkFan() {
   } else {
 #ifdef PI
     gpio_write(fPiGPIO, GPIOYELLO, 0);
+    fTrafficYellow = 0; 
 #endif
     turnOffFan();
   }
@@ -1893,6 +1915,19 @@ void driveHardware::dumpMQTT(int all) {
     ;
   if (all > -1) emit signalSendToMonitor(QString::fromStdString(ss.str()));
 
+  // -- dump various status information (disk space, traffic light, ...)
+  ss.str(std::string());
+  ss << "VAR = "
+     << fTrafficRed << ", "
+     << fTrafficYellow << ", "
+     << fTrafficGreen << ", "
+     << fLidStatus << ", "
+     << fInterlockStatus << ", "
+     << fFreeDiskspace << ", "
+    ;
+  emit signalSendToMonitor(QString::fromStdString(ss.str()));
+
+  
   // -- what to read: float
   map<string, double> tolerances = {
     {"ControlVoltage_Set", 0.1}
