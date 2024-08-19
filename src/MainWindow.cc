@@ -47,8 +47,10 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   INS.open("version.txt");
   getline(INS, sline);
   INS.close();
-  QLabel *lbl = new QLabel(string("TESSIE  (" + sline + ") ").c_str()); setupLBL(lbl);
+
+  QLabel *lbl = new QLabel(string("TESSIE  (" + sline + ") " + fpHw->getHostname()).c_str()); setupLBL(lbl);
   lbl->setStyleSheet("font-weight: bold;");
+
   hlay->addWidget(lbl);
 
   fLOG(INFO, "tessie version " + sline);

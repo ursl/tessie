@@ -208,6 +208,10 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
 #endif
 
   fStatusString = "no problem";
+
+  char hostname[1024];
+  gethostname(hostname, 1024);
+  fHostName = hostname;
 }
 
 
@@ -1188,8 +1192,8 @@ void driveHardware::parseIoMessage() {
 
     vector<string> vhelp;
     vhelp.push_back("> ===================");
-    vhelp.push_back("> hostname: coldbox01");
-    vhelp.push_back("> thread:  ctrlTessie");
+    vhelp.push_back("> hostname: " + fHostName);
+    vhelp.push_back("> thread:   ctrlTessie");
     vhelp.push_back("> ===================");
     vhelp.push_back("> ");
     vhelp.push_back("> Note: [tec {0|x}] can be before or after {get|set|cmd XXX}, e.g.");
@@ -1262,15 +1266,14 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> [tec {0|x}] get Ref_U");
 
     vhelp.push_back("> Tutorial for getting started:");
-    vhelp.push_back("> mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \" set valve0 on\" ");
-    vhelp.push_back("> mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \"set valve1 on\" ");
-    vhelp.push_back("> mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \"set ControlVoltage_Set 4.5\" ");
-    vhelp.push_back("> mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \"cmd Power_On\" ");
-    vhelp.push_back("> mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \"cmd Power_Off\" ");
-    vhelp.push_back("> mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \"set ControlVoltage_Set 0.0\" ");
-    vhelp.push_back("> mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \"set valve0 off\" ");
-    vhelp.push_back("> mosquitto_pub -h coldbox01 -t \"ctrlTessie\" -m \"set valve1 off\" ");
-
+    vhelp.push_back("> mosquitto_pub -h " + fHostName + " -t \"ctrlTessie\" -m \" set valve0 on\" ");
+    vhelp.push_back("> mosquitto_pub -h " + fHostName + " -t \"ctrlTessie\" -m \"set valve1 on\" ");
+    vhelp.push_back("> mosquitto_pub -h " + fHostName + " -t \"ctrlTessie\" -m \"set ControlVoltage_Set 4.5\" ");
+    vhelp.push_back("> mosquitto_pub -h " + fHostName + " -t \"ctrlTessie\" -m \"cmd Power_On\" ");
+    vhelp.push_back("> mosquitto_pub -h " + fHostName + " -t \"ctrlTessie\" -m \"cmd Power_Off\" ");
+    vhelp.push_back("> mosquitto_pub -h " + fHostName + " -t \"ctrlTessie\" -m \"set ControlVoltage_Set 0.0\" ");
+    vhelp.push_back("> mosquitto_pub -h " + fHostName + " -t \"ctrlTessie\" -m \"set valve0 off\" ");
+    vhelp.push_back("> mosquitto_pub -h " + fHostName + " -t \"ctrlTessie\" -m \"set valve1 off\" ");
 
     for (unsigned int i = 0; i < vhelp.size(); ++i) {
       emit signalSendToServer(QString::fromStdString(vhelp[i]));

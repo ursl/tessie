@@ -87,7 +87,8 @@ public:
   void  checkFan();
   void  checkLid();
   std::string getStatusString() {return fStatusString;}
-
+  std::string getHostname() {return fHostName;}
+  
   // -- controlling the TEC
   void  setTECParameter(float par); // ???
   void  entertainTECs();
@@ -231,7 +232,7 @@ private:
   // -- keep alarm state
   int fAlarmState;
 
-  std::string fStatusString;
+  std::string fStatusString, fHostName;
 };
 
 #endif // DRIVEHARDWARE_H
