@@ -1917,12 +1917,12 @@ void driveHardware::dumpMQTT(int all) {
 
   // -- dump various status information (disk space, traffic light, ...)
   ss.str(std::string());
-  ss << "VAR = "
+  ss << "VAR = G"
+     << fTrafficGreen << ", Y"
+     << fTrafficYellow << ", R"
      << fTrafficRed << ", "
-     << fTrafficYellow << ", "
-     << fTrafficGreen << ", "
-     << fLidStatus << ", "
-     << fInterlockStatus << ", "
+     << fLidStatus << ", L"
+     << fInterlockStatus << ", I"
      << fFreeDiskspace << ", "
     ;
   emit signalSendToMonitor(QString::fromStdString(ss.str()));
