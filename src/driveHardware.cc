@@ -376,13 +376,6 @@ void driveHardware::ensureSafety() {
 
   fStatusString = "no problem";
 
-  static bool first(true);
-  struct timeval yelloTime;
-  if (first) {
-    gettimeofday(&yelloTime, 0);
-    first = false;
-  }
-
   // -- check with water temperature whether chiller is running
   if (fTECData[8].reg["Temp_W"].value > 20.) {
     fStatusString = "turn on chiller!";
@@ -651,24 +644,13 @@ void driveHardware::ensureSafety() {
   // -- add yellow blinking light in case fan is off but conditions are not safe
   if (!getStatusFan()) {
     if (!greenLight) {
-      struct timeval nowTime;
-      gettimeofday(&nowTime, 0);
       fStatusString = "Keep lid closed";
-      stringstream nt, yt;
-      nt << nowTime.tv_sec << ":" << nowTime.tv_usec;
-      yt << yelloTime.tv_sec << ":" << yelloTime.tv_usec;
-      cout << "dbx: nowTime = " << nt.str() << " yelloTime = " << yt.str() << endl;         
-      if (diff_ms(nowTime, yelloTime) > 1000) {
-        yelloTime = nowTime;
-        if (yellowLight) {
-          gpio_write(fPiGPIO, GPIOYELLO, 0);
-          fTrafficYellow = 0; 
-          yellowLight = false;
-        } else {
-          gpio_write(fPiGPIO, GPIOYELLO, 1);
-          fTrafficYellow = 1;
-          yellowLight = true;
-        }
+      if (fTrafficYellow) {
+        gpio_write(fPiGPIO, GPIOYELLO, 0);
+        fTrafficYellow = 0; 
+      } else {
+        gpio_write(fPiGPIO, GPIOYELLO, 1);
+        fTrafficYellow = 1;
       }
     } else {
       yellowLight = false;
