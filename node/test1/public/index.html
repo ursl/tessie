@@ -367,20 +367,22 @@
       });
 
       valve0.addEventListener('click', (e) => {
-          if (valve0.style.background =='#46923c') {
-              valve0.style.background='#D3D3D3';
-          } else {
-              valve0.style.background =='#46923c';
-          }
+          valve0.style.background =='darkgray';
+//          if (valve0.style.background =='#46923c') {
+//              valve0.style.background='#D3D3D3';
+//          } else {
+//              valve0.style.background =='#46923c';
+//          }
           socket.emit('valve0');
       });
 
       valve1.addEventListener('click', (e) => {
-          if (valve1.style.background =='#46923c') {
-              valve1.style.background='#D3D3D3';
-          } else {
-              valve1.style.background =='#46923c';
-          }
+          valve1.style.background =='darkgray';
+//          if (valve1.style.background =='#46923c') {
+//              valve1.style.background='#D3D3D3';
+//          } else {
+//              valve1.style.background =='#46923c';
+//          }
           socket.emit('valve1');
       });
       
