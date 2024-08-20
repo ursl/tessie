@@ -425,21 +425,24 @@
           let interLock     = vNumbers[4].replace("I", "");
           let freeDiskspace = vNumbers[5] + " GB";
 
+          var el = document.getElementById('LidStatus');
           if (1 == lidStatus) {
-              document.getElementById('LidStatus').innerHTML = "locked";
-              document.getElementById('LidStatus').style.backgroundColor = mycolors[4];
+              el.innerHTML = "locked";
+              el.style.backgroundColor = mycolors[4];
           } else {
-              document.getElementById('LidStatus').innerHTML = "open";
-              document.getElementById('LidStatus').style.backgroundColor = mycolors[6];
+              el.innerHTML = "open";
+              el.style.backgroundColor = mycolors[6];
           }
+          el = document.getElementById('Interlock');
           if (1 == interLock) {
-              document.getElementById('Interlock').innerHTML = "good";
-              document.getElementById('Interlock').style.backgroundColor = mycolors[4];
+              el.innerHTML = "good";
+              el.style.backgroundColor = mycolors[4];
           } else {
-              document.getElementById('Interlock').innerHTML = "bad";
-              document.getElementById('Interlock').style.backgroundColor = mycolors[8];
+              el.innerHTML = "bad";
+              el.style.backgroundColor = mycolors[8];
           }
-          document.getElementById('FreeDiskspace').innerHTML = freeDiskspace;
+          el = document.getElementById('FreeDiskspace');
+          el.innerHTML = freeDiskspace;
       });
       
       socket.on('Temp_MString', (msg) => {
