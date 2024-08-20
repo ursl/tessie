@@ -374,15 +374,17 @@
           }
           socket.emit('valve0');
       });
-      valve1.addEventListener('click', (e) => {socket.emit('valve1'); });
+
+      valve1.addEventListener('click', (e) => {
+          if (valve1.style.background =='#46923c') {
+              valve1.style.background='#D3D3D3';
+          } else {
+              valve1.style.background =='#46923c';
+          }
+          socket.emit('valve1');
+      });
       
       getcsv.addEventListener('click', (e) => {socket.emit('getcsv'); });
-
-//      socket.on('valve0blue', (msg) => {valve0.style.background='#46923c'; });
-//      socket.on('valve0white', (msg) => {valve0.style.background='#D3D3D3'; });
-
-//      socket.on('valve1blue', (msg) => {valve1.style.background='#46923c'; });
-//      socket.on('valve1white', (msg) => {valve1.style.background='#D3D3D3'; });
 
       socket.on('envString', (msg) => {
           const snumbers = msg.toString().replace('Env = ', '');
