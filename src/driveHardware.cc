@@ -415,7 +415,6 @@ void driveHardware::ensureSafety() {
 #endif
 
   bool greenLight(true);
-  fTrafficYellow = (getStatusFan()?1:0);
 
   // -- first the trivial warnings
   if (redCANErrors() > 0) {
