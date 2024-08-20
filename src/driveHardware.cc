@@ -643,15 +643,19 @@ void driveHardware::ensureSafety() {
   // -- add yellow blinking light in case fan is off but conditions are not safe
   if (!getStatusFan()) {
     if (!greenLight) {
+      // -- need local (static) variable because fTrafficYellow is reset in checkFan()
+      static bool yelloOn(false);
       fStatusString = "Keep lid closed";
-      if (fTrafficYellow) {
+      if (yelloOn) {
         fLOG(INFO, "turn off yello");
         gpio_write(fPiGPIO, GPIOYELLO, 0);
         fTrafficYellow = 0; 
+        yelloOn = false;        
       } else {
         fLOG(INFO, "turn on yello");
         gpio_write(fPiGPIO, GPIOYELLO, 1);
         fTrafficYellow = 1;
+        yelloOn = true;
       }
     } else {
       gpio_write(fPiGPIO, GPIOYELLO, 0);
