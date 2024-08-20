@@ -415,7 +415,7 @@ void driveHardware::ensureSafety() {
 #endif
 
   bool greenLight(true);
-  static bool yellowLight(getStatusFan());
+  fTrafficYellow = (getStatusFan()?1:0);
 
   // -- first the trivial warnings
   if (redCANErrors() > 0) {
@@ -653,7 +653,6 @@ void driveHardware::ensureSafety() {
         fTrafficYellow = 1;
       }
     } else {
-      yellowLight = false;
       gpio_write(fPiGPIO, GPIOYELLO, 0);
       fTrafficYellow = 0;
     }
