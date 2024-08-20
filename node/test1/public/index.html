@@ -423,7 +423,7 @@
           let redLight      = vNumbers[2].replace("G", "");
           let lidStatus     = vNumbers[3].replace("L", "");
           let interLock     = vNumbers[4].replace("I", "");
-          let freeDiskspace = vNumbers[5] + " GB";
+          let freeDiskspace = parseInt(vNumbers[5]);
 
           var el = document.getElementById('LidStatus');
           if (1 == lidStatus) {
@@ -442,7 +442,7 @@
               el.style.backgroundColor = mycolors[8];
           }
           el = document.getElementById('FreeDiskspace');
-          el.innerHTML = freeDiskspace;
+          el.innerHTML = freeDiskspace + " GB";
           if (freeDiskspace > 2) {
               el.style.backgroundColor = mycolors[4];
           } else if ((freedisk > 1) && (freedisk < 2)) {
