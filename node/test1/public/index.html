@@ -394,7 +394,8 @@
           let tmp = parseFloat(vNumbers[0]); 
           var el = document.getElementById('TempAir');
           el.innerHTML       = tmp.toFixed(2);
-          el.backgroundColor = mycolors[colorReducedIndex(tmp)];
+//          el.backgroundColor = mycolors[colorReducedIndex(tmp)];
+          el.backgroundColor = mycolors[2];
           console.log("tmp = " + tmp + " colorReducedIndex(tmp) = " + colorReducedIndex(tmp)
                       + " color: " + mycolors[colorReducedIndex(tmp)]);
           document.getElementById('TempWater').innerHTML = parseFloat(vNumbers[1]).toFixed(2);
