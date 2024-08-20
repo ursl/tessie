@@ -384,6 +384,8 @@
           let tmp = parseFloat(vNumbers[0]); 
           document.getElementById('TempAir').innerHTML = tmp.toFixed(2);
           document.getElementById('TempAir').background = mycolors[colorReducedIndex(tmp)];
+          console.log("tmp = " + tmp + " colorReducedIndex(tmp) = " + colorReducedIndex(tmp)
+                      + " color: " + mycolors[colorReducedIndex(tmp)]);
           document.getElementById('TempWater').innerHTML = parseFloat(vNumbers[1]).toFixed(2);
           document.getElementById('RelHum').innerHTML = parseFloat(vNumbers[2]).toFixed(2);
           document.getElementById('DP').innerHTML = parseFloat(vNumbers[3]).toFixed(2);
