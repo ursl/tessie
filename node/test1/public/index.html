@@ -368,21 +368,11 @@
 
       valve0.addEventListener('click', (e) => {
           valve0.style.backgroundColor = 'darkgray';
-//          if (valve0.style.background =='#46923c') {
-//              valve0.style.background='#D3D3D3';
-//          } else {
-//              valve0.style.background =='#46923c';
-//          }
           socket.emit('valve0');
       });
 
       valve1.addEventListener('click', (e) => {
           valve1.style.backgroundColor = 'darkgray';
-//          if (valve1.style.background =='#46923c') {
-//              valve1.style.background='#D3D3D3';
-//          } else {
-//              valve1.style.background =='#46923c';
-//          }
           socket.emit('valve1');
       });
       
@@ -391,7 +381,9 @@
       socket.on('envString', (msg) => {
           const snumbers = msg.toString().replace('Env = ', '');
           const vNumbers = snumbers.split(', ');
-          document.getElementById('TempAir').innerHTML = parseFloat(vNumbers[0]).toFixed(2);
+          let tmp = parseFloat(vNumbers[0]); 
+          document.getElementById('TempAir').innerHTML = tmp.toFixed(2);
+          document.getElementById('TempAir').background = mycolors[colorReducedIndex(tmp)];
           document.getElementById('TempWater').innerHTML = parseFloat(vNumbers[1]).toFixed(2);
           document.getElementById('RelHum').innerHTML = parseFloat(vNumbers[2]).toFixed(2);
           document.getElementById('DP').innerHTML = parseFloat(vNumbers[3]).toFixed(2);
@@ -423,17 +415,17 @@
 
           if (1 == lidStatus) {
               document.getElementById('LidStatus').innerHTML = "locked";
-              document.getElementById('LidStatus').style.background='#0AC80A';
+              document.getElementById('LidStatus').style.background = mycolors[colorIndex(4)];
           } else {
               document.getElementById('LidStatus').innerHTML = "open";
-              document.getElementById('LidStatus').style.background='yellow';
+              document.getElementById('LidStatus').style.background = mycolors[colorIndex(6)];
           }
           if (1 == interLock) {
               document.getElementById('Interlock').innerHTML = "good";
-              document.getElementById('Interlock').style.background='#0AC80A';
+              document.getElementById('Interlock').style.background = mycolors[colorIndex(4)];
           } else {
               document.getElementById('Interlock').innerHTML = "bad";
-              document.getElementById('Interlock').style.background='red';
+              document.getElementById('Interlock').style.background = mycolors[colorIndex(8)];
           }
           document.getElementById('FreeDiskspace').innerHTML = freeDiskspace;
       });
@@ -735,6 +727,15 @@
           if (temp > 40.) return 8;
       }
 
+      function colorReducedIndex(double temp)  {
+          if (temp < 10.)  return 1;
+          if (temp < 20.)  return 2;
+          if (temp < 30.)  return 4;
+          if (temp > 40.)  return 8;
+          return 0;
+      }
+}
+      
     </script>
 
 
