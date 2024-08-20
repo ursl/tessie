@@ -647,12 +647,10 @@ void driveHardware::ensureSafety() {
       static bool yelloOn(false);
       fStatusString = "Keep lid closed";
       if (yelloOn) {
-        fLOG(INFO, "turn off yello");
         gpio_write(fPiGPIO, GPIOYELLO, 0);
         fTrafficYellow = 0; 
         yelloOn = false;        
       } else {
-        fLOG(INFO, "turn on yello");
         gpio_write(fPiGPIO, GPIOYELLO, 1);
         fTrafficYellow = 1;
         yelloOn = true;
