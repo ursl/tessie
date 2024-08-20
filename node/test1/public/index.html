@@ -443,6 +443,15 @@
           }
           el = document.getElementById('FreeDiskspace');
           el.innerHTML = freeDiskspace;
+          if (freeDiskspace > 2) {
+              el.style.backgroundColor = mycolors[4];
+          } else if ((freedisk > 1) && (freedisk < 2)) {
+              el.style.backgroundColor = mycolors[6];
+          } else {
+              el.style.backgroundColor = mycolors[8];
+          }
+
+
       });
       
       socket.on('Temp_MString', (msg) => {
