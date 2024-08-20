@@ -28,8 +28,8 @@
 
       <div style="background-color:DodgerBlue" float="left">
         <b>Nitrogen control: </b> <br>
-        <button id="valve0" style="background-color:gray">Flush</button>
-        <button id="valve1" style="background-color:gray">Rinse</button> <br>
+        <button id="valve0" style="background-color:#D3D3D3">Flush</button>
+        <button id="valve1" style="background-color:#D3D3D3">Rinse</button> <br>
         <hr>
         <button id="getcsv" style="background-color:#FCF5E5">Get CSV data</button>
       </div>
@@ -372,10 +372,10 @@
       getcsv.addEventListener('click', (e) => {socket.emit('getcsv'); });
 
       socket.on('valve0blue', (msg) => {valve0.style.background='#46923c'; });
-      socket.on('valve0white', (msg) => {valve0.style.background='gray'; });
+      socket.on('valve0white', (msg) => {valve0.style.background='#D3D3D3'; });
 
       socket.on('valve1blue', (msg) => {valve1.style.background='#46923c'; });
-      socket.on('valve1white', (msg) => {valve1.style.background='gray'; });
+      socket.on('valve1white', (msg) => {valve1.style.background='#D3D3D3'; });
 
       socket.on('envString', (msg) => {
           const snumbers = msg.toString().replace('Env = ', '');
@@ -388,12 +388,12 @@
           document.getElementById('I2CErrors').innerHTML = vNumbers[5];
           document.getElementById('RunTime').innerHTML = vNumbers[6];
           if (0 == vNumbers[7]) {
-              valve0.style.background='#gray';
+              valve0.style.background='#D3D3D3';
           } else {
               valve0.style.background='#46923c';
           }
           if (0 == vNumbers[8]) {
-              valve1.style.background='#gray';
+              valve1.style.background='#D3D3D3';
           } else {
               valve1.style.background='#46923c';
           }
@@ -408,10 +408,22 @@
           let redLight      = vNumbers[2].replace("G", "");
           let lidStatus     = vNumbers[3].replace("L", "");
           let interLock     = vNumbers[4].replace("I", "");
-          let freeDiskspace = vNumbers[5] + "GB";
+          let freeDiskspace = vNumbers[5] + " GB";
 
-          document.getElementById('LidStatus').innerHTML = lidStatus;
-          document.getElementById('Interlock').innerHTML = interLock;
+          if (1 == lidStatus) {
+              document.getElementById('LidStatus').innerHTML = "locked";
+              document.getElementById('LidStatus').style.background='#0AC80A';
+          } else {
+              document.getElementById('LidStatus').innerHTML = "open";
+              document.getElementById('LidStatus').style.background='#yellow';
+          }
+          if (1 == interLock) {
+              document.getElementById('Interlock').innerHTML = "good";
+              document.getElementById('Interlock').style.background='#0AC80A';
+          } else {
+              document.getElementById('Interlock').innerHTML = "bad";
+              document.getElementById('Interlock').style.background='#yellow';
+          }
           document.getElementById('FreeDiskspace').innerHTML = freeDiskspace;
       });
       
