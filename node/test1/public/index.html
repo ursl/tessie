@@ -347,6 +347,16 @@
       // var mp3_url = 'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3';
       // (new Audio(mp3_url)).play();
 
+      let mycolors = [];
+      mycolors.push('#0000fa'); // dark blue
+      mycolors.push('#1450fa'); // blue
+      mycolors.push('#14fafa'); // cyan
+      mycolors.push('#14f0b4'); // green-blue
+      mycolors.push('#0ac80a'); // darker green
+      mycolors.push('#50f000'); // light green
+      mycolors.push('#f0f000'); // yellow
+      mycolors.push('#f05000'); // orange
+      mycolors.push('#f00000'); // red
 
       const socket = io.connect();
       const valve0 = document.getElementById('valve0');
@@ -704,18 +714,6 @@
           return yy + "/" + mm + "/" + dd + " " + hh + ":" + mi + ":" + ss + ">";
       }
       
-      let mycolors = [];
-      mycolors.push('#0000fa'); // dark blue
-      mycolors.push('#1450fa'); // blue
-      mycolors.push('#14fafa'); // cyan
-      mycolors.push('#14f0b4'); // green-blue
-      mycolors.push('#0ac80a'); // darker green
-      mycolors.push('#50f000'); // light green
-      mycolors.push('#f0f000'); // yellow
-      mycolors.push('#f05000'); // orange
-      mycolors.push('#f00000'); // red
-
-
 
       function colorIndex(temp){
           if (temp < -30.) return 0;
