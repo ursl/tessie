@@ -371,11 +371,11 @@
 
       getcsv.addEventListener('click', (e) => {socket.emit('getcsv'); });
 
-      socket.on('valve0blue', (msg) => {valve0.style.background='#46923c'; });
-      socket.on('valve0white', (msg) => {valve0.style.background='#D3D3D3'; });
+//      socket.on('valve0blue', (msg) => {valve0.style.background='#46923c'; });
+//      socket.on('valve0white', (msg) => {valve0.style.background='#D3D3D3'; });
 
-      socket.on('valve1blue', (msg) => {valve1.style.background='#46923c'; });
-      socket.on('valve1white', (msg) => {valve1.style.background='#D3D3D3'; });
+//      socket.on('valve1blue', (msg) => {valve1.style.background='#46923c'; });
+//      socket.on('valve1white', (msg) => {valve1.style.background='#D3D3D3'; });
 
       socket.on('envString', (msg) => {
           const snumbers = msg.toString().replace('Env = ', '');
@@ -415,14 +415,14 @@
               document.getElementById('LidStatus').style.background='#0AC80A';
           } else {
               document.getElementById('LidStatus').innerHTML = "open";
-              document.getElementById('LidStatus').style.background='#yellow';
+              document.getElementById('LidStatus').style.background='yellow';
           }
           if (1 == interLock) {
               document.getElementById('Interlock').innerHTML = "good";
               document.getElementById('Interlock').style.background='#0AC80A';
           } else {
               document.getElementById('Interlock').innerHTML = "bad";
-              document.getElementById('Interlock').style.background='#yellow';
+              document.getElementById('Interlock').style.background='red';
           }
           document.getElementById('FreeDiskspace').innerHTML = freeDiskspace;
       });

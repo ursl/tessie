@@ -223,16 +223,16 @@ io.on('connection', (socket) => {
         if (HintString.length != 0) {
             socket.emit('HintString', HintString);
         }
-        if (valve0Status == 0) {
-            socket.emit('valve0white');
-        } else {
-            socket.emit('valve0blue');
-        }
-        if (valve1Status == 0) {
-            socket.emit('valve1white');
-        } else {
-            socket.emit('valve1blue');
-        }
+//        if (valve0Status == 0) {
+//            socket.emit('valve0white');
+//        } else {
+//            socket.emit('valve0blue');
+//        }
+//        if (valve1Status == 0) {
+//            socket.emit('valve1white');
+//        } else {
+//            socket.emit('valve1blue');
+//        }
 
     }, 1000);
 
@@ -286,7 +286,7 @@ io.on('connection', (socket) => {
 
     socket.on('getcsv', (msg) => {
         console.log('getcsv input received ->' + msg + '<-');
-        var filePath = path.join('/home/pi/tessie/test1', 'shorttessie.csv');
+        var filePath = path.join('/home/pi/tessie/src', 'shorttessie.csv');
         var stat = fs.statSync(filePath);
         socket.emit('putcsv', filePath, (status) => {
             console.log(status);
