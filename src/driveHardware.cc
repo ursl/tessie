@@ -645,9 +645,11 @@ void driveHardware::ensureSafety() {
     if (!greenLight) {
       fStatusString = "Keep lid closed";
       if (fTrafficYellow) {
+        fLOG(INFO, "turn off yello");
         gpio_write(fPiGPIO, GPIOYELLO, 0);
         fTrafficYellow = 0; 
       } else {
+        fLOG(INFO, "turn on yello");
         gpio_write(fPiGPIO, GPIOYELLO, 1);
         fTrafficYellow = 1;
       }
