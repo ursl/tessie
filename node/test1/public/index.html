@@ -391,16 +391,39 @@
       socket.on('envString', (msg) => {
           const snumbers = msg.toString().replace('Env = ', '');
           const vNumbers = snumbers.split(', ');
-          let tmp = parseFloat(vNumbers[0]); 
+          var tmpTA = parseFloat(vNumbers[0]); 
           var el = document.getElementById('TempAir');
-          el.innerHTML       = tmp.toFixed(2);
-          el.style.backgroundColor = mycolors[colorReducedIndex(tmp)];
-//          el.style.backgroundColor = mycolors[2];
-          console.log("tmp = " + tmp + " colorReducedIndex(tmp) = " + colorReducedIndex(tmp)
-                      + " color: " + mycolors[colorReducedIndex(tmp)]);
-          document.getElementById('TempWater').innerHTML = parseFloat(vNumbers[1]).toFixed(2);
-          document.getElementById('RelHum').innerHTML = parseFloat(vNumbers[2]).toFixed(2);
-          document.getElementById('DP').innerHTML = parseFloat(vNumbers[3]).toFixed(2);
+          el.innerHTML       = tmpTA.toFixed(2);
+          el.style.backgroundColor = mycolors[colorReducedIndex(tmpTA)];
+
+          var tmpTW = parseFloat(vNumbers[1]); 
+          el = document.getElementById('TempWater');
+          el.innerHTML = parseFloat(tmpTW).toFixed(2);
+          el.style.backgroundColor = mycolors[colorReducedIndex(tmpTW)];
+
+          var tmpRH = parseFloat(vNumbers[2]);
+          el = document.getElementById('RelHum');
+          el.innerHTML = tmpRH.toFixed(2);
+          if (tmpRH < 5.) {
+              el.style.backgroundColor = mycolors[4];
+          } else {
+              el.style.backgroundColor = mycolors[6];
+          }
+
+          var tmpDP = parseFloat(vNumbers[3]);
+          el = document.getElementById('DP');
+          el.innerHTML = tmpDP.toFixed(2);
+          if ((tmpTA - tmpDP) < 2.) {
+              el.style.backgroundColor = mycolors[8];
+          } else {
+              el.style.backgroundColor = mycolors[4];
+          }
+          if ((tmpTW - tmpDP) < 2.) {
+              el.style.backgroundColor = mycolors[8];
+          } else {
+              el.style.backgroundColor = mycolors[4];
+          }
+          
           document.getElementById('CANbusErrors').innerHTML = vNumbers[4];
           document.getElementById('I2CErrors').innerHTML = vNumbers[5];
           document.getElementById('RunTime').innerHTML = vNumbers[6];
