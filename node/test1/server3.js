@@ -223,16 +223,6 @@ io.on('connection', (socket) => {
         if (HintString.length != 0) {
             socket.emit('HintString', HintString);
         }
-//        if (valve0Status == 0) {
-//            socket.emit('valve0white');
-//        } else {
-//            socket.emit('valve0blue');
-//        }
-//        if (valve1Status == 0) {
-//            socket.emit('valve1white');
-//        } else {
-//            socket.emit('valve1blue');
-//        }
 
     }, 1000);
 
