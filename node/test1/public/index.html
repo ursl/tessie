@@ -89,7 +89,17 @@
           </tr>
           <tr>
             <td>Traffic light</td>
-            <td id="TrafficLight" style="text-align:right;">will follow </td>
+            <td id="TrafficLight" style="text-align:right">
+              <svg id="rLight" style="width: 24; height: 32">
+                <circle id="circleR" r="10" cx="12" cy="20" style="fill: #99cf30; stroke: red; stroke-width: 1"/>
+              </svg>
+              <svg id="gLight" style="width: 24; height: 32">
+                <circle id="circleG" r="10" cx="12" cy="20" style="fill: #99cf30; stroke: green; stroke-width: 1"/>
+              </svg>
+              <svg id="yLight" style="width: 24; height: 32">
+                <circle id="circleY" r="10" cx="12" cy="20" style="fill: #99cf30; stroke: yellow; stroke-width: 1"/>
+              </svg>
+            </td>
           </tr>
         </table>
       </div>
@@ -378,6 +388,10 @@
 
       valve0.addEventListener('click', (e) => {
           valve0.style.backgroundColor = 'darkgray';
+
+          //no          document.getElementById('circleR').style.setAttribute("fill", mycolors[4]);
+          //          document.getElementById('circleR').style = "fill: red";
+         
           socket.emit('valve0');
       });
 
@@ -444,8 +458,8 @@
           const snumbers = msg.toString().replace('VAR = ', '');
           const vNumbers = snumbers.split(', ');
           let greenLight    = vNumbers[0].replace("G", "");
-          let yellowLight   = vNumbers[1].replace("G", "");
-          let redLight      = vNumbers[2].replace("G", "");
+          let yellowLight   = vNumbers[1].replace("Y", "");
+          let redLight      = vNumbers[2].replace("R", "");
           let lidStatus     = vNumbers[3].replace("L", "");
           let interLock     = vNumbers[4].replace("I", "");
           let freeDiskspace = parseInt(vNumbers[5]);
@@ -476,7 +490,23 @@
               el.style.backgroundColor = mycolors[8];
           }
 
+          if ("1" == greenLight) {
+              document.getElementById('circleG').style = "fill: green";
+          } else {
+              document.getElementById('circleG').style = "fill: #99cf30";
+          }
 
+          if ("1" == redLight) {
+              document.getElementById('circleR').style = "fill: red";
+          } else {
+              document.getElementById('circleR').style = "fill: #99cf30";
+          }
+
+          if ("1" == yellowLight) {
+              document.getElementById('circleY').style = "fill: yellow";
+          } else {
+              document.getElementById('circleY').style = "fill: #99cf30";
+          }
       });
       
       socket.on('Temp_MString', (msg) => {
