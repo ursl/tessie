@@ -367,12 +367,12 @@
       });
 
       valve0.addEventListener('click', (e) => {
-          socket.emit('valve0');
           if (valve0.style.background =='#46923c') {
               valve0.style.background='#D3D3D3';
           } else {
               valve0.style.background =='#46923c';
           }
+          socket.emit('valve0');
       });
       valve1.addEventListener('click', (e) => {socket.emit('valve1'); });
       
