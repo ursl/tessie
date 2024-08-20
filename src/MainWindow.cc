@@ -211,14 +211,24 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fqleCANbusErrors->clearFocus();
 
   int trsp(200);
+
+  // dark blue #0000fa
   QPalette p0; p0.setColor(QPalette::Base, QColor(  0,   0, 250, trsp)); fPalettes.push_back(p0);
+  // blue #1450fa
   QPalette p1; p1.setColor(QPalette::Base, QColor( 20,  80, 250, trsp)); fPalettes.push_back(p1);
+  // cyan #14fafa
   QPalette p2; p2.setColor(QPalette::Base, QColor( 20, 250, 250, trsp)); fPalettes.push_back(p2);
+  // green-blue #14f0b4
   QPalette p3; p3.setColor(QPalette::Base, QColor( 20, 240, 180, trsp)); fPalettes.push_back(p3);
+  // darker green #0ac80a
   QPalette p4; p4.setColor(QPalette::Base, QColor( 10, 200,  10, trsp)); fPalettes.push_back(p4);
+  // light green #50f000
   QPalette p5; p5.setColor(QPalette::Base, QColor( 80, 240,   0, trsp)); fPalettes.push_back(p5);
+  // yellow #f0f000
   QPalette p6; p6.setColor(QPalette::Base, QColor(240, 240,   0, trsp)); fPalettes.push_back(p6);
+  // orange #f05000
   QPalette p7; p7.setColor(QPalette::Base, QColor(240,  80,   0, trsp)); fPalettes.push_back(p7);
+  // red #f00000
   QPalette p8; p8.setColor(QPalette::Base, QColor(240,   0,   0, trsp)); fPalettes.push_back(p8);
 
 }
