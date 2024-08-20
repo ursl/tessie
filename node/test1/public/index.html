@@ -701,7 +701,7 @@
           if (ss < 10) ss = '0' + ss;
           return yy + "/" + mm + "/" + dd + " " + hh + ":" + mi + ":" + ss + ">";
       }
-
+      
       let mycolors = [];
       mycolors.push('rgb(  0,   0, 250)');
       mycolors.push('rgb( 20,  80, 250)');
@@ -727,14 +727,13 @@
           if (temp > 40.) return 8;
       }
 
-      function colorReducedIndex(temp)  {
+      function colorReducedIndex(temp){
           if (temp < 10.)  return 1;
           if (temp < 20.)  return 2;
           if (temp < 30.)  return 4;
           if (temp > 40.)  return 8;
           return 0;
       }
-}
       
     </script>
 
