@@ -1548,21 +1548,13 @@ void driveHardware::toggleFras(int imask) {
 // ----------------------------------------------------------------------
 void driveHardware::stopOperations(int icode) {
   if (0 == fStopOperations) { 
+    fStopOperations = icode;
     fLOG(INFO, "stopOperations(" + to_string(icode) +  ") invoked");
     fStatusString = "emergency";
-    fStopOperations = icode;
+
 #ifdef PI
     gpio_write(fPiGPIO, GPIOINT, 0);
     fInterlockStatus = 0;
-    fLOG(INFO, "Changed Interlock to LOW");
-    
-    gpio_write(fPiGPIO, GPIORED,   1);
-    fTrafficRed = 1;
-    gpio_write(fPiGPIO, GPIOGREEN, 0);
-    fTrafficGreen = 0; 
-    gpio_write(fPiGPIO, GPIOYELLO, 0);
-    fTrafficYellow = 0; 
-    
 #endif
     
     for (int itec = 1; itec <= 8; ++itec) {
@@ -1575,6 +1567,16 @@ void driveHardware::stopOperations(int icode) {
     turnOnValve(0);
     turnOnValve(1);
   }
+
+#ifdef PI    
+    gpio_write(fPiGPIO, GPIORED,   1);
+    fTrafficRed = 1;
+    gpio_write(fPiGPIO, GPIOGREEN, 0);
+    fTrafficGreen = 0; 
+    gpio_write(fPiGPIO, GPIOYELLO, 0);
+    fTrafficYellow = 0; 
+    
+#endif
 
   stringstream a("==ALARM== Emergency stop T(air) = " +
                  to_string(fSHT85Temp) +
