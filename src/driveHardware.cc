@@ -471,7 +471,7 @@ void driveHardware::ensureSafety() {
 #endif
   }
   if (fSHT85Temp > SHUTDOWN_TEMP) {
-    stopOperations();
+    stopOperations(1);
   }      
 
   // -- dew point vs air temperature
@@ -525,7 +525,7 @@ void driveHardware::ensureSafety() {
 #endif
   }
   if (fTECData[8].reg["Temp_W"].value > SHUTDOWN_TEMP) {
-    stopOperations();
+    stopOperations(2);
   }      
 
   // -- check module temperatures (1) value and (2) against dew point
@@ -562,7 +562,7 @@ void driveHardware::ensureSafety() {
 #endif
     }
     if (mtemp > SHUTDOWN_TEMP) {
-      stopOperations();
+      stopOperations(3);
     }      
 
     if ((mtemp > -90.) && (mtemp < fSHT85DP + SAFETY_DPMARGIN)) {
@@ -1542,8 +1542,8 @@ void driveHardware::toggleFras(int imask) {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::stopOperations() {
-  fLOG(INFO, "stopOperations() invoked");
+void driveHardware::stopOperations(int icode) {
+  fLOG(INFO, "stopOperations(" + to_string(icode) +  "invoked");
   fStatusString = "emergency stop";
 #ifdef PI
   gpio_write(fPiGPIO, GPIOINT, 0);
