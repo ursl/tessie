@@ -375,7 +375,7 @@ void driveHardware::doRun() {
 // ----------------------------------------------------------------------
 void driveHardware::ensureSafety() {
 
-  fStatusString = "no problem";
+  if (0 == fStopOperations) fStatusString = "no problem";
 
   // -- check with water temperature whether chiller is running
   if (fTECData[8].reg["Temp_W"].value > 20.) {
