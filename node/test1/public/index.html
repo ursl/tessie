@@ -90,14 +90,14 @@
           <tr>
             <td>Traffic light</td>
             <td id="TrafficLight" style="text-align:right">
-              <svg id="gLight" style="width: 24; height: 32">
-                <circle id="circleG" r="10" cx="12" cy="20" style="fill: #99cf30; stroke: green; stroke-width: 1"/>
+              <svg id="gLight" style="width: 24pt; height: 32pt">
+                <circle id="circleG" r="10" cx="12" cy="20" style="fill: white; stroke: green; stroke-width: 2"/>
+              </svg> 
+              <svg id="yLight" style="width: 24pt; height: 32pt">
+                <circle id="circleY" r="10" cx="12" cy="20" style="fill: white; stroke: yellow; stroke-width: 2"/>
               </svg>
-              <svg id="yLight" style="width: 24; height: 32">
-                <circle id="circleY" r="10" cx="12" cy="20" style="fill: #99cf30; stroke: yellow; stroke-width: 1"/>
-              </svg>
-              <svg id="rLight" style="width: 24; height: 32">
-                <circle id="circleR" r="10" cx="12" cy="20" style="fill: #99cf30; stroke: red; stroke-width: 1"/>
+              <svg id="rLight" style="width: 24pt; height: 32pt">
+                <circle id="circleR" r="10" cx="12" cy="20" style="fill: white; stroke: red; stroke-width: 2"/>
               </svg>
             </td>
           </tr>
@@ -491,21 +491,21 @@
           }
 
           if ("1" == greenLight) {
-              document.getElementById('circleG').style = "fill: green";
+              document.getElementById('circleG').style = "fill: green; stroke: green; stroke-width: 2";
           } else {
-              document.getElementById('circleG').style = "fill: #99cf30";
+              document.getElementById('circleG').style = "fill: #99cf30; stroke: green; stroke-width: 2";
           }
 
           if ("1" == redLight) {
-              document.getElementById('circleR').style = "fill: red";
+              document.getElementById('circleR').style = "fill: red; stroke: red; stroke-width: 2";
           } else {
-              document.getElementById('circleR').style = "fill: #99cf30";
+              document.getElementById('circleR').style = "fill: #99cf30; stroke: red; stroke-width: 2";
           }
 
           if ("1" == yellowLight) {
-              document.getElementById('circleY').style = "fill: yellow";
+              document.getElementById('circleY').style = "fill: yellow; stroke: yellow; stroke-width: 2";
           } else {
-              document.getElementById('circleY').style = "fill: #99cf30";
+              document.getElementById('circleY').style = "fill: #99cf30; stroke: yellow; stroke-width: 2";
           }
       });
       
