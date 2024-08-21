@@ -469,10 +469,10 @@ void driveHardware::ensureSafety() {
     gpio_write(fPiGPIO, GPIOINT, 0);
     fInterlockStatus = 0;
 #endif
-    if (fSHT85Temp > SHUTDOWN_TEMP) {
-      stopOperations();
-    }      
   }
+  if (fSHT85Temp > SHUTDOWN_TEMP) {
+    stopOperations();
+  }      
 
   // -- dew point vs air temperature
   if ((fSHT85Temp - SAFETY_DPMARGIN) < fSHT85DP) {
@@ -523,10 +523,10 @@ void driveHardware::ensureSafety() {
     gpio_write(fPiGPIO, GPIOINT, 0);
     fInterlockStatus = 0;
 #endif
-    if (fTECData[8].reg["Temp_W"].value > SHUTDOWN_TEMP) {
-      stopOperations();
-    }      
   }
+  if (fTECData[8].reg["Temp_W"].value > SHUTDOWN_TEMP) {
+    stopOperations();
+  }      
 
   // -- check module temperatures (1) value and (2) against dew point
   for (int itec = 1; itec <= 8; ++itec) {
@@ -560,10 +560,10 @@ void driveHardware::ensureSafety() {
       gpio_write(fPiGPIO, GPIOINT, 0);
       fInterlockStatus = 0;
 #endif
-      if (mtemp > SHUTDOWN_TEMP) {
-        stopOperations();
-      }      
     }
+    if (mtemp > SHUTDOWN_TEMP) {
+      stopOperations();
+    }      
 
     if ((mtemp > -90.) && (mtemp < fSHT85DP + SAFETY_DPMARGIN)) {
       greenLight = false;
