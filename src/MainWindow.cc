@@ -302,7 +302,7 @@ void MainWindow::updateHardwareDisplay() {
     fqleFreeDisk->setText(QString::number(freedisk));
     if (freedisk > 2) {
       fqleFreeDisk->setPalette(fPalettes[4]);
-    } else if ((freedisk > 1) && (freedisk < 2)) {
+    } else if ((freedisk >= 1) && (freedisk < 2)) {
       fqleFreeDisk->setPalette(fPalettes[6]);
     } else {
       fqleFreeDisk->setPalette(fPalettes[8]);
