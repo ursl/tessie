@@ -1575,6 +1575,15 @@ void driveHardware::stopOperations(int icode) {
     turnOnValve(0);
     turnOnValve(1);
   }
+
+  stringstream a("==ALARM== Emergency stop T(air) = " +
+                 to_string(fSHT85Temp) +
+                 " T(water) = " + to_string(fTECData[8].reg["Temp_W"].value));
+  fLOG(ERROR, a.str());
+  emit signalSendToMonitor(QString::fromStdString(a.str()));
+  emit signalSendToServer(QString::fromStdString(a.str()));
+  emit signalAlarm(1);
+
 }
 
 
