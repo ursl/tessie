@@ -374,7 +374,7 @@ void driveHardware::doRun() {
 // ----------------------------------------------------------------------
 void driveHardware::ensureSafety() {
 
-  fStatusString = "no problem";
+  //  fStatusString = "no problem";
 
   // -- check with water temperature whether chiller is running
   if (fTECData[8].reg["Temp_W"].value > 20.) {
@@ -414,7 +414,7 @@ void driveHardware::ensureSafety() {
   }
 #endif
 
-  bool greenLight(true);
+  bool greenLight(fInterlockStatus?true:false);
 
   // -- first the trivial warnings
   if (redCANErrors() > 0) {
@@ -1544,6 +1544,7 @@ void driveHardware::toggleFras(int imask) {
 // ----------------------------------------------------------------------
 void driveHardware::stopOperations() {
   fLOG(INFO, "stopOperations() invoked");
+  fStatusString = "emergency stop";
 #ifdef PI
   gpio_write(fPiGPIO, GPIOINT, 0);
   fInterlockStatus = 0;
