@@ -1544,35 +1544,34 @@ void driveHardware::toggleFras(int imask) {
 
 // ----------------------------------------------------------------------
 void driveHardware::stopOperations(int icode) {
-  fLOG(INFO, "stopOperations(" + to_string(icode) +  ") invoked");
-  fStatusString = "emergency stop";
-  fStopOperations = icode;
+  if (0 == fStopOperations) { 
+    fLOG(INFO, "stopOperations(" + to_string(icode) +  ") invoked");
+    fStatusString = "emergency stop";
+    fStopOperations = icode;
 #ifdef PI
-  gpio_write(fPiGPIO, GPIOINT, 0);
-  fInterlockStatus = 0;
-  fLOG(INFO, "Changed Interlock to LOW");
-
-  gpio_write(fPiGPIO, GPIORED,   1);
-  fTrafficRed = 1;
-  gpio_write(fPiGPIO, GPIOGREEN, 0);
-  fTrafficGreen = 0; 
-  gpio_write(fPiGPIO, GPIOYELLO, 0);
-  fTrafficYellow = 0; 
-
+    gpio_write(fPiGPIO, GPIOINT, 0);
+    fInterlockStatus = 0;
+    fLOG(INFO, "Changed Interlock to LOW");
+    
+    gpio_write(fPiGPIO, GPIORED,   1);
+    fTrafficRed = 1;
+    gpio_write(fPiGPIO, GPIOGREEN, 0);
+    fTrafficGreen = 0; 
+    gpio_write(fPiGPIO, GPIOYELLO, 0);
+    fTrafficYellow = 0; 
+    
 #endif
-
-  for (int itec = 1; itec <= 8; ++itec) {
-    if (1 == static_cast<int>(fTECData[itec].reg["PowerState"].value)) {
-      turnOffTEC(itec);
+    
+    for (int itec = 1; itec <= 8; ++itec) {
+      if (1 == static_cast<int>(fTECData[itec].reg["PowerState"].value)) {
+        turnOffTEC(itec);
+      }
+      std::this_thread::sleep_for(fMilli5);
     }
-    std::this_thread::sleep_for(fMilli5);
+
+    turnOnValve(0);
+    turnOnValve(1);
   }
-
-  turnOnValve(0);
-  turnOnValve(1);
-
-  sleep(60);
-
 }
 
 
