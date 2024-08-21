@@ -375,7 +375,7 @@ void driveHardware::doRun() {
 // ----------------------------------------------------------------------
 void driveHardware::ensureSafety() {
 
-  //  fStatusString = "no problem";
+  fStatusString = "no problem";
 
   // -- check with water temperature whether chiller is running
   if (fTECData[8].reg["Temp_W"].value > 20.) {
@@ -2349,4 +2349,5 @@ void driveHardware::resetInterlock() {
   fTrafficYellow = 0; 
 #endif
   
+  fStatusString = "interlock reset";
 }
