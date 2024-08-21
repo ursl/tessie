@@ -1561,7 +1561,9 @@ void driveHardware::stopOperations() {
 
 
   for (int itec = 1; itec <= 8; ++itec) {
-    turnOffTEC(itec);
+    if (1 == static_cast<int>(fTECData[itec].reg["PowerState"].value)) {
+      turnOffTEC(itec);
+    }
     std::this_thread::sleep_for(fMilli5);
   }
 
