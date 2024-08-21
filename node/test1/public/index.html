@@ -375,8 +375,6 @@
 
       var logarea = document.getElementById("logarea");
 
-      disclaimerAlert();
-      
       let msg = "getversionstring";
       socket.emit('getversionstring', msg);
 
@@ -804,10 +802,11 @@
           return 0;
       }
 
-      function disclaimerAlert() {
-          alert("Note: After clicking anything, the display will update only after reading back the coldbox state!");
+      document.onreadystatechange =  function disclaimerAlert() {
+          if (document.readyState=='loaded' || document.readyState=='complete') {
+              alert("Note: After clicking anything, the display will update only after reading back the coldbox state!");
+          }
       }
-      
     </script>
 
 
