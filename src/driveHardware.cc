@@ -414,7 +414,7 @@ void driveHardware::ensureSafety() {
   }
 #endif
 
-  bool greenLight(fInterlockStatus?true:false);
+  bool greenLight(fInterlockStatus == 1?true:false);
 
   // -- first the trivial warnings
   if (redCANErrors() > 0) {
@@ -1543,7 +1543,7 @@ void driveHardware::toggleFras(int imask) {
 
 // ----------------------------------------------------------------------
 void driveHardware::stopOperations(int icode) {
-  fLOG(INFO, "stopOperations(" + to_string(icode) +  "invoked");
+  fLOG(INFO, "stopOperations(" + to_string(icode) +  ") invoked");
   fStatusString = "emergency stop";
 #ifdef PI
   gpio_write(fPiGPIO, GPIOINT, 0);
@@ -2318,10 +2318,6 @@ void  driveHardware::checkLid() {
 }
 
 
-unsigned long rounddiv(unsigned long num, unsigned long divisor) {
-    return (num + (divisor/2)) / divisor;
-}
-
 // ----------------------------------------------------------------------
 void driveHardware::checkDiskspace() {
   struct statvfs diskData;
@@ -2334,4 +2330,19 @@ void driveHardware::checkDiskspace() {
   stringstream a;
   a << "getCurrentRSS() = " << rss.getCurrentRSS();
   fLOG(INFO, a.str());
+}
+
+// ----------------------------------------------------------------------
+void driveHardware::resetInterlock() {
+  fInterlockStatus = 1;
+
+#ifdef PI
+  gpio_write(fPiGPIO, GPIORED,   0);
+  fTrafficRed = 0;
+  gpio_write(fPiGPIO, GPIOGREEN, 1);
+  fTrafficGreen = 1; 
+  gpio_write(fPiGPIO, GPIOYELLO, 0);
+  fTrafficYellow = 0; 
+#endif
+  
 }
