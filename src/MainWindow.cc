@@ -466,9 +466,9 @@ int MainWindow::colorIndex(double temp)  {
   if (temp < 0.)   return 3; // green-blue
   if (temp < 10.)  return 4; // darker green
   if (temp < 20.)  return 5; // light green
-  if (temp < 30.)  return 6; // yellow
-  if (temp < 40.)  return 7; // orange
-  if (temp > 40.)  return 8; // red
+  if (temp < 25.)  return 6; // yellow
+  if (temp < 30.)  return 7; // orange
+  if (temp > 30.)  return 8; // red
   return 0;
 
 }
@@ -477,8 +477,8 @@ int MainWindow::colorIndex(double temp)  {
 int MainWindow::colorReducedIndex(double temp)  {
   if (temp < 10.)  return 1;
   if (temp < 20.)  return 2;
-  if (temp < 30.)  return 4;
-  if (temp > 40.)  return 8;
+  if (temp < 25.)  return 4;
+  if (temp > 25.)  return 8;
   return 0;
 
 }

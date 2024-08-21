@@ -439,13 +439,14 @@ void driveHardware::ensureSafety() {
 
   // -- Check for GL condition
   if (fSHT85Temp < 15.0)  {
-    fStatusString = "Air temp < 15.00";
+    fStatusString = "Air temp < 15";
     greenLight = false;
   }
 
   int allOK(0);
   // -- air temperatures
   if (fSHT85Temp > SAFETY_MAXSHT85TEMP) {
+    greenLight = false;
     allOK = 1;
     char cs[100];
     snprintf(cs, sizeof(cs), "Air temp > %+5.2f", fSHT85Temp);
@@ -475,6 +476,7 @@ void driveHardware::ensureSafety() {
 
   // -- dew point vs air temperature
   if ((fSHT85Temp - SAFETY_DPMARGIN) < fSHT85DP) {
+    greenLight = false;
     allOK = 2;
     fStatusString = "Air temp too close to DP";
     stringstream a("==ALARM== Box air temperature = " +
@@ -500,9 +502,10 @@ void driveHardware::ensureSafety() {
 
   // -- check water temperature
   if (fTECData[8].reg["Temp_W"].value > SAFETY_MAXTEMPW) {
+    greenLight = false;
     allOK = 3;
     char cs[100];
-    snprintf(cs, sizeof(cs), "Water temp > %+5.2f", fTECData[8].reg["Temp_W"].value);
+    snprintf(cs, sizeof(cs), "Water temp = %+5.2f", fTECData[8].reg["Temp_W"].value);
     fStatusString = cs;
     stringstream a("==ALARM== Water temperature = " +
                    to_string(fTECData[8].reg["Temp_W"].value) +
@@ -533,9 +536,10 @@ void driveHardware::ensureSafety() {
       fStatusString = "Keep lid closed";
     }
     if (mtemp > SAFETY_MAXTEMPM) {
+      greenLight = false;
       allOK = 4;
       char cs[100];
-      snprintf(cs, sizeof(cs), "Module %d temp %+5.2f too high", itec, mtemp);
+      snprintf(cs, sizeof(cs), "Module %d too hot", itec);
       fStatusString = cs;
       stringstream a("==ALARM== module temperature = " +
                      to_string(mtemp) +
@@ -562,6 +566,7 @@ void driveHardware::ensureSafety() {
     }
 
     if ((mtemp > -90.) && (mtemp < fSHT85DP + SAFETY_DPMARGIN)) {
+      greenLight = false;
       allOK = 5;
       stringstream a("==ALARM== module " + to_string(itec) + " temperature = " +
                      to_string(mtemp) +
@@ -571,7 +576,7 @@ void driveHardware::ensureSafety() {
                      to_string(fSHT85Temp)
                      );
       fLOG(ERROR, a.str());
-      fStatusString = "Module " + std::to_string(itec) + " temp too close to DP";
+      fStatusString = "Module " + std::to_string(itec) + " temp near DP";
       emit signalSendToMonitor(QString::fromStdString(a.str()));
       emit signalSendToServer(QString::fromStdString(a.str()));
       emit signalAlarm(1);
