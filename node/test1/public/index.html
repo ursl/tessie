@@ -375,6 +375,8 @@
 
       var logarea = document.getElementById("logarea");
 
+      disclaimerAlert();
+      
       let msg = "getversionstring";
       socket.emit('getversionstring', msg);
 
@@ -800,6 +802,10 @@
           if (temp < 30.)  return 4;
           if (temp > 40.)  return 8;
           return 0;
+      }
+
+      function disclaimerAlert() {
+          alert("Note: After clicking anything, the display will update only after reading back the coldbox state!");
       }
       
     </script>
