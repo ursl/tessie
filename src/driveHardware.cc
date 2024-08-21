@@ -447,7 +447,6 @@ void driveHardware::ensureSafety() {
   // -- air temperatures
   if (fSHT85Temp > SAFETY_MAXSHT85TEMP) {
     allOK = 1;
-    // FIXME: snprintf
     char cs[100];
     snprintf(cs, sizeof(cs), "Air temp > %+5.2f", fSHT85Temp);
     fStatusString = cs;
@@ -1544,6 +1543,14 @@ void driveHardware::stopOperations() {
   gpio_write(fPiGPIO, GPIOINT, 0);
   fInterlockStatus = 0;
   fLOG(INFO, "Changed Interlock to LOW");
+
+  gpio_write(fPiGPIO, GPIORED,   1);
+  fTrafficRed = 1;
+  gpio_write(fPiGPIO, GPIOGREEN, 0);
+  fTrafficGreen = 0; 
+  gpio_write(fPiGPIO, GPIOYELLO, 0);
+  fTrafficYellow = 0; 
+
 #endif
 
 
