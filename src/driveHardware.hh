@@ -236,6 +236,7 @@ private:
 
   std::string fStatusString, fHostName;
   int fFreeDiskspace, fTrafficRed, fTrafficYellow, fTrafficGreen;
+  int fStopOperations;
 };
 
 #endif // DRIVEHARDWARE_H

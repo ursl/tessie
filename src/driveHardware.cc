@@ -62,7 +62,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
 
   fI2CErrorCounter = 0;
   fI2CErrorOld = 0;
-
+  fStopOperations = 0;
+  
   fTrafficRed = fTrafficYellow = fTrafficGreen = 0; 
   
   gettimeofday(&ftvStart, 0);
@@ -378,7 +379,7 @@ void driveHardware::ensureSafety() {
 
   // -- check with water temperature whether chiller is running
   if (fTECData[8].reg["Temp_W"].value > 20.) {
-    fStatusString = "turn on chiller!";
+    if (0 == fStopOperations) fStatusString = "turn on chiller!";
   }
   
   // -- check lid status (only 1 is good enough) and set interlock accordingly
@@ -423,7 +424,7 @@ void driveHardware::ensureSafety() {
                    + fCanMsg.getErrorFrame().getString()
                    );
     fLOG(WARNING, a.str());
-    fStatusString = "CANbus error";
+    if (0 == fStopOperations) fStatusString = "CANbus error";
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
   }
@@ -432,14 +433,14 @@ void driveHardware::ensureSafety() {
                    + to_string(fI2CErrorCounter)
                    );
     fLOG(WARNING, a.str());
-    fStatusString = "I2C error";
+    if (0 == fStopOperations) fStatusString = "I2C error";
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
   }
 
   // -- Check for GL condition
   if (fSHT85Temp < 15.0)  {
-    fStatusString = "Air temp < 15";
+    if (0 == fStopOperations) fStatusString = "Air temp < 15";
     greenLight = false;
   }
 
@@ -450,7 +451,7 @@ void driveHardware::ensureSafety() {
     allOK = 1;
     char cs[100];
     snprintf(cs, sizeof(cs), "Air temp > %+5.2f", fSHT85Temp);
-    fStatusString = cs;
+    if (0 == fStopOperations) fStatusString = cs;
     stringstream a("==ALARM== Box air temperature = " +
                    to_string(fSHT85Temp) +
                    " exceeds SAFETY_MAXSHT85TEMP = " +
@@ -478,7 +479,7 @@ void driveHardware::ensureSafety() {
   if ((fSHT85Temp - SAFETY_DPMARGIN) < fSHT85DP) {
     greenLight = false;
     allOK = 2;
-    fStatusString = "Air temp too close to DP";
+    if (0 == fStopOperations) fStatusString = "Air temp too close to DP";
     stringstream a("==ALARM== Box air temperature = " +
                    to_string(fSHT85Temp) +
                    " is too close to dew point = " +
@@ -506,7 +507,7 @@ void driveHardware::ensureSafety() {
     allOK = 3;
     char cs[100];
     snprintf(cs, sizeof(cs), "Water temp = %+5.2f", fTECData[8].reg["Temp_W"].value);
-    fStatusString = cs;
+    if (0 == fStopOperations) fStatusString = cs;
     stringstream a("==ALARM== Water temperature = " +
                    to_string(fTECData[8].reg["Temp_W"].value) +
                    " exceeds SAFETY_MAXTEMPW = " +
@@ -533,14 +534,14 @@ void driveHardware::ensureSafety() {
     double mtemp = fTECData[itec].reg["Temp_M"].value;
     if (mtemp < 15) {
       greenLight = false;
-      fStatusString = "Keep lid closed";
+      if (0 == fStopOperations) fStatusString = "Keep lid closed";
     }
     if (mtemp > SAFETY_MAXTEMPM) {
       greenLight = false;
       allOK = 4;
       char cs[100];
       snprintf(cs, sizeof(cs), "Module %d too hot", itec);
-      fStatusString = cs;
+      if (0 == fStopOperations) fStatusString = cs;
       stringstream a("==ALARM== module temperature = " +
                      to_string(mtemp) +
                      " exceeds SAFETY_MAXTEMPM = " +
@@ -576,7 +577,7 @@ void driveHardware::ensureSafety() {
                      to_string(fSHT85Temp)
                      );
       fLOG(ERROR, a.str());
-      fStatusString = "Module " + std::to_string(itec) + " temp near DP";
+      if (0 == fStopOperations) fStatusString = "Module " + std::to_string(itec) + " temp near DP";
       emit signalSendToMonitor(QString::fromStdString(a.str()));
       emit signalSendToServer(QString::fromStdString(a.str()));
       emit signalAlarm(1);
@@ -649,7 +650,7 @@ void driveHardware::ensureSafety() {
     if (!greenLight) {
       // -- need local (static) variable because fTrafficYellow is reset in checkFan()
       static bool yelloOn(false);
-      fStatusString = "Keep lid closed";
+      if (0 == fStopOperations) fStatusString = "Keep lid closed";
       if (yelloOn) {
         gpio_write(fPiGPIO, GPIOYELLO, 0);
         fTrafficYellow = 0; 
@@ -1545,6 +1546,7 @@ void driveHardware::toggleFras(int imask) {
 void driveHardware::stopOperations(int icode) {
   fLOG(INFO, "stopOperations(" + to_string(icode) +  ") invoked");
   fStatusString = "emergency stop";
+  fStopOperations = icode;
 #ifdef PI
   gpio_write(fPiGPIO, GPIOINT, 0);
   fInterlockStatus = 0;
@@ -1559,7 +1561,6 @@ void driveHardware::stopOperations(int icode) {
 
 #endif
 
-
   for (int itec = 1; itec <= 8; ++itec) {
     if (1 == static_cast<int>(fTECData[itec].reg["PowerState"].value)) {
       turnOffTEC(itec);
@@ -1569,6 +1570,9 @@ void driveHardware::stopOperations(int icode) {
 
   turnOnValve(0);
   turnOnValve(1);
+
+  sleep(60);
+
 }
 
 
@@ -2335,7 +2339,8 @@ void driveHardware::checkDiskspace() {
 // ----------------------------------------------------------------------
 void driveHardware::resetInterlock() {
   fInterlockStatus = 1;
-
+  fStopOperations = 0;
+  
 #ifdef PI
   gpio_write(fPiGPIO, GPIORED,   0);
   fTrafficRed = 0;
