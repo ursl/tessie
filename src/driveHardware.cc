@@ -664,6 +664,9 @@ void driveHardware::ensureSafety() {
       gpio_write(fPiGPIO, GPIOYELLO, 0);
       fTrafficYellow = 0;
     }
+  } else {
+    gpio_write(fPiGPIO, GPIOYELLO, 1);
+    fTrafficYellow = 1;
   }
 #endif
 
@@ -1546,7 +1549,7 @@ void driveHardware::toggleFras(int imask) {
 void driveHardware::stopOperations(int icode) {
   if (0 == fStopOperations) { 
     fLOG(INFO, "stopOperations(" + to_string(icode) +  ") invoked");
-    fStatusString = "emergency stop";
+    fStatusString = "emergency";
     fStopOperations = icode;
 #ifdef PI
     gpio_write(fPiGPIO, GPIOINT, 0);
