@@ -377,11 +377,6 @@ void driveHardware::ensureSafety() {
 
   if (0 == fStopOperations) fStatusString = "no problem";
 
-  // -- check with water temperature whether chiller is running
-  if (fTECData[8].reg["Temp_W"].value > 20.) {
-    if (0 == fStopOperations) fStatusString = "turn on chiller!";
-  }
-  
   // -- check lid status (only 1 is good enough) and set interlock accordingly
 #ifdef PI
   checkLid();
@@ -595,6 +590,11 @@ void driveHardware::ensureSafety() {
     }
   }
 
+  // -- check with water temperature whether chiller is running
+  if (fTECData[8].reg["Temp_W"].value > 20.) {
+    if (0 == fStopOperations) fStatusString = "turn on chiller!";
+  }
+  
   if ((fAlarmState > 0) && (0 == allOK)) {
     cout << "allOK = " << allOK << ", alarm condition gone, reset siren and red lamp" << endl;
     cout << "set GPIORED = LOW" << endl;
