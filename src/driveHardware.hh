@@ -33,12 +33,12 @@ const unsigned int CANBUS_WRITE   = 0x020;
 const unsigned int CANBUS_TECSEND = 0x040;
 const unsigned int CANBUS_TECREC  = 0x000;
 
-const double SAFETY_MAXSHT85TEMP  = 30.;
+const double SAFETY_MAXSHT85TEMP  = 25.;
 const double SAFETY_MAXTEMPW  = 25.;
-const double SAFETY_MAXTEMPM  = 30.;
+const double SAFETY_MAXTEMPM  = 25.;
 const double SAFETY_DPMARGIN = 2.;
 
-const double SHUTDOWN_TEMP  = 30.;
+const double SHUTDOWN_TEMP  = 25.;
 
 // ----------------------------------------------------------------------
 class driveHardware: public QObject {

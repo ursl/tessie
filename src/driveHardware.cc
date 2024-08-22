@@ -519,9 +519,10 @@ void driveHardware::ensureSafety() {
     gpio_write(fPiGPIO, GPIOINT, 0);
     fInterlockStatus = 0;
 #endif
+    stopOperations(2);
   }
   if (fTECData[8].reg["Temp_W"].value > SHUTDOWN_TEMP) {
-    stopOperations(2);
+    stopOperations(3);
   }      
 
   // -- check module temperatures (1) value and (2) against dew point
@@ -558,7 +559,7 @@ void driveHardware::ensureSafety() {
 #endif
     }
     if (mtemp > SHUTDOWN_TEMP) {
-      stopOperations(3);
+      stopOperations(4);
     }      
 
     if ((mtemp > -90.) && (mtemp < fSHT85DP + SAFETY_DPMARGIN)) {
