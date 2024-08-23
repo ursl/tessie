@@ -522,3 +522,107 @@ void corrTempM2TempHDI(string filename = "/Users/ursl/data/tessie/231103b-tessie
   c0.SaveAs(pdfname2.c_str());
 
 }
+
+
+// ----------------------------------------------------------------------
+void plotMeltDown(string filename = "csv/240822-tessie.csv", int zoomStart = -1) {
+  vector<csvEntry> csv;
+  if (!csvRead) csv = readCsv(filename);
+
+  int nstart(csv[0].time.Convert()),
+    nend(csv[csv.size()-1].time.Convert()),
+    nbin(nend-nstart+1);
+  
+  vector<TGraph*> vg;
+  for (int it = 0; it < 8; ++it) {
+    TGraph *g1;
+    vg.push_back(g1 = new TGraph());
+    g1->SetName(Form("gtempM%d", it+1));
+    
+    if (0 == it) g1->SetMarkerColor(kBlue);
+    if (1 == it) g1->SetMarkerColor(kBlue+2);
+    if (2 == it) g1->SetMarkerColor(kRed);
+    if (3 == it) g1->SetMarkerColor(kRed+2);
+    if (4 == it) g1->SetMarkerColor(kGreen+1);
+    if (5 == it) g1->SetMarkerColor(kGreen+3);
+    if (6 == it) g1->SetMarkerColor(kOrange+1);
+    if (7 == it) g1->SetMarkerColor(kOrange+3);
+
+    if (0 == it) g1->SetLineColor(kBlue);
+    if (1 == it) g1->SetLineColor(kBlue+2);
+    if (2 == it) g1->SetLineColor(kRed);
+    if (3 == it) g1->SetLineColor(kRed+2);
+    if (4 == it) g1->SetLineColor(kGreen+1);
+    if (5 == it) g1->SetLineColor(kGreen+3);
+    if (6 == it) g1->SetLineColor(kOrange+1);
+    if (7 == it) g1->SetLineColor(kOrange+3);
+  }
+
+  TGraph *gWater = new TGraph(); gWater->SetName("gTempWater"); gWater->SetMarkerStyle(24); gWater->SetMarkerSize(0.5);
+  TGraph *gTecOn = new TGraph(); gTecOn->SetName("gTecOn");
+
+  
+  for (unsigned int i = 0; i < csv.size(); ++i) {
+    int ntime = csv[i].time.Convert() - nstart;
+    cout << csv[i].time.AsString()
+         << " convert() = " << ntime
+         << " tempM[3] = " << csv[i].tempM[3]
+         << endl;
+    if (ntime > zoomStart) {
+      for (int it = 0; it < 8; ++it) {
+        vg[it]->AddPoint(ntime, csv[i].tempM[it]);
+      }                   
+      
+      gWater->AddPoint(ntime, csv[i].tempW);
+      gTecOn->AddPoint(ntime, 40. + 20.*csv[i].setOn[0]);
+    }
+  }
+
+  shrinkPad(0.1, 0.12);
+
+  TLegend *tleg = newLegend(0.2, 0.12, 0.35, 0.40);
+  tleg->SetTextSize(0.03);
+  tleg->SetFillStyle(1000);
+  gTecOn->Draw("alp");
+  gTecOn->SetMinimum(-25.);
+  gTecOn->SetMaximum(80.);
+  gTecOn->GetXaxis()->SetTitle(Form("seconds after %s", csv[0].time.AsString()));
+  gTecOn->GetYaxis()->SetTitle("Temperature [#circC]");
+  for (int it = 0; it < 8; ++it) {
+    tleg->AddEntry(vg[it], Form("TEC %d", it+1));
+    if (0 == it) {
+      vg[it]->Draw("l");
+    } else {
+      vg[it]->Draw("l");
+    }
+  }
+
+  gWater->Draw("p");
+  gTecOn->Draw("lp");
+  tleg->AddEntry(gWater, "T(water)");
+
+  if (zoomStart < 0) tl->DrawLatex(0.2, 0.62, "TEC power");
+  
+  string header(filename);
+  replaceAll(header, "csv/", "");             
+  replaceAll(header, "-tessie.csv", "");             
+  tleg->SetHeader(header.c_str());
+  tleg->Draw();
+  string pdfname = filename;
+
+  if (zoomStart > 0) {
+    replaceAll(pdfname, "-tessie", Form("-tessie-%d", zoomStart));
+  }
+
+  replaceAll(pdfname, ".csv", ".pdf");
+  c0.SaveAs(pdfname.c_str());
+}
+
+
+// ----------------------------------------------------------------------
+void plotAllMeltdowns() {
+  plotMeltDown("csv/240821-tessie.csv");
+  plotMeltDown("csv/240821-tessie.csv", 4200);
+  plotMeltDown("csv/240822-tessie.csv");
+  plotMeltDown("csv/240822-tessie.csv", 2800);
+}
