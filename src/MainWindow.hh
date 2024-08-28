@@ -35,6 +35,7 @@ public slots:
 private:
   void btnQuit();
   void btnINTL();
+  void btnSound();
   void btnStop();
   void btnValve0();
   void btnValve1();

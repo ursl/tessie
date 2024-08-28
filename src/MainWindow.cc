@@ -55,6 +55,13 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   fLOG(INFO, "tessie version " + sline);
 
+  QPushButton *btn1 = new QPushButton("Test\nsound"); btn1->setFocusPolicy(Qt::NoFocus);
+  btn1->setFont(fFont1);
+  btn1->setStyleSheet("QPushButton {background-color: rgba(154, 100, 100, 0.4);color: black; font-weight: bold;}");
+  btn1->setFixedSize(QSize(70, 50));
+  connect(btn1, &QPushButton::clicked, this, &MainWindow::btnSound);
+  hlay->addWidget(btn1);
+
   QPushButton *btn2 = new QPushButton("Interlock reset"); btn2->setFocusPolicy(Qt::NoFocus);
   btn2->setFont(fFont1);
   btn2->setStyleSheet("QPushButton {background-color: rgba(154, 100, 100, 0.4);color: black; font-weight: bold;}");
@@ -407,6 +414,7 @@ void MainWindow::btnQuit() {
   emit signalQuitProgram();
 }
 
+
 // ----------------------------------------------------------------------
 void MainWindow::btnINTL() {
   fLOG(INFO, "MainWindow::btnINTL() clicked");
@@ -514,6 +522,14 @@ void MainWindow::showAlarm(int state) {
     }
   }
 }
+
+
+// ----------------------------------------------------------------------
+void MainWindow::btnSound() {
+  fLOG(INFO, "MainWindow::btnSound() clicked");
+  system("/usr/bin/cvlc -R ../19seconds.mp3 &");
+}
+
 
 // ----------------------------------------------------------------------
 void MainWindow::killSiren() {
