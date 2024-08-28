@@ -57,7 +57,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   QPushButton *btn1 = new QPushButton("Test\nsound"); btn1->setFocusPolicy(Qt::NoFocus);
   btn1->setFont(fFont1);
-  btn1->setStyleSheet("QPushButton {background-color: rgba(154, 100, 100, 0.4);color: black; font-weight: bold;}");
+  btn1->setStyleSheet("QPushButton {background-color: rgba(154, 100, 100, 0.4);color: black;}");
   btn1->setFixedSize(QSize(70, 50));
   connect(btn1, &QPushButton::clicked, this, &MainWindow::btnSound);
   hlay->addWidget(btn1);
@@ -527,7 +527,7 @@ void MainWindow::showAlarm(int state) {
 // ----------------------------------------------------------------------
 void MainWindow::btnSound() {
   fLOG(INFO, "MainWindow::btnSound() clicked");
-  system("/usr/bin/cvlc -R ../19seconds.mp3 &");
+  system("/usr/bin/cvlc -R ../19seconds.mp3 ");
 }
 
 
