@@ -527,7 +527,8 @@ void MainWindow::showAlarm(int state) {
 // ----------------------------------------------------------------------
 void MainWindow::btnSound() {
   fLOG(INFO, "MainWindow::btnSound() clicked");
-  system("/usr/bin/cvlc -R ../19seconds.mp3 ");
+  system("/usr/bin/cvlc -R ../siren.mp3 & ");
+  //  system("/usr/bin/cvlc -R ../19seconds.mp3 ");
 }
 
 
