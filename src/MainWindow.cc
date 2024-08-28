@@ -206,6 +206,10 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   hlay1->addLayout(glay02);
 
+  //  QSpacerItem *spacer2 = new QSpacerItem(20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+  //  vlayTop->addSpacerItem(spacer2);
+
+  
   setCentralWidget(fWdg);
 
   fqleCANbusErrors->clearFocus();
