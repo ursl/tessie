@@ -211,9 +211,24 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
 
   // -- Load TEC parameters from FLASH
   loadFromFlash();
-#endif
 
-  fStatusString = "no problem";
+  // -- read firmware version (have it printed) and make sure that all TECs have the same version
+  int version1(getSWVersion(1)), version(-1);
+  bool versionOK(true);
+  for (int i = 2; i <= 8; ++i) {
+    version = getSWVersion(i);
+    if (version != version1) {
+      versionOK = false;
+    }
+  }
+  if (!versionOK) {  
+    fStatusString = "TEC firmware mismatch";
+    shutDown();
+  } else {
+    fStatusString = "initialization OK";
+  }
+
+#endif
 
   char hostname[1024];
   gethostname(hostname, 1024);
@@ -710,6 +725,7 @@ void driveHardware::shutDown() {
   // -- don't call this while things are warming up (from a previous shutDown call)
 #ifdef PI
   cout << "driveHardware::shutDown()" << endl;
+  fLOG(INFO, "driveHardware::shutDown()");
   breakInterlock();
 
   gpio_write(fPiGPIO, GPIORED,   0);
@@ -726,6 +742,7 @@ void driveHardware::shutDown() {
 
   pigpio_stop(fPiGPIO);
 
+  fStatusString = "Reboot!";
   return;
 
 #endif
