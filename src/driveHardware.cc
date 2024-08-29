@@ -382,18 +382,11 @@ void driveHardware::ensureSafety() {
   checkLid();
   if (fOldLidStatus != fLidStatus) {
     fOldLidStatus = fLidStatus;
-    stringstream b;
     if (fLidStatus < 1) {
-      gpio_write(fPiGPIO, GPIOINT, 0);
-      fInterlockStatus = 0;
-      b << "Changed Interlock to LOW";
+      breakInterlock();
     } else {
-      gpio_write(fPiGPIO, GPIOINT, 1);
-      fInterlockStatus = 1;
-      b << "Changed Interlock to HIGH";
+      resetInterlock();
     }
-    fLOG(INFO, b.str());
-    emit signalSendToServer(QString::fromStdString(b.str()));
 
     stringstream a;
     if (1 == fLidStatus) {
@@ -457,14 +450,7 @@ void driveHardware::ensureSafety() {
     emit signalAlarm(1);
     cout << "signalSetBackground(\"T\", red)" << endl;
     emit signalSetBackground("T", "red");
-#ifdef PI
-    gpio_write(fPiGPIO, GPIORED, 1);
-    fTrafficRed = 1;
-    gpio_write(fPiGPIO, GPIOGREEN, 0);
-    fTrafficGreen = 0;
-    gpio_write(fPiGPIO, GPIOINT, 0);
-    fInterlockStatus = 0;
-#endif
+    //FIXME? breakInterlock();
   }
   if (fSHT85Temp > SHUTDOWN_TEMP) {
     stopOperations(1);
@@ -486,14 +472,7 @@ void driveHardware::ensureSafety() {
     emit signalAlarm(1);
     cout << "signalSetBackground(\"DP\", red)" << endl;
     emit signalSetBackground("DP", "red");
-#ifdef PI
-    gpio_write(fPiGPIO, GPIORED, 1);
-    fTrafficRed = 1;
-    gpio_write(fPiGPIO, GPIOGREEN, 0);
-    fTrafficGreen = 0; 
-    gpio_write(fPiGPIO, GPIOINT, 0);
-    fInterlockStatus = 0;
-#endif
+    //FIXME?    breakInterlock();
   }
 
   // -- check water temperature
@@ -511,14 +490,6 @@ void driveHardware::ensureSafety() {
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
     emit signalAlarm(1);
-#ifdef PI
-    gpio_write(fPiGPIO, GPIORED, 1);
-    fTrafficRed = 1;
-    gpio_write(fPiGPIO, GPIOGREEN, 0);
-    fTrafficGreen = 0; 
-    gpio_write(fPiGPIO, GPIOINT, 0);
-    fInterlockStatus = 0;
-#endif
     stopOperations(2);
   }
   if (fTECData[8].reg["Temp_W"].value > SHUTDOWN_TEMP) {
@@ -549,14 +520,7 @@ void driveHardware::ensureSafety() {
       QString qtec = QString::fromStdString("tec"+to_string(itec));
       cout << "signalSetBackground(" << qtec.toStdString() << ", red)" << endl;
       emit signalSetBackground(qtec, "red");
-#ifdef PI
-      gpio_write(fPiGPIO, GPIORED, 1);
-      fTrafficRed = 1;
-      gpio_write(fPiGPIO, GPIOGREEN, 0);
-      fTrafficGreen = 0;
-      gpio_write(fPiGPIO, GPIOINT, 0);
-      fInterlockStatus = 0;
-#endif
+      //FIXME? breakInterlock();
     }
     if (mtemp > SHUTDOWN_TEMP) {
       stopOperations(4);
@@ -580,14 +544,7 @@ void driveHardware::ensureSafety() {
       QString qtec = QString::fromStdString("tec"+to_string(itec));
       cout << "signalSetBackground(" << qtec.toStdString() << ", red)" << endl;
       emit signalSetBackground(qtec, "red");
-#ifdef PI
-      gpio_write(fPiGPIO, GPIORED, 1);
-      fTrafficRed = 1;
-      gpio_write(fPiGPIO, GPIOGREEN, 0);
-      fTrafficGreen = 0;
-      gpio_write(fPiGPIO, GPIOINT, 0);
-      fInterlockStatus = 0;
-#endif
+      //FIXME? breakInterlock();
     }
   }
 
@@ -619,13 +576,8 @@ void driveHardware::ensureSafety() {
         fLOG(INFO, a.str());
         emit signalSendToServer(QString::fromStdString(a.str()));
 #ifdef PI
-      stringstream b;
-      b << "Changed Interlock to HIGH";
-      fLOG(INFO, b.str());
       fOldLidStatus = fLidStatus;
-      emit signalSendToServer(QString::fromStdString(b.str()));
-      gpio_write(fPiGPIO, GPIOINT, 1);
-      fInterlockStatus = 1;
+      resetInterlock();
 #endif
       }
     }
@@ -758,8 +710,7 @@ void driveHardware::shutDown() {
   // -- don't call this while things are warming up (from a previous shutDown call)
 #ifdef PI
   cout << "driveHardware::shutDown()" << endl;
-  gpio_write(fPiGPIO, GPIOINT, 0);
-  fInterlockStatus = 0;
+  breakInterlock();
 
   gpio_write(fPiGPIO, GPIORED,   0);
   fTrafficRed = 0;
@@ -1567,8 +1518,7 @@ void driveHardware::stopOperations(int icode) {
     fStatusString = "emergency";
 
 #ifdef PI
-    gpio_write(fPiGPIO, GPIOINT, 0);
-    fInterlockStatus = 0;
+    breakInterlock();
 #endif
     
     for (int itec = 1; itec <= 8; ++itec) {
@@ -1581,16 +1531,6 @@ void driveHardware::stopOperations(int icode) {
     turnOnValve(0);
     turnOnValve(1);
   }
-
-#ifdef PI    
-    gpio_write(fPiGPIO, GPIORED,   1);
-    fTrafficRed = 1;
-    gpio_write(fPiGPIO, GPIOGREEN, 0);
-    fTrafficGreen = 0; 
-    gpio_write(fPiGPIO, GPIOYELLO, 0);
-    fTrafficYellow = 0; 
-    
-#endif
 
   stringstream a("==ALARM== Emergency stop T(air) = " +
                  to_string(fSHT85Temp) +
@@ -2369,6 +2309,13 @@ void driveHardware::resetInterlock() {
   fStopOperations = 0;
   
 #ifdef PI
+  turnOnLV();
+  // -- delay turning on HV
+  std::chrono::milliseconds delay = std::chrono::milliseconds(1000);
+  std::this_thread::sleep_for(delay);
+  gpio_write(fPiGPIO, GPIOINT, 1);
+
+  // -- indicate status on traffic light
   gpio_write(fPiGPIO, GPIORED,   0);
   fTrafficRed = 0;
   gpio_write(fPiGPIO, GPIOGREEN, 1);
@@ -2377,5 +2324,42 @@ void driveHardware::resetInterlock() {
   fTrafficYellow = 0; 
 #endif
   
+  stringstream b;
+  b << "Changed Interlock to HIGH";
+  fLOG(INFO, b.str());
+  emit signalSendToServer(QString::fromStdString(b.str()));
+
   fStatusString = "interlock reset";
+}
+
+// ----------------------------------------------------------------------
+void driveHardware::breakInterlock() {
+  fInterlockStatus = 0;
+  fStopOperations = 1;
+  
+#ifdef PI
+  gpio_write(fPiGPIO, GPIOINT, 0);
+
+  // -- delay shutting off LV
+  std::chrono::milliseconds delay = std::chrono::milliseconds(1000);
+  std::this_thread::sleep_for(delay);
+  turnOffLV();
+
+  // -- indicate status on traffic light
+  gpio_write(fPiGPIO, GPIORED,   1);
+  fTrafficRed = 1;
+  gpio_write(fPiGPIO, GPIOGREEN, 0);
+  fTrafficGreen = 0; 
+  gpio_write(fPiGPIO, GPIOYELLO, 0);
+  fTrafficYellow = 0; 
+#endif
+
+  stringstream b;
+  b << "Changed Interlocks to LOW";
+  fLOG(INFO, b.str());
+  emit signalSendToServer(QString::fromStdString(b.str()));
+  
+  
+  fStatusString = "interlock broken";
+
 }

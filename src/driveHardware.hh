@@ -57,6 +57,7 @@ public:
   void doWarning(std::string errmsg, bool nothing = false);
   void doAlarm(std::string s);
   void lighting(int imode = 0);
+  void breakInterlock();
   void resetInterlock();
 
   std::string timeStamp(bool filestamp = true);
