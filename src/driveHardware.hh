@@ -79,12 +79,15 @@ public:
   bool  getStatusValve1() {return ((fRelaisMask & 2) == 2);}
   bool  getStatusValve()  {return (getStatusValve0() && getStatusValve1());}
   bool  getStatusFan() {return ((fRelaisMask & 4) == 4);}
+  bool  getStatusLVInterlock() {return ((fRelaisMask & 8) == 8);}
   int   getLidStatus() {return fLidStatus;}
   int   getInterlockStatus() {return fInterlockStatus;}
   void  turnOnValve(int i); // i = 0 or 1
   void  turnOffValve(int i); // i = 0 or 1
   void  turnOnFan();
   void  turnOffFan();
+  void  turnOnLV();
+  void  turnOffLV();
   void  checkFan();
   void  checkLid();
   std::string getStatusString() {return fStatusString;}

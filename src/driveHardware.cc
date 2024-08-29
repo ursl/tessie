@@ -1459,6 +1459,19 @@ void driveHardware::turnOffFan() {
 
 
 // ----------------------------------------------------------------------
+void driveHardware::turnOnLV() {
+  if (!getStatusLVInterlock()) toggleFras(8);
+}
+
+
+// ----------------------------------------------------------------------
+void driveHardware::turnOffLV() {
+  if (getStatusLVInterlock()) toggleFras(8);
+}
+
+
+
+// ----------------------------------------------------------------------
 void driveHardware::turnOnValve(int i) {
   if (0 == i) {
     if (!getStatusValve0()) toggleFras(1);
