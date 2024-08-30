@@ -70,6 +70,10 @@
             <td>Dew point</td>
             <td id="DP" style="text-align:right;">0 </td>
           </tr>
+          <tr>
+            <td>Copper plate</td>
+            <td id="Cu" style="text-align:right;">0/0 </td>
+          </tr>
         </table>
       </div>
 
@@ -437,7 +441,7 @@
           } else {
               el.style.backgroundColor = mycolors[4];
           }
-          
+
           document.getElementById('CANbusErrors').innerHTML = vNumbers[4];
           document.getElementById('I2CErrors').innerHTML = vNumbers[5];
           document.getElementById('RunTime').innerHTML = vNumbers[6];
@@ -509,6 +513,21 @@
           }
       });
       
+      socket.on('Temp_WString', (msg) => {
+          const snumbers = msg.toString().replace('Temp_W = ', '');
+          const vNumbers = snumbers.split(',');
+
+          // -- FIXME: correct indices
+          var tmpCu1 = parseFloat(vNumbers[3]);
+          var tmpCu2 = parseFloat(vNumbers[6]);
+          var tmpMax = (tmpCu1 > tmpCu2? tmpCu1: tmpCu2);
+          var el = document.getElementById('Cu');
+          el.innerHTML = tmpCu1.toFixed(2) + ' / ' + tmpCu2.toFixed(2);
+          el.style.backgroundColor = mycolors[colorReducedIndex(tmpMax)];
+      });
+          
+
+
       socket.on('Temp_MString', (msg) => {
           const snumbers = msg.toString().replace('Temp_M = ', '');
           const vNumbers = snumbers.split(',');
