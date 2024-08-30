@@ -38,6 +38,7 @@ let varString = ''
 let PowerStateString = ''
 let ControlVoltage_SetString = ''
 let Temp_MString = ''
+let Temp_WString = ''
 let PID_kpString = ''
 let PID_kiString = ''
 let PID_kdString = ''
@@ -112,6 +113,9 @@ clientMqtt.on('message', (topMon, payload) => {
     }
     if (payload.includes('Temp_M = ')) {
         Temp_MString = payload.toString();
+    }
+    if (payload.includes('Temp_W = ')) {
+        Temp_WString = payload.toString();
     }
     if (payload.includes('PID_kp = ')) {
         PID_kpString = payload.toString();
@@ -197,6 +201,7 @@ io.on('connection', (socket) => {
         socket.emit('PowerStateString', PowerStateString);
         socket.emit('ControlVoltage_SetString', ControlVoltage_SetString);
         socket.emit('Temp_MString', Temp_MString);
+        socket.emit('Temp_WString', Temp_WString);
         socket.emit('PID_kpString', PID_kpString);
         socket.emit('PID_kiString', PID_kiString);
         socket.emit('PID_kdString', PID_kdString);
@@ -282,6 +287,26 @@ io.on('connection', (socket) => {
             console.log(status);
         });
     });
+
+    socket.on('loadFW', (msg) => {
+        clientMqtt.publish(topCtrl, 'cmd LoadVariables', {qos: 0, retain: false }, (error) => {
+            if (error) {
+                console.error(error)
+            }
+        })
+        console.log('cmd LoadVariables sent to MQTT');
+    });
+
+    socket.on('saveFW', (msg) => {
+        clientMqtt.publish(topCtrl, 'cmd SaveVariables', {qos: 0, retain: false }, (error) => {
+            if (error) {
+                console.error(error)
+            }
+        })
+        console.log('cmd SaveVariables sent to MQTT');
+    });
+
+
 
     socket.on('controlvoltage_set', (msg) => {
         console.log('controlvoltage_set input received ->' + msg + '<-');

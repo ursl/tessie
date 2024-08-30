@@ -16,6 +16,17 @@
       .mycontainer > div {
           width:33.33%;
       }
+      .button {
+          border: none;
+          color: white;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          cursor: pointer;
+      }
       br {
           display: block;
           margin: 10px 0;
@@ -29,14 +40,10 @@
       <div style="background-color:DodgerBlue" float="left">
         <b>Nitrogen control: </b> <br>
         <button id="valve0" style="background-color:#D3D3D3">Flush</button>
-        <button id="valve1" style="background-color:#D3D3D3">Rinse</button> <br>
+        <button id="valve1" style="background-color:#D3D3D3">Rinse</button>
         <hr>
-        <button id="getcsv" style="background-color:#FCF5E5" disabled>Get CSV data</button>
-      </div>
-
-      <div style="background-color:DarkKhaki" >
-        <b>TEC arrangement</b>
-        <table style="border-collapse: collapse" border="2" cellspacing="0" cellpadding="5">
+        TEC arrangement:
+        <table style="border-collapse: collapse">
           <tr>
             <td>8</td>
             <td>7</td>
@@ -52,6 +59,15 @@
         </table>
       </div>
 
+      <div style="background-color:DarkKhaki" >
+        <b>tessie control: </b> <br>
+        TEC Firmware: 
+        <button id="loadFW">Load</button>
+        <button id="saveFW">Save</button>
+        CSV data:
+        <button id="getcsv" disabled>Get CSV data</button>
+      </div>
+
       <div id="envDiv" style="background-color:MediumSeaGreen" float="center">
         <table>
           <tr>
@@ -63,16 +79,16 @@
             <td id="TempWater" style="text-align:right;">0 </td>
           </tr>
           <tr>
+            <td>Copper plate</td>
+            <td id="Cu" style="text-align:right;">0/0 </td>
+          </tr>
+          <tr>
             <td>Rel. Humidity</td>
             <td id="RelHum" style="text-align:right;">0 </td>
           </tr>
           <tr>
             <td>Dew point</td>
             <td id="DP" style="text-align:right;">0 </td>
-          </tr>
-          <tr>
-            <td>Copper plate</td>
-            <td id="Cu" style="text-align:right;">0/0 </td>
           </tr>
         </table>
       </div>
@@ -376,6 +392,8 @@
       const valve0 = document.getElementById('valve0');
       const valve1 = document.getElementById('valve1');
       const getcsv = document.getElementById('getcsv');
+      const saveFW = document.getElementById('saveFW');
+      const loadFW = document.getElementById('loadFW');
 
       var logarea = document.getElementById("logarea");
 
@@ -392,10 +410,6 @@
 
       valve0.addEventListener('click', (e) => {
           valve0.style.backgroundColor = 'darkgray';
-
-          //no          document.getElementById('circleR').style.setAttribute("fill", mycolors[4]);
-          //          document.getElementById('circleR').style = "fill: red";
-         
           socket.emit('valve0');
       });
 
@@ -403,7 +417,15 @@
           valve1.style.backgroundColor = 'darkgray';
           socket.emit('valve1');
       });
-      
+
+      loadFW.addEventListener('click', (e) => {
+          socket.emit('loadFW');
+      });
+
+      saveFW.addEventListener('click', (e) => {
+          socket.emit('saveFW');
+      });
+
       getcsv.addEventListener('click', (e) => {socket.emit('getcsv'); });
 
       socket.on('envString', (msg) => {
@@ -461,6 +483,7 @@
       socket.on('varString', (msg) => {
           const snumbers = msg.toString().replace('VAR = ', '');
           const vNumbers = snumbers.split(', ');
+          console.log(vNumbers);
           let greenLight    = vNumbers[0].replace("G", "");
           let yellowLight   = vNumbers[1].replace("Y", "");
           let redLight      = vNumbers[2].replace("R", "");
@@ -823,7 +846,7 @@
 
       document.onreadystatechange =  function disclaimerAlert() {
           if (document.readyState=='loaded' || document.readyState=='complete') {
-              alert("Note: After clicking anything, the display will update only after reading back the coldbox state!\nThis allows synchronization between all connected browsers and the coldbox GUI.\nSo be patient before double-clicking!");
+              alert("Note: After clicking anything, the display will update only after reading back the coldbox state!\nThis allows synchronization between all connected browsers and the coldbox GUI.\nSo be patient before double-clicking!\n\nNote: Do not use Mode = 0 (temperature setting). Still under development!");
           }
       }
     </script>
