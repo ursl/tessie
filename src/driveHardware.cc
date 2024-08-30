@@ -2377,6 +2377,6 @@ void driveHardware::breakInterlock() {
   emit signalSendToServer(QString::fromStdString(b.str()));
   
   
-  fStatusString = "interlock broken";
+  fStatusString = "bad interlock";
 
 }
