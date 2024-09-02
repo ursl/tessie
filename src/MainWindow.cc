@@ -15,6 +15,8 @@
 #include "sha256.hh"
 #include "util.hh"
 
+#define UZH
+
 using namespace std;
 
 // -------------------------------------------------------------------------------
@@ -427,7 +429,11 @@ void MainWindow::btnStop() {
   static int cnt(0);
   cout << "MainWindow::signalStopProgram(), cnt = " << cnt << endl;
   ++cnt;
+#ifdef UZH
+  emit signalValve(4);
+#else
   emit signalStopOperations();
+#endif
 }
 
 

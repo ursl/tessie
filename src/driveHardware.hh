@@ -14,6 +14,8 @@
 #include "TECData.hh"
 #include "tLog.hh"
 
+#define UZH
+
 #ifdef PI
 #include <net/if.h>
 #include <sys/ioctl.h>
@@ -107,6 +109,10 @@ public:
   float  getValue();
   int    getSWVersion(int itec = 0);
   char   crc(char *data, size_t len);
+
+#ifdef UZH
+  int   readI2C();
+#endif
 
   // -- environmental data
   void    readSHT85();
