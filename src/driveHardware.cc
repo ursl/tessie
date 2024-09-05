@@ -300,8 +300,7 @@ void driveHardware::doRun() {
   while (1) {
 
 #ifdef UZH
-    if (!(readI2C()%2)){
-      //std::this_thread::sleep_for(2s);
+    if (!(readI2C()%2)){ // if odd, LED is red
       continue;
     }
 #endif
@@ -1427,25 +1426,33 @@ void driveHardware::entertainFras() {
 
 // ----------------------------------------------------------------------
 void driveHardware::turnOnFan() {
+#ifdef UZH
+#else
   if (!getStatusFan()) toggleFras(4);
+#endif
 }
 
 
 // ----------------------------------------------------------------------
 void driveHardware::turnOffFan() {
+#ifdef UZH
+#else
   if (getStatusFan()) toggleFras(4);
+#endif
 }
 
 
 // ----------------------------------------------------------------------
 void driveHardware::turnOnLV() {
   if (!getStatusLVInterlock()) toggleFras(8);
+  //fLOG(WARNING, "turning on LV");
 }
 
 
 // ----------------------------------------------------------------------
 void driveHardware::turnOffLV() {
   if (getStatusLVInterlock()) toggleFras(8);
+  //fLOG(WARNING, "turning off LV");
 }
 
 
@@ -2101,7 +2108,9 @@ void driveHardware::readSHT85() {
 // ----------------------------------------------------------------------
 int driveHardware::readI2C() {
 #ifdef PI
-
+  
+  std::this_thread::sleep_for(5*fMilli100);
+  
   int handle = i2c_open(fPiGPIO, I2CBUS, I2C_PCA_ADDR, 0);
   
   int r = i2c_read_byte_data(fPiGPIO, handle, 0);
