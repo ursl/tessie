@@ -21,7 +21,7 @@
 #include <pigpiod_if2.h>
 #endif
 
-#define UZH
+//#define UZH
 #define I2C_PCA_ADDR   0x41
 
 // -- i2c address of SHT85 sensor
@@ -2109,8 +2109,6 @@ void driveHardware::readSHT85() {
 int driveHardware::readI2C() {
 #ifdef PI
   
-  std::this_thread::sleep_for(5*fMilli100);
-  
   int handle = i2c_open(fPiGPIO, I2CBUS, I2C_PCA_ADDR, 0);
   
   int r = i2c_read_byte_data(fPiGPIO, handle, 0);
@@ -2124,7 +2122,7 @@ int driveHardware::readI2C() {
   if (r & 2) s_i2c += "on";
   else s_i2c += "off";
   
-  fLOG(WARNING, s_i2c+"  "+to_string(r));
+  //fLOG(WARNING, s_i2c+"  "+to_string(r));
   
   i2c_close(fPiGPIO, handle);
 #endif
