@@ -425,9 +425,9 @@ void MainWindow::btnINTL() {
 // ----------------------------------------------------------------------
 void MainWindow::btnStop() {
   static int cnt(0);
-  cout << "MainWindow::signalStopProgram(), cnt = " << cnt << endl;
+  cout << "MainWindow::signalStopProgram(99), cnt = " << cnt << endl;
   ++cnt;
-  emit signalStopOperations();
+  emit signalStopOperations(99);
 }
 
 

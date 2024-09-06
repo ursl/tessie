@@ -25,7 +25,7 @@ public:
 
 signals:
   void signalQuitProgram();
-  void signalStopOperations();
+  void signalStopOperations(int);
   void signalValve(int);
 
 public slots:
