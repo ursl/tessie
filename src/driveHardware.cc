@@ -21,6 +21,9 @@
 #include <pigpiod_if2.h>
 #endif
 
+#define UZH
+#define I2C_PCA_ADDR   0x41
+
 // -- i2c address of SHT85 sensor
 #define I2C_SHT85_ADDR 0x44
 
@@ -295,7 +298,14 @@ void driveHardware::doRun() {
 
   cout << "driveHardware::doRun() start loop" << endl;
   while (1) {
+
+#ifdef UZH
     evtHandler();
+    if (!(readI2C()%2)){ // if odd, LED is red
+      continue;
+    }
+#endif
+
 
     std::this_thread::sleep_for(fMilli5);
     evtHandler();
@@ -1416,25 +1426,33 @@ void driveHardware::entertainFras() {
 
 // ----------------------------------------------------------------------
 void driveHardware::turnOnFan() {
+#ifdef UZH
+#else
   if (!getStatusFan()) toggleFras(4);
+#endif
 }
 
 
 // ----------------------------------------------------------------------
 void driveHardware::turnOffFan() {
+#ifdef UZH
+#else
   if (getStatusFan()) toggleFras(4);
+#endif
 }
 
 
 // ----------------------------------------------------------------------
 void driveHardware::turnOnLV() {
   if (!getStatusLVInterlock()) toggleFras(8);
+  //fLOG(WARNING, "turning on LV");
 }
 
 
 // ----------------------------------------------------------------------
 void driveHardware::turnOffLV() {
   if (getStatusLVInterlock()) toggleFras(8);
+  //fLOG(WARNING, "turning off LV");
 }
 
 
@@ -1462,6 +1480,10 @@ void driveHardware::turnOffValve(int i) {
 
 
 // ----------------------------------------------------------------------
+#ifdef UZH
+bool fBusyDisarm = false;
+#endif
+
 void driveHardware::toggleFras(int imask) {
   fMutex.lock();
   int old = fRelaisMask;
@@ -1507,7 +1529,10 @@ void driveHardware::toggleFras(int imask) {
   if ((1 == imask) || (2 == imask)) {
     sbla << "toggleFRAS(" << (imask == 1? "flush) ": "rinse) ") << sstatus;
   } else {
+#ifdef UZH
+#else
     sbla << "toggleFRAS(fan) " << sstatus;
+#endif
   }
   fLOG(INFO, sbla.str().c_str());
 
@@ -1523,6 +1548,18 @@ void driveHardware::toggleFras(int imask) {
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
 #endif
   fMutex.unlock();
+
+#ifdef UZH
+  if (4 == imask){
+    if (fBusyDisarm){
+      fBusyDisarm = false;
+    } else{
+      fBusyDisarm = true;
+      std::this_thread::sleep_for(400ms);
+      toggleFras(4);
+    }
+  }
+#endif
 
 }
 
@@ -2066,6 +2103,35 @@ void driveHardware::readSHT85() {
 #endif
 }
 
+
+#ifdef UZH
+// ----------------------------------------------------------------------
+int driveHardware::readI2C() {
+  int r(1);
+#ifdef PI
+  
+  int handle = i2c_open(fPiGPIO, I2CBUS, I2C_PCA_ADDR, 0);
+  
+  r = i2c_read_byte_data(fPiGPIO, handle, 0);
+  
+  r = r xor 255;
+  string s_i2c = "LED is ";
+  
+  if (r & 1) s_i2c += "RED";
+  else s_i2c += "GREEN";
+  s_i2c += ", flow is ";
+  if (r & 2) s_i2c += "on";
+  else s_i2c += "off";
+  
+  //fLOG(WARNING, s_i2c+"  "+to_string(r));
+  
+  i2c_close(fPiGPIO, handle);
+#endif
+return r;
+
+}
+
+#endif
 
 // ----------------------------------------------------------------------
 void driveHardware::readVProbe(int pos) {
