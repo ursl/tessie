@@ -21,8 +21,9 @@
 #include <pigpiod_if2.h>
 #endif
 
-#define UZH
+#ifdef UZH
 #define I2C_PCA_ADDR   0x41
+#endif
 
 // -- i2c address of SHT85 sensor
 #define I2C_SHT85_ADDR 0x44

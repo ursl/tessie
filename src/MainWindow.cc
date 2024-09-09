@@ -15,8 +15,6 @@
 #include "sha256.hh"
 #include "util.hh"
 
-#define UZH
-
 using namespace std;
 
 // -------------------------------------------------------------------------------

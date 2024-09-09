@@ -23,6 +23,10 @@ CONFIG(NOPI) {
  LIBS += -L/usr/lib/arm-linux-gnueabihf -lmosquittopp
 }
 
+CONFIG(UZH) {
+ DEFINES += UZH
+}
+
 SOURCES += \
     CANmessage.cc \
     MainWindow.cc \

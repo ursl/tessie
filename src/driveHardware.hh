@@ -14,8 +14,6 @@
 #include "TECData.hh"
 #include "tLog.hh"
 
-#define UZH
-
 #ifdef PI
 #include <net/if.h>
 #include <sys/ioctl.h>
