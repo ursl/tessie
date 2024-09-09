@@ -21,7 +21,7 @@
 #include <pigpiod_if2.h>
 #endif
 
-//#define UZH
+#define UZH
 #define I2C_PCA_ADDR   0x41
 
 // -- i2c address of SHT85 sensor
@@ -300,12 +300,12 @@ void driveHardware::doRun() {
   while (1) {
 
 #ifdef UZH
+    evtHandler();
     if (!(readI2C()%2)){ // if odd, LED is red
       continue;
     }
 #endif
 
-    evtHandler();
 
     std::this_thread::sleep_for(fMilli5);
     evtHandler();
@@ -2107,11 +2107,12 @@ void driveHardware::readSHT85() {
 #ifdef UZH
 // ----------------------------------------------------------------------
 int driveHardware::readI2C() {
+  int r(1);
 #ifdef PI
   
   int handle = i2c_open(fPiGPIO, I2CBUS, I2C_PCA_ADDR, 0);
   
-  int r = i2c_read_byte_data(fPiGPIO, handle, 0);
+  r = i2c_read_byte_data(fPiGPIO, handle, 0);
   
   r = r xor 255;
   string s_i2c = "LED is ";
