@@ -238,6 +238,11 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   gethostname(hostname, 1024);
   fHostName = hostname;
 
+#ifdef UZH
+  fBusyDisarm = false;
+#endif
+
+  
 }
 
 
@@ -1427,8 +1432,7 @@ void driveHardware::entertainFras() {
 
 // ----------------------------------------------------------------------
 void driveHardware::turnOnFan() {
-#ifdef UZH
-#else
+#ifndef UZH
   if (!getStatusFan()) toggleFras(4);
 #endif
 }
@@ -1436,8 +1440,7 @@ void driveHardware::turnOnFan() {
 
 // ----------------------------------------------------------------------
 void driveHardware::turnOffFan() {
-#ifdef UZH
-#else
+#ifndef UZH
   if (getStatusFan()) toggleFras(4);
 #endif
 }
@@ -1481,10 +1484,6 @@ void driveHardware::turnOffValve(int i) {
 
 
 // ----------------------------------------------------------------------
-#ifdef UZH
-bool fBusyDisarm = false;
-#endif
-
 void driveHardware::toggleFras(int imask) {
   fMutex.lock();
   int old = fRelaisMask;
@@ -1530,8 +1529,7 @@ void driveHardware::toggleFras(int imask) {
   if ((1 == imask) || (2 == imask)) {
     sbla << "toggleFRAS(" << (imask == 1? "flush) ": "rinse) ") << sstatus;
   } else {
-#ifdef UZH
-#else
+#ifndef UZH
     sbla << "toggleFRAS(fan) " << sstatus;
 #endif
   }

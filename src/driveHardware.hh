@@ -236,6 +236,10 @@ private:
   int    fPiGPIO;
 #endif
 
+#ifdef UZH
+  bool fBusyDisarm;
+#endif
+  
   // -- all the registers, one element per TEC
   // -- this is a map instead of a vector to avoid the mismatch between '0' and '1'
   std::map<int, TECData> fTECData;
