@@ -1,3 +1,10 @@
+# ######################################################################
+# default on Pi:   qmake -o Makefile tessie.pro
+# not on a Pi:     qmake "CONFIG+=NOPI" -o Makefile tessie.pro
+# enable UZH code: qmake "CONFIG+=UZH" "CONFIG+=NOPI" -o Makefile tessie.pro
+# enable UZH code: qmake "CONFIG+=UZH" -o Makefile tessie.pro
+# ######################################################################
+
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
