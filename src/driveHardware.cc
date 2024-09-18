@@ -2035,20 +2035,41 @@ void driveHardware::dumpCSV() {
   fCsvFile <<  output.str() << endl;
 }
 
+
 // ----------------------------------------------------------------------
 string driveHardware::timeStamp(bool filestamp) {
   return fLOG.timeStamp(filestamp);
 }
 
+
 // ----------------------------------------------------------------------
 void driveHardware::readSHT85() {
 #ifdef PI
+  static int badReadoutCounter(0);
+  static int readoutCounter(0);
   int length(0), cnt(0);
 
+  ++readoutCounter;
+  if (readoutCounter > 100) {
+    stringstream a("periodic hard reset of SHT85");
+    fLOG(INFO, a.str()); 
+    gpio_write(fPiGPIO, GPIOPSUEN, 0);
+    std::this_thread::sleep_for(fMilli100);
+    std::this_thread::sleep_for(fMilli100);
+    gpio_write(fPiGPIO, GPIOPSUEN, 1);
+    readoutCounter = 0; 
+  }
+  
   int handle = i2c_open(fPiGPIO, I2CBUS, I2C_SHT85_ADDR, 0);
-  int result = i2c_write_device(fPiGPIO, handle, fSHT85Config, 2);
 
-  std::this_thread::sleep_for(fMilli100);
+  // -- send a softreset (inspired by sensirion driver code)
+  char softReset[2]; softReset[0] = 0xA2;  softReset[1] = 0x30;
+  length = i2c_write_device(fPiGPIO, handle, softReset, 2);
+  std::this_thread::sleep_for(fMilli20);
+
+  int result = i2c_write_device(fPiGPIO, handle, fSHT85Config, 2);
+  std::this_thread::sleep_for(fMilli20);
+
   length = i2c_read_device(fPiGPIO, handle, fSHT85Data, 6);
   while (cnt < 5) {
     if (6 == length) break;
@@ -2079,6 +2100,7 @@ void driveHardware::readSHT85() {
     } else if ((fSHT85Data[0] == 0) && (fSHT85Data[1] == 0)) {
       stringstream a("fSHT85Data[0,1] == 0,0 -- ignoring temperature reading ");
       fLOG(WARNING, a.str());
+      ++badReadoutCounter;
     } else {
       fSHT85Temp      = tmpTemp;
       st              = (fSHT85Data[3]<<8) + fSHT85Data[4];
@@ -2093,6 +2115,14 @@ void driveHardware::readSHT85() {
       fSHT85DP    = calcDP(1);
     }
 
+    if (badReadoutCounter > 10) {
+      stringstream a("badReadoutCounter > 10, invoking hard reset of SHT85");
+      gpio_write(fPiGPIO, GPIOPSUEN, 0);
+      std::this_thread::sleep_for(fMilli100);
+      gpio_write(fPiGPIO, GPIOPSUEN, 1);
+      badReadoutCounter = 0; 
+    }
+    
     // -- print
     if (0) {
       cout << "Temperature in Celsius: " << fSHT85Temp << endl;
