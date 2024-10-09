@@ -296,7 +296,8 @@ void driveHardware::sentFromServer(QString msg) {
 
 // ----------------------------------------------------------------------
 void driveHardware::doRun() {
-  cout << "driveHardware::doRun() entered" << endl;
+  cout << "driveHardware::doRun() entered, wait 5 seconds" << endl;
+  std::this_thread::sleep_for(std::chrono::milliseconds(5000));
   int cnt(-1);
   struct timeval tvVeryOld, tvOld, tvNew;
   gettimeofday(&tvVeryOld, 0);
