@@ -1,6 +1,6 @@
 #include <sstream>
 #include <iostream>
-
+#include <string.h> 
 
 // ----------------------------------------------------------------------
 // -- first part is from Sensirion
