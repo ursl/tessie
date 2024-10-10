@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include <linux/i2c-dev.h>
 #include <sys/ioctl.h>
@@ -20,24 +21,19 @@ int main(int argc, char *argv[]) {
   // -- get I2C device
   ioctl(file, I2C_SLAVE, I2C_ADDR);
   
-  // -- send high repeatability measurement command
-  //    command msb, command lsb(0x2C, 0x06)
-  char config[2] = {0};
-  config[0] = I2C_ADDR << 1; 
-  write(file, config, 1);
-  sleep(1);
-  
-  // -- read 6 bytes of data
-  //    temp msb, temp lsb, temp CRC, humidity msb, humidity lsb, humidity CRC
-  char data[6] = {0};
-  read(file, data, 6);
-
-  //   cout << "sbla ->" << sbla.str() << "<-"  << endl;
-  char sbuffer[2];
-  for (unsigned int i = 0; i < fdlen; ++i) {
-    sprintf(sbuffer, " %02X", (int)data[i]);
-    printf("sbuffer ");
+  // -- set command byte to 0x0 (Register: Input Port, Protocol: Read Byte)
+  char config = 0x0;
+  if (1) {
+    write(file, &config, 1);
   }
-  
+  /* write(file, config+2, 1); */
+  /* write(file, config+1, 1); */
+
+  // -- read 1 bytes of data
+  int dlen = 1;
+  char data = 0;
+  read(file, &data, 1);
+
+  printf("read back: %x\n", (char)~data);
   return 0;
 }
