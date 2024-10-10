@@ -11,7 +11,7 @@ using namespace std;
 canFrame::canFrame(int canid, int len, unsigned char *data) {
   fCanId = canid;
   fdlen  = len;
-  //  cout << "canFrame: canid = " << std::hex << canid << std::dec << " len = " << len << endl;
+  // cout << "canFrame: canid = " << std::hex << canid << std::dec << " len = " << len << endl;
 
   fData.clear();
   for (int i = 0; i < len; ++i) fData.push_back(data[i]);
@@ -57,7 +57,9 @@ canFrame::canFrame(int canid, int len, unsigned char *data) {
         }
       } else if (6 == fReg) {
         // -- software version in one byte
-        char ndata = fData[1];
+        // cout << "accessing fData, len = " << fdlen << endl;
+        char ndata = fData[0];
+        // cout << "ndata: " << ndata << endl;
         fIntVal = static_cast<int>(ndata);
       }
     }

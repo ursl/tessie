@@ -296,13 +296,13 @@ void driveHardware::sentFromServer(QString msg) {
 
 // ----------------------------------------------------------------------
 void driveHardware::doRun() {
-  cout << "driveHardware::doRun() entered" << endl;
+  fLOG(INFO, "driveHardware::doRun() entered");
   int cnt(-1);
   struct timeval tvVeryOld, tvOld, tvNew;
   gettimeofday(&tvVeryOld, 0);
   gettimeofday(&tvOld, 0);
 
-  cout << "driveHardware::doRun() start loop" << endl;
+  fLOG(INFO, "driveHardware::doRun() start loop");
   while (1) {
 
 #ifdef UZH

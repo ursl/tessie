@@ -70,7 +70,6 @@ int main(int argc, char *argv[]) {
   QObject::connect(&w, SIGNAL(signalStopOperations(int)), hw, SLOT(stopOperations(int)));
   
   ioThread->start();
-  std::this_thread::sleep_for(std::chrono::milliseconds(3000));
   hwThread->start();
 
   // -- this must be after setGui(...)!
