@@ -22,6 +22,9 @@ i2ctest: i2ctest.c
 i2ctest2: i2ctest2.c
 	gcc -o $@  $^
 
+i2ctest3: i2ctest3.c
+	gcc -o $@  $^
+
 rpi_i2c: rpi_i2c.c
 	gcc -o $@  $^ -lbcm_host
 

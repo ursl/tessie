@@ -31,6 +31,13 @@ int main(int argc, char *argv[]) {
   //    temp msb, temp lsb, temp CRC, humidity msb, humidity lsb, humidity CRC
   char data[6] = {0};
   read(file, data, 6);
+
+  //   cout << "sbla ->" << sbla.str() << "<-"  << endl;
+  char sbuffer[2];
+  for (unsigned int i = 0; i < fdlen; ++i) {
+    sprintf(sbuffer, " %02X", (int)data[i]);
+    printf("sbuffer ");
+  }
   
   return 0;
 }
