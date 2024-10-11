@@ -220,6 +220,7 @@ private:
   //    0 closed            (TEC7 0 < Temp_W < 4000)
   //    -1 open             (TEC7 Temp_W < 0)
   int fLidStatus, fOldLidStatus;
+  double fLidReading; 
   int fInterlockStatus;
   
 #ifdef PI

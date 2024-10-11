@@ -110,7 +110,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fAlarmState      = 0;
   fLidStatus       = 0;
   fInterlockStatus = 0;
-
+  fLidReading      = -99999.;
+  
 #ifdef PI
   fPiGPIO = pigpio_start(NULL, NULL);
 
@@ -412,6 +413,7 @@ void driveHardware::ensureSafety() {
 #ifdef PI
   checkLid();
   if (fOldLidStatus != fLidStatus) {
+    fLOG(INFO, "changing lid status, fLidReading = " + to_string(fLidReading));
     fOldLidStatus = fLidStatus;
     if (fLidStatus < 1) {
       breakInterlock();
@@ -593,6 +595,7 @@ void driveHardware::ensureSafety() {
 #endif
     if (1 == fLidStatus) {
       if (fOldLidStatus != fLidStatus) {
+        fLOG(INFO, "changing lid status, fLidReading = " + to_string(fLidReading));
         fOldLidStatus = fLidStatus;
         stringstream a;
         if (1 == fLidStatus) {
@@ -2386,11 +2389,11 @@ void driveHardware::lighting(int imode) {
 // ----------------------------------------------------------------------
 void  driveHardware::checkLid() {
   // -- keep reading from CAN bus in readAllParamsFromCANPublic() to minimize CAN errors
-  double reading = fTECData[1].reg["Temp_W"].value;
-  if (reading < 4100.) {
+  fLidReading =  fTECData[1].reg["Temp_W"].value;
+  if (fLidReading < 4100.) {
     // -- lid is locked
     fLidStatus = 1;
-  } else if (reading > 4100.) {
+  } else if (fLidReading > 4100.) {
     // -- lid is open
     fLidStatus = -1;
   } else {
