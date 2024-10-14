@@ -115,6 +115,7 @@ public:
   // -- environmental data
   void    readSHT85();
   void    readVProbe(int ipos);
+  void    readFlowmeter();
   float   getTemperature();
   float   getRH();
   float   getDP();

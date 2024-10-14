@@ -28,6 +28,9 @@
 // -- i2c address of SHT85 sensor
 #define I2C_SHT85_ADDR 0x44
 
+// -- i2c address of flowmeter
+#define I2C_FLOWMETER_ADDR 0x41
+
 // -- define GPIO pins for side lights and INTL/PSEN
 //     physical 11/13/15 LED pins  GPIO 17/27/22
 //     physical 16       INTL      GPIO 23
@@ -2134,6 +2137,27 @@ void driveHardware::readSHT85() {
   }
 #endif
 }
+
+
+// ----------------------------------------------------------------------
+void driveHardware::readFlowmeter() {
+#ifdef PI
+  int handle = i2c_open(fPiGPIO, I2CBUS, I2C_FLOWMETER_ADDR, 0);
+
+  // -- set command byte to 0x0 (Register: Input Port, Protocol: Read Byte)
+  char command = 0x0;
+  length = i2c_write_device(fPiGPIO, handle, &command, 1);
+  std::this_thread::sleep_for(fMilli20);
+
+  char data = 0x0;
+  length = i2c_read_device(fPiGPIO, handle, data, 1);
+
+  printf("read back: %x\n", (char)~data);
+  i2c_close(fPiGPIO, handle);
+  
+#endif
+}
+
 
 
 #ifdef UZH
