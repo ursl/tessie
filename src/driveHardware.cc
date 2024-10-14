@@ -332,7 +332,10 @@ void driveHardware::doRun() {
       tvOld = tvNew;
       if (0) cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
       // -- read SHT85 only every 2 seconds!
-      if (tdiff2 > 2000) readSHT85();
+      if (tdiff2 > 2000) {
+        readSHT85();
+        readFlowmeter();
+      }
 
       // -- read all parameters from CAN
       readAllParamsFromCANPublic();
