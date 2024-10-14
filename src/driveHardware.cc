@@ -424,6 +424,7 @@ void driveHardware::doRun() {
 void driveHardware::ensureSafety() {
 
   if (0 == fStopOperations) {
+    fLOG(INFO, "fFlowMeterStatus = " + to_string(fFlowMeterStatus));
     if (0 == fFlowMeterStatus) {
       fStatusString = "turn on chiller!";
     } else {
