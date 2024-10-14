@@ -2151,8 +2151,9 @@ void driveHardware::readFlowmeter() {
 
   char data = 0x0;
   length = i2c_read_device(fPiGPIO, handle, &data, 1);
-
-  printf("read back: %x\n", (char)~data);
+  data ~= data;
+  stringstream a("flowmeter readout data =  " + to_string(data));
+  fLOG(WARNING, a.str());
   i2c_close(fPiGPIO, handle);
   
 #endif
