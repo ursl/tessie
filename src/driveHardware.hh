@@ -33,13 +33,6 @@ const unsigned int CANBUS_WRITE   = 0x020;
 const unsigned int CANBUS_TECSEND = 0x040;
 const unsigned int CANBUS_TECREC  = 0x000;
 
-const double SAFETY_MAXSHT85TEMP  = 25.;
-const double SAFETY_MAXTEMPW  = 25.;
-const double SAFETY_MAXTEMPM  = 25.;
-const double SAFETY_DPMARGIN = 2.;
-
-const double SHUTDOWN_TEMP  = 25.;
-
 // ----------------------------------------------------------------------
 class driveHardware: public QObject {
   Q_OBJECT
@@ -254,6 +247,18 @@ private:
   std::string fStatusString, fHostName;
   int fFreeDiskspace, fTrafficRed, fTrafficYellow, fTrafficGreen;
   int fStopOperations, fFlowMeterStatus;
+
+
+  const double SAFETY_DPMARGIN = 2.;
+  
+  // -- reset to 35 if flowmeter present
+  double MAX_TEMP = 25.; 
+  // -- various temperatures
+  double SAFETY_MAXSHT85TEMP{MAX_TEMP};
+  double SAFETY_MAXTEMPW{MAX_TEMP};
+  double SAFETY_MAXTEMPM{MAX_TEMP};
+  double SHUTDOWN_TEMP{MAX_TEMP};
+  
 };
 
 #endif // DRIVEHARDWARE_H

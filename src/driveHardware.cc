@@ -337,6 +337,14 @@ void driveHardware::doRun() {
       if (tdiff2 > 2000) {
         readSHT85();
         readFlowmeter();
+        if (MAX_TEMP < 30. && fFlowMeterStatus > -1) {
+          MAX_TEMP = 35.;
+          SAFETY_MAXSHT85TEMP = MAX_TEMP;
+          SAFETY_MAXTEMPW     = MAX_TEMP;
+          SAFETY_MAXTEMPM     = MAX_TEMP;
+          SHUTDOWN_TEMP       = MAX_TEMP;
+          fLOG(INFO, "Flow switch detected. Changed maximum temperatures to 35 degC");
+        }
       }
 
       // -- read all parameters from CAN
@@ -415,7 +423,13 @@ void driveHardware::doRun() {
 // ----------------------------------------------------------------------
 void driveHardware::ensureSafety() {
 
-  if (0 == fStopOperations) fStatusString = "no problem";
+  if (0 == fStopOperations) {
+    if (0 == fFlowMeterStatus) {
+      fStatusString = "turn on chiller!";
+    } else {
+      fStatusString = "no problem";
+    }
+  }
 
   // -- check lid status (only 1 is good enough) and set interlock accordingly
 #ifdef PI
@@ -2193,7 +2207,7 @@ void driveHardware::readFlowmeter() {
 
   stringstream a("flowmeter readout data =  " + to_string(data)
                  + " fFlowMeterStatus = " + to_string(fFlowMeterStatus));
-  fLOG(WARNING, a.str());
+  //  fLOG(INFO, a.str());
   i2c_close(fPiGPIO, handle);
 #endif
 }
