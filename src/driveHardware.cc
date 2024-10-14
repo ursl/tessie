@@ -70,6 +70,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fI2CErrorCounter = 0;
   fI2CErrorOld = 0;
   fStopOperations = 0;
+  // -- negative means not yet set, 0 is no flow, 1 is flow enable
+  fFlowMeterStatus = -1; 
   
   fTrafficRed = fTrafficYellow = fTrafficGreen = 0; 
   
@@ -495,10 +497,31 @@ void driveHardware::ensureSafety() {
     stopOperations(1);
   }      
 
+  // -- ensure chiller running if at least one TEC is turned on
+  if (anyTECRunning()) {
+    if (fFlowMeterStatus < 0) {
+      // -- should be handled by temperature checking
+    } else {
+      if (fFlowMeterStatus < 1) {
+      
+        greenLight = false;
+        allOK = 2;
+        if (0 == fStopOperations) fStatusString = "Turn on chiller!";
+        stringstream a("==WARNING== chiller not running, turn it on = ");
+        fLOG(ERROR, a.str());
+        emit signalSendToMonitor(QString::fromStdString(a.str()));
+        emit signalSendToServer(QString::fromStdString(a.str()));
+      }
+      //FIXME?    breakInterlock();
+      stopOperations(2);
+    }
+  }
+
+
   // -- dew point vs air temperature
   if ((fSHT85Temp - SAFETY_DPMARGIN) < fSHT85DP) {
     greenLight = false;
-    allOK = 2;
+    allOK = 3;
     if (0 == fStopOperations) fStatusString = "Air temp too close to DP";
     stringstream a("==ALARM== Box air temperature = " +
                    to_string(fSHT85Temp) +
@@ -511,13 +534,13 @@ void driveHardware::ensureSafety() {
     emit signalAlarm(1);
     cout << "signalSetBackground(\"DP\", red)" << endl;
     emit signalSetBackground("DP", "red");
-    //FIXME?    breakInterlock();
+    stopOperations(3);
   }
 
   // -- check water temperature
   if (fTECData[8].reg["Temp_W"].value > SAFETY_MAXTEMPW) {
     greenLight = false;
-    allOK = 3;
+    allOK = 4;
     char cs[100];
     snprintf(cs, sizeof(cs), "Water temp = %+5.2f", fTECData[8].reg["Temp_W"].value);
     if (0 == fStopOperations) fStatusString = cs;
@@ -529,10 +552,10 @@ void driveHardware::ensureSafety() {
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
     emit signalAlarm(1);
-    stopOperations(2);
+    stopOperations(4);
   }
   if (fTECData[8].reg["Temp_W"].value > SHUTDOWN_TEMP) {
-    stopOperations(3);
+    stopOperations(4);
   }      
 
   // -- check module temperatures (1) value and (2) against dew point
@@ -544,7 +567,7 @@ void driveHardware::ensureSafety() {
     }
     if (mtemp > SAFETY_MAXTEMPM) {
       greenLight = false;
-      allOK = 4;
+      allOK = 5;
       char cs[100];
       snprintf(cs, sizeof(cs), "Module %d too hot", itec);
       if (0 == fStopOperations) fStatusString = cs;
@@ -562,12 +585,12 @@ void driveHardware::ensureSafety() {
       //FIXME? breakInterlock();
     }
     if (mtemp > SHUTDOWN_TEMP) {
-      stopOperations(4);
+      stopOperations(5);
     }      
 
     if ((mtemp > -90.) && (mtemp < fSHT85DP + SAFETY_DPMARGIN)) {
       greenLight = false;
-      allOK = 5;
+      allOK = 6;
       stringstream a("==ALARM== module " + to_string(itec) + " temperature = " +
                      to_string(mtemp) +
                      " is too close to dew point = " +
@@ -1620,8 +1643,16 @@ float driveHardware::getTECRegister(int itec, std::string regname) {
 
 // ----------------------------------------------------------------------
 void  driveHardware::turnOnTEC(int itec) {
+  if (0 == fFlowMeterStatus) {
+    string a("==HINT== chiller not running, turn on chiller flow!"); 
+    fLOG(INFO, a);
+    emit signalSendToServer(QString::fromStdString(a));
+    emit signalSendToMonitor(QString::fromStdString(a));
+    return;
+  }
+    
   float mtemp = fTECData[8].reg["Temp_W"].value;
-  if (mtemp > 20.) {
+  if ((fFlowMeterStatus < 0) && (mtemp > 20.0)) {
     char cs[200];
     snprintf(cs, sizeof(cs), "==HINT== water temperature = %+5.2f indicates chiller off. Turn it on!", mtemp);
     string a(cs); 
@@ -1679,24 +1710,23 @@ void  driveHardware::turnOffTEC(int itec) {
 
 
 // ----------------------------------------------------------------------
-// -- check whether any TEC is still turned on. If not, turn off fan.
-void driveHardware::checkFan() {
+bool driveHardware::anyTECRunning() {
   bool oneRunning(false);
-  int idx(-1);
   for (int itec = 1; itec <= 8; ++itec) {
     if (0 == fActiveTEC[itec]) continue;
     if (1 == static_cast<int>(fTECData[itec].reg["PowerState"].value)) {
-      idx = itec;
       oneRunning = true;
       break;
     }
   }
-  if (0 && oneRunning) {
-    cout << "static_cast<int>(fTECData[" << idx << "].reg[\"PowerState\"].value) = "
-         << static_cast<int>(fTECData[idx].reg["PowerState"].value)
-         << endl;
-  }
+  return oneRunning;
+}
 
+
+// ----------------------------------------------------------------------
+// -- check whether any TEC is still turned on. If not, turn off fan.
+void driveHardware::checkFan() {
+  bool oneRunning = anyTECRunning();
   if (oneRunning) {
     // do nothing
   } else {
@@ -2154,11 +2184,17 @@ void driveHardware::readFlowmeter() {
 
   char data = 0x0;
   length = i2c_read_device(fPiGPIO, handle, &data, 1);
-  data = ~data;
-  stringstream a("flowmeter readout data =  " + to_string(data));
+  if (length < 1) {
+    fFlowMeterStatus = -1;
+  } else {
+    data = ~data;
+    fFlowMeterStatus = data;
+  }
+
+  stringstream a("flowmeter readout data =  " + to_string(data)
+                 + " fFlowMeterStatus = " + to_string(fFlowMeterStatus));
   fLOG(WARNING, a.str());
   i2c_close(fPiGPIO, handle);
-  
 #endif
 }
 

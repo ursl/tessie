@@ -68,6 +68,7 @@ public:
   void  parseCAN();
 
   void parseIoMessage();
+
   // -- return true if either s1 or s2 in fIoMessage
   bool findInIoMessage(std::string &s1, std::string &s2, std::string &s3);
   void answerIoGet(std::string &what);
@@ -89,6 +90,7 @@ public:
   void  turnOffFan();
   void  turnOnLV();
   void  turnOffLV();
+  bool  anyTECRunning();
   void  checkFan();
   void  checkLid();
   std::string getStatusString() {return fStatusString;}
@@ -251,7 +253,7 @@ private:
 
   std::string fStatusString, fHostName;
   int fFreeDiskspace, fTrafficRed, fTrafficYellow, fTrafficGreen;
-  int fStopOperations;
+  int fStopOperations, fFlowMeterStatus;
 };
 
 #endif // DRIVEHARDWARE_H
