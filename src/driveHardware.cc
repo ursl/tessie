@@ -2150,7 +2150,7 @@ void driveHardware::readFlowmeter() {
   std::this_thread::sleep_for(fMilli20);
 
   char data = 0x0;
-  length = i2c_read_device(fPiGPIO, handle, data, 1);
+  length = i2c_read_device(fPiGPIO, handle, &data, 1);
 
   printf("read back: %x\n", (char)~data);
   i2c_close(fPiGPIO, handle);
