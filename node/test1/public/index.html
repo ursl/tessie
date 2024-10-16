@@ -79,10 +79,6 @@
             <td id="TempWater" style="text-align:right;">0 </td>
           </tr>
           <tr>
-            <td>Copper plate</td>
-            <td id="Cu" style="text-align:right;">0/0 </td>
-          </tr>
-          <tr>
             <td>Rel. Humidity</td>
             <td id="RelHum" style="text-align:right;">0 </td>
           </tr>
@@ -556,20 +552,6 @@
           }
       });
       
-      socket.on('Temp_WString', (msg) => {
-          const snumbers = msg.toString().replace('Temp_W = ', '');
-          const vNumbers = snumbers.split(',');
-
-          // -- FIXME: correct indices
-          var tmpCu1 = parseFloat(vNumbers[2]);
-          var tmpCu2 = parseFloat(vNumbers[6]);
-          var tmpMax = (tmpCu1 > tmpCu2? tmpCu1: tmpCu2);
-          var el = document.getElementById('Cu');
-          el.innerHTML = tmpCu1.toFixed(2) + ' / ' + tmpCu2.toFixed(2);
-          el.style.backgroundColor = mycolors[colorReducedIndex(tmpMax)];
-      });
-          
-
 
       socket.on('Temp_MString', (msg) => {
           const snumbers = msg.toString().replace('Temp_M = ', '');
