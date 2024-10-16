@@ -493,11 +493,11 @@
           let redLight      = vNumbers[2].replace("R", "");
           let lidStatus     = vNumbers[3].replace("L", "");
           let interLock     = vNumbers[4].replace("I", "");
-          let freeDiskspace = parseInt(vNumbers[5]);
+          let freeDiskspace = parseInt(vNumbers[5].replace("D", ""));
           let statusFM      = -1; 
           console.log(vNumbers.length);
           if (vNumbers.length > 6) {
-              statusFM =  parseInt(vNumbers[6]);
+              statusFM =  parseInt(parseInt(vNumbers[6].replace("F", ""));
           }
           
           var el = document.getElementById('LidStatus');
