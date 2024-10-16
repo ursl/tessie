@@ -820,7 +820,7 @@
           } else {
               msg = msg + " throttleN2Off";
           }
-          console.log(ct + " " + msg);
+          console.log("clkThrottle ->" + msg + "<-");
           socket.emit('throttle', msg);
       }
 
