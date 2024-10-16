@@ -72,6 +72,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fStopOperations = 0;
   // -- negative means not yet set, 0 is no flow, 1 is flow enable
   fFlowMeterStatus = -1; 
+  fThrottleStatus = 0;
   
   fTrafficRed = fTrafficYellow = fTrafficGreen = 0; 
   
@@ -1999,8 +2000,10 @@ void driveHardware::dumpMQTT(int all) {
      << fTrafficYellow << ", R"
      << fTrafficRed << ", L"
      << fLidStatus << ", I"
-     << fInterlockStatus << ", "
-     << fFreeDiskspace
+     << fInterlockStatus << ", D"
+     << fFreeDiskspace << ", F"
+     << fFlowMeterStatus << ", T"
+     << fThrottleStatus
     ;
   emit signalSendToMonitor(QString::fromStdString(ss.str()));
 
