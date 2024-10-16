@@ -2590,15 +2590,15 @@ void driveHardware::breakInterlock() {
 // ----------------------------------------------------------------------
 void driveHardware::throttleN2() {
   // -- the magic number is 5% relative humidity. The SHT85 does not like operation below that. 
-  if (fSHT85RH < 5.0) {
+  if (fSHT85RH < 6.0) {
     turnOffValve(0); 
     turnOffValve(1); 
     fLOG(INFO, "throttleN2 turn off both valves, RH = " + to_string(fSHT85RH));
-  } else if ((6.0 < fSHT85RH) && (fSHT85RH < 7.0)) {
+  } else if ((7.0 < fSHT85RH) && (fSHT85RH < 9.0)) {
     turnOffValve(0); 
     turnOnValve(1); 
     fLOG(INFO, "throttleN2 turn off(on) valves 0(1), RH = " + to_string(fSHT85RH));
-  } else if (fSHT85RH > 7.0) {
+  } else if (fSHT85RH > 9.0) {
     turnOnValve(0); 
     turnOnValve(1); 
     fLOG(INFO, "throttleN2 turn on both valves, RH = " + to_string(fSHT85RH));
