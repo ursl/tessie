@@ -90,10 +90,6 @@
             <td>Dew point</td>
             <td id="DP" style="text-align:right;">0 </td>
           </tr>
-          <tr>
-            <td>Flow meter</td>
-            <td id="FM" style="text-align:right;">0 </td>
-          </tr>
         </table>
       </div>
 
@@ -110,6 +106,10 @@
           <tr>
             <td>Free diskspace</td>
             <td id="FreeDiskspace" style="text-align:right;">0 </td>
+          </tr>
+          <tr>
+            <td>Flow meter</td>
+            <td id="FM" style="text-align:right;">0 </td>
           </tr>
           <tr>
             <td>Traffic light</td>
@@ -487,7 +487,6 @@
       socket.on('varString', (msg) => {
           const snumbers = msg.toString().replace('VAR = ', '');
           const vNumbers = snumbers.split(', ');
-          console.log(vNumbers);
           let greenLight    = vNumbers[0].replace("G", "");
           let yellowLight   = vNumbers[1].replace("Y", "");
           let redLight      = vNumbers[2].replace("R", "");
@@ -495,7 +494,6 @@
           let interLock     = vNumbers[4].replace("I", "");
           let freeDiskspace = parseInt(vNumbers[5].replace("D", ""));
           let statusFM      = -1; 
-          console.log(vNumbers.length);
           if (vNumbers.length > 6) {
               statusFM =  parseInt(parseInt(vNumbers[6].replace("F", "")));
           }
@@ -535,7 +533,7 @@
           } else if (0 == statusFM) {
               el.style.backgroundColor = mycolors[8];
           } else {
-              el.style.backgroundColor = mycolors[6];
+              el.style.backgroundColor = mycolors[5];
           }
 
           
