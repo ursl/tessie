@@ -1275,6 +1275,8 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> -------------");
     vhelp.push_back("> cmd valve0");
     vhelp.push_back("> cmd valve1");
+    vhelp.push_back("> cmd throttleN2On");
+    vhelp.push_back("> cmd throttleN2Off");
     vhelp.push_back("> [tec {0|x}] cmd Power_On");
     vhelp.push_back("> [tec {0|x}] cmd Power_Off");
     vhelp.push_back("> [tec {0|x}] cmd ClearError");
