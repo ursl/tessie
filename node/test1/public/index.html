@@ -495,6 +495,7 @@
           let interLock     = vNumbers[4].replace("I", "");
           let freeDiskspace = parseInt(vNumbers[5]);
           let statusFM      = -1; 
+          console.log(vNumbers.length);
           if (vNumbers.length > 6) {
               statusFM =  parseInt(vNumbers[6]);
           }
@@ -521,7 +522,7 @@
           el.innerHTML = freeDiskspace + " GB";
           if (freeDiskspace > 2) {
               el.style.backgroundColor = mycolors[4];
-          } else if ((freedisk > 1) && (freedisk < 2)) {
+          } else if ((freeDiskspace > 1) && (freeDiskspace < 2)) {
               el.style.backgroundColor = mycolors[6];
           } else {
               el.style.backgroundColor = mycolors[8];
