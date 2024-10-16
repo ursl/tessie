@@ -2594,7 +2594,7 @@ void driveHardware::throttleN2() {
     turnOffValve(0); 
     turnOffValve(1); 
     fLOG(INFO, "throttleN2 turn off both valves, RH = " + to_string(fSHT85RH));
-  } else if (fSHT85RH < 7.0) {
+  } else if ((6.0 < fSHT85RH) && (fSHT85RH < 7.0)) {
     turnOffValve(0); 
     turnOnValve(1); 
     fLOG(INFO, "throttleN2 turn off(on) valves 0(1), RH = " + to_string(fSHT85RH));
@@ -2602,5 +2602,7 @@ void driveHardware::throttleN2() {
     turnOnValve(0); 
     turnOnValve(1); 
     fLOG(INFO, "throttleN2 turn on both valves, RH = " + to_string(fSHT85RH));
-  } 
+  } else {
+    fLOG(INFO, "throttleN2 do nothing, RH = " + to_string(fSHT85RH));
+  }
 }
