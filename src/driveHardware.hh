@@ -86,6 +86,7 @@ public:
   bool  anyTECRunning();
   void  checkFan();
   void  checkLid();
+  void  throttleN2();
   std::string getStatusString() {return fStatusString;}
   std::string getHostname() {return fHostName;}
   void  checkDiskspace();

@@ -371,6 +371,15 @@ io.on('connection', (socket) => {
         })
     });
 
+    socket.on('throttle', (msg) => {
+        console.log('throttle input received ->' + msg + '<-');
+        clientMqtt.publish(topCtrl, msg, {qos: 0, retain: false }, (error) => {
+            if (error) {
+                console.error(error)
+            }
+        })
+    });
+    
     socket.on('getversionstring', (msg) => {
         console.log('getversionstring input received ->' + msg + '<-');
         socket.emit('versionString', versionString);

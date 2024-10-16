@@ -371,6 +371,10 @@ void driveHardware::doRun() {
 
       ensureSafety();
 
+      if (fThrottleStatus > 0) {
+        throttleN2();
+      }
+
       ++cnt;
       // -- about once per hour?
       if (0 == cnt%3600) {
@@ -1205,6 +1209,17 @@ void driveHardware::parseIoMessage() {
       toggleFras(1);
     }
 
+    s1 = "throttleN2On";  s2 = "throttleOn";
+    if (findInIoMessage(s1, s2, s3)) {
+      fThrottleStatus = 1; 
+    }
+
+    s1 = "throttleN2Off";  s2 = "throttleOff";
+    if (findInIoMessage(s1, s2, s3)) {
+      fThrottleStatus = 0; 
+    }
+
+    
     s1 = "valve1";  s2 = "valve1";
     if (findInIoMessage(s1, s2, s3)) {
       toggleFras(2);
@@ -2217,7 +2232,6 @@ void driveHardware::readFlowmeter() {
 }
 
 
-
 #ifdef UZH
 // ----------------------------------------------------------------------
 int driveHardware::readI2C() {
@@ -2246,6 +2260,7 @@ return r;
 }
 
 #endif
+
 
 // ----------------------------------------------------------------------
 void driveHardware::readVProbe(int pos) {
@@ -2375,20 +2390,24 @@ void driveHardware::readVProbe(int pos) {
   cout << fVprobeVoltages << endl;
 }
 
+
 // ----------------------------------------------------------------------
 float driveHardware::getTemperature() {
   return fSHT85Temp;
 }
+
 
 // ----------------------------------------------------------------------
 float driveHardware::getRH() {
   return fSHT85RH;
 }
 
+
 // ----------------------------------------------------------------------
 float driveHardware::getDP() {
   return fSHT85DP;
 }
+
 
 // ----------------------------------------------------------------------
 int driveHardware::getRunTime() {
@@ -2397,6 +2416,7 @@ int driveHardware::getRunTime() {
   int dt = tv.tv_sec - ftvStart.tv_sec;
   return dt;
 }
+
 
 // ----------------------------------------------------------------------
 int driveHardware::diff_ms(timeval t1, timeval t2) {
@@ -2422,6 +2442,7 @@ float driveHardware::calcDP(int mode) {
 
   return static_cast<float>(dp);
 }
+
 
 // ----------------------------------------------------------------------
 // https://stackoverflow.com/questions/51752284/how-to-calculate-crc8-in-c
@@ -2500,6 +2521,7 @@ void driveHardware::checkDiskspace() {
   fLOG(INFO, a.str());
 }
 
+
 // ----------------------------------------------------------------------
 void driveHardware::resetInterlock() {
   fInterlockStatus = 1;
@@ -2528,6 +2550,7 @@ void driveHardware::resetInterlock() {
 
   fStatusString = "interlock reset";
 }
+
 
 // ----------------------------------------------------------------------
 void driveHardware::breakInterlock() {
@@ -2559,4 +2582,23 @@ void driveHardware::breakInterlock() {
   
   fStatusString = "bad interlock";
 
+}
+
+
+// ----------------------------------------------------------------------
+void driveHardware::throttleN2() {
+  // -- the magic number is 5% relative humidity. The SHT85 does not like operation below that. 
+  if (fSHT85RH < 0.05) {
+    turnOffValve(0); 
+    turnOffValve(1); 
+    fLOG(INFO, "throttleN2 turn off both valves, RH = " + to_string(fSHT85RH));
+  } else if (fSHT85RH < 0.07) {
+    turnOffValve(0); 
+    turnOnValve(1); 
+    fLOG(INFO, "throttleN2 turn off(on) valves 0(1), RH = " + to_string(fSHT85RH));
+  } else if (fSHT85RH > 0.07) {
+    turnOnValve(0); 
+    turnOnValve(1); 
+    fLOG(INFO, "throttleN2 turn on both valves, RH = " + to_string(fSHT85RH));
+  } 
 }
