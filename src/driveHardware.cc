@@ -531,9 +531,9 @@ void driveHardware::ensureSafety() {
         fLOG(ERROR, a.str());
         emit signalSendToMonitor(QString::fromStdString(a.str()));
         emit signalSendToServer(QString::fromStdString(a.str()));
+        stopOperations(2);
       }
       //FIXME?    breakInterlock();
-      stopOperations(2);
     }
   }
 
