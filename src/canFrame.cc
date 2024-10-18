@@ -58,7 +58,7 @@ canFrame::canFrame(int canid, int len, unsigned char *data) {
       } else if (6 == fReg) {
         // -- software version in one byte
         // cout << "accessing fData, len = " << fdlen << endl;
-        char ndata = fData[0];
+        char ndata = fData[1];
         // cout << "ndata: " << ndata << endl;
         fIntVal = static_cast<int>(ndata);
       }
