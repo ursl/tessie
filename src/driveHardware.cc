@@ -633,7 +633,7 @@ void driveHardware::ensureSafety() {
   }
 
   // -- check with water temperature whether chiller is running
-  if (fTECData[8].reg["Temp_W"].value > 20.) {
+  if ((-1 == fFlowMeterStatus) && (fTECData[8].reg["Temp_W"].value > 20.)) {
     if (0 == fStopOperations) fStatusString = "turn on chiller!";
   }
   
