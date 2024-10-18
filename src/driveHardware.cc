@@ -17,6 +17,8 @@
 
 #include <fcntl.h>
 
+#include "tec_errors.hh"
+
 #ifdef PI
 #include <pigpiod_if2.h>
 #endif

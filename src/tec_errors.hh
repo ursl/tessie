@@ -33,11 +33,6 @@ extern "C" {
 // Description:   List of required include files (visible by all modules).
 //=================================================================================================
 
-//#include "../SDEF_StandardDefinitions.h"
-typedef bool BOOL;
-typedef void VOID;
-typedef uint32_t U32;
-
   
 //=================================================================================================
 // Section:       DEFINITIONS
@@ -210,14 +205,8 @@ typedef uint32_t U32;
 // Description:   Definition of global functions (visible by all modules).
 //=================================================================================================
 
-BOOL ERRH_boInitializeModule( VOID );
-VOID ERRH_vSetError( U32 u32Error );
-U32 ERRH_u32GetError( VOID );
-VOID ERRH_vClearError( VOID );
-
 #ifdef __cplusplus
 }
 #endif
 
 #endif
-#define SPI_ERROR_MASK 0x02000000
