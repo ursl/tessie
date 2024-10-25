@@ -65,6 +65,8 @@ private:
   std::vector<QPalette>    fPalettes;
 
   bool fAlarmSoundPlaying{false};
+
+  std::map<std::string, QString> fStyleSheet;
   
 };
 #endif // MAINWINDOW_H

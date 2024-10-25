@@ -177,11 +177,16 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   // -- buttons
   QVBoxLayout *vlay00 = new QVBoxLayout(/*fWdg*/);
 
+  fStyleSheet.insert(make_pair("valveOffThrottleOff", "QPushButton {background-color: gray; font-weight: bold; color: black}"));
+  fStyleSheet.insert(make_pair("valveOffThrottleOn", "QPushButton {background-color: gray; font-weight: bold; color: white}"));
+  fStyleSheet.insert(make_pair("valveOnThrottleOn", "QPushButton {background-color: #46923c; font-weight: bold; color: white}"));
+  fStyleSheet.insert(make_pair("valveOnThrottleOff", "QPushButton {background-color: #46923c; font-weight: bold; color: black}"));
+  
   fbtnValve0 = new QPushButton("Flush");
   fbtnValve0->setFocusPolicy(Qt::NoFocus);
   fbtnValve0->setFont(fFont1);
   fbtnValve0->setFixedSize(btnSize);
-  fbtnValve0->setStyleSheet("QPushButton {background-color: gray; color: black; font-weight: bold;}");
+  fbtnValve0->setStyleSheet(fStyleSheet["valveOffThrottleOff"]);
   connect(fbtnValve0, &QPushButton::clicked, this, &MainWindow::btnValve0);
   vlay00->addWidget(fbtnValve0);
 
@@ -189,7 +194,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fbtnValve1->setFocusPolicy(Qt::NoFocus);
   fbtnValve1->setFont(fFont1);
   fbtnValve1->setFixedSize(btnSize);
-  fbtnValve1->setStyleSheet("QPushButton {background-color: gray; color: black; font-weight: bold;}");
+  fbtnValve1->setStyleSheet(fStyleSheet["valveOffThrottleOff"]);
   connect(fbtnValve1, &QPushButton::clicked, this, &MainWindow::btnValve1);
   vlay00->addWidget(fbtnValve1);
 
@@ -297,14 +302,6 @@ void MainWindow::updateHardwareDisplay() {
   } else {
     fqleDP->setPalette(fPalettes[4]);
   }
-
-  if (fpHw->getThrottleStatus()) {
-    fbtnValve0->setStyleSheet("QPushButton {color: white}");
-    fbtnValve1->setStyleSheet("QPushButton {color: white}");
-  } else {
-    fbtnValve0->setStyleSheet("QPushButton {color: black}");
-    fbtnValve1->setStyleSheet("QPushButton {color: black}");
-  }
   
   fqleBusErrors->setText(QString::number(fpHw->getNCANbusErrors()) + "/" + QString::number(fpHw->getNI2CErrors()));
   if ((fpHw->redCANErrors() > 0) || (fpHw->redI2CErrors() > 0)) {
@@ -346,15 +343,32 @@ void MainWindow::updateHardwareDisplay() {
   }
   ++cnt;
 
-  if (fpHw->getStatusValve0()) {
-    fbtnValve0->setStyleSheet("QPushButton {background-color: #46923c; font-weight: bold;}");
+if (fpHw->getStatusValve0()) {
+  if (fpHw->getThrottleStatus()) {
+  fbtnValve0->setStyleSheet(fStyleSheet["valveOnThrottleOn"]);
+    } else {
+      fbtnValve0->setStyleSheet(fStyleSheet["valveOnThrottleOff"]);
+    }
   } else {
-    fbtnValve0->setStyleSheet("QPushButton {background-color: gray; font-weight: bold;}");
+    if (fpHw->getThrottleStatus()) {
+      fbtnValve0->setStyleSheet(fStyleSheet["valveOffThrottleOn"]);
+    } else {
+      fbtnValve0->setStyleSheet(fStyleSheet["valveOffThrottleOff"]);
+    }
   }
+
   if (fpHw->getStatusValve1()) {
-    fbtnValve1->setStyleSheet("QPushButton {background-color: #46923c; font-weight: bold;}");
+    if (fpHw->getThrottleStatus()) {
+      fbtnValve1->setStyleSheet(fStyleSheet["valveOnThrottleOn"]);
+    } else {
+      fbtnValve1->setStyleSheet(fStyleSheet["valveOnThrottleOff"]);
+    }
   } else {
-    fbtnValve1->setStyleSheet("QPushButton {background-color: gray; font-weight: bold;}");
+    if (fpHw->getThrottleStatus()) {
+      fbtnValve1->setStyleSheet(fStyleSheet["valveOffThrottleOn"]);
+    } else {
+      fbtnValve1->setStyleSheet(fStyleSheet["valveOffThrottleOff"]);
+    }
   }
 
   int ls = fpHw->getLidStatus();
