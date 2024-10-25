@@ -311,7 +311,8 @@ void MainWindow::updateHardwareDisplay() {
     fqleFlowSwitch->setStyleSheet("QLineEdit {background-color : red; }");
     //    system("/usr/bin/cvlc --play-and-exit houstonwehaveaproblem_loud.mp3  &");
   } else {
-    fqleFlowSwitch->setStyleSheet("QLineEdit {background-color : white; }");
+    //    fqleFlowSwitch->setStyleSheet("QLineEdit {background-color : white; }");
+    fqleFlowSwitch->setPalette(fPalettes[4]);
   }
 
   if (0 == cnt) {
