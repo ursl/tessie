@@ -124,6 +124,7 @@ public:
   int   redI2CErrors() {return fI2CErrorCounter - fI2CErrorOld;}
   int   getRunCnt() {return fRunCnt;}
   int   getFreeDisk() {checkDiskspace(); return fFreeDiskspace;}
+  int   getFlowSwitchStatus() {return fFlowMeterStatus;}
   
   // -- simply returns the value stored in fTECData
   float getTECRegister(int itec, std::string regname);
