@@ -308,6 +308,7 @@ void MainWindow::updateHardwareDisplay() {
   fqleFlowSwitch->setText(QString::number(fpHw->getFlowSwitchStatus()));
   if (fpHw->getFlowSwitchStatus() < 1) {
     cout << "Setting flow switch line edit to red" << endl;
+    fqleFlowSwitch->setPalette(fPalettes[8]);
     fqleFlowSwitch->setStyleSheet("QLineEdit {background-color : red; }");
     //    system("/usr/bin/cvlc --play-and-exit houstonwehaveaproblem_loud.mp3  &");
   } else {
