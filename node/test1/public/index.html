@@ -485,15 +485,19 @@
       socket.on('varString', (msg) => {
           const snumbers = msg.toString().replace('VAR = ', '');
           const vNumbers = snumbers.split(', ');
-          let greenLight    = vNumbers[0].replace("G", "");
-          let yellowLight   = vNumbers[1].replace("Y", "");
-          let redLight      = vNumbers[2].replace("R", "");
-          let lidStatus     = vNumbers[3].replace("L", "");
-          let interLock     = vNumbers[4].replace("I", "");
-          let freeDiskspace = parseInt(vNumbers[5].replace("D", ""));
-          let statusFM      = -1; 
+          let greenLight     = vNumbers[0].replace("G", "");
+          let yellowLight    = vNumbers[1].replace("Y", "");
+          let redLight       = vNumbers[2].replace("R", "");
+          let lidStatus      = vNumbers[3].replace("L", "");
+          let interLock      = vNumbers[4].replace("I", "");
+          let freeDiskspace  = parseInt(vNumbers[5].replace("D", ""));
+          let statusFM       = -1; 
+          let statusThrottle = -1; 
           if (vNumbers.length > 6) {
               statusFM =  parseInt(parseInt(vNumbers[6].replace("F", "")));
+          }
+          if (vNumbers.length > 7) {
+              statusThrottle =  parseInt(parseInt(vNumbers[7].replace("T", "")));
           }
           
           var el = document.getElementById('LidStatus');
@@ -534,6 +538,12 @@
               el.style.backgroundColor = mycolors[4];
           }
 
+          el = document.getElementById('throttleN2');
+          if (statusThrottle == 1) {
+              el.checked = true;
+          } else {
+              el.checked = false;
+          }
           
           if ("1" == greenLight) {
               document.getElementById('circleG').style = "fill: green; stroke: green; stroke-width: 2";
