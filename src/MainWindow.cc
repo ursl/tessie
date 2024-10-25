@@ -298,6 +298,14 @@ void MainWindow::updateHardwareDisplay() {
     fqleDP->setPalette(fPalettes[4]);
   }
 
+  if (fpHw->getThrottleStatus()) {
+    fbtnValve0->setStyleSheet("{color: white}");
+    fbtnValve1->setStyleSheet("{color: white}");
+  } else {
+    fbtnValve0->setStyleSheet("{color: black}");
+    fbtnValve1->setStyleSheet("{color: black}");
+  }
+  
   fqleBusErrors->setText(QString::number(fpHw->getNCANbusErrors()) + "/" + QString::number(fpHw->getNI2CErrors()));
   if ((fpHw->redCANErrors() > 0) || (fpHw->redI2CErrors() > 0)) {
     cout << "Setting CANbus error counter line edit to red" << endl;
