@@ -245,6 +245,8 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   QPalette p7; p7.setColor(QPalette::Base, QColor(240,  80,   0, trsp)); fPalettes.push_back(p7);
   // red #f00000
   QPalette p8; p8.setColor(QPalette::Base, QColor(240,   0,   0, trsp)); fPalettes.push_back(p8);
+  // white #ffffff
+  QPalette p9; p9.setColor(QPalette::Base, QColor(255, 255, 255, trsp)); fPalettes.push_back(p9);
 
 }
 
@@ -283,9 +285,9 @@ void MainWindow::updateHardwareDisplay() {
   double rh = fpHw->getRH();
   fqleRH->setText(QString::number(rh, 'f', 2));
   if (rh < 5.) {
-    fqleRH->setPalette(fPalettes[4]);
+    fqleRH->setPalette(fPalettes[3]);
   } else  {
-    fqleRH->setPalette(fPalettes[6]);
+    fqleRH->setPalette(fPalettes[4]);
   }
 
   double dp = fpHw->getDP();
@@ -297,12 +299,14 @@ void MainWindow::updateHardwareDisplay() {
   }
 
   fqleBusErrors->setText(QString::number(fpHw->getNCANbusErrors()) + "/" + QString::number(fpHw->getNI2CErrors()));
-  if (fpHw->redCANErrors() > 0) {
+  if ((fpHw->redCANErrors() > 0) || (fpHw->redI2CErrors() > 0)) {
     cout << "Setting CANbus error counter line edit to red" << endl;
-    fqleBusErrors->setStyleSheet("QLineEdit {background-color : red; }");
+    //    fqleBusErrors->setStyleSheet("QLineEdit {background-color : red; }");
+    fqleBusErrors->setPalette(fPalettes[8]);
     //    system("/usr/bin/cvlc --play-and-exit houstonwehaveaproblem_loud.mp3 &");
   } else {
-    fqleBusErrors->setStyleSheet("QLineEdit {background-color : white; }");
+    //fqleBusErrors->setStyleSheet("QLineEdit {background-color : white; }");
+    fqleBusErrors->setPalette(fPalettes[9]);
   }
 
   fqleFlowSwitch->setText(QString::number(fpHw->getFlowSwitchStatus()));
