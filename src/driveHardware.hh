@@ -77,6 +77,7 @@ public:
   bool  getStatusLVInterlock() {return ((fRelaisMask & 8) == 8);}
   int   getLidStatus() {return fLidStatus;}
   int   getInterlockStatus() {return fInterlockStatus;}
+  int   getThrottleStatus() {return fThrottleStatus;}
   void  turnOnValve(int i); // i = 0 or 1
   void  turnOffValve(int i); // i = 0 or 1
   void  turnOnFan();
