@@ -89,26 +89,30 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   //  fWdg->setLayout(glay00);
 
-  QLabel *lblA = new QLabel("CANbus errors"); setupLBL(lblA);
-  QLabel *lblB = new QLabel("I2C errors"); setupLBL(lblB);
+  QLabel *lblA = new QLabel("Errors (CANbus/I2C)"); setupLBL(lblA);
+  QLabel *lblB = new QLabel("Flow switch"); setupLBL(lblB);
   QLabel *lblE = new QLabel("Free diskspace"); setupLBL(lblE);
   QLabel *lblC = new QLabel("Runtime"); setupLBL(lblC);
   QLabel *lblD = new QLabel("Status"); setupLBL(lblD);
 
-  fqleCANbusErrors = new QLineEdit(/*fWdg*/); setupQLE(fqleCANbusErrors);
-  fqleI2CErrors    = new QLineEdit(/*fWdg*/); setupQLE(fqleI2CErrors);
+  fqleBusErrors = new QLineEdit(/*fWdg*/); setupQLE(fqleBusErrors);
+  fqleFlowSwitch   = new QLineEdit(/*fWdg*/); setupQLE(fqleFlowSwitch);
   fqleFreeDisk     = new QLineEdit(/*fWdg*/); setupQLE(fqleFreeDisk);
   fqleRunTime      = new QLineEdit(/*fWdg*/); setupQLE(fqleRunTime);
   fqleStatus       = new QLineEdit(/*fWdg*/); setupQLE(fqleStatus); fqleStatus->setFont(fFont2);
 
   glay00->addWidget(lblA,  0, 0, 1, 1);
-  glay00->addWidget(fqleCANbusErrors, 0, 1, 1, 1);
-  glay00->addWidget(lblB,  1, 0, 1, 1);
-  glay00->addWidget(fqleI2CErrors, 1, 1, 1, 1);
-  glay00->addWidget(lblE,  2, 0, 1, 1);
-  glay00->addWidget(fqleFreeDisk, 2, 1, 1, 1);
+  glay00->addWidget(fqleBusErrors, 0, 1, 1, 1);
+
+  glay00->addWidget(lblE,  1, 0, 1, 1);
+  glay00->addWidget(fqleFreeDisk, 1, 1, 1, 1);
+
+  glay00->addWidget(lblB,  2, 0, 1, 1);
+  glay00->addWidget(fqleFlowSwitch, 2, 1, 1, 1);
+
   glay00->addWidget(lblC,  3, 0, 1, 1);
   glay00->addWidget(fqleRunTime, 3, 1, 1, 1);
+
   glay00->addWidget(lblD,  4, 0, 1, 1);
   glay00->addWidget(fqleStatus, 4, 1, 1, 1);
 
@@ -219,7 +223,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   
   setCentralWidget(fWdg);
 
-  fqleCANbusErrors->clearFocus();
+  fqleBusErrors->clearFocus();
 
   int trsp(200);
 
@@ -292,22 +296,22 @@ void MainWindow::updateHardwareDisplay() {
     fqleDP->setPalette(fPalettes[4]);
   }
 
-  fqleCANbusErrors->setText(QString::number(fpHw->getNCANbusErrors()));
+  fqleBusErrors->setText(QString::number(fpHw->getNCANbusErrors()) + "/" + QString::number(fpHw->getNI2CErrors()));
   if (fpHw->redCANErrors() > 0) {
     cout << "Setting CANbus error counter line edit to red" << endl;
-    fqleCANbusErrors->setStyleSheet("QLineEdit {background-color : red; }");
+    fqleBusErrors->setStyleSheet("QLineEdit {background-color : red; }");
     //    system("/usr/bin/cvlc --play-and-exit houstonwehaveaproblem_loud.mp3 &");
   } else {
-    fqleCANbusErrors->setStyleSheet("QLineEdit {background-color : white; }");
+    fqleBusErrors->setStyleSheet("QLineEdit {background-color : white; }");
   }
 
-  fqleI2CErrors->setText(QString::number(fpHw->getNI2CErrors()));
-  if (fpHw->redI2CErrors() > 0) {
-    cout << "Setting I2C error counter line edit to red" << endl;
-    fqleI2CErrors->setStyleSheet("QLineEdit {background-color : red; }");
+  fqleFlowSwitch->setText(QString::number(fpHw->getFlowSwitchStatus()));
+  if (fpHw->getFlowSwitchStatus() < 1) {
+    cout << "Setting flow switch line edit to red" << endl;
+    fqleFlowSwitch->setStyleSheet("QLineEdit {background-color : red; }");
     //    system("/usr/bin/cvlc --play-and-exit houstonwehaveaproblem_loud.mp3  &");
   } else {
-    fqleI2CErrors->setStyleSheet("QLineEdit {background-color : white; }");
+    fqleFlowSwitch->setStyleSheet("QLineEdit {background-color : white; }");
   }
 
   if (0 == cnt) {

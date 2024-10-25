@@ -49,7 +49,7 @@ private:
 
   QWidget *fWdg;
 
-  QLineEdit *fqleCANbusErrors, *fqleI2CErrors, *fqleFreeDisk, *fqleRunTime, *fqleStatus;
+  QLineEdit *fqleBusErrors, *fqleFlowSwitch, *fqleFreeDisk, *fqleRunTime, *fqleStatus;
   QLineEdit *fqleWT, *fqleAT, *fqleRH, *fqleDP, *fqleLS, *fqleIL;
 
   QPushButton *fbtnValve0, *fbtnValve1;
