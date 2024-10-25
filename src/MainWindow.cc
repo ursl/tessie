@@ -313,7 +313,7 @@ void MainWindow::updateHardwareDisplay() {
     //    system("/usr/bin/cvlc --play-and-exit houstonwehaveaproblem_loud.mp3  &");
   } else {
     cout << "Setting flow switch line edit to green" << endl;
-    fqleFlowSwitch->setPalette(fPalettes[3]);
+    fqleFlowSwitch->setPalette(fPalettes[4]);
     //    fqleFlowSwitch->setStyleSheet("QLineEdit {background-color : #0ac80a; }");
   }
 
