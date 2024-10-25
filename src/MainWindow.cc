@@ -299,11 +299,11 @@ void MainWindow::updateHardwareDisplay() {
   }
 
   if (fpHw->getThrottleStatus()) {
-    fbtnValve0->setStyleSheet("{color: white}");
-    fbtnValve1->setStyleSheet("{color: white}");
+    fbtnValve0->setStyleSheet("QPushButton {color: white}");
+    fbtnValve1->setStyleSheet("QPushButton {color: white}");
   } else {
-    fbtnValve0->setStyleSheet("{color: black}");
-    fbtnValve1->setStyleSheet("{color: black}");
+    fbtnValve0->setStyleSheet("QPushButton {color: black}");
+    fbtnValve1->setStyleSheet("QPushButton {color: black}");
   }
   
   fqleBusErrors->setText(QString::number(fpHw->getNCANbusErrors()) + "/" + QString::number(fpHw->getNI2CErrors()));
@@ -347,14 +347,14 @@ void MainWindow::updateHardwareDisplay() {
   ++cnt;
 
   if (fpHw->getStatusValve0()) {
-    fbtnValve0->setStyleSheet("QPushButton {background-color: #46923c; color: black; font-weight: bold;}");
+    fbtnValve0->setStyleSheet("QPushButton {background-color: #46923c; font-weight: bold;}");
   } else {
-    fbtnValve0->setStyleSheet("QPushButton {background-color: gray; color: black; font-weight: bold;}");
+    fbtnValve0->setStyleSheet("QPushButton {background-color: gray; font-weight: bold;}");
   }
   if (fpHw->getStatusValve1()) {
-    fbtnValve1->setStyleSheet("QPushButton {background-color: #46923c; color: black; font-weight: bold;}");
+    fbtnValve1->setStyleSheet("QPushButton {background-color: #46923c; font-weight: bold;}");
   } else {
-    fbtnValve1->setStyleSheet("QPushButton {background-color: gray; color: black; font-weight: bold;}");
+    fbtnValve1->setStyleSheet("QPushButton {background-color: gray; font-weight: bold;}");
   }
 
   int ls = fpHw->getLidStatus();
