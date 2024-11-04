@@ -448,10 +448,11 @@
           el.innerHTML = tmpRH.toFixed(2);
           if (tmpRH < 5.) {
               el.style.backgroundColor = mycolors[2];
-          } else {
+          } else if (tmpRH < 12.){
               el.style.backgroundColor = mycolors[4];
+          } else {
+              el.style.backgroundColor = mycolors[6];
           }
-
           var tmpDP = parseFloat(vNumbers[3]);
           el = document.getElementById('DP');
           el.innerHTML = tmpDP.toFixed(2);
