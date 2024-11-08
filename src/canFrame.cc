@@ -50,6 +50,7 @@ canFrame::canFrame(int canid, int len, unsigned char *data) {
     if (0 == fType) {
       if (4 == fReg) {
         // -- alarms
+        cout << "TEC ERROR dlen = " << fdlen << endl;
         if (fIntVal > 0) {
           fAlarm = fIntVal;
         } else {
