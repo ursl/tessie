@@ -2382,13 +2382,14 @@ void driveHardware::readVProbe(int pos) {
   double vddd3 = v[ord[1]]  - v[ord[3]];
 
   stringstream output;
-  output << fLOG.shortTimeStamp() << " " <<  std::setprecision(5)
-         << vin << "   "
-         << voffs << "   "
-         << vdda0 << "   " << vddd0 << "   "
-         << vdda1 << "   " << vddd1 << "   "
-         << vdda2 << "   " << vddd2 << "   "
-         << vdda3 << "   " << vddd3 << "   ";
+  //  output << fLOG.shortTimeStamp() << " " <<  std::setprecision(5)
+  output << "vprobe" << pos << " = " <<  std::setprecision(5)
+         << vin << ","
+         << voffs << ","
+         << vdda0 << "," << vddd0 << ","
+         << vdda1 << "," << vddd1 << ","
+         << vdda2 << "," << vddd2 << ","
+         << vdda3 << "," << vddd3 ;
 
   fVprobeVoltages = output.str();
   cout << fVprobeVoltages << endl;
