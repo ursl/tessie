@@ -2320,9 +2320,10 @@ void driveHardware::readVProbe(int pos) {
     i2c_close(fPiGPIO, handle);
 
     if (length != lengthExp) {
-      printf("- Failed to read from the VProbe at i2c bus address 0x%x.", addresses[iaddr]);
-      cout << endl;
-      fVprobeVoltages = "error reading from VPROBE";
+      fLOG(INFO, "Failed to read from the VProbe ");
+      stringstream output;
+      output <<  "vprobe" << pos << " = -999";
+      fVprobeVoltages = output.str();
       return;
     } else {
       if (0) {
