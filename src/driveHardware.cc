@@ -2144,41 +2144,25 @@ void driveHardware::readHYT223() {
 #ifdef PI
   int handle = i2c_open(fPiGPIO, I2CBUS, I2C_HYT223_ADDR, 0);
 
-  // FIXME: first read out, then initiate measurement for next call
-  // no 100ms wait required
-
   for (int i = 0; i < 4; ++i) {
     fHYT223Data[i] = 0;
   }
-
   int length = i2c_read_device(fPiGPIO, handle, fHYT223Data, 4);
   if (length < 6) {
-    for (unsigned int i = 0; i < length; ++i) {
-      cout << dec << "i = " << i << ": 0x" << hex
-           << static_cast<int>(fHYT223Data[i])
-           << " "
-           << dec;
-    }
-    cout << endl;
-    
     unsigned int vrh  = ((fHYT223Data[0]<<8) + fHYT223Data[1]) & 0x3fff;
     unsigned int vtt  = ((fHYT223Data[2]<<8) + fHYT223Data[3]) >>2;
     
     double rh = 0.00610389 * vrh;
     double tt = 0.0100714 * vtt - 40.;
-    
-    cout << "T: " << tt << endl
-         << "RH: " << rh << endl;
+    cout << "readHYT223: T: " << tt << "RH: " << rh
+         << endl;
+
   } else {
     cout << "#### readHYT223 readout error, length = " << length << endl;
   }
    
   // -- trigger next measurement
-  //  char command = 0x0;
-  //  length = i2c_write_device(fPiGPIO, handle, &command, 1);
   i2c_write_quick(fPiGPIO, handle, 0);
-
- 
   i2c_close(fPiGPIO, handle);
 #endif
 }
@@ -2187,7 +2171,8 @@ void driveHardware::readHYT223() {
 // ----------------------------------------------------------------------
 void driveHardware::heatHYT223(bool on) {
 #ifdef PI
-  cout << "####### heatHYT223: " << on << endl;
+  stringstream a("heatHYT223: " + to_string(on));
+  fLOG(INFO, a.str());
   
   int handle = i2c_open(fPiGPIO, I2CBUS, I2C_HEATHYT223_ADDR, 0);
 
@@ -2217,13 +2202,6 @@ void driveHardware::heatHYT223(bool on) {
          << endl;
   }
 
-
-  // addr = command[0];
-  // length = i2c_write_device(fPiGPIO, handle, &addr, 1);
-  // addr = command[1];
-  // length = i2c_write_device(fPiGPIO, handle, &addr, 1);
-
-
   int result = i2c_write_device(fPiGPIO, handle, command, 2);
 
   for (int i = 0; i < 4; ++i) {
@@ -2233,26 +2211,7 @@ void driveHardware::heatHYT223(bool on) {
   addr = command[0];
   length = i2c_write_device(fPiGPIO, handle, &addr, 1);
   length = i2c_read_device(fPiGPIO, handle, fHYT223Data, 1);
-  for (unsigned int i = 0; i < length; ++i) {
-    cout << dec << "heat i = " << i << ": 0x" << hex
-         << static_cast<int>(fHYT223Data[i])
-         << dec
-         << endl;
-  }
   
-  if (0) {
-    static char trial = 0;
-    command[1] = trial;
-    ++trial; 
-  }
-  
-  cout << "heatHYT223: on = " << on
-       << " command = 0x" << hex
-       << static_cast<int>(command[1])
-       << static_cast<int>(command[0])
-       << dec
-       << endl;
-
   i2c_close(fPiGPIO, handle);
 #endif
 }
