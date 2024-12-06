@@ -305,25 +305,17 @@ void MainWindow::updateHardwareDisplay() {
   
   fqleBusErrors->setText(QString::number(fpHw->getNCANbusErrors()) + "/" + QString::number(fpHw->getNI2CErrors()));
   if ((fpHw->redCANErrors() > 0) || (fpHw->redI2CErrors() > 0)) {
-    cout << "Setting CANbus error counter line edit to red" << endl;
-    //    fqleBusErrors->setStyleSheet("QLineEdit {background-color : red; }");
     fqleBusErrors->setPalette(fPalettes[8]);
-    //    system("/usr/bin/cvlc --play-and-exit houstonwehaveaproblem_loud.mp3 &");
   } else {
-    //fqleBusErrors->setStyleSheet("QLineEdit {background-color : white; }");
     fqleBusErrors->setPalette(fPalettes[9]);
   }
 
   fqleFlowSwitch->setText(QString::number(fpHw->getFlowSwitchStatus()));
   if (fpHw->getFlowSwitchStatus() < 1) {
-    cout << "Setting flow switch line edit to red" << endl;
     fqleFlowSwitch->setPalette(fPalettes[8]);
-    //    fqleFlowSwitch->setStyleSheet("QLineEdit {background-color : red; }");
-    //    system("/usr/bin/cvlc --play-and-exit houstonwehaveaproblem_loud.mp3  &");
+
   } else {
-    cout << "Setting flow switch line edit to green" << endl;
     fqleFlowSwitch->setPalette(fPalettes[4]);
-    //    fqleFlowSwitch->setStyleSheet("QLineEdit {background-color : #0ac80a; }");
   }
 
   if (0 == cnt) {
