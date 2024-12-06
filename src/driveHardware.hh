@@ -111,6 +111,8 @@ public:
 
   // -- environmental data
   void    readSHT85();
+  void    readHYT223();
+  void    heatHYT223(bool on);
   void    readVProbe(int ipos);
   void    readFlowmeter();
   float   getTemperature();
@@ -211,6 +213,9 @@ private:
   char fSHT85Data[6], fSHT85Config[2];
   float fSHT85Temp, fSHT85RH, fSHT85DP;
 
+  // -- access and data from HYT223
+  char fHYT223Data[4];
+  
   // -- data from VProbe
   std::string fVprobeVoltages;
 
