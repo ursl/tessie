@@ -149,8 +149,6 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   
   lighting(1);
 
-  //no more  gpio_write(fPiGPIO, GPIOGREEN,  1);
-
   // -- read Sensirion SHT85 humidity/temperature sensor
   cout << "initial readout SHT85" << endl;
   readSHT85();
@@ -261,6 +259,15 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fBusyDisarm = false;
 #endif
 
+
+#ifdef PI
+  // -- Check I2C addresses
+  vector<unsigned int> vi2c = {I2C_SHT85_ADDR, I2C_HYT223_ADDR, I2C_HEATHYT223_ADDR, I2C_FLOWMETER_ADDR, 0x27};
+  for (auto it: vi2c) {
+    int handle = i2c_open(fPiGPIO, I2CBUS, it, 0);
+    cout << "I2C address = " << it << " handle = " << handle << endl;
+  }
+#endif
   
 }
 
