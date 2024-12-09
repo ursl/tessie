@@ -265,7 +265,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   vector<unsigned int> vi2c = {I2C_SHT85_ADDR, I2C_HYT223_ADDR, I2C_HEATHYT223_ADDR, I2C_FLOWMETER_ADDR, 0x27};
   for (auto it: vi2c) {
     int handle = i2c_open(fPiGPIO, I2CBUS, it, 0);
-    cout << "I2C address = " << it << " handle = " << handle << endl;
+    int length = i2c_read_device(fPiGPIO, handle, fHYT223Data, 4);
+    cout << "I2C address = " << it << " handle = " << handle << " length = " << length << endl;
   }
 #endif
   
