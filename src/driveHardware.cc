@@ -262,11 +262,29 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
 
 #ifdef PI
   // -- Check I2C addresses
+  fLOG(INFO, "Check I2C slaves"); 
+  char data[6];
+  
+  std::this_thread::sleep_for(fMilli100);
+  std::this_thread::sleep_for(fMilli100);
   vector<unsigned int> vi2c = {I2C_SHT85_ADDR, I2C_HYT223_ADDR, I2C_HEATHYT223_ADDR, I2C_FLOWMETER_ADDR, 0x27};
   for (auto it: vi2c) {
-    int handle = i2c_open(fPiGPIO, I2CBUS, it, 0);
-    int length = i2c_read_device(fPiGPIO, handle, fHYT223Data, 4);
-    cout << "I2C address = " << it << " handle = " << handle << " length = " << length << endl;
+    int handle(0), length(-1);
+    if (it == I2C_SHT85_ADDR) {
+      // -- SHT895 needs command written first
+      handle = i2c_open(fPiGPIO, I2CBUS, it, 0);
+      int result = i2c_write_device(fPiGPIO, handle, fSHT85Config, 2);
+      std::this_thread::sleep_for(fMilli20);
+      length = i2c_read_device(fPiGPIO, handle, data, 6);
+    } else {
+      // -- rest responds with simple read
+      handle = i2c_open(fPiGPIO, I2CBUS, it, 0);
+      length = i2c_read_device(fPiGPIO, handle, data, 4);
+    }
+    stringstream a;
+    a << "I2C address = " << hex << it << dec << " handle = " << handle << " length = " << length;
+    fLOG(INFO, a.str()); 
+    i2c_close(fPiGPIO, handle);
   }
 #endif
   
