@@ -291,7 +291,10 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
       fI2CSlaveStatus.insert(make_pair(it.second, false));
     }
     stringstream a;
-    a << "I2C address = " << hex << it.first << dec << "(" << it.second << ") handle = " << handle << " length = " << length;
+    a << "I2C address = " << hex << it.first << dec << "(" << it.second << ") handle = " << handle
+      << " length = " << length
+      << " fI2CSlaveStatus[" << it.second << "] = " << fI2CSlaveStatus[it.second]
+      ;
     fLOG(INFO, a.str()); 
     //    if (length > 0) fI2CSlaveStatus[it.index()]
     i2c_close(fPiGPIO, handle);
