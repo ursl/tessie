@@ -150,8 +150,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   lighting(1);
 
   // -- read Sensirion SHT85 humidity/temperature sensor
-  cout << "initial readout SHT85" << endl;
-  readSHT85();
+  cout << "initial readout air temperature" << endl;
+  readAirTemperature();
 
   // -- write CAN socket
   memset(&fFrameW, 0, sizeof(struct can_frame));
@@ -390,8 +390,7 @@ void driveHardware::doRun() {
       if (0) cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
       // -- read SHT85 only every 2 seconds!
       if (tdiff2 > 2000) {
-        readHYT223();
-        readSHT85();
+        readAirTemperature();
         readFlowmeter();
         if (MAX_TEMP < 30. && fFlowMeterStatus > -1) {
           MAX_TEMP = 35.;
@@ -2182,6 +2181,13 @@ string driveHardware::timeStamp(bool filestamp) {
 
 
 // ----------------------------------------------------------------------
+void driveHardware::readAirTemperature() {
+  if (fI2CSlaveStatus["SHT85"]) readSHT85();
+  if (fI2CSlaveStatus["HYT223"]) readHYT223();
+}
+
+
+// ----------------------------------------------------------------------
 void driveHardware::readHYT223() {
 #ifdef PI
   int handle = i2c_open(fPiGPIO, I2CBUS, I2C_HYT223_ADDR, 0);
@@ -2194,9 +2200,11 @@ void driveHardware::readHYT223() {
     unsigned int vrh  = ((fHYT223Data[0]<<8) + fHYT223Data[1]) & 0x3fff;
     unsigned int vtt  = ((fHYT223Data[2]<<8) + fHYT223Data[3]) >>2;
     
-    double rh = 0.00610389 * vrh;
-    double tt = 0.0100714 * vtt - 40.;
-    if (0) cout << "readHYT223: T: " << tt << "RH: " << rh << endl;
+    // -- see p.13 of "AHHeatedHYT223_E2.3.1 | App Note | Humidity Modules HYT"
+    fHYT223RH   = 0.00610389 * vrh;       // RH [%] = (100 / (2^{14} - 1)) * RHraw
+    fHYT223Temp = 0.0100714 * vtt - 40.;  // T [degC] = (165 / (2^{14} - 1)) * Traw - 40
+    fHYT223DP   = calcDP(1, fHYT223Temp, fHYT223RH);
+    if (0) cout << "readHYT223: T: " << fHYT223Temp << "RH: " << fHYT223RH << endl;
 
   } else {
     cout << "#### readHYT223 readout error, length = " << length << endl;
@@ -2255,12 +2263,6 @@ void driveHardware::heatHYT223(bool on) {
   
   i2c_close(fPiGPIO, handle);
 #endif
-}
-
-
-// ----------------------------------------------------------------------
-void driveHardware::readAirTemperature() {
-
 }
 
 
@@ -2334,7 +2336,7 @@ void driveHardware::readSHT85() {
       } else {
         fSHT85RH  = tmpRH;
       }
-      fSHT85DP    = calcDP(1);
+      fSHT85DP    = calcDP(1, fSHT85Temp, fSHT85RH);
     }
 
     if (badReadoutCounter > 10) {
@@ -2580,14 +2582,14 @@ int driveHardware::diff_ms(timeval t1, timeval t2) {
 // ----------------------------------------------------------------------
 // -- calculate dew point
 //    https://doi.org/10.1175/BAMS-86-2-225
-float driveHardware::calcDP(int mode) {
+float driveHardware::calcDP(float temp, float rh, int mode) {
   double dp(0.);
   if (0 == mode) {
-    dp = fSHT85Temp - (100. - fSHT85RH)/5.; // most simple approximation
+    dp = temp - (100. - rh)/5.; // most simple approximation
   } else if (1 == mode) {
     double A1(17.625), B1(243.04);
-    double td0 = B1 * (log(fSHT85RH/100.) + (A1*fSHT85Temp)/(B1 + fSHT85Temp));
-    double td1 = A1 - log(fSHT85RH/100.) - (A1*fSHT85Temp)/(B1 + fSHT85Temp);
+    double td0 = B1 * (log(rh/100.) + (A1*temp)/(B1 + temp));
+    double td1 = A1 - log(rh/100.) - (A1*temp)/(B1 + temp);
     dp = td0/td1;
 
   }

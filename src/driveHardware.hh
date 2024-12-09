@@ -119,7 +119,7 @@ public:
   float   getTemperature();
   float   getRH();
   float   getDP();
-  float   calcDP(int mode = 0);
+  float   calcDP(float temp, float rh, int mode = 1);
 
   int   getRunTime();
   int   getNCANbusErrors() {return fCANErrorCounter;}
@@ -217,6 +217,7 @@ private:
 
   // -- access and data from HYT223
   char fHYT223Data[4];
+  float fHYT223Temp, fHYT223RH, fHYT223DP;
   
   // -- data from VProbe
   std::string fVprobeVoltages;
