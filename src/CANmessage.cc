@@ -27,7 +27,6 @@ void CANmessage::addFrame(canFrame &x) {
   if ((1 <= x.fTec) && (x.fTec <= 8) && (0 == x.fType)
       && (1 == x.fPrivate) && (1 == x.fShift)) {
     // -- cmd GetSWVersion 301
-    cout << "DBX "; x.dump();
     fqFrames.push_front(x);
     filled = true;
   }
