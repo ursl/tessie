@@ -2187,7 +2187,7 @@ void driveHardware::readAirTemperature() {
   if (1) {
     cout << "readHYT223: T: " << fHYT223Temp << " RH: " << fHYT223RH << " DP: " << fHYT223DP << endl;
     cout << "readSHT85: T: " << fSHT85Temp << " RH: " << fSHT85RH << " DP: " << fSHT85DP << endl;
-
+  }
 }
 
 
