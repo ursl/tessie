@@ -267,23 +267,28 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   
   std::this_thread::sleep_for(fMilli100);
   std::this_thread::sleep_for(fMilli100);
-  vector<unsigned int> vi2c = {I2C_SHT85_ADDR, I2C_HYT223_ADDR, I2C_HEATHYT223_ADDR, I2C_FLOWMETER_ADDR, 0x27};
+  map<unsigned int, string> vi2c = {{I2C_SHT85_ADDR , "SHT85"},
+                                    {I2C_HYT223_ADDR, "HYT223"},
+                                    {I2C_HEATHYT223_ADDR, "HEATHYT223"},
+                                    {I2C_FLOWMETER_ADDR, "FLOWMETER"}
+  };
   for (auto it: vi2c) {
     int handle(0), length(-1);
-    if (it == I2C_SHT85_ADDR) {
+    if (it.first == I2C_SHT85_ADDR) {
       // -- SHT895 needs command written first
-      handle = i2c_open(fPiGPIO, I2CBUS, it, 0);
+      handle = i2c_open(fPiGPIO, I2CBUS, it.first, 0);
       int result = i2c_write_device(fPiGPIO, handle, fSHT85Config, 2);
       std::this_thread::sleep_for(fMilli20);
       length = i2c_read_device(fPiGPIO, handle, data, 6);
     } else {
       // -- rest responds with simple read
-      handle = i2c_open(fPiGPIO, I2CBUS, it, 0);
+      handle = i2c_open(fPiGPIO, I2CBUS, it.first, 0);
       length = i2c_read_device(fPiGPIO, handle, data, 4);
     }
     stringstream a;
-    a << "I2C address = " << hex << it << dec << " handle = " << handle << " length = " << length;
+    a << "I2C address = " << hex << it.first << dec << "(" << it.second << ") handle = " << handle << " length = " << length;
     fLOG(INFO, a.str()); 
+    //    if (length > 0) fI2CSlaveStatus[it.index()]
     i2c_close(fPiGPIO, handle);
   }
 #endif
@@ -2240,6 +2245,12 @@ void driveHardware::heatHYT223(bool on) {
   
   i2c_close(fPiGPIO, handle);
 #endif
+}
+
+
+// ----------------------------------------------------------------------
+void driveHardware::readAirTemperature() {
+
 }
 
 
