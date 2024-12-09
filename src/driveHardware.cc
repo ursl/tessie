@@ -285,11 +285,22 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
       handle = i2c_open(fPiGPIO, I2CBUS, it.first, 0);
       length = i2c_read_device(fPiGPIO, handle, data, 4);
     }
+    if (length > 0) {
+      fI2CSlaveStatus.insert(make_pair(it.second, true));
+    } else {
+      fI2CSlaveStatus.insert(make_pair(it.second, false));
+    }
     stringstream a;
     a << "I2C address = " << hex << it.first << dec << "(" << it.second << ") handle = " << handle << " length = " << length;
     fLOG(INFO, a.str()); 
     //    if (length > 0) fI2CSlaveStatus[it.index()]
     i2c_close(fPiGPIO, handle);
+  }
+
+  for (auto it: fI2CSlaveStatus) {
+    stringstream a;
+    a << "I2C slave status[" << it.first << "] = " << it.second;
+    fLOG(INFO, a.str()); 
   }
 #endif
   
@@ -2185,8 +2196,7 @@ void driveHardware::readHYT223() {
     
     double rh = 0.00610389 * vrh;
     double tt = 0.0100714 * vtt - 40.;
-    cout << "readHYT223: T: " << tt << "RH: " << rh
-         << endl;
+    if (0) cout << "readHYT223: T: " << tt << "RH: " << rh << endl;
 
   } else {
     cout << "#### readHYT223 readout error, length = " << length << endl;
