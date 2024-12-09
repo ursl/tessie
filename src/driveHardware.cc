@@ -357,7 +357,7 @@ void driveHardware::doRun() {
 
 #ifdef UZH
     evtHandler();
-    if (!(readI2C()%2)){ // if odd, LED is red
+    if (!(readI2C()&2)){ // if odd, LED is red
       continue;
     }
 #endif
@@ -2361,12 +2361,12 @@ void driveHardware::readFlowmeter() {
     fFlowMeterStatus = -1;
   } else {
     data = ~data;
-    fFlowMeterStatus = data;
+    fFlowMeterStatus = data & 1;
   }
 
   stringstream a("flowmeter readout data =  " + to_string(data)
                  + " fFlowMeterStatus = " + to_string(fFlowMeterStatus));
-  //  fLOG(INFO, a.str());
+   // fLOG(INFO, a.str());
   i2c_close(fPiGPIO, handle);
 #endif
 }
@@ -2385,10 +2385,10 @@ int driveHardware::readI2C() {
   r = r xor 255;
   string s_i2c = "LED is ";
   
-  if (r & 1) s_i2c += "RED";
+  if (r & 2) s_i2c += "RED";
   else s_i2c += "GREEN";
   s_i2c += ", flow is ";
-  if (r & 2) s_i2c += "on";
+  if (r & 1) s_i2c += "on";
   else s_i2c += "off";
   
   //fLOG(WARNING, s_i2c+"  "+to_string(r));
