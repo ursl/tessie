@@ -2184,6 +2184,10 @@ string driveHardware::timeStamp(bool filestamp) {
 void driveHardware::readAirTemperature() {
   if (fI2CSlaveStatus["SHT85"]) readSHT85();
   if (fI2CSlaveStatus["HYT223"]) readHYT223();
+  if (1) {
+    cout << "readHYT223: T: " << fHYT223Temp << " RH: " << fHYT223RH << " DP: " << fHYT223DP << endl;
+    cout << "readSHT85: T: " << fSHT85Temp << " RH: " << fSHT85RH << " DP: " << fSHT85DP << endl;
+
 }
 
 
@@ -2204,7 +2208,6 @@ void driveHardware::readHYT223() {
     fHYT223RH   = 0.00610389 * vrh;       // RH [%] = (100 / (2^{14} - 1)) * RHraw
     fHYT223Temp = 0.0100714 * vtt - 40.;  // T [degC] = (165 / (2^{14} - 1)) * Traw - 40
     fHYT223DP   = calcDP(1, fHYT223Temp, fHYT223RH);
-    if (0) cout << "readHYT223: T: " << fHYT223Temp << "RH: " << fHYT223RH << endl;
 
   } else {
     cout << "#### readHYT223 readout error, length = " << length << endl;
