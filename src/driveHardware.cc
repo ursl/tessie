@@ -381,7 +381,6 @@ void driveHardware::doRun() {
     }
 #endif
 
-
     std::this_thread::sleep_for(fMilli5);
     evtHandler();
     readCAN();
@@ -406,7 +405,7 @@ void driveHardware::doRun() {
           SAFETY_MAXTEMPW     = MAX_TEMP;
           SAFETY_MAXTEMPM     = MAX_TEMP;
           SHUTDOWN_TEMP       = MAX_TEMP;
-          fLOG(INFO, "Flow switch detected. Changed maximum temperatures to 35 degC");
+          fLOG(INFO, "Flow switch activated. Changed maximum temperatures to 35 degC");
         }
       }
 
@@ -442,7 +441,16 @@ void driveHardware::doRun() {
       if (0 == cnt%3600) {
         checkDiskspace();      
       }
-  
+
+      // -- about once per minute
+      if (0 == cnt%60) {
+        stringstream a("RH/T  HYT223 T = " + to_string(fHYT223Temp) + " RH = " + to_string(fHYT223RH)
+                       + "  SHT85 T = " + to_string(fSHT85Temp) + " RH = " + to_string(fSHT85RH)
+                       );
+        fLOG(INFO, a.str());
+
+      }
+
       // -- print errors (if present) accumulated in CANmessage
       int nerrs = fCanMsg.nErrors();
       if (nerrs > 0) {
@@ -2367,7 +2375,7 @@ void driveHardware::readSHT85() {
       gpio_write(fPiGPIO, GPIOPSUEN, 1);
       badReadoutCounter = 0; 
     }
-  
+
   }
 #endif
 }
