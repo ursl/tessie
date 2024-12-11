@@ -267,42 +267,41 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   
   std::this_thread::sleep_for(fMilli100);
   std::this_thread::sleep_for(fMilli100);
-  map<unsigned int, string> vi2c = {{I2C_SHT85_ADDR , "SHT85"},
-                                    {I2C_HYT223_ADDR, "HYT223"},
-                                    {I2C_HEATHYT223_ADDR, "HEATHYT223"},
-                                    {I2C_FLOWMETER_ADDR, "FLOWMETER"}
+  vector<unsigned int> vi2c = {I2C_SHT85_ADDR
+                               , I2C_HYT223_ADDR
+                               , I2C_HEATHYT223_ADDR
+                               , I2C_FLOWMETER_ADDR
   };
+  int handle(0), length(-1);
+
+  // -- essential?!
+  fI2CSlaveStatus.clear();
+
   for (auto it: vi2c) {
-    int handle(0), length(-1);
-    if (it.first == I2C_SHT85_ADDR) {
+    handle = length = -1;
+    if (it == I2C_SHT85_ADDR) {
       // -- SHT895 needs command written first
-      handle = i2c_open(fPiGPIO, I2CBUS, it.first, 0);
+      handle = i2c_open(fPiGPIO, I2CBUS, it, 0);
       int result = i2c_write_device(fPiGPIO, handle, fSHT85Config, 2);
       std::this_thread::sleep_for(fMilli20);
       length = i2c_read_device(fPiGPIO, handle, data, 6);
     } else {
       // -- rest responds with simple read
-      handle = i2c_open(fPiGPIO, I2CBUS, it.first, 0);
+      handle = i2c_open(fPiGPIO, I2CBUS, it, 0);
       length = i2c_read_device(fPiGPIO, handle, data, 4);
     }
-    if (length > 0) {
-      fI2CSlaveStatus.insert(make_pair(it.second, true));
-    } else {
-      fI2CSlaveStatus.insert(make_pair(it.second, false));
-    }
-    stringstream a;
-    a << "I2C address = " << hex << it.first << dec << "(" << it.second << ") handle = " << handle
-      << " length = " << length
-      << " fI2CSlaveStatus[" << it.second << "] = " << fI2CSlaveStatus[it.second]
-      ;
-    fLOG(INFO, a.str()); 
-    //    if (length > 0) fI2CSlaveStatus[it.index()]
     i2c_close(fPiGPIO, handle);
+    
+    if (length > 0) {
+      fI2CSlaveStatus.insert({it, true});
+    } else {
+      fI2CSlaveStatus.insert({it, false});
+    }
   }
 
   for (auto it: fI2CSlaveStatus) {
     stringstream a;
-    a << "I2C slave status[" << it.first << "] = " << it.second;
+    a << "I2C slave status[0x" << hex << it.first << dec << "] = " << it.second;
     fLOG(INFO, a.str()); 
   }
 #endif
@@ -2185,9 +2184,9 @@ string driveHardware::timeStamp(bool filestamp) {
 
 // ----------------------------------------------------------------------
 void driveHardware::readAirTemperature() {
-  if (fI2CSlaveStatus["SHT85"]) readSHT85();
-  if (fI2CSlaveStatus["HYT223"]) readHYT223();
-  if (1) {
+  if (fI2CSlaveStatus[I2C_SHT85_ADDR]) readSHT85();
+  if (fI2CSlaveStatus[I2C_HYT223_ADDR]) readHYT223();
+  if (0) {
     cout << "readHYT223: T: " << fHYT223Temp << " RH: " << fHYT223RH << " DP: " << fHYT223DP << endl;
     cout << "readSHT85: T: " << fSHT85Temp << " RH: " << fSHT85RH << " DP: " << fSHT85DP << endl;
   }
@@ -2210,7 +2209,7 @@ void driveHardware::readHYT223() {
     // -- see p.13 of "AHHeatedHYT223_E2.3.1 | App Note | Humidity Modules HYT"
     fHYT223RH   = 0.00610389 * vrh;       // RH [%] = (100 / (2^{14} - 1)) * RHraw
     fHYT223Temp = 0.0100714 * vtt - 40.;  // T [degC] = (165 / (2^{14} - 1)) * Traw - 40
-    fHYT223DP   = calcDP(1, fHYT223Temp, fHYT223RH);
+    fHYT223DP   = calcDP(fHYT223Temp, fHYT223RH, 1);
 
   } else {
     cout << "#### readHYT223 readout error, length = " << length << endl;
@@ -2342,7 +2341,7 @@ void driveHardware::readSHT85() {
       } else {
         fSHT85RH  = tmpRH;
       }
-      fSHT85DP    = calcDP(1, fSHT85Temp, fSHT85RH);
+      fSHT85DP    = calcDP(fSHT85Temp, fSHT85RH, 1);
     }
 
     if (badReadoutCounter > 10) {
