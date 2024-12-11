@@ -116,10 +116,16 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
     fSHT85Data[i] = 0;
   }
 
+  fHYT223Temp = -99.;
+  fHYT223RH   = -99.;
+  fHYT223DP   = -999.;
   for (int i = 0; i < 4; ++i) {
     fHYT223Data[i] = 0;
   }
 
+  fAirTemp = -99.;
+  fAirRH   = -99.;
+  fAirDP   = -999.;
   
   fSHT85Config[0] = 0x24;   // MSB
   fSHT85Config[1] = 0x00;   // LSB
@@ -544,21 +550,21 @@ void driveHardware::ensureSafety() {
   }
 
   // -- Check for GL condition
-  if (fSHT85Temp < 15.0)  {
+  if (fAirTemp < 15.0)  {
     if (0 == fStopOperations) fStatusString = "Air temp < 15";
     greenLight = false;
   }
 
   int allOK(0);
   // -- air temperatures
-  if (fSHT85Temp > SAFETY_MAXSHT85TEMP) {
+  if (fAirTemp > SAFETY_MAXSHT85TEMP) {
     greenLight = false;
     allOK = 1;
     char cs[100];
-    snprintf(cs, sizeof(cs), "Air temp > %+5.2f", fSHT85Temp);
+    snprintf(cs, sizeof(cs), "Air temp > %+5.2f", fAirTemp);
     if (0 == fStopOperations) fStatusString = cs;
     stringstream a("==ALARM== Box air temperature = " +
-                   to_string(fSHT85Temp) +
+                   to_string(fAirTemp) +
                    " exceeds SAFETY_MAXSHT85TEMP = " +
                    to_string(SAFETY_MAXSHT85TEMP));
     fLOG(ERROR, a.str());
@@ -569,7 +575,7 @@ void driveHardware::ensureSafety() {
     emit signalSetBackground("T", "red");
     //FIXME? breakInterlock();
   }
-  if (fSHT85Temp > SHUTDOWN_TEMP) {
+  if (fAirTemp > SHUTDOWN_TEMP) {
     stopOperations(1);
   }      
 
@@ -595,14 +601,14 @@ void driveHardware::ensureSafety() {
 
 
   // -- dew point vs air temperature
-  if ((fSHT85Temp - SAFETY_DPMARGIN) < fSHT85DP) {
+  if ((fAirTemp - SAFETY_DPMARGIN) < fAirDP) {
     greenLight = false;
     allOK = 3;
     if (0 == fStopOperations) fStatusString = "Air temp too close to DP";
     stringstream a("==ALARM== Box air temperature = " +
-                   to_string(fSHT85Temp) +
+                   to_string(fAirTemp) +
                    " is too close to dew point = " +
-                   to_string(fSHT85DP)
+                   to_string(fAirDP)
                    );
     fLOG(ERROR, a.str());
     emit signalSendToMonitor(QString::fromStdString(a.str()));
@@ -664,15 +670,15 @@ void driveHardware::ensureSafety() {
       stopOperations(5);
     }      
 
-    if ((mtemp > -90.) && (mtemp < fSHT85DP + SAFETY_DPMARGIN)) {
+    if ((mtemp > -90.) && (mtemp < fAirDP + SAFETY_DPMARGIN)) {
       greenLight = false;
       allOK = 6;
       stringstream a("==ALARM== module " + to_string(itec) + " temperature = " +
                      to_string(mtemp) +
                      " is too close to dew point = " +
-                     to_string(fSHT85DP) +
+                     to_string(fAirDP) +
                      ", air temperature = " +
-                     to_string(fSHT85Temp)
+                     to_string(fAirTemp)
                      );
       fLOG(ERROR, a.str());
       if (0 == fStopOperations) fStatusString = "Module " + std::to_string(itec) + " temp near DP";
@@ -1717,7 +1723,7 @@ void driveHardware::stopOperations(int icode) {
   }
 
   stringstream a("==ALARM== Emergency stop T(air) = " +
-                 to_string(fSHT85Temp) +
+                 to_string(fAirTemp) +
                  " T(water) = " + to_string(fTECData[8].reg["Temp_W"].value));
   fLOG(ERROR, a.str());
   emit signalSendToMonitor(QString::fromStdString(a.str()));
@@ -2064,10 +2070,10 @@ void driveHardware::dumpMQTT(int all) {
   // -- dump singular environmental data
   stringstream ss;
   ss << "Env = "
-     << fSHT85Temp << ", "
+     << fAirTemp << ", "
      << fTECData[8].reg["Temp_W"].value << ", "
-     << fSHT85RH << ", "
-     << fSHT85DP << ", "
+     << fAirRH << ", "
+     << fAirDP << ", "
      << fCANErrorCounter << ", "
      << fI2CErrorCounter << ", "
      << getRunTime() << ", "
@@ -2143,7 +2149,7 @@ void driveHardware::dumpMQTT(int all) {
 void driveHardware::dumpCSV() {
   stringstream output;
   char cs[100];
-  snprintf(cs, sizeof(cs), "%+5.2f,%05.2f,%+5.2f", fSHT85Temp, fSHT85RH, fSHT85DP);
+  snprintf(cs, sizeof(cs), "%+5.2f,%05.2f,%+5.2f", fAirTemp, fAirRH, fAirDP);
   output << timeStamp() << "," << cs;
 
   // -- only one water temperature reading
@@ -2184,8 +2190,18 @@ string driveHardware::timeStamp(bool filestamp) {
 
 // ----------------------------------------------------------------------
 void driveHardware::readAirTemperature() {
-  if (fI2CSlaveStatus[I2C_SHT85_ADDR]) readSHT85();
-  if (fI2CSlaveStatus[I2C_HYT223_ADDR]) readHYT223();
+  if (fI2CSlaveStatus[I2C_SHT85_ADDR]) {
+    readSHT85();
+    fAirTemp = fSHT85Temp;
+    fAirRH   = fSHT85RH;
+    fAirDP   = fSHT85DP;
+  }
+  if (fI2CSlaveStatus[I2C_HYT223_ADDR]) {
+    readHYT223();
+    fAirTemp = fHYT223Temp;
+    fAirRH   = fHYT223RH;
+    fAirDP   = fHYT223DP;
+  }
   if (0) {
     cout << "readHYT223: T: " << fHYT223Temp << " RH: " << fHYT223RH << " DP: " << fHYT223DP << endl;
     cout << "readSHT85: T: " << fSHT85Temp << " RH: " << fSHT85RH << " DP: " << fSHT85DP << endl;
@@ -2351,12 +2367,7 @@ void driveHardware::readSHT85() {
       gpio_write(fPiGPIO, GPIOPSUEN, 1);
       badReadoutCounter = 0; 
     }
-    
-    // -- print
-    if (0) {
-      cout << "Temperature in Celsius: " << fSHT85Temp << endl;
-      cout << "Relative Humidity:      " << fSHT85RH << endl;
-    }
+  
   }
 #endif
 }
@@ -2552,19 +2563,19 @@ void driveHardware::readVProbe(int pos) {
 
 // ----------------------------------------------------------------------
 float driveHardware::getTemperature() {
-  return fSHT85Temp;
+  return fAirTemp;
 }
 
 
 // ----------------------------------------------------------------------
 float driveHardware::getRH() {
-  return fSHT85RH;
+  return fAirRH;
 }
 
 
 // ----------------------------------------------------------------------
 float driveHardware::getDP() {
-  return fSHT85DP;
+  return fAirDP;
 }
 
 
@@ -2747,19 +2758,19 @@ void driveHardware::breakInterlock() {
 // ----------------------------------------------------------------------
 void driveHardware::throttleN2() {
   // -- the magic number is 5% relative humidity. The SHT85 does not like operation below that. 
-  if (fSHT85RH < 8.5) {
+  if (fAirRH < 8.5) {
     turnOffValve(0); 
     turnOffValve(1); 
-    fLOG(INFO, "throttleN2 turn off both valves, RH = " + to_string(fSHT85RH));
-  } else if ((8.5 < fSHT85RH) && (fSHT85RH < 10.0)) {
+    fLOG(INFO, "throttleN2 turn off both valves, RH = " + to_string(fAirRH));
+  } else if ((8.5 < fAirRH) && (fAirRH < 10.0)) {
     turnOffValve(0); 
     turnOnValve(1); 
-    fLOG(INFO, "throttleN2 turn off(on) valves 0(1), RH = " + to_string(fSHT85RH));
-  } else if (fSHT85RH > 12.0) {
+    fLOG(INFO, "throttleN2 turn off(on) valves 0(1), RH = " + to_string(fAirRH));
+  } else if (fAirRH > 12.0) {
     turnOnValve(0); 
     turnOnValve(1); 
-    fLOG(INFO, "throttleN2 turn on both valves, RH = " + to_string(fSHT85RH));
+    fLOG(INFO, "throttleN2 turn on both valves, RH = " + to_string(fAirRH));
   } else {
-    fLOG(INFO, "throttleN2 do nothing, RH = " + to_string(fSHT85RH));
+    fLOG(INFO, "throttleN2 do nothing, RH = " + to_string(fAirRH));
   }
 }

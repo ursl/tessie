@@ -218,7 +218,10 @@ private:
   // -- access and data from HYT223
   char fHYT223Data[4];
   float fHYT223Temp, fHYT223RH, fHYT223DP;
-  
+
+  // -- generic environmental characteristics
+  float fAirTemp, fAirRH, fAirDP;
+
   // -- data from VProbe
   std::string fVprobeVoltages;
 
