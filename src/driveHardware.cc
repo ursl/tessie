@@ -581,10 +581,10 @@ void driveHardware::ensureSafety() {
     emit signalAlarm(1);
     cout << "signalSetBackground(\"T\", red)" << endl;
     emit signalSetBackground("T", "red");
-    //FIXME? breakInterlock();
+    stopOperations(1);
   }
   if (fAirTemp > SHUTDOWN_TEMP) {
-    stopOperations(1);
+    stopOperations(2);
   }      
 
   // -- ensure chiller running if at least one TEC is turned on
@@ -601,7 +601,7 @@ void driveHardware::ensureSafety() {
         fLOG(ERROR, a.str());
         emit signalSendToMonitor(QString::fromStdString(a.str()));
         emit signalSendToServer(QString::fromStdString(a.str()));
-        stopOperations(2);
+        stopOperations(3);
       }
       //FIXME?    breakInterlock();
     }
@@ -624,7 +624,7 @@ void driveHardware::ensureSafety() {
     emit signalAlarm(1);
     cout << "signalSetBackground(\"DP\", red)" << endl;
     emit signalSetBackground("DP", "red");
-    stopOperations(3);
+    stopOperations(4);
   }
 
   // -- check water temperature
@@ -642,10 +642,10 @@ void driveHardware::ensureSafety() {
     emit signalSendToMonitor(QString::fromStdString(a.str()));
     emit signalSendToServer(QString::fromStdString(a.str()));
     emit signalAlarm(1);
-    stopOperations(4);
+    stopOperations(5);
   }
   if (fTECData[8].reg["Temp_W"].value > SHUTDOWN_TEMP) {
-    stopOperations(4);
+    stopOperations(6);
   }      
 
   // -- check module temperatures (1) value and (2) against dew point
@@ -672,10 +672,10 @@ void driveHardware::ensureSafety() {
       QString qtec = QString::fromStdString("tec"+to_string(itec));
       cout << "signalSetBackground(" << qtec.toStdString() << ", red)" << endl;
       emit signalSetBackground(qtec, "red");
-      //FIXME? breakInterlock();
+      stopOperations(7);
     }
     if (mtemp > SHUTDOWN_TEMP) {
-      stopOperations(5);
+      stopOperations(8);
     }      
 
     if ((mtemp > -90.) && (mtemp < fAirDP + SAFETY_DPMARGIN)) {
@@ -2734,6 +2734,7 @@ void driveHardware::resetInterlock() {
 void driveHardware::breakInterlock() {
   fInterlockStatus = 0;
   fStopOperations = 1;
+  fThrottleStatus = 0;
   
 #ifdef PI
   gpio_write(fPiGPIO, GPIOINT, 0);
@@ -2744,8 +2745,8 @@ void driveHardware::breakInterlock() {
   turnOffLV();
 
   // -- indicate status on traffic light
-  gpio_write(fPiGPIO, GPIORED,   1);
-  fTrafficRed = 1;
+  gpio_write(fPiGPIO, GPIORED,   0);
+  fTrafficRed = 0;
   gpio_write(fPiGPIO, GPIOGREEN, 0);
   fTrafficGreen = 0; 
   gpio_write(fPiGPIO, GPIOYELLO, 0);
