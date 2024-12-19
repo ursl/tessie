@@ -2770,16 +2770,16 @@ void driveHardware::throttleN2() {
   if (fAirRH < 8.5) {
     turnOffValve(0); 
     turnOffValve(1); 
-    fLOG(INFO, "throttleN2 turn off both valves, RH = " + to_string(fAirRH));
+    //fLOG(INFO, "throttleN2 turn off both valves, RH = " + to_string(fAirRH));
   } else if ((8.5 < fAirRH) && (fAirRH < 10.0)) {
     turnOffValve(0); 
     turnOnValve(1); 
-    fLOG(INFO, "throttleN2 turn off(on) valves 0(1), RH = " + to_string(fAirRH));
+    //fLOG(INFO, "throttleN2 turn off(on) valves 0(1), RH = " + to_string(fAirRH));
   } else if (fAirRH > 12.0) {
     turnOnValve(0); 
     turnOnValve(1); 
-    fLOG(INFO, "throttleN2 turn on both valves, RH = " + to_string(fAirRH));
+    //fLOG(INFO, "throttleN2 turn on both valves, RH = " + to_string(fAirRH));
   } else {
-    fLOG(INFO, "throttleN2 do nothing, RH = " + to_string(fAirRH));
+    //fLOG(INFO, "throttleN2 do nothing, RH = " + to_string(fAirRH));
   }
 }
