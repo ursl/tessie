@@ -95,6 +95,38 @@ vector<csvEntry> readCsv(string filename) {
 
 
 // ----------------------------------------------------------------------
+void plotCold(string filename = "csv/250115-coldbox01-tessie.csv") {
+  vector<csvEntry> csv;
+  if (!csvRead) csv = readCsv(filename);
+  
+  int nstart(csv[0].time.Convert()),
+    nend(csv[csv.size()-1].time.Convert()),
+    nbin(nend-nstart+1);
+  
+  TGraph *g1;
+  g1 = new TGraph();
+  g1->SetName("tempW");
+  g1->SetMarkerColor(kBlue);
+  
+  for (unsigned int i = 0; i < csv.size(); ++i) {
+    int ntime = csv[i].time.Convert() - nstart;
+    int atime = csv[i].time.Convert();
+    if (atime < 1729.68e6) continue;
+    if (atime > 1729.72e6) break;
+    if (0) cout << csv[i].time.AsString()
+                << " convert() = " << ntime
+                << " tempW = " << csv[i].tempW
+                << " absolute time = " << atime
+                << endl;
+    g1->AddPoint(atime, csv[i].tempW);
+  }
+
+  g1->Draw("alp");
+
+}
+
+
+// ----------------------------------------------------------------------
 void plotTempM(string filename = "csv/230120-tessie.csv") {
   vector<csvEntry> csv;
   if (!csvRead) csv = readCsv(filename);
