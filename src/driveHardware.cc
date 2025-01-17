@@ -2235,6 +2235,12 @@ void driveHardware::readHYT223() {
     fHYT223Temp = 0.0100714 * vtt - 40.;  // T [degC] = (165 / (2^{14} - 1)) * Traw - 40
     fHYT223DP   = calcDP(fHYT223Temp, fHYT223RH, 1);
 
+    // -- DBX
+    if (fHYT223Temp > 124.) {
+      stringstream a("## HYT223 UNPHYSICAL Temperature length = " + to_string(length) + " resetting to 25.");
+      fLOG(WARNING, a.str());
+      fHYT223Temp = 20.;
+    }
   } else if (length < 0) {
     stringstream a("## HYT223 READOUT Error length = " + to_string(length));
     fLOG(WARNING, a.str());
