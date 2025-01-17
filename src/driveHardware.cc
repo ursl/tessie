@@ -2235,6 +2235,14 @@ void driveHardware::readHYT223() {
     fHYT223Temp = 0.0100714 * vtt - 40.;  // T [degC] = (165 / (2^{14} - 1)) * Traw - 40
     fHYT223DP   = calcDP(fHYT223Temp, fHYT223RH, 1);
 
+  } else if (length < 0) {
+    stringstream a("## HYT223 READOUT Error length = " + to_string(length));
+    fLOG(WARNING, a.str());
+    stringstream b;
+    if (length == PI_BAD_HANDLE) b << " return value = PI_BAD_HANDLE";
+    if (length == PI_BAD_PARAM) b << " return value = PI_BAD_PARAM";
+    if (length == PI_I2C_READ_FAILED) b << " return value = PI_I2C_READ_FAILED";
+    fLOG(WARNING, b.str());
   } else {
     cout << "#### readHYT223 readout error, length = " << length << endl;
   }
