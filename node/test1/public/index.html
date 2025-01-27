@@ -773,7 +773,7 @@
       socket.on('fwverString', (msg) => {
           const snumbers = msg.toString().replace('GetSWVersion = ', '');
           const vNumbers = snumbers.split(',');
-          let fwverString = vNumbers[0];
+          let fwverString = vNumbers[0].toString();
           console.log(msg.toString() + ' => fwverString ->' + fwverString + '<-');
           document.getElementById('fwverField').innerHTML = fwverString;
       });
