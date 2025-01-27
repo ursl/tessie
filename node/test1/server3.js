@@ -203,6 +203,7 @@ io.on('connection', (socket) => {
 
     console.log('User connected');
     console.log('versionString ->' + versionString + '<-');
+    console.log('fwverString ->' + fwverString + '<-');
 
     socket.on('disconnect', () => {
         console.log('User disconnected');
