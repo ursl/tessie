@@ -403,9 +403,6 @@
 
       var logarea = document.getElementById("logarea");
 
-      let msg = "getversionstring";
-      socket.emit('getversionstring', msg);
-
       // --
       socket.on('disconnect', () => {
           document.getElementById('statusDiv').style = "background-color:Tomato";
@@ -785,6 +782,13 @@
           console.log('hallo got putcsv');
           console.log(msg.toString());
       });
+
+
+      let msg = "getversionstring";
+      socket.emit('getversionstring', msg);
+
+      let msg2 = "getfwverstring";
+      socket.emit('getfwverstring', msg2);
 
       function chgControlVoltage_Set(itec, val) {
           let msg = "tec " + itec.toString() + " set ControlVoltage_Set " + val.toString();
