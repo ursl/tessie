@@ -92,21 +92,6 @@ clientMqtt.on('connect', () => {
 })
 
 
-// -- inquire about TEC f/w version
-clientMqtt.publish(topCtrl, 'cmd GetSWVersion', {qos: 0, retain: false }, (error) => {
-    if (error) {
-        console.error(error)
-    }
-})
-
-clientMqtt.on('message', (topCtrl, payload) => {
-    console.log('Received Message:', topCtrl, payload.toString())
-    if (payload.includes('GetSWVersion = ')) {
-        fwverString = payload.toString();
-    }
-})
-
-
 clientMqtt.on('message', (topMon, payload) => {
     // -- reset strings
     AlarmString = '';
@@ -401,6 +386,20 @@ io.on('connection', (socket) => {
     });
 
     socket.on('getfwverstring', (msg) => {
+        // -- inquire about TEC f/w version
+        clientMqtt.publish(topCtrl, 'cmd GetSWVersion', {qos: 0, retain: false }, (error) => {
+            if (error) {
+                console.error(error)
+            }
+        })
+        
+        clientMqtt.on('message', (topCtrl, payload) => {
+            console.log('Received Message:', topCtrl, payload.toString())
+            if (payload.includes('GetSWVersion = ')) {
+                fwverString = payload.toString();
+            }
+        })
+
         console.log('getfwverstring input received ->' + msg + '<-');
         socket.emit('fwverString', fwverString);
     });
