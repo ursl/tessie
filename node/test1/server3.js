@@ -403,7 +403,7 @@ io.on('connection', (socket) => {
                     }
                 })
             }, 1000)
-        } while ();
+        } while (true);
 
         console.log('getfwverstring input received ->' + msg + '<-');
         socket.emit('fwverString', fwverString);
