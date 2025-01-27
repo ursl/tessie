@@ -80,7 +80,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   // -- negative means not yet set, 0 is no flow, 1 is flow enable
   fFlowMeterStatus = -1; 
   fThrottleStatus = 0;
-  
+  fHeaterStatus = 0; 
+
   fTrafficRed = fTrafficYellow = fTrafficGreen = 0; 
   
   gettimeofday(&ftvStart, 0);
@@ -565,7 +566,7 @@ void driveHardware::ensureSafety() {
 
   int allOK(0);
   // -- air temperatures
-  if (fAirTemp > SAFETY_MAXSHT85TEMP) {
+  if ((fAirTemp > SAFETY_MAXSHT85TEMP) && (0 == fHeaterStatus)) {
     greenLight = false;
     allOK = 1;
     char cs[100];
@@ -2274,9 +2275,11 @@ void driveHardware::heatHYT223(bool on) {
   if (on) {
     // -- Port low -> pFET passes VDD to heater
     command[1] = 0x00;
+    fHeaterStatus = 1;
   } else {
     // -- Port low -> pFET block VDD to heater
     command[1] = 0x7f;
+    fHeaterStatus = 0;
   }
 
   for (int i = 0; i < 4; ++i) {
