@@ -33,6 +33,7 @@ const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
 const connectUrl = `${protocol}://${host}:${port}`
 
 let versionString = ''
+let fwverString = ''
 let envString = ''
 let varString = ''
 let PowerStateString = ''
@@ -82,9 +83,6 @@ clientMqtt.on('connect', () => {
   clientMqtt.subscribe([topCtrl], () => { console.log(`Subscribe to topCtrl '${topCtrl}'`)  })
 })
 
-clientMqtt.on('message', (topCtrl, payload) => {
-//  console.log('Received Message:', topCtrl, payload.toString())
-})
 
 // -- monTessie
 const topMon  = 'monTessie';
@@ -92,6 +90,22 @@ clientMqtt.on('connect', () => {
   console.log('Connected')
   clientMqtt.subscribe([topMon], () => { console.log(`Subscribe to topMon '${topMon}'`)  })
 })
+
+
+// -- inquire about TEC f/w version
+clientMqtt.publish(topCtrl, 'cmd GetSWVersion', {qos: 0, retain: false }, (error) => {
+    if (error) {
+        console.error(error)
+    }
+})
+
+clientMqtt.on('message', (topCtrl, payload) => {
+    console.log('Received Message:', topCtrl, payload.toString())
+    if (payload.includes('GetSWVersion = ')) {
+        fwverString = payload.toString();
+    }
+})
+
 
 clientMqtt.on('message', (topMon, payload) => {
     // -- reset strings
@@ -383,6 +397,11 @@ io.on('connection', (socket) => {
     socket.on('getversionstring', (msg) => {
         console.log('getversionstring input received ->' + msg + '<-');
         socket.emit('versionString', versionString);
+    });
+
+    socket.on('getfwverstring', (msg) => {
+        console.log('getfwverstring input received ->' + msg + '<-');
+        socket.emit('fwverString', fwverString);
     });
 
 });

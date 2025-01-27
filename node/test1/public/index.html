@@ -144,6 +144,10 @@
             <td>tessie version</td>
             <td id="versionField" style="text-align:right;">n/a </td>
           </tr>
+          <tr>
+            <td>TEC f/w version</td>
+            <td id="tecfwField" style="text-align:right;">n/a </td>
+          </tr>
         </table>
       </div>
     </div>
@@ -769,7 +773,13 @@
           document.getElementById('versionField').innerHTML = versionString;
       });
 
-
+      socket.on('fwverString', (msg) => {
+          const snumbers = msg.toString().replace('GetSWVersion = ', '');
+          const vNumbers = snumbers.split(',');
+          let fwverString = vNumbers[0];
+          console.log(msg.toString() + ' => fwverString ->' + fwverString + '<-');
+          document.getElementById('fwverField').innerHTML = fwverString;
+      });
 
       socket.on('putcsv', (msg) => {
           console.log('hallo got putcsv');
@@ -873,7 +883,7 @@
 
       document.onreadystatechange =  function disclaimerAlert() {
           if (document.readyState=='loaded' || document.readyState=='complete') {
-              alert("Note: After clicking anything, the display will update only after reading back the coldbox state!\nThis allows synchronization between all connected browsers and the coldbox GUI.\nSo be patient before double-clicking!\n\nNote: Do not use Mode = 0 (temperature setting). Still under development!");
+              alert("Note: After clicking anything, the display will update only after reading back the coldbox state!\nThis allows synchronization between all connected browsers and the coldbox GUI.\nSo be patient before double-clicking!");
           }
       }
     </script>
