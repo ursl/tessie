@@ -386,6 +386,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('getfwverstring', (msg) => {
+        console("received getfwverstring"); 
         // -- inquire about TEC f/w version
         clientMqtt.publish(topCtrl, 'cmd GetSWVersion', {qos: 0, retain: false }, (error) => {
             if (error) {
