@@ -394,12 +394,15 @@ io.on('connection', (socket) => {
             }
         })
         
-        clientMqtt.on('message', (topCtrl, payload) => {
-            console.log('Received Message:', topCtrl, payload.toString())
-            if (payload.includes('GetSWVersion = ')) {
-                fwverString = payload.toString();
-            }
-        })
+        do {
+            clientMqtt.on('message', (topCtrl, payload) => {
+                console.log('Received Message:', topCtrl, payload.toString())
+                if (payload.includes('GetSWVersion = ')) {
+                    fwverString = payload.toString();
+                }
+            })
+            await sleep(1000);
+        } while ();
 
         console.log('getfwverstring input received ->' + msg + '<-');
         socket.emit('fwverString', fwverString);
