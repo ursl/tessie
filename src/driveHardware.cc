@@ -1082,10 +1082,11 @@ void driveHardware::answerIoCmd() {
       turnOffTEC(itec);
       continue;
     }
-    if (6 == fCANReg) {
-      getSWVersion(itec);
-      continue;
-    }
+    // -- the following suppresses the MQTT broadcast, I think
+    // if (6 == fCANReg) {
+    //   getSWVersion(itec);
+    //   continue;
+    // }
 
     fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_CMD);
     fCANVal = 0; // nothing required
