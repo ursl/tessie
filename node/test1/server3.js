@@ -73,21 +73,28 @@ const clientMqtt = mqtt.connect(connectUrl, {
 })
 
 clientMqtt.on('connect', () => {
-  console.log('Connected')
+  console.log('Connected 0')
 })
 
 // -- ctrlTessie
 const topCtrl = 'ctrlTessie';
 clientMqtt.on('connect', () => {
-  console.log('Connected')
-  clientMqtt.subscribe([topCtrl], () => { console.log(`Subscribe to topCtrl '${topCtrl}'`)  })
+    console.log('Connected 1')
+    clientMqtt.subscribe([topCtrl], () => { 
+        console.log(`Subscribe to topCtrl '${topCtrl}'`)  
+    })
 })
 
+clientMqtt.on('message', (topCtrl, payload) => {
+    if (payload.includes('GetSWVersion = ')) {
+        fwverString = payload.toString();
+    }
+})
 
 // -- monTessie
 const topMon  = 'monTessie';
 clientMqtt.on('connect', () => {
-  console.log('Connected')
+  console.log('Connected 2')
   clientMqtt.subscribe([topMon], () => { console.log(`Subscribe to topMon '${topMon}'`)  })
 })
 
@@ -185,6 +192,8 @@ clientMqtt.on('message', (topMon, payload) => {
 io.on('connection', (socket) => {
     // -- read version string
     readVersion();
+
+    getFirmwareVersion();
 
     console.log('User connected');
     console.log('versionString ->' + versionString + '<-');
@@ -381,41 +390,81 @@ io.on('connection', (socket) => {
     });
     
     socket.on('getversionstring', (msg) => {
-        console.log('getversionstring input received ->' + msg + '<-');
+        console.log('socket.on(getversionstring) received ->' + msg + '<-');
         socket.emit('versionString', versionString);
     });
 
     socket.on('getfwverstring', (msg) => {
-        console.log("received getfwverstring"); 
+        console.log('socket.on(getfwverstring) received ->' + msg + '<-'); 
         // -- inquire about TEC f/w version
         clientMqtt.publish(topCtrl, 'cmd GetSWVersion', {qos: 0, retain: false }, (error) => {
             if (error) {
                 console.error(error)
             }
-        })
-        
-        clientMqtt.on('message', (topCtrl, payload) => {
-            console.log('Received Message:', topCtrl, payload.toString())
-            if (payload.includes('GetSWVersion = ')) {
-                fwverString = payload.toString();
-            }
+               
+            clientMqtt.on('message', (topCtrl, payload) => {
+                if (payload.includes('GetSWVersion = ')) {
+                    fwverString = payload.toString();
+                }
+            })
         })
 
-        console.log('getfwverstring input received ->' + msg + '<-');
         socket.emit('fwverString', fwverString);
     });
 
 });
 
-
+startServer();
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 
+
+// ----------------------------------------------------------------------
+async function startServer() {
+    try {
+        let firmwareVersion = await getFirmwareVersion();
+        console.log("startServer> Firmware version received:", firmwareVersion);
+        // Continue with server initialization...
+    } catch (error) {
+        console.error("Failed to get firmware version:", error);
+        process.exit(1); // Exit if critical
+    }
+}
+
 // ----------------------------------------------------------------------
 function readVersion() {
     let filePath = "../../src/version.txt";
     versionString = fs.readFileSync(filePath).toString().replace('\n', '');
 }
+
+// ----------------------------------------------------------------------
+async function getFirmwareVersion() {
+    console.log("inside getFirmwareVersion()");
+    
+    return new Promise((resolve, reject) => {
+        let timeout = setTimeout(() => {
+            reject(new Error("Timeout waiting for firmware version"));
+        }, 10000); // Timeout after 5 seconds
+
+        // -- Publish the command
+        clientMqtt.publish(topCtrl, 'cmd GetSWVersion', { qos: 0, retain: false }, (error) => {
+            if (error) {
+                clearTimeout(timeout);
+                reject(error);
+            }
+        });
+
+        // -- Subscribe to MQTT messages
+        clientMqtt.on('message', (topic, payload) => {
+            const message = payload.toString();
+            if (topic === topCtrl && message.includes('GetSWVersion = ')) {
+                clearTimeout(timeout);
+                resolve(message); // Resolve with the received firmware version
+            }
+        });
+    });
+}
+
