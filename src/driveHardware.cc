@@ -311,6 +311,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
     a << "I2C slave status[0x" << hex << it.first << dec << "] = " << it.second;
     fLOG(INFO, a.str()); 
   }
+
+  clearTECErrors();
 #endif
   
 }
@@ -1944,6 +1946,16 @@ void driveHardware::saveToFlash() {
 
 
 // ----------------------------------------------------------------------
+void driveHardware::clearTECErrors() {
+  fCANId = (CANBUS_SHIFT | CANBUS_PUBLIC | CANBUS_TECREC | CANBUS_CMD);
+  fCANReg = 5; // clear TEC error
+  fCANVal = fTECParameter;
+  sendCANmessage();
+
+}
+
+
+// ----------------------------------------------------------------------
 void driveHardware::initTECData() {
   for (unsigned int itec = 1; itec <=8; ++itec) {
     fTECData.insert(make_pair(itec, initAllTECRegister()));
@@ -2140,8 +2152,20 @@ void driveHardware::dumpMQTT(int all) {
     stringstream ss;
     ss << skey.first << " = ";
     bool printit(false);
+    bool isInt(false); 
+    bool isHex(false); 
+    if (skey.first == "Mode")  isInt = true;
+    if (skey.first == "PowerState")  isInt = true;
+    if (skey.first == "Error") isHex = true;
+
     for (int i = 1; i <= 8; ++i) {
-      ss << fTECData[i].reg[skey.first].value;
+      if (isInt) {
+        ss << static_cast<int>(fTECData[i].reg[skey.first].value);
+      } else if (isHex) {
+        ss << hex << static_cast<int>(fTECData[i].reg[skey.first].value) << dec;
+      } else {
+        ss << fTECData[i].reg[skey.first].value;
+      }
       if (1 == all) {
         printit = true;
       } else {

@@ -149,6 +149,9 @@ public:
   void loadFromFlash();
   void saveToFlash();
 
+  // -- clear TEC errors
+  void clearTECErrors();
+
 public slots:
   void  sentFromServer(QString msg);
   void  toggleFras(int imask);
