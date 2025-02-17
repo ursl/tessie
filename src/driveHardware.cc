@@ -2162,7 +2162,7 @@ void driveHardware::dumpMQTT(int all) {
       if (isInt) {
         ss << static_cast<int>(fTECData[i].reg[skey.first].value);
       } else if (isHex) {
-        ss << hex << static_cast<int>(fTECData[i].reg[skey.first].value) << dec;
+        ss << "0x" << hex << static_cast<int>(fTECData[i].reg[skey.first].value) << dec;
       } else {
         ss << fTECData[i].reg[skey.first].value;
       }
