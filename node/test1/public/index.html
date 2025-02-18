@@ -754,7 +754,8 @@
           }
       });
 
-      socket.on('Error', (msg) => {
+      socket.on('ErrorString', (msg) => {
+          console.log("ErrorString ->" + msg);
           const snumbers = msg.toString().replace('ErrorString = ', '');
           const vNumbers = snumbers.split(',');
           for (let i = 1; i <= 8; i++) {
