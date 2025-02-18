@@ -256,14 +256,14 @@
         <tr>
           <td>Errorstate (0=OK, 1=Error)</td>
           <td> </td>
-          <td id="ErrorState1">wait </td>
-          <td id="ErrorState2">wait </td>
-          <td id="ErrorState3">wait </td>
-          <td id="ErrorState4">wait </td>
-          <td id="ErrorState5">wait </td>
-          <td id="ErrorState6">wait </td>
-          <td id="ErrorState7">wait </td>
-          <td id="ErrorState8">wait </td>
+          <button id="ErrorState1">wait </button>
+          <button id="ErrorState2">wait </button>
+          <button id="ErrorState3">wait </button>
+          <button id="ErrorState4">wait </button>
+          <button id="ErrorState5">wait </button>
+          <button id="ErrorState6">wait </button>
+          <button id="ErrorState7">wait </button>
+          <button id="ErrorState8">wait </button>
         </tr>
 
         <tr>
@@ -763,10 +763,10 @@
           for (let i = 1; i <= 8; i++) {
               let es = 'ErrorState' + i.toString();
               if (parseInt(vNumbers[i-1]) > 0) {
-                  document.getElementById(es).innerHTML = "1";
+                  document.getElementById(es).innerHTML = "show";
                   document.getElementById(es).style.backgroundColor = mycolors[8];
               } else {
-                  document.getElementById(es).innerHTML = "0";
+                  document.getElementById(es).innerHTML = "OK";
                   document.getElementById(es).style.backgroundColor = mycolors[4];
               }
           }
