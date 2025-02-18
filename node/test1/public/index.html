@@ -759,13 +759,12 @@
           const vNumbers = snumbers.split(',');
           for (let i = 1; i <= 8; i++) {
               let es = 'ErrorState' + i.toString();
-              console.log(es);
               if (parseInt(vNumbers[i-1]) > 0) {
                   document.getElementById(es).innerHTML = "1";
-                  document.getElementById(es).backgroundColor = mycolors[8];
+                  document.getElementById(es).style.backgroundColor = mycolors[8];
               } else {
                   document.getElementById(es).innerHTML = "0";
-                  document.getElementById(es).backgroundColor = mycolors[4];
+                  document.getElementById(es).style.backgroundColor = mycolors[4];
               }
           }
       });
