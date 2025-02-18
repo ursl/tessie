@@ -756,7 +756,7 @@
 
       socket.on('ErrorString', (msg) => {
           console.log("ErrorString ->" + msg);
-          const snumbers = msg.toString().replace('ErrorString = ', '');
+          const snumbers = msg.toString().replace('Error = ', '');
           const vNumbers = snumbers.split(',');
           for (let i = 1; i <= 8; i++) {
               console.log("parseInt(vNumbers[i-1]): " + parseInt(vNumbers[i-1]));
