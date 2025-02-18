@@ -761,10 +761,10 @@
               let es = 'ErrorState' + i.toString();
               console.log(es);
               if (parseInt(vNumbers[i-1]) > 0) {
-                  document.getElementById(es).value = "1";
+                  document.getElementById(es).innerHTML = "1";
                   document.getElementById(es).backgroundColor = mycolors[8];
               } else {
-                  document.getElementById(es).value = "0";
+                  document.getElementById(es).innerHTML = "0";
                   document.getElementById(es).backgroundColor = mycolors[4];
               }
           }
