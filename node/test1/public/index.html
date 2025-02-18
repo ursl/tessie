@@ -189,6 +189,19 @@
         </tr>
 
         <tr>
+          <td>PowerState (0=Off, 1=On)</td>
+          <td> </td>
+          <td id="PowerState1">wait </td>
+          <td id="PowerState2">wait </td>
+          <td id="PowerState3">wait </td>
+          <td id="PowerState4">wait </td>
+          <td id="PowerState5">wait </td>
+          <td id="PowerState6">wait </td>
+          <td id="PowerState7">wait </td>
+          <td id="PowerState8">wait </td>
+        </tr>
+
+        <tr>
           <td>Mode (0=T, 1=V)</td>
           <td> <input id="Mode0" maxlength="3" size="3" value="all"  onchange="chgMode(0,this.value)"></td>
           <td> <input id="Mode1" maxlength="3" size="3" value="wait" onchange="chgMode(1,this.value)"></td>
@@ -238,19 +251,6 @@
           <td id="Temp_M6">wait </td>
           <td id="Temp_M7">wait </td>
           <td id="Temp_M8">wait </td>
-        </tr>
-
-        <tr>
-          <td>PowerState (0=Off, 1=On)</td>
-          <td> </td>
-          <td id="PowerState1">wait </td>
-          <td id="PowerState2">wait </td>
-          <td id="PowerState3">wait </td>
-          <td id="PowerState4">wait </td>
-          <td id="PowerState5">wait </td>
-          <td id="PowerState6">wait </td>
-          <td id="PowerState7">wait </td>
-          <td id="PowerState8">wait </td>
         </tr>
 
         <tr>
@@ -410,6 +410,7 @@
       mycolors.push('#f0f000'); // yellow
       mycolors.push('#f05000'); // orange
       mycolors.push('#f00000'); // red
+      mycolors.push('#ffffff'); // white
 
       const socket = io.connect();
       const valve0 = document.getElementById('valve0');
@@ -611,9 +612,11 @@
               } else {
                   if (parseInt(vNumbers[i-1]).toFixed(0) == 1) {
                       document.getElementById(ps).innerHTML = parseInt(vNumbers[i-1]).toFixed(0);
+                      document.getElementById(ps).style.backgroundColor = mycolors[4];
                       document.getElementById(ct).checked = true;
                   } else {
                       document.getElementById(ps).innerHTML = parseInt(vNumbers[i-1]).toFixed(0);
+                      document.getElementById(ps).style.backgroundColor = mycolors[9];
                       document.getElementById(ct).checked = false;
                       checkAll = false;
                   }
