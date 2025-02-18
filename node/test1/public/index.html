@@ -254,16 +254,16 @@
         </tr>
 
         <tr>
-          <td>Errorstate (0=OK, 1=Error)</td>
+          <td>Errorstate (press to show error)</td>
           <td> </td>
-          <td><button id="ErrorState1">wait </button></td>
-          <td><button id="ErrorState2">wait </button></td>
-          <td><button id="ErrorState3">wait </button></td>
-          <td><button id="ErrorState4">wait </button></td>
-          <td><button id="ErrorState5">wait </button></td>
-          <td><button id="ErrorState6">wait </button></td>
-          <td><button id="ErrorState7">wait </button></td>
-          <td><button id="ErrorState8">wait </button></td>
+          <td><button class="favorite styled" id="ErrorState1" disabled>wait </button></td>
+          <td><button class="favorite styled" id="ErrorState2" disabled>wait </button></td>
+          <td><button class="favorite styled" id="ErrorState3" disabled>wait </button></td>
+          <td><button class="favorite styled" id="ErrorState4" disabled>wait </button></td>
+          <td><button class="favorite styled" id="ErrorState5" disabled>wait </button></td>
+          <td><button class="favorite styled" id="ErrorState6" disabled>wait </button></td>
+          <td><button class="favorite styled" id="ErrorState7" disabled>wait </button></td>
+          <td><button class="favorite styled" id="ErrorState8" disabled>wait </button></td>
         </tr>
 
         <tr>
@@ -386,6 +386,14 @@
       </table>
     </div>
 
+    <div id="mypopover" popover>
+      <h2 id="tecerrorTitle"></h2>
+      <p id="tecerrorValue"></p>
+      <p id="tecerrorExplanation"></p>
+      <p>Press ESC (escape) to close this notice</p>
+    </div>
+
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
 
@@ -399,6 +407,16 @@
       // -- this works:
       // var mp3_url = 'https://media.geeksforgeeks.org/wp-content/uploads/20190531135120/beep.mp3';
       // (new Audio(mp3_url)).play();
+
+      let fecErrors = Array("no error", 
+                            "no error", 
+                            "no error", 
+                            "no error", 
+                            "no error", 
+                            "no error", 
+                            "no error", 
+                            "no error");
+     
 
       let mycolors = [];
       mycolors.push('#0000fa'); // dark blue
@@ -763,11 +781,21 @@
           for (let i = 1; i <= 8; i++) {
               let es = 'ErrorState' + i.toString();
               if (parseInt(vNumbers[i-1]) > 0) {
+                  fecErrors[i-1] = parseInt(vNumbers[i-1]);
                   document.getElementById(es).innerHTML = "show";
                   document.getElementById(es).style.backgroundColor = mycolors[8];
+                  document.getElementById(es).disabled = false;
+                  document.getElementById("tecerrorTitle").innerHTML = "Error in TEC " + i.toString();
+                  document.getElementById("tecerrorValue").innerHTML = "0x" + fecErrors[i-1].toString(16);
+                  document.getElementById("tecerrorExplanation").innerHTML = tecErrorExplanation(fecErrors[i-1]);
               } else {
+                  fecErrors[i-1] = 0;
                   document.getElementById(es).innerHTML = "OK";
                   document.getElementById(es).style.backgroundColor = mycolors[4];
+                  document.getElementById(es).disabled = true;
+                  document.getElementById("tecerrorTitle").innerHTML = "No Error in TEC " + i.toString();
+                  document.getElementById("tecerrorValue").innerHTML = "0x0";
+                  document.getElementById("tecerrorExplanation").innerHTML = "Relax, all is well";
               }
           }
       });
@@ -920,11 +948,73 @@
           return 0;
       }
 
+      function tecErrorExplanation(tecerr) {
+          const catDict = {
+              1: "CAN_ERROR", 
+              2: "SPI_ERROR",
+              3: "AI_Error",
+              4: "AI_DMA_ERROR",
+              5: "TEMP_ERROR",
+              6: "VARH_ERROR",
+              7: "PELTIER_ERROR",
+              8: "MAIN_ERROR",
+              9: "HARDFAULT_ERROR"
+          };
+
+          const regDict = {
+              0: "Mode", 
+              1: "ControlVoltage_Set", 
+              2: "PID_kp", 
+              3: "PID_ki", 
+              4: "PID_kd",
+              5: "Temp_Set", 
+              6: "PID_Max", 
+              7: "PID_Min", 
+              8: "Temp_W", 
+              9: "Temp_M",
+              10:"Temp_Diff", 
+              11:"Peltier_U", 
+              12:"Peltier_I",
+              13:"Peltier_R",
+              14:"Peltier_P",
+              15:"Supply_U",
+              16:"Supply_I",
+              17:"Supply_P",
+              18:"PowerState",
+              19:"Error",
+              20:"Ref_U"
+          };
+
+          let cat = (tecerr & 0xff000000)>>24;
+          let reg = (tecerr & 0x0000ff00)>>8;
+          let err = (tecerr & 0x000000ff);
+          let str = "";
+          let msg = str.concat("category ", cat.toString(), " (", catDict[cat],
+                               ") <br> register ", reg.toString(), " (", regDict[reg],
+                               ") <br> error ", err.toString());
+          return msg;
+      }
+
+
+
       document.onreadystatechange =  function disclaimerAlert() {
           if (document.readyState=='loaded' || document.readyState=='complete') {
               alert("Note: After clicking anything, the display will update only after reading back the coldbox state!\nThis allows synchronization between all connected browsers and the coldbox GUI.\nSo be patient before double-clicking!");
           }
       }
+
+      // -- add eight event listeners for TEC error popover display
+      const popover = document.getElementById("mypopover");
+      for (let itec = 1; itec <= 8; itec++) {
+          document.getElementById("ErrorState" + itec.toString()).addEventListener('click', (e) => {
+              const popupOpened = popover.togglePopover();
+              // Check if popover is opened or closed on supporting browsers
+              if (popupOpened !== undefined) {
+                  // FIXME: now what?
+              }              
+          });
+      }
+
     </script>
 
 
