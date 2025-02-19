@@ -27,6 +27,9 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fFont2.setFamilies({QString::fromUtf8("Menlo")});
   fFont2.setPointSize(14);
 
+  fFont3.setFamilies({QString::fromUtf8("Menlo")});
+  fFont3.setPointSize(13);
+
   const QSize btnSize = QSize(100, 50);
 
   this->resize(800, 480);
@@ -158,7 +161,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
 
   QPushButton *btn4 = new QPushButton("STOP ALL"); btn4->setFocusPolicy(Qt::NoFocus);
-  btn4->setFont(fFont2);
+  btn4->setFont(fFont1);
   btn4->setFixedSize(QSize(150, 50));
   btn4->setStyleSheet("QPushButton {background-color: rgba(204, 50, 50, 0.4); color: black; font-weight: bold; border: 3px solid}");
   btn4->update();
@@ -166,12 +169,11 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   glay01->addWidget(btn4, 3, 0, 1, 2, Qt::AlignLeft);
 
   QPushButton *btn5 = new QPushButton("Restart tessieWeb"); btn5->setFocusPolicy(Qt::NoFocus);
-  btn5->setFont(fFont2);
-  btn5->setFixedSize(QSize(210, 50));
-  btn5->setStyleSheet("QPushButton {background-color: rgba(120, 120, 120, 0.4); color: black; font-weight: bold; border: 3px solid}");
-  btn5->update();
+  btn5->setFont(fFont3);
+  btn5->setFixedSize(QSize(190, 50));
+  btn5->setStyleSheet("QPushButton {background-color: rgba(100, 100, 150, 0.3); color: black; font-weight: bold;}");
+  //  btn5->update();
   connect(btn5, &QPushButton::clicked, this, &MainWindow::btnRestartTessieWeb);
-  //no  glay01->minimumWidth = 10;
   glay01->addWidget(btn5, 3, 2, 1, 2, Qt::AlignRight);
 
   hlay0->addLayout(glay01);
