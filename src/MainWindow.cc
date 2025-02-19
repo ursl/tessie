@@ -167,7 +167,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   QPushButton *btn5 = new QPushButton("Restart tessieWeb"); btn5->setFocusPolicy(Qt::NoFocus);
   btn5->setFont(fFont2);
-  btn5->setFixedSize(QSize(220, 50));
+  btn5->setFixedSize(QSize(210, 50));
   btn5->setStyleSheet("QPushButton {background-color: rgba(120, 120, 120, 0.4); color: black; font-weight: bold; border: 3px solid}");
   btn5->update();
   connect(btn5, &QPushButton::clicked, this, &MainWindow::btnRestartTessieWeb);
