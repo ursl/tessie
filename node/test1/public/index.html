@@ -396,43 +396,43 @@
       <h2 id="tec2errorTitle"></h2>
       <p id="tec2errorValue"></p>
       <p id="tec2errorExplanation"></p>
-      <p>Press ESC (escape) to close this notice</p>
+      <p>Click outside or press ESC (escape) to close this notice</p>
     </div>
     <div id="tec3pop" popover>
       <h2 id="tec3errorTitle"></h2>
       <p id="tec3errorValue"></p>
       <p id="tec3errorExplanation"></p>
-      <p>Press ESC (escape) to close this notice</p>
+      <p>Click outside or press ESC (escape) to close this notice</p>
     </div>
     <div id="tec4pop" popover>
       <h2 id="tec4errorTitle"></h2>
       <p id="tec4errorValue"></p>
       <p id="tec4errorExplanation"></p>
-      <p>Press ESC (escape) to close this notice</p>
+      <p>Click outside or press ESC (escape) to close this notice</p>
     </div>
     <div id="tec5pop" popover>
       <h2 id="tec5errorTitle"></h2>
       <p id="tec5errorValue"></p>
       <p id="tec5errorExplanation"></p>
-      <p>Press ESC (escape) to close this notice</p>
+      <p>Click outside or press ESC (escape) to close this notice</p>
     </div>
     <div id="tec6pop" popover>
       <h2 id="tec6errorTitle"></h2>
       <p id="tec6errorValue"></p>
       <p id="tec6errorExplanation"></p>
-      <p>Press ESC (escape) to close this notice</p>
+      <p>Click outside or press ESC (escape) to close this notice</p>
     </div>
     <div id="tec7pop" popover>
       <h2 id="tec7errorTitle"></h2>
       <p id="tec7errorValue"></p>
       <p id="tec7errorExplanation"></p>
-      <p>Press ESC (escape) to close this notice</p>
+      <p>Click outside or press ESC (escape) to close this notice</p>
     </div>
     <div id="tec8pop" popover>
       <h2 id="tec8errorTitle"></h2>
       <p id="tec8errorValue"></p>
       <p id="tec8errorExplanation"></p>
-      <p>Press ESC (escape) to close this notice</p>
+      <p>Click outside or press ESC (escape) to close this notice</p>
     </div>
 
 
@@ -1035,7 +1035,7 @@
               20:"Ref_U"
           };
 
-          const VARH_ERROR = {
+          const VARH_ERROR = { // 0x06000000
               0x1: "VARH_ERROR_INVALID_VARIABLE",      
               0x2: "VARH_ERROR_INVALID_DATA",
               0x4: "VARH_ERROR_READONLY",
@@ -1044,20 +1044,53 @@
               0x20: "VARH_ERROR_LOAD_FLASH"
           };
  
+          const PELTIER_ERROR = { // 0x07000000
+              0x1: "PELTIER_ERROR_SETVOLTAGE",
+              0x2: "PELTIER_ERROR_SETVOLTAGE_PID",
+              0x4: "PELTIER_ERROR_MAX_POWER"
+          };
+ 
+          const MAIN_ERROR = { // 0x08000000
+              0x1: "MAIN_ERROR_REG_NOT_FOUND", 
+              0x2: "MAIN_ERROR_CMD_NOT_FOUND", 
+              0x4: "MAIN_ERROR_SAVE_FLASH",
+              0x8: "MAIN_ERROR_WATCHDOG"
+          };
+ 
+
 
           let cat = (tecerr & 0xff000000)>>24;
           let reg = (tecerr & 0x0000ff00)>>8;
           let err = (tecerr & 0x000000ff);
           let errtext = "";
-          if (cat == 6) {
+          if (cat == 0) {
+              // nothing
+          } else if (cat == 6) {
               for (const [key, value] of Object.entries(VARH_ERROR)) {
                   let eak = err&key;
                   if (eak > 0) {
-                      console.log("cat == 6" + " err = " + err + " key = " + key + " value = " + value + " eak = " + eak);
                       errtext = errtext.concat(value, " ");
                   }
               }
+          } else if (cat == 7) {
+              for (const [key, value] of Object.entries(PELTIER_ERROR)) {
+                  let eak = err&key;
+                  if (eak > 0) {
+                      errtext = errtext.concat(value, " ");
+                  }
+              }
+          } else if (cat == 8) {
+              for (const [key, value] of Object.entries(MAIN_ERROR)) {
+                  let eak = err&key;
+                  if (eak > 0) {
+                      errtext = errtext.concat(value, " ");
+                  }
+              }
+          } else {
+              errtext = "please post an issue to github about this error!";
           }
+
+
           let str = "";
           let msg = str.concat("category ", cat.toString(), " (", catDict[cat],
                                ") <br> register ", reg.toString(), " (", regDict[reg],
