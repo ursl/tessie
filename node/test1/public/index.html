@@ -1050,7 +1050,7 @@
           let err = (tecerr & 0x000000ff);
           let errtext = "";
           if (cat == 6) {
-              for (let ie = 0; ie < VARH_ERROR.size(); ie++) {
+              for (let ie = 0; ie < VARH_ERROR.size; ie++) {
                   if (err & VARH_ERROR[ie]) errtext.concat(VARH_ERROR[ie], " ");
               }
           }
