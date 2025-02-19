@@ -37,6 +37,7 @@ private:
   void btnINTL();
   void btnSound();
   void btnStop();
+  void btnRestartTessieWeb();
   void btnValve0();
   void btnValve1();
 
