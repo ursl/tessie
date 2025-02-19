@@ -1051,7 +1051,8 @@
           let errtext = "";
           if (cat == 6) {
               for (const [key, value] of Object.entries(VARH_ERROR)) {
-                  console.log("cat == 6" + " err = " + err + " key = " + key + " value = " + value);
+                  let eak = err&key;
+                  console.log("cat == 6" + " err = " + err + " key = " + key + " value = " + value + " eak = " + eak);
                   if (err&key) errtext.concat(value, " ");
               }
           }
