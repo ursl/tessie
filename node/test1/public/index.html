@@ -255,15 +255,15 @@
 
         <tr>
           <td>Errorstate (press to show error)</td>
-          <td> </td>
-          <td><button class="favorite styled" id="ErrorState1" disabled>wait </button></td>
-          <td><button class="favorite styled" id="ErrorState2" disabled>wait </button></td>
-          <td><button class="favorite styled" id="ErrorState3" disabled>wait </button></td>
-          <td><button class="favorite styled" id="ErrorState4" disabled>wait </button></td>
-          <td><button class="favorite styled" id="ErrorState5" disabled>wait </button></td>
-          <td><button class="favorite styled" id="ErrorState6" disabled>wait </button></td>
-          <td><button class="favorite styled" id="ErrorState7" disabled>wait </button></td>
-          <td><button class="favorite styled" id="ErrorState8" disabled>wait </button></td>
+          <td><button id="ClearTECError" disabled>Clear</button></td>
+          <td><button id="ErrorState1" disabled>wait </button></td>
+          <td><button id="ErrorState2" disabled>wait </button></td>
+          <td><button id="ErrorState3" disabled>wait </button></td>
+          <td><button id="ErrorState4" disabled>wait </button></td>
+          <td><button id="ErrorState5" disabled>wait </button></td>
+          <td><button id="ErrorState6" disabled>wait </button></td>
+          <td><button id="ErrorState7" disabled>wait </button></td>
+          <td><button id="ErrorState8" disabled>wait </button></td>
         </tr>
 
         <tr>
@@ -386,10 +386,52 @@
       </table>
     </div>
 
-    <div id="mypopover" popover>
-      <h2 id="tecerrorTitle"></h2>
-      <p id="tecerrorValue"></p>
-      <p id="tecerrorExplanation"></p>
+    <div id="tec1pop" popover>
+      <h2 id="tec1errorTitle"></h2>
+      <p id="tec1errorValue"></p>
+      <p id="tec1errorExplanation"></p>
+      <p>Press ESC (escape) to close this notice</p>
+    </div>
+    <div id="tec2pop" popover>
+      <h2 id="tec2errorTitle"></h2>
+      <p id="tec2errorValue"></p>
+      <p id="tec2errorExplanation"></p>
+      <p>Press ESC (escape) to close this notice</p>
+    </div>
+    <div id="tec3pop" popover>
+      <h2 id="tec3errorTitle"></h2>
+      <p id="tec3errorValue"></p>
+      <p id="tec3errorExplanation"></p>
+      <p>Press ESC (escape) to close this notice</p>
+    </div>
+    <div id="tec4pop" popover>
+      <h2 id="tec4errorTitle"></h2>
+      <p id="tec4errorValue"></p>
+      <p id="tec4errorExplanation"></p>
+      <p>Press ESC (escape) to close this notice</p>
+    </div>
+    <div id="tec5pop" popover>
+      <h2 id="tec5errorTitle"></h2>
+      <p id="tec5errorValue"></p>
+      <p id="tec5errorExplanation"></p>
+      <p>Press ESC (escape) to close this notice</p>
+    </div>
+    <div id="tec6pop" popover>
+      <h2 id="tec6errorTitle"></h2>
+      <p id="tec6errorValue"></p>
+      <p id="tec6errorExplanation"></p>
+      <p>Press ESC (escape) to close this notice</p>
+    </div>
+    <div id="tec7pop" popover>
+      <h2 id="tec7errorTitle"></h2>
+      <p id="tec7errorValue"></p>
+      <p id="tec7errorExplanation"></p>
+      <p>Press ESC (escape) to close this notice</p>
+    </div>
+    <div id="tec8pop" popover>
+      <h2 id="tec8errorTitle"></h2>
+      <p id="tec8errorValue"></p>
+      <p id="tec8errorExplanation"></p>
       <p>Press ESC (escape) to close this notice</p>
     </div>
 
@@ -778,25 +820,33 @@
       socket.on('ErrorString', (msg) => {
           const snumbers = msg.toString().replace('Error = ', '');
           const vNumbers = snumbers.split(',');
+          let cntErrs = 0; 
           for (let i = 1; i <= 8; i++) {
               let es = 'ErrorState' + i.toString();
               if (parseInt(vNumbers[i-1]) > 0) {
+                  cntErrs++;
+                  
                   fecErrors[i-1] = parseInt(vNumbers[i-1]);
                   document.getElementById(es).innerHTML = "show";
                   document.getElementById(es).style.backgroundColor = mycolors[8];
                   document.getElementById(es).disabled = false;
-                  document.getElementById("tecerrorTitle").innerHTML = "Error in TEC " + i.toString();
-                  document.getElementById("tecerrorValue").innerHTML = "0x" + fecErrors[i-1].toString(16);
-                  document.getElementById("tecerrorExplanation").innerHTML = tecErrorExplanation(fecErrors[i-1]);
+                  document.getElementById("tec" + i.toString() + "errorTitle").innerHTML = "Error in TEC " + i.toString();
+                  document.getElementById("tec" + i.toString() + "errorValue").innerHTML = "0x" + fecErrors[i-1].toString(16);
+                  document.getElementById("tec" + i.toString() + "errorExplanation").innerHTML = tecErrorExplanation(fecErrors[i-1]);
+
+                  document.getElementById("ClearTECError").disabled = false;
               } else {
                   fecErrors[i-1] = 0;
                   document.getElementById(es).innerHTML = "OK";
                   document.getElementById(es).style.backgroundColor = mycolors[4];
                   document.getElementById(es).disabled = true;
-                  document.getElementById("tecerrorTitle").innerHTML = "No Error in TEC " + i.toString();
-                  document.getElementById("tecerrorValue").innerHTML = "0x0";
-                  document.getElementById("tecerrorExplanation").innerHTML = "Relax, all is well";
+                  document.getElementById("tec" + i.toString() + "errorTitle").innerHTML = "No Error in TEC " + i.toString();
+                  document.getElementById("tec" + i.toString() + "errorValue").innerHTML = "0x0";
+                  document.getElementById("tec" + i.toString() + "errorExplanation").innerHTML = "Relax, all is well";
               }
+          }
+          if (cntErrs == 0) {
+              document.getElementById("ClearTECError").disabled = true;
           }
       });
 
@@ -1004,10 +1054,11 @@
       }
 
       // -- add eight event listeners for TEC error popover display
-      const popover = document.getElementById("mypopover");
       for (let itec = 1; itec <= 8; itec++) {
+          let ps = 'tec' + itec.toString() + 'pop';
           document.getElementById("ErrorState" + itec.toString()).addEventListener('click', (e) => {
-              const popupOpened = popover.togglePopover();
+              console.log("ps ->" + ps + "<-");
+              const popupOpened = document.getElementById(ps).togglePopover();
               // Check if popover is opened or closed on supporting browsers
               if (popupOpened !== undefined) {
                   // FIXME: now what?
@@ -1015,8 +1066,13 @@
           });
       }
 
-    </script>
 
+      // -- emit ClearError when button pressed
+      document.getElementById("ClearTECError").addEventListener('click', (e) => {
+          socket.emit('ClearError');
+      });
+
+    </script>
 
   </body>
 </html>

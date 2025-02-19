@@ -297,6 +297,16 @@ io.on('connection', (socket) => {
         });
     });
 
+
+    socket.on('ClearError', (msg) => {
+        clientMqtt.publish(topCtrl, 'cmd ClearError', {qos: 0, retain: false }, (error) => {
+            if (error) {
+                console.error(error)
+            }
+        })
+        console.log('cmd ClearError sent to MQTT');
+    });
+
     socket.on('loadFW', (msg) => {
         clientMqtt.publish(topCtrl, 'cmd LoadVariables', {qos: 0, retain: false }, (error) => {
             if (error) {
