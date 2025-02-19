@@ -163,15 +163,16 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   btn4->setStyleSheet("QPushButton {background-color: rgba(204, 50, 50, 0.4); color: black; font-weight: bold; border: 3px solid}");
   btn4->update();
   connect(btn4, &QPushButton::clicked, this, &MainWindow::btnStop);
-  glay01->addWidget(btn4, 3, 0, 1, 4, Qt::AlignLeft);
+  glay01->addWidget(btn4, 3, 0, 1, 2, Qt::AlignLeft);
 
   QPushButton *btn5 = new QPushButton("Restart tessieWeb"); btn5->setFocusPolicy(Qt::NoFocus);
   btn5->setFont(fFont2);
-  btn5->setFixedSize(QSize(200, 50));
+  btn5->setFixedSize(QSize(220, 50));
   btn5->setStyleSheet("QPushButton {background-color: rgba(120, 120, 120, 0.4); color: black; font-weight: bold; border: 3px solid}");
   btn5->update();
   connect(btn5, &QPushButton::clicked, this, &MainWindow::btnRestartTessieWeb);
-  glay01->addWidget(btn5, 3, 2, 1, 4, Qt::AlignLeft);
+  //no  glay01->minimumWidth = 10;
+  glay01->addWidget(btn5, 3, 2, 1, 2, Qt::AlignRight);
 
   hlay0->addLayout(glay01);
 
