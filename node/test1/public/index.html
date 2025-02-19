@@ -1050,9 +1050,9 @@
           let err = (tecerr & 0x000000ff);
           let errtext = "";
           if (cat == 6) {
-              console.log("cat == 6" + " err = " + err );
               for (const [key, value] of Object.entries(VARH_ERROR)) {
-                  if (err & key) errtext.concat(value, " ");
+                  console.log("cat == 6" + " err = " + err + " key = " + key + " err&key = " + err&key);
+                  if (err&key) errtext.concat(value, " ");
               }
           }
           let str = "";
