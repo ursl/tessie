@@ -58,7 +58,7 @@ private:
   tLog&         fLOG;
   driveHardware *fpHw;
 
-  QFont fFont1, fFont2;
+  QFont fFont1, fFont2, fFont3;
 
   std::vector<QLineEdit* > fqleTEC;
   std::vector<QLabel* >    flblTEC;
