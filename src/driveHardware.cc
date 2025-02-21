@@ -2461,8 +2461,8 @@ void driveHardware::readFlowmeter() {
     ++cnt;
   }
 
-  stringstream a("flowmeter readout data =  " + to_string(data)
-                 + " fFlowMeterStatus = " + to_string(fFlowMeterStatus));
+  //  stringstream a("flowmeter readout data =  " + to_string(data)
+  //                 + " fFlowMeterStatus = " + to_string(fFlowMeterStatus));
    // fLOG(INFO, a.str());
   i2c_close(fPiGPIO, handle);
 #endif
