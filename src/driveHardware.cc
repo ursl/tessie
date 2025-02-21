@@ -588,7 +588,7 @@ void driveHardware::ensureSafety() {
   }
   if (fAirTemp > SHUTDOWN_TEMP) {
     stopOperations(2);
-  }      
+  }
 
   // -- ensure chiller running if at least one TEC is turned on
   if (anyTECRunning()) {
@@ -2430,21 +2430,36 @@ void driveHardware::readSHT85() {
 
 // ----------------------------------------------------------------------
 void driveHardware::readFlowmeter() {
+  int cnt(0);
+  int oldfFlowMeterStatus = fFlowMeterStatus;
 #ifdef PI
-  int handle = i2c_open(fPiGPIO, I2CBUS, I2C_FLOWMETER_ADDR, 0);
+  while (cnt < 2) {
+    int handle = i2c_open(fPiGPIO, I2CBUS, I2C_FLOWMETER_ADDR, 0);
+    
+    // -- set command byte to 0x0 (Register: Input Port, Protocol: Read Byte)
+    char command = 0x0;
+    int length = i2c_write_device(fPiGPIO, handle, &command, 1);
+    std::this_thread::sleep_for(fMilli20);
+    
+    char data = 0x0;
+    length = i2c_read_device(fPiGPIO, handle, &data, 1);
+    if (length < 1) {
+      fFlowMeterStatus = -1;
+    } else {
+      data = ~data;
+      fFlowMeterStatus = data & 1;
+    }
+    if (1 == fFlowMeterStatus) {
+      break;
+    }
 
-  // -- set command byte to 0x0 (Register: Input Port, Protocol: Read Byte)
-  char command = 0x0;
-  int length = i2c_write_device(fPiGPIO, handle, &command, 1);
-  std::this_thread::sleep_for(fMilli20);
-
-  char data = 0x0;
-  length = i2c_read_device(fPiGPIO, handle, &data, 1);
-  if (length < 1) {
-    fFlowMeterStatus = -1;
-  } else {
-    data = ~data;
-    fFlowMeterStatus = data & 1;
+    if (1 == oldfFlowMeterStatus && 0 == fFlowMeterStatus) {
+      std::this_thread::sleep_for(std::chrono::milliseconds(500));
+      std::this_thread::sleep_for(std::chrono::milliseconds(500));
+      std::this_thread::sleep_for(std::chrono::milliseconds(500));
+      std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    }
+    ++cnt;
   }
 
   stringstream a("flowmeter readout data =  " + to_string(data)
