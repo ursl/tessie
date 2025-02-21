@@ -2430,9 +2430,9 @@ void driveHardware::readSHT85() {
 
 // ----------------------------------------------------------------------
 void driveHardware::readFlowmeter() {
+#ifdef PI
   int cnt(0);
   int oldfFlowMeterStatus = fFlowMeterStatus;
-#ifdef PI
   while (cnt < 2) {
     int handle = i2c_open(fPiGPIO, I2CBUS, I2C_FLOWMETER_ADDR, 0);
     
