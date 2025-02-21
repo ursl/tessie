@@ -600,7 +600,7 @@ void driveHardware::ensureSafety() {
         greenLight = false;
         allOK = 2;
         if (0 == fStopOperations) fStatusString = "Turn on chiller!";
-        stringstream a("==WARNING== chiller not running, turn it on = ");
+        stringstream a("==ERROR== chiller not running, turn it on = ");
         fLOG(ERROR, a.str());
         emit signalSendToMonitor(QString::fromStdString(a.str()));
         emit signalSendToServer(QString::fromStdString(a.str()));
