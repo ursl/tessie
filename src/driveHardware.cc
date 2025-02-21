@@ -2433,8 +2433,8 @@ void driveHardware::readFlowmeter() {
 #ifdef PI
   int cnt(0);
   int oldfFlowMeterStatus = fFlowMeterStatus;
-  int handle = i2c_open(fPiGPIO, I2CBUS, I2C_FLOWMETER_ADDR, 0);
   while (cnt < 2) {
+    int handle = i2c_open(fPiGPIO, I2CBUS, I2C_FLOWMETER_ADDR, 0);
     // -- set command byte to 0x0 (Register: Input Port, Protocol: Read Byte)
     char command = 0x0;
     int length = i2c_write_device(fPiGPIO, handle, &command, 1);
@@ -2442,6 +2442,8 @@ void driveHardware::readFlowmeter() {
     
     char data = 0x0;
     length = i2c_read_device(fPiGPIO, handle, &data, 1);
+    i2c_close(fPiGPIO, handle);
+
     if (length < 1) {
       fFlowMeterStatus = -1;
     } else {
@@ -2453,6 +2455,7 @@ void driveHardware::readFlowmeter() {
     }
 
     if (1 == oldfFlowMeterStatus && 0 == fFlowMeterStatus) {
+      fLOG(INFO, "Flow switch changed from on to off. Double-check!")      
       std::this_thread::sleep_for(std::chrono::milliseconds(500));
       std::this_thread::sleep_for(std::chrono::milliseconds(500));
       std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -2464,7 +2467,6 @@ void driveHardware::readFlowmeter() {
   //  stringstream a("flowmeter readout data =  " + to_string(data)
   //                 + " fFlowMeterStatus = " + to_string(fFlowMeterStatus));
    // fLOG(INFO, a.str());
-  i2c_close(fPiGPIO, handle);
 #endif
 }
 
