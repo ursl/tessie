@@ -2455,7 +2455,7 @@ void driveHardware::readFlowmeter() {
     }
 
     if (1 == oldfFlowMeterStatus && 0 == fFlowMeterStatus) {
-      fLOG(INFO, "Flow switch changed from on to off. Double-check!")      
+      fLOG(INFO, "Flow switch changed from on to off. Double-check!");
       std::this_thread::sleep_for(std::chrono::milliseconds(500));
       std::this_thread::sleep_for(std::chrono::milliseconds(500));
       std::this_thread::sleep_for(std::chrono::milliseconds(500));
