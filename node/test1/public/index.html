@@ -646,6 +646,7 @@
       
 
       socket.on('Temp_MString', (msg) => {
+          console.log("index.html received ->" + msg + "<-");
           const snumbers = msg.toString().replace('Temp_M = ', '');
           const vNumbers = snumbers.split(',');
           for (let i = 1; i <= 8; i++) {
