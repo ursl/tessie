@@ -99,7 +99,7 @@ clientMqtt.on('connect', () => {
 })
 
 
-clientMqtt.on('message', (topMon, payload) => {
+clientMqtt.on('message', (topic, payload) => {
     // -- reset strings
     AlarmString = '';
     WarningString = '';
