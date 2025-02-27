@@ -105,77 +105,80 @@ clientMqtt.on('message', (topic, payload) => {
     WarningString = '';
     HintString = '';
 
-    console.log("topic ->" + topic + "<-");
+    
+    // -- only monTessie information should be used here. ctrlTessie can lead to "malformed" strings (single Temp_M)
+    if (topic === "monTessie") {
+        if (payload.includes('Env = ')) {
+            envString = payload.toString();
+        }
+        if (payload.includes('VAR = ')) {
+            varString = payload.toString();
+        }
+        if (payload.includes('PowerState = ')) {
+            PowerStateString = payload.toString();
+        }
+        if (payload.includes('ControlVoltage_Set = ')) {
+            ControlVoltage_SetString = payload.toString();
+        }
+        if (payload.includes('Temp_M = ')) {
+            Temp_MString = payload.toString();
+        }
+        if (payload.includes('Temp_W = ')) {
+            Temp_WString = payload.toString();
+        }
+        if (payload.includes('PID_kp = ')) {
+            PID_kpString = payload.toString();
+        }
+        if (payload.includes('PID_ki = ')) {
+            PID_kiString = payload.toString();
+        }
+        if (payload.includes('PID_kd = ')) {
+            PID_kdString = payload.toString();
+        }
+        if (payload.includes('Temp_Set = ')) {
+            Temp_SetString = payload.toString();
+        }
+        if (payload.includes('PID_Max = ')) {
+            PID_MaxString = payload.toString();
+        }
+        if (payload.includes('PID_Min = ')) {
+            PID_MinString = payload.toString();
+        }
+        if (payload.includes('Temp_Diff = ')) {
+            Temp_DiffString = payload.toString();
+        }
+        if (payload.includes('Peltier_U = ')) {
+            Peltier_UString = payload.toString();
+        }
+        if (payload.includes('Peltier_I = ')) {
+            Peltier_IString = payload.toString();
+        }
+        if (payload.includes('Peltier_R = ')) {
+            Peltier_RString = payload.toString();
+        }
+        if (payload.includes('Peltier_P = ')) {
+            Peltier_PString = payload.toString();
+        }
+        if (payload.includes('Supply_U = ')) {
+            Supply_UString = payload.toString();
+        }
+        if (payload.includes('Supply_I = ')) {
+            Supply_IString = payload.toString();
+        }
+        if (payload.includes('Supply_P = ')) {
+            Supply_PString = payload.toString();
+        }
+        if (payload.includes('Error = ')) {
+            ErrorString = payload.toString();
+        }
+        if (payload.includes('Ref_U = ')) {
+            Ref_UString = payload.toString();
+        }
+        if (payload.includes('Mode = ')) {
+            ModeString = payload.toString();
+        }
+    }
 
-    if (payload.includes('Env = ')) {
-        envString = payload.toString();
-    }
-    if (payload.includes('VAR = ')) {
-        varString = payload.toString();
-    }
-    if (payload.includes('PowerState = ')) {
-        PowerStateString = payload.toString();
-    }
-    if (payload.includes('ControlVoltage_Set = ')) {
-        ControlVoltage_SetString = payload.toString();
-    }
-    if (payload.includes('Temp_M = ')) {
-        Temp_MString = payload.toString();
-    }
-    if (payload.includes('Temp_W = ')) {
-        Temp_WString = payload.toString();
-    }
-    if (payload.includes('PID_kp = ')) {
-        PID_kpString = payload.toString();
-    }
-    if (payload.includes('PID_ki = ')) {
-        PID_kiString = payload.toString();
-    }
-    if (payload.includes('PID_kd = ')) {
-        PID_kdString = payload.toString();
-    }
-    if (payload.includes('Temp_Set = ')) {
-        Temp_SetString = payload.toString();
-    }
-    if (payload.includes('PID_Max = ')) {
-        PID_MaxString = payload.toString();
-    }
-    if (payload.includes('PID_Min = ')) {
-        PID_MinString = payload.toString();
-    }
-    if (payload.includes('Temp_Diff = ')) {
-        Temp_DiffString = payload.toString();
-    }
-    if (payload.includes('Peltier_U = ')) {
-        Peltier_UString = payload.toString();
-    }
-    if (payload.includes('Peltier_I = ')) {
-        Peltier_IString = payload.toString();
-    }
-    if (payload.includes('Peltier_R = ')) {
-        Peltier_RString = payload.toString();
-    }
-    if (payload.includes('Peltier_P = ')) {
-        Peltier_PString = payload.toString();
-    }
-    if (payload.includes('Supply_U = ')) {
-        Supply_UString = payload.toString();
-    }
-    if (payload.includes('Supply_I = ')) {
-        Supply_IString = payload.toString();
-    }
-    if (payload.includes('Supply_P = ')) {
-        Supply_PString = payload.toString();
-    }
-    if (payload.includes('Error = ')) {
-        ErrorString = payload.toString();
-    }
-    if (payload.includes('Ref_U = ')) {
-        Ref_UString = payload.toString();
-    }
-    if (payload.includes('Mode = ')) {
-        ModeString = payload.toString();
-    }
     if (payload.includes('==WARNING== ')) {
         WarningString = payload.toString();
     }
