@@ -105,6 +105,8 @@ clientMqtt.on('message', (topic, payload) => {
     WarningString = '';
     HintString = '';
 
+    console.log("topic ->" + topic + "<-");
+
     if (payload.includes('Env = ')) {
         envString = payload.toString();
     }
