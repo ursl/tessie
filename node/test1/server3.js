@@ -85,8 +85,8 @@ clientMqtt.on('connect', () => {
     })
 })
 
-clientMqtt.on('message', (topCtrl, payload) => {
-    if (payload.includes('GetSWVersion = ')) {
+clientMqtt.on('message', (topic, payload) => {
+    if (topic === "ctrlTessie" && payload.includes('GetSWVersion = ')) {
         fwverString = payload.toString();
     }
 })
@@ -417,8 +417,8 @@ io.on('connection', (socket) => {
                 console.error(error)
             }
                
-            clientMqtt.on('message', (topCtrl, payload) => {
-                if (payload.includes('GetSWVersion = ')) {
+            clientMqtt.on('message', (topic, payload) => {
+                if (topic === "ctrlTessie" && payload.includes('GetSWVersion = ')) {
                     fwverString = payload.toString();
                 }
             })
