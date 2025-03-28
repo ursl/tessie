@@ -1182,6 +1182,14 @@ void driveHardware::parseIoMessage() {
       emit signalSendToServer(qmsg);
     }
 
+    s1 = "throttleN2"; s2 = "throttle";
+    if (findInIoMessage(s1, s2, s3)) {
+      stringstream str;
+      str << "throttle" << " = " << (getThrottleStatus()?"on":"off");
+      QString qmsg = QString::fromStdString(str.str());
+      emit signalSendToServer(qmsg);
+    }
+
     for (int i = 1; i < 9; ++i) {
       stringstream str1;
       str1 << "vprobe" << i;
