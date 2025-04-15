@@ -991,7 +991,7 @@ void driveHardware::answerIoGet(string &) {
         uint32_t i;
       } u;
       u.f = a;
-      str << u.i;
+      str << ntohl(u.i);
     } else {
       str << getTECRegister(itec, regname);
     }
