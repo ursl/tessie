@@ -15,6 +15,7 @@
 #include <sys/statvfs.h>
 
 #include "rsstools.hh"
+#include <arpa/inet.h>
 
 #include <fcntl.h>
 
