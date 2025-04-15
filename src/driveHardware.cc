@@ -2100,6 +2100,20 @@ void driveHardware::readAllParamsFromCANPublic() {
   for (int i = 1; i <= 8; ++i) {
     if (0 == fActiveTEC[i]) continue;
     fTECData[i].reg["PowerState"].value = fCanMsg.getInt(i, regIdx);
+    if (fTECData[i].reg["PowerState"].value != 0 ||
+        fTECData[i].reg["PowerState"].value != 1) {
+           union {
+          float f;
+          uint32_t i;
+        } u;
+        u.i = fTECData[i].reg["PowerState"].value;
+        stringstream a("DEBUG Powerstate = " 
+          + to_string(fTECData[i].reg["PowerState"].value)
+          + " u.f = " + to_string(u.f)
+          + " u.i = " + to_string(u.i))
+          ;
+          fLOG(INFO, a.str());
+    }
   }
 
   // -- read integer Error
