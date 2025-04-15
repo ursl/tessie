@@ -986,10 +986,8 @@ void driveHardware::answerIoGet(string &) {
     if (ntec > 1) str << ",";
     if (isInt) {
       float a = getTECRegister(itec, regname);
-      char ndata[4];
-      memcpy(ndata, &a, sizeof a);
       int b = 0;
-      memcpy(&b, ndata, sizeof b);
+      memcpy(&b, &a, sizeof a);
       str << b;
     } else {
       str << getTECRegister(itec, regname);
