@@ -1,4 +1,5 @@
 #include "driveHardware.hh"
+#include <cstring>
 #include <iostream>
 #include <unistd.h>
 #include <sstream>
@@ -984,7 +985,12 @@ void driveHardware::answerIoGet(string &) {
     if ((0 != tec) && (itec != tec)) continue;
     if (ntec > 1) str << ",";
     if (isInt) {
-      str << reinterpret_cast<int>(getTECRegister(itec, regname));
+      float a = getTECRegister(itec, regname);
+      char ndata[4];
+      memcpy(ndata, &a, sizeof a);
+      int b = 0;
+      memcpy(&b, ndata, sizeof b);
+      str << b;
     } else {
       str << getTECRegister(itec, regname);
     }
