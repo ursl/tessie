@@ -973,13 +973,21 @@ void driveHardware::answerIoGet(string &) {
     }
   }
 
+  bool isInt(false); 
+  if (regname == "Mode")  isInt = true;
+  if (regname == "PowerState")  isInt = true;
+
   stringstream str;
   str << regname << " = ";
   int ntec(1);
   for (int itec = 1; itec <= 8; ++itec) {
     if ((0 != tec) && (itec != tec)) continue;
     if (ntec > 1) str << ",";
-    str << getTECRegister(itec, regname);
+    if (isInt) {
+      str << static_cast<int>(getTECRegister(itec, regname));
+    } else {
+      str << getTECRegister(itec, regname);
+    }
     ++ntec;
   }
   QString qmsg = QString::fromStdString(str.str());
