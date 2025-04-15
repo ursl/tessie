@@ -986,13 +986,14 @@ void driveHardware::answerIoGet(string &) {
     if ((0 != tec) && (itec != tec)) continue;
     if (ntec > 1) str << ",";
     if (isInt) {
-      float a = getTECRegister(itec, regname);
-      union {
-        float f;
-        uint32_t i;
-      } u;
-      u.f = a;
-      str << ntohl(u.i);
+      str << static_cast<int>(getTECRegister(itec, regname));
+      // float a = getTECRegister(itec, regname);
+      // union {
+      //   float f;
+      //   uint32_t i;
+      // } u;
+      // u.f = a;
+      // str << ntohl(u.i);
     } else {
       str << getTECRegister(itec, regname);
     }
