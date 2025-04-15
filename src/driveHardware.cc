@@ -2112,7 +2112,7 @@ void driveHardware::readAllParamsFromCANPublic() {
                     + to_string(fTECData[i].reg["PowerState"].value)
                     + " u.f = " + to_string(u.f)
                     + " u.i = " + to_string(u.i));
-      if (0) fLOG(INFO, a.str());
+      if (1) fLOG(INFO, a.str());
     }
   }
 
