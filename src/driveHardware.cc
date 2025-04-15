@@ -2099,7 +2099,7 @@ void driveHardware::readAllParamsFromCANPublic() {
   regIdx = fTECData[1].getIdx("PowerState");
   for (int i = 1; i <= 8; ++i) {
     if (0 == fActiveTEC[i]) continue;
-    fTECData[i].reg["PowerState"].value = fCanMsg.getInt(i, regIdx);
+    fTECData[i].reg["PowerState"].value = static_cast<float>(fCanMsg.getInt(i, regIdx));
     if (fTECData[i].reg["PowerState"].value == 0 || 
         fTECData[i].reg["PowerState"].value == 1) {
     } else {
