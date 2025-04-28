@@ -62,9 +62,9 @@ void ioServer::doRun() {
     //cout << "ioServer::doRun() while(1) loop, nmsg = " << nmsg << endl;
     if (fCtrlTessie->getNMessages() > 0) {
       string msg = fCtrlTessie->getMessage();
-      cout << "ioServer::doRun> Qt emit sendFromServer("
-           << msg
-           << ")" << endl;
+      if (0) cout << "ioServer::doRun> Qt emit sendFromServer("
+                  << msg
+                  << ")" << endl;
       QString qmsg = QString::fromStdString(msg);
       emit signalSendFromServer(qmsg);
 // -- monTessie is write only!

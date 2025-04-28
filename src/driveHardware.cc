@@ -956,7 +956,7 @@ bool driveHardware::findInIoMessage(string &s1, string &s2, string &s3) {
 void driveHardware::answerIoGet(string &) {
   string what = fIoMessage;
 
-  cout << "answerIoGet what ->" << what << "<-" << endl;
+  if (0) cout << "answerIoGet what ->" << what << "<-" << endl;
   string delimiter(" ");
 
   string regname("nada");
@@ -2042,7 +2042,6 @@ void driveHardware::readAllParamsFromCANPublic() {
                              , "Supply_U"
                              , "Supply_I"
                              , "Supply_P"
-                             , "PowerState"
                              , "Error"
                              , "Ref_U"
 
