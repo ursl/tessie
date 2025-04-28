@@ -149,6 +149,10 @@
             <td id="versionField" style="text-align:right;">n/a </td>
           </tr>
           <tr>
+            <td>tessieWeb</td>
+            <td id="versionWebField" style="text-align:right;">n/a </td>
+          </tr>
+          <tr>
             <td>TEC f/w version</td>
             <td id="fwverField" style="text-align:right;">n/a </td>
           </tr>
@@ -479,6 +483,9 @@
       const saveFW = document.getElementById('saveFW');
       const loadFW = document.getElementById('loadFW');
 
+      let tessieWebVersion = "unset";
+      var el = document.getElementById('versionWebField');
+
       var logarea = document.getElementById("logarea");
 
       // --
@@ -600,9 +607,9 @@
 
           el = document.getElementById('FreeDiskspace');
           el.innerHTML = freeDiskspace + " GB";
-          if (freeDiskspace > 2) {
+          if (freeDiskspace > 10) {
               el.style.backgroundColor = mycolors[4];
-          } else if ((freeDiskspace > 1) && (freeDiskspace < 2)) {
+          } else if ((freeDiskspace > 5) && (freeDiskspace < 10)) {
               el.style.backgroundColor = mycolors[6];
           } else {
               el.style.backgroundColor = mycolors[8];
@@ -891,6 +898,12 @@
           document.getElementById('fwverField').innerHTML = fwverString;
       });
 
+      socket.on('webVersionString', (msg) => {
+          let tessieWebVersionString= msg.toString();
+          console.log(msg.toString() + ' => tessieWebVersionString ->' + tessieWebVersionString + '<-');
+          document.getElementById('versionWebField').innerHTML = tessieWebVersionString;
+      });
+
       socket.on('putcsv', (msg) => {
           console.log('hallo got putcsv');
           console.log(msg.toString());
@@ -899,6 +912,9 @@
 
       let msg = "getversionstring";
       socket.emit('getversionstring', msg);
+
+      let msg1 = "getwebversionstring";
+      socket.emit('getwebversionstring', msg);
 
       let msg2 = "getfwverstring";
       socket.emit('getfwverstring', msg2);

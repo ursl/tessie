@@ -33,6 +33,7 @@ const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
 const connectUrl = `${protocol}://${host}:${port}`
 
 let versionString = ''
+let webVersionString = ''   
 let fwverString = ''
 let envString = ''
 let varString = ''
@@ -195,13 +196,14 @@ clientMqtt.on('message', (topic, payload) => {
 // -- socket.io
 // ----------------------------------------------------------------------
 io.on('connection', (socket) => {
-    // -- read version string
+    // -- read version strings
     readVersion();
-
+    readWebVersion();
     getFirmwareVersion();
 
     console.log('User connected');
     console.log('versionString ->' + versionString + '<-');
+    console.log('webVersionString ->' + webVersionString + '<-');
     console.log('fwverString ->' + fwverString + '<-');
 
     socket.on('disconnect', () => {
@@ -409,6 +411,11 @@ io.on('connection', (socket) => {
         socket.emit('versionString', versionString);
     });
 
+    socket.on('getwebversionstring', (msg) => {
+        console.log('socket.on(getwebversionstring) received ->' + msg + '<-');
+        socket.emit('webVersionString', webVersionString);
+    });
+
     socket.on('getfwverstring', (msg) => {
         console.log('socket.on(getfwverstring) received ->' + msg + '<-'); 
         // -- inquire about TEC f/w version
@@ -453,6 +460,13 @@ async function startServer() {
 function readVersion() {
     let filePath = "../../src/version.txt";
     versionString = fs.readFileSync(filePath).toString().replace('\n', '');
+}
+
+// ----------------------------------------------------------------------
+function readWebVersion() {
+    let filePath = "tessieWebVersion.txt";
+    webVersionString = fs.readFileSync(filePath).toString().replace('\n', '');
+    console.log('webVersionString ->' + webVersionString + '<-', ' filePath ->' + filePath + '<-');
 }
 
 // ----------------------------------------------------------------------
