@@ -1,5 +1,4 @@
 #include "driveHardware.hh"
-#include <cstring>
 #include <iostream>
 #include <unistd.h>
 #include <sstream>
@@ -15,7 +14,6 @@
 #include <sys/statvfs.h>
 
 #include "rsstools.hh"
-#include <arpa/inet.h>
 
 #include <fcntl.h>
 
@@ -81,6 +79,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fStopOperations = 0;
   // -- negative means not yet set, 0 is no flow, 1 is flow enable
   fFlowMeterStatus = -1; 
+  fBadFlowMeterReading = 0;
   fThrottleStatus = 0;
   fHeaterStatus = 0; 
 
@@ -975,28 +974,13 @@ void driveHardware::answerIoGet(string &) {
     }
   }
 
-  bool isInt(false); 
-  if (regname == "Mode")  isInt = true;
-  if (regname == "PowerState")  isInt = true;
-
   stringstream str;
   str << regname << " = ";
   int ntec(1);
   for (int itec = 1; itec <= 8; ++itec) {
     if ((0 != tec) && (itec != tec)) continue;
     if (ntec > 1) str << ",";
-    if (isInt) {
-      str << to_string(getTECRegister(itec, regname));
-      // float a = getTECRegister(itec, regname);
-      // union {
-      //   float f;
-      //   uint32_t i;
-      // } u;
-      // u.f = a;
-      // str << ntohl(u.i);
-    } else {
-      str << getTECRegister(itec, regname);
-    }
+    str << getTECRegister(itec, regname);
     ++ntec;
   }
   QString qmsg = QString::fromStdString(str.str());
@@ -2100,21 +2084,7 @@ void driveHardware::readAllParamsFromCANPublic() {
   regIdx = fTECData[1].getIdx("PowerState");
   for (int i = 1; i <= 8; ++i) {
     if (0 == fActiveTEC[i]) continue;
-    fTECData[i].reg["PowerState"].value = static_cast<float>(fCanMsg.getInt(i, regIdx));
-    if (fTECData[i].reg["PowerState"].value == 0 || 
-        fTECData[i].reg["PowerState"].value == 1) {
-    } else {
-      union {
-          float f;
-        uint32_t i;
-      } u;
-      u.i = fTECData[i].reg["PowerState"].value;
-      stringstream a("DEBUG Powerstate = " 
-                    + to_string(fTECData[i].reg["PowerState"].value)
-                    + " u.f = " + to_string(u.f)
-                    + " u.i = " + to_string(u.i));
-      if (1) fLOG(INFO, a.str());
-    }
+    fTECData[i].reg["PowerState"].value = fCanMsg.getInt(i, regIdx);
   }
 
   // -- read integer Error
@@ -2470,38 +2440,40 @@ void driveHardware::readSHT85() {
 // ----------------------------------------------------------------------
 void driveHardware::readFlowmeter() {
 #ifdef PI
-  int cnt(0);
-  int oldfFlowMeterStatus = fFlowMeterStatus;
-  while (cnt < 2) {
-    int handle = i2c_open(fPiGPIO, I2CBUS, I2C_FLOWMETER_ADDR, 0);
-    // -- set command byte to 0x0 (Register: Input Port, Protocol: Read Byte)
-    char command = 0x0;
-    int length = i2c_write_device(fPiGPIO, handle, &command, 1);
-    std::this_thread::sleep_for(fMilli20);
-    
-    char data = 0x0;
-    length = i2c_read_device(fPiGPIO, handle, &data, 1);
-    i2c_close(fPiGPIO, handle);
+  int flowMeterStatus(0);
+  int handle = i2c_open(fPiGPIO, I2CBUS, I2C_FLOWMETER_ADDR, 0);
+  // -- set command byte to 0x0 (Register: Input Port, Protocol: Read Byte)
+  char command = 0x0;
+  int  length = i2c_write_device(fPiGPIO, handle, &command, 1);
+  std::this_thread::sleep_for(fMilli20);
 
-    if (length < 1) {
-      fFlowMeterStatus = -1;
-    } else {
-      data = ~data;
-      fFlowMeterStatus = data & 1;
-    }
-    if (1 == fFlowMeterStatus) {
-      break;
-    }
+  char data = 0x0;
+  length = i2c_read_device(fPiGPIO, handle, &data, 1);
+  i2c_close(fPiGPIO, handle);
 
-    if (1 == oldfFlowMeterStatus && 0 == fFlowMeterStatus) {
-      fLOG(INFO, "Flow switch changed from on to off. Double-check!");
-      std::this_thread::sleep_for(std::chrono::milliseconds(500));
-      std::this_thread::sleep_for(std::chrono::milliseconds(500));
-      std::this_thread::sleep_for(std::chrono::milliseconds(500));
-      std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    }
-    ++cnt;
+  if (length < 1) {
+    flowMeterStatus = -1;
+  } else {
+    data = ~data;
+    flowMeterStatus = data & 1;
   }
+  if (0 == flowMeterStatus) {
+    ++fBadFlowMeterReading;
+    stringstream a("fBadFlowMeterReading = " + to_string(fBadFlowMeterReading));
+    fLOG(WARNING, a.str());
+  } else if (-1 == flowMeterStatus) {
+    fFlowMeterStatus = -1;
+  } else {
+    fFlowMeterStatus = 1;
+    fBadFlowMeterReading = 0;
+  } 
+
+  if (fBadFlowMeterReading > 10) {
+    stringstream a("fBadFlowMeterReading > 10, changing fFlowMeterStatus = 0;");
+    fFlowMeterStatus = 0;
+    fLOG(WARNING, a.str());
+  }
+  
 
   //  stringstream a("flowmeter readout data =  " + to_string(data)
   //                 + " fFlowMeterStatus = " + to_string(fFlowMeterStatus));
