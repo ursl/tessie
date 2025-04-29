@@ -2272,6 +2272,10 @@ void driveHardware::readHYT223() {
     fHYT223RH   = 0.00610389 * vrh;       // RH [%] = (100 / (2^{14} - 1)) * RHraw
     fHYT223Temp = 0.0100714 * vtt - 40.;  // T [degC] = (165 / (2^{14} - 1)) * Traw - 40
 
+    // -- apply offset deduction 
+    fHYT223RH -= 2.02;
+    if (fHYT223RH < 0.) fHYT223RH = 0.001;  
+
     // -- DBX
     if (fHYT223Temp > 124.) {
       stringstream a("## HYT223 UNPHYSICAL Temperature length = " + to_string(length) + " resetting to 25.");
