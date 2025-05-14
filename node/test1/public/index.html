@@ -609,7 +609,7 @@
           el.innerHTML = freeDiskspace + " GB";
           if (freeDiskspace > 10) {
               el.style.backgroundColor = mycolors[4];
-          } else if ((freeDiskspace > 5) && (freeDiskspace < 10)) {
+          } else if ((freeDiskspace > 5) && (freeDiskspace <= 10)) {
               el.style.backgroundColor = mycolors[6];
           } else {
               el.style.backgroundColor = mycolors[8];
