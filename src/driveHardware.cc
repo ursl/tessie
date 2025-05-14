@@ -1231,6 +1231,13 @@ void driveHardware::parseIoMessage() {
     s1 = "Error"; s2 = "Error";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
     s1 = "Ref_U"; s2 = "Ref_U";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
 
+    s1 = "monitoring"; s2 = "allMonTessie";
+    if (findInIoMessage(s1, s2, s3)) {
+      fLOG(INFO, "calling dumpMQTT(1) from ctrlTessie command");
+      dumpMQTT(1);
+    }
+
+
   } else if (string::npos != fIoMessage.find("set ")) {
     s3 = "set ";
 
