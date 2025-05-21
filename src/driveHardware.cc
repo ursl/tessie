@@ -1415,6 +1415,9 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> get valve1");
     vhelp.push_back("> get vprobe[1-8]");
     vhelp.push_back("> ");
+    vhelp.push_back("> get {monitoring|allMonTessie}");
+    vhelp.push_back("> ");
+
 
     vhelp.push_back("> [tec {0|x}] get Mode");
     vhelp.push_back("> [tec {0|x}] get ControlVoltage_Set");
