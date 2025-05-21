@@ -593,12 +593,12 @@ void driveHardware::ensureSafety() {
 
   // -- ensure chiller running if at least one TEC is turned on
   if (anyTECRunning()) {
+    greenLight = false;
     if (fFlowMeterStatus < 0) {
       // -- should be handled by temperature checking
     } else {
       if (fFlowMeterStatus < 1) {
       
-        greenLight = false;
         allOK = 2;
         if (0 == fStopOperations) fStatusString = "Turn on chiller!";
         stringstream a("==ERROR== chiller not running, turn it on = ");
