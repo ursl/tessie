@@ -255,16 +255,20 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   }
   if (!versionOK) {  
     fStatusString = "TEC firmware mismatch";
-    shutDown();
   } else {
     if (version < 12) {
       fLOG(INFO, "UPGRADE TEC firmware! Current version = " + to_string(version));
       fStatusString = "UPGRADE TEC firmware!";
-      shutDown();
+      versionOK = false;
     }
-    fStatusString = "initialization OK";
   }
 
+  if (!versionOK) {
+    fLOG(INFO, "get stuck ");
+    while (1) {};
+  }
+
+  fStatusString = "initialization OK";
 
 
 #endif
@@ -894,12 +898,7 @@ void driveHardware::shutDown() {
 
   pigpio_stop(fPiGPIO);
 
-  if (fStatusString != "UPGRADE TEC firmware!") {
-    fStatusString = "Reboot!";
-  } else {
-    fLOG(INFO, "get stuck ");
-    while (1) {};
-  }
+  fStatusString = "Reboot!";
   return;
 
 #endif
