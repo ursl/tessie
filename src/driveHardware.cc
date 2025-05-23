@@ -856,7 +856,7 @@ int driveHardware::getSWVersion(int itec) {
                           << " version = " << a.fIntVal;
   fLOG(INFO, sbla.str());
 
-
+  version = a.fIntVal;
   return version;
 }
 
