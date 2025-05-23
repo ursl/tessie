@@ -30,6 +30,11 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   fFont3.setFamilies({QString::fromUtf8("Menlo")});
   fFont3.setPointSize(13);
 
+  // Add a smaller font for the header labels
+  QFont fFontHeader;
+  fFontHeader.setFamilies({QString::fromUtf8("Menlo")});
+  fFontHeader.setPointSize(12);
+
   const QSize btnSize = QSize(100, 50);
 
   this->resize(800, 480);
@@ -59,6 +64,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   // First label with version and hostname
   QLabel *lblVersion = new QLabel(string("TESSIE  " + fpHw->getHostname()).c_str()); 
   setupLBL(lblVersion);
+  lblVersion->setFont(fFontHeader);
   lblVersion->setStyleSheet("font-weight: bold;");
   vlayLabels->addWidget(lblVersion);
   
@@ -66,6 +72,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   string sline3 = "Version: " + sline + ". TEC f/w: " + sline2;
   QLabel *lbl2 = new QLabel(sline3.c_str());
   setupLBL(lbl2);
+  lbl2->setFont(fFont3);
   vlayLabels->addWidget(lbl2);
   
   // Add the vertical layout to the horizontal layout
