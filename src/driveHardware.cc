@@ -1288,7 +1288,7 @@ void driveHardware::parseIoMessage() {
     s1 = "valve1"; s2 = "Valve1";
     if (findInIoMessage(s1, s2, s3)) {
       if (string::npos != fIoMessage.find("on")) {
-        if (!sValve1()) {
+        if (!getStatusValve1()) {
           toggleFras(2);
         }
       } else if (string::npos != fIoMessage.find("off")) {
