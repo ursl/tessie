@@ -33,7 +33,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   // Add a smaller font for the header labels
   QFont fFontHeader;
   fFontHeader.setFamilies({QString::fromUtf8("Menlo")});
-  fFontHeader.setPointSize(12);
+  fFontHeader.setPointSize(16);
 
   const QSize btnSize = QSize(100, 50);
 
