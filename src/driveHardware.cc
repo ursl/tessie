@@ -896,6 +896,8 @@ void driveHardware::shutDown() {
 
   if (fStatusString != "UPGRADE TEC firmware!") {
     fStatusString = "Reboot!";
+  } else {
+    while (1) {};
   }
   return;
 
