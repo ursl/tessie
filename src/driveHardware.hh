@@ -264,7 +264,7 @@ private:
   std::string fStatusString, fHostName;
   int fFreeDiskspace, fTrafficRed, fTrafficYellow, fTrafficGreen;
   int fStopOperations, fFlowMeterStatus, fBadFlowMeterReading, fThrottleStatus;
-  int fHeaterStatus;
+  int fHeaterStatus, fVersionOK;
 
   const double SAFETY_DPMARGIN = 2.;
   
