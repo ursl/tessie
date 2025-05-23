@@ -263,10 +263,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
     }
   }
 
-  if (!versionOK) {
-    fLOG(INFO, "get stuck ");
-    while (1) {};
-  }
+  fVersionOK = versionOK;
 
   fStatusString = "initialization OK";
 
@@ -515,6 +512,12 @@ void driveHardware::doRun() {
 
 // ----------------------------------------------------------------------
 void driveHardware::ensureSafety() {
+
+  if (!fVersionOK) {
+    fStatusString = "UPGRADE TEC firmware!";
+    fLOG(INFO, "get stuck ");
+    while (1) {};
+  }
 
   if (0 == fStopOperations) {
     // fLOG(INFO, "fFlowMeterStatus = " + to_string(fFlowMeterStatus));
