@@ -56,6 +56,11 @@
           margin-bottom: 0.5em;
           border-bottom: 1px solid #dee2e6;
       }
+      .table-wrapper {
+          max-width: 100vw; /* or a fixed px value matching the top */
+          margin: 0 auto;
+          overflow-x: auto;
+      }
     </style>
   </head>
   <body>
@@ -190,113 +195,7 @@
 
 
     <div class="w3-container w3-cream w3-cell">
-      <table class="w3-table">
-        <tr>
-          <th>Parameter</th>
-          <th>all</th>
-          <th>TEC 1</th>
-          <th>TEC 2</th>
-          <th>TEC 3</th>
-          <th>TEC 4</th>
-          <th>TEC 5</th>
-          <th>TEC 6</th>
-          <th>TEC 7</th>
-          <th>TEC 8</th>
-        </tr>
-        <tr>
-          <td>Turn on/off</td>
-          <td><input id="CheckTEC0" type="checkbox" onclick="clkCheckTec(0)"></td>
-          <td><input id="CheckTEC1" type="checkbox" onclick="clkCheckTec(1)"></td>
-          <td><input id="CheckTEC2" type="checkbox" onclick="clkCheckTec(2)"></td>
-          <td><input id="CheckTEC3" type="checkbox" onclick="clkCheckTec(3)"></td>
-          <td><input id="CheckTEC4" type="checkbox" onclick="clkCheckTec(4)"></td>
-          <td><input id="CheckTEC5" type="checkbox" onclick="clkCheckTec(5)"></td>
-          <td><input id="CheckTEC6" type="checkbox" onclick="clkCheckTec(6)"></td>
-          <td><input id="CheckTEC7" type="checkbox" onclick="clkCheckTec(7)"></td>
-          <td><input id="CheckTEC8" type="checkbox" onclick="clkCheckTec(8)"></td>
-        </tr>
-
-        <tr>
-          <td>PowerState (0=Off, 1=On)</td>
-          <td> </td>
-          <td id="PowerState1">wait </td>
-          <td id="PowerState2">wait </td>
-          <td id="PowerState3">wait </td>
-          <td id="PowerState4">wait </td>
-          <td id="PowerState5">wait </td>
-          <td id="PowerState6">wait </td>
-          <td id="PowerState7">wait </td>
-          <td id="PowerState8">wait </td>
-        </tr>
-
-        <tr>
-          <td>Mode (0=T, 1=V)</td>
-          <td> <input id="Mode0" maxlength="3" size="3" value="all"  onchange="chgMode(0,this.value)"></td>
-          <td> <input id="Mode1" maxlength="3" size="3" value="wait" onchange="chgMode(1,this.value)"></td>
-          <td> <input id="Mode2" maxlength="3" size="3" value="wait" onchange="chgMode(2,this.value)"></td>
-          <td> <input id="Mode3" maxlength="3" size="3" value="wait" onchange="chgMode(3,this.value)"></td>
-          <td> <input id="Mode4" maxlength="3" size="3" value="wait" onchange="chgMode(4,this.value)"></td>
-          <td> <input id="Mode5" maxlength="3" size="3" value="wait" onchange="chgMode(5,this.value)"></td>
-          <td> <input id="Mode6" maxlength="3" size="3" value="wait" onchange="chgMode(6,this.value)"></td>
-          <td> <input id="Mode7" maxlength="3" size="3" value="wait" onchange="chgMode(7,this.value)"></td>
-          <td> <input id="Mode8" maxlength="3" size="3" value="wait" onchange="chgMode(8,this.value)"></td>
-        </tr>
-
-        <tr>
-          <td>ControlVoltage_Set [V]</td>
-          <td> <input id="ControlVoltage_Set0" maxlength="4" size="4" value="all"  onchange="chgControlVoltage_Set(0,this.value)"></td>
-          <td> <input id="ControlVoltage_Set1" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(1,this.value)"></td>
-          <td> <input id="ControlVoltage_Set2" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(2,this.value)"></td>
-          <td> <input id="ControlVoltage_Set3" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(3,this.value)"></td>
-          <td> <input id="ControlVoltage_Set4" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(4,this.value)"></td>
-          <td> <input id="ControlVoltage_Set5" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(5,this.value)"></td>
-          <td> <input id="ControlVoltage_Set6" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(6,this.value)"></td>
-          <td> <input id="ControlVoltage_Set7" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(7,this.value)"></td>
-          <td> <input id="ControlVoltage_Set8" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(8,this.value)"></td>
-        </tr>
-
-        <tr>
-          <td> Temp_Set [°C] </td>
-          <td> <input id="Temp_Set0" maxlength="4" size="5" value="all"  onchange="chgTemp_Set(0,this.value)"> </td>
-          <td> <input id="Temp_Set1" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(1,this.value)"> </td>
-          <td> <input id="Temp_Set2" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(2,this.value)"> </td>
-          <td> <input id="Temp_Set3" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(3,this.value)"> </td>
-          <td> <input id="Temp_Set4" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(4,this.value)"> </td>
-          <td> <input id="Temp_Set5" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(5,this.value)"> </td>
-          <td> <input id="Temp_Set6" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(6,this.value)"> </td>
-          <td> <input id="Temp_Set7" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(7,this.value)"> </td>
-          <td> <input id="Temp_Set8" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(8,this.value)"> </td>
-        </tr>
-
-        <tr>
-          <td>Temp_M [°C]</td>
-          <td> </td>
-          <td id="Temp_M1">wait </td>
-          <td id="Temp_M2">wait </td>
-          <td id="Temp_M3">wait </td>
-          <td id="Temp_M4">wait </td>
-          <td id="Temp_M5">wait </td>
-          <td id="Temp_M6">wait </td>
-          <td id="Temp_M7">wait </td>
-          <td id="Temp_M8">wait </td>
-        </tr>
-
-        <tr>
-          <td>Errorstate (click for details)</td>
-          <td><button id="ClearTECError" disabled>Clear</button></td>
-          <td><button id="ErrorState1" disabled>wait </button></td>
-          <td><button id="ErrorState2" disabled>wait </button></td>
-          <td><button id="ErrorState3" disabled>wait </button></td>
-          <td><button id="ErrorState4" disabled>wait </button></td>
-          <td><button id="ErrorState5" disabled>wait </button></td>
-          <td><button id="ErrorState6" disabled>wait </button></td>
-          <td><button id="ErrorState7" disabled>wait </button></td>
-          <td><button id="ErrorState8" disabled>wait </button></td>
-        </tr>
-      </table>
-
-      <details>
-        <summary>Expert Details</summary>
+      <div class="table-wrapper">
         <table class="w3-table">
           <tr>
             <th>Parameter</th>
@@ -311,122 +210,232 @@
             <th>TEC 8</th>
           </tr>
           <tr>
-            <td>Supply_U [V]</td>
+            <td>Turn on/off</td>
+            <td><input id="CheckTEC0" type="checkbox" onclick="clkCheckTec(0)"></td>
+            <td><input id="CheckTEC1" type="checkbox" onclick="clkCheckTec(1)"></td>
+            <td><input id="CheckTEC2" type="checkbox" onclick="clkCheckTec(2)"></td>
+            <td><input id="CheckTEC3" type="checkbox" onclick="clkCheckTec(3)"></td>
+            <td><input id="CheckTEC4" type="checkbox" onclick="clkCheckTec(4)"></td>
+            <td><input id="CheckTEC5" type="checkbox" onclick="clkCheckTec(5)"></td>
+            <td><input id="CheckTEC6" type="checkbox" onclick="clkCheckTec(6)"></td>
+            <td><input id="CheckTEC7" type="checkbox" onclick="clkCheckTec(7)"></td>
+            <td><input id="CheckTEC8" type="checkbox" onclick="clkCheckTec(8)"></td>
+          </tr>
+
+          <tr>
+            <td>PowerState (0=Off, 1=On)</td>
             <td> </td>
-            <td id="Supply_U1">wait </td>
-            <td id="Supply_U2">wait </td>
-            <td id="Supply_U3">wait </td>
-            <td id="Supply_U4">wait </td>
-            <td id="Supply_U5">wait </td>
-            <td id="Supply_U6">wait </td>
-            <td id="Supply_U7">wait </td>
-            <td id="Supply_U8">wait </td>
+            <td id="PowerState1">wait </td>
+            <td id="PowerState2">wait </td>
+            <td id="PowerState3">wait </td>
+            <td id="PowerState4">wait </td>
+            <td id="PowerState5">wait </td>
+            <td id="PowerState6">wait </td>
+            <td id="PowerState7">wait </td>
+            <td id="PowerState8">wait </td>
           </tr>
 
           <tr>
-            <td>Supply_P [W]</td>
+            <td>Mode (0=T, 1=V)</td>
+            <td> <input id="Mode0" maxlength="3" size="3" value="all"  onchange="chgMode(0,this.value)"></td>
+            <td> <input id="Mode1" maxlength="3" size="3" value="wait" onchange="chgMode(1,this.value)"></td>
+            <td> <input id="Mode2" maxlength="3" size="3" value="wait" onchange="chgMode(2,this.value)"></td>
+            <td> <input id="Mode3" maxlength="3" size="3" value="wait" onchange="chgMode(3,this.value)"></td>
+            <td> <input id="Mode4" maxlength="3" size="3" value="wait" onchange="chgMode(4,this.value)"></td>
+            <td> <input id="Mode5" maxlength="3" size="3" value="wait" onchange="chgMode(5,this.value)"></td>
+            <td> <input id="Mode6" maxlength="3" size="3" value="wait" onchange="chgMode(6,this.value)"></td>
+            <td> <input id="Mode7" maxlength="3" size="3" value="wait" onchange="chgMode(7,this.value)"></td>
+            <td> <input id="Mode8" maxlength="3" size="3" value="wait" onchange="chgMode(8,this.value)"></td>
+          </tr>
+
+          <tr>
+            <td>ControlVoltage_Set [V]</td>
+            <td> <input id="ControlVoltage_Set0" maxlength="4" size="4" value="all"  onchange="chgControlVoltage_Set(0,this.value)"></td>
+            <td> <input id="ControlVoltage_Set1" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(1,this.value)"></td>
+            <td> <input id="ControlVoltage_Set2" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(2,this.value)"></td>
+            <td> <input id="ControlVoltage_Set3" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(3,this.value)"></td>
+            <td> <input id="ControlVoltage_Set4" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(4,this.value)"></td>
+            <td> <input id="ControlVoltage_Set5" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(5,this.value)"></td>
+            <td> <input id="ControlVoltage_Set6" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(6,this.value)"></td>
+            <td> <input id="ControlVoltage_Set7" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(7,this.value)"></td>
+            <td> <input id="ControlVoltage_Set8" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(8,this.value)"></td>
+          </tr>
+
+          <tr>
+            <td> Temp_Set [°C] </td>
+            <td> <input id="Temp_Set0" maxlength="4" size="5" value="all"  onchange="chgTemp_Set(0,this.value)"> </td>
+            <td> <input id="Temp_Set1" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(1,this.value)"> </td>
+            <td> <input id="Temp_Set2" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(2,this.value)"> </td>
+            <td> <input id="Temp_Set3" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(3,this.value)"> </td>
+            <td> <input id="Temp_Set4" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(4,this.value)"> </td>
+            <td> <input id="Temp_Set5" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(5,this.value)"> </td>
+            <td> <input id="Temp_Set6" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(6,this.value)"> </td>
+            <td> <input id="Temp_Set7" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(7,this.value)"> </td>
+            <td> <input id="Temp_Set8" maxlength="4" size="5" value="wait" onchange="chgTemp_Set(8,this.value)"> </td>
+          </tr>
+
+          <tr>
+            <td>Temp_M [°C]</td>
             <td> </td>
-            <td id="Supply_P1">wait </td>
-            <td id="Supply_P2">wait </td>
-            <td id="Supply_P3">wait </td>
-            <td id="Supply_P4">wait </td>
-            <td id="Supply_P5">wait </td>
-            <td id="Supply_P6">wait </td>
-            <td id="Supply_P7">wait </td>
-            <td id="Supply_P8">wait </td>
+            <td id="Temp_M1">wait </td>
+            <td id="Temp_M2">wait </td>
+            <td id="Temp_M3">wait </td>
+            <td id="Temp_M4">wait </td>
+            <td id="Temp_M5">wait </td>
+            <td id="Temp_M6">wait </td>
+            <td id="Temp_M7">wait </td>
+            <td id="Temp_M8">wait </td>
           </tr>
 
           <tr>
-            <td>Peltier_U [V]</td>
-            <td> </td>
-            <td id="Peltier_U1">wait </td>
-            <td id="Peltier_U2">wait </td>
-            <td id="Peltier_U3">wait </td>
-            <td id="Peltier_U4">wait </td>
-            <td id="Peltier_U5">wait </td>
-            <td id="Peltier_U6">wait </td>
-            <td id="Peltier_U7">wait </td>
-            <td id="Peltier_U8">wait </td>
-          </tr>
-
-          <tr>
-            <td>Peltier_P [W]</td>
-            <td> </td>
-            <td id="Peltier_P1">wait </td>
-            <td id="Peltier_P2">wait </td>
-            <td id="Peltier_P3">wait </td>
-            <td id="Peltier_P4">wait </td>
-            <td id="Peltier_P5">wait </td>
-            <td id="Peltier_P6">wait </td>
-            <td id="Peltier_P7">wait </td>
-            <td id="Peltier_P8">wait </td>
-          </tr>
-
-          <tr>
-            <td>Peltier_I [A]</td>
-            <td> </td>
-            <td id="Peltier_I1">wait </td>
-            <td id="Peltier_I2">wait </td>
-            <td id="Peltier_I3">wait </td>
-            <td id="Peltier_I4">wait </td>
-            <td id="Peltier_I5">wait </td>
-            <td id="Peltier_I6">wait </td>
-            <td id="Peltier_I7">wait </td>
-            <td id="Peltier_I8">wait </td>
-          </tr>
-
-          <tr>
-            <td>Peltier_R [Ω]</td>
-            <td> </td>
-            <td id="Peltier_R1">wait </td>
-            <td id="Peltier_R2">wait </td>
-            <td id="Peltier_R3">wait </td>
-            <td id="Peltier_R4">wait </td>
-            <td id="Peltier_R5">wait </td>
-            <td id="Peltier_R6">wait </td>
-            <td id="Peltier_R7">wait </td>
-            <td id="Peltier_R8">wait </td>
-          </tr>
-
-          <tr>
-            <td>PID_kp</td>
-            <td> <input id="PID_kp0" maxlength="4" size="4" value="all"  onchange="chgPID_kp(0,this.value)"></td>
-            <td> <input id="PID_kp1" maxlength="4" size="4" value="wait" onchange="chgPID_kp(1,this.value)"></td>
-            <td> <input id="PID_kp2" maxlength="4" size="4" value="wait" onchange="chgPID_kp(2,this.value)"></td>
-            <td> <input id="PID_kp3" maxlength="4" size="4" value="wait" onchange="chgPID_kp(3,this.value)"></td>
-            <td> <input id="PID_kp4" maxlength="4" size="4" value="wait" onchange="chgPID_kp(4,this.value)"></td>
-            <td> <input id="PID_kp5" maxlength="4" size="4" value="wait" onchange="chgPID_kp(5,this.value)"></td>
-            <td> <input id="PID_kp6" maxlength="4" size="4" value="wait" onchange="chgPID_kp(6,this.value)"></td>
-            <td> <input id="PID_kp7" maxlength="4" size="4" value="wait" onchange="chgPID_kp(7,this.value)"></td>
-            <td> <input id="PID_kp8" maxlength="4" size="4" value="wait" onchange="chgPID_kp(8,this.value)"></td>
-          </tr>
-
-          <tr>
-            <td>PID_ki</td>
-            <td> <input id="PID_ki0" maxlength="4" size="4" value="all"  onchange="chgPID_ki(0,this.value)"></td>
-            <td> <input id="PID_ki1" maxlength="4" size="4" value="wait" onchange="chgPID_ki(1,this.value)"></td>
-            <td> <input id="PID_ki2" maxlength="4" size="4" value="wait" onchange="chgPID_ki(2,this.value)"></td>
-            <td> <input id="PID_ki3" maxlength="4" size="4" value="wait" onchange="chgPID_ki(3,this.value)"></td>
-            <td> <input id="PID_ki4" maxlength="4" size="4" value="wait" onchange="chgPID_ki(4,this.value)"></td>
-            <td> <input id="PID_ki5" maxlength="4" size="4" value="wait" onchange="chgPID_ki(5,this.value)"></td>
-            <td> <input id="PID_ki6" maxlength="4" size="4" value="wait" onchange="chgPID_ki(6,this.value)"></td>
-            <td> <input id="PID_ki7" maxlength="4" size="4" value="wait" onchange="chgPID_ki(7,this.value)"></td>
-            <td> <input id="PID_ki8" maxlength="4" size="4" value="wait" onchange="chgPID_ki(8,this.value)"></td>
-          </tr>
-
-          <tr>
-            <td>PID_kd</td>
-            <td> <input id="PID_kd0" maxlength="4" size="4" value="all"  onchange="chgPID_kd(0,this.value)"></td>
-            <td> <input id="PID_kd1" maxlength="4" size="4" value="wait" onchange="chgPID_kd(1,this.value)"></td>
-            <td> <input id="PID_kd2" maxlength="4" size="4" value="wait" onchange="chgPID_kd(2,this.value)"></td>
-            <td> <input id="PID_kd3" maxlength="4" size="4" value="wait" onchange="chgPID_kd(3,this.value)"></td>
-            <td> <input id="PID_kd4" maxlength="4" size="4" value="wait" onchange="chgPID_kd(4,this.value)"></td>
-            <td> <input id="PID_kd5" maxlength="4" size="4" value="wait" onchange="chgPID_kd(5,this.value)"></td>
-            <td> <input id="PID_kd6" maxlength="4" size="4" value="wait" onchange="chgPID_kd(6,this.value)"></td>
-            <td> <input id="PID_kd7" maxlength="4" size="4" value="wait" onchange="chgPID_kd(7,this.value)"></td>
-            <td> <input id="PID_kd8" maxlength="4" size="4" value="wait" onchange="chgPID_kd(8,this.value)"></td>
+            <td>Errorstate (click for details)</td>
+            <td><button id="ClearTECError" disabled>Clear</button></td>
+            <td><button id="ErrorState1" disabled>wait </button></td>
+            <td><button id="ErrorState2" disabled>wait </button></td>
+            <td><button id="ErrorState3" disabled>wait </button></td>
+            <td><button id="ErrorState4" disabled>wait </button></td>
+            <td><button id="ErrorState5" disabled>wait </button></td>
+            <td><button id="ErrorState6" disabled>wait </button></td>
+            <td><button id="ErrorState7" disabled>wait </button></td>
+            <td><button id="ErrorState8" disabled>wait </button></td>
           </tr>
         </table>
+      </div>
+
+      <details>
+        <summary>Expert Details</summary>
+        <div class="table-wrapper">
+          <table class="w3-table">
+            <tr>
+              <th>Parameter</th>
+              <th>all</th>
+              <th>TEC 1</th>
+              <th>TEC 2</th>
+              <th>TEC 3</th>
+              <th>TEC 4</th>
+              <th>TEC 5</th>
+              <th>TEC 6</th>
+              <th>TEC 7</th>
+              <th>TEC 8</th>
+            </tr>
+            <tr>
+              <td>Supply_U [V]</td>
+              <td> </td>
+              <td id="Supply_U1">wait </td>
+              <td id="Supply_U2">wait </td>
+              <td id="Supply_U3">wait </td>
+              <td id="Supply_U4">wait </td>
+              <td id="Supply_U5">wait </td>
+              <td id="Supply_U6">wait </td>
+              <td id="Supply_U7">wait </td>
+              <td id="Supply_U8">wait </td>
+            </tr>
+
+            <tr>
+              <td>Supply_P [W]</td>
+              <td> </td>
+              <td id="Supply_P1">wait </td>
+              <td id="Supply_P2">wait </td>
+              <td id="Supply_P3">wait </td>
+              <td id="Supply_P4">wait </td>
+              <td id="Supply_P5">wait </td>
+              <td id="Supply_P6">wait </td>
+              <td id="Supply_P7">wait </td>
+              <td id="Supply_P8">wait </td>
+            </tr>
+
+            <tr>
+              <td>Peltier_U [V]</td>
+              <td> </td>
+              <td id="Peltier_U1">wait </td>
+              <td id="Peltier_U2">wait </td>
+              <td id="Peltier_U3">wait </td>
+              <td id="Peltier_U4">wait </td>
+              <td id="Peltier_U5">wait </td>
+              <td id="Peltier_U6">wait </td>
+              <td id="Peltier_U7">wait </td>
+              <td id="Peltier_U8">wait </td>
+            </tr>
+
+            <tr>
+              <td>Peltier_P [W]</td>
+              <td> </td>
+              <td id="Peltier_P1">wait </td>
+              <td id="Peltier_P2">wait </td>
+              <td id="Peltier_P3">wait </td>
+              <td id="Peltier_P4">wait </td>
+              <td id="Peltier_P5">wait </td>
+              <td id="Peltier_P6">wait </td>
+              <td id="Peltier_P7">wait </td>
+              <td id="Peltier_P8">wait </td>
+            </tr>
+
+            <tr>
+              <td>Peltier_I [A]</td>
+              <td> </td>
+              <td id="Peltier_I1">wait </td>
+              <td id="Peltier_I2">wait </td>
+              <td id="Peltier_I3">wait </td>
+              <td id="Peltier_I4">wait </td>
+              <td id="Peltier_I5">wait </td>
+              <td id="Peltier_I6">wait </td>
+              <td id="Peltier_I7">wait </td>
+              <td id="Peltier_I8">wait </td>
+            </tr>
+
+            <tr>
+              <td>Peltier_R [Ω]</td>
+              <td> </td>
+              <td id="Peltier_R1">wait </td>
+              <td id="Peltier_R2">wait </td>
+              <td id="Peltier_R3">wait </td>
+              <td id="Peltier_R4">wait </td>
+              <td id="Peltier_R5">wait </td>
+              <td id="Peltier_R6">wait </td>
+              <td id="Peltier_R7">wait </td>
+              <td id="Peltier_R8">wait </td>
+            </tr>
+
+            <tr>
+              <td>PID_kp</td>
+              <td> <input id="PID_kp0" maxlength="4" size="4" value="all"  onchange="chgPID_kp(0,this.value)"></td>
+              <td> <input id="PID_kp1" maxlength="4" size="4" value="wait" onchange="chgPID_kp(1,this.value)"></td>
+              <td> <input id="PID_kp2" maxlength="4" size="4" value="wait" onchange="chgPID_kp(2,this.value)"></td>
+              <td> <input id="PID_kp3" maxlength="4" size="4" value="wait" onchange="chgPID_kp(3,this.value)"></td>
+              <td> <input id="PID_kp4" maxlength="4" size="4" value="wait" onchange="chgPID_kp(4,this.value)"></td>
+              <td> <input id="PID_kp5" maxlength="4" size="4" value="wait" onchange="chgPID_kp(5,this.value)"></td>
+              <td> <input id="PID_kp6" maxlength="4" size="4" value="wait" onchange="chgPID_kp(6,this.value)"></td>
+              <td> <input id="PID_kp7" maxlength="4" size="4" value="wait" onchange="chgPID_kp(7,this.value)"></td>
+              <td> <input id="PID_kp8" maxlength="4" size="4" value="wait" onchange="chgPID_kp(8,this.value)"></td>
+            </tr>
+
+            <tr>
+              <td>PID_ki</td>
+              <td> <input id="PID_ki0" maxlength="4" size="4" value="all"  onchange="chgPID_ki(0,this.value)"></td>
+              <td> <input id="PID_ki1" maxlength="4" size="4" value="wait" onchange="chgPID_ki(1,this.value)"></td>
+              <td> <input id="PID_ki2" maxlength="4" size="4" value="wait" onchange="chgPID_ki(2,this.value)"></td>
+              <td> <input id="PID_ki3" maxlength="4" size="4" value="wait" onchange="chgPID_ki(3,this.value)"></td>
+              <td> <input id="PID_ki4" maxlength="4" size="4" value="wait" onchange="chgPID_ki(4,this.value)"></td>
+              <td> <input id="PID_ki5" maxlength="4" size="4" value="wait" onchange="chgPID_ki(5,this.value)"></td>
+              <td> <input id="PID_ki6" maxlength="4" size="4" value="wait" onchange="chgPID_ki(6,this.value)"></td>
+              <td> <input id="PID_ki7" maxlength="4" size="4" value="wait" onchange="chgPID_ki(7,this.value)"></td>
+              <td> <input id="PID_ki8" maxlength="4" size="4" value="wait" onchange="chgPID_ki(8,this.value)"></td>
+            </tr>
+
+            <tr>
+              <td>PID_kd</td>
+              <td> <input id="PID_kd0" maxlength="4" size="4" value="all"  onchange="chgPID_kd(0,this.value)"></td>
+              <td> <input id="PID_kd1" maxlength="4" size="4" value="wait" onchange="chgPID_kd(1,this.value)"></td>
+              <td> <input id="PID_kd2" maxlength="4" size="4" value="wait" onchange="chgPID_kd(2,this.value)"></td>
+              <td> <input id="PID_kd3" maxlength="4" size="4" value="wait" onchange="chgPID_kd(3,this.value)"></td>
+              <td> <input id="PID_kd4" maxlength="4" size="4" value="wait" onchange="chgPID_kd(4,this.value)"></td>
+              <td> <input id="PID_kd5" maxlength="4" size="4" value="wait" onchange="chgPID_kd(5,this.value)"></td>
+              <td> <input id="PID_kd6" maxlength="4" size="4" value="wait" onchange="chgPID_kd(6,this.value)"></td>
+              <td> <input id="PID_kd7" maxlength="4" size="4" value="wait" onchange="chgPID_kd(7,this.value)"></td>
+              <td> <input id="PID_kd8" maxlength="4" size="4" value="wait" onchange="chgPID_kd(8,this.value)"></td>
+            </tr>
+          </table>
+        </div>
       </details>
     </div>
 
