@@ -248,6 +248,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   bool versionOK(true);
   for (int i = 2; i <= 8; ++i) {
     version = getSWVersion(i);
+    fLOG(INFO, "TEC " + to_string(i) + " firmware version = " + to_string(version));
     if (version != version1) {
       versionOK = false;
     }
