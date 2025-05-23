@@ -359,9 +359,9 @@ void MainWindow::updateHardwareDisplay() {
   if (0 == cnt) {
     int freedisk = fpHw->getFreeDisk(); 
     fqleFreeDisk->setText(QString::number(freedisk));
-    if (freedisk > 2) {
+    if (freedisk > 10) {
       fqleFreeDisk->setPalette(fPalettes[4]);
-    } else if ((freedisk >= 1) && (freedisk < 2)) {
+    } else if ((freedisk > 2) && (freedisk <= 10)) {
       fqleFreeDisk->setPalette(fPalettes[6]);
     } else {
       fqleFreeDisk->setPalette(fPalettes[8]);
