@@ -32,6 +32,26 @@
           margin: 10px 0;
           line-height:22px;
       }
+      details {
+          margin: 1em 0;
+          padding: 0.5em;
+          background-color: #f8f9fa;
+          border: 1px solid #dee2e6;
+          border-radius: 4px;
+      }
+      details summary {
+          cursor: pointer;
+          padding: 0.5em;
+          font-weight: bold;
+          color: #495057;
+      }
+      details summary:hover {
+          background-color: #e9ecef;
+      }
+      details[open] summary {
+          margin-bottom: 0.5em;
+          border-bottom: 1px solid #dee2e6;
+      }
     </style>
   </head>
   <body>
@@ -270,123 +290,127 @@
           <td><button id="ErrorState8" disabled>wait </button></td>
         </tr>
 
-        <tr>
-          <td>Supply_U [V]</td>
-          <td> </td>
-          <td id="Supply_U1">wait </td>
-          <td id="Supply_U2">wait </td>
-          <td id="Supply_U3">wait </td>
-          <td id="Supply_U4">wait </td>
-          <td id="Supply_U5">wait </td>
-          <td id="Supply_U6">wait </td>
-          <td id="Supply_U7">wait </td>
-          <td id="Supply_U8">wait </td>
-        </tr>
+        <details>
+          <summary>Expert Details</summary>
+          <table class="w3-table">
+            <tr>
+              <td>Supply_U [V]</td>
+              <td> </td>
+              <td id="Supply_U1">wait </td>
+              <td id="Supply_U2">wait </td>
+              <td id="Supply_U3">wait </td>
+              <td id="Supply_U4">wait </td>
+              <td id="Supply_U5">wait </td>
+              <td id="Supply_U6">wait </td>
+              <td id="Supply_U7">wait </td>
+              <td id="Supply_U8">wait </td>
+            </tr>
 
-        <tr>
-          <td>Supply_P [W]</td>
-          <td> </td>
-          <td id="Supply_P1">wait </td>
-          <td id="Supply_P2">wait </td>
-          <td id="Supply_P3">wait </td>
-          <td id="Supply_P4">wait </td>
-          <td id="Supply_P5">wait </td>
-          <td id="Supply_P6">wait </td>
-          <td id="Supply_P7">wait </td>
-          <td id="Supply_P8">wait </td>
-        </tr>
+            <tr>
+              <td>Supply_P [W]</td>
+              <td> </td>
+              <td id="Supply_P1">wait </td>
+              <td id="Supply_P2">wait </td>
+              <td id="Supply_P3">wait </td>
+              <td id="Supply_P4">wait </td>
+              <td id="Supply_P5">wait </td>
+              <td id="Supply_P6">wait </td>
+              <td id="Supply_P7">wait </td>
+              <td id="Supply_P8">wait </td>
+            </tr>
 
-        <tr>
-          <td>Peltier_U [V]</td>
-          <td> </td>
-          <td id="Peltier_U1">wait </td>
-          <td id="Peltier_U2">wait </td>
-          <td id="Peltier_U3">wait </td>
-          <td id="Peltier_U4">wait </td>
-          <td id="Peltier_U5">wait </td>
-          <td id="Peltier_U6">wait </td>
-          <td id="Peltier_U7">wait </td>
-          <td id="Peltier_U8">wait </td>
-        </tr>
+            <tr>
+              <td>Peltier_U [V]</td>
+              <td> </td>
+              <td id="Peltier_U1">wait </td>
+              <td id="Peltier_U2">wait </td>
+              <td id="Peltier_U3">wait </td>
+              <td id="Peltier_U4">wait </td>
+              <td id="Peltier_U5">wait </td>
+              <td id="Peltier_U6">wait </td>
+              <td id="Peltier_U7">wait </td>
+              <td id="Peltier_U8">wait </td>
+            </tr>
 
-        <tr>
-          <td>Peltier_P [W]</td>
-          <td> </td>
-          <td id="Peltier_P1">wait </td>
-          <td id="Peltier_P2">wait </td>
-          <td id="Peltier_P3">wait </td>
-          <td id="Peltier_P4">wait </td>
-          <td id="Peltier_P5">wait </td>
-          <td id="Peltier_P6">wait </td>
-          <td id="Peltier_P7">wait </td>
-          <td id="Peltier_P8">wait </td>
-        </tr>
+            <tr>
+              <td>Peltier_P [W]</td>
+              <td> </td>
+              <td id="Peltier_P1">wait </td>
+              <td id="Peltier_P2">wait </td>
+              <td id="Peltier_P3">wait </td>
+              <td id="Peltier_P4">wait </td>
+              <td id="Peltier_P5">wait </td>
+              <td id="Peltier_P6">wait </td>
+              <td id="Peltier_P7">wait </td>
+              <td id="Peltier_P8">wait </td>
+            </tr>
 
-        <tr>
-          <td>Peltier_I [A]</td>
-          <td> </td>
-          <td id="Peltier_I1">wait </td>
-          <td id="Peltier_I2">wait </td>
-          <td id="Peltier_I3">wait </td>
-          <td id="Peltier_I4">wait </td>
-          <td id="Peltier_I5">wait </td>
-          <td id="Peltier_I6">wait </td>
-          <td id="Peltier_I7">wait </td>
-          <td id="Peltier_I8">wait </td>
-        </tr>
+            <tr>
+              <td>Peltier_I [A]</td>
+              <td> </td>
+              <td id="Peltier_I1">wait </td>
+              <td id="Peltier_I2">wait </td>
+              <td id="Peltier_I3">wait </td>
+              <td id="Peltier_I4">wait </td>
+              <td id="Peltier_I5">wait </td>
+              <td id="Peltier_I6">wait </td>
+              <td id="Peltier_I7">wait </td>
+              <td id="Peltier_I8">wait </td>
+            </tr>
 
-        <tr>
-          <td>Peltier_R [Ω]</td>
-          <td> </td>
-          <td id="Peltier_R1">wait </td>
-          <td id="Peltier_R2">wait </td>
-          <td id="Peltier_R3">wait </td>
-          <td id="Peltier_R4">wait </td>
-          <td id="Peltier_R5">wait </td>
-          <td id="Peltier_R6">wait </td>
-          <td id="Peltier_R7">wait </td>
-          <td id="Peltier_R8">wait </td>
-        </tr>
+            <tr>
+              <td>Peltier_R [Ω]</td>
+              <td> </td>
+              <td id="Peltier_R1">wait </td>
+              <td id="Peltier_R2">wait </td>
+              <td id="Peltier_R3">wait </td>
+              <td id="Peltier_R4">wait </td>
+              <td id="Peltier_R5">wait </td>
+              <td id="Peltier_R6">wait </td>
+              <td id="Peltier_R7">wait </td>
+              <td id="Peltier_R8">wait </td>
+            </tr>
 
-        <tr>
-          <td>PID_kp</td>
-          <td> <input id="PID_kp0" maxlength="4" size="4" value="all"  onchange="chgPID_kp(0,this.value)"></td>
-          <td> <input id="PID_kp1" maxlength="4" size="4" value="wait" onchange="chgPID_kp(1,this.value)"></td>
-          <td> <input id="PID_kp2" maxlength="4" size="4" value="wait" onchange="chgPID_kp(2,this.value)"></td>
-          <td> <input id="PID_kp3" maxlength="4" size="4" value="wait" onchange="chgPID_kp(3,this.value)"></td>
-          <td> <input id="PID_kp4" maxlength="4" size="4" value="wait" onchange="chgPID_kp(4,this.value)"></td>
-          <td> <input id="PID_kp5" maxlength="4" size="4" value="wait" onchange="chgPID_kp(5,this.value)"></td>
-          <td> <input id="PID_kp6" maxlength="4" size="4" value="wait" onchange="chgPID_kp(6,this.value)"></td>
-          <td> <input id="PID_kp7" maxlength="4" size="4" value="wait" onchange="chgPID_kp(7,this.value)"></td>
-          <td> <input id="PID_kp8" maxlength="4" size="4" value="wait" onchange="chgPID_kp(8,this.value)"></td>
-        </tr>
+            <tr>
+              <td>PID_kp</td>
+              <td> <input id="PID_kp0" maxlength="4" size="4" value="all"  onchange="chgPID_kp(0,this.value)"></td>
+              <td> <input id="PID_kp1" maxlength="4" size="4" value="wait" onchange="chgPID_kp(1,this.value)"></td>
+              <td> <input id="PID_kp2" maxlength="4" size="4" value="wait" onchange="chgPID_kp(2,this.value)"></td>
+              <td> <input id="PID_kp3" maxlength="4" size="4" value="wait" onchange="chgPID_kp(3,this.value)"></td>
+              <td> <input id="PID_kp4" maxlength="4" size="4" value="wait" onchange="chgPID_kp(4,this.value)"></td>
+              <td> <input id="PID_kp5" maxlength="4" size="4" value="wait" onchange="chgPID_kp(5,this.value)"></td>
+              <td> <input id="PID_kp6" maxlength="4" size="4" value="wait" onchange="chgPID_kp(6,this.value)"></td>
+              <td> <input id="PID_kp7" maxlength="4" size="4" value="wait" onchange="chgPID_kp(7,this.value)"></td>
+              <td> <input id="PID_kp8" maxlength="4" size="4" value="wait" onchange="chgPID_kp(8,this.value)"></td>
+            </tr>
 
-        <tr>
-          <td>PID_ki</td>
-          <td> <input id="PID_ki0" maxlength="4" size="4" value="all"  onchange="chgPID_ki(0,this.value)"></td>
-          <td> <input id="PID_ki1" maxlength="4" size="4" value="wait" onchange="chgPID_ki(1,this.value)"></td>
-          <td> <input id="PID_ki2" maxlength="4" size="4" value="wait" onchange="chgPID_ki(2,this.value)"></td>
-          <td> <input id="PID_ki3" maxlength="4" size="4" value="wait" onchange="chgPID_ki(3,this.value)"></td>
-          <td> <input id="PID_ki4" maxlength="4" size="4" value="wait" onchange="chgPID_ki(4,this.value)"></td>
-          <td> <input id="PID_ki5" maxlength="4" size="4" value="wait" onchange="chgPID_ki(5,this.value)"></td>
-          <td> <input id="PID_ki6" maxlength="4" size="4" value="wait" onchange="chgPID_ki(6,this.value)"></td>
-          <td> <input id="PID_ki7" maxlength="4" size="4" value="wait" onchange="chgPID_ki(7,this.value)"></td>
-          <td> <input id="PID_ki8" maxlength="4" size="4" value="wait" onchange="chgPID_ki(8,this.value)"></td>
-        </tr>
+            <tr>
+              <td>PID_ki</td>
+              <td> <input id="PID_ki0" maxlength="4" size="4" value="all"  onchange="chgPID_ki(0,this.value)"></td>
+              <td> <input id="PID_ki1" maxlength="4" size="4" value="wait" onchange="chgPID_ki(1,this.value)"></td>
+              <td> <input id="PID_ki2" maxlength="4" size="4" value="wait" onchange="chgPID_ki(2,this.value)"></td>
+              <td> <input id="PID_ki3" maxlength="4" size="4" value="wait" onchange="chgPID_ki(3,this.value)"></td>
+              <td> <input id="PID_ki4" maxlength="4" size="4" value="wait" onchange="chgPID_ki(4,this.value)"></td>
+              <td> <input id="PID_ki5" maxlength="4" size="4" value="wait" onchange="chgPID_ki(5,this.value)"></td>
+              <td> <input id="PID_ki6" maxlength="4" size="4" value="wait" onchange="chgPID_ki(6,this.value)"></td>
+              <td> <input id="PID_ki7" maxlength="4" size="4" value="wait" onchange="chgPID_ki(7,this.value)"></td>
+              <td> <input id="PID_ki8" maxlength="4" size="4" value="wait" onchange="chgPID_ki(8,this.value)"></td>
+            </tr>
 
-        <tr>
-          <td>PID_kd</td>
-          <td> <input id="PID_kd0" maxlength="4" size="4" value="all"  onchange="chgPID_kd(0,this.value)"></td>
-          <td> <input id="PID_kd1" maxlength="4" size="4" value="wait" onchange="chgPID_kd(1,this.value)"></td>
-          <td> <input id="PID_kd2" maxlength="4" size="4" value="wait" onchange="chgPID_kd(2,this.value)"></td>
-          <td> <input id="PID_kd3" maxlength="4" size="4" value="wait" onchange="chgPID_kd(3,this.value)"></td>
-          <td> <input id="PID_kd4" maxlength="4" size="4" value="wait" onchange="chgPID_kd(4,this.value)"></td>
-          <td> <input id="PID_kd5" maxlength="4" size="4" value="wait" onchange="chgPID_kd(5,this.value)"></td>
-          <td> <input id="PID_kd6" maxlength="4" size="4" value="wait" onchange="chgPID_kd(6,this.value)"></td>
-          <td> <input id="PID_kd7" maxlength="4" size="4" value="wait" onchange="chgPID_kd(7,this.value)"></td>
-          <td> <input id="PID_kd8" maxlength="4" size="4" value="wait" onchange="chgPID_kd(8,this.value)"></td>
-        </tr>
-
+            <tr>
+              <td>PID_kd</td>
+              <td> <input id="PID_kd0" maxlength="4" size="4" value="all"  onchange="chgPID_kd(0,this.value)"></td>
+              <td> <input id="PID_kd1" maxlength="4" size="4" value="wait" onchange="chgPID_kd(1,this.value)"></td>
+              <td> <input id="PID_kd2" maxlength="4" size="4" value="wait" onchange="chgPID_kd(2,this.value)"></td>
+              <td> <input id="PID_kd3" maxlength="4" size="4" value="wait" onchange="chgPID_kd(3,this.value)"></td>
+              <td> <input id="PID_kd4" maxlength="4" size="4" value="wait" onchange="chgPID_kd(4,this.value)"></td>
+              <td> <input id="PID_kd5" maxlength="4" size="4" value="wait" onchange="chgPID_kd(5,this.value)"></td>
+              <td> <input id="PID_kd6" maxlength="4" size="4" value="wait" onchange="chgPID_kd(6,this.value)"></td>
+              <td> <input id="PID_kd7" maxlength="4" size="4" value="wait" onchange="chgPID_kd(7,this.value)"></td>
+              <td> <input id="PID_kd8" maxlength="4" size="4" value="wait" onchange="chgPID_kd(8,this.value)"></td>
+            </tr>
+          </table>
+        </details>
       </table>
     </div>
 
