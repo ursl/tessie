@@ -286,7 +286,7 @@ void MainWindow::updateHardwareDisplay() {
     fqleStatus->setPalette(fPalettes[4]);
   } else  if (string::npos != ss.find("emergency")) {
     fqleStatus->setPalette(fPalettes[8]);
-  } else  if (string::npos != ss.find("upgrade TEC f/w!")) {
+  } else  if (string::npos != ss.find("TEC f/w < 12")) {
     fqleStatus->setPalette(fPalettes[8]);
   } else {
     fqleStatus->setPalette(fPalettes[6]);

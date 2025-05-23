@@ -258,7 +258,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   } else {
     if (version < 12) {
       fLOG(INFO, "Upgrade TEC f/w! Current version = " + to_string(version));
-      fStatusString = "upgrade TEC f/w!";
+      fStatusString = "TEC f/w < 12";
       versionOK = false;
     }
   }
@@ -432,7 +432,7 @@ void driveHardware::doRun() {
       // -- do something with the results
       if (0) cout << tStamp() << " emit signalUpdateHwDisplay tdiff = " << tdiff << endl;
       if (!fVersionOK) {
-        fStatusString = "upgrade TEC f/w!";
+        fStatusString = "TEC f/w < 12";
       }
       emit signalUpdateHwDisplay();
       dumpCSV();
