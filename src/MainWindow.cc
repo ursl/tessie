@@ -50,7 +50,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   INS.open("version.txt");
   getline(INS, sline);
   INS.close();
-  string sline2 = to_string(fpHw->getSWVersion());
+  string sline2 = to_string(fpHw->getSWVersion(1));
 
   // Create vertical layout for the two labels
   QVBoxLayout *vlayLabels = new QVBoxLayout();
