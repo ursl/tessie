@@ -255,11 +255,13 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   }
   if (!versionOK) {  
     fStatusString = "TEC firmware mismatch";
+    return;
   } else {
     if (version < 12) {
       fLOG(INFO, "UPGRADE TEC firmware! Current version = " + to_string(version));
       fStatusString = "UPGRADE TEC firmware!";
       versionOK = false;
+      return;
     }
   }
 
