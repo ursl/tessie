@@ -255,13 +255,11 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   }
   if (!versionOK) {  
     fStatusString = "TEC firmware mismatch";
-    return;
   } else {
     if (version < 12) {
       fLOG(INFO, "UPGRADE TEC firmware! Current version = " + to_string(version));
       fStatusString = "UPGRADE TEC firmware!";
       versionOK = false;
-      return;
     }
   }
 
@@ -433,6 +431,9 @@ void driveHardware::doRun() {
 
       // -- do something with the results
       if (0) cout << tStamp() << " emit signalUpdateHwDisplay tdiff = " << tdiff << endl;
+      if (!fVersionOK) {
+        fStatusString = "UPGRADE TEC firmware!";
+      }
       emit signalUpdateHwDisplay();
       dumpCSV();
       dumpMQTT();
