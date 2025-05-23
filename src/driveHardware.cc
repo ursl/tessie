@@ -257,6 +257,12 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
     fStatusString = "initialization OK";
   }
 
+  if (version1 < 12) {
+    fLOG(INFO, "UPGRADE TEC firmware! Current version = " + to_string(version1));
+    fStatusString = "UPGRADE TEC firmware!";
+    shutDown();
+  }
+
 #endif
 
   char hostname[1024];
@@ -884,7 +890,9 @@ void driveHardware::shutDown() {
 
   pigpio_stop(fPiGPIO);
 
-  fStatusString = "Reboot!";
+  if (fStatusString != "UPGRADE TEC firmware!") {
+    fStatusString = "Reboot!";
+  }
   return;
 
 #endif
@@ -1990,7 +1998,7 @@ TECData  driveHardware::initAllTECRegister() {
 
   TECRegister b;
   // -- read/write registers
-  b = {1,      "Mode",                 0, 1}; tdata.reg.insert(make_pair(b.name, b));
+  b = {0,      "Mode",                 0, 1}; tdata.reg.insert(make_pair(b.name, b));
   b = {0.,     "ControlVoltage_Set",   1, 1}; tdata.reg.insert(make_pair(b.name, b));
   b = {1.,     "PID_kp",               2, 1}; tdata.reg.insert(make_pair(b.name, b));
   b = {2.,     "PID_ki",               3, 1}; tdata.reg.insert(make_pair(b.name, b));
