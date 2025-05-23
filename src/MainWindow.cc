@@ -50,11 +50,29 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   INS.open("version.txt");
   getline(INS, sline);
   INS.close();
+  string sline2 = to_string(fpHw->getSWVersion());
 
-  QLabel *lbl = new QLabel(string("TESSIE  (" + sline + ") " + fpHw->getHostname()).c_str()); setupLBL(lbl);
-  lbl->setStyleSheet("font-weight: bold;");
+  // Create vertical layout for the two labels
+  QVBoxLayout *vlayLabels = new QVBoxLayout();
+  vlayLabels->setSpacing(0); // Remove spacing between labels
+  
+  // First label with version and hostname
+  QLabel *lblVersion = new QLabel(string("TESSIE  " + fpHw->getHostname()).c_str()); 
+  setupLBL(lblVersion);
+  lblVersion->setStyleSheet("font-weight: bold;");
+  vlayLabels->addWidget(lblVersion);
+  
+  // Second label with hostname
+  string sline3 = "Version: " + sline + ". TEC f/w: " + sline2;
+  QLabel *lbl2 = new QLabel(sline3.c_str());
+  setupLBL(lbl2);
+  vlayLabels->addWidget(lbl2);
+  
+  // Add the vertical layout to the horizontal layout
+  hlay->addLayout(vlayLabels);
 
-  hlay->addWidget(lbl);
+  // QLabel *lbl2 = new QLabel(fpHw->getStatusString().c_str()); setupLBL(lbl2);
+  // hlay->addWidget(lbl2);
 
   fLOG(INFO, "tessie version " + sline);
 
