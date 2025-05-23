@@ -420,7 +420,7 @@ void driveHardware::doRun() {
           SAFETY_MAXTEMPW     = MAX_TEMP;
           SAFETY_MAXTEMPM     = MAX_TEMP;
           SHUTDOWN_TEMP       = MAX_TEMP;
-          fLOG(INFO, "Flow switch activated. Changed maximum temperatures to 35 degC");
+          fLOG(INFO, "Flow switch activated.  Changed maximum temperatures to 35 degC");
         }
       }
 
