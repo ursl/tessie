@@ -240,6 +240,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
 
   // -- Load TEC parameters from FLASH
   loadFromFlash();
+  std::this_thread::sleep_for(fMilli100);
+
 
   // -- read firmware version (have it printed) and make sure that all TECs have the same version
   int version1(getSWVersion(1)), version(-1);
@@ -254,14 +256,15 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
     fStatusString = "TEC firmware mismatch";
     shutDown();
   } else {
+    if (version < 12) {
+      fLOG(INFO, "UPGRADE TEC firmware! Current version = " + to_string(version));
+      fStatusString = "UPGRADE TEC firmware!";
+      shutDown();
+    }
     fStatusString = "initialization OK";
   }
 
-  if (version1 < 12) {
-    fLOG(INFO, "UPGRADE TEC firmware! Current version = " + to_string(version1));
-    fStatusString = "UPGRADE TEC firmware!";
-    shutDown();
-  }
+
 
 #endif
 
