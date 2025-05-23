@@ -286,6 +286,9 @@ void MainWindow::updateHardwareDisplay() {
     fqleStatus->setPalette(fPalettes[4]);
   } else  if (string::npos != ss.find("emergency")) {
     fqleStatus->setPalette(fPalettes[8]);
+  } else  if (string::npos != ss.find("UPGRADE TEC firmware!")) {
+    fqleStatus->setPalette(fPalettes[8]);
+    while (1) {};
   } else {
     fqleStatus->setPalette(fPalettes[6]);
   }
