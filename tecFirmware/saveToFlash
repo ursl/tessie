@@ -1,0 +1,20 @@
+#! /bin/bash -f
+
+# ----------------------------------------------------------------------
+# saveToFlash
+# -----------
+#
+# Very simple-minded script to write TEC variables (e.g. after f/w upgrade)
+# to FLASH memory. This OVERWRITES the flash memory.
+# 
+# Usage:  ./saveToFlash
+# ----------------------------------------------------------------------
+
+cansend can0 308#07
+cansend can0 307#07
+cansend can0 306#07
+cansend can0 305#07
+cansend can0 304#07
+cansend can0 303#07
+cansend can0 302#07
+cansend can0 301#07
