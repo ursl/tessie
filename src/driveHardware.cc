@@ -415,12 +415,12 @@ void driveHardware::doRun() {
         readAirTemperature();
         readFlowmeter();
         if (MAX_TEMP < 30. && fFlowMeterStatus > -1) {
-          MAX_TEMP = 35.;
+          MAX_TEMP = 40.;
           SAFETY_MAXSHT85TEMP = MAX_TEMP;
           SAFETY_MAXTEMPW     = MAX_TEMP;
           SAFETY_MAXTEMPM     = MAX_TEMP;
           SHUTDOWN_TEMP       = MAX_TEMP;
-          fLOG(INFO, "Flow switch activated.  Changed maximum temperatures to 35 degC");
+          fLOG(INFO, "Flow switch activated.  Changed maximum temperatures to 40 degC");
         }
       }
 
