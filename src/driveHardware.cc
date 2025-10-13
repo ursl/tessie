@@ -607,7 +607,7 @@ void driveHardware::ensureSafety() {
     emit signalSetBackground("T", "red");
     stopOperations(1);
   }
-  if (fAirTemp > SHUTDOWN_TEMP) {
+  if ((fAirTemp > SHUTDOWN_TEMP) && (0 == fHeaterStatus)) {
     stopOperations(2);
   }
 
