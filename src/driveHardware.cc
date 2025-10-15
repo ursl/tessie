@@ -51,6 +51,8 @@
 
 #define I2CBUS    0
 
+#define HEATER_MAX_STATUS 180
+
 #include <chrono>
 
 #include <thread>
@@ -430,7 +432,7 @@ void driveHardware::doRun() {
       evtHandler();
 
       // -- count dount fHeaterStatus to allow cool down
-      if (0 < fHeaterStatus && fHeaterStatus < 100) --fHeaterStatus;
+      if (0 < fHeaterStatus && fHeaterStatus < HEATER_MAX_STATUS) --fHeaterStatus;
 
       // -- do something with the results
       if (0) cout << tStamp() << " emit signalUpdateHwDisplay tdiff = " << tdiff << endl;
@@ -2374,7 +2376,7 @@ void driveHardware::heatHYT223(bool on) {
   if (on) {
     // -- Port low -> pFET passes VDD to heater
     command[1] = 0x00;
-    fHeaterStatus = 180;
+    fHeaterStatus = HEATER_MAX_STATUS;
   } else {
     // -- Port low -> pFET block VDD to heater
     command[1] = 0x7f;
