@@ -1165,7 +1165,7 @@ void driveHardware::parseIoMessage() {
     if (string::npos != fIoMessage.find("> ")) {
 
     } else if (string::npos != fIoMessage.find("cmd ")) {
-      s1 = "heatOff";  s2 = "heatoff";
+      s1 = "heatOff";  s2 = "heatoff"; s3 = "cmd";
       if (findInIoMessage(s1, s2, s3)) {
         heatHYT223(0);      
       }
