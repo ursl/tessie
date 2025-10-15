@@ -467,10 +467,7 @@ void driveHardware::doRun() {
       if (0 == cnt%60) {
         stringstream a("RH/T  HYT223 T = " + to_string(fHYT223Temp) + " RH = " + to_string(fHYT223RH)
                        + "  SHT85 T = " + to_string(fSHT85Temp) + " RH = " + to_string(fSHT85RH)
-                       );
-        if (fHeaterStatus > 0) {
-          a << "  Heater status = " + to_string(fHeaterStatus);
-        }
+                       + (fHeaterStatus > 0?"  Heater status = " + to_string(fHeaterStatus): ""));
         fLOG(INFO, a.str());
 
       }
@@ -532,6 +529,8 @@ void driveHardware::ensureSafety() {
     // fLOG(INFO, "fFlowMeterStatus = " + to_string(fFlowMeterStatus));
     if (0 == fFlowMeterStatus) {
       fStatusString = "turn on chiller!";
+    } else if (fHeaterStatus > 0) {
+      fStatusString = "reconditioning";
     } else {
       fStatusString = "no problem";
     }
@@ -2375,7 +2374,7 @@ void driveHardware::heatHYT223(bool on) {
   if (on) {
     // -- Port low -> pFET passes VDD to heater
     command[1] = 0x00;
-    fHeaterStatus = 100;
+    fHeaterStatus = 180;
   } else {
     // -- Port low -> pFET block VDD to heater
     command[1] = 0x7f;
