@@ -468,6 +468,9 @@ void driveHardware::doRun() {
         stringstream a("RH/T  HYT223 T = " + to_string(fHYT223Temp) + " RH = " + to_string(fHYT223RH)
                        + "  SHT85 T = " + to_string(fSHT85Temp) + " RH = " + to_string(fSHT85RH)
                        );
+        if (fHeaterStatus > 0) {
+          a << "  Heater status = " + to_string(fHeaterStatus);
+        }
         fLOG(INFO, a.str());
 
       }
@@ -2377,6 +2380,10 @@ void driveHardware::heatHYT223(bool on) {
     // -- Port low -> pFET block VDD to heater
     command[1] = 0x7f;
     --fHeaterStatus;
+    // -- flush to speed up cool-down
+    if (!getStatusValve0()) {
+      toggleFras(1);
+    }
   }
 
   for (int i = 0; i < 4; ++i) {
