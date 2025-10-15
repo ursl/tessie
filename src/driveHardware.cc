@@ -429,6 +429,9 @@ void driveHardware::doRun() {
 
       evtHandler();
 
+      // -- count dount fHeaterStatus to allow cool down
+      if (0 < fHeaterStatus && fHeaterStatus < 100) --fHeaterStatus;
+
       // -- do something with the results
       if (0) cout << tStamp() << " emit signalUpdateHwDisplay tdiff = " << tdiff << endl;
       if (!fVersionOK) {
@@ -1155,6 +1158,14 @@ void driveHardware::answerIoCmd() {
 
 // ----------------------------------------------------------------------
 void driveHardware::parseIoMessage() {
+  if (fHeaterStatus > 0) {
+    stringstream sbla; 
+    sbla << "Reconditioning in progress, heater status: " << fHeaterStatus;
+    sbla << " ignoring ->" << fIoMessage << "<-";
+    fLOG(INFO, sbla.str());
+    return;
+  }
+
   string s1("Temp"), s2("Temperature"), s3("get"), s0("Temp_");
   // -- GET answers
   if (string::npos != fIoMessage.find("> ")) {
@@ -2349,11 +2360,11 @@ void driveHardware::heatHYT223(bool on) {
   if (on) {
     // -- Port low -> pFET passes VDD to heater
     command[1] = 0x00;
-    fHeaterStatus = 1;
+    fHeaterStatus = 100;
   } else {
     // -- Port low -> pFET block VDD to heater
     command[1] = 0x7f;
-    fHeaterStatus = 0;
+    --fHeaterStatus;
   }
 
   for (int i = 0; i < 4; ++i) {
