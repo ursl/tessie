@@ -1158,7 +1158,20 @@ void driveHardware::answerIoCmd() {
 
 // ----------------------------------------------------------------------
 void driveHardware::parseIoMessage() {
+  string s1("Temp"), s2("Temperature"), s3("get"), s0("Temp_");
+
+  // -- Ignore all messages except for heatOff when reconditioning
   if (fHeaterStatus > 0) {
+    if (string::npos != fIoMessage.find("> ")) {
+
+    } else if (string::npos != fIoMessage.find("cmd ")) {
+      s1 = "heatOff";  s2 = "heatoff";
+      if (findInIoMessage(s1, s2, s3)) {
+        heatHYT223(0);      
+      }
+      return;
+    }
+
     stringstream sbla; 
     sbla << "Reconditioning in progress, heater status: " << fHeaterStatus;
     sbla << " ignoring ->" << fIoMessage << "<-";
@@ -1166,7 +1179,6 @@ void driveHardware::parseIoMessage() {
     return;
   }
 
-  string s1("Temp"), s2("Temperature"), s3("get"), s0("Temp_");
   // -- GET answers
   if (string::npos != fIoMessage.find("> ")) {
 
