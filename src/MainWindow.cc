@@ -193,7 +193,7 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   connect(btn4, &QPushButton::clicked, this, &MainWindow::btnStop);
   glay01->addWidget(btn4, 3, 0, 1, 2, Qt::AlignLeft);
 
-  QPushButton *btn5 = new QPushButton("Start Reconditioning"); btn5->setFocusPolicy(Qt::NoFocus);
+  QPushButton *btn5 = new QPushButton("Recondition!"); btn5->setFocusPolicy(Qt::NoFocus);
   btn5->setFont(fFont3);
   btn5->setFixedSize(QSize(190, 50));
   btn5->setStyleSheet("QPushButton {background-color: rgba(100, 100, 150, 0.3); color: black; font-weight: bold;}");
