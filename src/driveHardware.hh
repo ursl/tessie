@@ -53,7 +53,7 @@ public:
   void breakInterlock();
   void resetInterlock();
 
-  void doReconditioning(bool on = true);
+  void doReconditioning();
 
   std::string timeStamp(bool filestamp = true);
   std::string tStamp() {return timeStamp(false);}

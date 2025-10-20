@@ -2366,8 +2366,8 @@ void driveHardware::readHYT223() {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::doReconditioning(bool on) {
-  if (0 == fReconditioning && on) {
+void driveHardware::doReconditioning() {
+  if (0 == fReconditioning) {
     heatHYT223(true);
     fReconditioning = 1;
   } 

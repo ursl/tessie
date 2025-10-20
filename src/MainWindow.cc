@@ -500,7 +500,7 @@ void MainWindow::btnStop() {
 // ----------------------------------------------------------------------
 void MainWindow::btnStartReconditioning() {
   fLOG(INFO, "MainWindow::btnStartReconditioning() clicked");
-  fpHw->doReconditioning(true);
+  fpHw->doReconditioning();
 }
 
 
