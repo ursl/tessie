@@ -1178,8 +1178,8 @@ void driveHardware::parseIoMessage() {
       s1 = "heatOff";  s2 = "heatoff"; s3 = "cmd";
       if (findInIoMessage(s1, s2, s3)) {
         heatHYT223(0);      
+        return;
       }
-      return;
     }
 
     stringstream sbla; 
