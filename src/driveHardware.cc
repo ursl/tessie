@@ -433,6 +433,10 @@ void driveHardware::doRun() {
 
       evtHandler();
 
+      // -- if reconditioning had been started, go there
+      if (fReconditioning > 0) doReconditioning();
+
+
       // -- count dount fHeaterStatus to allow cool down
       if (0 < fHeaterStatus && fHeaterStatus < HEATER_MAX_STATUS) --fHeaterStatus;
 
