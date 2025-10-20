@@ -193,12 +193,12 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   connect(btn4, &QPushButton::clicked, this, &MainWindow::btnStop);
   glay01->addWidget(btn4, 3, 0, 1, 2, Qt::AlignLeft);
 
-  QPushButton *btn5 = new QPushButton("Restart tessieWeb"); btn5->setFocusPolicy(Qt::NoFocus);
+  QPushButton *btn5 = new QPushButton("Start Reconditioning"); btn5->setFocusPolicy(Qt::NoFocus);
   btn5->setFont(fFont3);
   btn5->setFixedSize(QSize(190, 50));
   btn5->setStyleSheet("QPushButton {background-color: rgba(100, 100, 150, 0.3); color: black; font-weight: bold;}");
   //  btn5->update();
-  connect(btn5, &QPushButton::clicked, this, &MainWindow::btnRestartTessieWeb);
+  connect(btn5, &QPushButton::clicked, this, &MainWindow::btnStartReconditioning);
   glay01->addWidget(btn5, 3, 2, 1, 2, Qt::AlignRight);
 
   hlay0->addLayout(glay01);
@@ -498,9 +498,9 @@ void MainWindow::btnStop() {
 }
 
 // ----------------------------------------------------------------------
-void MainWindow::btnRestartTessieWeb() {
-  cout << "MainWindow::btnRestartTessieWeb" << endl;
-  system("/usr/bin/sudo systemctl restart tessieWeb");
+void MainWindow::btnStartReconditioning() {
+  fLOG(INFO, "MainWindow::btnStartReconditioning() clicked");
+  fpHw->doReconditioning(true);
 }
 
 

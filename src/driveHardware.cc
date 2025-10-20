@@ -84,6 +84,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fBadFlowMeterReading = 0;
   fThrottleStatus = 0;
   fHeaterStatus = 0; 
+  fReconditioning = 0;
+  fReconditioningWaitTime = 0;
 
   fTrafficRed = fTrafficYellow = fTrafficGreen = 0; 
   
@@ -2362,6 +2364,34 @@ void driveHardware::readHYT223() {
 #endif
 }
 
+
+// ----------------------------------------------------------------------
+void driveHardware::doReconditioning(bool on) {
+  if (0 == fReconditioning && on) {
+    heatHYT223(true);
+    fReconditioning = 1;
+  } 
+
+  if (1 == fReconditioning) {
+    if (fHYT223Temp > 90.) {
+      fReconditioning = 2;
+      stringstream a("Reconditioning: temperature > 90degC, starting reconditioning, wait time = " + to_string(fReconditioningWaitTime));
+      ++fReconditioningWaitTime;
+    }
+  }
+
+  if (2 == fReconditioning) {
+    stringstream a("Reconditioning: temperature = " + to_string(fHYT223Temp) + "degC, wait time = " + to_string(fReconditioningWaitTime));
+    fLOG(INFO, a.str());
+    if (fReconditioningWaitTime > 20) {
+      fReconditioning = 0;
+      stringstream a("Reconditioning: wait time > 20, stopping with reconditioning, cool-down started");
+      fLOG(INFO, a.str());
+      heatHYT223(false);
+    }
+  }
+
+}
 
 // ----------------------------------------------------------------------
 void driveHardware::heatHYT223(bool on) {

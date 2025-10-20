@@ -68,6 +68,7 @@ int main(int argc, char *argv[]) {
   QObject::connect(&w, &MainWindow::signalQuitProgram, quitProgram);
   QObject::connect(&w, SIGNAL(signalValve(int)), hw, SLOT(toggleFras(int)));
   QObject::connect(&w, SIGNAL(signalStopOperations(int)), hw, SLOT(stopOperations(int)));
+  QObject::connect(&w, &MainWindow::btnStartReconditioning, hw, &driveHardware::doReconditioning);
   
   ioThread->start();
   hwThread->start();

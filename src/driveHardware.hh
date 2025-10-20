@@ -53,6 +53,8 @@ public:
   void breakInterlock();
   void resetInterlock();
 
+  void doReconditioning(bool on = true);
+
   std::string timeStamp(bool filestamp = true);
   std::string tStamp() {return timeStamp(false);}
 
@@ -170,6 +172,7 @@ signals:
   void  signalUpdateHwDisplay();
   void  signalAlarm(int);
   void  signalKillSiren();
+  void  signalStartReconditioning();
 
 
 protected:
@@ -265,6 +268,7 @@ private:
   int fFreeDiskspace, fTrafficRed, fTrafficYellow, fTrafficGreen;
   int fStopOperations, fFlowMeterStatus, fBadFlowMeterReading, fThrottleStatus;
   int fHeaterStatus, fVersionOK;
+  int fReconditioning, fReconditioningWaitTime;
 
   const double SAFETY_DPMARGIN = 2.;
   

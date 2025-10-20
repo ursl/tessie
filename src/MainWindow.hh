@@ -31,6 +31,7 @@ signals:
 public slots:
   void updateHardwareDisplay();
   void showAlarm(int);
+  void btnStartReconditioning();
 
 private:
   void btnQuit();
