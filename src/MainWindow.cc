@@ -289,6 +289,35 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   // white #ffffff
   QPalette p9; p9.setColor(QPalette::Base, QColor(255, 255, 255, trsp)); fPalettes.push_back(p9);
 
+  // -- Initialize reconditioning dialog
+  fReconditioningDialog = new QDialog(this);
+  fReconditioningDialog->setWindowTitle("Reconditioning in Progress");
+  fReconditioningDialog->setModal(true);
+  fReconditioningDialog->setFixedSize(400, 200);
+  fReconditioningDialog->setStyleSheet("QDialog { background-color: #FF6B6B; }");
+  
+  QVBoxLayout *dialogLayout = new QVBoxLayout(fReconditioningDialog);
+  
+  QLabel *titleLabel = new QLabel("⚠️ Reconditioning in Progress");
+  titleLabel->setAlignment(Qt::AlignCenter);
+  titleLabel->setStyleSheet("QLabel { color: white; font-size: 18px; font-weight: bold; }");
+  dialogLayout->addWidget(titleLabel);
+  
+  QLabel *messageLabel = new QLabel("Please wait while the system reconditions...");
+  messageLabel->setAlignment(Qt::AlignCenter);
+  messageLabel->setStyleSheet("QLabel { color: white; font-size: 14px; }");
+  dialogLayout->addWidget(messageLabel);
+  
+  fReconditioningStatus = new QLabel("Air Temperature: -- °C\nHeater Status: --");
+  fReconditioningStatus->setAlignment(Qt::AlignCenter);
+  fReconditioningStatus->setStyleSheet("QLabel { color: white; font-size: 12px; background-color: rgba(255,255,255,0.2); padding: 10px; border-radius: 5px; }");
+  dialogLayout->addWidget(fReconditioningStatus);
+  
+  QPushButton *closeButton = new QPushButton("Close Alert");
+  closeButton->setStyleSheet("QPushButton { background-color: rgba(255,255,255,0.3); color: white; border: 2px solid white; padding: 8px; border-radius: 5px; font-size: 12px; }");
+  connect(closeButton, &QPushButton::clicked, this, &MainWindow::hideReconditioningDialog);
+  dialogLayout->addWidget(closeButton);
+
 }
 
 
@@ -448,6 +477,24 @@ if (fpHw->getStatusValve0()) {
   }
 
   isred = !isred;
+
+  // -- Handle reconditioning dialog
+  int heaterStatus = fpHw->getHeaterStatus();
+  if (heaterStatus > 0) {
+    // Update dialog status if visible
+    if (fReconditioningDialog && fReconditioningDialog->isVisible()) {
+      QString statusText = QString("Air Temperature: %1 °C\nHeater Status: %2")
+                          .arg(fpHw->getTemperature(), 0, 'f', 1)
+                          .arg(heaterStatus);
+      fReconditioningStatus->setText(statusText);
+    } else {
+      // Show dialog if not already visible
+      showReconditioningDialog();
+    }
+  } else {
+    // Hide dialog when reconditioning is finished
+    hideReconditioningDialog();
+  }
 
 }
 
@@ -628,4 +675,20 @@ void MainWindow::killSiren() {
   }
   pclose(fp);
  
+}
+
+// ----------------------------------------------------------------------
+void MainWindow::showReconditioningDialog() {
+  if (fReconditioningDialog && !fReconditioningDialog->isVisible()) {
+    fLOG(INFO, "Showing reconditioning dialog");
+    fReconditioningDialog->show();
+  }
+}
+
+// ----------------------------------------------------------------------
+void MainWindow::hideReconditioningDialog() {
+  if (fReconditioningDialog && fReconditioningDialog->isVisible()) {
+    fLOG(INFO, "Hiding reconditioning dialog");
+    fReconditioningDialog->hide();
+  }
 }

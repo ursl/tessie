@@ -80,6 +80,7 @@ public:
   int   getLidStatus() {return fLidStatus;}
   int   getInterlockStatus() {return fInterlockStatus;}
   int   getThrottleStatus() {return fThrottleStatus;}
+  int   getHeaterStatus() {return fHeaterStatus;}
   void  turnOnValve(int i); // i = 0 or 1
   void  turnOffValve(int i); // i = 0 or 1
   void  turnOnFan();

@@ -14,6 +14,9 @@ class QLineEdit;
 class QLabel;
 class QPushButton;
 class QWidget;
+class QDialog;
+class QVBoxLayout;
+class QHBoxLayout;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -42,6 +45,9 @@ private:
   void btnValve0();
   void btnValve1();
 
+  void showReconditioningDialog();
+  void hideReconditioningDialog();
+
   void setupQLE(QLineEdit *);
   void setupLBL(QLabel *);
   void mkTEC(int i);
@@ -55,6 +61,9 @@ private:
   QLineEdit *fqleWT, *fqleAT, *fqleRH, *fqleDP, *fqleLS, *fqleIL;
 
   QPushButton *fbtnValve0, *fbtnValve1;
+
+  QDialog *fReconditioningDialog;
+  QLabel *fReconditioningStatus;
 
   tLog&         fLOG;
   driveHardware *fpHw;
