@@ -405,6 +405,15 @@ io.on('connection', (socket) => {
             }
         })
     });
+
+    socket.on('startReconditioning', (msg) => {
+        console.log('startReconditioning input received ->' + msg + '<-');
+        clientMqtt.publish(topCtrl, 'cmd startReconditioning', {qos: 0, retain: false }, (error) => {
+            if (error) {
+                console.error(error)
+            }
+        })
+    });
     
     socket.on('getversionstring', (msg) => {
         console.log('socket.on(getversionstring) received ->' + msg + '<-');

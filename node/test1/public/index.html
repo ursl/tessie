@@ -71,6 +71,8 @@
         <button id="valve0" style="background-color:#D3D3D3">Flush</button>
         <button id="valve1" style="background-color:#D3D3D3">Rinse</button>
         <label><input id="throttleN2" name="throttleN2" type="checkbox" onclick="clkThrottle()"/>throttle N2</label>
+        <br>
+        <button id="startReconditioning" style="background-color:#FF6B6B; color:white; font-weight:bold">Start Reconditioning</button>
 
         <hr>
         TEC arrangement:
@@ -531,6 +533,7 @@
       const getcsv = document.getElementById('getcsv');
       const saveFW = document.getElementById('saveFW');
       const loadFW = document.getElementById('loadFW');
+      const startReconditioning = document.getElementById('startReconditioning');
 
       let tessieWebVersion = "unset";
       var el = document.getElementById('versionWebField');
@@ -564,6 +567,11 @@
       });
 
       getcsv.addEventListener('click', (e) => {socket.emit('getcsv'); });
+
+      startReconditioning.addEventListener('click', (e) => {
+          startReconditioning.style.backgroundColor = 'darkgray';
+          socket.emit('startReconditioning', 'startReconditioning');
+      });
 
       socket.on('envString', (msg) => {
           const snumbers = msg.toString().replace('Env = ', '');
