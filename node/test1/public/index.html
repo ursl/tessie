@@ -61,9 +61,55 @@
           margin: 0 auto;
           overflow-x: auto;
       }
+      
+      /* Reconditioning Alert Styles */
+      #reconditioningAlert {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.8);
+          z-index: 9999;
+          display: none;
+          justify-content: center;
+          align-items: center;
+      }
+      
+      .alert-content {
+          background-color: #FF6B6B;
+          color: white;
+          padding: 40px;
+          border-radius: 10px;
+          text-align: center;
+          font-size: 24px;
+          font-weight: bold;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+          max-width: 500px;
+          margin: 20px;
+      }
+      
+      .alert-content h2 {
+          margin: 0 0 20px 0;
+          font-size: 32px;
+      }
+      
+      .alert-content p {
+          margin: 0;
+          font-size: 18px;
+      }
     </style>
   </head>
   <body>
+    <!-- Reconditioning Alert -->
+    <div id="reconditioningAlert">
+        <div class="alert-content">
+            <h2>⚠️ Reconditioning in Progress</h2>
+            <p>Please wait while the system reconditions...</p>
+            <p style="font-size: 16px; margin-top: 15px; opacity: 0.9;">This process will complete automatically.</p>
+        </div>
+    </div>
+
     <div class="mycontainer">
 
       <div style="background-color:DodgerBlue" float="left">
@@ -693,13 +739,19 @@
               el.checked = false;
           }
           
-          // -- Handle reconditioning button status
+          // -- Handle reconditioning button status and alert
           if (statusHeater > 0) {
               // Reconditioning is active - keep button gray
               startReconditioning.style.backgroundColor = 'darkgray';
+              // Show blocking alert if not already shown
+              if (!document.getElementById('reconditioningAlert')) {
+                  showReconditioningAlert();
+              }
           } else {
               // Reconditioning is finished - reset button to normal
               startReconditioning.style.backgroundColor = '#FF6B6B';
+              // Hide alert if it exists
+              hideReconditioningAlert();
           }
           
           if ("1" == greenLight) {
@@ -1209,6 +1261,23 @@
       document.getElementById("ClearTECError").addEventListener('click', (e) => {
           socket.emit('ClearError');
       });
+
+      // -- Reconditioning Alert Functions
+      function showReconditioningAlert() {
+          const alert = document.getElementById('reconditioningAlert');
+          alert.style.display = 'flex';
+          // Prevent scrolling when alert is shown
+          document.body.style.overflow = 'hidden';
+      }
+
+      function hideReconditioningAlert() {
+          const alert = document.getElementById('reconditioningAlert');
+          if (alert) {
+              alert.style.display = 'none';
+              // Restore scrolling when alert is hidden
+              document.body.style.overflow = 'auto';
+          }
+      }
 
     </script>
 
