@@ -2423,6 +2423,10 @@ void driveHardware::doReconditioning() {
       stringstream a("Reconditioning: wait time > 20, stopping with reconditioning, cool-down started");
       fLOG(INFO, a.str());
       heatHYT223(false);
+      // -- flush to speed up cool-down
+      if (!getStatusValve0()) {
+         toggleFras(1);
+      }
       fReconditioningWaitTime = 0;
     }
   }
@@ -2447,10 +2451,6 @@ void driveHardware::heatHYT223(bool on) {
     // -- Port low -> pFET block VDD to heater
     command[1] = 0x7f;
     --fHeaterStatus;
-    // -- flush to speed up cool-down
-    if (!getStatusValve0()) {
-      toggleFras(1);
-    }
   }
 
   for (int i = 0; i < 4; ++i) {
