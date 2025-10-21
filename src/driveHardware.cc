@@ -435,7 +435,10 @@ void driveHardware::doRun() {
 
       // -- if reconditioning had been started, go there
       if (fReconditioning > 0) doReconditioning();
-
+      if (fHeaterStatus == 1) {
+        turnOffValve(1);
+        turnOffValve(0);
+      }
 
       // -- count dount fHeaterStatus to allow cool down
       if (0 < fHeaterStatus && fHeaterStatus < HEATER_MAX_STATUS) --fHeaterStatus;
@@ -2423,10 +2426,9 @@ void driveHardware::doReconditioning() {
       stringstream a("Reconditioning: wait time > 20, stopping with reconditioning, cool-down started");
       fLOG(INFO, a.str());
       heatHYT223(false);
-      // -- flush to speed up cool-down
-      if (!getStatusValve0()) {
-         toggleFras(1);
-      }
+      // -- flush+rinse to speed up cool-down
+      turnOnValve(1);
+      turnOnValve(0);
       fReconditioningWaitTime = 0;
     }
   }
