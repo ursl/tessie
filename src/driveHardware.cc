@@ -1382,6 +1382,11 @@ void driveHardware::parseIoMessage() {
       heatHYT223(0);      
     }
 
+    s1 = "startReconditioning";  s2 = "startReconditioning";
+    if (findInIoMessage(s1, s2, s3)) {
+      doReconditioning();      
+    }
+
     s1 = "throttleN2On";  s2 = "throttleOn";
     if (findInIoMessage(s1, s2, s3)) {
       fThrottleStatus = 1; 
@@ -2193,7 +2198,8 @@ void driveHardware::dumpMQTT(int all) {
      << fI2CErrorCounter << ", "
      << getRunTime() << ", "
      << getStatusValve0() << ", "
-     << getStatusValve1() 
+     << getStatusValve1() << ", "
+     << fHeaterStatus
     ;
   if (all > -1) emit signalSendToMonitor(QString::fromStdString(ss.str()));
 

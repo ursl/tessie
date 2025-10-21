@@ -71,8 +71,6 @@
         <button id="valve0" style="background-color:#D3D3D3">Flush</button>
         <button id="valve1" style="background-color:#D3D3D3">Rinse</button>
         <label><input id="throttleN2" name="throttleN2" type="checkbox" onclick="clkThrottle()"/>throttle N2</label>
-        <br>
-        <button id="startReconditioning" style="background-color:#FF6B6B; color:white; font-weight:bold">Start Reconditioning</button>
 
         <hr>
         TEC arrangement:
@@ -99,6 +97,8 @@
         <button id="saveFW">Save</button><br>
         CSV data:
         <button id="getcsv" disabled>Get CSV data</button>
+        <br><br>
+        <button id="startReconditioning" style="background-color:#FF6B6B; color:white; font-weight:bold">Start Reconditioning</button>
       </div>
 
       <div id="envDiv" style="background-color:MediumSeaGreen" float="center">
@@ -622,6 +622,18 @@
               valve1.style.background='#D3D3D3';
           } else {
               valve1.style.background='#46923c';
+          }
+          
+          // -- Handle reconditioning button status
+          if (vNumbers.length > 9) {
+              let heaterStatus = parseInt(vNumbers[9]);
+              if (heaterStatus > 0) {
+                  // Reconditioning is active - keep button gray
+                  startReconditioning.style.backgroundColor = 'darkgray';
+              } else {
+                  // Reconditioning is finished - reset button to normal
+                  startReconditioning.style.backgroundColor = '#FF6B6B';
+              }
           }
 
       });
