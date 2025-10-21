@@ -780,36 +780,51 @@ void driveHardware::ensureSafety() {
   }
 
 #ifdef PI
-  if (greenLight) {
+  // -- During reconditioning (fHeaterStatus > 0), turn on all traffic lights
+  if (fHeaterStatus > 0) {
     gpio_write(fPiGPIO, GPIOGREEN, 1);
     fTrafficGreen = 1;
-  } else {
-    gpio_write(fPiGPIO, GPIOGREEN, 0);
-    fTrafficGreen = 0; 
-  }
-
-  // -- add yellow blinking light in case fan is off but conditions are not safe
-  if (!getStatusFan()) {
-    if (!greenLight) {
-      // -- need local (static) variable because fTrafficYellow is reset in checkFan()
-      static bool yelloOn(false);
-      if (0 == fStopOperations) fStatusString = "Keep lid closed";
-      if (yelloOn) {
-        gpio_write(fPiGPIO, GPIOYELLO, 0);
-        fTrafficYellow = 0; 
-        yelloOn = false;        
-      } else {
-        gpio_write(fPiGPIO, GPIOYELLO, 1);
-        fTrafficYellow = 1;
-        yelloOn = true;
-      }
-    } else {
-      gpio_write(fPiGPIO, GPIOYELLO, 0);
-      fTrafficYellow = 0;
-    }
-  } else {
     gpio_write(fPiGPIO, GPIOYELLO, 1);
     fTrafficYellow = 1;
+    gpio_write(fPiGPIO, GPIORED, 1);
+    fTrafficRed = 1;
+  } else {
+    // -- Normal traffic light control
+    if (greenLight) {
+      gpio_write(fPiGPIO, GPIOGREEN, 1);
+      fTrafficGreen = 1;
+    } else {
+      gpio_write(fPiGPIO, GPIOGREEN, 0);
+      fTrafficGreen = 0; 
+    }
+
+    // -- add yellow blinking light in case fan is off but conditions are not safe
+    if (!getStatusFan()) {
+      if (!greenLight) {
+        // -- need local (static) variable because fTrafficYellow is reset in checkFan()
+        static bool yelloOn(false);
+        if (0 == fStopOperations) fStatusString = "Keep lid closed";
+        if (yelloOn) {
+          gpio_write(fPiGPIO, GPIOYELLO, 0);
+          fTrafficYellow = 0; 
+          yelloOn = false;        
+        } else {
+          gpio_write(fPiGPIO, GPIOYELLO, 1);
+          fTrafficYellow = 1;
+          yelloOn = true;
+        }
+      } else {
+        gpio_write(fPiGPIO, GPIOYELLO, 0);
+        fTrafficYellow = 0;
+      }
+    } else {
+      gpio_write(fPiGPIO, GPIOYELLO, 1);
+      fTrafficYellow = 1;
+    }
+    
+    // -- Red light control (normally off unless there's an alarm)
+    gpio_write(fPiGPIO, GPIORED, 0);
+    fTrafficRed = 0;
   }
 #endif
 
