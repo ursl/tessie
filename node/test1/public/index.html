@@ -623,18 +623,6 @@
           } else {
               valve1.style.background='#46923c';
           }
-          
-          // -- Handle reconditioning button status
-          if (vNumbers.length > 9) {
-              let heaterStatus = parseInt(vNumbers[9]);
-              if (heaterStatus > 0) {
-                  // Reconditioning is active - keep button gray
-                  startReconditioning.style.backgroundColor = 'darkgray';
-              } else {
-                  // Reconditioning is finished - reset button to normal
-                  startReconditioning.style.backgroundColor = '#FF6B6B';
-              }
-          }
 
       });
 
@@ -654,6 +642,10 @@
           }
           if (vNumbers.length > 7) {
               statusThrottle =  parseInt(parseInt(vNumbers[7].replace("T", "")));
+          }
+          let statusHeater = -1;
+          if (vNumbers.length > 8) {
+              statusHeater = parseInt(vNumbers[8].replace("H", ""));
           }
           
           var el = document.getElementById('LidStatus');
@@ -699,6 +691,15 @@
               el.checked = true;
           } else {
               el.checked = false;
+          }
+          
+          // -- Handle reconditioning button status
+          if (statusHeater > 0) {
+              // Reconditioning is active - keep button gray
+              startReconditioning.style.backgroundColor = 'darkgray';
+          } else {
+              // Reconditioning is finished - reset button to normal
+              startReconditioning.style.backgroundColor = '#FF6B6B';
           }
           
           if ("1" == greenLight) {

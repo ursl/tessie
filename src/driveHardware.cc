@@ -2198,8 +2198,7 @@ void driveHardware::dumpMQTT(int all) {
      << fI2CErrorCounter << ", "
      << getRunTime() << ", "
      << getStatusValve0() << ", "
-     << getStatusValve1() << ", "
-     << fHeaterStatus
+     << getStatusValve1() 
     ;
   if (all > -1) emit signalSendToMonitor(QString::fromStdString(ss.str()));
 
@@ -2213,7 +2212,8 @@ void driveHardware::dumpMQTT(int all) {
      << fInterlockStatus << ", D"
      << fFreeDiskspace << ", F"
      << fFlowMeterStatus << ", T"
-     << fThrottleStatus
+     << fThrottleStatus << ", H"
+     << fHeaterStatus
     ;
   emit signalSendToMonitor(QString::fromStdString(ss.str()));
 
