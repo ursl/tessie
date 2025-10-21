@@ -111,7 +111,12 @@
         <div class="alert-content">
             <h2>⚠️ Reconditioning in Progress</h2>
             <p>Please wait while the system reconditions...</p>
+            <div id="alertStatus" style="font-size: 18px; margin-top: 20px; padding: 15px; background-color: rgba(255,255,255,0.2); border-radius: 5px;">
+                <p style="margin: 5px 0;"><strong>Air Temperature:</strong> <span id="alertAirTemp">--</span> °C</p>
+                <p style="margin: 5px 0;"><strong>Heater Status:</strong> <span id="alertHeaterStatus">--</span></p>
+            </div>
             <p style="font-size: 16px; margin-top: 15px; opacity: 0.9;">This process will complete automatically.</p>
+            <button onclick="hideReconditioningAlert()" style="background-color: rgba(255,255,255,0.3); color: white; border: 2px solid white; padding: 10px 20px; border-radius: 5px; font-size: 16px; margin-top: 15px; cursor: pointer;">Close Alert</button>
         </div>
     </div>
 
@@ -150,8 +155,6 @@
         <button id="getcsv" disabled>Get CSV data</button>
         <br><br>
         <button id="startReconditioning" style="background-color:#FF6B6B; color:white; font-weight:bold">Start Reconditioning</button>
-        <br>
-        <button onclick="showReconditioningAlert()" style="background-color:#007bff; color:white; font-size:12px; margin-top:5px;">Test Alert</button>
       </div>
 
       <div id="envDiv" style="background-color:MediumSeaGreen" float="center">
@@ -748,6 +751,9 @@
           
           // -- Handle reconditioning button status and alert
           console.log('Heater status:', statusHeater);
+          // Store heater status globally for alert updates
+          window.currentHeaterStatus = statusHeater;
+          
           if (statusHeater > 0) {
               // Reconditioning is active - keep button gray
               startReconditioning.style.backgroundColor = 'darkgray';
@@ -755,11 +761,15 @@
               const alert = document.getElementById('reconditioningAlert');
               if (alert && !alert.classList.contains('show')) {
                   showReconditioningAlert();
+              } else if (alert && alert.classList.contains('show')) {
+                  // Update alert status if already shown
+                  updateAlertStatus();
               }
           } else {
               // Reconditioning is finished - reset button to normal
               startReconditioning.style.backgroundColor = '#FF6B6B';
               // Hide alert if it exists
+              console.log('Heater status is 0, attempting to hide alert');
               hideReconditioningAlert();
           }
           
@@ -1275,6 +1285,8 @@
       function showReconditioningAlert() {
           const alert = document.getElementById('reconditioningAlert');
           if (alert) {
+              // Update status information
+              updateAlertStatus();
               alert.classList.add('show');
               // Prevent scrolling when alert is shown
               document.body.style.overflow = 'hidden';
@@ -1282,13 +1294,35 @@
           }
       }
 
+      function updateAlertStatus() {
+          // Get current air temperature from the display
+          const airTempElement = document.getElementById('TempAir');
+          const airTemp = airTempElement ? airTempElement.innerHTML : '--';
+          
+          // Get current heater status (we'll update this from the status check)
+          const heaterStatusElement = document.getElementById('alertHeaterStatus');
+          if (heaterStatusElement) {
+              heaterStatusElement.innerHTML = window.currentHeaterStatus || '--';
+          }
+          
+          // Update air temperature in alert
+          const alertAirTempElement = document.getElementById('alertAirTemp');
+          if (alertAirTempElement) {
+              alertAirTempElement.innerHTML = airTemp;
+          }
+      }
+
       function hideReconditioningAlert() {
           const alert = document.getElementById('reconditioningAlert');
+          console.log('hideReconditioningAlert called, alert element:', alert);
           if (alert) {
+              console.log('Alert found, removing show class');
               alert.classList.remove('show');
               // Restore scrolling when alert is hidden
               document.body.style.overflow = 'auto';
               console.log('Reconditioning alert hidden');
+          } else {
+              console.log('Alert element not found!');
           }
       }
 
