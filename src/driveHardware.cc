@@ -2396,6 +2396,7 @@ void driveHardware::readHYT223() {
 // ----------------------------------------------------------------------
 void driveHardware::doReconditioning() {
   double targetTemp(90.);
+  int    targetTime(600);
   if (0 == fReconditioning) {
     fLOG(INFO, "Reconditioning: starting reconditioning");
     heatHYT223(true);
@@ -2421,9 +2422,10 @@ void driveHardware::doReconditioning() {
     stringstream a;
     a << "Reconditioning: temperature = " << fixed << setprecision(1) << fHYT223Temp << "degC, wait time = " << fReconditioningWaitTime;
     fLOG(INFO, a.str());
-    if (fReconditioningWaitTime > 10) {
+    if (fReconditioningWaitTime > targetTime) {
       fReconditioning = 0;
-      stringstream a("Reconditioning: wait time > 20, stopping with reconditioning, cool-down started");
+      stringstream a;
+      a << "Reconditioning: wait time > " << targetTime << " seconds, stopping with reconditioning, cool-down started";
       fLOG(INFO, a.str());
       heatHYT223(false);
       // -- flush+rinse to speed up cool-down
