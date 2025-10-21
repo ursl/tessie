@@ -1314,15 +1314,10 @@
 
       function hideReconditioningAlert() {
           const alert = document.getElementById('reconditioningAlert');
-          console.log('hideReconditioningAlert called, alert element:', alert);
           if (alert) {
-              console.log('Alert found, removing show class');
               alert.classList.remove('show');
               // Restore scrolling when alert is hidden
               document.body.style.overflow = 'auto';
-              console.log('Reconditioning alert hidden');
-          } else {
-              console.log('Alert element not found!');
           }
       }
 
