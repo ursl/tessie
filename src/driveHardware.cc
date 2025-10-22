@@ -2400,6 +2400,8 @@ void driveHardware::doReconditioning() {
   if (0 == fReconditioning) {
     fLOG(INFO, "Reconditioning: starting reconditioning");
     heatHYT223(true);
+    turnOffValve(1);
+    turnOffValve(0);
     fReconditioning = 1;
     fReconditioningWaitTime = 0;
   } 
