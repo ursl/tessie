@@ -1452,6 +1452,8 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> ");
     vhelp.push_back("> Note: tec numbering is from 1 .. 8. tec 0 refers to all TECs.");
     vhelp.push_back("> ");
+    vhelp.push_back("> Note: Once heatOn has been called, tessie will only react to heatOff");
+    vhelp.push_back("> ");
     vhelp.push_back("> cmd messages:");
     vhelp.push_back("> -------------");
     vhelp.push_back("> cmd valve0");
