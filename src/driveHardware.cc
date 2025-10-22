@@ -114,6 +114,9 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   }
 
   initTECData();
+  for (int itec = 1; itec <= 8; ++itec) {
+    fTECTurnedOn[itec] = false;
+  }
 
   fSHT85Temp = -99.;
   fSHT85RH   = -99.;
@@ -830,6 +833,18 @@ void driveHardware::ensureSafety() {
     fTrafficRed = 0;
   }
 #endif
+
+  // -- make sure that all TECs that should be on are on
+  for (int itec = 1; itec <= 8; ++itec) {
+    if (fTECTurnedOn[itec]) {
+      if (0 == static_cast<int>(fTECData[itec].reg["PowerState"].value)) {
+        stringstream a;
+        a << "TEC " << itec << " should be on, turning it on";
+        fLOG(INFO, a.str());
+        turnOnTEC(itec);
+      }
+    }
+  }
 
   // -- keep a record for the next time
   fAlarmState = allOK;
@@ -1898,7 +1913,7 @@ void  driveHardware::turnOnTEC(int itec) {
   sendCANmessage();
 
   fTECData[itec].reg["PowerState"].value = 1.;
-
+  fTECTurnedOn[itec] = true;
 #ifdef PI
   gpio_write(fPiGPIO, GPIOYELLO, 1);
   fTrafficYellow = 1;
@@ -1926,6 +1941,7 @@ void  driveHardware::turnOffTEC(int itec) {
   fLOG(INFO, sbla.str());
   sendCANmessage();
 
+  fTECTurnedOn[itec] = false;
   checkFan();
 }
 
