@@ -1477,6 +1477,7 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> cmd throttleN2Off");
     vhelp.push_back("> cmd heatOn");
     vhelp.push_back("> cmd heatOff");
+    vhelp.push_back("> cmd startReconditioning");
     vhelp.push_back("> [tec {0|x}] cmd Power_On");
     vhelp.push_back("> [tec {0|x}] cmd Power_Off");
     vhelp.push_back("> [tec {0|x}] cmd ClearError");
