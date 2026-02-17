@@ -1291,6 +1291,17 @@ void driveHardware::parseIoMessage() {
       }
     }
 
+    // -- get the ground voltages of the last vprobe readout
+    s1 = "vprobegnd"; s2 = "vprobegnd";
+    if (findInIoMessage(s1, s2, s3)) {
+      stringstream str;
+      readVProbeGnd();
+      str << fVprobeGndVoltages;
+      QString qmsg = QString::fromStdString(str.str());
+      emit signalSendToServer(qmsg);
+    }
+
+
     s1 = "Mode";  s2 = "Mode";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
     s1 = "Voltage";  s2 = "ControlVoltage_Set";  if (findInIoMessage(s1, s2, s3)) answerIoGet(s2);
 
@@ -1509,6 +1520,7 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> get valve0");
     vhelp.push_back("> get valve1");
     vhelp.push_back("> get vprobe[1-8]");
+    vhelp.push_back("> get vprobegnd");
     vhelp.push_back("> ");
     vhelp.push_back("> get {monitoring|allMonTessie}");
     vhelp.push_back("> ");
@@ -2786,6 +2798,13 @@ void driveHardware::readVProbe(int pos) {
   double vdda3 = v[ord[2]]  - v[ord[3]];
   double vddd3 = v[ord[1]]  - v[ord[3]];
 
+  fMapVprobeGndVoltages.clear();
+  fMapVprobeGndVoltages["gnd3"] = v[ord[3]];
+  fMapVprobeGndVoltages["gnd6"] = v[ord[6]];
+  fMapVprobeGndVoltages["gnd11"] = v[ord[11]];
+  fMapVprobeGndVoltages["gnd14"] = v[ord[14]];
+  fMapVprobeGndVoltages["gnd26"] = v[ord[26]];
+
   stringstream output;
   //  output << fLOG.shortTimeStamp() << " " <<  std::setprecision(5)
   output << "vprobe" << pos << " = " <<  std::setprecision(5)
@@ -2800,6 +2819,20 @@ void driveHardware::readVProbe(int pos) {
   cout << fVprobeVoltages << endl;
 }
 
+
+// ----------------------------------------------------------------------
+void driveHardware::readVProbeGnd() {
+  stringstream output;
+  output << "vprobegnd = " <<  std::setprecision(5)
+         << fMapVprobeGndVoltages["gnd3"] << ","
+         << fMapVprobeGndVoltages["gnd6"] << ","
+         << fMapVprobeGndVoltages["gnd11"] << ","
+         << fMapVprobeGndVoltages["gnd14"] << ","
+         << fMapVprobeGndVoltages["gnd26"];
+
+  fVprobeGndVoltages = output.str();
+  cout << fVprobeGndVoltages << endl;
+}
 
 // ----------------------------------------------------------------------
 float driveHardware::getTemperature() {

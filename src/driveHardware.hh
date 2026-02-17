@@ -118,6 +118,7 @@ public:
   void    readHYT223();
   void    heatHYT223(bool on);
   void    readVProbe(int ipos);
+  void    readVProbeGnd(int ipos);
   void    readFlowmeter();
   float   getTemperature();
   float   getRH();
@@ -230,7 +231,7 @@ private:
   float fAirTemp, fAirRH, fAirDP;
 
   // -- data from VProbe
-  std::string fVprobeVoltages;
+  std::string fVprobeVoltages, fVprobeGndVoltages;
 
   // -- lid status (read out from TEC7 (of 8)
   //    1 closed and locked (TEC7 Temp_W > 4000)
@@ -263,6 +264,10 @@ private:
   std::map<int, TECData> fTECData;
   // -- keep track of which TECs have been turned on and ensure they turned on!
   std::map<int, bool> fTECTurnedOn;
+
+
+  // -- data from VProbe
+  std::map<std::string, double> fMapVprobeGndVoltages;
 
   // -- keep alarm state
   int fAlarmState;
