@@ -118,7 +118,7 @@ public:
   void    readHYT223();
   void    heatHYT223(bool on);
   void    readVProbe(int ipos);
-  void    readVProbeGnd(int ipos);
+  void    readVProbeGnd();
   void    readFlowmeter();
   float   getTemperature();
   float   getRH();
