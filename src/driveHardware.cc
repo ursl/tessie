@@ -906,14 +906,13 @@ int driveHardware::getSWVersion(int itec) {
   fMutex.unlock();
 
   canFrame a = fCanMsg.getFrame();
+  version = a.fIntVal;
   stringstream sbla; sbla << "getSWVersion("
                           << itec << ")"
                           << " reg = " << fCANReg << hex
                           << " canID = 0x" << fCANId << dec
-                          << " version = " << a.fIntVal;
+                          << " version = " << version << " end version";
   fLOG(INFO, sbla.str());
-
-  version = a.fIntVal;
   return version;
 }
 
