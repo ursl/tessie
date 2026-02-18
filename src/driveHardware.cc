@@ -2739,6 +2739,12 @@ void driveHardware::readVProbe(int pos) {
       stringstream output;
       output <<  "vprobe" << pos << " = -999";
       fVprobeVoltages = output.str();
+      fMapVprobeGndVoltages.clear();
+      fMapVprobeGndVoltages["gnd3"] = -999;
+      fMapVprobeGndVoltages["gnd6"] = -999;
+      fMapVprobeGndVoltages["gnd11"] = -999;
+      fMapVprobeGndVoltages["gnd14"] = -999;
+      fMapVprobeGndVoltages["gnd26"] = -999;
       return;
     } else {
       if (0) {
