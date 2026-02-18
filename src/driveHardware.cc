@@ -911,7 +911,7 @@ int driveHardware::getSWVersion(int itec) {
                           << itec << ")"
                           << " reg = " << fCANReg << hex
                           << " canID = 0x" << fCANId << dec
-                          << " version = " << version << " end version";
+                          << " version = " << version << ".";
   fLOG(INFO, sbla.str());
   return version;
 }
