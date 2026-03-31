@@ -1126,6 +1126,7 @@ void driveHardware::answerIoCmd() {
   }
 
   if (string::npos != cmdname.find("RecoverCAN")) {
+    fLOG(INFO, "Calling recoverCANBus() ");
     bool ok = recoverCANBus();
     QString qmsg = QString::fromStdString(string("RecoverCAN = ") + (ok ? "OK" : "FAIL"));
     emit signalSendToServer(qmsg);
