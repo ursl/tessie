@@ -1125,7 +1125,7 @@ void driveHardware::answerIoCmd() {
     }
   }
   fLOG(INFO, "answerIoCmd cmdname = " + cmdname);
-  
+
   if (string::npos != cmdname.find("RecoverCAN")) {
     fLOG(INFO, "Calling recoverCANBus() ");
     bool ok = recoverCANBus();
@@ -2829,8 +2829,17 @@ void driveHardware::readVProbe(int pos) {
       readAllParamsFromCANPublic();
       dumpMQTT(1);
       fLOG(ERROR, fMonString);
-      fLOG(ERROR, "Trying to recover from error by reading all parameters from CAN bus");
-      fLOG(ERROR, "If this fails, you will have to power-cycle the coldbox"); 
+      fLOG(ERROR, "Turn off LV");
+      turnOffLV();
+      std::this_thread::sleep_for(fMilli100);
+      std::this_thread::sleep_for(fMilli100);
+      std::this_thread::sleep_for(fMilli100);
+      std::this_thread::sleep_for(fMilli100);
+      std::this_thread::sleep_for(fMilli100);
+      fLOG(ERROR, "Turn on LV");
+      turnOnLV();
+      std::this_thread::sleep_for(fMilli100);
+      fLOG(ERROR, "Trying to recover CAN bus");
       recoverCANBus();
       readAllParamsFromCANPublic();
       dumpMQTT(1);
