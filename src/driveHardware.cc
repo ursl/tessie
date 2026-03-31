@@ -910,6 +910,7 @@ int driveHardware::getSWVersion(int itec) {
 
   canFrame a = fCanMsg.getFrame();
   version = a.fIntVal;
+  fSWVersionCached[itec] = version;
   stringstream sbla; sbla << "getSWVersion("
                           << itec << ")"
                           << " reg = " << fCANReg << hex
@@ -919,6 +920,14 @@ int driveHardware::getSWVersion(int itec) {
   return version;
 }
 
+
+// ----------------------------------------------------------------------
+int driveHardware::getSWVersionCached(int itec) {
+  if (fSWVersionCached.find(itec) != fSWVersionCached.end()) {
+    return fSWVersionCached[itec];
+  }
+  return getSWVersion(itec);
+}
 
 // ----------------------------------------------------------------------
 void  driveHardware::setTECParameter(float par) {

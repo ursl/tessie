@@ -106,6 +106,7 @@ public:
   int    getRegister();
   float  getValue();
   int    getSWVersion(int itec = 0);
+  int    getSWVersionCached(int itec = 1);
   char   crc(char *data, size_t len);
 
 #ifdef UZH
@@ -203,6 +204,8 @@ private:
 
   std::map<int, int> fActiveTEC;
   int fNActiveTEC;
+
+  std::map<int, int> fSWVersionCached;
 
   int     fCANReadIntVal;
   float   fCANReadFloatVal;
