@@ -2289,6 +2289,7 @@ void driveHardware::dumpMQTT(int all) {
     , {"Mode", 0.1}
   };
 
+  fMonString = "";
   for (auto const &skey: tolerances) {
     stringstream ss;
     ss << skey.first << " = ";
@@ -2316,6 +2317,7 @@ void driveHardware::dumpMQTT(int all) {
       }
       if (i < 8) ss << ",";
     }
+    fMonString += ss.str();
     if (printit)  emit signalSendToMonitor(QString::fromStdString(ss.str()));
   }
 
@@ -2746,6 +2748,7 @@ void driveHardware::readVProbe(int pos) {
     int handle = i2c_open(fPiGPIO, I2CBUS, addresses[iaddr], 0);
     int length = i2c_read_device(fPiGPIO, handle, (iaddr == 0? bufferC0 : bufferC1), lengthExp);
     i2c_close(fPiGPIO, handle);
+    std::this_thread::sleep_for(fMilli10);
 
     if (length != lengthExp) {
       fLOG(INFO, "Failed to read from the VProbe ");
@@ -2758,6 +2761,13 @@ void driveHardware::readVProbe(int pos) {
       fMapVprobeGndVoltages["gnd11"] = -999;
       fMapVprobeGndVoltages["gnd14"] = -999;
       fMapVprobeGndVoltages["gnd26"] = -999;
+
+      fLOG(WARNING, "Failed to read from the VProbe at i2c bus address 0x" + to_string(addresses[iaddr])  );
+      dumpMQTT(1);
+      fLOG(WARNING, fMonString);
+      readAllParamsFromCANPublic();
+      dumpMQTT(1);
+      fLOG(WARNING, fMonString);
       return;
     } else {
       if (0) {

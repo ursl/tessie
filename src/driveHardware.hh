@@ -206,6 +206,7 @@ private:
   int fNActiveTEC;
 
   std::map<int, int> fSWVersionCached;
+  std::string fMonString;
 
   int     fCANReadIntVal;
   float   fCANReadFloatVal;
