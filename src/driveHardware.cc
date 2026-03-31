@@ -252,6 +252,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
 
   // -- read firmware version (have it printed) and make sure that all TECs have the same version
   int version1 = getSWVersion(1);
+  fLOG(INFO, "TEC 1 firmware version = " + to_string(version1));
+
   int version(-1);
   bool versionOK(true);
   for (int i = 2; i <= 8; ++i) {
