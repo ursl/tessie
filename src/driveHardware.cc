@@ -1124,7 +1124,8 @@ void driveHardware::answerIoCmd() {
       cmdname = tokens[it];
     }
   }
-
+  fLOG(INFO, "answerIoCmd cmdname = " + cmdname);
+  
   if (string::npos != cmdname.find("RecoverCAN")) {
     fLOG(INFO, "Calling recoverCANBus() ");
     bool ok = recoverCANBus();
