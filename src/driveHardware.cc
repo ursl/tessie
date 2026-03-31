@@ -65,6 +65,7 @@ using namespace std;
 #ifdef PI
 // ----------------------------------------------------------------------
 bool driveHardware::initCANSockets() {
+  fLOG(INFO, "initCANSockets() start");
   // -- write CAN socket
   memset(&fFrameW, 0, sizeof(struct can_frame));
   fSw = socket(PF_CAN, SOCK_RAW, CAN_RAW);
@@ -121,6 +122,7 @@ bool driveHardware::initCANSockets() {
     perror("Error in setting up time out");
   }
 
+  fLOG(INFO, "initCANSockets() success");
   return true;
 }
 #endif
