@@ -145,6 +145,7 @@ public:
 
   // -- same as above, but with "public" broadcast
   void  readAllParamsFromCANPublic();
+  bool  recoverCANBus();
 
   // -- AFTER readCANmessage() these can be used to get the relevant value
   float getCANReadFloatVal() {return fCANReadFloatVal;}
@@ -255,6 +256,8 @@ private:
   struct sockaddr_can fAddrR;
   struct ifreq fIfrR;
   struct can_frame fFrameR;
+
+  bool   initCANSockets();
 
   int    fPiGPIO;
 #endif

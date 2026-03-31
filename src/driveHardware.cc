@@ -62,6 +62,69 @@
 
 using namespace std;
 
+#ifdef PI
+// ----------------------------------------------------------------------
+bool driveHardware::initCANSockets() {
+  // -- write CAN socket
+  memset(&fFrameW, 0, sizeof(struct can_frame));
+  fSw = socket(PF_CAN, SOCK_RAW, CAN_RAW);
+  if (fSw < 0) {
+    perror("socket PF_CAN failed");
+    return false;
+  }
+
+  strcpy(fIfrW.ifr_name, "can0");
+  int ret = ioctl(fSw, SIOCGIFINDEX, &fIfrW);
+  if (ret < 0) {
+    perror("ioctl failed");
+    return false;
+  }
+
+  fAddrW.can_family = AF_CAN;
+  fAddrW.can_ifindex = fIfrW.ifr_ifindex;
+  ret = bind(fSw, (struct sockaddr *)&fAddrW, sizeof(fAddrW));
+  if (ret < 0) {
+    perror("bind failed");
+    return false;
+  }
+
+  setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
+
+  // -- read CAN socket
+  memset(&fFrameR, 0, sizeof(struct can_frame));
+  fSr = socket(PF_CAN, SOCK_RAW, CAN_RAW);
+  if (fSr < 0) {
+    perror("socket PF_CAN failed");
+    return false;
+  }
+
+  strcpy(fIfrR.ifr_name, "can0");
+  ret = ioctl(fSr, SIOCGIFINDEX, &fIfrR);
+  if (ret < 0) {
+    perror("ioctl failed");
+    return false;
+  }
+
+  fAddrR.can_family = AF_CAN;
+  fAddrR.can_ifindex = fIfrR.ifr_ifindex;
+  ret = bind(fSr, (struct sockaddr *)&fAddrR, sizeof(fAddrR));
+  if (ret < 0) {
+    perror("bind failed");
+    return false;
+  }
+
+  // -- add timeout
+  struct timeval tv;
+  tv.tv_sec = 0;
+  tv.tv_usec = 10; // 0.1 millisecond
+  if (setsockopt(fSr, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0) {
+    perror("Error in setting up time out");
+  }
+
+  return true;
+}
+#endif
+
 // ----------------------------------------------------------------------
 driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fRestart   = false;
@@ -146,6 +209,8 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fLidReading      = -99999.;
   
 #ifdef PI
+  fSw = -1;
+  fSr = -1;
   fPiGPIO = pigpio_start(NULL, NULL);
 
   cout << "pigpio_start() = " << fPiGPIO << endl;
@@ -168,79 +233,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   cout << "initial readout air temperature" << endl;
   readAirTemperature();
 
-  // -- write CAN socket
-  memset(&fFrameW, 0, sizeof(struct can_frame));
-  fSw = socket(PF_CAN, SOCK_RAW, CAN_RAW);
-  if (fSw < 0) {
-    perror("socket PF_CAN failed");
-    return;
-  }
-
-  strcpy(fIfrW.ifr_name, "can0");
-  int ret = ioctl(fSw, SIOCGIFINDEX, &fIfrW);
-  if (ret < 0) {
-    perror("ioctl failed");
-    return;
-  }
-
-  fAddrW.can_family = AF_CAN;
-  fAddrW.can_ifindex = fIfrW.ifr_ifindex;
-  ret = bind(fSw, (struct sockaddr *)&fAddrW, sizeof(fAddrW));
-  if (ret < 0) {
-    perror("bind failed");
-    return;
-  }
-
-  setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
-
-
-  // -- read CAN socket
-  memset(&fFrameR, 0, sizeof(struct can_frame));
-  fSr = socket(PF_CAN, SOCK_RAW, CAN_RAW);
-  if (fSr < 0) {
-    perror("socket PF_CAN failed");
-    return;
-  }
-
-  strcpy(fIfrR.ifr_name, "can0");
-  ret = ioctl(fSr, SIOCGIFINDEX, &fIfrR);
-  if (ret < 0) {
-    perror("ioctl failed");
-    return;
-  }
-
-  fAddrR.can_family = AF_CAN;
-  fAddrR.can_ifindex = fIfrR.ifr_ifindex;
-  ret = bind(fSr, (struct sockaddr *)&fAddrR, sizeof(fAddrR));
-  if (ret < 0) {
-    perror("bind failed");
-    return;
-  }
-
-  //4.Define receive rules
-  //  struct can_filter rfilter[1];
-  //  rfilter[0].can_id = 0x000;
-  //  rfilter[0].can_mask = CAN_SFF_MASK;
-  // -- this does not work with the new CANBUS protocol?!
-  //  setsockopt(fSr, SOL_CAN_RAW, CAN_RAW_FILTER, &rfilter, sizeof(rfilter));
-
-
-  // -- add timeout?
-  // https://stackoverflow.com/questions/2876024/linux-is-there-a-read-or-recv-from-socket-with-timeout
-  // struct timeval tv;
-  // tv.tv_sec = 0;
-  // tv.tv_usec = 1000; // 1 millisecond
-  // setsockopt(fSr, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof tv);
-
-  if (1) {
-    // https://stackoverflow.com/questions/13547721/udp-socket-set-timeout
-    struct timeval tv;
-    tv.tv_sec = 0;
-    tv.tv_usec = 10; // 0.1 millisecond
-    if (setsockopt(fSr /*rcv_sock*/, SOL_SOCKET, SO_RCVTIMEO, &tv,sizeof(tv)) < 0) {
-      perror("Error in setting up time out");
-    }
-  }
+  if (!initCANSockets()) return;
 
   fOldLidStatus = 2; // initial value
   checkLid();
@@ -1132,6 +1125,13 @@ void driveHardware::answerIoCmd() {
     }
   }
 
+  if (string::npos != cmdname.find("RecoverCAN")) {
+    bool ok = recoverCANBus();
+    QString qmsg = QString::fromStdString(string("RecoverCAN = ") + (ok ? "OK" : "FAIL"));
+    emit signalSendToServer(qmsg);
+    return;
+  }
+
   if (string::npos != cmdname.find("Power_On")) {
     fCANReg = 1;
   } else if (string::npos != cmdname.find("Power_Off")) {
@@ -1501,6 +1501,7 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> cmd heatOn");
     vhelp.push_back("> cmd heatOff");
     vhelp.push_back("> cmd startReconditioning");
+    vhelp.push_back("> cmd RecoverCAN");
     vhelp.push_back("> [tec {0|x}] cmd Power_On");
     vhelp.push_back("> [tec {0|x}] cmd Power_Off");
     vhelp.push_back("> [tec {0|x}] cmd ClearError");
@@ -1666,6 +1667,52 @@ void driveHardware::sendCANmessage(bool setMutex) {
 
   if (setMutex) fMutex.unlock();
 
+#endif
+}
+
+
+// ----------------------------------------------------------------------
+bool driveHardware::recoverCANBus() {
+#ifdef PI
+  fLOG(WARNING, "driveHardware::recoverCANBus() start");
+
+  auto runCmd = [this](const std::string &cmd) -> bool {
+    int rc = std::system(cmd.c_str());
+    if (0 != rc) {
+      fLOG(WARNING, "CAN recovery command failed: " + cmd + " rc=" + to_string(rc));
+      return false;
+    }
+    return true;
+  };
+
+  fMutex.lock();
+
+  if (fSr >= 0) {
+    close(fSr);
+    fSr = -1;
+  }
+  if (fSw >= 0) {
+    close(fSw);
+    fSw = -1;
+  }
+
+  bool ok = true;
+  ok &= runCmd("ip link set can0 down");
+  // Try controller-level restart and set auto-restart.
+  ok &= runCmd("ip link set can0 type can restart-ms 100");
+  ok &= runCmd("ip link set can0 up");
+
+  if (ok) {
+    ok = initCANSockets();
+  }
+
+  fMutex.unlock();
+
+  fLOG(ok ? INFO : ERROR, string("driveHardware::recoverCANBus() ") + (ok ? "success" : "failed"));
+  return ok;
+#else
+  fLOG(WARNING, "driveHardware::recoverCANBus() only available on PI build");
+  return false;
 #endif
 }
 
@@ -2762,13 +2809,18 @@ void driveHardware::readVProbe(int pos) {
       fMapVprobeGndVoltages["gnd14"] = -999;
       fMapVprobeGndVoltages["gnd26"] = -999;
 
-      fLOG(WARNING, "Failed to read from the VProbe at i2c bus address 0x" + to_string(addresses[iaddr])  );
+      fLOG(ERROR, "Failed to read from the VProbe at i2c bus address 0x" + to_string(addresses[iaddr])  );
       dumpMQTT(1);
-      fLOG(WARNING, fMonString);
+      fLOG(ERROR, fMonString);
       readAllParamsFromCANPublic();
       dumpMQTT(1);
-      fLOG(WARNING, fMonString);
-      return;
+      fLOG(ERROR, fMonString);
+      fLOG(ERROR, "Trying to recover from error by reading all parameters from CAN bus");
+      fLOG(ERROR, "If this fails, you will have to power-cycle the coldbox"); 
+      recoverCANBus();
+      readAllParamsFromCANPublic();
+      dumpMQTT(1);
+      fLOG(ERROR, fMonString);
     } else {
       if (0) {
         printf("- Data read from the VProbe at i2c bus address 0x%x", addresses[iaddr]);
