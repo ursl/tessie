@@ -2671,7 +2671,7 @@ int driveHardware::readI2C() {
   else s_i2c += "off";
   
   //fLOG(WARNING, s_i2c+"  "+to_string(r));
-  
+  std::this_thread::sleep_for(fMilli20);
   i2c_close(fPiGPIO, handle);
 #endif
 return r;
