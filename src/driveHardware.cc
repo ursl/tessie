@@ -1470,6 +1470,11 @@ void driveHardware::parseIoMessage() {
       answerIoCmd();
     }
 
+    s1 = "RecoverCAN"; s2 = "recovercan";
+    if (findInIoMessage(s1, s2, s3)) {
+      recoverCANBus();
+    }
+
     s1 = "quit";  s2 = "exit";
     if (findInIoMessage(s1, s2, s3)) {
       shutDown();
