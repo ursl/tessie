@@ -55,7 +55,9 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
   INS.open("version.txt");
   getline(INS, sline);
   INS.close();
-  string sline2 = to_string(fpHw->getSWVersion(1));
+  int version1 = fpHw->getSWVersion(1);
+  string sline2 = to_string(version1);
+  fLOG(INFO, "TEC 1 firmware version = " + to_string(version1)) + " sline2 = " + sline2;
 
   // Create vertical layout for the two labels
   QVBoxLayout *vlayLabels = new QVBoxLayout();
