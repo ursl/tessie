@@ -1,0 +1,61 @@
+#!/usr/bin/env perl
+
+# ----------------------------------------------------------------------
+# usage: ./scripts/playVprobe -n 2000 -s 1000000
+# ----------------------------------------------------------------------
+
+use Time::HiRes qw(usleep nanosleep);
+use IO::Select;
+
+use Getopt::Std;
+getopts('n:s:');
+
+# -- number of steps
+if (!$opt_n) {
+    $opt_n = 10;
+}
+
+# -- start value
+if (!$opt_v) {
+    $opt_v = 1.0;
+}
+
+# -- sleep microseconds (0.5seconds by default)
+if (!$opt_s) {
+    $opt_s = 500000;
+}
+
+my $sub_pid = open(my $sub, "-|", "mosquitto_sub", "-h", "coldbox02", "-t", "ctrlTessie", "-v")
+  or die "cannot start mosquitto_sub: $!";
+my $sel = IO::Select->new($sub);
+
+for (my $i = 0; $i < $opt_n; $i++) {
+    print "step = $i\n";
+    system("mosquitto_pub -h coldbox02 -t \"ctrlTessie\" -m \"get vprobe4\"");
+
+    my $deadline = time() + 2;  # 2s max wait for one vprobe reply
+    my $got_reply = 0;
+    while (time() < $deadline) {
+        my @ready = $sel->can_read(0.2);
+        next unless @ready;
+        my $line = <$sub>;
+        die "mosquitto_sub ended unexpectedly\n" unless defined $line;
+        print $line;
+        if ($line =~ /vprobe4 = 0,0,0,0,0,0,0,0,0,0/) {
+            print "problems with readout, waiting 5 seconds\n";
+            sleep(5);
+        } elsif ($line =~ /vprobe4 = [0-9.]+/) {
+            $got_reply = 1;
+            last;
+        }
+    }
+    print "timeout waiting for vprobe4 reply\n" unless $got_reply;
+
+    usleep($opt_s);
+}
+
+kill 'TERM', $sub_pid if $sub_pid;
+waitpid($sub_pid, 0) if $sub_pid;
+close($sub);
+
+print "done\n";
