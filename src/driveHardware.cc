@@ -924,6 +924,7 @@ int driveHardware::getSWVersion(int itec) {
 // ----------------------------------------------------------------------
 int driveHardware::getSWVersionCached(int itec) {
   if (fSWVersionCached.find(itec) != fSWVersionCached.end()) {
+    fLOG(INFO, "getSWVersionCached(" + to_string(itec) + ") = " + to_string(fSWVersionCached[itec]));
     return fSWVersionCached[itec];
   }
   return getSWVersion(itec);
