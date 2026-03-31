@@ -1685,8 +1685,15 @@ bool driveHardware::recoverCANBus() {
 
   auto runCmd = [this](const std::string &cmd) -> bool {
     int rc = std::system(cmd.c_str());
+    if (0 == rc) return true;
+
+    // -- fallback for deployments where ctrlTessie runs without CAP_NET_ADMIN
+    std::string sudoCmd = "sudo -n " + cmd;
+    rc = std::system(sudoCmd.c_str());
     if (0 != rc) {
-      fLOG(WARNING, "CAN recovery command failed: " + cmd + " rc=" + to_string(rc));
+      fLOG(WARNING, "CAN recovery command failed: " + cmd
+           + " rc=" + to_string(rc)
+           + " (also failed with sudo -n)");
       return false;
     }
     return true;
