@@ -2825,6 +2825,8 @@ void driveHardware::readVProbe(int pos) {
       fMapVprobeGndVoltages["gnd14"] = -999;
       fMapVprobeGndVoltages["gnd26"] = -999;
 
+      fHeaterStatus = 10;
+      fLOG(ERROR, "fHeaterStatus = " + to_string(fHeaterStatus));
       fLOG(ERROR, "Failed to read from the VProbe at i2c bus address 0x" + to_string(addresses[iaddr])  );
       dumpMQTT(1);
       fLOG(ERROR, fMonString);
@@ -2846,6 +2848,8 @@ void driveHardware::readVProbe(int pos) {
       readAllParamsFromCANPublic();
       dumpMQTT(1);
       fLOG(ERROR, fMonString);
+      fHeaterStatus = 0;
+      fLOG(ERROR, "fHeaterStatus = " + to_string(fHeaterStatus));
     } else {
       if (0) {
         printf("- Data read from the VProbe at i2c bus address 0x%x", addresses[iaddr]);
