@@ -2764,6 +2764,8 @@ return r;
 // ----------------------------------------------------------------------
 void driveHardware::readVProbe(int pos) {
 
+  fLOG(INFO, "readVProbe(" + to_string(pos) + ") start");
+
   double VDD(3.3114);
   // -- TP corr. Doc:  6  5  9  10  11  7  8  12  4  3  2  13  14  26  8  1
   // -- TP wrong Doc: 12  8  7  11  10  9  5   6  1  8 26  14  13   2  3  4
@@ -2928,7 +2930,7 @@ void driveHardware::readVProbe(int pos) {
          << vdda3 << "," << vddd3 ;
 
   fVprobeVoltages = output.str();
-  cout << fVprobeVoltages << endl;
+  fLOG(INFO, "fVprobeVoltages = " + fVprobeVoltages);
 }
 
 
