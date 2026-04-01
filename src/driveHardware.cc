@@ -2810,8 +2810,8 @@ void driveHardware::readVProbe(int pos) {
     int lengthExp(18); // A = 10, B = 11, C = 12, D = 13, E = 14, F = 15
     int handle = i2c_open(fPiGPIO, I2CBUS, addresses[iaddr], 0);
     int length = i2c_read_device(fPiGPIO, handle, (iaddr == 0? bufferC0 : bufferC1), lengthExp);
+    std::this_thread::sleep_for(fMilli5);
     i2c_close(fPiGPIO, handle);
-    std::this_thread::sleep_for(fMilli10);
 
     if (length != lengthExp) {
       fLOG(INFO, "Failed to read from the VProbe ");
@@ -2833,6 +2833,8 @@ void driveHardware::readVProbe(int pos) {
       readAllParamsFromCANPublic();
       dumpMQTT(1);
       fLOG(ERROR, fMonString);
+      clearTECErrors();
+      fCanMsg.clearAllFrames();
       fLOG(ERROR, "Turn off LV");
       turnOffLV();
       std::this_thread::sleep_for(fMilli100);
