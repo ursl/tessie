@@ -2087,7 +2087,7 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
   fMutex.lock();
   sendCANmessage(false);
   std::this_thread::sleep_for(fMilli10);
-  if (1) fLOG(INFO, "  getTECRegisterFromCAN for tec = " + to_string(itec)
+  if (0) fLOG(INFO, "  getTECRegisterFromCAN for tec = " + to_string(itec)
               + " register = " + regname
               + " regidx = " + to_string(fCANReg)
               );
@@ -2255,7 +2255,7 @@ void driveHardware::readAllParamsFromCANPublic() {
     } else if (9 == ireg) {
       fTECData[8].reg["Temp_Diff"].value = getTECRegisterFromCAN(8, regnames[ireg]);
     } else {
-      if (1) fLOG(INFO, "reading broadcast " + regnames[ireg]);
+      if (0) fLOG(INFO, "reading broadcast " + regnames[ireg]);
       getTECRegisterFromCAN(0, regnames[ireg]);
       int regIdx = fTECData[1].getIdx(regnames[ireg]);
       for (int i = 1; i <= 8; ++i) {
