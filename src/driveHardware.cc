@@ -2833,7 +2833,7 @@ void driveHardware::readVProbe(int pos) {
       dumpMQTT(1);
       fLOG(ERROR, fMonString);
       clearTECErrors();
-      fCanMsg.clearAllFrames();
+      fCanMsg.clearAll();
       fLOG(ERROR, "Turn off LV");
       turnOffLV();
       std::this_thread::sleep_for(fMilli100);

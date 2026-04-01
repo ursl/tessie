@@ -27,6 +27,8 @@ public:
   int nErrors();
   // -- clear frames
   void clearAllFrames();
+  // -- clear everything
+  void clearAll();
   // -- get accumulated error messages
   std::deque<std::string> getErrors();
 

@@ -110,6 +110,21 @@ void CANmessage::clearAllFrames() {
 
 
 // ----------------------------------------------------------------------
+void CANmessage::clearAll() {
+  for (auto &itt :fMapFrames) {
+    for (auto &itr: itt.second) {
+      itr.second.clear();
+    }
+  }
+  fMapFrames.clear();
+  fqFRASFrames.clear();
+  fqAlarmFrames.clear();
+  fqFrames.clear();
+  fqErrors.clear();
+}
+
+
+// ----------------------------------------------------------------------
 void CANmessage::dump() {
   cout << "dump map<int, map<int, deque>> containers" << endl;
   for (auto &itt :fMapFrames) {
