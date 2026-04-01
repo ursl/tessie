@@ -1682,7 +1682,8 @@ void driveHardware::sendCANmessage(bool setMutex) {
 
 // ----------------------------------------------------------------------
 bool driveHardware::recoverCANBus() {
-#ifdef PI
+  fCanMsg.clearAll();
+  #ifdef PI
   fLOG(WARNING, "driveHardware::recoverCANBus() start");
 
   auto runCmd = [this](const std::string &cmd) -> bool {
@@ -1725,6 +1726,7 @@ bool driveHardware::recoverCANBus() {
   fMutex.unlock();
 
   fLOG(ok ? INFO : ERROR, string("driveHardware::recoverCANBus() ") + (ok ? "success" : "failed"));
+  fCanMsg.clearAll();
   return ok;
 #else
   fLOG(WARNING, "driveHardware::recoverCANBus() only available on PI build");
