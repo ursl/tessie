@@ -1682,6 +1682,7 @@ void driveHardware::sendCANmessage(bool setMutex) {
 
 // ----------------------------------------------------------------------
 bool driveHardware::recoverCANBus() {
+  fLOG(WARNING, "calling CANmessage::clearAll() in recoverCANBus()");
   fCanMsg.clearAll();
   #ifdef PI
   fLOG(WARNING, "driveHardware::recoverCANBus() start");
@@ -1726,6 +1727,7 @@ bool driveHardware::recoverCANBus() {
   fMutex.unlock();
 
   fLOG(ok ? INFO : ERROR, string("driveHardware::recoverCANBus() ") + (ok ? "success" : "failed"));
+  fLOG(WARNING, "calling CANmessage::clearAll() again in recoverCANBus()");
   fCanMsg.clearAll();
   return ok;
 #else
@@ -2837,6 +2839,7 @@ void driveHardware::readVProbe(int pos) {
       dumpMQTT(1);
       fLOG(ERROR, fMonString);
       clearTECErrors();
+      fLOG(WARNING, "calling CANmessage::clearAll");
       fCanMsg.clearAll();
       fLOG(ERROR, "Turn off LV");
       turnOffLV();
