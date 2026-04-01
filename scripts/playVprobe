@@ -49,8 +49,16 @@ for (my $i = 0; $i < $opt_n; $i++) {
             last;
         }
     }
-    print "timeout waiting for vprobe4 reply\n" unless $got_reply;
 
+    if ($got_reply) {
+        print "vprobe4 = $line\n";
+    } else {
+        print "timeout waiting for vprobe4 reply\n";
+        print "problems with readout, waiting 5 seconds\n";
+        sleep(5);
+        system("mosquitto_pub -h coldbox02 -t \"ctrlTessie\" -m \"cmd recovercan\"");
+        sleep(5);
+    }
     usleep($opt_s);
 }
 
