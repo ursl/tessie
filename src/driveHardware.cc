@@ -2085,10 +2085,10 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
   fMutex.lock();
   sendCANmessage(false);
   std::this_thread::sleep_for(fMilli10);
-  if (0) cout << "  getTECRegisterFromCAN for tec = " << itec
-              << " register = "<< regname
-              << " regidx = " << fCANReg
-              << endl;
+  if (1) fLOG(INFO, "  getTECRegisterFromCAN for tec = " + to_string(itec)
+              + " register = " + regname
+              + " regidx = " + to_string(fCANReg)
+              );
 
   if (itec > 0) {
     readCAN(1, false);
@@ -2253,8 +2253,8 @@ void driveHardware::readAllParamsFromCANPublic() {
     } else if (9 == ireg) {
       fTECData[8].reg["Temp_Diff"].value = getTECRegisterFromCAN(8, regnames[ireg]);
     } else {
+      if (1) fLOG(INFO, "reading broadcast " + regnames[ireg]);
       getTECRegisterFromCAN(0, regnames[ireg]);
-      if (0) cout << "  " << tStamp() << " reading broadcast "<< regnames[ireg] << endl;
       int regIdx = fTECData[1].getIdx(regnames[ireg]);
       for (int i = 1; i <= 8; ++i) {
         if (0 == fActiveTEC[i]) continue;
@@ -2814,7 +2814,7 @@ void driveHardware::readVProbe(int pos) {
     i2c_close(fPiGPIO, handle);
 
     if (length != lengthExp) {
-      fLOG(INFO, "Failed to read from the VProbe ");
+      fLOG(ERROR, "Failed to read from the VProbe at i2c bus address 0x" + to_string(addresses[iaddr])  );
       stringstream output;
       output <<  "vprobe" << pos << " = -999";
       fVprobeVoltages = output.str();
@@ -2827,7 +2827,6 @@ void driveHardware::readVProbe(int pos) {
 
       fHeaterStatus = 10;
       fLOG(ERROR, "fHeaterStatus = " + to_string(fHeaterStatus));
-      fLOG(ERROR, "Failed to read from the VProbe at i2c bus address 0x" + to_string(addresses[iaddr])  );
       dumpMQTT(1);
       fLOG(ERROR, fMonString);
       readAllParamsFromCANPublic();
