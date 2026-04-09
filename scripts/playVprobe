@@ -1,14 +1,14 @@
 #!/usr/bin/env perl
 
 # ----------------------------------------------------------------------
-# usage: ./scripts/playVprobe -n 2000 -s 1000000
+# usage: ./scripts/playVprobe -n 2000 -s 1000000 [-h coldbox01]
 # ----------------------------------------------------------------------
 
 use Time::HiRes qw(usleep nanosleep);
 use IO::Select;
 
 use Getopt::Std;
-getopts('n:s:');
+getopts('n:s:p:h:');
 
 # -- number of steps
 if (!$opt_n) {
@@ -25,39 +25,67 @@ if (!$opt_s) {
     $opt_s = 500000;
 }
 
-my $sub_pid = open(my $sub, "-|", "mosquitto_sub", "-h", "coldbox02", "-t", "ctrlTessie", "-v")
+# -- MQTT host
+if (!$opt_h) {
+    $opt_h = "coldbox02";
+}
+my $host = $opt_h;
+
+# -- vprobe index to query
+if (!$opt_p) {
+    $opt_p = 4;
+}
+my $probe = int($opt_p);
+if ($probe < 1 || $probe > 8) {
+    die "invalid -p $opt_p, expected 1..8\n";
+}
+my $probe_key = "vprobe$probe";
+
+my $sub_pid = open(my $sub, "-|", "mosquitto_sub", "-h", $host, "-t", "ctrlTessie", "-v")
   or die "cannot start mosquitto_sub: $!";
 my $sel = IO::Select->new($sub);
+my $n_consecutive_timeouts = 0;
+my $recover_after_timeouts = 3;
 
 for (my $i = 0; $i < $opt_n; $i++) {
     print "step = $i\n";
-    system("mosquitto_pub -h coldbox02 -t \"ctrlTessie\" -m \"get vprobe4\"");
+    system("mosquitto_pub -h $host -t \"ctrlTessie\" -m \"get $probe_key\"");
 
-    my $deadline = time() + 2;  # 2s max wait for one vprobe reply
+    my $deadline = time() + 8;  # allow slower replies during busy/error conditions
     my $got_reply = 0;
+    my $last_vprobe_reply = "";
     while (time() < $deadline) {
         my @ready = $sel->can_read(0.2);
         next unless @ready;
         my $line = <$sub>;
         die "mosquitto_sub ended unexpectedly\n" unless defined $line;
         print $line;
-        if ($line =~ /vprobe4 = 0,0,0,0,0,0,0,0,0,0/) {
+        if ($line =~ /$probe_key = 0,0,0,0,0,0,0,0,0,0/) {
             print "problems with readout, waiting 5 seconds\n";
             sleep(5);
-        } elsif ($line =~ /vprobe4 = [0-9.]+/) {
+        } elsif ($line =~ /$probe_key\s*=/) {
+            $last_vprobe_reply = $line;
             $got_reply = 1;
             last;
         }
     }
 
     if ($got_reply) {
-        print "vprobe4 = $line\n";
+        $n_consecutive_timeouts = 0;
+        print "$probe_key reply: $last_vprobe_reply";
     } else {
-        print "timeout waiting for vprobe4 reply\n";
-        print "problems with readout, waiting 5 seconds\n";
-        sleep(5);
-        system("mosquitto_pub -h coldbox02 -t \"ctrlTessie\" -m \"cmd recovercan\"");
-        sleep(5);
+        ++$n_consecutive_timeouts;
+        print "timeout waiting for $probe_key reply\n";
+        print "consecutive timeouts = $n_consecutive_timeouts\n";
+        if ($n_consecutive_timeouts >= $recover_after_timeouts) {
+            print "triggering RecoverCAN after repeated timeouts\n";
+            system("mosquitto_pub -h $host -t \"ctrlTessie\" -m \"cmd RecoverCAN\"");
+            $n_consecutive_timeouts = 0;
+            sleep(5);
+        } else {
+            print "waiting 5 seconds before retry\n";
+            sleep(5);
+        }
     }
     usleep($opt_s);
 }
