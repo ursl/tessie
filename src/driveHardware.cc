@@ -1854,6 +1854,26 @@ void driveHardware::turnOffLV() {
 }
 
 
+// ----------------------------------------------------------------------
+void driveHardware::power3V3(bool on) {
+  stringstream a("power3V3(" + to_string(on) + ")");
+  fLOG(INFO, a.str()); 
+  if (on) {
+    gpio_write(fPiGPIO, GPIOPSUEN, 1);
+  } else {
+    gpio_write(fPiGPIO, GPIOPSUEN, 0);
+  }
+}
+
+
+// ----------------------------------------------------------------------
+void driveHardware::powerCycle3V3() {
+  power3V3(false);
+  std::this_thread::sleep_for(fMilli500);
+  power3V3(true);
+  std::this_thread::sleep_for(fMilli100);
+}
+
 
 // ----------------------------------------------------------------------
 void driveHardware::turnOnValve(int i) {
@@ -2916,26 +2936,12 @@ void driveHardware::readVProbe(int pos) {
       fMapVprobeGndVoltages["gnd14"] = -999;
       fMapVprobeGndVoltages["gnd26"] = -999;
 
-      // dumpMQTT(1);
-      // fLOG(ERROR, fMonString);
-      // readAllParamsFromCANPublic();
-      // dumpMQTT(1);
-      // fLOG(ERROR, fMonString);
-      // clearTECErrors();
-      // fLOG(WARNING, "calling CANmessage::clearAll");
-      // fCanMsg.clearAll();
-      // std::this_thread::sleep_for(fMilli100);
-      // fLOG(ERROR, "Trying to recover CAN bus");
-      // recoverCANBus();
-      // readAllParamsFromCANPublic();
-      // dumpMQTT(1);
-      // fLOG(ERROR, fMonString);
-    } else {
-      if (0) {
-        printf("- Data read from the VProbe at i2c bus address 0x%x", addresses[iaddr]);
-        cout << endl;
-      }
-    }
+      stringstream a("power cycling 3.3V due to VProbe read error");
+      fLOG(ERROR, a.str());
+      powerCycle3V3();
+      stringstream b("power cycling 3.3V done");
+      fLOG(ERROR, b.str());
+    } 
 #else
     cout << "using default data instead of reading from I2C bus, iaddr = " << iaddr << endl;
 #endif

@@ -87,6 +87,8 @@ public:
   void  turnOffFan();
   void  turnOnLV();
   void  turnOffLV();
+  void  power3V3(bool on);
+  void  powerCycle3V3();
   bool  anyTECRunning();
   void  checkFan();
   void  checkLid();
@@ -229,7 +231,7 @@ private:
   int fCanShortfallCount{0};
    
   // -- timing and wall-clock ticks (or so)
-  std::chrono::milliseconds fMilli5, fMilli10, fMilli20, fMilli100;
+  std::chrono::milliseconds fMilli5, fMilli10, fMilli20, fMilli100, fMilli500;
   struct timeval ftvStart;
   int    fRunCnt;
 
