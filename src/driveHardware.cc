@@ -41,7 +41,7 @@
 // -- define GPIO pins for side lights and INTL/PSEN
 //     physical 11/13/15 LED pins  GPIO 17/27/22
 //     physical 16       INTL      GPIO 23
-//     physical 18       PSEN      GPIO 24
+//     physical 18       PSEN      GPIO 24    // this is 3.3V enable for central PCB
 
 #define GPIORED   17
 #define GPIOYELLO 27
@@ -2137,17 +2137,30 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
     readCAN(fNActiveTEC, false);
     fMutex.unlock();
     if (fCanLastReadReceived < fNActiveTEC) {
-      stringstream sbla;
-      sbla << "CAN frame shortfall in broadcast read: reg="
-           << regname
-           << " regIdx=" << fCANReg
-           << " requested=" << fCanLastReadRequested
-           << " attempts=" << fCanLastReadAttempts
-           << " received=" << fCanLastReadReceived
-           << " absorbRead=" << fCanLastAbsorbRead
-           << " sentId=0x" << hex << fCanLastSentId << dec
-           << " sentReg=" << fCanLastSentReg;
-      fLOG(WARNING, sbla.str());
+      ++fCanShortfallCount;
+      // -- keep this compact: print details every Nth shortfall
+      if ((fCanShortfallCount <= 3) || (0 == fCanShortfallCount%25)) {
+        stringstream sbla;
+        sbla << "CAN frame shortfall #" << fCanShortfallCount
+             << " in broadcast read: reg="
+             << regname
+             << " regIdx=" << fCANReg
+             << " requested=" << fCanLastReadRequested
+             << " attempts=" << fCanLastReadAttempts
+             << " received=" << fCanLastReadReceived
+             << " absorbRead=" << fCanLastAbsorbRead
+             << " sentId=0x" << hex << fCanLastSentId << dec
+             << " sentReg=" << fCanLastSentReg;
+        fLOG(WARNING, sbla.str());
+      }
+    } else {
+      // -- emit occasional recovery marker after a burst
+      if (fCanShortfallCount > 0) {
+        stringstream sbla;
+        sbla << "CAN frame shortfall recovered after " << fCanShortfallCount << " shortfalls";
+        fLOG(INFO, sbla.str());
+        fCanShortfallCount = 0;
+      }
     }
     return -97;
   }

@@ -226,6 +226,7 @@ private:
   int fCanLastAbsorbRead{0};
   int fCanLastSentId{0};
   int fCanLastSentReg{0};
+  int fCanShortfallCount{0};
    
   // -- timing and wall-clock ticks (or so)
   std::chrono::milliseconds fMilli5, fMilli10, fMilli20, fMilli100;
