@@ -888,7 +888,7 @@ int driveHardware::getTECRegisterIdx(std::string rname) {
 
 // ----------------------------------------------------------------------
 int driveHardware::getSWVersion(int itec) {
-  int version(0);
+  int version(-99);
   if (0 == fActiveTEC[itec]) {
     cout << "TEC " << itec <<  " not active, skipping" << endl;
     return version;
@@ -899,12 +899,24 @@ int driveHardware::getSWVersion(int itec) {
 
   fMutex.lock();
   sendCANmessage(false);
-  std::this_thread::sleep_for(fMilli10);
-  readCAN(1, false);
+  // -- robustly wait for the proper reply frame (CMD reply reg=6 for this TEC)
+  bool gotVersion(false);
+  for (int i = 0; i < 10; ++i) {
+    readCAN(1, false);
+    canFrame a = fCanMsg.getFrame();
+    if ((a.fTec == static_cast<unsigned int>(itec)) && (0 == a.fType) && (6 == a.fReg)) {
+      version = a.fIntVal;
+      gotVersion = true;
+      break;
+    }
+    std::this_thread::sleep_for(fMilli5);
+  }
   fMutex.unlock();
 
-  canFrame a = fCanMsg.getFrame();
-  version = a.fIntVal;
+  if (!gotVersion) {
+    fLOG(WARNING, "getSWVersion(" + to_string(itec) + ") timed out waiting for reg 6 reply");
+  }
+
   fSWVersionCached[itec] = version;
   stringstream sbla; sbla << "getSWVersion("
                           << itec << ")"
@@ -1183,17 +1195,31 @@ void driveHardware::answerIoCmd() {
     fLOG(INFO, sbla.str());
     fMutex.lock();
     sendCANmessage(false);
-    std::this_thread::sleep_for(fMilli10);
-    readCAN(1, false);
+    int cmdResult(-99);
+    bool gotCmdReply(false);
+    // -- robustly wait for the proper command reply
+    for (int iwait = 0; iwait < 10; ++iwait) {
+      readCAN(1, false);
+      canFrame a = fCanMsg.getFrame();
+      if ((a.fTec == static_cast<unsigned int>(itec)) && (0 == a.fType) && (static_cast<unsigned int>(fCANReg) == a.fReg)) {
+        cmdResult = a.fIntVal;
+        gotCmdReply = true;
+        break;
+      }
+      std::this_thread::sleep_for(fMilli5);
+    }
     fMutex.unlock();
-    canFrame a = fCanMsg.getFrame();
+
+    if ((6 == fCANReg) && !gotCmdReply) {
+      fLOG(WARNING, "answerIoCmd(GetSWVersion) timed out waiting for reply from tec " + to_string(itec));
+    }
     if (5 == fCANReg) {
       if (ntec > 1) str << ",";
       str << itec;
       ++ntec;
     } else if (6 == fCANReg) {
       if (ntec > 1) str << ",";
-      str << a.fIntVal;
+      str << cmdResult;
       ++ntec;
     } else if (7 == fCANReg) {
       if (ntec > 1) str << ",";
