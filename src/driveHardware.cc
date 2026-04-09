@@ -2417,6 +2417,7 @@ void driveHardware::dumpMQTT(int all) {
   };
 
   fMonString = "";
+  int cnt(0);
   for (auto const &skey: tolerances) {
     stringstream ss;
     ss << skey.first << " = ";
@@ -2444,6 +2445,7 @@ void driveHardware::dumpMQTT(int all) {
       }
       if (i < 8) ss << ",";
     }
+    if (cnt++ > 0) fMonString += " ";
     fMonString += ss.str();
     if (printit)  emit signalSendToMonitor(QString::fromStdString(ss.str()));
   }
@@ -2827,6 +2829,7 @@ return r;
 void driveHardware::readVProbe(int pos) {
 
   fLOG(INFO, "readVProbe(" + to_string(pos) + ") start");
+  static deque<string> sRecentVprobeRawReadouts;
 
   double VDD(3.3114);
   // -- TP corr. Doc:  6  5  9  10  11  7  8  12  4  3  2  13  14  26  8  1
@@ -2879,11 +2882,30 @@ void driveHardware::readVProbe(int pos) {
     std::this_thread::sleep_for(fMilli5);
     i2c_close(fPiGPIO, handle);
 
+    stringstream raw;
+    raw << "vprobe" << pos
+        << " iaddr=" << iaddr
+        << " addr(dec)=" << addresses[iaddr]
+        << " addr(hex)=0x" << hex << addresses[iaddr] << dec
+        << " length=" << length
+        << " bytes=";
+    for (int ibyte = 0; ibyte < lengthExp; ++ibyte) {
+      if (ibyte > 0) raw << " ";
+      raw << std::setfill('0') << std::setw(2) << hex
+          << (static_cast<unsigned int>(static_cast<unsigned char>(buffer[ibyte])) & 0xff);
+    }
+    sRecentVprobeRawReadouts.push_back(raw.str());
+    while (sRecentVprobeRawReadouts.size() > 5) sRecentVprobeRawReadouts.pop_front();
+
     if (length != lengthExp) {
       fLOG(ERROR, "Failed to read from the VProbe at i2c bus address " 
            + to_string(addresses[iaddr])  
            + " length = " + to_string(length) + ""
           );
+      fLOG(ERROR, "Last VProbe raw readouts (oldest -> newest):");
+      for (auto const &entry: sRecentVprobeRawReadouts) {
+        fLOG(ERROR, "  " + entry);
+      }
       stringstream output;
       output <<  "vprobe" << pos << " = -999";
       fVprobeVoltages = output.str();
