@@ -2880,7 +2880,10 @@ void driveHardware::readVProbe(int pos) {
     i2c_close(fPiGPIO, handle);
 
     if (length != lengthExp) {
-      fLOG(ERROR, "Failed to read from the VProbe at i2c bus address 0x" + to_string(addresses[iaddr])  );
+      fLOG(ERROR, "Failed to read from the VProbe at i2c bus address " 
+           + to_string(addresses[iaddr])  
+           + " length = " + to_string(length) + ""
+          );
       stringstream output;
       output <<  "vprobe" << pos << " = -999";
       fVprobeVoltages = output.str();
@@ -2891,29 +2894,20 @@ void driveHardware::readVProbe(int pos) {
       fMapVprobeGndVoltages["gnd14"] = -999;
       fMapVprobeGndVoltages["gnd26"] = -999;
 
-      dumpMQTT(1);
-      fLOG(ERROR, fMonString);
-      readAllParamsFromCANPublic();
-      dumpMQTT(1);
-      fLOG(ERROR, fMonString);
-      clearTECErrors();
-      fLOG(WARNING, "calling CANmessage::clearAll");
-      fCanMsg.clearAll();
-      fLOG(ERROR, "Turn off LV");
-      turnOffLV();
-      std::this_thread::sleep_for(fMilli100);
-      std::this_thread::sleep_for(fMilli100);
-      std::this_thread::sleep_for(fMilli100);
-      std::this_thread::sleep_for(fMilli100);
-      std::this_thread::sleep_for(fMilli100);
-      fLOG(ERROR, "Turn on LV");
-      turnOnLV();
-      std::this_thread::sleep_for(fMilli100);
-      fLOG(ERROR, "Trying to recover CAN bus");
-      recoverCANBus();
-      readAllParamsFromCANPublic();
-      dumpMQTT(1);
-      fLOG(ERROR, fMonString);
+      // dumpMQTT(1);
+      // fLOG(ERROR, fMonString);
+      // readAllParamsFromCANPublic();
+      // dumpMQTT(1);
+      // fLOG(ERROR, fMonString);
+      // clearTECErrors();
+      // fLOG(WARNING, "calling CANmessage::clearAll");
+      // fCanMsg.clearAll();
+      // std::this_thread::sleep_for(fMilli100);
+      // fLOG(ERROR, "Trying to recover CAN bus");
+      // recoverCANBus();
+      // readAllParamsFromCANPublic();
+      // dumpMQTT(1);
+      // fLOG(ERROR, fMonString);
     } else {
       if (0) {
         printf("- Data read from the VProbe at i2c bus address 0x%x", addresses[iaddr]);
