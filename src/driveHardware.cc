@@ -972,7 +972,7 @@ void driveHardware::readCAN(int nreads, bool setMutex) {
 
   bool DBX(false);
 
-  ++nreads;
+  //++nreads;
 
   while (nreads > 0) {
     if (DBX) cout << "read(fSr, &fFrameR, sizeof(fFrameR)) ... nreads = " << nreads << endl;
