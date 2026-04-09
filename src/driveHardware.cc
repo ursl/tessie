@@ -117,7 +117,7 @@ bool driveHardware::initCANSockets() {
   // -- add timeout
   struct timeval tv;
   tv.tv_sec = 0;
-  tv.tv_usec = 10; // 0.1 millisecond
+  tv.tv_usec = 1000; // 1 millisecond
   if (setsockopt(fSr, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0) {
     perror("Error in setting up time out");
   }
@@ -2895,7 +2895,6 @@ void driveHardware::readVProbe(int pos) {
     else
       buffer = bufferC1;
 
-#ifdef PI
     int lengthExp(18); // A = 10, B = 11, C = 12, D = 13, E = 14, F = 15
     int handle = i2c_open(fPiGPIO, I2CBUS, addresses[iaddr], 0);
     int length = i2c_read_device(fPiGPIO, handle, (iaddr == 0? bufferC0 : bufferC1), lengthExp);
@@ -2922,6 +2921,15 @@ void driveHardware::readVProbe(int pos) {
            + to_string(addresses[iaddr])  
            + " length = " + to_string(length) + ""
           );
+      if (length < 0) {
+        stringstream b;
+        if (length == PI_BAD_HANDLE) b << " return value = PI_BAD_HANDLE";
+        if (length == PI_BAD_PARAM) b << " return value = PI_BAD_PARAM";
+        if (length == PI_I2C_READ_FAILED) b << " return value = PI_I2C_READ_FAILED";
+        if (b.str().size() > 0) {
+          fLOG(ERROR, b.str());
+        }
+      }
       fLOG(ERROR, "Last VProbe raw readouts (oldest -> newest):");
       for (auto const &entry: sRecentVprobeRawReadouts) {
         fLOG(ERROR, "  " + entry);
@@ -2942,9 +2950,7 @@ void driveHardware::readVProbe(int pos) {
       stringstream b("power cycling 3.3V done");
       fLOG(ERROR, b.str());
     } 
-#else
-    cout << "using default data instead of reading from I2C bus, iaddr = " << iaddr << endl;
-#endif
+
     std::ios_base::fmtflags f( cout.flags() );
     if (0) {
       for (int i = 0; i < 18; i +=2) {
@@ -3001,7 +3007,6 @@ void driveHardware::readVProbe(int pos) {
   fMapVprobeGndVoltages["gnd26"] = v[ord[26]];
 
   stringstream output;
-  //  output << fLOG.shortTimeStamp() << " " <<  std::setprecision(5)
   output << "vprobe" << pos << " = " <<  std::setprecision(5)
          << vin << ","
          << voffs << ","
