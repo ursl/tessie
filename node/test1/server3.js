@@ -62,6 +62,87 @@ let WarningString = ''
 let AlarmString = ''
 let HintString = ''
 
+// ----------------------------------------------------------------------
+// -- MQTT history retention (in-memory)
+// ----------------------------------------------------------------------
+const MQTT_HISTORY_DEFAULT_HOURS = Number(process.env.MQTT_HISTORY_HOURS || 12);
+const MQTT_HISTORY_MAX_HOURS = Number(process.env.MQTT_HISTORY_MAX_HOURS || 72);
+const MQTT_HISTORY_MAX_ITEMS = Number(process.env.MQTT_HISTORY_MAX_ITEMS || 200000);
+const MQTT_HISTORY_SWEEP_EVERY = 250;
+
+const mqttHistory = [];
+let mqttHistoryInserts = 0;
+
+function clampHours(hours) {
+    if (!Number.isFinite(hours)) return MQTT_HISTORY_DEFAULT_HOURS;
+    return Math.max(0.1, Math.min(MQTT_HISTORY_MAX_HOURS, hours));
+}
+
+function purgeMqttHistory(nowMs = Date.now()) {
+    const cutoffMs = nowMs - clampHours(MQTT_HISTORY_MAX_HOURS) * 3600 * 1000;
+    while (mqttHistory.length > 0 && mqttHistory[0].tsMs < cutoffMs) {
+        mqttHistory.shift();
+    }
+    while (mqttHistory.length > MQTT_HISTORY_MAX_ITEMS) {
+        mqttHistory.shift();
+    }
+}
+
+function recordMqttHistory(topic, payloadBuffer) {
+    const payload = payloadBuffer.toString();
+    const tsMs = Date.now();
+    const entry = {
+        tsMs,
+        tsIso: new Date(tsMs).toISOString(),
+        topic,
+        payload
+    };
+    mqttHistory.push(entry);
+    ++mqttHistoryInserts;
+    if (0 == mqttHistoryInserts%MQTT_HISTORY_SWEEP_EVERY) {
+        purgeMqttHistory(tsMs);
+    }
+    // Future extension point: append entry to JSONL here.
+}
+
+function queryMqttHistory({ topic = 'all', hours = MQTT_HISTORY_DEFAULT_HOURS, limit = 5000 }) {
+    const h = clampHours(Number(hours));
+    const maxLimit = 50000;
+    const l = Math.max(1, Math.min(maxLimit, Number(limit) || 5000));
+    const cutoffMs = Date.now() - h * 3600 * 1000;
+
+    const topicFilter = topic.toLowerCase();
+    const selected = [];
+    for (let i = mqttHistory.length - 1; i >= 0; --i) {
+        const item = mqttHistory[i];
+        if (item.tsMs < cutoffMs) break;
+        if (topicFilter !== 'all' && item.topic.toLowerCase() !== topicFilter) continue;
+        selected.push(item);
+        if (selected.length >= l) break;
+    }
+    selected.reverse();
+    return { entries: selected, hours: h, limit: l, topic: topicFilter };
+}
+
+app.get('/api/mqtt/history', (req, res) => {
+    const topic = (req.query.topic || 'all').toString();
+    const hours = req.query.hours;
+    const limit = req.query.limit;
+    if (!['all', 'ctrlTessie', 'monTessie'].includes(topic)) {
+        return res.status(400).json({ error: 'topic must be one of all|ctrlTessie|monTessie' });
+    }
+    const result = queryMqttHistory({ topic, hours, limit });
+    res.json({
+        meta: {
+            topic: result.topic,
+            hours: result.hours,
+            limit: result.limit,
+            available: mqttHistory.length
+        },
+        entries: result.entries
+    });
+});
+
 
 // ----------------------------------------------------------------------
 // -- MQTT
@@ -76,6 +157,13 @@ const clientMqtt = mqtt.connect(connectUrl, {
 clientMqtt.on('connect', () => {
   console.log('Connected 0')
 })
+
+// -- central ingestion for MQTT history
+clientMqtt.on('message', (topic, payload) => {
+    if (topic === 'ctrlTessie' || topic === 'monTessie') {
+        recordMqttHistory(topic, payload);
+    }
+});
 
 // -- ctrlTessie
 const topCtrl = 'ctrlTessie';

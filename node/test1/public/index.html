@@ -254,6 +254,22 @@
     <textarea id="logarea" class="scrollabletextbox" style="font-size: 10pt; width: 100%; max-width: 100%;"></textarea>
     </div>
 
+    <div style="background-color:LightSteelBlue; padding:6px; margin-top:4px;">
+      <label for="historyTopic">MQTT history topic:</label>
+      <select id="historyTopic">
+        <option value="all">all</option>
+        <option value="ctrlTessie">ctrlTessie</option>
+        <option value="monTessie">monTessie</option>
+      </select>
+      <label for="historyHours">hours:</label>
+      <input id="historyHours" type="number" min="0.1" step="0.5" value="2" style="width:70px;">
+      <label for="historyLimit">limit:</label>
+      <input id="historyLimit" type="number" min="1" step="100" value="2000" style="width:90px;">
+      <button id="historyRefresh">Refresh history</button>
+      <span id="historyMeta" style="margin-left:8px; font-size:9pt;"></span>
+      <textarea id="historyArea" class="scrollabletextbox" style="font-size: 9pt; width: 100%; max-width: 100%; margin-top:4px;"></textarea>
+    </div>
+
 
     <div class="w3-container w3-cream w3-cell">
       <div class="table-wrapper">
@@ -593,6 +609,12 @@
       const saveFW = document.getElementById('saveFW');
       const loadFW = document.getElementById('loadFW');
       const startReconditioning = document.getElementById('startReconditioning');
+      const historyTopic = document.getElementById('historyTopic');
+      const historyHours = document.getElementById('historyHours');
+      const historyLimit = document.getElementById('historyLimit');
+      const historyRefresh = document.getElementById('historyRefresh');
+      const historyArea = document.getElementById('historyArea');
+      const historyMeta = document.getElementById('historyMeta');
 
       let tessieWebVersion = "unset";
       var el = document.getElementById('versionWebField');
@@ -630,6 +652,36 @@
       startReconditioning.addEventListener('click', (e) => {
           startReconditioning.style.backgroundColor = 'darkgray';
           socket.emit('startReconditioning', 'startReconditioning');
+      });
+
+      async function loadMqttHistory() {
+          const topic = historyTopic.value;
+          const hours = historyHours.value || '2';
+          const limit = historyLimit.value || '2000';
+          const params = new URLSearchParams({ topic: topic, hours: hours, limit: limit });
+          historyMeta.innerHTML = 'loading...';
+          try {
+              const response = await fetch('/api/mqtt/history?' + params.toString());
+              if (!response.ok) {
+                  throw new Error('HTTP ' + response.status);
+              }
+              const data = await response.json();
+              const lines = data.entries.map((entry) => {
+                  return entry.tsIso + ' [' + entry.topic + '] ' + entry.payload;
+              });
+              historyArea.value = lines.join('\n');
+              historyArea.scrollTop = historyArea.scrollHeight;
+              historyMeta.innerHTML = 'loaded ' + data.entries.length
+                  + ' entries (topic=' + data.meta.topic
+                  + ', hours=' + data.meta.hours
+                  + ', available=' + data.meta.available + ')';
+          } catch (err) {
+              historyMeta.innerHTML = 'history load failed: ' + err.message;
+          }
+      }
+
+      historyRefresh.addEventListener('click', (e) => {
+          loadMqttHistory();
       });
 
       socket.on('envString', (msg) => {
@@ -1062,6 +1114,7 @@
 
       let msg2 = "getfwverstring";
       socket.emit('getfwverstring', msg2);
+      loadMqttHistory();
 
       function chgControlVoltage_Set(itec, val) {
           let msg = "tec " + itec.toString() + " set ControlVoltage_Set " + val.toString();
