@@ -981,10 +981,13 @@ void driveHardware::shutDown() {
 void driveHardware::readCAN(int nreads, bool setMutex) {
   if (setMutex) fMutex.lock();
   int nbytes(0);
+  int nGoodReads(0);
 
   bool DBX(false);
 
+  fCanLastReadRequested = nreads;
   ++nreads;
+  fCanLastReadAttempts = nreads;
 
   while (nreads > 0) {
     if (DBX) cout << "read(fSr, &fFrameR, sizeof(fFrameR)) ... nreads = " << nreads << endl;
@@ -998,6 +1001,7 @@ void driveHardware::readCAN(int nreads, bool setMutex) {
     //  nbytes = recvfrom(fSr, &fFrameR, sizeof(fFrameR), 0, (struct sockaddr*)&fAddrR, &len);
 
     if (nbytes > -1) {
+      ++nGoodReads;
       if (1) {
 #ifdef PI
         canFrame f(fFrameR.can_id, fFrameR.can_dlc, fFrameR.data);
@@ -1007,6 +1011,7 @@ void driveHardware::readCAN(int nreads, bool setMutex) {
     }
     --nreads;
   }
+  fCanLastReadReceived = nGoodReads;
   if (setMutex) fMutex.unlock();
 
   parseCAN();
@@ -1633,6 +1638,8 @@ void driveHardware::sendCANmessage(bool setMutex) {
 
   char data[4] = {0, 0, 0, 0};
   fFrameW.can_id = fCANId;
+  fCanLastSentId = fCANId;
+  fCanLastSentReg = fCANReg;
   int dlength(0), command(0);
   if (0x0 == ((0x0f0 & fCANId)>>4)) {
     // -- x0x is command access and no subsequent 4 bytes are required.
@@ -1696,6 +1703,7 @@ void driveHardware::sendCANmessage(bool setMutex) {
 
   // -- this is required to absorb the write request from fSr
   nbytes = read(fSr, &fFrameR, sizeof(fFrameR));
+  fCanLastAbsorbRead = (nbytes > -1 ? 1 : 0);
 
   // -- wait a bit
   std::this_thread::sleep_for(fMilli5);
@@ -2128,6 +2136,19 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
   } else {
     readCAN(fNActiveTEC, false);
     fMutex.unlock();
+    if (fCanLastReadReceived < fNActiveTEC) {
+      stringstream sbla;
+      sbla << "CAN frame shortfall in broadcast read: reg="
+           << regname
+           << " regIdx=" << fCANReg
+           << " requested=" << fCanLastReadRequested
+           << " attempts=" << fCanLastReadAttempts
+           << " received=" << fCanLastReadReceived
+           << " absorbRead=" << fCanLastAbsorbRead
+           << " sentId=0x" << hex << fCanLastSentId << dec
+           << " sentReg=" << fCanLastSentReg;
+      fLOG(WARNING, sbla.str());
+    }
     return -97;
   }
   return -96;

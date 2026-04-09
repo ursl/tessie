@@ -218,6 +218,14 @@ private:
   int fCANErrorCounter{0}, fCANErrorOld{0};
   int fI2CErrorCounter{0}, fI2CErrorOld{0};
   std::map<unsigned int, bool> fI2CSlaveStatus;
+
+  // -- CAN diagnostics for request/response accounting
+  int fCanLastReadRequested{0};
+  int fCanLastReadAttempts{0};
+  int fCanLastReadReceived{0};
+  int fCanLastAbsorbRead{0};
+  int fCanLastSentId{0};
+  int fCanLastSentReg{0};
    
   // -- timing and wall-clock ticks (or so)
   std::chrono::milliseconds fMilli5, fMilli10, fMilli20, fMilli100;
