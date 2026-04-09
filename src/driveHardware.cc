@@ -2848,6 +2848,25 @@ return r;
 // ----------------------------------------------------------------------
 void driveHardware::readVProbe(int pos) {
 
+  static map<int, time_t> sLastVprobeReadout;
+  static int first(1);
+  if (first) {
+    for (int i = 1; i <= 8; ++i) {
+      sLastVprobeReadout[i] = time(NULL);
+    }
+    first = 0;
+  }
+  time_t now = time(NULL);
+  const time_t vprobeRecoveryCutSeconds = 12*60*60; // 12h
+  if (now - sLastVprobeReadout[pos] > vprobeRecoveryCutSeconds) {
+    stringstream a("readVProbe(" + to_string(pos) + ") timeout (>12h), last readout was at "
+                   + to_string(sLastVprobeReadout[pos])
+                   + ", now = " + to_string(now));
+    fLOG(WARNING, a.str());
+    powerCycle3V3();
+    sLastVprobeReadout[pos] = now;
+  }
+
   fLOG(INFO, "readVProbe(" + to_string(pos) + ") start");
   static deque<string> sRecentVprobeRawReadouts;
 
