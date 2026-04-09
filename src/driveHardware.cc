@@ -2895,7 +2895,7 @@ void driveHardware::readVProbe(int pos) {
           << (static_cast<unsigned int>(static_cast<unsigned char>(buffer[ibyte])) & 0xff);
     }
     sRecentVprobeRawReadouts.push_back(raw.str());
-    while (sRecentVprobeRawReadouts.size() > 5) sRecentVprobeRawReadouts.pop_front();
+    while (sRecentVprobeRawReadouts.size() > 10) sRecentVprobeRawReadouts.pop_front();
 
     if (length != lengthExp) {
       fLOG(ERROR, "Failed to read from the VProbe at i2c bus address " 
