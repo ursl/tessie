@@ -2975,10 +2975,10 @@ void driveHardware::readVProbe(int pos) {
         fLOG(ERROR, a.str());
         power3V3(false);
         std::this_thread::sleep_for(fMilli500);
-        resetCANBus();
+        recoverCANBus();
         std::this_thread::sleep_for(fMilli500);
         power3V3(true);
-        stringstream b("turn on 3.3V and resetting CAN bus done");
+        stringstream b("turn on 3.3V and recover CAN bus done");
         fLOG(ERROR, b.str());
         goodLastCall = 2;
       }
