@@ -2971,14 +2971,14 @@ void driveHardware::readVProbe(int pos) {
       stringstream b("power cycling 3.3V done");
       fLOG(ERROR, b.str());
       if (0 == goodLastCall) {
-        stringstream a("readVProbe(" + to_string(pos) + ") failed second time in a row, resetting CAN bus");
+        stringstream a("readVProbe(" + to_string(pos) + ") failed second time in a row, shutdown 3.3V and resetting CAN bus");
         fLOG(ERROR, a.str());
-        power3V3(false)
+        power3V3(false);
         std::this_thread::sleep_for(fMilli500);
         resetCANBus();
         std::this_thread::sleep_for(fMilli500);
         power3V3(true);
-        stringstream b("reset CAN bus done");
+        stringstream b("turn on 3.3V and resetting CAN bus done");
         fLOG(ERROR, b.str());
         goodLastCall = 2;
       }
