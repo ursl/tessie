@@ -159,6 +159,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fMilli10  = std::chrono::milliseconds(10);
   fMilli20  = std::chrono::milliseconds(20);
   fMilli100 = std::chrono::milliseconds(100);
+  fMilli500 = std::chrono::milliseconds(500);
 
   fCsvFileName = "tessie.csv";
   fLOG(INFO, stringstream("open" + fCsvFileName).str());
