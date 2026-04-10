@@ -2932,9 +2932,47 @@ void driveHardware::readVProbe(int pos) {
       if (ibyte > 0) raw << " ";
       raw << std::setfill('0') << std::setw(2) << hex
           << (static_cast<unsigned int>(static_cast<unsigned char>(buffer[ibyte])) & 0xff);
+
     }
     sRecentVprobeRawReadouts.push_back(raw.str());
     while (sRecentVprobeRawReadouts.size() > 10) sRecentVprobeRawReadouts.pop_front();
+
+    // -- Check for valid second-to-last and last byte values
+    bool badReadout(false);
+    if (length == lengthExp) {
+      unsigned int w16 = (static_cast<unsigned int>(static_cast<unsigned char>(buffer[16])) & 0xff);
+      unsigned int w17 = (static_cast<unsigned int>(static_cast<unsigned char>(buffer[17])) & 0xff);
+      if (w16 != 0xc9 || w17 != 0x01) {
+        badReadout = true;
+      }
+      fLOG(ERROR, "Caught bad readout from the VProbe at i2c bus address " 
+        + to_string(addresses[iaddr])  
+        + " length = " + to_string(length) + ""
+       );
+      fLOG(ERROR, "Bad readout: w16 = " + to_string(w16) + ", w17 = " + to_string(w17));
+      fLOG(ERROR, "Last VProbe raw readouts (oldest -> newest):");
+      for (auto const &entry: sRecentVprobeRawReadouts) {
+        fLOG(ERROR, "  " + entry);
+      }
+      fLOG(ERROR, "power cycling 3.3V due to VProbe read error");
+
+      powerCycle3V3();
+
+      stringstream output;
+      output <<  "vprobe" << pos << " = -999";
+      fVprobeVoltages = output.str();
+
+      stringstream output2;
+      output2 <<  "vprobegnd = -999";
+      fVprobeGndVoltages = output2.str();
+      fMapVprobeGndVoltages.clear();
+      fMapVprobeGndVoltages["gnd3"] = -999;
+      fMapVprobeGndVoltages["gnd6"] = -999;
+      fMapVprobeGndVoltages["gnd11"] = -999;
+      fMapVprobeGndVoltages["gnd14"] = -999;
+      fMapVprobeGndVoltages["gnd26"] = -999;
+      return;
+    }
 
     if (length != lengthExp) {
       fLOG(ERROR, "Failed to read from the VProbe at i2c bus address " 
