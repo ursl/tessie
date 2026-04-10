@@ -2850,7 +2850,7 @@ return r;
 void driveHardware::readVProbe(int pos) {
 
   static map<int, time_t> sLastVprobeReadout;
-  static int first(1);
+  static int first(1), goodLastCall(2);
   if (first) {
     for (int i = 1; i <= 8; ++i) {
       sLastVprobeReadout[i] = time(NULL);
@@ -2964,47 +2964,30 @@ void driveHardware::readVProbe(int pos) {
       fMapVprobeGndVoltages["gnd14"] = -999;
       fMapVprobeGndVoltages["gnd26"] = -999;
 
+      --goodLastCall;
       stringstream a("power cycling 3.3V due to VProbe read error");
       fLOG(ERROR, a.str());
       powerCycle3V3();
       stringstream b("power cycling 3.3V done");
       fLOG(ERROR, b.str());
-    } 
-
-    std::ios_base::fmtflags f( cout.flags() );
-    if (0) {
-      for (int i = 0; i < 18; i +=2) {
-        cout << dec << "i = " << i << ": 0x" << hex
-             << std::setfill('0') << std::setw(2)
-             << static_cast<int>(buffer[i])
-             << std::setfill('0') << std::setw(2)
-             << static_cast<int>(buffer[i+1])
-             << ". ";
+      if (0 == goodLastCall) {
+        stringstream a("readVProbe(" + to_string(pos) + ") failed second time in a row, resetting CAN bus");
+        fLOG(ERROR, a.str());
+        power3V3(false)
+        std::this_thread::sleep_for(fMilli500);
+        resetCANBus();
+        std::this_thread::sleep_for(fMilli500);
+        power3V3(true);
+        stringstream b("reset CAN bus done");
+        fLOG(ERROR, b.str());
+        goodLastCall = 2;
       }
-      cout << endl;
-      cout.flags(f);
+    } else {
+      goodLastCall = 2;
     }
 
     for (int i = 0; i < 8; ++i) {
       v[iaddr*8+i] = static_cast<unsigned int>(buffer[2*i] + (buffer[2*i+1]<<8))*VDD/65536;
-      if (0) {
-        cout << "i = " << i << ": buffer[] = "
-             << std::setfill('0') << std::setw(4)
-             << hex
-             << static_cast<int>(buffer[2*i] + (buffer[2*i+1]<<8)) << " -> " << v[iaddr*8+i]
-             << dec
-             << " at idx = " << iaddr*8+i
-             << endl;
-
-        cout.flags( f );
-
-        cout << "v[] printout:" << endl;
-        for (int i = 0; i < 16; ++i) {
-          cout << std::setw(5) << v[i] << " ";
-        }
-        cout << endl;
-        cout.flags(f);
-      }
     }
   }
 
