@@ -1868,9 +1868,9 @@ void driveHardware::power3V3(bool on) {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::powerCycle3V3() {
+void driveHardware::powerCycle3V3(int n500ms) {
   power3V3(false);
-  std::this_thread::sleep_for(fMilli500);
+  std::this_thread::sleep_for(fMilli500*n500ms);
   power3V3(true);
   std::this_thread::sleep_for(fMilli100);
 }
@@ -2950,7 +2950,7 @@ void driveHardware::readVProbe(int pos) {
       if (badReadout) {
         fLOG(ERROR, "Caught bad readout from the VProbe at i2c bus address " 
           + to_string(addresses[iaddr])  
-          + " length = " + to_string(length) + ""
+          + " length = " + to_string(length) + " for position " + to_string(pos)
         );
         fLOG(ERROR, "Bad readout: w16 = " + to_string(w16) + ", w17 = " + to_string(w17));
         fLOG(ERROR, "Last VProbe raw readouts (oldest -> newest):");
@@ -2959,7 +2959,7 @@ void driveHardware::readVProbe(int pos) {
         }
         fLOG(ERROR, "power cycling 3.3V due to VProbe read error");
 
-        powerCycle3V3();
+        powerCycle3V3(2);
 
         stringstream output;
         output <<  "vprobe" << pos << " = -999";
@@ -2974,10 +2974,11 @@ void driveHardware::readVProbe(int pos) {
         fMapVprobeGndVoltages["gnd11"] = -999;
         fMapVprobeGndVoltages["gnd14"] = -999;
         fMapVprobeGndVoltages["gnd26"] = -999;
+        fLOG(ERROR, "returning due to bad readout");
         return;
       }
     }
-    
+
     if (length != lengthExp) {
       fLOG(ERROR, "Failed to read from the VProbe at i2c bus address " 
            + to_string(addresses[iaddr])  
