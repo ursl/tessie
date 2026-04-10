@@ -187,8 +187,10 @@ deque<string> CANmessage::getErrors() {
 // ----------------------------------------------------------------------
 float CANmessage::getFloat(unsigned int itec, unsigned int ireg) {
   float result(-999.);
+  bool hadFrame(false);
 
   if (nFrames(itec, ireg) > 0) {
+    hadFrame = true;
     result = fMapFrames[itec][ireg].front().fFloatVal;
     if (0) {
       cout << " pop_front "; fMapFrames[itec][ireg].front().dump(false); cout << endl;
@@ -198,10 +200,18 @@ float CANmessage::getFloat(unsigned int itec, unsigned int ireg) {
   }
 
   if (result < -990.) {
-    string errstring = "parse issue float: reg " + to_string(ireg)
-      + " itec " + to_string(itec)
-      + " getFloat " + to_string(result)
-      + " canFrame: ->" + fErrorFrame.getString() + "<-";
+    string errstring;
+    if (hadFrame) {
+      errstring = "parse issue float: reg " + to_string(ireg)
+        + " itec " + to_string(itec)
+        + " getFloat " + to_string(result)
+        + " canFrame: ->" + fErrorFrame.getString() + "<-";
+    } else {
+      errstring = "missing frame float: reg " + to_string(ireg)
+        + " itec " + to_string(itec)
+        + " getFloat " + to_string(result)
+        + " queueSize=0";
+    }
     fqErrors.push_front(errstring);
     ++fErrorCounter;
   }
@@ -212,8 +222,10 @@ float CANmessage::getFloat(unsigned int itec, unsigned int ireg) {
 // ----------------------------------------------------------------------
 int CANmessage::getInt(unsigned int itec, unsigned int ireg) {
   int result(-999);
+  bool hadFrame(false);
 
   if (nFrames(itec, ireg) > 0) {
+    hadFrame = true;
     result = fMapFrames[itec][ireg].front().fIntVal;
     if (0) {
       cout << " pop_front "; fMapFrames[itec][ireg].front().dump(false); cout << endl;
@@ -224,9 +236,18 @@ int CANmessage::getInt(unsigned int itec, unsigned int ireg) {
 
   if (result < -990) {
     ++fErrorCounter;
-    string errstring = "parse issue int: reg " + to_string(ireg)
-       + " itec " + to_string(itec)
-       + " getInt " + to_string(result);
+    string errstring;
+    if (hadFrame) {
+      errstring = "parse issue int: reg " + to_string(ireg)
+         + " itec " + to_string(itec)
+         + " getInt " + to_string(result)
+         + " canFrame: ->" + fErrorFrame.getString() + "<-";
+    } else {
+      errstring = "missing frame int: reg " + to_string(ireg)
+         + " itec " + to_string(itec)
+         + " getInt " + to_string(result)
+         + " queueSize=0";
+    }
     fqErrors.push_front(errstring);
   }
   return result;
