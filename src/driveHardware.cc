@@ -2896,19 +2896,6 @@ void driveHardware::readVProbe(int pos) {
 
   char *buffer(0);
 
-  if (fVerbose > 9) {
-    fLOG(INFO, "bufferC0: ");
-    for (int i = 0; i < 18; i +=2) {
-      fLOG(INFO, "i = " + to_string(i) + ": 0x" + formatHex(static_cast<unsigned int>(bufferC0[i])) + " " + formatHex(static_cast<unsigned int>(bufferC0[i+1])));
-    }
-    fLOG(INFO, "");
-    fLOG(INFO, "bufferC1: ");
-    for (int i = 0; i < 18; i +=2) {
-      fLOG(INFO, "i = " + to_string(i) + ": 0x" + formatHex(static_cast<unsigned int>(bufferC1[i])) + " " + formatHex(static_cast<unsigned int>(bufferC1[i+1])));
-    }
-    fLOG(INFO, "");
-  }
-
   double v[16] = {0};
 
   int ipos = pos - 1;
@@ -2963,7 +2950,7 @@ void driveHardware::readVProbe(int pos) {
         }
         fLOG(ERROR, "power cycling 3.3V due to VProbe read error");
 
-        powerCycle3V3(2);
+        //powerCycle3V3(1);
 
         stringstream output;
         output <<  "vprobe" << pos << " = -999";
@@ -3021,6 +3008,19 @@ void driveHardware::readVProbe(int pos) {
         v[iaddr*8+i] = static_cast<unsigned int>(buffer[2*i] + (buffer[2*i+1]<<8))*VDD/65536;
       }
     }
+  }
+    
+  if (fVerbose > 9) {
+    fLOG(INFO, "bufferC0: ");
+    for (int i = 0; i < 18; i +=2) {
+      fLOG(INFO, "i = " + to_string(i) + ": 0x" + formatHex(static_cast<unsigned int>(bufferC0[i])) + " " + formatHex(static_cast<unsigned int>(bufferC0[i+1])));
+    }
+    fLOG(INFO, "");
+    fLOG(INFO, "bufferC1: ");
+    for (int i = 0; i < 18; i +=2) {
+      fLOG(INFO, "i = " + to_string(i) + ": 0x" + formatHex(static_cast<unsigned int>(bufferC1[i])) + " " + formatHex(static_cast<unsigned int>(bufferC1[i+1])));
+    }
+    fLOG(INFO, "");
   }
 
   double vin   = v[ord[7]]  - v[ord[26]];
