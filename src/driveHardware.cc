@@ -337,7 +337,8 @@ bool driveHardware::initCANSockets() {
   // -- add timeout
   struct timeval tv;
   tv.tv_sec = 0;
-  tv.tv_usec = 1000; // 1 millisecond
+  // Give broadcast replies a little more time to arrive.
+  tv.tv_usec = 10000; // 10 milliseconds
   if (setsockopt(fSr, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0) {
     perror("Error in setting up time out");
   }
@@ -2156,7 +2157,12 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
   // -- send read request
   fMutex.lock();
   sendCANmessage(false);
-  std::this_thread::sleep_for(fMilli10);
+  if (itec > 0) {
+    std::this_thread::sleep_for(fMilli10);
+  } else {
+    // Broadcast replies can arrive slightly staggered across TECs.
+    std::this_thread::sleep_for(fMilli20);
+  }
   if (0) fLOG(INFO, "  getTECRegisterFromCAN for tec = " + to_string(itec)
               + " register = " + regname
               + " regidx = " + to_string(fCANReg)
@@ -2366,6 +2372,24 @@ void driveHardware::readAllParamsFromCANPublic() {
   // -- read integer Mode
   getTECRegisterFromCAN(0, "Mode");
   int regIdx = fTECData[1].getIdx("Mode");
+  {
+    std::vector<int> missingTec;
+    for (int i = 1; i <= 8; ++i) {
+      if (0 == fActiveTEC[i]) continue;
+      if (0 == fCanMsg.nFrames(i, regIdx)) missingTec.push_back(i);
+    }
+    if (!missingTec.empty()) {
+      std::stringstream ss;
+      ss << "Missing CAN reply for register Mode (idx=" << regIdx << ") from TEC";
+      if (missingTec.size() > 1) ss << "s";
+      ss << ": ";
+      for (size_t j = 0; j < missingTec.size(); ++j) {
+        if (j > 0) ss << ",";
+        ss << missingTec[j];
+      }
+      fLOG(WARNING, ss.str());
+    }
+  }
   for (int i = 1; i <= 8; ++i) {
     if (0 == fActiveTEC[i]) continue;
     fTECData[i].reg["Mode"].value = fCanMsg.getInt(i, regIdx);
@@ -2374,6 +2398,24 @@ void driveHardware::readAllParamsFromCANPublic() {
   // -- read integer PowerState
   getTECRegisterFromCAN(0, "PowerState");
   regIdx = fTECData[1].getIdx("PowerState");
+  {
+    std::vector<int> missingTec;
+    for (int i = 1; i <= 8; ++i) {
+      if (0 == fActiveTEC[i]) continue;
+      if (0 == fCanMsg.nFrames(i, regIdx)) missingTec.push_back(i);
+    }
+    if (!missingTec.empty()) {
+      std::stringstream ss;
+      ss << "Missing CAN reply for register PowerState (idx=" << regIdx << ") from TEC";
+      if (missingTec.size() > 1) ss << "s";
+      ss << ": ";
+      for (size_t j = 0; j < missingTec.size(); ++j) {
+        if (j > 0) ss << ",";
+        ss << missingTec[j];
+      }
+      fLOG(WARNING, ss.str());
+    }
+  }
   for (int i = 1; i <= 8; ++i) {
     if (0 == fActiveTEC[i]) continue;
     fTECData[i].reg["PowerState"].value = fCanMsg.getInt(i, regIdx);
@@ -2382,6 +2424,24 @@ void driveHardware::readAllParamsFromCANPublic() {
   // -- read integer Error
   getTECRegisterFromCAN(0, "Error");
   regIdx = fTECData[1].getIdx("Error");
+  {
+    std::vector<int> missingTec;
+    for (int i = 1; i <= 8; ++i) {
+      if (0 == fActiveTEC[i]) continue;
+      if (0 == fCanMsg.nFrames(i, regIdx)) missingTec.push_back(i);
+    }
+    if (!missingTec.empty()) {
+      std::stringstream ss;
+      ss << "Missing CAN reply for register Error (idx=" << regIdx << ") from TEC";
+      if (missingTec.size() > 1) ss << "s";
+      ss << ": ";
+      for (size_t j = 0; j < missingTec.size(); ++j) {
+        if (j > 0) ss << ",";
+        ss << missingTec[j];
+      }
+      fLOG(WARNING, ss.str());
+    }
+  }
   for (int i = 1; i <= 8; ++i) {
     if (0 == fActiveTEC[i]) continue;
     fTECData[i].reg["Error"].value = fCanMsg.getInt(i, regIdx);
