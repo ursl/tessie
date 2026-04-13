@@ -2360,10 +2360,26 @@ void driveHardware::readAllParamsFromCANPublic() {
       if (fVerbose > 5) fLOG(INFO, "reading broadcast " + regnames[ireg]);
       getTECRegisterFromCAN(0, regnames[ireg]);
       int regIdx = fTECData[1].getIdx(regnames[ireg]);
+      std::stringstream perTec;
+      if (fVerbose > 9) {
+        perTec << "broadcast results " << regnames[ireg] << ": ";
+      }
       for (int i = 1; i <= 8; ++i) {
         if (0 == fActiveTEC[i]) continue;
-        fTECData[i].reg[regnames[ireg]].value = fCanMsg.getFloat(i, regIdx);
+        bool haveFrame = (fCanMsg.nFrames(i, regIdx) > 0);
+        float regValue = fCanMsg.getFloat(i, regIdx);
+        fTECData[i].reg[regnames[ireg]].value = regValue;
+        if (fVerbose > 9) {
+          perTec << "TEC" << i << "=";
+          if (haveFrame) {
+            perTec << regValue;
+          } else {
+            perTec << "MISS";
+          }
+          perTec << " ";
+        }
       }
+      if (fVerbose > 9) fLOG(INFO, perTec.str());
     }
   }
 
@@ -2390,10 +2406,24 @@ void driveHardware::readAllParamsFromCANPublic() {
       fLOG(WARNING, ss.str());
     }
   }
+  std::stringstream modePerTec;
+  if (fVerbose > 9) modePerTec << "broadcast results Mode: ";
   for (int i = 1; i <= 8; ++i) {
     if (0 == fActiveTEC[i]) continue;
-    fTECData[i].reg["Mode"].value = fCanMsg.getInt(i, regIdx);
+    bool haveFrame = (fCanMsg.nFrames(i, regIdx) > 0);
+    int regValue = fCanMsg.getInt(i, regIdx);
+    fTECData[i].reg["Mode"].value = regValue;
+    if (fVerbose > 9) {
+      modePerTec << "TEC" << i << "=";
+      if (haveFrame) {
+        modePerTec << regValue;
+      } else {
+        modePerTec << "MISS";
+      }
+      modePerTec << " ";
+    }
   }
+  if (fVerbose > 9) fLOG(INFO, modePerTec.str());
 
   // -- read integer PowerState
   getTECRegisterFromCAN(0, "PowerState");
@@ -2416,10 +2446,24 @@ void driveHardware::readAllParamsFromCANPublic() {
       fLOG(WARNING, ss.str());
     }
   }
+  std::stringstream powerPerTec;
+  if (fVerbose > 9) powerPerTec << "broadcast results PowerState: ";
   for (int i = 1; i <= 8; ++i) {
     if (0 == fActiveTEC[i]) continue;
-    fTECData[i].reg["PowerState"].value = fCanMsg.getInt(i, regIdx);
+    bool haveFrame = (fCanMsg.nFrames(i, regIdx) > 0);
+    int regValue = fCanMsg.getInt(i, regIdx);
+    fTECData[i].reg["PowerState"].value = regValue;
+    if (fVerbose > 9) {
+      powerPerTec << "TEC" << i << "=";
+      if (haveFrame) {
+        powerPerTec << regValue;
+      } else {
+        powerPerTec << "MISS";
+      }
+      powerPerTec << " ";
+    }
   }
+  if (fVerbose > 9) fLOG(INFO, powerPerTec.str());
 
   // -- read integer Error
   getTECRegisterFromCAN(0, "Error");
@@ -2442,10 +2486,24 @@ void driveHardware::readAllParamsFromCANPublic() {
       fLOG(WARNING, ss.str());
     }
   }
+  std::stringstream errorPerTec;
+  if (fVerbose > 9) errorPerTec << "broadcast results Error: ";
   for (int i = 1; i <= 8; ++i) {
     if (0 == fActiveTEC[i]) continue;
-    fTECData[i].reg["Error"].value = fCanMsg.getInt(i, regIdx);
+    bool haveFrame = (fCanMsg.nFrames(i, regIdx) > 0);
+    int regValue = fCanMsg.getInt(i, regIdx);
+    fTECData[i].reg["Error"].value = regValue;
+    if (fVerbose > 9) {
+      errorPerTec << "TEC" << i << "=";
+      if (haveFrame) {
+        errorPerTec << regValue;
+      } else {
+        errorPerTec << "MISS";
+      }
+      errorPerTec << " ";
+    }
   }
+  if (fVerbose > 9) fLOG(INFO, errorPerTec.str());
 
 }
 
