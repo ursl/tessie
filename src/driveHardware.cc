@@ -1868,11 +1868,10 @@ void driveHardware::power3V3(bool on) {
 
 
 // ----------------------------------------------------------------------
-void driveHardware::powerCycle3V3(int n500ms) {
+void driveHardware::powerCycle3V3(int n100ms) {
   power3V3(false);
-  std::this_thread::sleep_for(fMilli500*n500ms);
+  std::this_thread::sleep_for(fMilli100*n100ms);
   power3V3(true);
-  std::this_thread::sleep_for(fMilli100);
 }
 
 
@@ -3017,9 +3016,9 @@ void driveHardware::readVProbe(int pos) {
         stringstream a("readVProbe(" + to_string(pos) + ") failed second time in a row, shutdown 3.3V and resetting CAN bus");
         fLOG(ERROR, a.str());
         power3V3(false);
-        std::this_thread::sleep_for(fMilli500);
+        std::this_thread::sleep_for(fMilli10);
         recoverCANBus();
-        std::this_thread::sleep_for(fMilli500);
+        std::this_thread::sleep_for(fMilli10);
         power3V3(true);
         stringstream b("turn on 3.3V and recover CAN bus done");
         fLOG(ERROR, b.str());

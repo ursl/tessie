@@ -88,7 +88,7 @@ public:
   void  turnOnLV();
   void  turnOffLV();
   void  power3V3(bool on);
-  void  powerCycle3V3(int n500ms = 1);
+  void  powerCycle3V3(int n100ms = 1);
   bool  anyTECRunning();
   void  checkFan();
   void  checkLid();
