@@ -2861,7 +2861,7 @@ return r;
 void driveHardware::readVProbe(int pos) {
 
   static map<int, time_t> sLastVprobeReadout;
-  static int first(1), goodLastCall(2);
+  static int first(1);
   if (first) {
     for (int i = 1; i <= 8; ++i) {
       sLastVprobeReadout[i] = time(NULL);
@@ -2923,7 +2923,6 @@ void driveHardware::readVProbe(int pos) {
     int lengthExp(18); // A = 10, B = 11, C = 12, D = 13, E = 14, F = 15
     int handle = i2c_open(fPiGPIO, I2CBUS, addresses[iaddr], 0);
     int length = i2c_read_device(fPiGPIO, handle, (iaddr == 0? bufferC0 : bufferC1), lengthExp);
-    std::this_thread::sleep_for(fMilli5);
     i2c_close(fPiGPIO, handle);
 
     stringstream raw;
@@ -3012,30 +3011,15 @@ void driveHardware::readVProbe(int pos) {
       fMapVprobeGndVoltages["gnd14"] = -999;
       fMapVprobeGndVoltages["gnd26"] = -999;
 
-      --goodLastCall;
       stringstream a("power cycling 3.3V due to VProbe read error");
       fLOG(ERROR, a.str());
       powerCycle3V3();
       stringstream b("power cycling 3.3V done");
       fLOG(ERROR, b.str());
-      if (0 == goodLastCall) {
-        stringstream a("readVProbe(" + to_string(pos) + ") failed second time in a row, shutdown 3.3V and resetting CAN bus");
-        fLOG(ERROR, a.str());
-        power3V3(false);
-        std::this_thread::sleep_for(fMilli10);
-        recoverCANBus();
-        std::this_thread::sleep_for(fMilli10);
-        power3V3(true);
-        stringstream b("turn on 3.3V and recover CAN bus done");
-        fLOG(ERROR, b.str());
-        goodLastCall = 2;
-      }
     } else {
-      goodLastCall = 2;
-    }
-
-    for (int i = 0; i < 8; ++i) {
-      v[iaddr*8+i] = static_cast<unsigned int>(buffer[2*i] + (buffer[2*i+1]<<8))*VDD/65536;
+      for (int i = 0; i < 8; ++i) {
+        v[iaddr*8+i] = static_cast<unsigned int>(buffer[2*i] + (buffer[2*i+1]<<8))*VDD/65536;
+      }
     }
   }
 
