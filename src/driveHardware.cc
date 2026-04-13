@@ -62,71 +62,6 @@
 
 using namespace std;
 
-#ifdef PI
-// ----------------------------------------------------------------------
-bool driveHardware::initCANSockets() {
-  fLOG(INFO, "initCANSockets() start");
-  // -- write CAN socket
-  memset(&fFrameW, 0, sizeof(struct can_frame));
-  fSw = socket(PF_CAN, SOCK_RAW, CAN_RAW);
-  if (fSw < 0) {
-    perror("socket PF_CAN failed");
-    return false;
-  }
-
-  strcpy(fIfrW.ifr_name, "can0");
-  int ret = ioctl(fSw, SIOCGIFINDEX, &fIfrW);
-  if (ret < 0) {
-    perror("ioctl failed");
-    return false;
-  }
-
-  fAddrW.can_family = AF_CAN;
-  fAddrW.can_ifindex = fIfrW.ifr_ifindex;
-  ret = bind(fSw, (struct sockaddr *)&fAddrW, sizeof(fAddrW));
-  if (ret < 0) {
-    perror("bind failed");
-    return false;
-  }
-
-  setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
-
-  // -- read CAN socket
-  memset(&fFrameR, 0, sizeof(struct can_frame));
-  fSr = socket(PF_CAN, SOCK_RAW, CAN_RAW);
-  if (fSr < 0) {
-    perror("socket PF_CAN failed");
-    return false;
-  }
-
-  strcpy(fIfrR.ifr_name, "can0");
-  ret = ioctl(fSr, SIOCGIFINDEX, &fIfrR);
-  if (ret < 0) {
-    perror("ioctl failed");
-    return false;
-  }
-
-  fAddrR.can_family = AF_CAN;
-  fAddrR.can_ifindex = fIfrR.ifr_ifindex;
-  ret = bind(fSr, (struct sockaddr *)&fAddrR, sizeof(fAddrR));
-  if (ret < 0) {
-    perror("bind failed");
-    return false;
-  }
-
-  // -- add timeout
-  struct timeval tv;
-  tv.tv_sec = 0;
-  tv.tv_usec = 1000; // 1 millisecond
-  if (setsockopt(fSr, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0) {
-    perror("Error in setting up time out");
-  }
-
-  fLOG(INFO, "initCANSockets() success");
-  return true;
-}
-#endif
-
 // ----------------------------------------------------------------------
 driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fRestart   = false;
@@ -135,7 +70,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fCANReg    = 0;
   fCANVal    = 0.;
   fVerbose   = verbose;
-  //fVerbose   = 99;
+  fVerbose   = 99;
   QDateTime dt = QDateTime::currentDateTime();
   fDateAndTime = dt.date().toString() + "  " +  dt.time().toString("hh:mm");
 
@@ -345,6 +280,73 @@ driveHardware::~driveHardware() {
 
   shutDown();
 }
+
+
+#ifdef PI
+// ----------------------------------------------------------------------
+bool driveHardware::initCANSockets() {
+  fLOG(INFO, "initCANSockets() start");
+  // -- write CAN socket
+  memset(&fFrameW, 0, sizeof(struct can_frame));
+  fSw = socket(PF_CAN, SOCK_RAW, CAN_RAW);
+  if (fSw < 0) {
+    perror("socket PF_CAN failed");
+    return false;
+  }
+
+  strcpy(fIfrW.ifr_name, "can0");
+  int ret = ioctl(fSw, SIOCGIFINDEX, &fIfrW);
+  if (ret < 0) {
+    perror("ioctl failed");
+    return false;
+  }
+
+  fAddrW.can_family = AF_CAN;
+  fAddrW.can_ifindex = fIfrW.ifr_ifindex;
+  ret = bind(fSw, (struct sockaddr *)&fAddrW, sizeof(fAddrW));
+  if (ret < 0) {
+    perror("bind failed");
+    return false;
+  }
+
+  setsockopt(fSw, SOL_CAN_RAW, CAN_RAW_FILTER, NULL, 0);
+
+  // -- read CAN socket
+  memset(&fFrameR, 0, sizeof(struct can_frame));
+  fSr = socket(PF_CAN, SOCK_RAW, CAN_RAW);
+  if (fSr < 0) {
+    perror("socket PF_CAN failed");
+    return false;
+  }
+
+  strcpy(fIfrR.ifr_name, "can0");
+  ret = ioctl(fSr, SIOCGIFINDEX, &fIfrR);
+  if (ret < 0) {
+    perror("ioctl failed");
+    return false;
+  }
+
+  fAddrR.can_family = AF_CAN;
+  fAddrR.can_ifindex = fIfrR.ifr_ifindex;
+  ret = bind(fSr, (struct sockaddr *)&fAddrR, sizeof(fAddrR));
+  if (ret < 0) {
+    perror("bind failed");
+    return false;
+  }
+
+  // -- add timeout
+  struct timeval tv;
+  tv.tv_sec = 0;
+  tv.tv_usec = 1000; // 1 millisecond
+  if (setsockopt(fSr, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) < 0) {
+    perror("Error in setting up time out");
+  }
+
+  fLOG(INFO, "initCANSockets() success");
+  return true;
+}
+#endif
+
 
 // ----------------------------------------------------------------------
 std::string driveHardware::formatHex(unsigned int value) const {
@@ -2785,6 +2787,7 @@ void driveHardware::readSHT85() {
 // ----------------------------------------------------------------------
 void driveHardware::readFlowmeter() {
 #ifdef PI
+  if (fVerbose > 1) fLOG(INFO, "readFlowmeter entered");
   int flowMeterStatus(0);
   int handle = i2c_open(fPiGPIO, I2CBUS, I2C_FLOWMETER_ADDR, 0);
   // -- set command byte to 0x0 (Register: Input Port, Protocol: Read Byte)
@@ -2819,10 +2822,11 @@ void driveHardware::readFlowmeter() {
     fLOG(WARNING, a.str());
   }
   
-
-  //  stringstream a("flowmeter readout data =  " + to_string(data)
-  //                 + " fFlowMeterStatus = " + to_string(fFlowMeterStatus));
-   // fLOG(INFO, a.str());
+  if (fVerbose > 1) {
+   stringstream a("flowmeter readout data =  " + to_string(data)
+                    + " fFlowMeterStatus = " + to_string(fFlowMeterStatus));
+    fLOG(INFO, a.str());
+  }
 #endif
 }
 
