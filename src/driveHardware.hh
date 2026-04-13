@@ -187,6 +187,8 @@ protected:
   int         diff_ms(timeval t1, timeval t2);
 
 private:
+  std::string formatHex(unsigned int value) const;
+
   tLog&   fLOG;
   QMutex fMutex;
   QWaitCondition fCondition;

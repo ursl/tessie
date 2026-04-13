@@ -135,6 +135,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fCANReg    = 0;
   fCANVal    = 0.;
   fVerbose   = verbose;
+  fVerbose   = 99;
   QDateTime dt = QDateTime::currentDateTime();
   fDateAndTime = dt.date().toString() + "  " +  dt.time().toString("hh:mm");
 
@@ -345,6 +346,13 @@ driveHardware::~driveHardware() {
   shutDown();
 }
 
+// ----------------------------------------------------------------------
+std::string driveHardware::formatHex(unsigned int value) const {
+  std::ostringstream ss;
+  ss << "0x" << std::uppercase << std::hex << value;
+  return ss.str();
+}
+
 
 // ----------------------------------------------------------------------
 void driveHardware::doWarning(string errmsg, bool nothing) {
@@ -415,7 +423,7 @@ void driveHardware::doRun() {
     }
     if (tdiff > 1000.) {
       tvOld = tvNew;
-      if (0) cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
+      if (fVerbose > 5) cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
       // -- read SHT85 only every 2 seconds!
       if (tdiff2 > 2000) {
         readAirTemperature();
@@ -531,6 +539,7 @@ void driveHardware::doRun() {
 
 // ----------------------------------------------------------------------
 void driveHardware::ensureSafety() {
+  if (fVerbose > 1) cout << tStamp() << " driveHardware::ensureSafety() entered" << endl;
 
   // -- if TEC firmware is not OK, get stuck
   if (!fVersionOK) {
@@ -1048,7 +1057,7 @@ bool driveHardware::findInIoMessage(string &s1, string &s2, string &s3) {
 void driveHardware::answerIoGet(string &) {
   string what = fIoMessage;
 
-  if (0) cout << "answerIoGet what ->" << what << "<-" << endl;
+  if (fVerbose > 5) cout << "answerIoGet what ->" << what << "<-" << endl;
   string delimiter(" ");
 
   string regname("nada");
@@ -1085,7 +1094,7 @@ void driveHardware::answerIoGet(string &) {
 void driveHardware::answerIoSet(string &) {
   string what = fIoMessage;
 
-  cout << "answerIoSet what ->" << what << "<-" << endl;
+  if (fVerbose > 5) cout << "answerIoSet what ->" << what << "<-" << endl;
   string delimiter(" ");
 
   string regname("nada");
@@ -1109,10 +1118,11 @@ void driveHardware::answerIoSet(string &) {
   if (value < -900.) {
     fLOG(WARNING, "no proper value: " + what );
   } else {
-    cout << "register ->" << regname
+    if (fVerbose > 5) cout << "register ->" << regname
          << "<- value ->" << value
          << "<- tec = " << tec
          << endl;
+    }
   }
 
   for (int itec = 1; itec <= 8; ++itec) {
@@ -1127,7 +1137,7 @@ void driveHardware::answerIoSet(string &) {
 void driveHardware::answerIoCmd() {
   string what = fIoMessage;
 
-  cout << "answerIoCmd what ->" << what << "<-" << endl;
+  if (fVerbose > 5) cout << "answerIoCmd what ->" << what << "<-" << endl;
   string delimiter(" ");
 
   string cmdname("nada");
@@ -1630,10 +1640,10 @@ void driveHardware::sendCANmessage(bool setMutex) {
 #ifdef PI
   int itec = 0;
   itec = fCANId & 0xf;
-  if (0) cout << "sendCANmessage() TEC " << itec << endl;
+  if (fVerbose > 9) cout << "sendCANmessage() TEC " << itec << endl;
 
   if ((itec > 0) && (0 == fActiveTEC[itec])) {
-    if (0) cout << "TEC " << itec <<  " not active, skipping" << endl;
+    if (fVerbose > 9) cout << "TEC " << itec <<  " not active, skipping" << endl;
     return;
   }
 
@@ -1663,7 +1673,7 @@ void driveHardware::sendCANmessage(bool setMutex) {
     unsigned int intCanVal = 0;
     if (0 == fCANReg) {
       intCanVal = static_cast<unsigned int>(fCANVal);
-      cout << "DBX interpreting as unsigned int ->" << intCanVal << "<-" << endl;
+      if (fVerbose > 9) cout << "DBX interpreting as unsigned int ->" << intCanVal << "<-" << endl;
       memcpy(data, &intCanVal, sizeof intCanVal);
     } else {
       memcpy(data, &fCANVal, sizeof fCANVal);
@@ -1674,22 +1684,19 @@ void driveHardware::sendCANmessage(bool setMutex) {
     fFrameW.data[4] = data[3];
   }
 
-  if (0) {
+  if (fVerbose > 9) {
     if (1 == command) {
-      cout << "   sendCANmessage: canid = " << fCANId << " cmd = " << fCANReg
-           << endl;
+      fLOG(INFO, "   sendCANmessage: canid = " + to_string(fCANId) + " cmd = " + to_string(fCANReg));
     } else {
-      cout << "   canid = " << fCANId << " reg = " << fCANReg
-           << " value = " << fCANVal
-           << " dlength = " << dlength
-           << endl;
-
+      fLOG(INFO, "   canid = " + to_string(fCANId) + " reg = " + to_string(fCANReg)
+           + " value = " + to_string(fCANVal)
+           + " dlength = " + to_string(dlength));
     }
-    printf("    can_id  = 0x%X (from sendCANmessage())\n", fFrameW.can_id);
-    printf("    can_dlc = %d\n", fFrameW.can_dlc);
-
+    fLOG(INFO, "    can_id  = " + formatHex(fFrameW.can_id) + " (from sendCANmessage())");
+    fLOG(INFO, "    can_dlc = " + to_string(fFrameW.can_dlc));
     for (int i = 0; i < fFrameW.can_dlc; ++i) {
-      printf("    data[%d] = %2x/%3d\r\n", i, fFrameW.data[i], fFrameW.data[i]);
+      fLOG(INFO, "    data[" + to_string(i) + "] = " + to_string(fFrameW.data[i])
+           + " / " + formatHex(static_cast<unsigned int>(fFrameW.data[i])));
     }
   }
 
@@ -1791,7 +1798,9 @@ void driveHardware::entertainFras() {
     return;
   }
   //  fMutex.lock();
+  if (fVerbose > 9) cout << "entertainFras() fRelaisMask = " << fRelaisMask << endl;
   if (0 == fRelaisMask) {
+    if (fVerbose > 9) cout << "entertainFras() fRelaisMask = 0, sending RTR frame" << endl;
     fFrameW.can_id = CAN_RTR_FLAG | 0x41;
     int dlength(0);
     fFrameW.can_dlc = dlength;
@@ -1878,9 +1887,11 @@ void driveHardware::powerCycle3V3(int n100ms) {
 // ----------------------------------------------------------------------
 void driveHardware::turnOnValve(int i) {
   if (0 == i) {
+    if (fVerbose > 1) cout << "turnOnValve(0) entered" << endl;
     if (!getStatusValve0()) toggleFras(1);
   }
   if (1 == i) {
+    if (fVerbose > 1) cout << "turnOnValve(1) entered" << endl;
     if (!getStatusValve1()) toggleFras(2);
   }
 }
@@ -1889,9 +1900,11 @@ void driveHardware::turnOnValve(int i) {
 // ----------------------------------------------------------------------
 void driveHardware::turnOffValve(int i) {
   if (0 == i) {
+    if (fVerbose > 1) cout << "turnOffValve(0) entered" << endl;
     if (getStatusValve0()) toggleFras(1);
   }
   if (1 == i) {
+    if (fVerbose > 1) cout << "turnOffValve(1) entered" << endl;
     if (getStatusValve1()) toggleFras(2);
   }
 }
@@ -1903,6 +1916,7 @@ void driveHardware::toggleFras(int imask) {
   int old = fRelaisMask;
   fRelaisMask = old xor imask;
 
+  if (fVerbose > 1) fLOG(INFO, "toggleFras(" + to_string(imask) + ") entered");
   //            TEC:   ssP'..tt'aaaa
   //           FRAS:   0aa'aaaa'akkk
   //  fFrameW.can_id = 000'0100'0000 -> 0x040 for process
@@ -2025,6 +2039,7 @@ float driveHardware::getTECRegister(int itec, std::string regname) {
 
 // ----------------------------------------------------------------------
 void  driveHardware::turnOnTEC(int itec) {
+  if (fVerbose > 1) fLOG(INFO, "turnOnTEC(" + to_string(itec) + ") entered");
   if (0 == fFlowMeterStatus) {
     string a("==HINT== chiller not running, turn on chiller flow!"); 
     fLOG(INFO, a);
@@ -2045,7 +2060,7 @@ void  driveHardware::turnOnTEC(int itec) {
   }
 
   if (0 == fActiveTEC[itec]) {
-    cout << "TEC " << itec <<  " not active, skipping" << endl;
+    if (fVerbose > 1) fLOG(INFO, "TEC " + to_string(itec) +  " not active, skipping");
     return;
   }
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_CMD);
@@ -2074,7 +2089,7 @@ void  driveHardware::turnOnTEC(int itec) {
 // ----------------------------------------------------------------------
 void  driveHardware::turnOffTEC(int itec) {
   if (0 == fActiveTEC[itec]) {
-    cout << "TEC " << itec <<  " not active, skipping" << endl;
+    if (fVerbose > 1) fLOG(INFO, "TEC " + to_string(itec) +  " not active, skipping");
     return;
   }
   fCANId = (itec | CANBUS_SHIFT | CANBUS_PRIVATE | CANBUS_TECREC | CANBUS_CMD);
@@ -2124,7 +2139,7 @@ void driveHardware::checkFan() {
 
 // ----------------------------------------------------------------------
 float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
-  if (0) cout << "getTECRegisterFromCAN regname ->" << regname << "<-" << endl;
+  if (fVerbose > 5) fLOG(INFO, "getTECRegisterFromCAN regname ->" + regname + "<-");
   if (itec > 0) {
     if (0 == fActiveTEC[itec]) {
       return -99.;
@@ -2337,7 +2352,7 @@ void driveHardware::readAllParamsFromCANPublic() {
     } else if (9 == ireg) {
       fTECData[8].reg["Temp_Diff"].value = getTECRegisterFromCAN(8, regnames[ireg]);
     } else {
-      if (0) fLOG(INFO, "reading broadcast " + regnames[ireg]);
+      if (fVerbose > 5) fLOG(INFO, "reading broadcast " + regnames[ireg]);
       getTECRegisterFromCAN(0, regnames[ireg]);
       int regIdx = fTECData[1].getIdx(regnames[ireg]);
       for (int i = 1; i <= 8; ++i) {
@@ -2532,9 +2547,9 @@ void driveHardware::readAirTemperature() {
     fAirRH   = fHYT223RH;
     fAirDP   = fHYT223DP;
   }
-  if (0) {
-    cout << "readHYT223: T: " << fHYT223Temp << " RH: " << fHYT223RH << " DP: " << fHYT223DP << endl;
-    cout << "readSHT85: T: " << fSHT85Temp << " RH: " << fSHT85RH << " DP: " << fSHT85DP << endl;
+  if (fVerbose > 5) {
+    fLOG(INFO, "readHYT223: T: " + to_string(fHYT223Temp) + " RH: " + to_string(fHYT223RH) + " DP: " + to_string(fHYT223DP));
+    fLOG(INFO, "readSHT85: T: " + to_string(fSHT85Temp) + " RH: " + to_string(fSHT85RH) + " DP: " + to_string(fSHT85DP));
   }
 }
 
@@ -2577,7 +2592,7 @@ void driveHardware::readHYT223() {
     if (length == PI_I2C_READ_FAILED) b << " return value = PI_I2C_READ_FAILED";
     fLOG(WARNING, b.str());
   } else {
-    cout << "#### readHYT223 readout error, length = " << length << endl;
+    if (fVerbose > 1) fLOG(ERROR, "#### readHYT223 readout error, length = " + to_string(length));
   }
    
   // -- trigger next measurement
@@ -2884,23 +2899,17 @@ void driveHardware::readVProbe(int pos) {
 
   char *buffer(0);
 
-  if (0) {
-    cout << "bufferC0: ";
+  if (fVerbose > 9) {
+    fLOG(INFO, "bufferC0: ");
     for (int i = 0; i < 18; i +=2) {
-      cout << dec << "i = " << i << ": 0x" << hex
-           << static_cast<int>(bufferC0[i])
-           << static_cast<int>(bufferC0[i+1])
-           << ". ";
+      fLOG(INFO, "i = " + to_string(i) + ": 0x" + formatHex(static_cast<unsigned int>(bufferC0[i])) + " " + formatHex(static_cast<unsigned int>(bufferC0[i+1])));
     }
-    cout << endl;
-    cout << "bufferC1: ";
+    fLOG(INFO, "");
+    fLOG(INFO, "bufferC1: ");
     for (int i = 0; i < 18; i +=2) {
-      cout << dec << "i = " << i << ": 0x" << hex
-           << static_cast<int>(bufferC1[i])
-           << static_cast<int>(bufferC1[i+1])
-           << ". ";
+      fLOG(INFO, "i = " + to_string(i) + ": 0x" + formatHex(static_cast<unsigned int>(bufferC1[i])) + " " + formatHex(static_cast<unsigned int>(bufferC1[i+1])));
     }
-    cout << endl;
+    fLOG(INFO, "");
   }
 
   double v[16] = {0};
