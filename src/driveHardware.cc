@@ -2948,8 +2948,7 @@ void driveHardware::readVProbe(int pos) {
         for (auto const &entry: sRecentVprobeRawReadouts) {
           fLOG(ERROR, "  " + entry);
         }
-        fLOG(ERROR, "power cycling 3.3V due to VProbe read error");
-
+        //fLOG(ERROR, "power cycling 3.3V due to VProbe read error");
         //powerCycle3V3(1);
 
         stringstream output;
@@ -2998,11 +2997,11 @@ void driveHardware::readVProbe(int pos) {
       fMapVprobeGndVoltages["gnd14"] = -999;
       fMapVprobeGndVoltages["gnd26"] = -999;
 
-      stringstream a("power cycling 3.3V due to VProbe read error");
-      fLOG(ERROR, a.str());
-      powerCycle3V3();
-      stringstream b("power cycling 3.3V done");
-      fLOG(ERROR, b.str());
+      // stringstream a("power cycling 3.3V due to VProbe read error");
+      // fLOG(ERROR, a.str());
+      // powerCycle3V3();
+      // stringstream b("power cycling 3.3V done");
+      // fLOG(ERROR, b.str());
     } else {
       for (int i = 0; i < 8; ++i) {
         v[iaddr*8+i] = static_cast<unsigned int>(buffer[2*i] + (buffer[2*i+1]<<8))*VDD/65536;
