@@ -1094,7 +1094,7 @@ void driveHardware::answerIoGet(string &) {
 void driveHardware::answerIoSet(string &) {
   string what = fIoMessage;
 
-  if (fVerbose > 5) cout << "answerIoSet what ->" << what << "<-" << endl;
+  if (fVerbose > 5) fLOG(INFO, "answerIoSet what ->" + what + "<-");
   string delimiter(" ");
 
   string regname("nada");
@@ -1118,26 +1118,23 @@ void driveHardware::answerIoSet(string &) {
   if (value < -900.) {
     fLOG(WARNING, "no proper value: " + what );
   } else {
-    if (fVerbose > 5) cout << "register ->" << regname
-         << "<- value ->" << value
-         << "<- tec = " << tec
-         << endl;
-    }
-  }
+    if (fVerbose > 9) fLOG(INFO, "register ->" + regname
+         + "<- value ->" + to_string(value)
+         + "<- tec = " + to_string(tec));
 
-  for (int itec = 1; itec <= 8; ++itec) {
-    if ((0 != tec) && (itec != tec)) continue;
-    setTECRegister(itec, regname, value);
+    for (int itec = 1; itec <= 8; ++itec) {
+      if ((0 != tec) && (itec != tec)) continue;
+      setTECRegister(itec, regname, value);
+    }
+    if (fVerbose > 9) fLOG(INFO, "answerIoSet: setTECRegister(" + to_string(itec) + ", " + regname + ", " + to_string(value) + ")");
   }
   return;
 }
 
-
 // ----------------------------------------------------------------------
 void driveHardware::answerIoCmd() {
   string what = fIoMessage;
-
-  if (fVerbose > 5) cout << "answerIoCmd what ->" << what << "<-" << endl;
+  if (fVerbose > 5) fLOG(INFO, "answerIoCmd what ->" + what + "<-");
   string delimiter(" ");
 
   string cmdname("nada");
