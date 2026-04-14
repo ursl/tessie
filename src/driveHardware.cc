@@ -70,7 +70,7 @@ driveHardware::driveHardware(tLog& x, int verbose): fLOG(x) {
   fCANReg    = 0;
   fCANVal    = 0.;
   fVerbose   = verbose;
-  fVerbose   = 99;
+  fVerbose   = 6;
   QDateTime dt = QDateTime::currentDateTime();
   fDateAndTime = dt.date().toString() + "  " +  dt.time().toString("hh:mm");
 
