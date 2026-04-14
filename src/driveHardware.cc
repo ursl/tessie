@@ -2160,8 +2160,7 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
   if (itec > 0) {
     std::this_thread::sleep_for(fMilli10);
   } else {
-    // Broadcast replies can arrive slightly staggered across TECs.
-    std::this_thread::sleep_for(fMilli20);
+    std::this_thread::sleep_for(fMilli10);
   }
   if (0) fLOG(INFO, "  getTECRegisterFromCAN for tec = " + to_string(itec)
               + " register = " + regname
@@ -2347,7 +2346,7 @@ void driveHardware::readAllParamsFromCANPublic() {
   };
 
   for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
-    if (0 == ireg%2) evtHandler();
+    //if (0 == ireg%2) evtHandler();
     // -- NOTE: ireg != regnumber
     if (7 == ireg) {
       // -- read water temperature from special TEC 8
