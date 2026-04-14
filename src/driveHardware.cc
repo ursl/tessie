@@ -2379,7 +2379,7 @@ void driveHardware::readAllParamsFromCANPublic() {
     }
   }
 
-  evtHandler();
+  //evtHandler();
 
   // -- read integer Mode
   if (fVerbose > 5) fLOG(INFO, "reading broadcast Mode");
