@@ -2351,10 +2351,14 @@ void driveHardware::readAllParamsFromCANPublic() {
     if (7 == ireg) {
       // -- read water temperature from special TEC 8
       fTECData[8].reg["Temp_W"].value = getTECRegisterFromCAN(8, regnames[ireg]);
+      if (fVerbose > 5) fLOG(INFO, "read single register Temp_W for water temperature = " + to_string(fTECData[8].reg["Temp_W"].value));
       // -- read pressure sensor from special TEC 1
       fTECData[1].reg["Temp_W"].value = getTECRegisterFromCAN(1, "Temp_W");
+      if (fVerbose > 5) fLOG(INFO, "read single register Temp_W for pressure sensor = " + to_string(fTECData[1].reg["Temp_W"].value));
     } else if (9 == ireg) {
+      if (fVerbose > 5) fLOG(INFO, "reading broadcast Temp_Diff");
       fTECData[8].reg["Temp_Diff"].value = getTECRegisterFromCAN(8, regnames[ireg]);
+      if (fVerbose > 5) fLOG(INFO, "read single register Temp_Diff = " + to_string(fTECData[8].reg["Temp_Diff"].value));
     } else {
       if (fVerbose > 5) fLOG(INFO, "reading broadcast " + regnames[ireg]);
       getTECRegisterFromCAN(0, regnames[ireg]);
