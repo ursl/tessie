@@ -2361,25 +2361,21 @@ void driveHardware::readAllParamsFromCANPublic() {
       getTECRegisterFromCAN(0, regnames[ireg]);
       int regIdx = fTECData[1].getIdx(regnames[ireg]);
       std::stringstream perTec;
-      if (fVerbose > 5) {
-        perTec << "broadcast results " << regnames[ireg] << ": ";
-      }
+      perTec << "broadcast results " << regnames[ireg] << ": ";
       for (int i = 1; i <= 8; ++i) {
         if (0 == fActiveTEC[i]) continue;
         bool haveFrame = (fCanMsg.nFrames(i, regIdx) > 0);
         float regValue = fCanMsg.getFloat(i, regIdx);
         fTECData[i].reg[regnames[ireg]].value = regValue;
-        if (fVerbose > 5) {
-          perTec << "TEC" << i << "=";
-          if (haveFrame) {
-            perTec << regValue;
-          } else {
-            perTec << "MISS";
-          }
-          perTec << " ";
+        perTec << "TEC" << i << "=";
+        if (haveFrame) {
+          perTec << regValue;
+        } else {
+          perTec << "MISS";
         }
+        perTec << " ";
       }
-      if (fVerbose > 9) fLOG(INFO, perTec.str());
+      if (fVerbose > 5) fLOG(INFO, perTec.str());
     }
   }
 
