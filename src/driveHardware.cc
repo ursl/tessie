@@ -2386,6 +2386,7 @@ void driveHardware::readAllParamsFromCANPublic() {
   evtHandler();
 
   // -- read integer Mode
+  if (fVerbose > 5) fLOG(INFO, "reading broadcast Mode");
   getTECRegisterFromCAN(0, "Mode");
   int regIdx = fTECData[1].getIdx("Mode");
   {
@@ -2426,6 +2427,7 @@ void driveHardware::readAllParamsFromCANPublic() {
   if (fVerbose > 9) fLOG(INFO, modePerTec.str());
 
   // -- read integer PowerState
+  if (fVerbose > 5) fLOG(INFO, "reading broadcast PowerState");
   getTECRegisterFromCAN(0, "PowerState");
   regIdx = fTECData[1].getIdx("PowerState");
   {
@@ -2466,6 +2468,7 @@ void driveHardware::readAllParamsFromCANPublic() {
   if (fVerbose > 9) fLOG(INFO, powerPerTec.str());
 
   // -- read integer Error
+  if (fVerbose > 5) fLOG(INFO, "reading broadcast Error");
   getTECRegisterFromCAN(0, "Error");
   regIdx = fTECData[1].getIdx("Error");
   {
@@ -2981,7 +2984,8 @@ return r;
 
 // ----------------------------------------------------------------------
 void driveHardware::readVProbe(int pos) {
-
+  fVprobeVoltages = "init";
+  fVprobeGndVoltages = "init";
   static map<int, time_t> sLastVprobeReadout;
   static int first(1);
   if (first) {
@@ -3134,12 +3138,12 @@ void driveHardware::readVProbe(int pos) {
   if (fVerbose > 9) {
     fLOG(INFO, "bufferC0: ");
     for (int i = 0; i < 18; i +=2) {
-      fLOG(INFO, "i = " + to_string(i) + ": 0x" + formatHex(static_cast<unsigned int>(bufferC0[i])) + " " + formatHex(static_cast<unsigned int>(bufferC0[i+1])));
+      fLOG(INFO, "i = " + to_string(i) + ": " + formatHex(static_cast<unsigned int>(bufferC0[i])) + " " + formatHex(static_cast<unsigned int>(bufferC0[i+1])));
     }
     fLOG(INFO, "");
     fLOG(INFO, "bufferC1: ");
     for (int i = 0; i < 18; i +=2) {
-      fLOG(INFO, "i = " + to_string(i) + ": 0x" + formatHex(static_cast<unsigned int>(bufferC1[i])) + " " + formatHex(static_cast<unsigned int>(bufferC1[i+1])));
+      fLOG(INFO, "i = " + to_string(i) + ": " + formatHex(static_cast<unsigned int>(bufferC1[i])) + " " + formatHex(static_cast<unsigned int>(bufferC1[i+1])));
     }
     fLOG(INFO, "");
   }
