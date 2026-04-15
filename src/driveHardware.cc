@@ -402,6 +402,14 @@ void driveHardware::doRun() {
   struct timeval tvVeryOld, tvOld, tvNew;
   gettimeofday(&tvVeryOld, 0);
   gettimeofday(&tvOld, 0);
+  auto stepMs = [this](const char *label, const struct timeval &t0, int warnMs = 50) {
+    struct timeval t1;
+    gettimeofday(&t1, 0);
+    int dt = diff_ms(t1, t0);
+    if ((dt > warnMs) || (fVerbose > 9)) {
+      fLOG(INFO, string("timing: ") + label + " took " + to_string(dt) + " ms");
+    }
+  };
 
   fLOG(INFO, "driveHardware::doRun() start loop");
   while (1) {
@@ -429,8 +437,14 @@ void driveHardware::doRun() {
       if (fVerbose > 5) cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
       // -- read SHT85 only every 2 seconds!
       if (tdiff2 > 2000) {
+        struct timeval tsAir;
+        gettimeofday(&tsAir, 0);
         readAirTemperature();
+        stepMs("readAirTemperature", tsAir, 50);
+        struct timeval tsFlow;
+        gettimeofday(&tsFlow, 0);
         readFlowmeter();
+        stepMs("readFlowmeter", tsFlow, 50);
         if (MAX_TEMP < 30. && fFlowMeterStatus > -1) {
           MAX_TEMP = 40.;
           SAFETY_MAXSHT85TEMP = MAX_TEMP;
@@ -442,7 +456,10 @@ void driveHardware::doRun() {
       }
 
       // -- read all parameters from CAN
+      struct timeval tsCanPoll;
+      gettimeofday(&tsCanPoll, 0);
       readAllParamsFromCANPublic();
+      stepMs("readAllParamsFromCANPublic", tsCanPoll, 80);
 
       evtHandler();
 
@@ -470,12 +487,20 @@ void driveHardware::doRun() {
 
       evtHandler();
 
+      struct timeval tsFras;
+      gettimeofday(&tsFras, 0);
       entertainFras();
+      stepMs("entertainFras", tsFras, 30);
+      struct timeval tsTecs;
+      gettimeofday(&tsTecs, 0);
       entertainTECs();
+      stepMs("entertainTECs", tsTecs, 30);
 
+      struct timeval tsSafety;
+      gettimeofday(&tsSafety, 0);
       checkFan();
-
       ensureSafety();
+      stepMs("checkFan+ensureSafety", tsSafety, 30);
 
       if (fThrottleStatus > 0) {
         throttleN2();
