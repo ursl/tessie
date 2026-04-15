@@ -3085,9 +3085,9 @@ void driveHardware::readVProbe(int pos) {
         fMapVprobeGndVoltages["gnd14"] = -999;
         fMapVprobeGndVoltages["gnd26"] = -999;
 
-        fLOG(ERROR, "power cycling 3.3V due to VProbe read error");
-        powerCycle3V3();
-        fLOG(ERROR, "power cycling 3.3V done");
+        // fLOG(ERROR, "power cycling 3.3V due to VProbe read error");
+        // powerCycle3V3();
+        // fLOG(ERROR, "power cycling 3.3V done");
         fLOG(ERROR, "returning due to bad readout");
         return;
       }
@@ -3121,9 +3121,9 @@ void driveHardware::readVProbe(int pos) {
       fMapVprobeGndVoltages["gnd14"] = -999;
       fMapVprobeGndVoltages["gnd26"] = -999;
 
-      fLOG(ERROR, "power cycling 3.3V due to VProbe read error");
-      powerCycle3V3();
-      fLOG(ERROR, "power cycling 3.3V done");
+      // fLOG(ERROR, "power cycling 3.3V due to VProbe read error");
+      // powerCycle3V3();
+      // fLOG(ERROR, "power cycling 3.3V done");
       fLOG(ERROR, "returning due to failed readout");
       return;
 
