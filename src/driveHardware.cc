@@ -2347,73 +2347,29 @@ TECData  driveHardware::initAllTECRegister() {
 // ----------------------------------------------------------------------
 void driveHardware::readAllParamsFromCANPublic() {
   ++fRunCnt;
-  // -- what to read: float
-  vector<string> regnames = {"ControlVoltage_Set"
-                             , "PID_kp"
-                             , "PID_ki"
-                             , "PID_kd"
-                             , "Temp_Set"
-                             , "PID_Max"
-                             , "PID_Min"
-                             , "Temp_W"
-                             , "Temp_M"
-                             , "Temp_Diff"
-                             , "Peltier_U"
-                             , "Peltier_I"
-                             , "Peltier_R"
-                             , "Peltier_P"
-                             , "Supply_U"
-                             , "Supply_I"
-                             , "Supply_P"
-                             , "Error"
-                             , "Ref_U"
-
+  auto readBroadcastFloat = [this](const std::string &regname) {
+    if (fVerbose > 5) fLOG(INFO, "reading broadcast " + regname);
+    getTECRegisterFromCAN(0, regname);
+    int regIdx = fTECData[1].getIdx(regname);
+    const bool dbgBroadcast = (fVerbose > 5);
+    std::stringstream perTec;
+    if (dbgBroadcast) perTec << "broadcast results " << regname << ": ";
+    for (int i = 1; i <= 8; ++i) {
+      if (0 == fActiveTEC[i]) continue;
+      bool haveFrame = (fCanMsg.nFrames(i, regIdx) > 0);
+      float regValue = fCanMsg.getFloat(i, regIdx);
+      fTECData[i].reg[regname].value = regValue;
+      if (dbgBroadcast) {
+        perTec << "TEC" << i << "=" << (haveFrame ? to_string(regValue) : "MISS") << " ";
+      }
+    }
+    if (dbgBroadcast) fLOG(INFO, perTec.str());
   };
 
-  for (unsigned int ireg = 0; ireg < regnames.size(); ++ireg) {
-    //if (0 == ireg%2) evtHandler();
-    // -- NOTE: ireg != regnumber
-    if (7 == ireg) {
-      // -- read water temperature from special TEC 8
-      fTECData[8].reg["Temp_W"].value = getTECRegisterFromCAN(8, regnames[ireg]);
-      if (fVerbose > 5) fLOG(INFO, "read single register Temp_W for water temperature = " + to_string(fTECData[8].reg["Temp_W"].value));
-      // -- read pressure sensor from special TEC 1
-      fTECData[1].reg["Temp_W"].value = getTECRegisterFromCAN(1, "Temp_W");
-      if (fVerbose > 5) fLOG(INFO, "read single register Temp_W for pressure sensor = " + to_string(fTECData[1].reg["Temp_W"].value));
-    } else if (9 == ireg) {
-      if (fVerbose > 5) fLOG(INFO, "reading broadcast Temp_Diff");
-      fTECData[8].reg["Temp_Diff"].value = getTECRegisterFromCAN(8, regnames[ireg]);
-      if (fVerbose > 5) fLOG(INFO, "read single register Temp_Diff = " + to_string(fTECData[8].reg["Temp_Diff"].value));
-    } else {
-      if (fVerbose > 5) fLOG(INFO, "reading broadcast " + regnames[ireg]);
-      getTECRegisterFromCAN(0, regnames[ireg]);
-      int regIdx = fTECData[1].getIdx(regnames[ireg]);
-      std::stringstream perTec;
-      perTec << "broadcast results " << regnames[ireg] << ": ";
-      for (int i = 1; i <= 8; ++i) {
-        if (0 == fActiveTEC[i]) continue;
-        bool haveFrame = (fCanMsg.nFrames(i, regIdx) > 0);
-        float regValue = fCanMsg.getFloat(i, regIdx);
-        fTECData[i].reg[regnames[ireg]].value = regValue;
-        perTec << "TEC" << i << "=";
-        if (haveFrame) {
-          perTec << regValue;
-        } else {
-          perTec << "MISS";
-        }
-        perTec << " ";
-      }
-      if (fVerbose > 5) fLOG(INFO, perTec.str());
-    }
-  }
-
-  //evtHandler();
-
-  // -- read integer Mode
-  if (fVerbose > 5) fLOG(INFO, "reading broadcast Mode");
-  getTECRegisterFromCAN(0, "Mode");
-  int regIdx = fTECData[1].getIdx("Mode");
-  {
+  auto readBroadcastInt = [this](const std::string &regname) {
+    if (fVerbose > 5) fLOG(INFO, "reading broadcast " + regname);
+    getTECRegisterFromCAN(0, regname);
+    int regIdx = fTECData[1].getIdx(regname);
     std::vector<int> missingTec;
     for (int i = 1; i <= 8; ++i) {
       if (0 == fActiveTEC[i]) continue;
@@ -2421,7 +2377,7 @@ void driveHardware::readAllParamsFromCANPublic() {
     }
     if (!missingTec.empty()) {
       std::stringstream ss;
-      ss << "Missing CAN reply for register Mode (idx=" << regIdx << ") from TEC";
+      ss << "Missing CAN reply for register " << regname << " (idx=" << regIdx << ") from TEC";
       if (missingTec.size() > 1) ss << "s";
       ss << ": ";
       for (size_t j = 0; j < missingTec.size(); ++j) {
@@ -2430,101 +2386,52 @@ void driveHardware::readAllParamsFromCANPublic() {
       }
       fLOG(WARNING, ss.str());
     }
-  }
-  std::stringstream modePerTec;
-  modePerTec << "broadcast results Mode: ";
-  for (int i = 1; i <= 8; ++i) {
-    if (0 == fActiveTEC[i]) continue;
-    bool haveFrame = (fCanMsg.nFrames(i, regIdx) > 0);
-    int regValue = fCanMsg.getInt(i, regIdx);
-    fTECData[i].reg["Mode"].value = regValue;
-    modePerTec << "TEC" << i << "=";
-    if (haveFrame) {
-      modePerTec << regValue;
-    } else {
-      modePerTec << "MISS";
-    }
-    modePerTec << " ";
-  }
-  if (fVerbose > 5) fLOG(INFO, modePerTec.str());
-
-  // -- read integer PowerState
-  if (fVerbose > 5) fLOG(INFO, "reading broadcast PowerState");
-  getTECRegisterFromCAN(0, "PowerState");
-  regIdx = fTECData[1].getIdx("PowerState");
-  {
-    std::vector<int> missingTec;
+    const bool dbgBroadcast = (fVerbose > 5);
+    std::stringstream perTec;
+    if (dbgBroadcast) perTec << "broadcast results " << regname << ": ";
     for (int i = 1; i <= 8; ++i) {
       if (0 == fActiveTEC[i]) continue;
-      if (0 == fCanMsg.nFrames(i, regIdx)) missingTec.push_back(i);
-    }
-    if (!missingTec.empty()) {
-      std::stringstream ss;
-      ss << "Missing CAN reply for register PowerState (idx=" << regIdx << ") from TEC";
-      if (missingTec.size() > 1) ss << "s";
-      ss << ": ";
-      for (size_t j = 0; j < missingTec.size(); ++j) {
-        if (j > 0) ss << ",";
-        ss << missingTec[j];
+      bool haveFrame = (fCanMsg.nFrames(i, regIdx) > 0);
+      int regValue = fCanMsg.getInt(i, regIdx);
+      fTECData[i].reg[regname].value = regValue;
+      if (dbgBroadcast) {
+        perTec << "TEC" << i << "=" << (haveFrame ? to_string(regValue) : "MISS") << " ";
       }
-      fLOG(WARNING, ss.str());
     }
-  }
-  std::stringstream powerPerTec;
-  powerPerTec << "broadcast results PowerState: ";
-  for (int i = 1; i <= 8; ++i) {
-    if (0 == fActiveTEC[i]) continue;
-    bool haveFrame = (fCanMsg.nFrames(i, regIdx) > 0);
-    int regValue = fCanMsg.getInt(i, regIdx);
-    fTECData[i].reg["PowerState"].value = regValue;
-    powerPerTec << "TEC" << i << "=";
-    if (haveFrame) {
-      powerPerTec << regValue;
-    } else {
-      powerPerTec << "MISS";
-    }
-    powerPerTec << " ";
-  }
-  if (fVerbose > 5) fLOG(INFO, powerPerTec.str());
+    if (dbgBroadcast) fLOG(INFO, perTec.str());
+  };
 
-  // -- read integer Error
-  if (fVerbose > 5) fLOG(INFO, "reading broadcast Error");
-  getTECRegisterFromCAN(0, "Error");
-  regIdx = fTECData[1].getIdx("Error");
-  {
-    std::vector<int> missingTec;
-    for (int i = 1; i <= 8; ++i) {
-      if (0 == fActiveTEC[i]) continue;
-      if (0 == fCanMsg.nFrames(i, regIdx)) missingTec.push_back(i);
-    }
-    if (!missingTec.empty()) {
-      std::stringstream ss;
-      ss << "Missing CAN reply for register Error (idx=" << regIdx << ") from TEC";
-      if (missingTec.size() > 1) ss << "s";
-      ss << ": ";
-      for (size_t j = 0; j < missingTec.size(); ++j) {
-        if (j > 0) ss << ",";
-        ss << missingTec[j];
-      }
-      fLOG(WARNING, ss.str());
-    }
+  // -- fast-changing registers: always read each cycle
+  readBroadcastFloat("ControlVoltage_Set");
+  readBroadcastFloat("Temp_Set");
+  // -- water temperature from special TEC 8 and pressure sensor from special TEC 1
+  fTECData[8].reg["Temp_W"].value = getTECRegisterFromCAN(8, "Temp_W");
+  if (fVerbose > 5) fLOG(INFO, "read single register Temp_W for water temperature = " + to_string(fTECData[8].reg["Temp_W"].value));
+  fTECData[1].reg["Temp_W"].value = getTECRegisterFromCAN(1, "Temp_W");
+  if (fVerbose > 5) fLOG(INFO, "read single register Temp_W for pressure sensor = " + to_string(fTECData[1].reg["Temp_W"].value));
+  readBroadcastFloat("Temp_M");
+  readBroadcastFloat("Peltier_U");
+  readBroadcastFloat("Peltier_I");
+  readBroadcastFloat("Peltier_R");
+  readBroadcastFloat("Peltier_P");
+  readBroadcastFloat("Supply_U");
+  readBroadcastFloat("Supply_I");
+  readBroadcastFloat("Supply_P");
+
+  // -- slow-changing registers: read one per cycle in round-robin (~10s cadence)
+  static const std::vector<std::string> slowRegs = {
+    "PID_kp", "PID_ki", "PID_kd", "PID_Max", "PID_Min",
+    "Temp_Diff", "Ref_U", "Mode", "PowerState", "Error"
+  };
+  const std::string &slowReg = slowRegs[static_cast<size_t>(fRunCnt) % slowRegs.size()];
+  if ("Temp_Diff" == slowReg) {
+    fTECData[8].reg["Temp_Diff"].value = getTECRegisterFromCAN(8, "Temp_Diff");
+    if (fVerbose > 5) fLOG(INFO, "read single register Temp_Diff = " + to_string(fTECData[8].reg["Temp_Diff"].value));
+  } else if (("Mode" == slowReg) || ("PowerState" == slowReg) || ("Error" == slowReg)) {
+    readBroadcastInt(slowReg);
+  } else {
+    readBroadcastFloat(slowReg);
   }
-  std::stringstream errorPerTec;
-  errorPerTec << "broadcast results Error: ";
-  for (int i = 1; i <= 8; ++i) {
-    if (0 == fActiveTEC[i]) continue;
-    bool haveFrame = (fCanMsg.nFrames(i, regIdx) > 0);
-    int regValue = fCanMsg.getInt(i, regIdx);
-    fTECData[i].reg["Error"].value = regValue;
-    errorPerTec << "TEC" << i << "=";
-    if (haveFrame) {
-      errorPerTec << regValue;
-    } else {
-      errorPerTec << "MISS";
-    }
-    errorPerTec << " ";
-  }
-  if (fVerbose > 5) fLOG(INFO, errorPerTec.str());
 }
 
 
