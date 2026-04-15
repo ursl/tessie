@@ -402,13 +402,13 @@ void driveHardware::doRun() {
   struct timeval tvVeryOld, tvOld, tvNew;
   gettimeofday(&tvVeryOld, 0);
   gettimeofday(&tvOld, 0);
-  auto stepMs = [this](const char *label, int warnMs, void (driveHardware::*fn)()) {
+  auto stepMs = [this](const char *label, int warnMs, int verbose, void (driveHardware::*fn)()) {
     struct timeval t0, t1;
     gettimeofday(&t0, 0);
     (this->*fn)();
     gettimeofday(&t1, 0);
     int dt = diff_ms(t1, t0);
-    if ((dt > warnMs) || (fVerbose > 9)) {
+    if ((dt > warnMs) || (fVerbose > verbose)) {
       fLOG(INFO, string("timing: ") + label + " took " + to_string(dt) + " ms");
     }
   };
@@ -439,8 +439,8 @@ void driveHardware::doRun() {
       if (fVerbose > 5) cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
       // -- read SHT85 only every 2 seconds!
       if (tdiff2 > 2000) {
-        stepMs("readAirTemperature", 20, &driveHardware::readAirTemperature);
-        stepMs("readFlowmeter", 20, &driveHardware::readFlowmeter);
+        stepMs("readAirTemperature", 20, 9, &driveHardware::readAirTemperature);
+        stepMs("readFlowmeter", 20, 9, &driveHardware::readFlowmeter);
         if (MAX_TEMP < 30. && fFlowMeterStatus > -1) {
           MAX_TEMP = 40.;
           SAFETY_MAXSHT85TEMP = MAX_TEMP;
@@ -452,7 +452,7 @@ void driveHardware::doRun() {
       }
 
       // -- read all parameters from CAN
-      stepMs("readAllParamsFromCANPublic", 80, &driveHardware::readAllParamsFromCANPublic);
+      stepMs("readAllParamsFromCANPublic", 80, 9, &driveHardware::readAllParamsFromCANPublic);
 
       evtHandler();
 
@@ -480,20 +480,11 @@ void driveHardware::doRun() {
 
       evtHandler();
 
-      struct timeval tsFras;
-      gettimeofday(&tsFras, 0);
-      entertainFras();
-      stepMs("entertainFras", tsFras, 30);
-      struct timeval tsTecs;
-      gettimeofday(&tsTecs, 0);
-      entertainTECs();
-      stepMs("entertainTECs", tsTecs, 30);
+      stepMs("entertainFras", 30, 10, &driveHardware::entertainFras);
+      stepMs("entertainTECs", 30, 10, &driveHardware::entertainTECs);
 
-      struct timeval tsSafety;
-      gettimeofday(&tsSafety, 0);
-      checkFan();
-      ensureSafety();
-      stepMs("checkFan+ensureSafety", tsSafety, 30);
+      stepMs("checkFan", 30, 10, &driveHardware::checkFan);
+      stepMs("ensureSafety", 30, 10, &driveHardware::ensureSafety);
 
       if (fThrottleStatus > 0) {
         throttleN2();
