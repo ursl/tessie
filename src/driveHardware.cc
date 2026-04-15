@@ -2183,9 +2183,9 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
   fMutex.lock();
   sendCANmessage(false);
   if (itec > 0) {
-    std::this_thread::sleep_for(fMilli10);
+    std::this_thread::sleep_for(fMilli5);
   } else {
-    std::this_thread::sleep_for(fMilli10);
+    std::this_thread::sleep_for(fMilli5);
   }
   if (0) fLOG(INFO, "  getTECRegisterFromCAN for tec = " + to_string(itec)
               + " register = " + regname
