@@ -402,8 +402,10 @@ void driveHardware::doRun() {
   struct timeval tvVeryOld, tvOld, tvNew;
   gettimeofday(&tvVeryOld, 0);
   gettimeofday(&tvOld, 0);
-  auto stepMs = [this](const char *label, const struct timeval &t0, int warnMs = 50) {
-    struct timeval t1;
+  auto stepMs = [this](const char *label, int warnMs, void (driveHardware::*fn)()) {
+    struct timeval t0, t1;
+    gettimeofday(&t0, 0);
+    (this->*fn)();
     gettimeofday(&t1, 0);
     int dt = diff_ms(t1, t0);
     if ((dt > warnMs) || (fVerbose > 9)) {
@@ -437,14 +439,8 @@ void driveHardware::doRun() {
       if (fVerbose > 5) cout << tStamp() << " readAllParamsFromCANPublic(), tdiff = " << tdiff << endl;
       // -- read SHT85 only every 2 seconds!
       if (tdiff2 > 2000) {
-        struct timeval tsAir;
-        gettimeofday(&tsAir, 0);
-        readAirTemperature();
-        stepMs("readAirTemperature", tsAir, 50);
-        struct timeval tsFlow;
-        gettimeofday(&tsFlow, 0);
-        readFlowmeter();
-        stepMs("readFlowmeter", tsFlow, 50);
+        stepMs("readAirTemperature", 20, &driveHardware::readAirTemperature);
+        stepMs("readFlowmeter", 20, &driveHardware::readFlowmeter);
         if (MAX_TEMP < 30. && fFlowMeterStatus > -1) {
           MAX_TEMP = 40.;
           SAFETY_MAXSHT85TEMP = MAX_TEMP;
@@ -456,10 +452,7 @@ void driveHardware::doRun() {
       }
 
       // -- read all parameters from CAN
-      struct timeval tsCanPoll;
-      gettimeofday(&tsCanPoll, 0);
-      readAllParamsFromCANPublic();
-      stepMs("readAllParamsFromCANPublic", tsCanPoll, 80);
+      stepMs("readAllParamsFromCANPublic", 80, &driveHardware::readAllParamsFromCANPublic);
 
       evtHandler();
 
@@ -567,8 +560,6 @@ void driveHardware::doRun() {
 
 // ----------------------------------------------------------------------
 void driveHardware::ensureSafety() {
-  if (fVerbose > 1) cout << tStamp() << " driveHardware::ensureSafety() entered" << endl;
-
   // -- if TEC firmware is not OK, get stuck
   if (!fVersionOK) {
     fStatusString = "upgrade TEC f/w!";
@@ -1912,11 +1903,9 @@ void driveHardware::powerCycle3V3(int n100ms) {
 // ----------------------------------------------------------------------
 void driveHardware::turnOnValve(int i) {
   if (0 == i) {
-    if (fVerbose > 1) cout << "turnOnValve(0) entered" << endl;
     if (!getStatusValve0()) toggleFras(1);
   }
   if (1 == i) {
-    if (fVerbose > 1) cout << "turnOnValve(1) entered" << endl;
     if (!getStatusValve1()) toggleFras(2);
   }
 }
@@ -1925,11 +1914,9 @@ void driveHardware::turnOnValve(int i) {
 // ----------------------------------------------------------------------
 void driveHardware::turnOffValve(int i) {
   if (0 == i) {
-    if (fVerbose > 1) cout << "turnOffValve(0) entered" << endl;
     if (getStatusValve0()) toggleFras(1);
   }
   if (1 == i) {
-    if (fVerbose > 1) cout << "turnOffValve(1) entered" << endl;
     if (getStatusValve1()) toggleFras(2);
   }
 }
