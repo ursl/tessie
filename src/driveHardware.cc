@@ -3066,6 +3066,8 @@ void driveHardware::readVProbe(int pos) {
         for (auto const &entry: sRecentVprobeRawReadouts) {
           fLOG(ERROR, "  " + entry);
         }
+        fLOG(ERROR, "setting fVerbose to 10");
+        fVerbose = 10;
         //fLOG(ERROR, "power cycling 3.3V due to VProbe read error");
         //powerCycle3V3(1);
 
