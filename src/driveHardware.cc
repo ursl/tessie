@@ -499,7 +499,7 @@ void driveHardware::doRun() {
       // -- about once per minute
       if (0 == cnt%60) {
         stringstream a("RH/T  HYT223 T = " + to_string(fHYT223Temp) + " RH = " + to_string(fHYT223RH)
-                       + "  SHT85 T = " + to_string(fSHT85Temp) + " RH = " + to_string(fSHT85RH)
+                       + (fI2CSlaveStatus[I2C_SHT85_ADDR]? ("  SHT85 T = " + to_string(fSHT85Temp) + " RH = " + to_string(fSHT85RH)): "")
                        + (fHeaterStatus > 0?"  Heater status = " + to_string(fHeaterStatus): ""));
         fLOG(INFO, a.str());
 
@@ -1874,7 +1874,7 @@ void driveHardware::turnOffLV() {
 // ----------------------------------------------------------------------
 void driveHardware::power3V3(bool on) {
   stringstream a("power3V3(" + to_string(on) + ")");
-  fLOG(INFO, a.str()); 
+  if (fVerbose > 1)fLOG(INFO, a.str()); 
   if (on) {
     gpio_write(fPiGPIO, GPIOPSUEN, 1);
   } else {
