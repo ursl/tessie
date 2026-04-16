@@ -2562,16 +2562,18 @@ void driveHardware::readAirTemperature() {
     fAirTemp = fSHT85Temp;
     fAirRH   = fSHT85RH;
     fAirDP   = fSHT85DP;
+    if (fVerbose > 5) {
+      fLOG(INFO, "readSHT85: T: " + to_string(fSHT85Temp) + " RH: " + to_string(fSHT85RH) + " DP: " + to_string(fSHT85DP));
+    }
   }
   if (fI2CSlaveStatus[I2C_HYT223_ADDR]) {
     readHYT223();
     fAirTemp = fHYT223Temp;
     fAirRH   = fHYT223RH;
     fAirDP   = fHYT223DP;
-  }
-  if (fVerbose > 5) {
-    fLOG(INFO, "readHYT223: T: " + to_string(fHYT223Temp) + " RH: " + to_string(fHYT223RH) + " DP: " + to_string(fHYT223DP));
-    fLOG(INFO, "readSHT85: T: " + to_string(fSHT85Temp) + " RH: " + to_string(fSHT85RH) + " DP: " + to_string(fSHT85DP));
+    if (fVerbose > 5) {
+      fLOG(INFO, "readHYT223: T: " + to_string(fHYT223Temp) + " RH: " + to_string(fHYT223RH) + " DP: " + to_string(fHYT223DP));
+    }
   }
 }
 
@@ -2978,8 +2980,10 @@ void driveHardware::readVProbe(int pos) {
         }
         fLOG(ERROR, "setting fVerbose to 10");
         fVerbose = 10;
-        //fLOG(ERROR, "power cycling 3.3V due to VProbe read error");
-        //powerCycle3V3(1);
+        fLOG(ERROR, "power cycling 3.3V due to VProbe read error");
+        powerCycle3V3(1);
+        std::this_thread::sleep_for(fMilli100);
+        fLOG(ERROR, "power cycling 3.3V done");
 
         stringstream output;
         output <<  "vprobe" << pos << " = -999";
