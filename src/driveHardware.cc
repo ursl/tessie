@@ -2587,6 +2587,12 @@ void driveHardware::readHYT223() {
     fHYT223Data[i] = 0;
   }
   int length = i2c_read_device(fPiGPIO, handle, fHYT223Data, 4);
+  if (length == PI_I2C_READ_FAILED) {
+    i2c_close(fPiGPIO, handle);
+    recoverI2CBus();
+    handle = i2c_open(fPiGPIO, I2CBUS, I2C_HYT223_ADDR, 0);
+    length = i2c_read_device(fPiGPIO, handle, fHYT223Data, 4);
+  }
   if (length < 6) {
     unsigned int vrh  = ((fHYT223Data[0]<<8) + fHYT223Data[1]) & 0x3fff;
     unsigned int vtt  = ((fHYT223Data[2]<<8) + fHYT223Data[3]) >>2;
@@ -2622,6 +2628,61 @@ void driveHardware::readHYT223() {
   // -- trigger next measurement
   i2c_write_quick(fPiGPIO, handle, 0);
   i2c_close(fPiGPIO, handle);
+#endif
+}
+
+// ----------------------------------------------------------------------
+bool driveHardware::recoverI2CBus() {
+#ifdef PI
+  // TODO: verify pin numbers for your hardware.
+  // -- GPIO00/GPIO01 correspond to physical header pins 27/28 on Raspberry Pi.
+  const unsigned int SDA_PIN = 0; // pin 27: SDA0
+  const unsigned int SCL_PIN = 1; // pin 28: SCL0
+  const int pulseDelayUs = 10;
+
+  fLOG(WARNING, "recoverI2CBus() start");
+
+  set_mode(fPiGPIO, SDA_PIN, PI_INPUT);
+  set_mode(fPiGPIO, SCL_PIN, PI_INPUT);
+  std::this_thread::sleep_for(std::chrono::milliseconds(1));
+  int sdaBefore = gpio_read(fPiGPIO, SDA_PIN);
+  int sclBefore = gpio_read(fPiGPIO, SCL_PIN);
+  fLOG(INFO, "recoverI2CBus() levels before pulse: SDA="
+       + to_string(sdaBefore) + " SCL=" + to_string(sclBefore));
+
+  // -- if SDA is held low by a slave, release with up to 9 SCL pulses
+  for (int i = 0; i < 9; ++i) {
+    if (1 == gpio_read(fPiGPIO, SDA_PIN)) break;
+    set_mode(fPiGPIO, SCL_PIN, PI_OUTPUT);
+    gpio_write(fPiGPIO, SCL_PIN, 0);
+    std::this_thread::sleep_for(std::chrono::microseconds(pulseDelayUs));
+    set_mode(fPiGPIO, SCL_PIN, PI_INPUT); // release high
+    std::this_thread::sleep_for(std::chrono::microseconds(pulseDelayUs));
+  }
+
+  // -- issue STOP condition: SDA low while SCL high, then SDA high
+  set_mode(fPiGPIO, SDA_PIN, PI_OUTPUT);
+  gpio_write(fPiGPIO, SDA_PIN, 0);
+  std::this_thread::sleep_for(std::chrono::microseconds(pulseDelayUs));
+  set_mode(fPiGPIO, SCL_PIN, PI_INPUT);
+  std::this_thread::sleep_for(std::chrono::microseconds(pulseDelayUs));
+  set_mode(fPiGPIO, SDA_PIN, PI_INPUT);
+  std::this_thread::sleep_for(std::chrono::microseconds(pulseDelayUs));
+
+  // -- restore I2C alternate function
+  set_mode(fPiGPIO, SDA_PIN, PI_ALT0);
+  set_mode(fPiGPIO, SCL_PIN, PI_ALT0);
+  std::this_thread::sleep_for(std::chrono::milliseconds(1));
+
+  int sdaAfter = gpio_read(fPiGPIO, SDA_PIN);
+  int sclAfter = gpio_read(fPiGPIO, SCL_PIN);
+  fLOG(INFO, "recoverI2CBus() levels after pulse: SDA="
+       + to_string(sdaAfter) + " SCL=" + to_string(sclAfter));
+  bool ok = ((1 == sdaAfter) && (1 == sclAfter));
+  fLOG(ok ? INFO : WARNING, string("recoverI2CBus() ") + (ok ? "success" : "incomplete (SDA/SCL still low)"));
+  return ok;
+#else
+  return false;
 #endif
 }
 
@@ -2752,6 +2813,12 @@ void driveHardware::readSHT85() {
   std::this_thread::sleep_for(fMilli20);
 
   length = i2c_read_device(fPiGPIO, handle, fSHT85Data, 6);
+  if (length == PI_I2C_READ_FAILED) {
+    i2c_close(fPiGPIO, handle);
+    recoverI2CBus();
+    handle = i2c_open(fPiGPIO, I2CBUS, I2C_SHT85_ADDR, 0);
+    length = i2c_read_device(fPiGPIO, handle, fSHT85Data, 6);
+  }
   while (cnt < 5) {
     if (6 == length) break;
     std::this_thread::sleep_for(fMilli20);
@@ -2822,6 +2889,16 @@ void driveHardware::readFlowmeter() {
 
   char data = 0x0;
   length = i2c_read_device(fPiGPIO, handle, &data, 1);
+  if (length == PI_I2C_READ_FAILED) {
+    i2c_close(fPiGPIO, handle);
+    recoverI2CBus();
+    handle = i2c_open(fPiGPIO, I2CBUS, I2C_FLOWMETER_ADDR, 0);
+    length = i2c_write_device(fPiGPIO, handle, &command, 1);
+    if (length >= 0) {
+      std::this_thread::sleep_for(fMilli20);
+      length = i2c_read_device(fPiGPIO, handle, &data, 1);
+    }
+  }
   i2c_close(fPiGPIO, handle);
 
   if (length < 1) {
@@ -2940,6 +3017,12 @@ void driveHardware::readVProbe(int pos) {
     int lengthExp(18); // A = 10, B = 11, C = 12, D = 13, E = 14, F = 15
     int handle = i2c_open(fPiGPIO, I2CBUS, addresses[iaddr], 0);
     int length = i2c_read_device(fPiGPIO, handle, (iaddr == 0? bufferC0 : bufferC1), lengthExp);
+    if (length == PI_I2C_READ_FAILED) {
+      i2c_close(fPiGPIO, handle);
+      recoverI2CBus();
+      handle = i2c_open(fPiGPIO, I2CBUS, addresses[iaddr], 0);
+      length = i2c_read_device(fPiGPIO, handle, (iaddr == 0? bufferC0 : bufferC1), lengthExp);
+    }
     i2c_close(fPiGPIO, handle);
 
     stringstream raw;

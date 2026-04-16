@@ -271,6 +271,7 @@ private:
   struct can_frame fFrameR;
 
   bool   initCANSockets();
+  bool   recoverI2CBus();
 
   int    fPiGPIO;
 #endif
