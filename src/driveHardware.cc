@@ -2965,6 +2965,7 @@ return r;
 
 // ----------------------------------------------------------------------
 void driveHardware::readVProbe(int pos) {
+  static map<int, int> nReads({{1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}});
   fVprobeVoltages = "init";
   fVprobeGndVoltages = "init";
   static map<int, time_t> sLastVprobeReadout;
@@ -2984,6 +2985,15 @@ void driveHardware::readVProbe(int pos) {
     fLOG(WARNING, a.str());
     powerCycle3V3();
     sLastVprobeReadout[pos] = now;
+  }
+
+  ++nReads[pos];
+  if (nReads[pos] > 100) {
+    nReads[pos] = 0;
+    fLOG(INFO, "readVProbe(" + to_string(pos) + ") reset due to too many reads");
+    powerCycle3V3(1);
+    std::this_thread::sleep_for(fMilli100);
+    fLOG(INFO, "readVProbe(" + to_string(pos) + ") reset done");
   }
 
   fLOG(INFO, "readVProbe(" + to_string(pos) + ") start");
@@ -3017,12 +3027,6 @@ void driveHardware::readVProbe(int pos) {
     int lengthExp(18); // A = 10, B = 11, C = 12, D = 13, E = 14, F = 15
     int handle = i2c_open(fPiGPIO, I2CBUS, addresses[iaddr], 0);
     int length = i2c_read_device(fPiGPIO, handle, (iaddr == 0? bufferC0 : bufferC1), lengthExp);
-    if (length == PI_I2C_READ_FAILED) {
-      i2c_close(fPiGPIO, handle);
-      recoverI2CBus();
-      handle = i2c_open(fPiGPIO, I2CBUS, addresses[iaddr], 0);
-      length = i2c_read_device(fPiGPIO, handle, (iaddr == 0? bufferC0 : bufferC1), lengthExp);
-    }
     i2c_close(fPiGPIO, handle);
 
     stringstream raw;
@@ -3068,6 +3072,12 @@ void driveHardware::readVProbe(int pos) {
         std::this_thread::sleep_for(fMilli100);
         fLOG(ERROR, "power cycling 3.3V done");
 
+        fLOG(ERROR, "closing I2C bus");
+        i2c_close(fPiGPIO, handle);
+        fLOG(ERROR, "recovering I2C bus");
+        recoverI2CBus();
+        fLOG(ERROR, "recovering I2C bus done");
+  
         stringstream output;
         output <<  "vprobe" << pos << " = -999";
         fVprobeVoltages = output.str();
@@ -3087,10 +3097,12 @@ void driveHardware::readVProbe(int pos) {
         // fLOG(ERROR, "power cycling 3.3V done");
         fLOG(ERROR, "returning due to bad readout");
         return;
+      } else {
+        for (int i = 0; i < 8; ++i) {
+          v[iaddr*8+i] = static_cast<unsigned int>(buffer[2*i] + (buffer[2*i+1]<<8))*VDD/65536;
+        }
       }
-    }
-
-    if (length != lengthExp) {
+    } else {
       fLOG(ERROR, "Failed to read from the VProbe at i2c bus address " 
            + to_string(addresses[iaddr])  
            + " length = " + to_string(length) + ""
@@ -3129,13 +3141,9 @@ void driveHardware::readVProbe(int pos) {
       // powerCycle3V3();
       // stringstream b("power cycling 3.3V done");
       // fLOG(ERROR, b.str());
-    } else {
-      for (int i = 0; i < 8; ++i) {
-        v[iaddr*8+i] = static_cast<unsigned int>(buffer[2*i] + (buffer[2*i+1]<<8))*VDD/65536;
-      }
     }
   }
-    
+
   if (fVerbose > 9) {
     fLOG(INFO, "bufferC0: ");
     for (int i = 0; i < 18; i +=2) {
