@@ -1526,6 +1526,16 @@ void driveHardware::parseIoMessage() {
       powerCycle3V3();
     }
 
+    s1 = "PowerOff3V3"; s2 = "poweroff3v3";
+    if (findInIoMessage(s1, s2, s3)) {
+      power3V3(false);
+    }
+
+    s1 = "PowerOn3V3"; s2 = "poweron3v3";
+    if (findInIoMessage(s1, s2, s3)) {
+      power3V3(true);
+    }
+
     s1 = "quit";  s2 = "exit";
     if (findInIoMessage(s1, s2, s3)) {
       shutDown();
@@ -1560,6 +1570,8 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> cmd startReconditioning");
     vhelp.push_back("> cmd RecoverCAN");
     vhelp.push_back("> cmd PowerCycle3V3");
+    vhelp.push_back("> cmd PowerOff3V3");
+    vhelp.push_back("> cmd PowerOn3V3");
     vhelp.push_back("> [tec {0|x}] cmd Power_On");
     vhelp.push_back("> [tec {0|x}] cmd Power_Off");
     vhelp.push_back("> [tec {0|x}] cmd ClearError");
