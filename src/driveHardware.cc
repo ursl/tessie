@@ -1448,17 +1448,11 @@ void driveHardware::parseIoMessage() {
     s1 = "Power_On";  s2 = "Power_On";
     if (findInIoMessage(s1, s2, s3)) {
       answerIoCmd();
-      // for (int itec = 1; itec <=8; ++itec) {
-      //   turnOnTEC(itec);
-      // }
     }
 
     s1 = "Power_Off";  s2 = "Power_Off";
     if (findInIoMessage(s1, s2, s3)) {
       answerIoCmd();
-      // for (int itec = 1; itec <=8; ++itec) {
-      //   turnOffTEC(itec);
-      // }
     }
 
     s1 = "valve0";  s2 = "valve0";
@@ -1527,6 +1521,11 @@ void driveHardware::parseIoMessage() {
       recoverCANBus();
     }
 
+    s1 = "PowerCycle3V3"; s2 = "powercycle3v3";
+    if (findInIoMessage(s1, s2, s3)) {
+      powerCycle3V3();
+    }
+
     s1 = "quit";  s2 = "exit";
     if (findInIoMessage(s1, s2, s3)) {
       shutDown();
@@ -1560,6 +1559,7 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> cmd heatOff");
     vhelp.push_back("> cmd startReconditioning");
     vhelp.push_back("> cmd RecoverCAN");
+    vhelp.push_back("> cmd PowerCycle3V3");
     vhelp.push_back("> [tec {0|x}] cmd Power_On");
     vhelp.push_back("> [tec {0|x}] cmd Power_Off");
     vhelp.push_back("> [tec {0|x}] cmd ClearError");
