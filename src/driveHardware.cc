@@ -2798,6 +2798,7 @@ void driveHardware::heatHYT223(bool on) {
 
 // ----------------------------------------------------------------------
 void driveHardware::readSHT85() {
+  return;
 #ifdef PI
   static int badReadoutCounter(0);
   static int readoutCounter(0);
