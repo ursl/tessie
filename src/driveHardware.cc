@@ -1886,7 +1886,7 @@ void driveHardware::turnOffLV() {
 // ----------------------------------------------------------------------
 void driveHardware::power3V3(bool on) {
   stringstream a("power3V3(" + to_string(on) + ")");
-  if (fVerbose > 1)fLOG(INFO, a.str()); 
+  if (fVerbose > -1)fLOG(INFO, a.str()); 
   if (on) {
     gpio_write(fPiGPIO, GPIOPSUEN, 1);
   } else {
