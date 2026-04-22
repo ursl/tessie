@@ -3085,11 +3085,11 @@ void driveHardware::readVProbe(int pos) {
         std::this_thread::sleep_for(fMilli100);
         fLOG(ERROR, "power cycling 3.3V done");
 
-        fLOG(ERROR, "closing I2C bus");
-        i2c_close(fPiGPIO, handle);
-        fLOG(ERROR, "recovering I2C bus");
-        recoverI2CBus();
-        fLOG(ERROR, "recovering I2C bus done");
+        // fLOG(ERROR, "closing I2C bus");
+        // i2c_close(fPiGPIO, handle);
+        // fLOG(ERROR, "recovering I2C bus");
+        // recoverI2CBus();
+        // fLOG(ERROR, "recovering I2C bus done");
   
         stringstream output;
         output <<  "vprobe" << pos << " = -999";
@@ -3111,6 +3111,10 @@ void driveHardware::readVProbe(int pos) {
         fLOG(ERROR, "returning due to bad readout");
         return;
       } else {
+        if (10 == fVerbose) {
+          fVerbose = 0;
+          fLOG(INFO, "resetting fVerbose = 0");
+        } 
         for (int i = 0; i < 8; ++i) {
           v[iaddr*8+i] = static_cast<unsigned int>(buffer[2*i] + (buffer[2*i+1]<<8))*VDD/65536;
         }
