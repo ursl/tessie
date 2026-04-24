@@ -711,6 +711,7 @@ void driveHardware::ensureSafety() {
 
   // -- check module temperatures (1) value and (2) against dew point
   for (int itec = 1; itec <= 8; ++itec) {
+    if (0 == fActiveTEC[itec]) continue;
     double mtemp = fTECData[itec].reg["Temp_M"].value;
     if (mtemp < 15) {
       greenLight = false;
@@ -1193,6 +1194,7 @@ void driveHardware::answerIoCmd() {
   str << cmdname << " = ";
   int ntec(1);
   for (int itec = 1; itec <= 8; ++itec) {
+    if (0 == fActiveTEC[itec]) continue;
     if ((0 != tec) && (itec != tec)) continue;
     // -- use the proper functions to also control YELLO and the fan
     if (1 == fCANReg) {
@@ -2018,6 +2020,7 @@ void driveHardware::stopOperations(int icode) {
 #endif
     
     for (int itec = 1; itec <= 8; ++itec) {
+      if (0 == fActiveTEC[itec]) continue;
       if (1 == static_cast<int>(fTECData[itec].reg["PowerState"].value)) {
         turnOffTEC(itec);
       }
@@ -2041,6 +2044,9 @@ void driveHardware::stopOperations(int icode) {
 
 // ----------------------------------------------------------------------
 float driveHardware::getTECRegister(int itec, std::string regname) {
+  if (0 == fActiveTEC[itec]) {
+    return -999.;
+  }
   if (fTECData.find(itec) == fTECData.end()) {
     return -1.;
   }
@@ -2224,6 +2230,10 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
 
 // ----------------------------------------------------------------------
 void driveHardware::setTECRegister(int itec, std::string regname, float value) {
+  if (0 == fActiveTEC[itec]) {
+    if (fVerbose > -1) fLOG(INFO, "TEC " + to_string(itec) +  " not active, skipping");
+    return;
+  }
   fTECData[itec].reg[regname].value = value;
 
   // -- program parameter
