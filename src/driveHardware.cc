@@ -1864,7 +1864,7 @@ void driveHardware::entertainFras() {
     return;
   }
   //  fMutex.lock();
-  if (fVerbose > -1) cout << "entertainFras() fRelaisMask = " << fRelaisMask << endl;
+  if (fVerbose > 0) cout << "entertainFras() fRelaisMask = " << fRelaisMask << endl;
   if (0 == fRelaisMask) {
     if (fVerbose > 9) cout << "entertainFras() fRelaisMask = 0, sending RTR frame" << endl;
     fFrameW.can_id = CAN_RTR_FLAG | 0x41;
@@ -2978,7 +2978,7 @@ void driveHardware::readSHT85() {
 // ----------------------------------------------------------------------
 void driveHardware::readFlowmeter() {
 #ifdef PI
-  if (fVerbose > -1) fLOG(INFO, "readFlowmeter entered");
+  if (fVerbose > 0) fLOG(INFO, "readFlowmeter entered");
   int flowMeterStatus(0);
   int handle = i2c_open(fPiGPIO, I2CBUS, I2C_FLOWMETER_ADDR, 0);
   // -- set command byte to 0x0 (Register: Input Port, Protocol: Read Byte)
@@ -3023,7 +3023,7 @@ void driveHardware::readFlowmeter() {
     fLOG(WARNING, a.str());
   }
   
-  if (fVerbose > -1) {
+  if (fVerbose > 0) {
    stringstream a("flowmeter readout data =  " + to_string(data)
                     + " fFlowMeterStatus = " + to_string(fFlowMeterStatus));
     fLOG(INFO, a.str());
@@ -3441,7 +3441,7 @@ void driveHardware::checkDiskspace() {
 void driveHardware::resetInterlock() {
   fInterlockStatus = 1;
   fStopOperations = 0;
-  
+  fVerbose = 0; 
 #ifdef PI
   turnOnLV();
   // -- delay turning on HV
