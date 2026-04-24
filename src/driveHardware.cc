@@ -4,6 +4,8 @@
 #include <sstream>
 #include <string>
 #include <cstdlib>
+#include <algorithm>
+#include <cctype>
 
 #include <fstream>
 #include <iomanip>
@@ -1088,12 +1090,15 @@ void driveHardware::answerIoGet(string &) {
 
   stringstream str;
   str << regname << " = ";
+  std::string regnameLower = regname;
+  std::transform(regnameLower.begin(), regnameLower.end(), regnameLower.begin(),
+                 [](unsigned char c){ return std::tolower(c); });
   int ntec(1);
   for (int itec = 1; itec <= 8; ++itec) {
     if ((0 != tec) && (itec != tec)) continue;
     float regValue = getTECRegister(itec, regname);
     if (0 == fActiveTEC[itec]) {
-      if (regname == "PowerState") {
+      if ((regnameLower == "powerstate") || (regnameLower == "mode") || (regnameLower == "error")) {
         regValue = 0.;
       } else {
         regValue = -99.;
