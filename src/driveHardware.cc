@@ -1092,7 +1092,13 @@ void driveHardware::answerIoGet(string &) {
   for (int itec = 1; itec <= 8; ++itec) {
     if ((0 != tec) && (itec != tec)) continue;
     float regValue = getTECRegister(itec, regname);
-    if (0 == fActiveTEC[itec]) regValue = -99.;
+    if (0 == fActiveTEC[itec]) {
+      if (regname == "PowerState") {
+        regValue = 0.;
+      } else {
+        regValue = -99.;
+      }
+    }
     if (ntec > 1) str << ",";
     str << regValue;
     ++ntec;
@@ -2204,6 +2210,9 @@ float driveHardware::getTECRegisterFromCAN(int itec, std::string regname) {
   if (fVerbose > 5) fLOG(INFO, "getTECRegisterFromCAN regname ->" + regname + "<-");
   if (itec > 0) {
     if (0 == fActiveTEC[itec]) {
+      if (regname == "PowerState") {
+        return 0.;
+      }
       return -99.;
     }
   }
