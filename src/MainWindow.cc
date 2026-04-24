@@ -473,7 +473,7 @@ if (fpHw->getStatusValve0()) {
         if (!isred) fqleTEC[i]->setPalette(fPalettes[8]);
       }
     } else {
-      fqleTEC[i]->setText("inactive");
+      fqleTEC[i]->setText("inact.");
       fqleTEC[i]->setPalette(fPalettes[6]);
     }
 
