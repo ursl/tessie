@@ -2091,6 +2091,13 @@ float driveHardware::getTECRegister(int itec, std::string regname) {
   }
 }
 
+// ----------------------------------------------------------------------
+bool driveHardware::isTECActive(int itec) {
+  auto it = fActiveTEC.find(itec);
+  if (it == fActiveTEC.end()) return false;
+  return (1 == it->second);
+}
+
 
 // ----------------------------------------------------------------------
 void  driveHardware::turnOnTEC(int itec) {

@@ -139,6 +139,7 @@ public:
   
   // -- simply returns the value stored in fTECData
   float getTECRegister(int itec, std::string regname);
+  bool  isTECActive(int itec);
   int   getTECRegisterIdx(std::string rname);
 
   // -- read from and write to CAN

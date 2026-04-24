@@ -463,15 +463,24 @@ if (fpHw->getStatusValve0()) {
 
 
   for (unsigned int i = 0; i < fqleTEC.size(); ++i) {
-    double temp = fpHw->getTECRegister(i+1, "Temp_M");
-    fqleTEC[i]->setText(QString::number(temp, 'f', 2));
-    fqleTEC[i]->setPalette(fPalettes[colorIndex(temp)]);
-    if ((temp - dp) < 2) {
-      if (!isred) fqleTEC[i]->setPalette(fPalettes[8]);
+    int itec = static_cast<int>(i) + 1;
+    bool active = fpHw->isTECActive(itec);
+    double temp = fpHw->getTECRegister(itec, "Temp_M");
+    if (active) {
+      fqleTEC[i]->setText(QString::number(temp, 'f', 2));
+      fqleTEC[i]->setPalette(fPalettes[colorIndex(temp)]);
+      if ((temp - dp) < 2) {
+        if (!isred) fqleTEC[i]->setPalette(fPalettes[8]);
+      }
+    } else {
+      fqleTEC[i]->setText("inactive");
+      fqleTEC[i]->setPalette(fPalettes[6]);
     }
 
-    if (fpHw->getTECRegister(i+1, "PowerState")) {
+    if (fpHw->getTECRegister(itec, "PowerState")) {
       flblTEC[i]->setStyleSheet("font-weight: bold; background-color: #A3C1DA");
+    } else if (!active) {
+      flblTEC[i]->setStyleSheet("font-weight: bold; background-color: #FFD27F");
     } else {
       flblTEC[i]->setStyleSheet("font-weight: normal; background-color: rgba(211, 211, 211, 60%)");
     }
