@@ -688,7 +688,7 @@ void driveHardware::ensureSafety() {
     stopOperations(4);
   }
 
-  // -- check water temperature
+  // -- check water temperature (derived from TEC8; TEC8 must stay active)
   if (fTECData[8].reg["Temp_W"].value > SAFETY_MAXTEMPW) {
     greenLight = false;
     allOK = 4;
@@ -1091,8 +1091,10 @@ void driveHardware::answerIoGet(string &) {
   int ntec(1);
   for (int itec = 1; itec <= 8; ++itec) {
     if ((0 != tec) && (itec != tec)) continue;
+    float regValue = getTECRegister(itec, regname);
+    if (0 == fActiveTEC[itec]) regValue = -99.;
     if (ntec > 1) str << ",";
-    str << getTECRegister(itec, regname);
+    str << regValue;
     ++ntec;
   }
   QString qmsg = QString::fromStdString(str.str());
@@ -1189,6 +1191,18 @@ void driveHardware::answerIoCmd() {
   } else if (string::npos != cmdname.find("Reset")) {
     fCANReg = 255;
   } else if (string::npos != cmdname.find("InactivateTEC")) {
+    if (1 == tec) {
+      string a("==WARNING== TEC 1 cannot be inactivated (required for lid sensor safety).");
+      fLOG(WARNING, a);
+      emit signalSendToServer(QString::fromStdString(a));
+      return;
+    }
+    if (8 == tec) {
+      string a("==WARNING== TEC 8 cannot be inactivated (required for water temperature safety).");
+      fLOG(WARNING, a);
+      emit signalSendToServer(QString::fromStdString(a));
+      return;
+    }
     fActiveTEC[tec] = 0;
     return;
   }
@@ -1197,8 +1211,20 @@ void driveHardware::answerIoCmd() {
   str << cmdname << " = ";
   int ntec(1);
   for (int itec = 1; itec <= 8; ++itec) {
-    if (0 == fActiveTEC[itec]) continue;
     if ((0 != tec) && (itec != tec)) continue;
+    if (0 == fActiveTEC[itec]) {
+      if ((5 == fCANReg) || (6 == fCANReg) || (7 == fCANReg) || (8 == fCANReg) || (255 == fCANReg)) {
+        if (ntec > 1) str << ",";
+        // -- keep fixed-width all-TEC replies: mark inactive boards with unphysical sentinel
+        if (6 == fCANReg) {
+          str << -99;
+        } else {
+          str << -1;
+        }
+        ++ntec;
+      }
+      continue;
+    }
     // -- use the proper functions to also control YELLO and the fan
     if (1 == fCANReg) {
       turnOnTEC(itec);
@@ -2363,7 +2389,11 @@ void driveHardware::readAllParamsFromCANPublic() {
     std::stringstream perTec;
     if (dbgBroadcast) perTec << "broadcast results " << regname << ": ";
     for (int i = 1; i <= 8; ++i) {
-      if (0 == fActiveTEC[i]) continue;
+      if (0 == fActiveTEC[i]) {
+        fTECData[i].reg[regname].value = -99.;
+        if (dbgBroadcast) perTec << "TEC" << i << "=INACTIVE ";
+        continue;
+      }
       bool haveFrame = (fCanMsg.nFrames(i, regIdx) > 0);
       float regValue = fCanMsg.getFloat(i, regIdx);
       fTECData[i].reg[regname].value = regValue;
@@ -2398,7 +2428,11 @@ void driveHardware::readAllParamsFromCANPublic() {
     std::stringstream perTec;
     if (dbgBroadcast) perTec << "broadcast results " << regname << ": ";
     for (int i = 1; i <= 8; ++i) {
-      if (0 == fActiveTEC[i]) continue;
+      if (0 == fActiveTEC[i]) {
+        fTECData[i].reg[regname].value = -1;
+        if (dbgBroadcast) perTec << "TEC" << i << "=INACTIVE ";
+        continue;
+      }
       bool haveFrame = (fCanMsg.nFrames(i, regIdx) > 0);
       int regValue = fCanMsg.getInt(i, regIdx);
       fTECData[i].reg[regname].value = regValue;
@@ -2511,22 +2545,30 @@ void driveHardware::dumpMQTT(int all) {
     bool printit(false);
     bool isInt(false); 
     bool isHex(false); 
+    double inactiveValue(-99.);
     if (skey.first == "Mode")  isInt = true;
     if (skey.first == "PowerState")  isInt = true;
     if (skey.first == "Error") isHex = true;
+    if (isInt || isHex) inactiveValue = -1.;
 
     for (int i = 1; i <= 8; ++i) {
+      double value = fTECData[i].reg[skey.first].value;
+      double oldValue = oldTECData[i].reg[skey.first].value;
+      if (0 == fActiveTEC[i]) {
+        value = inactiveValue;
+        oldValue = inactiveValue;
+      }
       if (isInt) {
-        ss << static_cast<int>(fTECData[i].reg[skey.first].value);
+        ss << static_cast<int>(value);
       } else if (isHex) {
-        ss << "0x" << hex << static_cast<int>(fTECData[i].reg[skey.first].value) << dec;
+        ss << "0x" << hex << static_cast<int>(value) << dec;
       } else {
-        ss << fTECData[i].reg[skey.first].value;
+        ss << value;
       }
       if (1 == all) {
         printit = true;
       } else {
-        if (fabs(fTECData[i].reg[skey.first].value - oldTECData[i].reg[skey.first].value) > tolerances[skey.first]) {
+        if (fabs(value - oldValue) > tolerances[skey.first]) {
           printit = true;
         }
       }
@@ -2551,28 +2593,33 @@ void driveHardware::dumpCSV() {
 
   // -- only one water temperature reading
   for (int i = 8; i <= 8; ++i) {
-    snprintf(cs, sizeof(cs), "%+4.1f", fTECData[i].reg["Temp_W"].value);
-    if (fActiveTEC[i]) output << "," << cs;
+    double val = fActiveTEC[i] ? fTECData[i].reg["Temp_W"].value : -99.0;
+    snprintf(cs, sizeof(cs), "%+4.1f", val);
+    output << "," << cs;
   }
 
   for (int i = 1; i <= 8; ++i) {
-    snprintf(cs, sizeof(cs), "%1.0f", fTECData[i].reg["PowerState"].value);
-    if (fActiveTEC[i]) output << "," << cs;
+    double val = fActiveTEC[i] ? fTECData[i].reg["PowerState"].value : -1.0;
+    snprintf(cs, sizeof(cs), "%1.0f", val);
+    output << "," << cs;
   }
 
   for (int i = 1; i <= 8; ++i) {
-    snprintf(cs, sizeof(cs), "%+5.2f", fTECData[i].reg["ControlVoltage_Set"].value);
-    if (fActiveTEC[i]) output << "," << cs;
+    double val = fActiveTEC[i] ? fTECData[i].reg["ControlVoltage_Set"].value : -99.0;
+    snprintf(cs, sizeof(cs), "%+5.2f", val);
+    output << "," << cs;
   }
 
   for (int i = 1; i <= 8; ++i) {
-    snprintf(cs, sizeof(cs), "%+4.1f", fTECData[i].reg["Temp_Set"].value);
-    if (fActiveTEC[i]) output << "," << cs;
+    double val = fActiveTEC[i] ? fTECData[i].reg["Temp_Set"].value : -99.0;
+    snprintf(cs, sizeof(cs), "%+4.1f", val);
+    output << "," << cs;
   }
 
   for (int i = 1; i <= 8; ++i) {
-    snprintf(cs, sizeof(cs), "%+5.2f", fTECData[i].reg["Temp_M"].value);
-    if (fActiveTEC[i]) output << "," << cs;
+    double val = fActiveTEC[i] ? fTECData[i].reg["Temp_M"].value : -99.0;
+    snprintf(cs, sizeof(cs), "%+5.2f", val);
+    output << "," << cs;
   }
 
   fCsvFile <<  output.str() << endl;
