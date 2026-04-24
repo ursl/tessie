@@ -477,10 +477,10 @@ if (fpHw->getStatusValve0()) {
       fqleTEC[i]->setPalette(fPalettes[6]);
     }
 
-    if (fpHw->getTECRegister(itec, "PowerState")) {
-      flblTEC[i]->setStyleSheet("font-weight: bold; background-color: #A3C1DA");
-    } else if (!active) {
+    if (!active) {
       flblTEC[i]->setStyleSheet("font-weight: bold; background-color: #FFD27F");
+    } else if (fpHw->getTECRegister(itec, "PowerState")) {
+      flblTEC[i]->setStyleSheet("font-weight: bold; background-color: #A3C1DA");
     } else {
       flblTEC[i]->setStyleSheet("font-weight: normal; background-color: rgba(211, 211, 211, 60%)");
     }
