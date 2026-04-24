@@ -1188,6 +1188,9 @@ void driveHardware::answerIoCmd() {
     fCANReg = 255;
   } else if (string::npos != cmdname.find("Reset")) {
     fCANReg = 255;
+  } else if (string::npos != cmdname.find("InactivateTEC")) {
+    fActiveTEC[tec] = 0;
+    return;
   }
 
   stringstream str;
@@ -1447,6 +1450,11 @@ void driveHardware::parseIoMessage() {
 
   } else if (string::npos != fIoMessage.find("cmd ")) {
     s3 = "cmd ";
+    s1 = "InactivateTEC";  s2 = "inactivatetec";
+    if (findInIoMessage(s1, s2, s3)) {
+      answerIoCmd();
+    }
+
     s1 = "Power_On";  s2 = "Power_On";
     if (findInIoMessage(s1, s2, s3)) {
       answerIoCmd();
@@ -1486,7 +1494,6 @@ void driveHardware::parseIoMessage() {
     if (findInIoMessage(s1, s2, s3)) {
       fThrottleStatus = 0; 
     }
-
     
     s1 = "valve1";  s2 = "valve1";
     if (findInIoMessage(s1, s2, s3)) {
@@ -1581,6 +1588,7 @@ void driveHardware::parseIoMessage() {
     vhelp.push_back("> [tec {0|x}] cmd SaveVariables");
     vhelp.push_back("> [tec {0|x}] cmd LoadVariables");
     vhelp.push_back("> [tec {0|x}] cmd Reboot");
+    vhelp.push_back("> [tec {0|x}] cmd InactivateTEC");
 
     vhelp.push_back("> ");
     vhelp.push_back("> messages to write information:");
