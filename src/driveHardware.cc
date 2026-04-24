@@ -442,7 +442,7 @@ void driveHardware::doRun() {
       // -- read SHT85 only every 2 seconds!
       if (tdiff2 > 2000) {
         stepMs("readAirTemperature", 20, 9, &driveHardware::readAirTemperature);
-        stepMs("readFlowmeter", 20, 9, &driveHardware::readFlowmeter);
+        stepMs("readFlowmeter", 50, 9, &driveHardware::readFlowmeter);
         if (MAX_TEMP < 30. && fFlowMeterStatus > -1) {
           MAX_TEMP = 40.;
           SAFETY_MAXSHT85TEMP = MAX_TEMP;
@@ -454,7 +454,7 @@ void driveHardware::doRun() {
       }
 
       // -- read all parameters from CAN
-      stepMs("readAllParamsFromCANPublic", 80, 9, &driveHardware::readAllParamsFromCANPublic);
+      stepMs("readAllParamsFromCANPublic", 400, 9, &driveHardware::readAllParamsFromCANPublic);
 
       evtHandler();
 
