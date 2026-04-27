@@ -2473,18 +2473,16 @@ void driveHardware::readAllParamsFromCANPublic() {
   fTECData[1].reg["Temp_W"].value = getTECRegisterFromCAN(1, "Temp_W");
   if (fVerbose > 5) fLOG(INFO, "read single register Temp_W for pressure sensor = " + to_string(fTECData[1].reg["Temp_W"].value));
   readBroadcastFloat("Temp_M");
-  readBroadcastFloat("Peltier_U");
-  readBroadcastFloat("Peltier_I");
-  readBroadcastFloat("Peltier_R");
-  readBroadcastFloat("Peltier_P");
-  readBroadcastFloat("Supply_U");
-  readBroadcastFloat("Supply_I");
-  readBroadcastFloat("Supply_P");
+  readBroadcastFloat("PowerState");
+  readBroadcastFloat("Mode");
+  readBroadcastFloat("Error");
 
   // -- slow-changing registers: read one per cycle in round-robin (~10s cadence)
   static const std::vector<std::string> slowRegs = {
     "PID_kp", "PID_ki", "PID_kd", "PID_Max", "PID_Min",
-    "Temp_Diff", "Ref_U", "Mode", "PowerState", "Error"
+    "Temp_Diff", "Ref_U", 
+    "Peltier_U", "Peltier_I", "Peltier_R", "Peltier_P",
+    "Supply_U", "Supply_I", "Supply_P"
   };
   const std::string &slowReg = slowRegs[static_cast<size_t>(fRunCnt) % slowRegs.size()];
   if ("Temp_Diff" == slowReg) {
