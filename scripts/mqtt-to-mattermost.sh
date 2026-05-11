@@ -2,6 +2,7 @@
 # Subscribe to Tessie monitor topic; forward alarm-like lines to Mattermost incoming webhook.
 # Requires: MATTERMOST_WEBHOOK_URL (e.g. from systemd EnvironmentFile=), mosquitto_sub, curl,
 #           and either python3 (default on Raspberry Pi OS) or jq for JSON encoding.
+# Optional: MATTERMOST_USERNAME — shown as the poster name in Mattermost (set e.g. to coldbox02 on that host).
 # Logs to stderr -> visible in: journalctl -u mqtt-to-mattermost -f
 
 set -uo pipefail
@@ -25,11 +26,26 @@ else
   exit 1
 fi
 
+# Optional: MATTERMOST_USERNAME — Mattermost shows posts under this name (e.g. coldbox02).
+# Set per host in /etc/mqtt-to-mattermost.env
+
 json_payload() {
   if [[ "$JSON_ENCODER" == jq ]]; then
-    printf '%s' "$1" | jq -Rs '{text: .}'
+    if [[ -n "${MATTERMOST_USERNAME:-}" ]]; then
+      printf '%s' "$1" | jq -Rs --arg u "$MATTERMOST_USERNAME" '{text: ., username: $u}'
+    else
+      printf '%s' "$1" | jq -Rs '{text: .}'
+    fi
   else
-    printf '%s' "$1" | python3 -c 'import json,sys; print(json.dumps({"text": sys.stdin.read()}), end="")'
+    printf '%s' "$1" | MATTERMOST_USERNAME="${MATTERMOST_USERNAME:-}" python3 -c '
+import json, os, sys
+text = sys.stdin.read()
+d = {"text": text}
+u = os.environ.get("MATTERMOST_USERNAME", "").strip()
+if u:
+    d["username"] = u
+print(json.dumps(d), end="")
+'
   fi
 }
 
