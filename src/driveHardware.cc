@@ -3156,7 +3156,7 @@ void driveHardware::readVProbe(int pos) {
     if (length == lengthExp) {
       unsigned int w16 = (static_cast<unsigned int>(static_cast<unsigned char>(buffer[16])) & 0xff);
       unsigned int w17 = (static_cast<unsigned int>(static_cast<unsigned char>(buffer[17])) & 0xff);
-      if (w16 == 0xc9 && w17 == 0x01) {
+      if (w16 == 0xc9 && (w17 == 0x01 || w17 == 0x02)) {
         badReadout = false;
       } else {
         badReadout = true;
