@@ -35,7 +35,9 @@ json_payload() {
 
 echo "mqtt-to-mattermost: listening on monTessie (localhost), JSON via $JSON_ENCODER" >&2
 
-mosquitto_sub -h localhost -t monTessie -N | while IFS= read -r line; do
+# Do NOT use mosquitto_sub -N here: without a trailing newline, `read` never completes a line
+# and this loop never runs (MQTT still delivers to other clients message-by-message).
+mosquitto_sub -h localhost -t monTessie | while IFS= read -r line; do
   case "$line" in
     *"==ALARM=="*|*"==ERROR=="*)
       echo "mqtt-to-mattermost: match, forwarding (${#line} chars)" >&2
