@@ -2417,7 +2417,10 @@ void driveHardware::readAllParamsFromCANPublic() {
       }
       bool haveFrame = (fCanMsg.nFrames(i, regIdx) > 0);
       float regValue = fCanMsg.getFloat(i, regIdx);
-      fTECData[i].reg[regname].value = regValue;
+      // -- do not overwrite cached value on missed reply (avoids bogus 0/off flicker)
+      if (haveFrame) {
+        fTECData[i].reg[regname].value = regValue;
+      }
       if (dbgBroadcast) {
         perTec << "TEC" << i << "=" << (haveFrame ? to_string(regValue) : "MISS") << " ";
       }
@@ -2456,7 +2459,9 @@ void driveHardware::readAllParamsFromCANPublic() {
       }
       bool haveFrame = (fCanMsg.nFrames(i, regIdx) > 0);
       int regValue = fCanMsg.getInt(i, regIdx);
-      fTECData[i].reg[regname].value = regValue;
+      if (haveFrame) {
+        fTECData[i].reg[regname].value = regValue;
+      }
       if (dbgBroadcast) {
         perTec << "TEC" << i << "=" << (haveFrame ? to_string(regValue) : "MISS") << " ";
       }
@@ -2592,6 +2597,10 @@ void driveHardware::dumpMQTT(int all) {
         }
       }
       if (i < 8) ss << ",";
+    }
+    // -- web UI (server3.js) caches last "PowerState = ..." / Mode / Error lines; publish every cycle
+    if (skey.first == "PowerState" || skey.first == "Mode" || skey.first == "Error") {
+      printit = true;
     }
     if (cnt++ > 0) fMonString += " ";
     fMonString += ss.str();
