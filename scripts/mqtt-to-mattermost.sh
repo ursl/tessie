@@ -26,22 +26,25 @@ else
   exit 1
 fi
 
-# Optional: MATTERMOST_USERNAME — Mattermost shows posts under this name (e.g. coldbox02).
-# Set per host in /etc/mqtt-to-mattermost.env
+# Optional: MATTERMOST_USERNAME — Mattermost incoming webhook JSON field "username" (display name).
+# Set per host in /etc/mqtt-to-mattermost.env (no quotes needed: MATTERMOST_USERNAME=coldbox02)
 
 json_payload() {
+  local msg="$1"
   if [[ "$JSON_ENCODER" == jq ]]; then
     if [[ -n "${MATTERMOST_USERNAME:-}" ]]; then
-      printf '%s' "$1" | jq -Rs --arg u "$MATTERMOST_USERNAME" '{text: ., username: $u}'
+      # --arg avoids jq -Rs quirks where "username" did not reliably appear in the payload
+      jq -n --arg text "$msg" --arg username "$MATTERMOST_USERNAME" \
+        '{text: $text, username: $username}'
     else
-      printf '%s' "$1" | jq -Rs '{text: .}'
+      jq -n --arg text "$msg" '{text: $text}'
     fi
   else
-    printf '%s' "$1" | MATTERMOST_USERNAME="${MATTERMOST_USERNAME:-}" python3 -c '
-import json, os, sys
-text = sys.stdin.read()
-d = {"text": text}
+    TEXT="$msg" MATTERMOST_USERNAME="${MATTERMOST_USERNAME:-}" python3 -c '
+import json, os
+text = os.environ.get("TEXT", "")
 u = os.environ.get("MATTERMOST_USERNAME", "").strip()
+d = {"text": text}
 if u:
     d["username"] = u
 print(json.dumps(d), end="")
@@ -50,6 +53,11 @@ print(json.dumps(d), end="")
 }
 
 echo "mqtt-to-mattermost: listening on monTessie (localhost), JSON via $JSON_ENCODER" >&2
+if [[ -n "${MATTERMOST_USERNAME:-}" ]]; then
+  echo "mqtt-to-mattermost: MATTERMOST_USERNAME is set to '${MATTERMOST_USERNAME}' (Mattermost may ignore if server disables webhook overrides)" >&2
+else
+  echo "mqtt-to-mattermost: MATTERMOST_USERNAME unset (posts use integration default name)" >&2
+fi
 
 # Do NOT use mosquitto_sub -N here: without a trailing newline, `read` never completes a line
 # and this loop never runs (MQTT still delivers to other clients message-by-message).
