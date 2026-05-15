@@ -2478,9 +2478,10 @@ void driveHardware::readAllParamsFromCANPublic() {
   fTECData[1].reg["Temp_W"].value = getTECRegisterFromCAN(1, "Temp_W");
   if (fVerbose > 5) fLOG(INFO, "read single register Temp_W for pressure sensor = " + to_string(fTECData[1].reg["Temp_W"].value));
   readBroadcastFloat("Temp_M");
-  readBroadcastFloat("PowerState");
-  readBroadcastFloat("Mode");
-  readBroadcastFloat("Error");
+  // -- integer CAN values (0/1): must use getInt/fIntVal; getFloat mis-parses e.g. PowerState=1 as ~0
+  readBroadcastInt("PowerState");
+  readBroadcastInt("Mode");
+  readBroadcastInt("Error");
 
   // -- slow-changing registers: read one per cycle in round-robin (~10s cadence)
   static const std::vector<std::string> slowRegs = {
