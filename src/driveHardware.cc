@@ -773,8 +773,10 @@ void driveHardware::ensureSafety() {
     cout << "allOK = " << allOK << ", alarm condition gone, reset siren and red lamp" << endl;
     cout << "set GPIORED = LOW" << endl;
 #ifdef PI
-    gpio_write(fPiGPIO, GPIORED, 0);
-    fTrafficRed = 0;
+    if (0 == fStopOperations) {
+      gpio_write(fPiGPIO, GPIORED, 0);
+      fTrafficRed = 0;
+    }
 #endif
     if (1 == fLidStatus) {
       if (fOldLidStatus != fLidStatus) {
@@ -849,9 +851,14 @@ void driveHardware::ensureSafety() {
       fTrafficYellow = 1;
     }
     
-    // -- Red light control (normally off unless there's an alarm)
-    gpio_write(fPiGPIO, GPIORED, 0);
-    fTrafficRed = 0;
+    // -- Red: alarm (allOK) or emergency stop; transient alarms blink when allOK toggles
+    if ((allOK > 0) || (fStopOperations > 0)) {
+      gpio_write(fPiGPIO, GPIORED, 1);
+      fTrafficRed = 1;
+    } else {
+      gpio_write(fPiGPIO, GPIORED, 0);
+      fTrafficRed = 0;
+    }
   }
 #endif
 
@@ -2062,6 +2069,8 @@ void driveHardware::stopOperations(int icode) {
 
 #ifdef PI
     breakInterlock();
+    gpio_write(fPiGPIO, GPIORED, 1);
+    fTrafficRed = 1;
 #endif
     
     for (int itec = 1; itec <= 8; ++itec) {
