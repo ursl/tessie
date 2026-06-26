@@ -853,8 +853,11 @@ void driveHardware::ensureSafety() {
     
     // -- Red: alarm (allOK) or latched emergency stop (fStopOperations); not lid-only breakInterlock
     if ((allOK > 0) || (fStopOperations > 0)) {
-      gpio_write(fPiGPIO, GPIORED, 1);
-      fTrafficRed = 1;
+      if (1 != fLidStatus) {
+      } else {
+        gpio_write(fPiGPIO, GPIORED, 1);
+        fTrafficRed = 1;
+      }
     } else {
       gpio_write(fPiGPIO, GPIORED, 0);
       fTrafficRed = 0;
