@@ -851,7 +851,7 @@ void driveHardware::ensureSafety() {
       fTrafficYellow = 1;
     }
     
-    // -- Red: alarm (allOK) or emergency stop; transient alarms blink when allOK toggles
+    // -- Red: alarm (allOK) or latched emergency stop (fStopOperations); not lid-only breakInterlock
     if ((allOK > 0) || (fStopOperations > 0)) {
       gpio_write(fPiGPIO, GPIORED, 1);
       fTrafficRed = 1;
