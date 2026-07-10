@@ -284,16 +284,16 @@
           </tr>
 
           <tr>
-            <td>PowerState (0=Off, 1=On)</td>
+            <td>PowerState</td>
             <td> </td>
-            <td id="PowerState1">wait </td>
-            <td id="PowerState2">wait </td>
-            <td id="PowerState3">wait </td>
-            <td id="PowerState4">wait </td>
-            <td id="PowerState5">wait </td>
-            <td id="PowerState6">wait </td>
-            <td id="PowerState7">wait </td>
-            <td id="PowerState8">wait </td>
+            <td id="PowerState1" style="text-align:center;">wait</td>
+            <td id="PowerState2" style="text-align:center;">wait</td>
+            <td id="PowerState3" style="text-align:center;">wait</td>
+            <td id="PowerState4" style="text-align:center;">wait</td>
+            <td id="PowerState5" style="text-align:center;">wait</td>
+            <td id="PowerState6" style="text-align:center;">wait</td>
+            <td id="PowerState7" style="text-align:center;">wait</td>
+            <td id="PowerState8" style="text-align:center;">wait</td>
           </tr>
 
           <tr>
@@ -891,13 +891,14 @@
                   //    This is to avoid the flicker on the checkbox
                   checkedTEC = -1;
               } else {
-                  if (parseInt(vNumbers[i-1]).toFixed(0) == 1) {
-                      document.getElementById(ps).innerHTML = parseInt(vNumbers[i-1]).toFixed(0);
-                      document.getElementById(ps).style.backgroundColor = mycolors[4];
+                  const el = document.getElementById(ps);
+                  if (parseInt(vNumbers[i-1], 10) === 1) {
+                      el.innerHTML = 'on';
+                      el.style.backgroundColor = mycolors[4];
                       document.getElementById(ct).checked = true;
                   } else {
-                      document.getElementById(ps).innerHTML = parseInt(vNumbers[i-1]).toFixed(0);
-                      document.getElementById(ps).style.backgroundColor = mycolors[9];
+                      el.innerHTML = 'off';
+                      el.style.backgroundColor = mycolors[9];
                       document.getElementById(ct).checked = false;
                       checkAll = false;
                   }
