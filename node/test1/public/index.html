@@ -61,6 +61,22 @@
           margin: 0 auto;
           overflow-x: auto;
       }
+
+      /* Mode-linked setpoints: make enabled vs disabled obvious */
+      input[id^="Temp_Set"],
+      input[id^="ControlVoltage_Set"] {
+          border: 2px solid #2c3e50;
+          background-color: #ffffff;
+          color: #111111;
+          box-sizing: border-box;
+      }
+      input[id^="Temp_Set"]:disabled,
+      input[id^="ControlVoltage_Set"]:disabled {
+          border: 1px solid #cccccc;
+          background-color: #e8e8e8;
+          color: #999999;
+          opacity: 0.65;
+      }
       
       /* Reconditioning Alert Styles */
       #reconditioningAlert {
