@@ -297,29 +297,29 @@
           </tr>
 
           <tr>
-            <td>Mode (0=T, 1=V)</td>
-            <td> <input id="Mode0" maxlength="3" size="3" value="all"  onchange="chgMode(0,this.value)"></td>
-            <td> <input id="Mode1" maxlength="3" size="3" value="wait" onchange="chgMode(1,this.value)"></td>
-            <td> <input id="Mode2" maxlength="3" size="3" value="wait" onchange="chgMode(2,this.value)"></td>
-            <td> <input id="Mode3" maxlength="3" size="3" value="wait" onchange="chgMode(3,this.value)"></td>
-            <td> <input id="Mode4" maxlength="3" size="3" value="wait" onchange="chgMode(4,this.value)"></td>
-            <td> <input id="Mode5" maxlength="3" size="3" value="wait" onchange="chgMode(5,this.value)"></td>
-            <td> <input id="Mode6" maxlength="3" size="3" value="wait" onchange="chgMode(6,this.value)"></td>
-            <td> <input id="Mode7" maxlength="3" size="3" value="wait" onchange="chgMode(7,this.value)"></td>
-            <td> <input id="Mode8" maxlength="3" size="3" value="wait" onchange="chgMode(8,this.value)"></td>
+            <td>Mode</td>
+            <td> <select id="Mode0" onchange="chgMode(0,this.value)"><option value="0" selected>Temp</option><option value="1">Voltage</option></select></td>
+            <td> <select id="Mode1" onchange="chgMode(1,this.value)"><option value="0" selected>Temp</option><option value="1">Voltage</option></select></td>
+            <td> <select id="Mode2" onchange="chgMode(2,this.value)"><option value="0" selected>Temp</option><option value="1">Voltage</option></select></td>
+            <td> <select id="Mode3" onchange="chgMode(3,this.value)"><option value="0" selected>Temp</option><option value="1">Voltage</option></select></td>
+            <td> <select id="Mode4" onchange="chgMode(4,this.value)"><option value="0" selected>Temp</option><option value="1">Voltage</option></select></td>
+            <td> <select id="Mode5" onchange="chgMode(5,this.value)"><option value="0" selected>Temp</option><option value="1">Voltage</option></select></td>
+            <td> <select id="Mode6" onchange="chgMode(6,this.value)"><option value="0" selected>Temp</option><option value="1">Voltage</option></select></td>
+            <td> <select id="Mode7" onchange="chgMode(7,this.value)"><option value="0" selected>Temp</option><option value="1">Voltage</option></select></td>
+            <td> <select id="Mode8" onchange="chgMode(8,this.value)"><option value="0" selected>Temp</option><option value="1">Voltage</option></select></td>
           </tr>
 
           <tr>
             <td>ControlVoltage_Set [V]</td>
-            <td> <input id="ControlVoltage_Set0" maxlength="4" size="4" value="all"  onchange="chgControlVoltage_Set(0,this.value)"></td>
-            <td> <input id="ControlVoltage_Set1" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(1,this.value)"></td>
-            <td> <input id="ControlVoltage_Set2" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(2,this.value)"></td>
-            <td> <input id="ControlVoltage_Set3" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(3,this.value)"></td>
-            <td> <input id="ControlVoltage_Set4" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(4,this.value)"></td>
-            <td> <input id="ControlVoltage_Set5" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(5,this.value)"></td>
-            <td> <input id="ControlVoltage_Set6" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(6,this.value)"></td>
-            <td> <input id="ControlVoltage_Set7" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(7,this.value)"></td>
-            <td> <input id="ControlVoltage_Set8" maxlength="4" size="4" value="wait" onchange="chgControlVoltage_Set(8,this.value)"></td>
+            <td> <input id="ControlVoltage_Set0" maxlength="4" size="4" value="all"  disabled onchange="chgControlVoltage_Set(0,this.value)"></td>
+            <td> <input id="ControlVoltage_Set1" maxlength="4" size="4" value="wait" disabled onchange="chgControlVoltage_Set(1,this.value)"></td>
+            <td> <input id="ControlVoltage_Set2" maxlength="4" size="4" value="wait" disabled onchange="chgControlVoltage_Set(2,this.value)"></td>
+            <td> <input id="ControlVoltage_Set3" maxlength="4" size="4" value="wait" disabled onchange="chgControlVoltage_Set(3,this.value)"></td>
+            <td> <input id="ControlVoltage_Set4" maxlength="4" size="4" value="wait" disabled onchange="chgControlVoltage_Set(4,this.value)"></td>
+            <td> <input id="ControlVoltage_Set5" maxlength="4" size="4" value="wait" disabled onchange="chgControlVoltage_Set(5,this.value)"></td>
+            <td> <input id="ControlVoltage_Set6" maxlength="4" size="4" value="wait" disabled onchange="chgControlVoltage_Set(6,this.value)"></td>
+            <td> <input id="ControlVoltage_Set7" maxlength="4" size="4" value="wait" disabled onchange="chgControlVoltage_Set(7,this.value)"></td>
+            <td> <input id="ControlVoltage_Set8" maxlength="4" size="4" value="wait" disabled onchange="chgControlVoltage_Set(8,this.value)"></td>
           </tr>
 
           <tr>
@@ -991,10 +991,26 @@
       socket.on('ModeString', (msg) => {
           const snumbers = msg.toString().replace('Mode = ', '');
           const vNumbers = snumbers.split(',');
+          let allSame = true;
+          let firstMode = null;
           for (let i = 1; i <= 8; i++) {
               let tm = 'Mode' + i.toString();
-              if (document.activeElement != document.getElementById(tm))
-                  document.getElementById(tm).value = parseFloat(vNumbers[i-1]).toFixed(0);
+              const modeEl = document.getElementById(tm);
+              const modeVal = parseInt(vNumbers[i-1], 10);
+              if (isNaN(modeVal)) continue;
+              if (firstMode === null) firstMode = modeVal;
+              else if (modeVal !== firstMode) allSame = false;
+              if (document.activeElement != modeEl) {
+                  modeEl.value = modeVal.toString();
+                  applyModeUI(i, modeVal);
+              }
+          }
+          if (allSame && firstMode !== null) {
+              const mode0 = document.getElementById('Mode0');
+              if (document.activeElement != mode0) {
+                  mode0.value = firstMode.toString();
+                  applyModeUI(0, firstMode);
+              }
           }
       });
 
@@ -1146,10 +1162,29 @@
           socket.emit('temp_set', msg);
       }
 
+      function applyModeUI(itec, modeVal) {
+          const isTemp = (parseInt(modeVal, 10) === 0);
+          const tempEl = document.getElementById('Temp_Set' + itec);
+          const cvEl = document.getElementById('ControlVoltage_Set' + itec);
+          if (tempEl) tempEl.disabled = !isTemp;
+          if (cvEl) cvEl.disabled = isTemp;
+      }
+
       function chgMode(itec, val) {
           let msg = "tec " + itec.toString() + " set Mode " + val.toString();
           console.log("mode_set: " + msg);
           socket.emit('mode_set', msg);
+          if (itec === 0) {
+              for (let i = 0; i <= 8; i++) {
+                  if (i > 0) {
+                      const modeEl = document.getElementById('Mode' + i);
+                      if (modeEl) modeEl.value = val.toString();
+                  }
+                  applyModeUI(i, val);
+              }
+          } else {
+              applyModeUI(itec, val);
+          }
       }
 
       function chgPID_kp(itec, val) {
