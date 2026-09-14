@@ -85,11 +85,11 @@ MainWindow::MainWindow(tLog &x, driveHardware *h, QWidget *parent) :
 
   fLOG(INFO, "tessie version " + sline);
 
-  QPushButton *btn1 = new QPushButton("Test\nsound"); btn1->setFocusPolicy(Qt::NoFocus);
+  QPushButton *btn1 = new QPushButton("Restart\ntessieWeb"); btn1->setFocusPolicy(Qt::NoFocus);
   btn1->setFont(fFont1);
   btn1->setStyleSheet("QPushButton {background-color: rgba(211, 211, 211, 0.4);color: black;}");
-  btn1->setFixedSize(QSize(70, 50));
-  connect(btn1, &QPushButton::clicked, this, &MainWindow::btnSound);
+  btn1->setFixedSize(QSize(120, 50));
+  connect(btn1, &QPushButton::clicked, this, &MainWindow::btnRestartTessieWeb);
   hlay->addWidget(btn1);
 
   QPushButton *btn2 = new QPushButton("Interlock reset"); btn2->setFocusPolicy(Qt::NoFocus);
@@ -660,6 +660,13 @@ void MainWindow::btnSound() {
   fLOG(INFO, "MainWindow::btnSound() clicked");
   system("/usr/bin/cvlc ../siren.mp3 & ");
   //  system("/usr/bin/cvlc -R ../19seconds.mp3 ");
+}
+
+
+// ----------------------------------------------------------------------
+void MainWindow::btnRestartTessieWeb() {
+  fLOG(INFO, "MainWindow::btnRestartTessieWeb() clicked");
+  system("/usr/bin/sudo systemctl restart tessieWeb");
 }
 
 
