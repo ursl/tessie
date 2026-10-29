@@ -174,11 +174,11 @@
   </head>
   <body>
     <div id="authOverlay" class="hidden">
-        <form id="authCard">
+        <form id="authCard" action="javascript:void(0)">
             <h2>tessieWeb</h2>
             <p>Enter the password to enable controls. Readings stay live.</p>
             <input id="authPassword" type="password" autocomplete="current-password">
-            <button type="submit">Unlock</button>
+            <button type="button" id="authUnlock">Unlock</button>
             <button type="button" id="authCancel">Cancel</button>
             <p id="authError"></p>
         </form>
@@ -779,11 +779,52 @@
           document.getElementById('authError').innerHTML = '';
       });
 
-      document.getElementById('authCard').addEventListener('submit', (e) => {
-          e.preventDefault();
+      function applyAuthResult(result) {
+          const errEl = document.getElementById('authError');
+          if (result && result.ok) {
+              document.getElementById('authPassword').value = '';
+              setControlsUnlocked(true);
+              return;
+          }
+          if (result && result.reason === 'unconfigured') {
+              errEl.innerHTML = 'No password configured on this coldbox.';
+          } else if (result && result.reason === 'timeout') {
+              errEl.innerHTML = 'No answer from the server. Restart tessieWeb.';
+          } else if (result && result.reason === 'disconnected') {
+              errEl.innerHTML = 'Not connected to the server.';
+          } else {
+              errEl.innerHTML = 'Wrong password.';
+          }
+          document.getElementById('authPassword').focus();
+      }
+
+      function sendUnlock() {
           const password = document.getElementById('authPassword').value;
-          document.getElementById('authError').innerHTML = '';
-          socket.emit('auth', { password: password });
+          const errEl = document.getElementById('authError');
+          if (!password) {
+              errEl.innerHTML = 'Enter the password.';
+              return;
+          }
+          if (!socket.connected) {
+              applyAuthResult({ ok: false, reason: 'disconnected' });
+              return;
+          }
+          errEl.innerHTML = 'Checking...';
+          socket.timeout(5000).emit('webLogin', password, (err, result) => {
+              if (err) {
+                  applyAuthResult({ ok: false, reason: 'timeout' });
+                  return;
+              }
+              applyAuthResult(result);
+          });
+      }
+
+      document.getElementById('authUnlock').addEventListener('click', sendUnlock);
+      document.getElementById('authPassword').addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+              e.preventDefault();
+              sendUnlock();
+          }
       });
 
       socket.on('authRequired', (msg) => {
@@ -793,15 +834,7 @@
       });
 
       socket.on('authResult', (msg) => {
-          if (msg && msg.ok) {
-              document.getElementById('authPassword').value = '';
-              setControlsUnlocked(true);
-          } else if (msg && msg.reason === 'unconfigured') {
-              document.getElementById('authError').innerHTML = 'No password configured on this coldbox.';
-          } else {
-              document.getElementById('authError').innerHTML = 'Wrong password.';
-              document.getElementById('authPassword').focus();
-          }
+          applyAuthResult(msg);
       });
 
       valve0.addEventListener('click', (e) => {

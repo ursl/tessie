@@ -343,26 +343,28 @@ io.on('connection', (socket) => {
 
     socket.on('ignored', () => {});
 
-    socket.on('auth', (msg) => {
-        const given = (msg && typeof msg.password === 'string') ? msg.password : '';
-        if (passwordMatches(given)) {
+    socket.on('webLogin', (password, ack) => {
+        const given = typeof password === 'string' ? password.trim() : '';
+        const ok = passwordMatches(given);
+        const result = ok
+            ? { ok: true }
+            : { ok: false, reason: webPassword.length > 0 ? 'wrong' : 'unconfigured' };
+        if (ok) {
             socket.authed = true;
-            socket.emit('authResult', { ok: true });
             console.log('tessieWeb controls unlocked');
         } else {
             socket.authed = false;
-            socket.emit('authResult', {
-                ok: false,
-                reason: webPassword.length > 0 ? 'wrong' : 'unconfigured'
-            });
-            console.log('tessieWeb unlock failed');
+            console.log('tessieWeb unlock failed: ' + result.reason);
         }
+        if (typeof ack === 'function') ack(result);
     });
 
     // -- read version strings
     readVersion();
     readWebVersion();
-    getFirmwareVersion();
+    getFirmwareVersion().catch((error) => {
+        console.error('Failed to get firmware version:', error.message);
+    });
 
     console.log('User connected');
     console.log('versionString ->' + versionString + '<-');
@@ -624,7 +626,6 @@ async function startServer() {
         // Continue with server initialization...
     } catch (error) {
         console.error("Failed to get firmware version:", error);
-        process.exit(1); // Exit if critical
     }
 }
 
