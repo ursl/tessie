@@ -6,6 +6,7 @@ const mqtt = require('mqtt');
 const os = require("os");
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 var valve0Status = 0;
 var valve1Status = 0;
@@ -281,9 +282,83 @@ clientMqtt.on('message', (topic, payload) => {
 
 
 // ----------------------------------------------------------------------
+// -- web password (not served from public/)
+//    TESSIE_WEB_PASSWORD, or the first line of TESSIE_WEB_PASSWORD_FILE,
+//    or node/test1/tessieWeb.passwd
+// ----------------------------------------------------------------------
+function loadWebPassword() {
+    if (process.env.TESSIE_WEB_PASSWORD && process.env.TESSIE_WEB_PASSWORD.length > 0) {
+        return process.env.TESSIE_WEB_PASSWORD;
+    }
+    const filePath = process.env.TESSIE_WEB_PASSWORD_FILE
+        || path.join(__dirname, 'tessieWeb.passwd');
+    try {
+        const line = fs.readFileSync(filePath, 'utf8').split('\n')[0].trim();
+        if (line.length > 0) return line;
+    } catch (err) {
+        console.error('tessieWeb controls locked: no password in TESSIE_WEB_PASSWORD or ' + filePath);
+    }
+    return '';
+}
+
+const webPassword = loadWebPassword();
+if (webPassword.length > 0) {
+    console.log('tessieWeb password loaded (' + webPassword.length + ' characters)');
+}
+
+const CONTROL_EVENTS = new Set([
+    'valve0', 'valve1', 'getcsv', 'ClearError', 'loadFW', 'saveFW',
+    'controlvoltage_set', 'temp_set', 'mode_set',
+    'pid_kp', 'pid_ki', 'pid_kd',
+    'checktec', 'throttle', 'startReconditioning'
+]);
+
+function passwordMatches(given) {
+    if (!webPassword || typeof given !== 'string') return false;
+    const a = Buffer.from(given);
+    const b = Buffer.from(webPassword);
+    if (a.length !== b.length) {
+        crypto.timingSafeEqual(b, b);
+        return false;
+    }
+    return crypto.timingSafeEqual(a, b);
+}
+
+// ----------------------------------------------------------------------
 // -- socket.io
 // ----------------------------------------------------------------------
 io.on('connection', (socket) => {
+    socket.authed = false;
+    socket.emit('authRequired', { configured: webPassword.length > 0 });
+
+    socket.use((packet, next) => {
+        const eventName = packet[0];
+        if (CONTROL_EVENTS.has(eventName) && !socket.authed) {
+            console.log('rejected unauthenticated event ' + eventName);
+            packet[0] = 'ignored';
+            packet.length = 1;
+        }
+        next();
+    });
+
+    socket.on('ignored', () => {});
+
+    socket.on('auth', (msg) => {
+        const given = (msg && typeof msg.password === 'string') ? msg.password : '';
+        if (passwordMatches(given)) {
+            socket.authed = true;
+            socket.emit('authResult', { ok: true });
+            console.log('tessieWeb controls unlocked');
+        } else {
+            socket.authed = false;
+            socket.emit('authResult', {
+                ok: false,
+                reason: webPassword.length > 0 ? 'wrong' : 'unconfigured'
+            });
+            console.log('tessieWeb unlock failed');
+        }
+    });
+
     // -- read version strings
     readVersion();
     readWebVersion();
